@@ -1,10 +1,11 @@
 {
-  "refreshedAt": "2026-09-22T14:14:46.426Z",
+  "refreshedAt": "2026-09-22T18:59:26.547Z",
   "sectors": [
     {
       "sector": "semis",
       "label": "מוליכים למחצה",
       "ok": true,
+      "refreshedAt": null,
       "articles": [
         {
           "url": "http://www.laosnews.net/news/279323075/electronica-india-and-productronica-india-2026-open-in-bengaluru-with-focus-on-manufacturing-depth-and-global-partnerships",
@@ -78,6 +79,7 @@
       "sector": "energy",
       "label": "אנרגיה",
       "ok": true,
+      "refreshedAt": null,
       "articles": [
         {
           "url": "https://www.riotimesonline.com/brava-energia-potiguar-sale-azevedo-travassos-dispute-2026/",
@@ -151,12 +153,14 @@
       "sector": "defense",
       "label": "ביטחון",
       "ok": false,
+      "refreshedAt": null,
       "articles": []
     },
     {
       "sector": "finance",
       "label": "פיננסים",
       "ok": true,
+      "refreshedAt": null,
       "articles": [
         {
           "url": "https://www.aol.com/articles/97-retirees-carry-debt-social-202418000.html",
@@ -227,8 +231,76 @@
     {
       "sector": "trade",
       "label": "סחר ומכסים",
-      "ok": false,
-      "articles": []
+      "ok": true,
+      "refreshedAt": "2026-09-22T18:59:26.547Z",
+      "articles": [
+        {
+          "url": "https://www.ocregister.com/2026/09/22/us-china-agreements-trump-xi-meeting/",
+          "title": "Fulfilling US - China deals is work in progress as Trump , Xi meet again",
+          "domain": "ocregister.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T18:45:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.bioxconomy.com/partnering/telix-to-buy-itm-for-1-65bn-upfront-in-radiopharmaceutical-consolidation-play",
+          "title": "Telix buys ITM for $1 . 65bn to expand radiopharma pipeline",
+          "domain": "bioxconomy.com",
+          "country": "",
+          "seenAt": "2026-09-22T18:45:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.kxl.com/the-latest-trump-returns-to-un-at-moment-of-anxiety-about-iran-ai-and-future-of-world-body-itself/",
+          "title": "The Latest : Trump uses UN speech to defend decision to start war against Iran",
+          "domain": "kxl.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T18:45:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.620ckrm.com/2026/09/22/podcast-business-commentator-questions-feasibility-of-belarus-potash-deal/",
+          "title": "PODCAST : Business commentator questions feasibility of Belarus potash deal",
+          "domain": "620ckrm.com",
+          "country": "Canada",
+          "seenAt": "2026-09-22T18:30:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.riotimesonline.com/asia-intelligence-brief-tuesday-september-22-2026/",
+          "title": "Asia Intelligence Brief Tuesday , September 22 , 2026",
+          "domain": "riotimesonline.com",
+          "country": "Brazil",
+          "seenAt": "2026-09-22T18:30:00.000Z",
+          "tickers": [
+            "INTC"
+          ]
+        },
+        {
+          "url": "http://northcountrynow.com/premium/stacker/stories/the-cannabis-industryrsquos-trafficked-workforce,391905",
+          "title": "The cannabis industry trafficked workforce - North Country Now",
+          "domain": "northcountrynow.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T18:15:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.cochranetimespost.ca:443/news/sault-aims-to-put-its-firefighting-assets-on-the-national-radar",
+          "title": "Sault aims to put its firefighting assets on the national radar",
+          "domain": "cochranetimespost.ca",
+          "country": "Canada",
+          "seenAt": "2026-09-22T18:15:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://businessdayghana.com/regulate-the-petroleum-sector-without-weakening-bost/",
+          "title": "Regulate the Petroleum Sector Without Weakening BOST",
+          "domain": "businessdayghana.com",
+          "country": "Ghana",
+          "seenAt": "2026-09-22T18:15:00.000Z",
+          "tickers": []
+        }
+      ]
     }
   ]
 }
