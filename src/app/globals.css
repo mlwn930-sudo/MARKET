@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #0b0d10;
+  --color-surface: #14181e;
+  --color-surface-raised: #1b2029;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+
+  --color-ink: #e8e6e1;
+  --color-ink-muted: #8a8f98;
+  --color-ink-faint: #5e636b;
+
+  /* Direction only. Never decorative — see CLAUDE.md. */
+  --color-up: #1baf7a;
+  --color-down: #e24b4a;
+
+  /* Reserved for headings and knowledge emphasis. */
+  --color-gold: #c9a227;
+
+  --font-sans: var(--font-heebo), system-ui, sans-serif;
+  --font-serif: var(--font-frank), Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html {
+  background: var(--color-canvas);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+/* Every figure on this site aligns in its column. This single rule is what
+   separates a serious financial interface from an amateur one.
+ *
+ * direction/unicode-bidi are load-bearing, not cosmetic: inside an RTL page
+ * the bidi algorithm moves a leading sign to the far side ("+2.30%" renders
+ * as "2.30%+") and reverses ranges ("221.56 – 228.50" renders high-first).
+ * Isolating each figure as LTR keeps signs and ranges truthful. */
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+::selection {
+  background: rgba(201, 162, 39, 0.25);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 5px;
+}

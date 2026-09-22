@@ -1,0 +1,54 @@
+name: Refresh fundamentals and institutional data
+
+# Separate from the news workflow because the cadences are completely
+# different. Company filings change a few times a year; 13F reports land
+# once a quarter. Running these every 20 minutes would download hundreds of
+# megabytes from SEC for nothing.
+on:
+  schedule:
+    # Sunday 04:00 UTC.
+    - cron: "0 4 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Rebuild fundamentals
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: npm run build:fundamentals
+
+      - name: Rebuild institutional holdings
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: npm run build:institutional
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/fundamentals content/institutional
+          if git diff --staged --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore: refresh fundamentals and institutional data"
+            git push
+          fi
