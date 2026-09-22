@@ -5,6 +5,7 @@ const LINKS = [
   { href: "/opportunities", label: "הזדמנויות" },
   { href: "/institutional", label: "מעקב מוסדי" },
   { href: "/news", label: "חדשות" },
+  { href: "/learn", label: "מרכז ידע" },
 ];
 
 export function SiteNav() {

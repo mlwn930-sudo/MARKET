@@ -15,6 +15,7 @@
 import { writeFile, mkdir, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { SECTORS, isRelevant, tickersIn } from "./news-config.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = resolve(ROOT, "content/news/latest.json");
@@ -22,34 +23,6 @@ const OUT = resolve(ROOT, "content/news/latest.json");
 const BASE = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GAP_MS = 7_000;
 const RETRY_DELAYS_MS = [20_000, 60_000];
-
-const SECTORS = [
-  {
-    sector: "semis",
-    label: "מוליכים למחצה",
-    q: '(semiconductor OR "chip export" OR lithography OR foundry) sourcelang:english',
-  },
-  {
-    sector: "energy",
-    label: "אנרגיה",
-    q: '("oil price" OR OPEC OR "natural gas" OR refinery) sourcelang:english',
-  },
-  {
-    sector: "defense",
-    label: "ביטחון",
-    q: '("defense spending" OR "military aid" OR "arms deal") sourcelang:english',
-  },
-  {
-    sector: "finance",
-    label: "פיננסים",
-    q: '("Federal Reserve" OR "interest rate" OR inflation OR "bond yields") sourcelang:english',
-  },
-  {
-    sector: "trade",
-    label: "סחר ומכסים",
-    q: '(tariff OR "trade war" OR "export controls" OR sanctions) sourcelang:english',
-  },
-];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -104,8 +77,13 @@ async function fetchSector(entry) {
             domain: a.domain ?? "",
             country: a.sourcecountry ?? null,
             seenAt: parseSeenDate(a.seendate),
-          }));
-        return { ok: true, articles: dedupe(articles).slice(0, 12) };
+            tickers: tickersIn(a.title),
+          }))
+          // Relevance is applied here rather than in the query because
+          // mining wire releases and conference notices use the same
+          // vocabulary as real market coverage.
+          .filter(isRelevant);
+        return { ok: true, articles: dedupe(articles).slice(0, 8) };
       } catch {
         // Fall through to a retry.
       }

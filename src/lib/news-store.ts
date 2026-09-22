@@ -1,11 +1,17 @@
 /**
- * Reads the news feed that the background job wrote.
+ * Reads the news feed that the background job wrote, and the Hebrew
+ * summaries written alongside it.
  *
  * The site never calls GDELT during a request. GDELT allows about one
  * request every 5 seconds and punishes bursts with a long cooldown, so
- * fetching at request time produced page loads of 30 to 400 seconds and
- * frequent failures. scripts/refresh-news.mjs does that work on a schedule
- * and writes content/news/latest.json; this module just reads it.
+ * fetching at request time produced page loads of 30 to 400 seconds.
+ * scripts/refresh-news.mjs does that work on a schedule and writes
+ * content/news/latest.json; this module just reads it.
+ *
+ * Summaries live in a separate file keyed by article URL rather than inside
+ * the feed. A refresh replaces the article list wholesale, and summaries are
+ * expensive to produce — keeping them apart means a refresh never discards
+ * work already done, and a story that reappears keeps its summary.
  */
 
 import { readFile } from "node:fs/promises";
@@ -18,6 +24,7 @@ const articleSchema = z.object({
   domain: z.string(),
   country: z.string().nullable(),
   seenAt: z.string().nullable(),
+  tickers: z.array(z.string()).optional(),
 });
 
 const feedSchema = z.object({
@@ -37,28 +44,112 @@ const feedSchema = z.object({
   ),
 });
 
+/** Written by /summarize-news. `impact` is analysis of what the story means
+ *  for sectors and companies — never a recommendation to buy or sell. */
+const summarySchema = z.object({
+  summary: z.string(),
+  impact: z.string(),
+  tickers: z.array(z.string()).default([]),
+  significance: z.enum(["high", "medium", "low"]).default("medium"),
+  writtenAt: z.string().optional(),
+});
+
+const summariesFileSchema = z.object({
+  writtenAt: z.string().nullable(),
+  summaries: z.record(z.string(), summarySchema),
+});
+
 export type NewsFeed = z.infer<typeof feedSchema>;
 export type NewsArticle = z.infer<typeof articleSchema>;
+export type ArticleSummary = z.infer<typeof summarySchema>;
 
-const EMPTY: NewsFeed = { refreshedAt: null, sectors: [] };
+/** An article with its summary attached, if one has been written. */
+export type EnrichedArticle = NewsArticle & { analysis: ArticleSummary | null };
+
+export type EnrichedSector = {
+  sector: string;
+  label: string;
+  ok: boolean;
+  refreshedAt?: string | null;
+  articles: EnrichedArticle[];
+};
+
+const EMPTY_FEED: NewsFeed = { refreshedAt: null, sectors: [] };
+
+// The third type argument pins T to the schema's OUTPUT type. Without it,
+// TypeScript infers the input type, and fields carrying .default() come back
+// as optional even though parsing always fills them.
+async function readJson<T>(
+  relativePath: string,
+  schema: z.ZodType<T, z.ZodTypeDef, unknown>,
+  fallback: T,
+): Promise<T> {
+  try {
+    const raw = await readFile(join(process.cwd(), relativePath), "utf8");
+    const parsed = schema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : fallback;
+  } catch {
+    return fallback;
+  }
+}
 
 export async function getNewsFeed(): Promise<NewsFeed> {
-  try {
-    const raw = await readFile(
-      join(process.cwd(), "content/news/latest.json"),
-      "utf8",
-    );
-    const parsed = feedSchema.safeParse(JSON.parse(raw));
-    return parsed.success ? parsed.data : EMPTY;
-  } catch {
-    return EMPTY;
-  }
+  return readJson("content/news/latest.json", feedSchema, EMPTY_FEED);
+}
+
+export async function getSummaries(): Promise<Record<string, ArticleSummary>> {
+  const file = await readJson("content/news/summaries.json", summariesFileSchema, {
+    writtenAt: null,
+    summaries: {},
+  });
+  return file.summaries;
+}
+
+/** The feed with summaries merged in. An article without one renders as a
+ *  plain headline rather than being hidden — a missing summary means nobody
+ *  has written it yet, not that the story is unimportant. */
+export async function getEnrichedFeed(): Promise<{
+  refreshedAt: string | null;
+  sectors: EnrichedSector[];
+  summarizedCount: number;
+  totalCount: number;
+}> {
+  const [feed, summaries] = await Promise.all([getNewsFeed(), getSummaries()]);
+
+  let summarizedCount = 0;
+  let totalCount = 0;
+
+  const sectors = feed.sectors.map((sector) => ({
+    ...sector,
+    articles: sector.articles.map((article) => {
+      totalCount++;
+      const analysis = summaries[article.url] ?? null;
+      if (analysis) summarizedCount++;
+      return { ...article, analysis };
+    }),
+  }));
+
+  return {
+    refreshedAt: feed.refreshedAt,
+    sectors,
+    summarizedCount,
+    totalCount,
+  };
 }
 
 /** True when the feed is older than two hours — the refresh job is meant to
  *  run every 20 minutes, so that gap means something is wrong with it. */
-export function isFeedStale(feed: NewsFeed): boolean {
-  if (!feed.refreshedAt) return true;
-  const age = Date.now() - new Date(feed.refreshedAt).getTime();
+export function isFeedStale(refreshedAt: string | null): boolean {
+  if (!refreshedAt) return true;
+  const age = Date.now() - new Date(refreshedAt).getTime();
   return !Number.isFinite(age) || age > 2 * 60 * 60 * 1000;
 }
+
+export const SIGNIFICANCE_LABELS: Record<
+  ArticleSummary["significance"],
+  string
+> = {
+  high: "השפעה גבוהה",
+  medium: "השפעה בינונית",
+  low: "השפעה נמוכה",
+};
