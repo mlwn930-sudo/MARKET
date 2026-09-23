@@ -1,3 +1,4 @@
+import type { PriceHistory } from "@/lib/sources/prices";
 import {
   TREND_LABELS,
   lastCross,
@@ -5,8 +6,7 @@ import {
   rsi,
   sma,
   volatility,
-  type PriceHistory,
-} from "@/lib/sources/prices";
+} from "@/lib/metrics/technical";
 import { fmtCompact, fmtPrice } from "@/lib/format";
 
 /**

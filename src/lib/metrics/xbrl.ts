@@ -106,6 +106,58 @@ const RETAINED_EARNINGS = ["RetainedEarningsAccumulatedDeficit"];
 const DILUTED_SHARES = ["WeightedAverageNumberOfDilutedSharesOutstanding"];
 const EPS_DILUTED = ["EarningsPerShareDiluted"];
 
+/* Working capital, for the cash conversion cycle. A company with no
+   inventory tag genuinely has no inventory — software and services — and
+   that is reported as such rather than as a zero. */
+const RECEIVABLES = [
+  "AccountsReceivableNetCurrent",
+  "ReceivablesNetCurrent",
+  "AccountsReceivableGrossCurrent",
+];
+const INVENTORY = ["InventoryNet", "InventoryGross"];
+const PAYABLES = [
+  "AccountsPayableCurrent",
+  "AccountsPayableTradeCurrent",
+  "AccountsPayableAndAccruedLiabilitiesCurrent",
+];
+
+/* Stock-based compensation, as added back in the cash flow statement. That
+   is the figure that matters here: it is precisely the amount by which
+   operating cash flow flatters the economics. */
+const STOCK_COMPENSATION = [
+  "ShareBasedCompensation",
+  "AllocatedShareBasedCompensationExpense",
+  "ShareBasedCompensationArrangementByShareBasedPaymentAwardCompensationCost",
+];
+
+/* Capital allocation — where the cash actually went. */
+const BUYBACKS = [
+  "PaymentsForRepurchaseOfCommonStock",
+  "PaymentsForRepurchaseOfEquity",
+];
+const DIVIDENDS = [
+  "PaymentsOfDividendsCommonStock",
+  "PaymentsOfDividends",
+  "PaymentsOfDividendsMinorityInterest",
+];
+const ACQUISITIONS = [
+  "PaymentsToAcquireBusinessesNetOfCashAcquired",
+  "PaymentsToAcquireBusinessesAndInterestInAffiliatesGross",
+];
+
+/* Operating expense lines, for the unit-economics proxies. True customer
+   acquisition cost is not a reported figure — see metrics/capital.ts. */
+const RESEARCH_DEVELOPMENT = ["ResearchAndDevelopmentExpense"];
+const SELLING_MARKETING = [
+  "SellingAndMarketingExpense",
+  "MarketingExpense",
+  "SellingGeneralAndAdministrativeExpense",
+];
+const DEFERRED_REVENUE = [
+  "ContractWithCustomerLiabilityCurrent",
+  "DeferredRevenueCurrent",
+];
+
 export const CONCEPTS = {
   REVENUE,
   COST_OF_REVENUE,
@@ -129,6 +181,16 @@ export const CONCEPTS = {
   RETAINED_EARNINGS,
   DILUTED_SHARES,
   EPS_DILUTED,
+  RECEIVABLES,
+  INVENTORY,
+  PAYABLES,
+  STOCK_COMPENSATION,
+  BUYBACKS,
+  DIVIDENDS,
+  ACQUISITIONS,
+  RESEARCH_DEVELOPMENT,
+  SELLING_MARKETING,
+  DEFERRED_REVENUE,
 };
 
 type RankedFact = XbrlFact & { priority: number };

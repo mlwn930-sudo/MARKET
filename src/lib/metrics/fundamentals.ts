@@ -30,8 +30,43 @@ export type Metric = {
 
 export type MetricGroup = { title: string; metrics: Metric[] };
 
+/**
+ * The intermediate figures every ratio on the site is built from.
+ *
+ * Exposed so that the deeper analysis in `capital.ts` can work from the same
+ * numbers rather than deriving its own. Two modules each computing their own
+ * NOPAT is exactly how a site ends up showing two different ROICs for one
+ * company on one page.
+ */
+export type FinancialBase = {
+  revenue: number | null;
+  cost: number | null;
+  operating: number | null;
+  netIncome: number | null;
+  operatingCashFlow: number | null;
+  capex: number | null;
+  fcf: number | null;
+  ebitda: number | null;
+  interest: number | null;
+  /** Falls back to the 21% federal statutory rate when the filing gives no
+   *  usable pre-tax figure. Disclosed wherever it is used. */
+  effectiveTaxRate: number;
+  taxRateIsAssumed: boolean;
+  nopat: number | null;
+  investedCapital: number | null;
+  totalDebt: number | null;
+  cash: number | null;
+  netDebt: number | null;
+  equity: number | null;
+  enterpriseValue: number | null;
+  marketCap: number | null;
+  /** As a percentage, matching the metric shown in the valuation group. */
+  roic: number | null;
+};
+
 export type Fundamentals = {
   groups: MetricGroup[];
+  base: FinancialBase;
   asOf: { end: string; filed: string } | null;
   /** True when the newest figure is older than 120 days — surfaced prominently. */
   stale: boolean;
@@ -114,8 +149,8 @@ export function computeFundamentals(
   const enterpriseValue =
     marketCap === null || netDebt === null ? null : marketCap + netDebt;
 
-  const effectiveTaxRate =
-    pretax !== null && pretax > 0 && tax !== null ? tax / pretax : 0.21;
+  const taxRateIsAssumed = !(pretax !== null && pretax > 0 && tax !== null);
+  const effectiveTaxRate = taxRateIsAssumed ? 0.21 : tax! / pretax!;
 
   const nopat = operating === null ? null : operating * (1 - effectiveTaxRate);
 
@@ -386,6 +421,28 @@ export function computeFundamentals(
 
   return {
     groups,
+    base: {
+      revenue,
+      cost,
+      operating,
+      netIncome,
+      operatingCashFlow: ocf,
+      capex,
+      fcf,
+      ebitda,
+      interest,
+      effectiveTaxRate,
+      taxRateIsAssumed,
+      nopat,
+      investedCapital,
+      totalDebt,
+      cash,
+      netDebt,
+      equity,
+      enterpriseValue,
+      marketCap,
+      roic: pct(safeDiv(nopat, investedCapital)),
+    },
     asOf,
     stale,
     revenueSeries,

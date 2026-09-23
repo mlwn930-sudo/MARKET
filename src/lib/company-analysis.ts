@@ -17,10 +17,17 @@
 import { unstable_cache } from "next/cache";
 import { getCompanyFacts, lookupTicker } from "@/lib/sources/sec";
 import { getProfile, type Profile } from "@/lib/sources/finnhub";
+import { getBenchmarkHistory, getPriceHistory } from "@/lib/sources/prices";
+import { getRiskFreeRate } from "@/lib/sources/fred";
 import {
   computeFundamentals,
   type Fundamentals,
 } from "@/lib/metrics/fundamentals";
+import {
+  computeCapitalQuality,
+  type CapitalQuality,
+} from "@/lib/metrics/capital";
+import { beta, readTechnicals, type TechnicalRead } from "@/lib/metrics/technical";
 
 export type CompanyAnalysis = {
   ticker: string;
@@ -29,20 +36,31 @@ export type CompanyAnalysis = {
   profile: Profile | null;
   marketCap: number | null;
   fundamentals: Fundamentals;
+  /** Cash cycle, dilution, cost of capital, operating leverage, allocation. */
+  capital: CapitalQuality;
 };
 
 async function build(ticker: string): Promise<CompanyAnalysis | null> {
   const listing = await lookupTicker(ticker);
   if (!listing) return null;
 
-  const [facts, profile] = await Promise.all([
+  const [facts, profile, history, benchmark, riskFree] = await Promise.all([
     getCompanyFacts(listing.cik_str),
     // A missing profile costs the market cap and therefore the valuation
     // multiples, but the margins and growth figures still stand.
     getProfile(ticker).catch(() => null),
+    // Needed here only for beta. Both calls share the hourly price cache
+    // with the chart on the page, so neither is an extra request.
+    getPriceHistory(ticker).catch(() => null),
+    getBenchmarkHistory().catch(() => null),
+    getRiskFreeRate().catch(() => null),
   ]);
 
   const marketCap = profile?.marketCap ?? null;
+  const fundamentals = computeFundamentals(facts, marketCap);
+
+  const stockBeta =
+    history && benchmark ? beta(history.candles, benchmark.candles) : null;
 
   return {
     ticker: ticker.toUpperCase(),
@@ -50,7 +68,17 @@ async function build(ticker: string): Promise<CompanyAnalysis | null> {
     title: listing.title,
     profile,
     marketCap,
-    fundamentals: computeFundamentals(facts, marketCap),
+    fundamentals,
+    capital: computeCapitalQuality(
+      facts,
+      fundamentals.base,
+      {
+        revenue: fundamentals.revenueSeries,
+        operating: fundamentals.operatingIncomeSeries,
+        shareCount: fundamentals.shareCountSeries,
+      },
+      { beta: stockBeta, riskFree },
+    ),
   };
 }
 
@@ -62,4 +90,27 @@ export function getCompanyAnalysis(
     revalidate: 3600,
     tags: ["company", `company:${symbol}`],
   })();
+}
+
+/**
+ * The technical read, computed once per company per hour.
+ *
+ * Separate from the fundamental analysis above because it depends only on
+ * price — a company that has not filed anything for two months still has a
+ * chart that moved this morning — and because the chart and the analysis
+ * panel both need it. Computing it twice per page view would be harmless
+ * but wasteful, and the shared cache makes the second read free.
+ */
+export async function getTechnicalRead(
+  ticker: string,
+): Promise<TechnicalRead | null> {
+  const symbol = ticker.toUpperCase();
+
+  const [history, benchmark] = await Promise.all([
+    getPriceHistory(symbol).catch(() => null),
+    getBenchmarkHistory().catch(() => null),
+  ]);
+  if (!history) return null;
+
+  return readTechnicals(history.candles, benchmark?.candles ?? null);
 }

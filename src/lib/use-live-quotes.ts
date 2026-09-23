@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { marketStatus, type MarketStatus } from "./market-hours";
 
 export type LiveQuote = {
   symbol: string;
@@ -14,18 +15,25 @@ export type LiveQuote = {
 
 export type QuoteState = {
   quotes: Record<string, LiveQuote>;
-  /** "up" or "down" for a few hundred ms after a price moves, so the change
-   *  is visible without the reader having to watch the number. */
+  /** "up" or "down" for a moment after a price moves, so the change is
+   *  visible without the reader having to watch the number. */
   flash: Record<string, "up" | "down" | undefined>;
   fetchedAt: Date | null;
   failing: boolean;
+  /** Session state, so the UI can say why prices are or are not moving. */
+  market: MarketStatus;
 };
 
-const POLL_MS = 15_000;
 const FLASH_MS = 900;
 
 /**
  * Polls the quotes route and reports which prices just moved.
+ *
+ * The cadence comes from the market session rather than a fixed constant.
+ * Finnhub's free tier allows 60 calls a minute and every symbol is one call,
+ * so the budget is the real constraint on how fast this can go: eight
+ * seconds while the exchange is open, two minutes when it is shut. Polling
+ * hard overnight would spend the allowance to receive an unchanged number.
  *
  * Two behaviours worth knowing about:
  *
@@ -33,9 +41,9 @@ const FLASH_MS = 900;
  * is simply not current — and blanking the table would tell the reader the
  * market went away. The `failing` flag surfaces the staleness instead.
  *
- * Polling pauses while the tab is hidden. A background tab burning four
- * requests a minute against a 60-per-minute allowance is the kind of waste
- * that only shows up as a rate-limit error hours later.
+ * Polling stops while the tab is hidden and catches up the moment it comes
+ * back. A background tab burning requests against a shared allowance is the
+ * kind of waste that only surfaces as a rate-limit error hours later.
  */
 export function useLiveQuotes(
   symbols: string[],
@@ -45,6 +53,7 @@ export function useLiveQuotes(
   const [flash, setFlash] = useState<QuoteState["flash"]>({});
   const [fetchedAt, setFetchedAt] = useState<Date | null>(null);
   const [failing, setFailing] = useState(false);
+  const [market, setMarket] = useState<MarketStatus>(() => marketStatus());
 
   const previous = useRef<Record<string, number | null>>({});
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -52,6 +61,8 @@ export function useLiveQuotes(
 
   useEffect(() => {
     let cancelled = false;
+    let interval: ReturnType<typeof setInterval> | null = null;
+    let sessionState = marketStatus().state;
 
     async function poll() {
       if (document.visibilityState === "hidden") return;
@@ -97,11 +108,26 @@ export function useLiveQuotes(
       }
     }
 
-    poll();
-    const interval = setInterval(poll, POLL_MS);
+    function schedule() {
+      const status = marketStatus();
+      sessionState = status.state;
+      setMarket(status);
 
-    // Catch up immediately when the tab comes back rather than waiting out
-    // the rest of the interval on a stale number.
+      if (interval) clearInterval(interval);
+      interval = setInterval(() => {
+        // Re-check the session each tick, so the cadence tightens by itself
+        // when the bell rings rather than waiting for a page reload.
+        if (marketStatus().state !== sessionState) {
+          schedule();
+          return;
+        }
+        poll();
+      }, status.pollMs);
+    }
+
+    poll();
+    schedule();
+
     const onVisible = () => {
       if (document.visibilityState === "visible") poll();
     };
@@ -109,12 +135,12 @@ export function useLiveQuotes(
 
     return () => {
       cancelled = true;
-      clearInterval(interval);
+      if (interval) clearInterval(interval);
       document.removeEventListener("visibilitychange", onVisible);
       timers.current.forEach(clearTimeout);
       timers.current = [];
     };
   }, [key]);
 
-  return { quotes, flash, fetchedAt, failing };
+  return { quotes, flash, fetchedAt, failing, market };
 }

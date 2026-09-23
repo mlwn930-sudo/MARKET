@@ -1,5 +1,9 @@
 /**
- * Daily OHLC price history, and the technical measures drawn from it.
+ * Daily OHLC price history.
+ *
+ * Fetching only. Everything derived from these candles — averages, trend,
+ * stage, the contraction pattern — lives in `metrics/technical.ts`, because
+ * a formula computed in two places eventually disagrees with itself.
  *
  * Source is Yahoo's chart endpoint. It is not a documented public API, and
  * that is a real caveat: it can change or start refusing requests without
@@ -114,209 +118,17 @@ export function getPriceHistory(
   )();
 }
 
-/* ------------------------------------------------------------------ */
-/* Indicators                                                          */
-/* ------------------------------------------------------------------ */
-
-/** Simple moving average, aligned to the candles. The first `period - 1`
- *  entries are null: an average over fewer days than the period is a
- *  different measure wearing the same name. */
-export function sma(
-  candles: Candle[],
-  period: number,
-  pick: (c: Candle) => number = (c) => c.close,
-): (number | null)[] {
-  const out: (number | null)[] = new Array(candles.length).fill(null);
-  if (candles.length < period) return out;
-
-  let sum = 0;
-  for (let i = 0; i < candles.length; i++) {
-    sum += pick(candles[i]);
-    if (i >= period) sum -= pick(candles[i - period]);
-    if (i >= period - 1) out[i] = sum / period;
-  }
-  return out;
-}
-
 /**
- * Relative strength index, Wilder's smoothing.
+ * The index every stock on this site is measured against.
  *
- * Above 70 is conventionally "overbought" and below 30 "oversold", but the
- * convention misleads in a strong trend: a stock in a real advance can hold
- * above 70 for months, and selling it on that basis is a common way to be
- * early and wrong. The site shows the number and the trend together for
- * exactly that reason.
- */
-export function rsi(candles: Candle[], period = 14): (number | null)[] {
-  const out: (number | null)[] = new Array(candles.length).fill(null);
-  if (candles.length <= period) return out;
-
-  let gains = 0;
-  let losses = 0;
-  for (let i = 1; i <= period; i++) {
-    const change = candles[i].close - candles[i - 1].close;
-    if (change >= 0) gains += change;
-    else losses -= change;
-  }
-
-  let avgGain = gains / period;
-  let avgLoss = losses / period;
-  out[period] = avgLoss === 0 ? 100 : 100 - 100 / (1 + avgGain / avgLoss);
-
-  for (let i = period + 1; i < candles.length; i++) {
-    const change = candles[i].close - candles[i - 1].close;
-    const gain = change > 0 ? change : 0;
-    const loss = change < 0 ? -change : 0;
-    avgGain = (avgGain * (period - 1) + gain) / period;
-    avgLoss = (avgLoss * (period - 1) + loss) / period;
-    out[i] = avgLoss === 0 ? 100 : 100 - 100 / (1 + avgGain / avgLoss);
-  }
-
-  return out;
-}
-
-/** Annualised volatility from daily returns, as a percentage. */
-export function volatility(candles: Candle[], window = 60): number | null {
-  if (candles.length < window + 1) return null;
-  const slice = candles.slice(-(window + 1));
-
-  const returns: number[] = [];
-  for (let i = 1; i < slice.length; i++) {
-    returns.push(Math.log(slice[i].close / slice[i - 1].close));
-  }
-
-  const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
-  const variance =
-    returns.reduce((sum, r) => sum + (r - mean) ** 2, 0) / (returns.length - 1);
-
-  return Math.sqrt(variance) * Math.sqrt(252) * 100;
-}
-
-export type Cross = { kind: "golden" | "death"; date: string; ago: number };
-
-/**
- * The most recent crossing of the short average over the long one.
+ * SPY rather than ^GSPC: the ETF trades, so its candles carry real volume
+ * and match the days a stock actually traded. The index itself would do for
+ * returns but would misalign on days the ETF halted.
  *
- * Reported with how long ago it happened, because the age is the whole
- * story: a cross that happened two days ago is news, and one from eight
- * months ago is just the current state described in a dramatic way.
+ * One symbol for the whole site, so the hourly cache is shared: a hundred
+ * company pages cost one request between them.
  */
-export function lastCross(
-  candles: Candle[],
-  short: (number | null)[],
-  long: (number | null)[],
-): Cross | null {
-  for (let i = candles.length - 1; i > 0; i--) {
-    const s = short[i];
-    const l = long[i];
-    const prevS = short[i - 1];
-    const prevL = long[i - 1];
-    if (s === null || l === null || prevS === null || prevL === null) continue;
-
-    const crossedUp = prevS <= prevL && s > l;
-    const crossedDown = prevS >= prevL && s < l;
-    if (crossedUp || crossedDown) {
-      return {
-        kind: crossedUp ? "golden" : "death",
-        date: candles[i].date,
-        ago: candles.length - 1 - i,
-      };
-    }
-  }
-  return null;
+export function getBenchmarkHistory(): Promise<PriceHistory | null> {
+  return getPriceHistory("SPY");
 }
 
-export type TrendRead = {
-  vsAveragePercent: number | null;
-  averageDirection: "rising" | "falling" | "flat" | null;
-  verdict: "uptrend" | "downtrend" | "mixed" | null;
-  high52: number | null;
-  low52: number | null;
-  fromHighPercent: number | null;
-  fromLowPercent: number | null;
-};
-
-/**
- * Trend as two separate questions, because they can disagree and the
- * disagreement is the interesting case.
- *
- * Price above a rising long average is the textbook uptrend. Price above a
- * falling average usually means a bounce inside a decline, and price below
- * a rising average usually means a pullback inside an advance — both are
- * reported as "mixed" rather than forced into one of the two clean answers,
- * because calling either of them a trend would be a guess.
- */
-export function readTrend(
-  candles: Candle[],
-  longAverage: (number | null)[],
-): TrendRead {
-  const empty: TrendRead = {
-    vsAveragePercent: null,
-    averageDirection: null,
-    verdict: null,
-    high52: null,
-    low52: null,
-    fromHighPercent: null,
-    fromLowPercent: null,
-  };
-  if (candles.length === 0) return empty;
-
-  const lastClose = candles[candles.length - 1].close;
-  const lastAverage = longAverage[longAverage.length - 1];
-  const monthAgoIndex = Math.max(0, longAverage.length - 22);
-  const averageThen = longAverage[monthAgoIndex];
-
-  const window = candles.slice(-252);
-  const high52 = window.length ? Math.max(...window.map((c) => c.high)) : null;
-  const low52 = window.length ? Math.min(...window.map((c) => c.low)) : null;
-
-  const fromHighPercent =
-    high52 && high52 > 0 ? ((lastClose - high52) / high52) * 100 : null;
-  const fromLowPercent =
-    low52 && low52 > 0 ? ((lastClose - low52) / low52) * 100 : null;
-
-  if (lastAverage === null) {
-    return { ...empty, high52, low52, fromHighPercent, fromLowPercent };
-  }
-
-  const vsAveragePercent = ((lastClose - lastAverage) / lastAverage) * 100;
-
-  let averageDirection: TrendRead["averageDirection"] = null;
-  if (averageThen !== null && averageThen !== undefined && averageThen > 0) {
-    const change = ((lastAverage - averageThen) / averageThen) * 100;
-    averageDirection = change > 1 ? "rising" : change < -1 ? "falling" : "flat";
-  }
-
-  const above = vsAveragePercent > 0;
-  let verdict: TrendRead["verdict"] = "mixed";
-  if (above && averageDirection === "rising") verdict = "uptrend";
-  else if (!above && averageDirection === "falling") verdict = "downtrend";
-
-  return {
-    vsAveragePercent,
-    averageDirection,
-    verdict,
-    high52,
-    low52,
-    fromHighPercent,
-    fromLowPercent,
-  };
-}
-
-export const TREND_LABELS: Record<
-  NonNullable<TrendRead["verdict"]>,
-  { he: string; note: string }
-> = {
-  uptrend: {
-    he: "מגמה עולה",
-    note: "המחיר מעל הממוצע הארוך, והממוצע עצמו עולה",
-  },
-  downtrend: {
-    he: "מגמה יורדת",
-    note: "המחיר מתחת לממוצע הארוך, והממוצע עצמו יורד",
-  },
-  mixed: {
-    he: "מגמה מעורבת",
-    note: "המחיר והממוצע אינם מצביעים לאותו כיוון",
-  },
-};
