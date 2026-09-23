@@ -29,7 +29,7 @@ export function ArticleCard({
 
   return (
     <article
-      className="group relative overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-line-strong"
+      className="group relative overflow-hidden panel panel-interactive"
       style={isMajor ? { borderInlineStartWidth: 2, borderInlineStartColor: accent } : undefined}
     >
       {article.image && (

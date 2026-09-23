@@ -34,9 +34,10 @@ export default async function NewsPage() {
             {refreshedAt && (
               <>
                 <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-up" />
-                <span className="num">
-                  עודכן {fmtRelative(new Date(refreshedAt))}
-                </span>
+                {/* No .num here. fmtRelative returns a Hebrew phrase, and
+                    the class forces its contents left-to-right — it exists
+                    to isolate figures, not sentences that contain one. */}
+                <span>עודכן {fmtRelative(new Date(refreshedAt))}</span>
               </>
             )}
           </span>
@@ -62,7 +63,7 @@ export default async function NewsPage() {
       </header>
 
       {empty ? (
-        <p className="mt-6 rounded-xl border border-line bg-surface px-4 py-4 text-sm text-ink-muted">
+        <p className="mt-6 panel px-4 py-4 text-sm text-ink-muted">
           הפיד עדיין לא אוכלס. הרץ{" "}
           <code className="num">npm run refresh:news</code>.
         </p>

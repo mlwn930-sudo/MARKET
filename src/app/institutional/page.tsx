@@ -40,7 +40,7 @@ export default async function InstitutionalPage() {
     return (
       <main className="mx-auto max-w-5xl px-6 py-8">
         <h1 className="text-xl">מעקב מוסדי</h1>
-        <p className="mt-4 rounded-xl border border-line bg-surface px-4 py-4 text-sm text-ink-muted">
+        <p className="mt-4 panel px-4 py-4 text-sm text-ink-muted">
           הנתונים עדיין לא נבנו. הרץ{" "}
           <code className="num">npm run build:institutional</code>.
         </p>
@@ -69,7 +69,7 @@ export default async function InstitutionalPage() {
         {institutions.map((inst) => (
           <section
             key={inst.cik}
-            className="rounded-xl border border-line bg-surface p-4"
+            className="panel p-4"
           >
             <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-3">
               <div>

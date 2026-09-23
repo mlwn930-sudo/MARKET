@@ -62,7 +62,7 @@ export function ValueQualityScatter({ results }: { results: ScreenResult[] }) {
     .slice(0, 6);
 
   return (
-    <figure className="rounded-xl border border-line bg-surface p-4">
+    <figure className="panel p-4">
       <figcaption className="mb-1 text-sm text-ink">תמחור מול איכות</figcaption>
       <p className="mb-3 text-[11px] leading-relaxed text-ink-muted">
         כל נקודה היא חברה. ככל שהיא שמאלה יותר היא זולה יותר ביחס לרווחיה,
@@ -201,7 +201,7 @@ export function ScoreDistribution({ results }: { results: ScreenResult[] }) {
   const barWidth = Math.min(24, slot * 0.55);
 
   return (
-    <figure className="rounded-xl border border-line bg-surface p-4">
+    <figure className="panel p-4">
       <figcaption className="mb-1 text-sm text-ink">התפלגות הציונים</figcaption>
       <p className="mb-3 text-[11px] leading-relaxed text-ink-muted">
         כמה חברות קיבלו כל ציון. זה מראה כמה הרף באמת גבוה — ציון{" "}

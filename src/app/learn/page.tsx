@@ -52,7 +52,7 @@ export default function LearnPage() {
               {section.entries.map((entry) => (
                 <article
                   key={entry.term}
-                  className="rounded-xl border border-line bg-surface p-4"
+                  className="panel p-4"
                 >
                   <h3 className="flex flex-wrap items-baseline gap-2 text-sm">
                     <span className="num text-gold">{entry.term}</span>

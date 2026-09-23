@@ -113,7 +113,7 @@ export function CandleChart({
   const verdict = trend.verdict;
 
   return (
-    <figure className="rounded-xl border border-line bg-surface p-4">
+    <figure className="panel p-4">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-4 text-[11px]">
           <span className="flex items-center gap-1.5">

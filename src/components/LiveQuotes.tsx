@@ -78,7 +78,7 @@ export function LiveIndexStrip({
           return (
             <div
               key={item.symbol}
-              className={`relative overflow-hidden rounded-xl border border-line bg-surface p-4 ${flashClass(flash[item.symbol])}`}
+              className={`relative overflow-hidden panel p-4 ${flashClass(flash[item.symbol])}`}
             >
               <div
                 className="absolute inset-x-0 top-0 h-0.5"

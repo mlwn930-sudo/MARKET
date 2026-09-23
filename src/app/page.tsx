@@ -143,7 +143,7 @@ export default async function Home() {
           </div>
 
           {topPicks.length === 0 ? (
-            <p className="rounded-xl border border-line bg-surface px-4 py-4 text-xs text-ink-muted">
+            <p className="panel px-4 py-4 text-xs text-ink-muted">
               הסורק עדיין לא נבנה.
             </p>
           ) : (
@@ -183,9 +183,7 @@ export default async function Home() {
             </h2>
             <div className="flex items-center gap-3 text-[11px] text-ink-muted">
               {feed.refreshedAt && (
-                <span className="num">
-                  עודכן {fmtRelative(new Date(feed.refreshedAt))}
-                </span>
+                <span>עודכן {fmtRelative(new Date(feed.refreshedAt))}</span>
               )}
               <Link href="/news" className="hover:text-ink">
                 כל החדשות ←
@@ -214,7 +212,7 @@ export default async function Home() {
             <Link
               key={section.href}
               href={section.href}
-              className="group rounded-xl border border-line bg-surface p-4 transition-colors hover:border-line-strong"
+              className="group panel p-4 transition-colors hover:border-line-strong"
               style={{
                 borderInlineStartWidth: 2,
                 borderInlineStartColor: section.accent,

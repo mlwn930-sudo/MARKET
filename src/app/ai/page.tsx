@@ -100,7 +100,7 @@ export default async function AiPage() {
           {feed.refreshedAt && (
             <p className="mt-3 flex items-center gap-2 text-[11px] text-ink-faint">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-up" />
-              <span className="num">
+              <span>
                 חדשות עודכנו {fmtRelative(new Date(feed.refreshedAt))}
               </span>
             </p>
@@ -132,7 +132,7 @@ export default async function AiPage() {
                 <Link
                   key={ticker}
                   href={`/company/${ticker}`}
-                  className="rounded-xl border border-line bg-surface p-3 transition-colors hover:border-line-strong"
+                  className="panel panel-interactive p-3"
                   style={{ borderInlineStartWidth: 2, borderInlineStartColor: identity.accent }}
                 >
                   <div className="flex items-baseline justify-between">

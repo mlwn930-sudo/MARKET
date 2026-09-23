@@ -16,7 +16,7 @@ export default async function OpportunitiesPage() {
     return (
       <main className="mx-auto max-w-5xl px-6 py-8">
         <h1 className="text-xl">הזדמנויות השקעה</h1>
-        <p className="mt-4 rounded-xl border border-line bg-surface px-4 py-4 text-sm text-ink-muted">
+        <p className="mt-4 panel px-4 py-4 text-sm text-ink-muted">
           הנתונים עדיין לא נבנו. הרץ{" "}
           <code className="num">npm run build:fundamentals</code>.
         </p>
@@ -34,8 +34,8 @@ export default async function OpportunitiesPage() {
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h1 className="text-xl">הזדמנויות לטווח בינוני-ארוך</h1>
           {builtAt && (
-            <span className="num text-[11px] text-ink-muted">
-              נבנה {fmtDate(builtAt.slice(0, 10))}
+            <span className="text-[11px] text-ink-muted">
+              נבנה <span className="num">{fmtDate(builtAt.slice(0, 10))}</span>
             </span>
           )}
         </div>
@@ -62,7 +62,7 @@ export default async function OpportunitiesPage() {
         {results.map((result) => (
           <section
             key={result.company.ticker}
-            className="rounded-xl border border-line bg-surface p-4"
+            className="panel p-4"
           >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div>

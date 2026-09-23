@@ -122,8 +122,11 @@ export default async function CompanyPage({
           )}
           {sector && (
             <span>
-              מושווה מול <span className="text-ink">{sector.label}</span>
-              <span className="num"> ({sector.peerCount} חברות)</span>
+              מושווה מול <span className="text-ink">{sector.label}</span>{" "}
+              {/* Only the digits carry .num. Wrapping the Hebrew word in it
+                  too forces the whole phrase left-to-right, which moves the
+                  closing bracket to the wrong side. */}
+              (<span className="num">{sector.peerCount}</span> חברות)
             </span>
           )}
         </div>

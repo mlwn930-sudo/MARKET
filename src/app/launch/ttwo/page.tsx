@@ -219,8 +219,9 @@ export default async function TtwoLaunchPage() {
                 initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
               />
               {analysis?.marketCap && (
-                <span className="num pb-2 text-xs text-ink-muted">
-                  שווי שוק ${fmtCompact(analysis.marketCap)}
+                <span className="pb-2 text-xs text-ink-muted">
+                  שווי שוק{" "}
+                  <span className="num">${fmtCompact(analysis.marketCap)}</span>
                 </span>
               )}
             </div>
