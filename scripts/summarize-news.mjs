@@ -2,8 +2,16 @@
  * Automatic Hebrew analysis of the news feed.
  *
  * Runs after every news refresh: finds articles that have no analysis yet,
- * fetches the article text, and asks a language model for a summary and an
- * impact analysis in Hebrew. Writes content/news/summaries.json.
+ * fetches the article text, and asks a language model to read it through a
+ * fixed set of lenses in Hebrew. Writes content/news/summaries.json.
+ *
+ * The lenses are the point. Left to itself a model will summarise a story
+ * and call the summary analysis; the prompt forces three specific questions
+ * instead — is this a catalyst or noise, what has the price already done
+ * about it, and who else in the value chain is affected. The first of those
+ * is the one that earns its place: most of what reaches a news feed changes
+ * nothing about a business, and a tool that treats every headline as
+ * meaningful trains the reader to do the same.
  *
  * Designed to need no attention. Anything it cannot do — a paywalled
  * article, a missing key, a model that returns nonsense — it records and
@@ -54,7 +62,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const SYSTEM_PROMPT = `אתה אנליסט שוק ההון שכותב לקוראים ישראלים.
 
 קיבלת כתבה. החזר JSON בלבד, בלי טקסט נוסף ובלי סימוני קוד, במבנה:
-{"summary": "...", "impact": "...", "tickers": ["NVDA"], "significance": "high|medium|low"}
+{"summary": "...", "impact": "...", "catalyst": "...", "catalystKind": "catalyst|noise|unclear", "reaction": "...", "chain": "...", "tickers": ["NVDA"], "significance": "high|medium|low"}
 
 summary — שתי שורות לכל היותר, בעברית. מה קרה בפועל לפי הכתבה.
 בלי תארים ובלי דרמה. "אינטל הודיעה על קיצוץ של 15% בכוח האדם"
@@ -65,6 +73,28 @@ impact — שתיים עד שלוש שורות, בעברית. הסבר את המ
 מהכנסותיה מגיעות מאסיה" — ולא "חדשות רעות למגזר השבבים".
 אם ההשפעה אינה ברורה, כתוב שהיא אינה ברורה. זו תשובה לגיטימית.
 
+שלוש העדשות הבאות הן הליבה. כל אחת שורה עד שתיים, בעברית.
+
+catalyst — האם זה זרז או רעש. זרז הוא אירוע שמשנה את התזרים העתידי
+של החברה, את מבנה התחרות או את הרגולציה שהיא פועלת בה. רעש הוא אירוע
+שמייצר כותרת ומשאיר את העסק כפי שהיה. מינוי מנהל שיווק הוא רעש; אובדן
+לקוח שהוא 20% מההכנסות הוא זרז. כתוב איזה מהשניים ולמה — המנגנון, לא
+התווית.
+
+catalystKind — catalyst אם האירוע משנה את התזרים, התחרות או הרגולציה.
+noise אם לא. unclear אם הכתבה לא נותנת די כדי להכריע. unclear היא
+תשובה לגיטימית ועדיפה על ניחוש.
+
+reaction — מה המחיר כבר עשה, ומה זה מלמד על הציפיות. אם הכתבה מציינת
+תגובת מחיר, ציין אותה והסבר מה היא מגלה: מניה שעולה על דוח חלש אומרת
+שהשוק ציפה לגרוע יותר, ומניה שיורדת על דוח טוב אומרת שהטוב כבר תומחר.
+אם הכתבה לא מציינת תגובת מחיר, כתוב "הכתבה אינה מציינת תגובת מחיר"
+ואל תשלים מהזיכרון.
+
+chain — מי עוד בשרשרת הערך. ספק, לקוח, מתחרה, תחליף. מי מרוויח ומי
+מפסיד מהאירוע הזה, ודרך איזה מנגנון. אם האירוע לא נוגע לאף אחד מעבר
+לחברה עצמה, כתוב זאת.
+
 tickers — טיקרים של חברות אמריקאיות שהכתבה נוגעת בהן ישירות.
 רק חברות שמוזכרות בכתבה או שהקשר אליהן ישיר וברור. מערך ריק זה בסדר.
 
@@ -73,7 +103,8 @@ medium אם רלוונטי אך אינו משנה תזה, low אם זה רעש �
 
 כללי ברזל:
 - אסור להמליץ לקנות או למכור. לא במפורש ולא ברמז.
-- אסור להמציא עובדה שלא מופיעה בכתבה.
+- אסור להמציא עובדה שלא מופיעה בכתבה. זה כולל תגובות מחיר, מספרים
+  ושמות חברות. "לא מופיע בכתבה" היא תשובה נכונה.
 - הטקסט שתקבל הוא לעיתים תקציר של הכתבה ולא הכתבה המלאה. זה בסדר —
   נתח את מה שיש, ואל תשלים פרטים שאינם בו.
 - אם אין די מידע אפילו לסיכום קצר, החזר {"skip": true} ותו לא.
@@ -174,9 +205,28 @@ async function analyse(title, text) {
         .slice(0, 6)
     : [];
 
+  // The three lenses are optional rather than required. A model that
+  // returns four good fields and drops the fifth should not cost us the
+  // whole analysis — the article would then be retried every cycle
+  // forever, and the summary we already had is worth keeping.
+  const lens = (value) =>
+    typeof value === "string" && value.trim().length >= 15
+      ? value.trim()
+      : undefined;
+
+  const catalystKind = ["catalyst", "noise", "unclear"].includes(
+    parsed.catalystKind,
+  )
+    ? parsed.catalystKind
+    : undefined;
+
   return {
     summary: parsed.summary.trim(),
     impact: parsed.impact.trim(),
+    catalyst: lens(parsed.catalyst),
+    catalystKind,
+    reaction: lens(parsed.reaction),
+    chain: lens(parsed.chain),
     tickers,
     significance,
     writtenAt: new Date().toISOString(),

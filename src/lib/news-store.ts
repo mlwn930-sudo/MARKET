@@ -50,6 +50,15 @@ const feedSchema = z.object({
 const summarySchema = z.object({
   summary: z.string(),
   impact: z.string(),
+  /* The three lenses every story is read through. Optional because the feed
+     already holds analyses written before they existed, and because a model
+     that returns four good fields and drops the fifth should not cost us the
+     whole entry — the article would then be re-analysed every cycle for
+     ever. See scripts/summarize-news.mjs. */
+  catalyst: z.string().optional(),
+  catalystKind: z.enum(["catalyst", "noise", "unclear"]).optional(),
+  reaction: z.string().optional(),
+  chain: z.string().optional(),
   tickers: z.array(z.string()).default([]),
   significance: z.enum(["high", "medium", "low"]).default("medium"),
   writtenAt: z.string().optional(),
@@ -175,4 +184,29 @@ export const SIGNIFICANCE_LABELS: Record<
   high: "השפעה גבוהה",
   medium: "השפעה בינונית",
   low: "השפעה נמוכה",
+};
+
+/**
+ * The catalyst verdict, in the words used on the page.
+ *
+ * "Noise" is the label that makes the feed useful. Most of what reaches a
+ * news feed changes nothing about a business, and a tool that presents every
+ * headline as meaningful teaches the reader to react to all of them.
+ */
+export const CATALYST_LABELS: Record<
+  NonNullable<ArticleSummary["catalystKind"]>,
+  { label: string; note: string }
+> = {
+  catalyst: {
+    label: "זרז",
+    note: "האירוע משנה תזרים, תחרות או רגולציה",
+  },
+  noise: {
+    label: "רעש",
+    note: "כותרת שלא משנה את העסק",
+  },
+  unclear: {
+    label: "לא הוכרע",
+    note: "הכתבה לא נותנת די כדי לקבוע",
+  },
 };

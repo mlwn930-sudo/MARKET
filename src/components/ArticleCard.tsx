@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  CATALYST_LABELS,
   SIGNIFICANCE_LABELS,
   type EnrichedArticle,
 } from "@/lib/news-store";
@@ -57,12 +58,26 @@ export function ArticleCard({
             {article.title}
           </a>
           {analysis && (
-            <span
-              className="shrink-0 rounded-full border px-2 py-0.5 text-[10px]"
-              style={{ borderColor: `${accent}55`, color: accent }}
-            >
-              {SIGNIFICANCE_LABELS[analysis.significance]}
-            </span>
+            <div className="flex shrink-0 flex-col items-end gap-1">
+              <span
+                className="rounded-full border px-2 py-0.5 text-[10px]"
+                style={{ borderColor: `${accent}55`, color: accent }}
+              >
+                {SIGNIFICANCE_LABELS[analysis.significance]}
+              </span>
+
+              {/* Shown on the card rather than hidden in the detail, because
+                  "this one changes nothing" is the single most useful thing
+                  the feed can tell a reader who is scanning it. */}
+              {analysis.catalystKind && (
+                <span
+                  className="rounded-full border border-line px-2 py-0.5 text-[10px] text-ink-muted"
+                  title={CATALYST_LABELS[analysis.catalystKind].note}
+                >
+                  {CATALYST_LABELS[analysis.catalystKind].label}
+                </span>
+              )}
+            </div>
           )}
         </div>
 
@@ -75,6 +90,57 @@ export function ArticleCard({
               <span style={{ color: accent }}>השפעה: </span>
               {analysis.impact}
             </p>
+
+            {/* The three lenses, when the analysis carries them. Collapsed
+                by default: the feed's job is to be scannable, and a reader
+                who wants the full reading of one story opens that story. */}
+            {(analysis.catalyst || analysis.reaction || analysis.chain) && (
+              <details className="pt-1">
+                <summary className="cursor-pointer text-[11px] text-ink-faint transition-colors hover:text-ink-muted">
+                  ניתוח בשלוש עדשות
+                </summary>
+
+                <div className="mt-2 space-y-2 border-t border-line pt-2">
+                  {analysis.catalyst && (
+                    <div>
+                      <span className="text-[11px] text-ink-faint">
+                        זרז או רעש
+                        {analysis.catalystKind && (
+                          <span className="mr-1.5 text-ink-muted">
+                            · {CATALYST_LABELS[analysis.catalystKind].label}
+                          </span>
+                        )}
+                      </span>
+                      <p className="text-[12px] leading-relaxed text-ink-muted">
+                        {analysis.catalyst}
+                      </p>
+                    </div>
+                  )}
+
+                  {analysis.reaction && (
+                    <div>
+                      <span className="text-[11px] text-ink-faint">
+                        תגובת מחיר מול ציפיות
+                      </span>
+                      <p className="text-[12px] leading-relaxed text-ink-muted">
+                        {analysis.reaction}
+                      </p>
+                    </div>
+                  )}
+
+                  {analysis.chain && (
+                    <div>
+                      <span className="text-[11px] text-ink-faint">
+                        שרשרת הערך
+                      </span>
+                      <p className="text-[12px] leading-relaxed text-ink-muted">
+                        {analysis.chain}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </details>
+            )}
           </div>
         ) : (
           article.excerpt && (

@@ -2,6 +2,7 @@ import { getEnrichedFeed, isFeedStale } from "@/lib/news-store";
 import { ArticleCard } from "@/components/ArticleCard";
 import { fmtRelative } from "@/lib/format";
 import { AccentTheme } from "@/components/AccentTheme";
+import { NewsAutoRefresh } from "@/components/NewsAutoRefresh";
 
 export const revalidate = 300;
 
@@ -24,20 +25,27 @@ export default async function NewsPage() {
     <main className="mx-auto max-w-6xl px-6 py-8">
       <header className="border-b border-line pb-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h1 className="text-2xl">חדשות השוק</h1>
-          {refreshedAt && (
-            <span className="flex items-center gap-2 text-[11px] text-ink-muted">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-up" />
-              <span className="num">
-                עודכן {fmtRelative(new Date(refreshedAt))}
-              </span>
-            </span>
-          )}
+          <h1 className="text-3xl">חדשות השוק</h1>
+          <span className="flex items-center gap-2 text-[11px] text-ink-muted">
+            <NewsAutoRefresh
+              refreshedAt={refreshedAt}
+              analysedCount={analysedCount}
+            />
+            {refreshedAt && (
+              <>
+                <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-up" />
+                <span className="num">
+                  עודכן {fmtRelative(new Date(refreshedAt))}
+                </span>
+              </>
+            )}
+          </span>
         </div>
 
         <p className="mt-2 max-w-3xl text-xs leading-relaxed text-ink-muted">
           חדשות מ-CNBC, רויטרס ומקורות שוק נוספים, ממוינות לסקטורים. כל כתבה
-          חדשה מנותחת אוטומטית — סיכום בעברית והסבר על מנגנון ההשפעה.
+          חדשה נקראת דרך שלוש עדשות קבועות: האם זה זרז או רעש, מה המחיר כבר
+          עשה, ומי עוד בשרשרת הערך. העמוד מתעדכן מעצמו כשהפיד מתרענן.
           {totalCount > 0 && (
             <>
               {" "}
@@ -111,7 +119,7 @@ export default async function NewsPage() {
                     אין כרגע כתבות בסקטור הזה.
                   </p>
                 ) : (
-                  <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="stagger mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {sector.articles.map((article) => (
                       <ArticleCard
                         key={article.url}
