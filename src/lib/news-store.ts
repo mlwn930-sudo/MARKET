@@ -57,6 +57,9 @@ const summarySchema = z.object({
 const summariesFileSchema = z.object({
   writtenAt: z.string().nullable(),
   summaries: z.record(z.string(), summarySchema),
+  // URLs the summariser could not fetch, with the time it gave up. Kept so
+  // a paywalled article is not re-requested every twenty minutes forever.
+  unfetchable: z.record(z.string(), z.string()).optional(),
 });
 
 export type NewsFeed = z.infer<typeof feedSchema>;

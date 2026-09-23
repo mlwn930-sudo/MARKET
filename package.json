@@ -12,7 +12,8 @@
     "db:studio": "drizzle-kit studio",
     "refresh:news": "node scripts/refresh-news.mjs",
     "build:fundamentals": "tsx scripts/build-fundamentals.ts",
-    "build:institutional": "tsx scripts/build-institutional.ts"
+    "build:institutional": "tsx scripts/build-institutional.ts",
+    "summarize:news": "node scripts/summarize-news.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
