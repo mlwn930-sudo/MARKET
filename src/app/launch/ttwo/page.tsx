@@ -5,16 +5,19 @@ import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
 import { getArticlesForTicker } from "@/lib/news-store";
 import { getSectorContext } from "@/lib/fundamentals-store";
 import { buildThesis } from "@/lib/analysis/thesis";
+import { buildVerdict } from "@/lib/analysis/verdict";
 import { AccentTheme } from "@/components/AccentTheme";
-import { CandleChart } from "@/components/CandleChart";
+import { CompanyChart } from "@/components/CompanyChart";
+import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
 import { ArticleCard } from "@/components/ArticleCard";
 import { VicePanorama } from "@/components/VicePanorama";
 import { LivePrice } from "@/components/LivePrice";
+import { VerdictPanel } from "@/components/VerdictPanel";
 import { ThesisPanel } from "@/components/ThesisPanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { ValueChain, type ChainLink } from "@/components/ValueChain";
-import type { LiveQuote } from "@/lib/use-live-quotes";
+import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtCompact, fmtMetric } from "@/lib/format";
 
 export const revalidate = 600;
@@ -171,6 +174,43 @@ export default async function TtwoLaunchPage() {
     { key: "current_ratio", label: "Current Ratio" },
   ];
 
+  /** The frameworks' own levels, drawn on the chart. Same source as the
+   *  analysis panel below it, so the two cannot disagree. */
+  const chartLevels: ChartLevel[] = [];
+  if (technical?.vcp.pivot != null) {
+    chartLevels.push({
+      price: technical.vcp.pivot,
+      label: "רמת ייחוס",
+      kind: "pivot",
+    });
+  }
+  if (technical?.risk) {
+    chartLevels.push({ price: technical.risk.stop, label: "עצירה", kind: "stop" });
+    for (const target of technical.risk.targets) {
+      chartLevels.push({
+        price: target.price,
+        label: `${target.multiple}R`,
+        kind: "target",
+      });
+    }
+  }
+
+  const chartMarkers: ChartMarker[] =
+    technical?.vcp.contractions.map((contraction, i) => ({
+      date: contraction.lowDate,
+      label: `${i + 1} · ${contraction.depthPercent.toFixed(0)}%`,
+    })) ?? [];
+
+  const verdict =
+    analysis &&
+    buildVerdict(
+      analysis.fundamentals,
+      analysis.capital,
+      technical,
+      sector,
+      analysis.profile?.name ?? "Take-Two",
+    );
+
   const thesis =
     analysis &&
     buildThesis(
@@ -185,7 +225,7 @@ export default async function TtwoLaunchPage() {
     <>
       <AccentTheme accent={NEON_PINK} />
 
-      <main className="mx-auto max-w-6xl px-6 py-8">
+      <main className="vice-page mx-auto max-w-6xl px-6 py-8">
         <nav className="mb-5 text-xs text-ink-muted">
           <Link href="/" className="transition-colors hover:text-ink">
             ← חזרה לדשבורד
@@ -230,7 +270,7 @@ export default async function TtwoLaunchPage() {
 
         {/* ---- How a launch moves through the accounts ---- */}
         <section className="reveal mt-12">
-          <h2 className="text-lg" style={{ color: NEON_PINK }}>
+          <h2 className="text-xl">
             איך השקה נראית בדוחות
           </h2>
           <div className="stagger mt-4 grid gap-4 md:grid-cols-2">
@@ -253,6 +293,12 @@ export default async function TtwoLaunchPage() {
         </section>
 
         {/* ---- The bottom line, from the same engine as every company ---- */}
+        {verdict && (
+          <div className="mt-12">
+            <VerdictPanel verdict={verdict} />
+          </div>
+        )}
+
         {thesis && (
           <div className="mt-12">
             <ThesisPanel thesis={thesis} />
@@ -262,7 +308,7 @@ export default async function TtwoLaunchPage() {
         {/* ---- Headline numbers ---- */}
         {metrics && (
           <section className="reveal mt-12">
-            <h2 className="text-lg" style={{ color: NEON_ORANGE }}>
+            <h2 className="text-xl">
               המספרים של Take-Two היום
             </h2>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
@@ -289,10 +335,18 @@ export default async function TtwoLaunchPage() {
         {/* ---- Price ---- */}
         {history && (
           <section className="reveal mt-12">
-            <h2 className="mb-4 text-lg" style={{ color: NEON_PURPLE }}>
+            <h2 className="mb-4 text-xl">
               המחיר לפני ההשקה
             </h2>
-            <CandleChart history={history} accent={NEON_PINK} />
+            <CompanyChart
+              symbol="TTWO"
+              name="Take-Two"
+              candles={history.candles}
+              accent={NEON_PINK}
+              levels={chartLevels}
+              markers={chartMarkers}
+              initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
+            />
           </section>
         )}
 
@@ -310,7 +364,7 @@ export default async function TtwoLaunchPage() {
 
         {/* ---- What to read in the filing ---- */}
         <section className="reveal mt-12">
-          <h2 className="text-lg" style={{ color: NEON_ORANGE }}>
+          <h2 className="text-xl">
             מה לקרוא בדוח כשהוא יגיע
           </h2>
           <p className="mt-1.5 max-w-2xl text-[12px] leading-relaxed text-ink-muted">
@@ -332,7 +386,7 @@ export default async function TtwoLaunchPage() {
 
         {/* ---- The chain around it ---- */}
         <section className="reveal mt-12">
-          <h2 className="text-lg" style={{ color: NEON_PURPLE }}>
+          <h2 className="text-xl">
             מי עוד בשרשרת
           </h2>
           <p className="mt-1.5 max-w-2xl text-[12px] leading-relaxed text-ink-muted">
@@ -348,7 +402,7 @@ export default async function TtwoLaunchPage() {
         {/* ---- News ---- */}
         {articles.length > 0 && (
           <section className="reveal mt-12">
-            <h2 className="mb-4 text-lg" style={{ color: NEON_PINK }}>
+            <h2 className="mb-4 text-xl">
               חדשות על החברה
             </h2>
             <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">

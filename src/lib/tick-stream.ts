@@ -1,179 +1,219 @@
 "use client";
 
 /**
- * One trade stream per tab, shared by everything that wants ticks.
+ * One trade stream per tab, multiplexed across everything that wants ticks.
  *
  * The rule that forces this design: the upstream feed accepts a single
- * concurrent connection, and a second one is refused with 429. That makes
- * "open a stream in a hook" quietly wrong, because there are at least three
- * ways to end up with two of them —
+ * concurrent connection, and a second one is refused with 429.
  *
- *   React's development strict mode mounts every effect twice, so a single
- *   component opens two connections and the second kills the first;
+ * The first version keyed a connection per symbol set, which fixed strict
+ * mode mounting effects twice but not the real case. A launch page asks for
+ * three things at once — the hero price, the chart, and the value chain
+ * below it — and the first two want one symbol while the third wants four.
+ * Two different sets, two connections, and the second one refused. The page
+ * sat on "polling" with a price that never moved.
  *
- *   two components on one page can both want prices, and on this site they
- *   do — a watchlist and a header quote are separate components;
- *
- *   a reconnect can race the socket it is replacing, so the old connection
- *   is still counted upstream while the new one shakes hands.
- *
- * So connections live here instead, keyed by symbol set and reference
- * counted. Subscribing twice to the same symbols costs one connection; the
- * last unsubscribe closes it, after a short grace period so that a
- * navigation between two pages watching the same symbols does not tear the
- * stream down and immediately rebuild it.
+ * So there is exactly one connection now, and it carries the union of every
+ * symbol anyone has asked for. Subscribers receive only the symbols they
+ * asked about. When the union changes the socket is reopened with the new
+ * set, debounced, because a page mounting three components in one frame
+ * should reconnect once rather than three times.
  */
 
 export type Tick = { symbol: string; price: number; at: number };
 export type StreamState = "live" | "connecting" | "limited" | "failed";
 
 type Listener = {
+  symbols: string[];
   onTicks: (ticks: Tick[]) => void;
   onState: (state: StreamState) => void;
 };
 
-type Connection = {
-  source: EventSource | null;
-  listeners: Set<Listener>;
-  state: StreamState;
-  failures: number;
-  limited: boolean;
-  retry: ReturnType<typeof setTimeout> | null;
-  closing: ReturnType<typeof setTimeout> | null;
-};
+const listeners = new Set<Listener>();
 
-const connections = new Map<string, Connection>();
+let source: EventSource | null = null;
+let state: StreamState = "connecting";
+let failures = 0;
+let limited = false;
+let subscribed = "";
+let retry: ReturnType<typeof setTimeout> | null = null;
+let settle: ReturnType<typeof setTimeout> | null = null;
+let idle: ReturnType<typeof setTimeout> | null = null;
 
-/** Attempts before the stream is declared unavailable and the caller falls
- *  back to polling. Generous, because most failures here are the route
- *  cycling itself rather than a fault. */
+/** Attempts before the stream is declared unavailable and callers fall back
+ *  to polling. Generous, because most failures are the route cycling itself
+ *  rather than a fault. */
 const MAX_FAILURES = 8;
-/** How long a connection is kept alive with no listeners, so a navigation
- *  between two pages that want the same symbols reuses it. */
-const GRACE_MS = 3000;
+/** Components mounting together should produce one connection, not one per
+ *  component. Long enough to collect a render, short enough to be invisible. */
+const SETTLE_MS = 120;
+/** Kept alive briefly with no listeners, so navigating between two pages
+ *  that both want prices does not tear the stream down and rebuild it. */
+const IDLE_MS = 3000;
+/** The upstream cap. Past this the oldest requests are dropped rather than
+ *  the connection being refused outright. */
+const MAX_SYMBOLS = 25;
 
-function announce(connection: Connection, state: StreamState) {
-  connection.state = state;
-  for (const listener of connection.listeners) listener.onState(state);
+function wanted(): string {
+  const union = new Set<string>();
+  for (const listener of listeners) {
+    for (const symbol of listener.symbols) union.add(symbol);
+  }
+  return [...union].sort().slice(0, MAX_SYMBOLS).join(",");
 }
 
-function open(key: string) {
-  const connection = connections.get(key);
-  if (!connection || connection.source) return;
+function announce(next: StreamState) {
+  state = next;
+  for (const listener of listeners) listener.onState(next);
+}
 
-  connection.limited = false;
-  announce(connection, connection.state === "live" ? "connecting" : connection.state);
+function close() {
+  source?.close();
+  source = null;
+  subscribed = "";
+}
 
-  const source = new EventSource(
-    `/api/stream?symbols=${encodeURIComponent(key)}`,
+function connect() {
+  if (retry) {
+    clearTimeout(retry);
+    retry = null;
+  }
+
+  const symbols = wanted();
+  if (symbols.length === 0) {
+    close();
+    return;
+  }
+
+  // Already streaming exactly this set — nothing to do.
+  if (source && subscribed === symbols) return;
+
+  close();
+  limited = false;
+  if (state !== "live") announce("connecting");
+
+  subscribed = symbols;
+  const stream = new EventSource(
+    `/api/stream?symbols=${encodeURIComponent(symbols)}`,
   );
-  connection.source = source;
+  source = stream;
 
-  source.addEventListener("status", (event) => {
+  stream.addEventListener("status", (event) => {
     const payload = JSON.parse((event as MessageEvent).data) as {
       state: string;
     };
 
     if (payload.state === "connected") {
-      connection.failures = 0;
-      announce(connection, "live");
+      failures = 0;
+      announce("live");
       return;
     }
 
-    // Refused for rate limiting rather than broken. The retry below waits
-    // longer for this, because the thing to wait for is the upstream
-    // allowance recovering — retrying immediately just spends it again.
+    // Refused for rate limiting rather than broken. The retry waits longer
+    // for this: the thing to wait for is the upstream allowance recovering,
+    // and reconnecting immediately just spends it again.
     if (payload.state === "limited") {
-      connection.limited = true;
-      announce(connection, "limited");
+      limited = true;
+      announce("limited");
     }
   });
 
-  source.addEventListener("ticks", (event) => {
+  stream.addEventListener("ticks", (event) => {
     const rows = JSON.parse((event as MessageEvent).data) as Tick[];
-    connection.failures = 0;
-    if (connection.state !== "live") announce(connection, "live");
-    for (const listener of connection.listeners) listener.onTicks(rows);
+    failures = 0;
+    if (state !== "live") announce("live");
+
+    // Each subscriber sees only what it asked for. A watchlist component
+    // should not re-render because an unrelated symbol on another panel
+    // printed.
+    for (const listener of listeners) {
+      const mine = rows.filter((row) => listener.symbols.includes(row.symbol));
+      if (mine.length > 0) listener.onTicks(mine);
+    }
   });
 
-  source.onerror = () => {
-    source.close();
-    connection.source = null;
+  stream.onerror = () => {
+    if (source !== stream) return; // superseded by a newer connection
+    close();
 
-    // No listeners left: the cleanup path already ran, nothing to retry for.
-    if (connection.listeners.size === 0) return;
+    if (listeners.size === 0) return;
 
-    connection.failures++;
-    if (connection.failures >= MAX_FAILURES) {
-      announce(connection, "failed");
+    failures++;
+    if (failures >= MAX_FAILURES) {
+      announce("failed");
       return;
     }
 
-    const wait = connection.limited
-      ? Math.min(3000 * connection.failures, 20_000)
-      : Math.min(500 * connection.failures, 4000);
+    const wait = limited
+      ? Math.min(3000 * failures, 20_000)
+      : Math.min(500 * failures, 4000);
 
-    announce(connection, connection.limited ? "limited" : "connecting");
-    connection.retry = setTimeout(() => open(key), wait);
+    announce(limited ? "limited" : "connecting");
+    retry = setTimeout(connect, wait);
   };
 }
 
-function teardown(key: string) {
-  const connection = connections.get(key);
-  if (!connection) return;
-
-  if (connection.retry) clearTimeout(connection.retry);
-  if (connection.closing) clearTimeout(connection.closing);
-  connection.source?.close();
-  connections.delete(key);
+/** Coalesces the reconnects that a page mounting several components in one
+ *  frame would otherwise trigger. */
+function schedule() {
+  if (settle) clearTimeout(settle);
+  settle = setTimeout(() => {
+    settle = null;
+    connect();
+  }, SETTLE_MS);
 }
 
 /**
  * Receive ticks for a set of symbols. Returns the unsubscribe function.
  *
- * The symbol string is the identity of the connection, so callers that want
- * the same symbols in the same order share one. Callers that want different
- * sets get different connections — which the upstream limit means should be
- * avoided, and is why the pages here pass one combined list rather than one
- * per component.
+ * Callers pass whatever they need; the manager works out the union. There
+ * is no benefit to combining symbol lists at the call site and no penalty
+ * for not doing so.
  */
 export function subscribeToTicks(
   key: string,
-  listener: Listener,
+  handlers: {
+    onTicks: (ticks: Tick[]) => void;
+    onState: (state: StreamState) => void;
+  },
 ): () => void {
-  let connection = connections.get(key);
+  const listener: Listener = {
+    symbols: key.split(",").filter(Boolean),
+    onTicks: handlers.onTicks,
+    onState: handlers.onState,
+  };
 
-  if (!connection) {
-    connection = {
-      source: null,
-      listeners: new Set(),
-      state: "connecting",
-      failures: 0,
-      limited: false,
-      retry: null,
-      closing: null,
-    };
-    connections.set(key, connection);
+  if (idle) {
+    clearTimeout(idle);
+    idle = null;
   }
 
-  // A listener arriving during the grace period cancels the shutdown.
-  if (connection.closing) {
-    clearTimeout(connection.closing);
-    connection.closing = null;
+  listeners.add(listener);
+  listener.onState(state);
+
+  // Only reconnect when this subscriber actually widens the set. A second
+  // component asking for symbols already on the wire costs nothing.
+  const covered = subscribed.split(",");
+  if (!source || listener.symbols.some((s) => !covered.includes(s))) {
+    schedule();
   }
-
-  connection.listeners.add(listener);
-  listener.onState(connection.state);
-
-  if (!connection.source && !connection.retry) open(key);
 
   return () => {
-    const current = connections.get(key);
-    if (!current) return;
+    listeners.delete(listener);
 
-    current.listeners.delete(listener);
-    if (current.listeners.size > 0) return;
+    if (listeners.size === 0) {
+      idle = setTimeout(() => {
+        idle = null;
+        if (listeners.size === 0) {
+          close();
+          failures = 0;
+        }
+      }, IDLE_MS);
+      return;
+    }
 
-    current.closing = setTimeout(() => teardown(key), GRACE_MS);
+    // Narrowing the set is not urgent — the extra symbols cost nothing on
+    // an open connection, and reconnecting to drop them would cost a gap in
+    // the prices that remain.
   };
 }

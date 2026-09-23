@@ -10,10 +10,12 @@
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "refresh:news": "node scripts/refresh-news.mjs",
+    "refresh:news": "node --env-file-if-exists=.env.local scripts/refresh-news.mjs",
     "build:fundamentals": "tsx scripts/build-fundamentals.ts",
     "build:institutional": "tsx scripts/build-institutional.ts",
-    "summarize:news": "node scripts/summarize-news.mjs"
+    "summarize:news": "node --env-file-if-exists=.env.local scripts/summarize-news.mjs",
+    "filter:news": "node --env-file-if-exists=.env.local scripts/filter-news.mjs",
+    "doctor": "node --env-file-if-exists=.env.local scripts/doctor.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

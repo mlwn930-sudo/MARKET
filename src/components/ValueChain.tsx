@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLiveQuotes, type LiveQuote } from "@/lib/use-live-quotes";
+import { useLiveTicks, type LiveQuote } from "@/lib/use-live-ticks";
 import { identityFor } from "@/lib/company-identity";
 import { directionClass, fmtPercent, fmtPrice } from "@/lib/format";
 
@@ -39,7 +39,7 @@ export function ValueChain({
   initial: Record<string, LiveQuote>;
 }) {
   const symbols = links.map((link) => link.symbol);
-  const { quotes, flash } = useLiveQuotes(symbols, initial);
+  const { quotes, flash } = useLiveTicks(symbols, initial);
 
   return (
     <div className="stagger grid gap-3 sm:grid-cols-2">

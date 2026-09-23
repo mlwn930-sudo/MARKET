@@ -537,6 +537,131 @@ a.panel:hover::before,
 }
 
 /**
+ * The launch page's own skin, applied to everything below the hero.
+ *
+ * The rest of the site is an analyst's terminal and should stay one. This
+ * page is about a cultural event, and treating it with the same restraint
+ * made the hero look like a banner someone had pasted above a spreadsheet.
+ * So the neon carries all the way down: every panel is rimmed in pink and
+ * lit from inside, section headings burn, chips glow, and a scanline wash
+ * sits over the whole thing.
+ *
+ * One thing does NOT change, and it is the reason the page is still usable:
+ * figures stay tabular and neutral, and green and red still mean price
+ * direction. A neon percentage is unreadable at a glance, and a pink number
+ * beside a green one implies a difference that does not exist.
+ */
+.vice-page {
+  --accent: #ff2e88;
+  --vice-cyan: #22d3ee;
+  --vice-purple: #8b5cf6;
+  --vice-orange: #ff9f1c;
+  position: relative;
+}
+
+/* Scanlines. Very faint — the reference is a CRT, and an actual CRT is
+   unreadable. At 2.5% it registers as texture and nothing else. */
+.vice-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Panels are lit from within and rimmed, rather than being dark boxes with
+   a hairline. The inset glow is what makes them read as signage. */
+.vice-page .panel {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 46, 136, 0.08) 0%,
+      rgba(139, 92, 246, 0.04) 45%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    color-mix(in oklab, #0f0a18 78%, transparent);
+  border-color: rgba(255, 46, 136, 0.3);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.07),
+    0 0 28px -20px #ff2e88;
+}
+
+.vice-page .panel::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--vice-cyan),
+    #ff2e88,
+    transparent
+  );
+  opacity: 0.8;
+}
+
+.vice-page a.panel:hover,
+.vice-page .panel-interactive:hover {
+  border-color: rgba(34, 211, 238, 0.6);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    0 0 40px -14px #22d3ee,
+    0 18px 40px -26px rgba(0, 0, 0, 0.9);
+}
+
+/* Section headings are the loudest thing on the page after the hero. The
+   gradient runs pink to cyan, which is the palette in two words. */
+.vice-page h2 {
+  background: linear-gradient(95deg, #ff2e88 0%, #ff9f1c 42%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(255, 46, 136, 0.35));
+  font-weight: 500;
+}
+
+.vice-page h3 {
+  color: #fdf2f8;
+}
+
+/* The rule under a heading, so a section announces itself before its
+   content does. */
+.vice-page section > h2::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 0.55rem;
+  background: linear-gradient(
+    90deg,
+    #ff2e88,
+    rgba(139, 92, 246, 0.5),
+    transparent
+  );
+}
+
+.vice-page .accent-chip {
+  background: rgba(255, 46, 136, 0.16);
+  border-color: rgba(255, 46, 136, 0.5);
+  color: #ffd6e8;
+  box-shadow: 0 0 20px -8px #ff2e88;
+}
+
+/* Figures keep the site's discipline. Tabular, neutral, aligned — the one
+   thing on this page that is not allowed to glow. */
+.vice-page .num {
+  color: inherit;
+  text-shadow: none;
+}
+
+.vice-page .accent-edge {
+  border-inline-start-color: var(--vice-cyan);
+}
+
+/**
  * Neon type for the launch page only.
  *
  * A text shadow is normally forbidden here because it costs legibility for

@@ -1,11 +1,32 @@
-name: Refresh news feed
+name: Analyse news
 
-# GitHub Actions is the scheduler because Vercel Hobby only allows one cron
-# run per day. Scheduled workflows are free on public repositories; on a
-# private repo with a free account they never fire at all.
+# What this workflow is for changed, and the schedule changed with it.
+#
+# It used to be the only thing that put news on the site, so it ran every
+# twenty minutes and the feed was as stale as the gap between runs. The site
+# now reads the wire directly on every visit through a two-minute cache, so
+# freshness no longer depends on this at all.
+#
+# What is left is the part that cannot happen during a page render: the
+# language model reading each story through the three lenses. That is worth
+# doing often, and it is not worth doing every twenty minutes.
+#
+# The frequency is also a budget. A run every twenty minutes is 72 a day,
+# which on a private repository consumes roughly 3,300 of the 2,000 free
+# Actions minutes a month — and when that allowance runs out GitHub stops
+# running the workflow without announcing it. That is what happened here:
+# the last run was hours before anyone noticed, and an empty analysis looks
+# exactly like a quiet news day.
+#
+# So: every half hour while the US market is open, twice a day otherwise.
+# About 450 runs a month, comfortably inside the allowance.
+
 on:
   schedule:
-    - cron: "*/20 * * * *"
+    # Weekdays, 13:00–21:00 UTC — the US session plus the hour either side.
+    - cron: "*/30 13-21 * * 1-5"
+    # A morning and an evening pass for news that breaks out of hours.
+    - cron: "0 2,10 * * *"
   workflow_dispatch:
 
 permissions:
@@ -18,6 +39,10 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    # A run that hangs on an unresponsive publisher should not sit there
+    # spending the month's allowance.
+    timeout-minutes: 12
+
     steps:
       - uses: actions/checkout@v4
 
@@ -25,20 +50,37 @@ jobs:
         with:
           node-version: 22
 
+      # Refreshes the stored feed. The site does not depend on this for
+      # freshness any more — it is the fallback the live wire degrades to,
+      # and it is the list the analysis step works from.
       - name: Fetch latest news
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: node scripts/refresh-news.mjs
 
-      # Analyses only articles that have none yet, so a normal cycle is a
-      # handful of calls. Never fails the run: a missing key or an
-      # unreachable article leaves the feed intact without analysis, which
-      # is still a working feed.
+      # Analyses only articles that have none yet. Never fails the run: a
+      # missing key or an unreachable article leaves the feed intact without
+      # analysis, which is still a working feed.
       - name: Write Hebrew analysis
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/summarize-news.mjs
+
+      # Fails loudly when the key is missing, rather than leaving the site
+      # showing unanalysed headlines for weeks with nothing to explain it.
+      # Checked through an env var rather than in an `if:` — the secrets
+      # context is not available to step conditions.
+      - name: Check the analysis key is configured
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::GEMINI_API_KEY is not set, so no article was analysed."
+            echo "::error::Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          echo "analysis key present"
 
       - name: Commit if anything changed
         run: |
@@ -50,5 +92,8 @@ jobs:
             echo "feed unchanged"
           else
             git commit -m "chore: refresh news feed and analysis"
+            # A run can finish while another has already pushed. Rebase and
+            # retry rather than losing the analysis this run just paid for.
+            git pull --rebase --autostash origin main
             git push
           fi

@@ -7,9 +7,11 @@ import { getArticlesForTicker } from "@/lib/news-store";
 import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
 import { identityFor, tint } from "@/lib/company-identity";
 import { buildThesis } from "@/lib/analysis/thesis";
+import { buildVerdict } from "@/lib/analysis/verdict";
 import { AccentTheme } from "@/components/AccentTheme";
 import { CompanyChart } from "@/components/CompanyChart";
 import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
+import { VerdictPanel } from "@/components/VerdictPanel";
 import { ThesisPanel } from "@/components/ThesisPanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
@@ -60,6 +62,7 @@ export default async function CompanyPage({
   const name = profile?.name ?? title;
 
   const thesis = buildThesis(fundamentals, capital, technical, sector, name);
+  const verdict = buildVerdict(fundamentals, capital, technical, sector, name);
 
   /**
    * The frameworks' own levels, drawn on the chart.
@@ -174,6 +177,10 @@ export default async function CompanyPage({
         )}
 
         <div className="mt-8">
+          <VerdictPanel verdict={verdict} />
+        </div>
+
+        <div className="mt-12">
           <ThesisPanel thesis={thesis} />
         </div>
 

@@ -36,10 +36,19 @@ const OUT = resolve(ROOT, "content/news/summaries.json");
 const MODEL = process.env.GEMINI_MODEL ?? "gemini-flash-latest";
 const API_KEY = process.env.GEMINI_API_KEY;
 
-/** Kept well under the free tier. A refresh rarely brings more new stories
- *  than this, and a cap means a flood of articles cannot burn the day's
- *  quota in one run. */
-const MAX_PER_RUN = 25;
+/**
+ * Kept well under the free tier, and raised when the schedule was thinned.
+ *
+ * The workflow used to run every twenty minutes, so twenty-five new stories
+ * a run was more than the feed ever produced. It now runs every half hour
+ * during the session and twice a day outside it, which means a run has more
+ * ground to cover — and a backlog that never clears is the same as no
+ * analysis at all.
+ *
+ * Still a cap, because a flood of articles should not be able to spend the
+ * day's model quota in a single run.
+ */
+const MAX_PER_RUN = 45;
 const GAP_MS = 2_500;
 const FETCH_TIMEOUT_MS = 20_000;
 
