@@ -7,7 +7,7 @@ import { getArticlesForTicker } from "@/lib/news-store";
 import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
 import { identityFor, tint } from "@/lib/company-identity";
 import { RevenueChart } from "@/components/RevenueChart";
-import { PriceChart } from "@/components/PriceChart";
+import { CandleChart } from "@/components/CandleChart";
 import { ArticleCard } from "@/components/ArticleCard";
 import {
   directionClass,
@@ -141,7 +141,7 @@ export default async function CompanyPage({
       {history && (
         <section className="mt-6">
           <h2 className="mb-3 text-base">מחיר ומגמה</h2>
-          <PriceChart history={history} accent={identity.accent} />
+          <CandleChart history={history} accent={identity.accent} />
         </section>
       )}
 

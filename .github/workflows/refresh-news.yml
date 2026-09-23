@@ -26,6 +26,8 @@ jobs:
           node-version: 22
 
       - name: Fetch latest news
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: node scripts/refresh-news.mjs
 
       # Analyses only articles that have none yet, so a normal cycle is a

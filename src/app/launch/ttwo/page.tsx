@@ -3,7 +3,7 @@ import { getQuote } from "@/lib/sources/finnhub";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { getCompanyAnalysis } from "@/lib/company-analysis";
 import { getArticlesForTicker } from "@/lib/news-store";
-import { PriceChart } from "@/components/PriceChart";
+import { CandleChart } from "@/components/CandleChart";
 import { ArticleCard } from "@/components/ArticleCard";
 import { VicePanorama } from "@/components/VicePanorama";
 import {
@@ -192,7 +192,7 @@ export default async function TtwoLaunchPage() {
           <h2 className="mb-4 text-lg" style={{ color: NEON_PURPLE }}>
             המחיר לפני ההשקה
           </h2>
-          <PriceChart history={history} accent={NEON_PINK} />
+          <CandleChart history={history} accent={NEON_PINK} />
         </section>
       )}
 
