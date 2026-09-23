@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-09-22T22:00:54.017Z",
+  "refreshedAt": "2026-09-23T00:43:04.044Z",
   "sectors": [
     {
       "sector": "semis",
@@ -152,9 +152,79 @@
     {
       "sector": "defense",
       "label": "ביטחון",
-      "ok": false,
-      "refreshedAt": null,
-      "articles": []
+      "ok": true,
+      "refreshedAt": "2026-09-23T00:43:04.044Z",
+      "articles": [
+        {
+          "url": "https://foreignpolicy.com/2026/09/22/canada-united-states-trade-economics-trump-threats-anita-anand/?tpcc=recirc_trending062921",
+          "title": "FP Live : Anita Anand on How Canada Is Navigating Trump Threats",
+          "domain": "foreignpolicy.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T22:00:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://truthout.org/articles/trumps-fbi-scrapped-bribery-investigation-linked-to-sen-susan-collins/",
+          "title": "Trump FBI Scrapped Bribery Investigation Linked to Sen . Susan Collins",
+          "domain": "truthout.org",
+          "country": "United States",
+          "seenAt": "2026-09-22T20:15:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.wealthdaily.com/a-classified-doc-dump-just-opened-up-a-huge-opportunity-for-investors/",
+          "title": "A Classified Doc Dump Just Opened up a Huge Opportunity for Investors",
+          "domain": "wealthdaily.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T18:15:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.defenseone.com/threats/2026/09/fbi-defense-bribery-investigation/416138/",
+          "title": "Trump FBI shut down investigation into defense contractor alleged bribes",
+          "domain": "defenseone.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T18:00:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.aol.com/articles/defense-stocks-fall-while-oil-155213000.html",
+          "title": "Defense Stocks Fall While Oil Slides on Hormuz Reopening Report : Lockheed Martin and RTX Drop 3 %, Boeing Dips",
+          "domain": "aol.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T16:30:00.000Z",
+          "tickers": [
+            "LMT",
+            "BA"
+          ]
+        },
+        {
+          "url": "https://www.gilmermirror.com/2026/09/22/the-fbi-anti-corruption-squad-was-circling-susan-collins-until-trump-got-in-the-way/",
+          "title": "The FBI Anti - Corruption Squad Was Circling Susan Collins Until Trump Got in the Way",
+          "domain": "gilmermirror.com",
+          "country": "United States",
+          "seenAt": "2026-09-22T15:30:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://www.ibtimes.com.au/sunrise-energy-metals-shares-scandium-project-rally-1875729",
+          "title": "Sunrise Energy Metals Rallies 12 . 71 % to $20 . 48 , Nearing 52 - Week High on Scandium Momentum Once Again",
+          "domain": "ibtimes.com.au",
+          "country": "Australia",
+          "seenAt": "2026-09-22T07:15:00.000Z",
+          "tickers": [
+            "META"
+          ]
+        },
+        {
+          "url": "https://thediplomat.com/2026/09/breaking-down-the-philippines-2027-budget/",
+          "title": "Breaking Down the Philippine 2027 Budget – The Diplomat",
+          "domain": "thediplomat.com",
+          "country": "China",
+          "seenAt": "2026-09-22T06:45:00.000Z",
+          "tickers": []
+        }
+      ]
     },
     {
       "sector": "finance",
