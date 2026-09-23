@@ -1,4 +1,5 @@
 import type { CapitalQuality } from "@/lib/metrics/capital";
+import { Gauge } from "./Gauge";
 import { fmtCompact } from "@/lib/format";
 
 /**
@@ -50,9 +51,90 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
   const barWidth = (value: number | null) =>
     value === null ? 0 : Math.min(Math.abs(value) / SCALE, 1) * 100;
 
+  // The cost-of-capital figures are fractions; everything on screen is a
+  // percentage. Converted once here so the dials and the bars below cannot
+  // end up on different scales.
+  const roicPercent =
+    costOfCapital.roic === null ? null : costOfCapital.roic * 100;
+  const waccPercent =
+    costOfCapital.wacc === null ? null : costOfCapital.wacc * 100;
+
   return (
     <section className="reveal">
       <h2 className="mb-3 text-base">איכות הרווח</h2>
+
+      {/* ---- The three dials ---- */}
+      <div className="stagger mb-4 grid gap-3 sm:grid-cols-3">
+        <Gauge
+          label="ROIC מול WACC"
+          value={roicPercent}
+          reference={waccPercent}
+          referenceLabel={
+            waccPercent === null ? undefined : `WACC ${waccPercent.toFixed(1)}%`
+          }
+          min={0}
+          max={40}
+          display={number(roicPercent, 1, "%")}
+          bands={[
+            { from: 0, to: 8, color: "#e24b4a" },
+            { from: 8, to: 15, color: "#c9a227" },
+            { from: 15, to: 40, color: "#1baf7a" },
+          ]}
+          meaning={
+            costOfCapital.spread === null
+              ? "לא ניתן לחשב את המרווח."
+              : costOfCapital.spread > 2
+                ? `מרווח חיובי של ${costOfCapital.spread.toFixed(1)} נקודות — כל דולר מושקע מחזיר יותר ממה שהוא עולה.`
+                : costOfCapital.spread < -2
+                  ? `מרווח שלילי של ${Math.abs(costOfCapital.spread).toFixed(1)} נקודות — צמיחה כאן הורסת ערך.`
+                  : "התשואה מכסה את עלות ההון וכמעט לא מעבר."
+          }
+        />
+
+        <Gauge
+          label="מחזור המרת מזומנים"
+          value={cashCycle.cycle}
+          min={-60}
+          max={180}
+          display={
+            cashCycle.cycle === null ? "—" : `${cashCycle.cycle.toFixed(0)}d`
+          }
+          bands={[
+            { from: -60, to: 0, color: "#1baf7a" },
+            { from: 0, to: 90, color: "#c9a227" },
+            { from: 90, to: 180, color: "#e24b4a" },
+          ]}
+          meaning={
+            cashCycle.financedBySuppliers
+              ? "מחזור שלילי — הלקוחות משלמים לפני הספקים, וצמיחה מייצרת מזומן."
+              : cashCycle.cycle === null
+                ? "הדוחות אינם כוללים את כל הרכיבים."
+                : `כל דולר כבול ${Math.round(cashCycle.cycle)} ימים. ככל שגבוה יותר, צמיחה דורשת יותר הון חוזר.`
+          }
+        />
+
+        <Gauge
+          label="תגמול במניות מתוך FCF"
+          value={stockComp.shareOfFcf}
+          min={0}
+          max={60}
+          display={number(stockComp.shareOfFcf, 0, "%")}
+          bands={[
+            { from: 0, to: 15, color: "#1baf7a" },
+            { from: 15, to: 30, color: "#c9a227" },
+            { from: 30, to: 60, color: "#e24b4a" },
+          ]}
+          meaning={
+            stockComp.shareOfFcf === null
+              ? "התגמול במניות אינו מדווח בנפרד."
+              : stockComp.verdict === "diluting"
+                ? "ספירת המניות עולה — העלות מגולגלת לבעלי המניות בדילול."
+                : stockComp.verdict === "creating"
+                  ? "ספירת המניות יורדת בפועל — הרכישות גדולות מההנפקה."
+                  : "הרכישות העצמיות בעיקר סופגות את ההנפקה לעובדים."
+          }
+        />
+      </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* ---- ROIC against WACC ---- */}
@@ -64,14 +146,14 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
               <div className="flex items-baseline justify-between text-[11px]">
                 <span className="text-ink-muted">ROIC</span>
                 <span className="num text-ink">
-                  {number(costOfCapital.roic === null ? null : costOfCapital.roic * 100, 1, "%")}
+                  {number(roicPercent, 1, "%")}
                 </span>
               </div>
               <div className="mt-1 h-2 overflow-hidden rounded-full bg-surface-raised">
                 <div
                   className="h-full rounded-full"
                   style={{
-                    width: `${barWidth(costOfCapital.roic === null ? null : costOfCapital.roic * 100)}%`,
+                    width: `${barWidth(roicPercent)}%`,
                     background: "var(--accent)",
                   }}
                 />
@@ -82,15 +164,13 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
               <div className="flex items-baseline justify-between text-[11px]">
                 <span className="text-ink-muted">WACC</span>
                 <span className="num text-ink">
-                  {number(costOfCapital.wacc === null ? null : costOfCapital.wacc * 100, 1, "%")}
+                  {number(waccPercent, 1, "%")}
                 </span>
               </div>
               <div className="mt-1 h-2 overflow-hidden rounded-full bg-surface-raised">
                 <div
                   className="h-full rounded-full bg-ink-faint"
-                  style={{
-                    width: `${barWidth(costOfCapital.wacc === null ? null : costOfCapital.wacc * 100)}%`,
-                  }}
+                  style={{ width: `${barWidth(waccPercent)}%` }}
                 />
               </div>
             </div>

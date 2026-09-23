@@ -76,7 +76,12 @@ export type NewsFeed = z.infer<typeof feedSchema>;
 export type NewsArticle = z.infer<typeof articleSchema>;
 export type ArticleSummary = z.infer<typeof summarySchema>;
 
-export type EnrichedArticle = NewsArticle & { analysis: ArticleSummary | null };
+export type EnrichedArticle = NewsArticle & {
+  analysis: ArticleSummary | null;
+  /** The instant rule-based reading. Present on every live article; absent
+   *  on articles coming straight from the stored file. See news-triage.ts. */
+  triage?: import("./news-triage").Triage;
+};
 
 export type EnrichedSector = Omit<
   z.infer<typeof sectorSchema>,

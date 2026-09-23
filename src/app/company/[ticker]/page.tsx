@@ -8,12 +8,12 @@ import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
 import { identityFor, tint } from "@/lib/company-identity";
 import { buildThesis } from "@/lib/analysis/thesis";
 import { AccentTheme } from "@/components/AccentTheme";
-import { LivePrice } from "@/components/LivePrice";
+import { CompanyChart } from "@/components/CompanyChart";
+import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
 import { ThesisPanel } from "@/components/ThesisPanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
-import { CandleChart } from "@/components/CandleChart";
 import { ArticleCard } from "@/components/ArticleCard";
 import { fmtCompact, fmtDate, fmtMetric } from "@/lib/format";
 
@@ -61,6 +61,44 @@ export default async function CompanyPage({
 
   const thesis = buildThesis(fundamentals, capital, technical, sector, name);
 
+  /**
+   * The frameworks' own levels, drawn on the chart.
+   *
+   * Computed here from the same technical read the analysis panel renders,
+   * so the line on the chart and the number in the table cannot disagree.
+   * The chart never decides where a pivot or a stop belongs.
+   */
+  const chartLevels: ChartLevel[] = [];
+  if (technical?.vcp.pivot != null) {
+    chartLevels.push({
+      price: technical.vcp.pivot,
+      label: "רמת ייחוס",
+      kind: "pivot",
+    });
+  }
+  if (technical?.risk) {
+    chartLevels.push({
+      price: technical.risk.stop,
+      label: "עצירה",
+      kind: "stop",
+    });
+    for (const target of technical.risk.targets) {
+      chartLevels.push({
+        price: target.price,
+        label: `${target.multiple}R`,
+        kind: "target",
+      });
+    }
+  }
+
+  // Each contraction low, so the tightening the pattern claims is visible
+  // on the chart rather than only described beneath it.
+  const chartMarkers: ChartMarker[] =
+    technical?.vcp.contractions.map((contraction, i) => ({
+      date: contraction.lowDate,
+      label: `${i + 1} · ${contraction.depthPercent.toFixed(0)}%`,
+    })) ?? [];
+
   return (
     <>
       <AccentTheme accent={identity.accent} />
@@ -98,10 +136,7 @@ export default async function CompanyPage({
               </p>
             </div>
 
-            <LivePrice
-              symbol={ticker}
-              initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
-            />
+
           </div>
         </header>
 
@@ -145,7 +180,15 @@ export default async function CompanyPage({
         {history && (
           <section className="reveal mt-10">
             <h2 className="mb-3 text-base">מחיר ומגמה</h2>
-            <CandleChart history={history} accent={identity.accent} />
+            <CompanyChart
+              symbol={ticker}
+              name={name}
+              candles={history.candles}
+              accent={identity.accent}
+              levels={chartLevels}
+              markers={chartMarkers}
+              initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
+            />
           </section>
         )}
 

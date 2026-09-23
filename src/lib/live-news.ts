@@ -31,6 +31,7 @@ import {
   type EnrichedSector,
 } from "@/lib/news-store";
 import { SECTORS, classify, isRelevant, tickersIn } from "@/lib/news-sectors.mjs";
+import { triage } from "@/lib/news-triage";
 
 /** Per sector. Enough to fill a row on a wide screen without the page
  *  turning into an endless scroll of near-duplicates. */
@@ -60,6 +61,12 @@ async function build(): Promise<EnrichedFeed> {
     if (!item.url || seen.has(item.url)) continue;
     if (!isRelevant(item)) continue;
 
+    // Service journalism and listicles are dropped here rather than
+    // labelled. A research feed that carries "the 5 best credit cards" next
+    // to an earnings warning teaches the reader to skim past both.
+    const verdict = triage(item.headline, item.summary ?? "");
+    if (verdict.drop) continue;
+
     const sectors = classify(item);
     if (sectors.length === 0) continue;
 
@@ -75,6 +82,10 @@ async function build(): Promise<EnrichedFeed> {
       seenAt: item.publishedAt.toISOString(),
       tickers: tickersIn(item),
       analysis: summaries[item.url] ?? null,
+      // The rule-based reading, always present. The model's analysis above
+      // is richer and wins wherever it exists; this is the floor, so the
+      // feed is never a wall of unread headlines.
+      triage: verdict,
     };
 
     for (const sector of sectors) {
@@ -106,9 +117,18 @@ async function build(): Promise<EnrichedFeed> {
     for (const article of previous) {
       if (merged.length >= PER_SECTOR) break;
       if (merged.some((a) => a.url === article.url)) continue;
+
+      // The stored feed predates the triage rules, so it still carries the
+      // listicles they now drop. They are filtered on the way in rather
+      // than left to age out, otherwise "how to invest in 2026" sits in the
+      // feed until the next scheduled refresh happens to push it off.
+      const verdict = article.triage ?? triage(article.title, article.excerpt);
+      if (verdict.drop) continue;
+
       merged.push({
         ...article,
         analysis: summaries[article.url] ?? article.analysis ?? null,
+        triage: verdict,
       });
     }
 

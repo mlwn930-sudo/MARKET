@@ -4,6 +4,7 @@ import {
   SIGNIFICANCE_LABELS,
   type EnrichedArticle,
 } from "@/lib/news-store";
+import { TRIAGE_CAVEAT } from "@/lib/news-triage";
 import { fmtRelative } from "@/lib/format";
 
 /**
@@ -79,6 +80,21 @@ export function ArticleCard({
               )}
             </div>
           )}
+
+          {/* No model reading yet: the rule-based verdict stands in, marked
+              as provisional so it is never mistaken for the real analysis. */}
+          {!analysis && article.triage && (
+            <span
+              className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[10px] text-ink-muted"
+              title={TRIAGE_CAVEAT}
+            >
+              {article.triage.kind === "catalyst"
+                ? "זרז אפשרי"
+                : article.triage.kind === "noise"
+                  ? "רעש"
+                  : "לא הוכרע"}
+            </span>
+          )}
         </div>
 
         {analysis ? (
@@ -143,11 +159,23 @@ export function ArticleCard({
             )}
           </div>
         ) : (
-          article.excerpt && (
-            <p className="mt-2 line-clamp-2 text-[12px] leading-relaxed text-ink-muted" dir="auto">
-              {article.excerpt}
-            </p>
-          )
+          <div className="mt-2 space-y-2">
+            {article.excerpt && (
+              <p
+                className="line-clamp-2 text-[12px] leading-relaxed text-ink-muted"
+                dir="auto"
+              >
+                {article.excerpt}
+              </p>
+            )}
+
+            {article.triage && (
+              <p className="text-[11px] leading-relaxed text-ink-faint">
+                <span style={{ color: accent }}>סיווג ראשוני: </span>
+                {article.triage.reason}
+              </p>
+            )}
+          </div>
         )}
 
         {(analysis?.tickers.length || article.tickers.length) > 0 && (
@@ -179,7 +207,7 @@ export function ArticleCard({
               <span>{fmtRelative(new Date(article.seenAt))}</span>
             </>
           )}
-          {!analysis && <span>· ממתין לניתוח</span>}
+          {!analysis && <span>· ניתוח מלא בהרצה הבאה</span>}
         </div>
       </div>
     </article>
