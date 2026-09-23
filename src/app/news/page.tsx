@@ -1,6 +1,7 @@
 import { getEnrichedFeed, isFeedStale } from "@/lib/news-store";
 import { ArticleCard } from "@/components/ArticleCard";
 import { fmtRelative } from "@/lib/format";
+import { AccentTheme } from "@/components/AccentTheme";
 
 export const revalidate = 300;
 
@@ -18,6 +19,8 @@ export default async function NewsPage() {
   const empty = sectors.length === 0;
 
   return (
+    <>
+      <AccentTheme accent="#c96f2a" />
     <main className="mx-auto max-w-6xl px-6 py-8">
       <header className="border-b border-line pb-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -129,5 +132,6 @@ export default async function NewsPage() {
         קישור לכתבה אינו המלצה, ואין באמור ייעוץ השקעות.
       </p>
     </main>
+    </>
   );
 }

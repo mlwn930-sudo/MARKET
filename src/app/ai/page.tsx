@@ -4,6 +4,7 @@ import { getEnrichedFeed } from "@/lib/news-store";
 import { getFundamentalsFile } from "@/lib/fundamentals-store";
 import { identityFor, tint } from "@/lib/company-identity";
 import { ArticleCard } from "@/components/ArticleCard";
+import { AccentTheme } from "@/components/AccentTheme";
 import {
   directionClass,
   fmtCompact,
@@ -74,6 +75,8 @@ export default async function AiPage() {
   const aiSector = feed.sectors.find((s) => s.sector === "ai");
 
   return (
+    <>
+      <AccentTheme accent="#7f77dd" />
     <main className="mx-auto max-w-6xl px-6 py-8">
       <header
         className="overflow-hidden rounded-2xl border border-line"
@@ -216,5 +219,6 @@ export default async function AiPage() {
         </Link>
       </p>
     </main>
+    </>
   );
 }

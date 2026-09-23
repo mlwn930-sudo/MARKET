@@ -1,15 +1,21 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ */
+/* Tokens                                                              */
+/* ------------------------------------------------------------------ */
+
 @theme {
-  --color-canvas: #0b0d10;
-  --color-surface: #14181e;
-  --color-surface-raised: #1b2029;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(255, 255, 255, 0.16);
+  /* Deeper than before, so the ambient layers behind the content have
+     somewhere to sit. A pure flat panel leaves them nothing to glow against. */
+  --color-canvas: #07090d;
+  --color-surface: #11151c;
+  --color-surface-raised: #171c25;
+  --color-line: rgba(255, 255, 255, 0.07);
+  --color-line-strong: rgba(255, 255, 255, 0.15);
 
   --color-ink: #e8e6e1;
-  --color-ink-muted: #8a8f98;
-  --color-ink-faint: #5e636b;
+  --color-ink-muted: #8d929b;
+  --color-ink-faint: #61666f;
 
   /* Direction only. Never decorative — see CLAUDE.md. */
   --color-up: #1baf7a;
@@ -23,6 +29,21 @@
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
+/**
+ * The accent is the one colour that changes per page.
+ *
+ * Every page sets --accent on the document; company pages set their own, and
+ * everything that reacts to it — surface tints, hover borders, the ambient
+ * glow — reads it from here rather than being passed a prop. That is what
+ * makes a company page feel like it belongs to that company without any
+ * component knowing which company it is.
+ */
+:root {
+  --accent: #c9a227;
+  --accent-soft: rgba(201, 162, 39, 0.14);
+  --accent-line: rgba(201, 162, 39, 0.3);
+}
+
 html {
   background: var(--color-canvas);
   color-scheme: dark;
@@ -33,6 +54,9 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  /* The ambient layer is fixed behind everything; without this, a short page
+     lets the browser's overscroll show the raw canvas underneath it. */
+  overscroll-behavior-y: none;
 }
 
 h1,
@@ -40,7 +64,12 @@ h2,
 h3 {
   font-family: var(--font-serif);
   font-weight: 500;
+  letter-spacing: -0.01em;
 }
+
+/* ------------------------------------------------------------------ */
+/* Numbers                                                             */
+/* ------------------------------------------------------------------ */
 
 /* Every figure on this site aligns in its column. This single rule is what
    separates a serious financial interface from an amateur one.
@@ -57,21 +86,181 @@ h3 {
   unicode-bidi: isolate;
 }
 
-::selection {
-  background: rgba(201, 162, 39, 0.25);
+/* ------------------------------------------------------------------ */
+/* Ambient background                                                  */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Three layers behind the content: two accent-coloured pools of light, a
+ * fine measuring grid, and a film of noise.
+ *
+ * All three are held at very low opacity on purpose. The background's job is
+ * to give the page depth and identity; the moment it competes with a number
+ * for attention it has failed, and the numbers are the product. The grid in
+ * particular is at 3% — enough to feel like an instrument, not enough to
+ * read as a texture.
+ */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+.ambient::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(
+      42% 38% at 18% 12%,
+      color-mix(in oklab, var(--accent) 26%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      36% 44% at 84% 78%,
+      color-mix(in oklab, var(--accent) 16%, transparent) 0%,
+      transparent 72%
+    );
+  opacity: 0.32;
+  filter: blur(40px);
+  animation: drift 48s ease-in-out infinite alternate;
 }
-::-webkit-scrollbar-track {
-  background: var(--color-canvas);
+
+.ambient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  /* Fades out toward the bottom, so the grid reads as a horizon rather than
+     as wallpaper stopping at the fold. */
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+  opacity: 0.55;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--color-line-strong);
-  border-radius: 5px;
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2%, -3%, 0) scale(1.08);
+  }
 }
+
+/* A film of grain over the whole page. It is what stops large dark areas
+   from banding on an 8-bit display, and it is most of why the surface reads
+   as a material rather than as a hex value. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------ */
+/* Surfaces                                                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The standard panel. Semi-transparent so the ambient layer shows through —
+ * that is what ties a card to the page it sits on instead of making it look
+ * pasted over the top.
+ */
+.panel {
+  background: color-mix(in oklab, var(--color-surface) 82%, transparent);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+
+/* Only panels that lead somewhere react to the cursor. A card that lifts
+   under the mouse and then does nothing when clicked is a small lie. */
+a.panel:hover,
+.panel-interactive:hover {
+  border-color: var(--accent-line);
+  background: color-mix(in oklab, var(--color-surface) 92%, transparent);
+  transform: translateY(-2px);
+}
+
+/* The accent rule that identifies a section or a company. Uses the logical
+   inline edge, so it stays on the correct side in an RTL layout. */
+.accent-edge {
+  border-inline-start: 2px solid var(--accent);
+}
+
+.accent-chip {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+}
+
+/* ------------------------------------------------------------------ */
+/* Entrance and scroll reveal                                          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Content arrives rather than appearing.
+ *
+ * Deliberately short and small: 400ms and eight pixels. A financial page
+ * that slides half a screen on every navigation stops feeling responsive and
+ * starts feeling like it is buffering.
+ *
+ * These are time-based, and that is a decision rather than a limitation.
+ * Scroll-driven reveals — `animation-timeline: view()` — were tried here and
+ * removed: a section taller than the viewport never completes its entry
+ * range, so it holds the opening keyframe and the content simply never
+ * becomes visible. On a site whose entire purpose is to display numbers,
+ * an effect that can hide a panel of them is not a trade worth making,
+ * however good it looks on the sections where it happens to work.
+ *
+ * Scroll-linked motion is used on the launch page instead, where it moves
+ * artwork and cannot take a figure with it.
+ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.enter {
+  animation: rise 0.4s ease-out both;
+}
+
+.reveal {
+  animation: rise 0.55s ease-out both;
+}
+
+/* Staggered entrance for a row of cards. Capped at six, because past that
+   the last card waits long enough for the delay to read as a page that has
+   not finished loading. */
+.stagger > * {
+  animation: rise 0.45s ease-out both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 45ms; }
+.stagger > *:nth-child(3) { animation-delay: 90ms; }
+.stagger > *:nth-child(4) { animation-delay: 135ms; }
+.stagger > *:nth-child(5) { animation-delay: 180ms; }
+.stagger > *:nth-child(6) { animation-delay: 225ms; }
+
+/* ------------------------------------------------------------------ */
+/* Live price feedback                                                 */
+/* ------------------------------------------------------------------ */
 
 /* A price that just moved gets a brief tint. The colour matches the
    direction rule used everywhere else — green up, red down, and nothing
@@ -79,7 +268,7 @@ h3 {
    table does not jump while someone is reading a row. */
 @keyframes flash-up {
   from {
-    background-color: rgba(27, 175, 122, 0.18);
+    background-color: rgba(27, 175, 122, 0.2);
   }
   to {
     background-color: transparent;
@@ -88,7 +277,7 @@ h3 {
 
 @keyframes flash-down {
   from {
-    background-color: rgba(226, 75, 74, 0.18);
+    background-color: rgba(226, 75, 74, 0.2);
   }
   to {
     background-color: transparent;
@@ -103,11 +292,87 @@ h3 {
   animation: flash-down 0.9s ease-out;
 }
 
-/* Anyone who has asked their system to reduce motion gets the tint without
-   the fade, rather than losing the signal entirely. */
+/* The dot beside a live price. It pulses only while data is actually
+   arriving — a "live" indicator that keeps pulsing after the feed has
+   stopped is worse than no indicator. */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* Chrome                                                              */
+/* ------------------------------------------------------------------ */
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 28%, transparent);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-line);
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Anyone who has asked their system to reduce motion gets the information
+ * without the movement — never the movement removed along with the
+ * information. The price flash keeps its colour and loses its fade; the
+ * entrance animations resolve instantly instead of being cancelled, which
+ * matters because an element mid-fade that is cancelled stays invisible.
+ */
 @media (prefers-reduced-motion: reduce) {
   .flash-up,
   .flash-down {
     animation-duration: 0.01s;
+  }
+
+  .ambient::before {
+    animation: none;
+  }
+
+  .live-dot {
+    animation: none;
+  }
+
+  .enter,
+  .reveal,
+  .stagger > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .panel {
+    transition: none;
+  }
+
+  a.panel:hover,
+  .panel-interactive:hover {
+    transform: none;
   }
 }

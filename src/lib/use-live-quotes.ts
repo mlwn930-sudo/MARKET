@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { marketStatus, type MarketStatus } from "./market-hours";
+import {
+  marketStatus,
+  pollIntervalFor,
+  type MarketStatus,
+} from "./market-hours";
 
 export type LiveQuote = {
   symbol: string;
@@ -22,6 +26,9 @@ export type QuoteState = {
   failing: boolean;
   /** Session state, so the UI can say why prices are or are not moving. */
   market: MarketStatus;
+  /** The current cadence in milliseconds, so the UI can state it plainly
+   *  instead of leaving the reader to guess how live "live" is. */
+  intervalMs: number;
 };
 
 const FLASH_MS = 900;
@@ -29,13 +36,18 @@ const FLASH_MS = 900;
 /**
  * Polls the quotes route and reports which prices just moved.
  *
- * The cadence comes from the market session rather than a fixed constant.
- * Finnhub's free tier allows 60 calls a minute and every symbol is one call,
- * so the budget is the real constraint on how fast this can go: eight
- * seconds while the exchange is open, two minutes when it is shut. Polling
- * hard overnight would spend the allowance to receive an unchanged number.
+ * Why polling and not a WebSocket, since this is the question anyone reading
+ * it will ask: Finnhub's socket takes the API key in the connection URL, so
+ * opening it from the browser publishes the key to anyone who looks at the
+ * network tab. The usual answer is to proxy the socket server-side, and
+ * Vercel's Hobby runtime has no long-lived process to hold that connection
+ * open. Polling keeps the key on the server and costs, at one symbol, a
+ * four-second delay that a medium-term research tool cannot feel.
  *
- * Two behaviours worth knowing about:
+ * The cadence comes from the market session and the number of symbols rather
+ * than from a constant — see market-hours.ts for the arithmetic.
+ *
+ * Two behaviours worth knowing about.
  *
  * A failed poll does NOT clear the prices. The previous price is real — it
  * is simply not current — and blanking the table would tell the reader the
@@ -54,12 +66,16 @@ export function useLiveQuotes(
   const [fetchedAt, setFetchedAt] = useState<Date | null>(null);
   const [failing, setFailing] = useState(false);
   const [market, setMarket] = useState<MarketStatus>(() => marketStatus());
+  const [intervalMs, setIntervalMs] = useState(() =>
+    pollIntervalFor(marketStatus().state, symbols.length),
+  );
 
   const previous = useRef<Record<string, number | null>>({});
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const key = symbols.join(",");
 
   useEffect(() => {
+    const list = key.split(",").filter(Boolean);
     let cancelled = false;
     let interval: ReturnType<typeof setInterval> | null = null;
     let sessionState = marketStatus().state;
@@ -111,7 +127,10 @@ export function useLiveQuotes(
     function schedule() {
       const status = marketStatus();
       sessionState = status.state;
+      const wait = pollIntervalFor(status.state, list.length);
+
       setMarket(status);
+      setIntervalMs(wait);
 
       if (interval) clearInterval(interval);
       interval = setInterval(() => {
@@ -122,7 +141,7 @@ export function useLiveQuotes(
           return;
         }
         poll();
-      }, status.pollMs);
+      }, wait);
     }
 
     poll();
@@ -133,14 +152,15 @@ export function useLiveQuotes(
     };
     document.addEventListener("visibilitychange", onVisible);
 
+    const pending = timers.current;
     return () => {
       cancelled = true;
       if (interval) clearInterval(interval);
       document.removeEventListener("visibilitychange", onVisible);
-      timers.current.forEach(clearTimeout);
+      pending.forEach(clearTimeout);
       timers.current = [];
     };
   }, [key]);
 
-  return { quotes, flash, fetchedAt, failing, market };
+  return { quotes, flash, fetchedAt, failing, market, intervalMs };
 }

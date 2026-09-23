@@ -82,14 +82,28 @@ async function build(ticker: string): Promise<CompanyAnalysis | null> {
   };
 }
 
+/**
+ * Bumped whenever the shape of CompanyAnalysis changes.
+ *
+ * The cache holds a serialised object for an hour, and it does not know that
+ * the code reading it has since grown a new field. Without this, adding a
+ * field ships a page that crashes on every company until the cache happens
+ * to expire — which is exactly what happened when `capital` was added.
+ */
+const SHAPE_VERSION = "v2";
+
 export function getCompanyAnalysis(
   ticker: string,
 ): Promise<CompanyAnalysis | null> {
   const symbol = ticker.toUpperCase();
-  return unstable_cache(() => build(symbol), ["company-analysis", symbol], {
-    revalidate: 3600,
-    tags: ["company", `company:${symbol}`],
-  })();
+  return unstable_cache(
+    () => build(symbol),
+    ["company-analysis", SHAPE_VERSION, symbol],
+    {
+      revalidate: 3600,
+      tags: ["company", `company:${symbol}`],
+    },
+  )();
 }
 
 /**

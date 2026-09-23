@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { unstable_cache } from "next/cache";
 import { getQuotes } from "@/lib/sources/finnhub";
+import { marketStatus, pollIntervalFor } from "@/lib/market-hours";
 
 /**
  * Live quotes for the client to poll.
@@ -14,21 +15,27 @@ import { getQuotes } from "@/lib/sources/finnhub";
  * medium-term research tool.
  *
  * The cache is the part that matters for the rate limit. Finnhub's free tier
- * allows 60 calls per minute; eleven symbols refreshed every 15 seconds is 44
- * calls per minute from ONE viewer. Without a shared cache, a second viewer
- * would break the limit. With it, any number of viewers cost the same as one.
+ * allows 60 calls per minute; eleven symbols refreshed every four seconds is
+ * 165 calls per minute from ONE viewer. Without a shared cache, a second
+ * viewer would break the limit. With it, any number of viewers watching the
+ * same symbols cost the same as one.
+ *
+ * The cache lifetime is computed from the symbol count by the same function
+ * the browser uses to schedule its polling, so the two cannot drift apart.
+ * A single symbol refreshes every four seconds — which is what makes a
+ * company page feel live — and the eleven-symbol dashboard settles around
+ * nineteen, because it costs eleven times as much to serve.
  */
 
 export const dynamic = "force-dynamic";
 
-const CACHE_SECONDS = 15;
 const MAX_SYMBOLS = 20;
 
-const fetchQuotes = (symbols: string[]) =>
+const fetchQuotes = (symbols: string[], seconds: number) =>
   unstable_cache(
     () => getQuotes(symbols),
     ["live-quotes", symbols.join(",")],
-    { revalidate: CACHE_SECONDS, tags: ["quotes"] },
+    { revalidate: seconds, tags: ["quotes"] },
   )();
 
 export async function GET(request: Request) {
@@ -47,8 +54,13 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "no valid symbols" }, { status: 400 });
   }
 
+  const cacheSeconds = Math.max(
+    1,
+    Math.round(pollIntervalFor(marketStatus().state, symbols.length) / 1000),
+  );
+
   try {
-    const quotes = await fetchQuotes(symbols);
+    const quotes = await fetchQuotes(symbols, cacheSeconds);
 
     // A symbol whose fetch failed comes back as null and stays null. The
     // client then keeps showing the previous price rather than blanking the

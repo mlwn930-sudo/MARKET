@@ -5,6 +5,7 @@ import {
   ValueQualityScatter,
 } from "@/components/ScreenerCharts";
 import { fmtCompact, fmtDate } from "@/lib/format";
+import { AccentTheme } from "@/components/AccentTheme";
 
 export const revalidate = 3600;
 
@@ -26,6 +27,8 @@ export default async function OpportunitiesPage() {
   const maxScore = results[0].maxScore;
 
   return (
+    <>
+      <AccentTheme accent="#3fa7c4" />
     <main className="mx-auto max-w-5xl px-6 py-8">
       <header className="border-b border-line pb-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -130,5 +133,6 @@ export default async function OpportunitiesPage() {
         </Link>
       </p>
     </main>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LEARN_SECTIONS } from "@/lib/learn-content";
+import { AccentTheme } from "@/components/AccentTheme";
 
 export const metadata = {
   title: "מרכז ידע — Market Intel",
@@ -14,6 +15,8 @@ export default function LearnPage() {
   );
 
   return (
+    <>
+      <AccentTheme accent="#c9a227" />
     <main className="mx-auto max-w-5xl px-6 py-8">
       <header className="border-b border-line pb-5">
         <h1 className="text-xl">מרכז ידע</h1>
@@ -94,5 +97,6 @@ export default function LearnPage() {
         </Link>
       </p>
     </main>
+    </>
   );
 }

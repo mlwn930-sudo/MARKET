@@ -5,6 +5,7 @@ import {
   type PositionChange,
 } from "@/lib/institutional-store";
 import { fmtCompact, fmtDate } from "@/lib/format";
+import { AccentTheme } from "@/components/AccentTheme";
 
 export const revalidate = 3600;
 
@@ -48,6 +49,8 @@ export default async function InstitutionalPage() {
   }
 
   return (
+    <>
+      <AccentTheme accent="#378add" />
     <main className="mx-auto max-w-5xl px-6 py-8">
       <header className="border-b border-line pb-5">
         <h1 className="text-xl">מעקב מוסדי</h1>
@@ -150,5 +153,6 @@ export default async function InstitutionalPage() {
         </Link>
       </p>
     </main>
+    </>
   );
 }

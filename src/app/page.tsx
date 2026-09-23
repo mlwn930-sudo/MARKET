@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getQuotes } from "@/lib/sources/finnhub";
 import { getEnrichedFeed } from "@/lib/news-store";
 import { runScreen } from "@/lib/screener";
+import { AccentTheme } from "@/components/AccentTheme";
 import { TickerSearch } from "@/components/TickerSearch";
 import { LiveIndexStrip, LiveWatchlist } from "@/components/LiveQuotes";
 import { ArticleCard } from "@/components/ArticleCard";
@@ -31,7 +32,10 @@ const SECTIONS = [
     href: "/opportunities",
     title: "הזדמנויות",
     blurb: "48 חברות מול 10 קריטריונים של איכות ותמחור",
-    accent: "#1baf7a",
+    // Cyan, not the site's green. Green means "price went up" everywhere on
+    // this site, and a green section card would quietly imply that the
+    // screener found something good before the reader has opened it.
+    accent: "#3fa7c4",
   },
   {
     href: "/institutional",
@@ -97,10 +101,12 @@ export default async function Home() {
   const topPicks = screen.results.slice(0, 5);
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-8">
-      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">
+    <>
+      <AccentTheme accent="#c9a227" />
+      <main className="mx-auto max-w-6xl px-6 py-8">
+      <header className="enter flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">
         <div>
-          <h1 className="font-serif text-3xl text-gold">Market Intel</h1>
+          <h1 className="font-serif text-4xl text-gold">Market Intel</h1>
           <p className="mt-1 text-sm text-ink-muted">
             מחקר שוק ההון האמריקאי — מספרים, הקשר, וחדשות מנותחות
           </p>
@@ -224,6 +230,7 @@ export default async function Home() {
           ))}
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
