@@ -312,6 +312,206 @@ a.panel:hover,
 }
 
 /* ------------------------------------------------------------------ */
+/* The launch hero                                                     */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Parallax for the Take-Two page, and nowhere else on the site.
+ *
+ * Scroll-linked motion is confined to this one component on purpose. The
+ * same technique applied to a panel of figures can leave those figures
+ * invisible when the panel is taller than the viewport; here it moves
+ * artwork, so the worst a browser without support can do is show a still
+ * image — which is the scene, unharmed.
+ *
+ * Every keyframe below translates or dims. None of them hides, and none of
+ * them starts from opacity 0, so nothing in this hero can fail to appear.
+ */
+.vice-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 18px;
+  border: 1px solid var(--color-line);
+  min-height: 560px;
+}
+
+.vice-layer {
+  position: absolute;
+  inset: -8% 0 0 0;
+  will-change: transform;
+}
+
+.vice-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 13, 16, 0) 0%,
+    rgba(11, 13, 16, 0.55) 58%,
+    rgba(11, 13, 16, 0.94) 100%
+  );
+}
+
+/* Depth: the sky barely moves, the nearest palm moves most. That ratio is
+   the whole illusion — get it uniform and the scene reads as a flat image
+   sliding, which is worse than no parallax at all. */
+@keyframes vice-drift-sky {
+  to {
+    transform: translate3d(0, 26px, 0);
+  }
+}
+@keyframes vice-drift-far {
+  to {
+    transform: translate3d(0, 46px, 0);
+  }
+}
+@keyframes vice-drift-near {
+  to {
+    transform: translate3d(0, 74px, 0);
+  }
+}
+@keyframes vice-drift-water {
+  to {
+    transform: translate3d(0, 96px, 0);
+  }
+}
+@keyframes vice-drift-palms {
+  to {
+    transform: translate3d(0, 130px, 0);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .vice-layer-sky,
+  .vice-layer-far,
+  .vice-layer-near,
+  .vice-layer-water,
+  .vice-layer-palms {
+    animation: linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 640px;
+  }
+  .vice-layer-sky {
+    animation-name: vice-drift-sky;
+  }
+  .vice-layer-far {
+    animation-name: vice-drift-far;
+  }
+  .vice-layer-near {
+    animation-name: vice-drift-near;
+  }
+  .vice-layer-water {
+    animation-name: vice-drift-water;
+  }
+  .vice-layer-palms {
+    animation-name: vice-drift-palms;
+  }
+}
+
+/* Ambient life in the scene, independent of scroll. Slow enough that it
+   reads as atmosphere rather than as something demanding attention. */
+@keyframes vice-sun-breathe {
+  0%,
+  100% {
+    opacity: 0.92;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+}
+.vice-sun {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vice-sun-breathe 9s ease-in-out infinite;
+}
+
+/* Windows never go dark — they dim. A city that blinks off is a power cut. */
+@keyframes vice-window-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+.vice-windows {
+  animation: vice-window-flicker 6.5s ease-in-out infinite;
+}
+
+@keyframes vice-ripple-shift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-9px);
+  }
+}
+.vice-ripples {
+  animation: vice-ripple-shift 11s ease-in-out infinite;
+}
+
+@keyframes vice-palm-sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0.9deg);
+  }
+}
+.vice-palm-near {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: vice-palm-sway 13s ease-in-out infinite;
+}
+.vice-palm-far {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: vice-palm-sway 17s ease-in-out infinite reverse;
+}
+
+/**
+ * Neon type for the launch page only.
+ *
+ * A text shadow is normally forbidden on this site because it costs
+ * legibility for decoration. This heading is the exception the design rules
+ * allow for the hero: it carries no data, and the glow is the subject.
+ */
+.neon {
+  color: #fff;
+  text-shadow:
+    0 0 6px rgba(255, 46, 136, 0.85),
+    0 0 22px rgba(255, 46, 136, 0.55),
+    0 0 48px rgba(139, 92, 246, 0.4);
+}
+
+@keyframes neon-settle {
+  0% {
+    opacity: 0.72;
+  }
+  8% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0.8;
+  }
+  16% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.neon-flicker {
+  animation: neon-settle 2.6s ease-out 1 both;
+}
+
+/* ------------------------------------------------------------------ */
 /* Chrome                                                              */
 /* ------------------------------------------------------------------ */
 
@@ -374,5 +574,19 @@ a.panel:hover,
   a.panel:hover,
   .panel-interactive:hover {
     transform: none;
+  }
+
+  /* The launch scene keeps every layer in place. It is still the same
+     picture — a sunset over a skyline — just not a moving one. */
+  .vice-layer,
+  .vice-sun,
+  .vice-windows,
+  .vice-ripples,
+  .vice-palm-near,
+  .vice-palm-far,
+  .neon-flicker {
+    animation: none;
+    transform: none;
+    opacity: 1;
   }
 }
