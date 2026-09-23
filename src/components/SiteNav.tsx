@@ -2,10 +2,12 @@ import Link from "next/link";
 
 const LINKS = [
   { href: "/", label: "דשבורד" },
+  { href: "/ai", label: "AI" },
   { href: "/opportunities", label: "הזדמנויות" },
   { href: "/institutional", label: "מעקב מוסדי" },
   { href: "/news", label: "חדשות" },
   { href: "/learn", label: "מרכז ידע" },
+  { href: "/launch/ttwo", label: "GTA VI" },
 ];
 
 export function SiteNav() {
