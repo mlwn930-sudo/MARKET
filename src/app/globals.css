@@ -72,3 +72,42 @@ h3 {
   background: var(--color-line-strong);
   border-radius: 5px;
 }
+
+/* A price that just moved gets a brief tint. The colour matches the
+   direction rule used everywhere else — green up, red down, and nothing
+   else on the site is allowed to use them. Motion is kept to a fade so the
+   table does not jump while someone is reading a row. */
+@keyframes flash-up {
+  from {
+    background-color: rgba(27, 175, 122, 0.18);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+@keyframes flash-down {
+  from {
+    background-color: rgba(226, 75, 74, 0.18);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.flash-up {
+  animation: flash-up 0.9s ease-out;
+}
+
+.flash-down {
+  animation: flash-down 0.9s ease-out;
+}
+
+/* Anyone who has asked their system to reduce motion gets the tint without
+   the fade, rather than losing the signal entirely. */
+@media (prefers-reduced-motion: reduce) {
+  .flash-up,
+  .flash-down {
+    animation-duration: 0.01s;
+  }
+}
