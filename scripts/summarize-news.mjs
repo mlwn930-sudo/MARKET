@@ -31,8 +31,8 @@ const API_KEY = process.env.GEMINI_API_KEY;
 /** Kept well under the free tier. A refresh rarely brings more new stories
  *  than this, and a cap means a flood of articles cannot burn the day's
  *  quota in one run. */
-const MAX_PER_RUN = 12;
-const GAP_MS = 4_000;
+const MAX_PER_RUN = 25;
+const GAP_MS = 2_500;
 const FETCH_TIMEOUT_MS = 20_000;
 
 /** An article that could not be fetched is not retried for this long.
@@ -74,8 +74,9 @@ medium אם רלוונטי אך אינו משנה תזה, low אם זה רעש �
 כללי ברזל:
 - אסור להמליץ לקנות או למכור. לא במפורש ולא ברמז.
 - אסור להמציא עובדה שלא מופיעה בכתבה.
-- אם הטקסט שקיבלת אינו כתבה עיתונאית ממשית, או שאין בו די מידע,
-  החזר {"skip": true} ותו לא.
+- הטקסט שתקבל הוא לעיתים תקציר של הכתבה ולא הכתבה המלאה. זה בסדר —
+  נתח את מה שיש, ואל תשלים פרטים שאינם בו.
+- אם אין די מידע אפילו לסיכום קצר, החזר {"skip": true} ותו לא.
 - עברית, אבל טיקרים ומונחים מקצועיים באנגלית.`;
 
 async function readJson(path, fallback) {
@@ -231,14 +232,23 @@ async function main() {
     const label = article.title.slice(0, 60);
     process.stdout.write(`${label}... `);
 
-    let text;
-    try {
-      text = await fetchArticle(article.url);
-    } catch (err) {
-      console.log(`unreachable (${err.message})`);
-      unfetchable[article.url] = new Date().toISOString();
-      skipped++;
-      continue;
+    // The feed already carries the publisher's own summary, so the common
+    // path needs no network call at all. Fetching the page is only a
+    // fallback for the rare item that arrives without one — and a failure
+    // there is not fatal, because the excerpt is usually enough.
+    let text = (article.excerpt ?? "").trim();
+
+    if (text.length < 180) {
+      try {
+        text = await fetchArticle(article.url);
+      } catch (err) {
+        if (text.length < 60) {
+          console.log(`no text available (${err.message})`);
+          unfetchable[article.url] = new Date().toISOString();
+          skipped++;
+          continue;
+        }
+      }
     }
 
     try {

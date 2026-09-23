@@ -1,179 +1,226 @@
 /**
  * Background news refresh.
  *
- * Fetches every sector from GDELT and writes content/news/latest.json.
- * Run by GitHub Actions on a schedule; the site only ever reads the file,
- * so no page view ever waits on GDELT.
+ * Pulls market news from Finnhub, sorts it into sectors, and writes
+ * content/news/latest.json. The site only ever reads that file, so no page
+ * view waits on a news API.
  *
- * This exists because GDELT allows roughly one request every 5 seconds and
- * punishes bursts with a cooldown far longer than that. Doing the work in a
- * request handler meant page loads of 30 to 400 seconds.
+ * Finnhub replaced GDELT here after GDELT rate-limited every sector on a
+ * scheduled run and failed the whole job. Beyond reliability, each Finnhub
+ * item carries a summary, an image and related tickers — so the analysis
+ * step never has to fetch the article page, which is what used to lose a
+ * third of stories to paywalls.
  *
  *   node scripts/refresh-news.mjs
  */
 
 import { writeFile, mkdir, readFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SECTORS, isRelevant, tickersIn } from "./news-config.mjs";
+import { SECTORS, classify, isRelevant, tickersIn } from "./news-config.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = resolve(ROOT, "content/news/latest.json");
 
-const BASE = "https://api.gdeltproject.org/api/v2/doc/doc";
-const GAP_MS = 7_000;
-const RETRY_DELAYS_MS = [20_000, 60_000];
+const API_KEY = process.env.FINNHUB_API_KEY;
+const PER_SECTOR = 10;
+
+/** Extra pulls so thin sectors are not left empty. Company news is tagged to
+ *  one ticker, which reliably lands it in that company's sector. */
+const COMPANY_PULLS = [
+  "NVDA",
+  "XOM",
+  "NEE",
+  "LMT",
+  "LLY",
+  "WMT",
+  "JPM",
+  "TSM",
+];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function parseSeenDate(stamp) {
-  const iso = String(stamp).replace(
-    /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/,
-    "$1-$2-$3T$4:$5:$6Z",
-  );
-  const d = new Date(iso);
-  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+function loadEnvFile() {
+  // Local runs read .env.local; CI passes the key in the environment.
+  if (API_KEY) return API_KEY;
+  try {
+    const raw = readFileSync(resolve(ROOT, ".env.local"), "utf8");
+    return raw.match(/^FINNHUB_API_KEY=(.+)$/m)?.[1]?.trim() ?? null;
+  } catch {
+    return null;
+  }
 }
 
+async function finnhub(path, key) {
+  const url = `https://finnhub.io/api/v1${path}${path.includes("?") ? "&" : "?"}token=${key}`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+  if (!res.ok) throw new Error(`Finnhub ${res.status} for ${path}`);
+  return res.json();
+}
+
+/**
+ * Rejects publisher fallback logos.
+ *
+ * When a story has no artwork, Finnhub hands back the outlet's default
+ * house image — Yahoo's is a 354x50 logo strip. Stretched into a card it
+ * looks like a rendering bug, so it is better to show no image than that.
+ */
+const PLACEHOLDER_IMAGE = [
+  /yahoo_finance_en-US/i,
+  //rz/stage//i,
+  /default[-_]?(image|thumb|logo)/i,
+  /placeholder/i,
+  /logo/i,
+  /og[-_]image[-_]default/i,
+];
+
+function usableImage(url) {
+  if (typeof url !== "string" || !url.startsWith("http")) return null;
+  if (PLACEHOLDER_IMAGE.some((pattern) => pattern.test(url))) return null;
+  return url;
+}
+
+function normalise(item) {
+  return {
+    url: item.url,
+    title: item.headline,
+    // Finnhub's own one-line summary. Kept so the analysis step has text to
+    // work from even when the publisher blocks automated readers.
+    excerpt: typeof item.summary === "string" ? item.summary.slice(0, 900) : "",
+    image: usableImage(item.image),
+    domain: item.source ?? "",
+    country: null,
+    seenAt: item.datetime
+      ? new Date(item.datetime * 1000).toISOString()
+      : null,
+    tickers: tickersIn(item),
+  };
+}
+
+/** The same wire story appears under several outlets; keep one per headline. */
 function dedupe(articles) {
   const seen = new Set();
   const out = [];
-  for (const a of articles) {
-    const key = a.title.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  for (const article of articles) {
+    const key = article.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim()
+      .slice(0, 70);
     if (!key || seen.has(key)) continue;
     seen.add(key);
-    out.push(a);
+    out.push(article);
   }
   return out;
 }
 
-async function fetchSector(entry) {
-  const url =
-    `${BASE}?query=${encodeURIComponent(entry.q)}` +
-    `&mode=ArtList&format=json&sort=DateDesc&maxrecords=60&timespan=24h`;
-
-  for (let i = 0; i <= RETRY_DELAYS_MS.length; i++) {
-    let res;
-    let body;
-    try {
-      res = await fetch(url, { signal: AbortSignal.timeout(30_000) });
-      body = await res.text();
-    } catch (err) {
-      // A refused connection or DNS failure must be retried like a 429,
-      // not crash the run and leave the feed unwritten.
-      res = { ok: false, status: 0 };
-      body = String(err?.cause?.code ?? err?.message ?? err);
-    }
-
-    // Rate-limit rejections arrive as prose, sometimes with a 200.
-    if (res.ok && body.trimStart().startsWith("{")) {
-      try {
-        const json = JSON.parse(body);
-        const articles = (json.articles ?? [])
-          .filter((a) => a?.url && a?.title)
-          .map((a) => ({
-            url: a.url,
-            title: a.title,
-            domain: a.domain ?? "",
-            country: a.sourcecountry ?? null,
-            seenAt: parseSeenDate(a.seendate),
-            tickers: tickersIn(a.title),
-          }))
-          // Relevance is applied here rather than in the query because
-          // mining wire releases and conference notices use the same
-          // vocabulary as real market coverage.
-          .filter(isRelevant);
-        return { ok: true, articles: dedupe(articles).slice(0, 8) };
-      } catch {
-        // Fall through to a retry.
-      }
-    }
-
-    const delay = RETRY_DELAYS_MS[i];
-    if (delay === undefined) {
-      return {
-        ok: false,
-        error: `${res.status}: ${body.slice(0, 60)}`,
-        articles: [],
-      };
-    }
-    console.log(`  rate limited, waiting ${delay / 1000}s...`);
-    await sleep(delay);
-  }
-  return { ok: false, error: "exhausted retries", articles: [] };
-}
-
 async function main() {
-  // Previous run, if any. A sector that fails this time keeps the articles
-  // it had rather than being blanked: losing good data to a transient rate
-  // limit is worse than serving a feed that is an hour old.
+  const key = loadEnvFile();
+  if (!key) {
+    console.error("FINNHUB_API_KEY is not set.");
+    process.exit(1);
+  }
+
   let previous = { sectors: [] };
   try {
     previous = JSON.parse(await readFile(OUT, "utf8"));
   } catch {
-    // First run, or the file was removed. Nothing to preserve.
+    // First run. Nothing to preserve.
+  }
+
+  const pool = new Map();
+  let requests = 0;
+
+  process.stdout.write("market news... ");
+  try {
+    const general = await finnhub("/news?category=general", key);
+    requests++;
+    for (const item of general) {
+      if (!item?.url || !item?.headline || !isRelevant(item)) continue;
+      pool.set(item.url, item);
+    }
+    console.log(`${general.length} items`);
+  } catch (err) {
+    console.log(`FAILED (${err.message})`);
+  }
+
+  // Finnhub's free tier allows 60 calls a minute; this loop uses nine.
+  const to = new Date().toISOString().slice(0, 10);
+  const from = new Date(Date.now() - 3 * 86_400_000).toISOString().slice(0, 10);
+
+  for (const ticker of COMPANY_PULLS) {
+    await sleep(1200);
+    try {
+      const items = await finnhub(
+        `/company-news?symbol=${ticker}&from=${from}&to=${to}`,
+        key,
+      );
+      requests++;
+      let added = 0;
+      for (const item of items.slice(0, 15)) {
+        if (!item?.url || !item?.headline || !isRelevant(item)) continue;
+        if (pool.has(item.url)) continue;
+        // Company news is not always tagged, so pin the ticker we asked for.
+        pool.set(item.url, { ...item, related: item.related || ticker });
+        added++;
+      }
+      process.stdout.write(`${ticker}:${added} `);
+    } catch {
+      process.stdout.write(`${ticker}:fail `);
+    }
+  }
+  console.log(`\n\n${pool.size} unique articles from ${requests} requests\n`);
+
+  if (pool.size === 0) {
+    console.error("no articles fetched - leaving the existing feed untouched");
+    process.exit(1);
   }
 
   const now = new Date().toISOString();
-  const sectors = [];
-  let failures = 0;
+  const buckets = new Map(SECTORS.map((s) => [s.sector, []]));
 
-  for (const entry of SECTORS) {
-    process.stdout.write(`${entry.sector}... `);
-    const result = await fetchSector(entry);
-    const prior = (previous.sectors ?? []).find(
-      (s) => s.sector === entry.sector,
-    );
-
-    if (result.ok) {
-      console.log(`${result.articles.length} articles`);
-      sectors.push({
-        sector: entry.sector,
-        label: entry.label,
-        ok: true,
-        refreshedAt: now,
-        articles: result.articles,
-      });
-    } else {
-      failures++;
-      const kept = prior?.articles?.length ?? 0;
-      console.log(
-        kept
-          ? `FAILED (${result.error}) - keeping ${kept} earlier articles`
-          : `FAILED (${result.error})`,
-      );
-      sectors.push({
-        sector: entry.sector,
-        label: entry.label,
-        ok: kept > 0,
-        refreshedAt: prior?.refreshedAt ?? null,
-        articles: prior?.articles ?? [],
-      });
+  for (const item of pool.values()) {
+    for (const sector of classify(item)) {
+      buckets.get(sector)?.push(normalise(item));
     }
-    await sleep(GAP_MS);
   }
 
-  // A total wipeout means GDELT is unreachable. Writing would replace a good
-  // feed with nothing, so the existing file is left exactly as it is.
-  if (failures === SECTORS.length) {
-    console.error(
-      `\nall ${SECTORS.length} sectors failed - leaving the existing feed untouched`,
+  const sectors = SECTORS.map((definition) => {
+    const found = dedupe(buckets.get(definition.sector) ?? [])
+      .sort((a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""))
+      .slice(0, PER_SECTOR);
+
+    const prior = (previous.sectors ?? []).find(
+      (s) => s.sector === definition.sector,
     );
-    process.exit(1);
-  }
+
+    // A sector with nothing new keeps what it had rather than going blank:
+    // a quiet hour is not the same as no coverage.
+    const articles = found.length > 0 ? found : (prior?.articles ?? []);
+
+    return {
+      sector: definition.sector,
+      label: definition.label,
+      blurb: definition.blurb,
+      accent: definition.accent,
+      ok: true,
+      refreshedAt: found.length > 0 ? now : (prior?.refreshedAt ?? null),
+      articles,
+    };
+  });
 
   await mkdir(dirname(OUT), { recursive: true });
   await writeFile(
     OUT,
-    JSON.stringify({ refreshedAt: now, sectors }, null, 2),
+    JSON.stringify({ refreshedAt: now, sectors }, null, 2) + "\n",
     "utf8",
   );
 
-  const total = sectors.reduce((n, s) => n + s.articles.length, 0);
-  console.log(`\nwrote ${OUT}`);
-  console.log(
-    `${total} articles, ${SECTORS.length - failures}/${SECTORS.length} sectors refreshed`,
-  );
+  console.log(`wrote ${OUT}`);
+  for (const sector of sectors) {
+    console.log(`  ${sector.sector.padEnd(10)} ${sector.articles.length}`);
+  }
 }
 
 main().catch((err) => {

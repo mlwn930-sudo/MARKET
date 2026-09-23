@@ -1,17 +1,14 @@
 /**
- * Reads the news feed that the background job wrote, and the Hebrew
- * summaries written alongside it.
+ * Reads the news feed and the Hebrew analysis written alongside it.
  *
- * The site never calls GDELT during a request. GDELT allows about one
- * request every 5 seconds and punishes bursts with a long cooldown, so
- * fetching at request time produced page loads of 30 to 400 seconds.
- * scripts/refresh-news.mjs does that work on a schedule and writes
- * content/news/latest.json; this module just reads it.
+ * The site never calls a news API during a request. scripts/refresh-news.mjs
+ * pulls from Finnhub on a schedule and writes content/news/latest.json;
+ * scripts/summarize-news.mjs writes the analysis into a separate file.
  *
- * Summaries live in a separate file keyed by article URL rather than inside
- * the feed. A refresh replaces the article list wholesale, and summaries are
- * expensive to produce — keeping them apart means a refresh never discards
- * work already done, and a story that reappears keeps its summary.
+ * Analysis lives apart from the feed, keyed by article URL, because a
+ * refresh replaces the article list wholesale. Keeping them separate means a
+ * refresh never discards work already done, and a story that reappears in a
+ * later cycle keeps the analysis it already has.
  */
 
 import { readFile } from "node:fs/promises";
@@ -21,31 +18,35 @@ import { z } from "zod";
 const articleSchema = z.object({
   url: z.string(),
   title: z.string(),
+  /** The publisher's own summary, carried by the feed. */
+  excerpt: z.string().optional().default(""),
+  image: z.string().nullable().optional().default(null),
   domain: z.string(),
-  country: z.string().nullable(),
+  country: z.string().nullable().optional().default(null),
   seenAt: z.string().nullable(),
-  tickers: z.array(z.string()).optional(),
+  tickers: z.array(z.string()).optional().default([]),
+});
+
+const sectorSchema = z.object({
+  sector: z.string(),
+  label: z.string(),
+  blurb: z.string().optional().default(""),
+  /** Hex colour that identifies the sector across the site. */
+  accent: z.string().optional().default("#c9a227"),
+  ok: z.boolean(),
+  // Per-sector, because a sector with nothing new keeps its previous
+  // articles and is therefore older than the feed as a whole.
+  refreshedAt: z.string().nullable().optional(),
+  articles: z.array(articleSchema),
 });
 
 const feedSchema = z.object({
   refreshedAt: z.string().nullable(),
-  sectors: z.array(
-    z.object({
-      sector: z.string(),
-      label: z.string(),
-      ok: z.boolean(),
-      // Per-sector, because a sector whose refresh failed keeps the
-      // articles from its last good run and is therefore older than the
-      // feed as a whole. Optional so feeds written before this existed
-      // still parse.
-      refreshedAt: z.string().nullable().optional(),
-      articles: z.array(articleSchema),
-    }),
-  ),
+  sectors: z.array(sectorSchema),
 });
 
-/** Written by /summarize-news. `impact` is analysis of what the story means
- *  for sectors and companies — never a recommendation to buy or sell. */
+/** Written by scripts/summarize-news.mjs. `impact` explains what the story
+ *  means for sectors and companies — never a recommendation to buy or sell. */
 const summarySchema = z.object({
   summary: z.string(),
   impact: z.string(),
@@ -57,8 +58,8 @@ const summarySchema = z.object({
 const summariesFileSchema = z.object({
   writtenAt: z.string().nullable(),
   summaries: z.record(z.string(), summarySchema),
-  // URLs the summariser could not fetch, with the time it gave up. Kept so
-  // a paywalled article is not re-requested every twenty minutes forever.
+  // URLs with no usable text, and when we gave up. Kept so a paywalled
+  // article is not re-requested every cycle forever.
   unfetchable: z.record(z.string(), z.string()).optional(),
 });
 
@@ -66,16 +67,12 @@ export type NewsFeed = z.infer<typeof feedSchema>;
 export type NewsArticle = z.infer<typeof articleSchema>;
 export type ArticleSummary = z.infer<typeof summarySchema>;
 
-/** An article with its summary attached, if one has been written. */
 export type EnrichedArticle = NewsArticle & { analysis: ArticleSummary | null };
 
-export type EnrichedSector = {
-  sector: string;
-  label: string;
-  ok: boolean;
-  refreshedAt?: string | null;
-  articles: EnrichedArticle[];
-};
+export type EnrichedSector = Omit<
+  z.infer<typeof sectorSchema>,
+  "articles"
+> & { articles: EnrichedArticle[] };
 
 const EMPTY_FEED: NewsFeed = { refreshedAt: null, sectors: [] };
 
@@ -101,25 +98,28 @@ export async function getNewsFeed(): Promise<NewsFeed> {
 }
 
 export async function getSummaries(): Promise<Record<string, ArticleSummary>> {
-  const file = await readJson("content/news/summaries.json", summariesFileSchema, {
-    writtenAt: null,
-    summaries: {},
-  });
+  const file = await readJson(
+    "content/news/summaries.json",
+    summariesFileSchema,
+    { writtenAt: null, summaries: {} },
+  );
   return file.summaries;
 }
 
-/** The feed with summaries merged in. An article without one renders as a
- *  plain headline rather than being hidden — a missing summary means nobody
- *  has written it yet, not that the story is unimportant. */
-export async function getEnrichedFeed(): Promise<{
+export type EnrichedFeed = {
   refreshedAt: string | null;
   sectors: EnrichedSector[];
-  summarizedCount: number;
+  analysedCount: number;
   totalCount: number;
-}> {
+};
+
+/** The feed with analysis merged in. An article without analysis renders as
+ *  a plain headline rather than being hidden — no analysis means nobody has
+ *  written it yet, not that the story is unimportant. */
+export async function getEnrichedFeed(): Promise<EnrichedFeed> {
   const [feed, summaries] = await Promise.all([getNewsFeed(), getSummaries()]);
 
-  let summarizedCount = 0;
+  let analysedCount = 0;
   let totalCount = 0;
 
   const sectors = feed.sectors.map((sector) => ({
@@ -127,25 +127,45 @@ export async function getEnrichedFeed(): Promise<{
     articles: sector.articles.map((article) => {
       totalCount++;
       const analysis = summaries[article.url] ?? null;
-      if (analysis) summarizedCount++;
+      if (analysis) analysedCount++;
       return { ...article, analysis };
     }),
   }));
 
-  return {
-    refreshedAt: feed.refreshedAt,
-    sectors,
-    summarizedCount,
-    totalCount,
-  };
+  return { refreshedAt: feed.refreshedAt, sectors, analysedCount, totalCount };
 }
 
-/** True when the feed is older than two hours — the refresh job is meant to
- *  run every 20 minutes, so that gap means something is wrong with it. */
+/** Every article that mentions a ticker, newest first. Used by the company
+ *  page to show what is being written about that company right now. */
+export async function getArticlesForTicker(
+  ticker: string,
+  limit = 8,
+): Promise<EnrichedArticle[]> {
+  const { sectors } = await getEnrichedFeed();
+  const symbol = ticker.toUpperCase();
+  const byUrl = new Map<string, EnrichedArticle>();
+
+  for (const sector of sectors) {
+    for (const article of sector.articles) {
+      const mentioned =
+        article.tickers.includes(symbol) ||
+        article.analysis?.tickers.includes(symbol);
+      if (mentioned && !byUrl.has(article.url)) byUrl.set(article.url, article);
+    }
+  }
+
+  return [...byUrl.values()]
+    .sort((a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""))
+    .slice(0, limit);
+}
+
+/** True when the feed is older than three hours. GitHub throttles scheduled
+ *  workflows well beyond their stated cadence, so the threshold is set by
+ *  what actually happens rather than by the cron expression. */
 export function isFeedStale(refreshedAt: string | null): boolean {
   if (!refreshedAt) return true;
   const age = Date.now() - new Date(refreshedAt).getTime();
-  return !Number.isFinite(age) || age > 2 * 60 * 60 * 1000;
+  return !Number.isFinite(age) || age > 3 * 60 * 60 * 1000;
 }
 
 export const SIGNIFICANCE_LABELS: Record<

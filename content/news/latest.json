@@ -1,79 +1,128 @@
 {
-  "refreshedAt": "2026-09-23T11:21:35.142Z",
+  "refreshedAt": "2026-09-23T14:07:50.030Z",
   "sectors": [
     {
-      "sector": "semis",
-      "label": "מוליכים למחצה",
+      "sector": "ai",
+      "label": "בינה מלאכותית",
+      "blurb": "מודלים, שבבי AI, מרכזי נתונים והמירוץ בין החברות",
+      "accent": "#7f77dd",
       "ok": true,
-      "refreshedAt": "2026-09-23T11:21:35.142Z",
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
       "articles": [
         {
-          "url": "https://www.business-standard.com/markets/capital-market-news/benchmarks-hold-firm-europe-opens-higher-after-saudi-arabia-restarts-east-west-pipeline-126092300575_1.html",
-          "title": "Benchmarks hold firm ; Europe opens higher after Saudi Arabia restarts east - west pipeline",
-          "domain": "business-standard.com",
-          "country": "India",
-          "seenAt": "2026-09-23T09:00:00.000Z",
+          "url": "https://www.cnbc.com/2026/09/23/new-rules-of-finding-a-job-right-now.html",
+          "title": "Typical job search advice isn't working in today's market. Experts' new rules for landing a role right now",
+          "excerpt": "AI and the economy are reshaping hiring. These are the new strategies for finding a job in today's tough market.",
+          "image": "https://image.cnbcfm.com/api/v1/image/108365080-1789754902326-gettyimages-1468207062-dsc06756.jpeg?v=1789754960&w=1920&h=1080",
+          "domain": "CNBC",
+          "country": null,
+          "seenAt": "2026-09-23T13:15:01.000Z",
           "tickers": []
         },
         {
-          "url": "http://www.sanantoniopost.com/news/279321994/amd-joins-usd1-trillion-club-as-shares-surge-to-record-high",
-          "title": "AMD joins $1 trillion club as shares surge to record high",
-          "domain": "sanantoniopost.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T09:00:00.000Z",
+          "url": "https://finnhub.io/api/news?id=0ea496b35481396abea9b4923fa03e94bcf7ec8b7a038230ca3f2d01624e540d",
+          "title": "How to Invest in Stocks in 2026: Go Beyond Index Funds and Buy These 3 Names",
+          "excerpt": "There's still a place for index funds in your portfolio, but if you're just looking to learn with small starting positions, there are some smart all-weather stocks to consider as well.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:49:00.000Z",
           "tickers": [
-            "AMD"
+            "NVDA"
           ]
         },
         {
-          "url": "https://www.al-monitor.com/originals/2026/09/oil-prices-fall-after-trump-hails-good-talks-iran",
-          "title": "Oil prices fall after Trump hails  good  talks with Iran",
-          "domain": "al-monitor.com",
-          "country": "Israel",
-          "seenAt": "2026-09-23T08:45:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://bmmagazine.co.uk/news/nick-clegg-nscale-ipo-shares-18m/",
-          "title": "Nick Clegg shares worth $18m in Nscale IPO",
-          "domain": "bmmagazine.co.uk",
-          "country": "United Kingdom",
-          "seenAt": "2026-09-23T08:30:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-micron-gets-paid-more-203122649.html",
-          "title": "NVIDIA Or Micron : Which Gets Paid More Safely For The AI Shortage ? ",
-          "domain": "finance.yahoo.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T08:30:00.000Z",
+          "url": "https://finnhub.io/api/news?id=18a875f241d407f6a493f93cd1efea046fdd19815c093b2baefe0a78dafa7004",
+          "title": "Quanome Advances Its AI Cloud Business XDT with US$18.8 Million Infrastructure Purchase Agreement",
+          "excerpt": "Company Advances Development of First U.S. AI Infrastructure Hub, Executes Its Quantum & AI Systems Strategy ITASCA, Ill., Sept. 23, 2026 (GLOBE NEWSWIRE) -- Quanome Technologies, Inc. (Nasdaq: QNME) (“Quanome” or the “Company”) is advancing its Quantum and AI Systems business through an approximately US$18.8 million purchase agreement for computing infrastructure powered by NVIDIA GPU technology to build its AI cloud business through its subsidiary, XDT Infrastructure I, LLC (“XDT”). The Compan",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:45:00.000Z",
           "tickers": [
-            "NVDA",
-            "MU"
+            "NVDA"
           ]
         },
         {
-          "url": "https://www.cbc.ca/news/world/donald-trump-xi-jinping-summit-washington-ai-9.7353943",
-          "title": "  Nuclear  threat or market boom ? Either way , AI race looms over Trump - Xi talks",
-          "domain": "cbc.ca",
-          "country": "Canada",
-          "seenAt": "2026-09-23T08:30:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=49da13652283221b473151c20c926dae55c21f48ef76a23cc57a3f8ca485a84a",
+          "title": "Pay Attention, Wall Street Is Actively Re-Rating AMD as It Crosses $1 Trillion",
+          "excerpt": "AMD just crossed a trillion-dollar market cap and the sell side is scrambling to rewrite its models in real time, but the gap between the bulls racing to raise targets and the bears warning of a blow-off top has never been wider.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:37:08.000Z",
+          "tickers": [
+            "NVDA"
+          ]
         },
         {
-          "url": "https://www.niagarafallsreview.ca/business/asian-shares-are-mixed-and-oil-prices-fall-after-trump-says-us-and-iran-met-at-the-un/article_0f23cad1-d88f-546b-baa0-f5e214dd8654.html",
-          "title": "Asian shares are mixed and oil prices fall after Trump says US and Iran met at the UN",
-          "domain": "niagarafallsreview.ca",
-          "country": "Canada",
-          "seenAt": "2026-09-23T08:30:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=a3fa6cade5ef52c655363edefe8a92b57793a20368ef7a506a2cba1b2b29fa0e",
+          "title": "2 Growth Stocks That Could Double by 2030",
+          "excerpt": "Netflix and Airbnb could see meaningful earnings growth, delivering compounding returns.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:34:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
         },
         {
-          "url": "http://www.indiagazette.com/news/279325271/andreessen-horowitz-launches-tech-academy-for-high-school-graduates-nvidia-openai-among-founding-partners",
-          "title": "Andreessen Horowitz launches tech academy for high school graduates ; Nvidia , OpenAI among founding partners",
-          "domain": "indiagazette.com",
-          "country": "India",
-          "seenAt": "2026-09-23T08:15:00.000Z",
+          "url": "https://finnhub.io/api/news?id=e3596b0564f43caa17e8606473c3ca746eae4f55dbea99def7aaa8f5a689d24f",
+          "title": "Insider Alert: Nvidia Director Dumps $300 Million in Stock",
+          "excerpt": "Nvidia Insider's Latest $300 Million Dump Pushes Stock Sales Near $1 Billion",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:24:58.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=a4339505cca8a7dea6dc70af0e76eb23e3c9d38278bed199d0fa50d2a94aec12",
+          "title": "Nvidia Director Just Sold Another $300 Million in Shares",
+          "excerpt": "Mark Stevens has disclosed another large Nvidia stock sale, bringing his reported disposals since Aug. 31 to nearly $947 million.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:23:42.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b5a935a8a4d5ea63611e298a017beff4c08563ade64b16a4cb3c16bdfe478b36",
+          "title": "Is XRP a Buy Right Now at $1.50?",
+          "excerpt": "XRP has rebounded from a low of $1 this summer, but how much higher can it go?",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:16:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=858ce5df8d29be6585bfa50657c2982282a2ac062a6bf8e510715b809babdc60",
+          "title": "Trump's Latest Stock Disclosure Reveals a Surprising Trading Pattern",
+          "excerpt": "Microsoft and Amazon sales were each valued at $5 million to $25 million.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:14:38.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b8ffc993d3869750f163c6402ef5758ece6a7ef56d42e59a15dc48f82a299ab4",
+          "title": "Long-Term Treasury Yields Are Surging. History Says That Might Actually Be Good News for Stocks.",
+          "excerpt": "Rising interest rates haven't historically been that bad for stock prices.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:05:00.000Z",
           "tickers": [
             "NVDA"
           ]
@@ -81,297 +130,1022 @@
       ]
     },
     {
-      "sector": "energy",
-      "label": "אנרגיה",
+      "sector": "semis",
+      "label": "מוליכים למחצה",
+      "blurb": "ייצור שבבים, ציוד ליתוגרפיה, זיכרון ומגבלות יצוא",
+      "accent": "#1d9e75",
       "ok": true,
-      "refreshedAt": "2026-09-23T11:21:35.142Z",
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
       "articles": [
         {
-          "url": "https://www.business-standard.com/markets/capital-market-news/benchmarks-hold-firm-europe-opens-higher-after-saudi-arabia-restarts-east-west-pipeline-126092300575_1.html",
-          "title": "Benchmarks hold firm ; Europe opens higher after Saudi Arabia restarts east - west pipeline",
-          "domain": "business-standard.com",
-          "country": "India",
-          "seenAt": "2026-09-23T09:00:00.000Z",
+          "url": "https://finnhub.io/api/news?id=0ea496b35481396abea9b4923fa03e94bcf7ec8b7a038230ca3f2d01624e540d",
+          "title": "How to Invest in Stocks in 2026: Go Beyond Index Funds and Buy These 3 Names",
+          "excerpt": "There's still a place for index funds in your portfolio, but if you're just looking to learn with small starting positions, there are some smart all-weather stocks to consider as well.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:49:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=18a875f241d407f6a493f93cd1efea046fdd19815c093b2baefe0a78dafa7004",
+          "title": "Quanome Advances Its AI Cloud Business XDT with US$18.8 Million Infrastructure Purchase Agreement",
+          "excerpt": "Company Advances Development of First U.S. AI Infrastructure Hub, Executes Its Quantum & AI Systems Strategy ITASCA, Ill., Sept. 23, 2026 (GLOBE NEWSWIRE) -- Quanome Technologies, Inc. (Nasdaq: QNME) (“Quanome” or the “Company”) is advancing its Quantum and AI Systems business through an approximately US$18.8 million purchase agreement for computing infrastructure powered by NVIDIA GPU technology to build its AI cloud business through its subsidiary, XDT Infrastructure I, LLC (“XDT”). The Compan",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:45:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=49da13652283221b473151c20c926dae55c21f48ef76a23cc57a3f8ca485a84a",
+          "title": "Pay Attention, Wall Street Is Actively Re-Rating AMD as It Crosses $1 Trillion",
+          "excerpt": "AMD just crossed a trillion-dollar market cap and the sell side is scrambling to rewrite its models in real time, but the gap between the bulls racing to raise targets and the bears warning of a blow-off top has never been wider.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:37:08.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=a3fa6cade5ef52c655363edefe8a92b57793a20368ef7a506a2cba1b2b29fa0e",
+          "title": "2 Growth Stocks That Could Double by 2030",
+          "excerpt": "Netflix and Airbnb could see meaningful earnings growth, delivering compounding returns.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:34:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e3596b0564f43caa17e8606473c3ca746eae4f55dbea99def7aaa8f5a689d24f",
+          "title": "Insider Alert: Nvidia Director Dumps $300 Million in Stock",
+          "excerpt": "Nvidia Insider's Latest $300 Million Dump Pushes Stock Sales Near $1 Billion",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:24:58.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=a4339505cca8a7dea6dc70af0e76eb23e3c9d38278bed199d0fa50d2a94aec12",
+          "title": "Nvidia Director Just Sold Another $300 Million in Shares",
+          "excerpt": "Mark Stevens has disclosed another large Nvidia stock sale, bringing his reported disposals since Aug. 31 to nearly $947 million.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:23:42.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b5a935a8a4d5ea63611e298a017beff4c08563ade64b16a4cb3c16bdfe478b36",
+          "title": "Is XRP a Buy Right Now at $1.50?",
+          "excerpt": "XRP has rebounded from a low of $1 this summer, but how much higher can it go?",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:16:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=858ce5df8d29be6585bfa50657c2982282a2ac062a6bf8e510715b809babdc60",
+          "title": "Trump's Latest Stock Disclosure Reveals a Surprising Trading Pattern",
+          "excerpt": "Microsoft and Amazon sales were each valued at $5 million to $25 million.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:14:38.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b8ffc993d3869750f163c6402ef5758ece6a7ef56d42e59a15dc48f82a299ab4",
+          "title": "Long-Term Treasury Yields Are Surging. History Says That Might Actually Be Good News for Stocks.",
+          "excerpt": "Rising interest rates haven't historically been that bad for stock prices.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:05:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e6923ae9ac6b11f0099f594e5ba61b833a1c2ea924d716265ed98608640e5122",
+          "title": "Buy 3 Top-Ranked AI-Led Stocks at Deep Discount to Maximize Your Gains",
+          "excerpt": "AI infrastructure stocks AMKR, CIEN and TTMI have rallied over 30% in 2026 yet trade more than 30% below 52-week highs.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:02:00.000Z",
+          "tickers": [
+            "NVDA"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": "oil",
+      "label": "נפט וגז",
+      "blurb": "מחירי נפט, אופ״ק, זיקוק ושרשרת האספקה העולמית",
+      "accent": "#d85a30",
+      "ok": true,
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
+      "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=f6043140d1ca7e259912988c21fa227b4efff53909c13ae569116af2c28985f3",
+          "title": "Zacks Industry Outlook Highlights ExxonMobil, Chevron, BP and Eni SpA",
+          "excerpt": "Integrated oil and gas stocks gain from favorable crude prices, sturdy midstream demand and diversification into renewables.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:52:00.000Z",
+          "tickers": [
+            "XOM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=39daa93f12fb1aaac7873cc98266cd588a5e81be0a76291af138bb4bd2206c12",
+          "title": "Novo Nordisk Stock Slides After Unveiling Long Term Pipeline Growth Targets",
+          "excerpt": "Key Stats for Novo Nordisk StockPrice change for Novo Nordisk stock in last 1 year: -35%$NVO Stock Price as of Sep. 22: $3952-Week High: $64$NVO Stock Price Target: $47What Happened?Novo Nordisk (NVO) stock dropped sharply on Monday after the company laid out new long-term goals that failed to convince investors it can hold its ground against fast-growing rivals in the weight loss drug market.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:41:26.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=526dd46f4a4d47dee84a519823b541839f60e09324b676ad25199de09988439f",
+          "title": "Analyzing The Venezuelan Oil Deal And Possible Opportunities",
+          "excerpt": "Venezuela's political shift and a new US-backed joint venture open significant long-term opportunities for upstream and oilfield services companies.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2203041736/image_2203041736.jpg?io=getty-c-w1536",
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-09-23T08:38:51.000Z",
+          "tickers": [
+            "XOM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=39993d50bd0b16b126257b6ff0540453eb1592cd589615a3dd3f84ef87356bcd",
+          "title": "ExxonMobil (XOM) Delivers Record Oil Output And Revenue On Lower Spending",
+          "excerpt": "ExxonMobil Holdings (NYSE:XOM) recently reported record oil output and revenue achieved while keeping capital spending at lower levels. Management highlighted higher production from high-return assets such as the Permian Basin as a key driver of these records. The group indicated that technology and efficiency gains allowed it to sustain operations despite geopolitical risks affecting Middle East supply routes. This record oil production and revenue on tighter capital spending, helped by...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T05:16:44.000Z",
+          "tickers": [
+            "XOM"
+          ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPMUxlOVZSaE9hZmRXV1NDeHlvUlBOaXZadHY3ZHJiOUF6MXVSN01uRWwxYUQxLUhjYVF0aGR5UHZyQXJGOWZWZjktdVBSYzAwZFJFd29aSTFhTGEzOU1nTnREcnd3dkJHS1l5ZHk1M045T3VQWnduUkFxOGt3bTRzUk9NQjZlTjVndGVVeVJveE5BYlJuUzRRYW5VNTY3T2x1MkhVdF9KRzJZZURoMG5UVDRIVm1LY1dIajZZLVlfUVZrOWpy?oc=5",
+          "title": "Shipping traffic via Strait of Hormuz stays below 10-day average, data shows - Reuters",
+          "excerpt": "Shipping traffic via Strait of Hormuz stays below 10-day average, data shows  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-23T02:39:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://www.thenationalnews.com/business/energy/2026/09/23/trumps-energy-adviser-says-gulf-must-build-new-oil-routes-to-bypass-strait-of-hormuz/",
-          "title": "Trump energy adviser says Gulf must build new oil routes to bypass Strait of Hormuz",
-          "domain": "thenationalnews.com",
-          "country": "",
-          "seenAt": "2026-09-23T09:00:00.000Z",
+          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOeFhpNFFXWGZ2azRGVllBNXpwLXZQeTFySkY3Vi12SmpTNmMyY09oU3RMa3Rqb21pNUl0ZGhSbVBWQnZBOXdOb19xSlU3TnNra0F6OWowVHp5RHlSblJGTVhXandWeEFJaDBOTi1VcjdrSjVNeGVJZnVjeUJXM3NVYUgxZ28yQkVuWXNhc1pxd093NVVBTHZnWm40c01OS00zZHAwRWVR?oc=5",
+          "title": "Oil holds near two-week lows while diesel cracks hit record peak - Reuters",
+          "excerpt": "Oil holds near two-week lows while diesel cracks hit record peak  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-23T01:44:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://www.euronews.com/2026/09/23/europe-may-avoid-wider-jet-fuel-shortage-but-smaller-airports-remain-at-risk",
-          "title": "Europe may avoid wider jet fuel shortage , but smaller airports remain at risk",
-          "domain": "euronews.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T08:30:00.000Z",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQeE55dDdROVIwdjhlcVFjWnRFQmx0T3pxNldiUkE1eklicGwtRlFGMEljOFoxT01rMVdURzhrTlhCV3NxNnFpSGdSQUROSUROUjVRX3d1R0ZPSDh3RHFBNE1FV21oR0ZpU0pYbXNCRmotM2hna09KT24wX0ljWl8yS2dEU05wUVJSbjNQck04MzR5blJmamxSSVlzZFdWNUZNeVRxODBsbldaaVE4cFItSDY0eFFKYkJYbmRoUFQxX0dxaVlpSUE?oc=5",
+          "title": "South Korea plans to cut its reliance on Middle East crude oil imports to 50% by 2035 - Reuters",
+          "excerpt": "South Korea plans to cut its reliance on Middle East crude oil imports to 50% by 2035  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-23T00:42:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://economictimes.indiatimes.com/news/new-updates/uday-kotak-says-india-can-become-current-account-surplus-nation-asias-richest-banker-shares-one-golden-formula/articleshow/134429229.cms",
-          "title": "Uday Kotak says India can become current account surplus nation : Asia richest banker shares one golden formula",
-          "domain": "economictimes.indiatimes.com",
-          "country": "India",
-          "seenAt": "2026-09-23T08:30:00.000Z",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPRVVYazU2NVBYOUFueHpwS0lxNDJzbFgzYVhRZ1ZjcjRyTGdESUlaT0UzQ0MtbDcyYklsVkk0TVRseTZHUjI0dlU4UmhfVmhQNzEwVVAwY1FTMVFaSHByTDNXd19NUHc5bXRuMWYyaGhmbXBsRUo0TkQ5LVRBQm5ZbndBSEc1amtZR3BrN21XWkFsZw?oc=5",
+          "title": "Trump supports diesel export ban as fuel prices hit records - Reuters",
+          "excerpt": "Trump supports diesel export ban as fuel prices hit records  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-22T23:22:15.000Z",
           "tickers": []
         },
         {
-          "url": "https://blueprint.ng/how-ogun-customs-is-fighting-smuggling-protecting-local-industry-opening-new-export-frontiers/",
-          "title": "How Ogun Customs Is Fighting Smuggling , Protecting Local Industry , Opening New Export Frontiers",
-          "domain": "blueprint.ng",
-          "country": "Nigeria",
-          "seenAt": "2026-09-23T08:30:00.000Z",
+          "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOYVI5Zk1aX3RhYUR3djFoUE4wTGo1cEJscDJwelUwamFLQV9WVEh3OU1BcFhkOGJKWWtCVXFPSndFUUpFV2xvWWctLTQxVWFlWmE0d3ctNmJuYzVDLXJSdjdwaktKWFREMVBQeUlZakZvalZOQTAtSlQ5UzZFQkFlUVZPblc2bEE5dzNVRV9pTzM2ZkxURHlFMzVlamZCWG50RUlkaVd5MDc4MzZTbWp1N1J1Y3NnQnUwMnFNRjhWMnd6Y0Z1LWp5NA?oc=5",
+          "title": "Iran submits conditions for reopening of Hormuz to U.S. representative, state media says - Reuters",
+          "excerpt": "Iran submits conditions for reopening of Hormuz to U.S. representative, state media says  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-22T19:46:20.000Z",
           "tickers": []
         },
         {
-          "url": "https://www.vanguardngr.com/2026/09/petrol-depot-prices-drop-pump-price-cuts-loom/",
-          "title": "Petrol depot prices drop , pump price cuts loom",
-          "domain": "vanguardngr.com",
-          "country": "Nigeria",
-          "seenAt": "2026-09-23T08:15:00.000Z",
+          "url": "https://finnhub.io/api/news?id=4608eaaf06be6e2560b32568e717851e67c0a20ca4cb05674dec02b71777f328",
+          "title": "3 High-Yielding Dividend Stocks That Are No-Brainer Buys for Retirees and Risk-Averse Investors",
+          "excerpt": "These quality, low-volatility stocks yield between 2.4% and 3.1%, and have been raising their payouts for decades.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T17:23:30.000Z",
+          "tickers": [
+            "XOM"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": "power",
+      "label": "חשמל ואנרגיה",
+      "blurb": "רשת החשמל, גרעין, מתחדשות והביקוש שמרכזי הנתונים יוצרים",
+      "accent": "#eda100",
+      "ok": true,
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
+      "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=f6043140d1ca7e259912988c21fa227b4efff53909c13ae569116af2c28985f3",
+          "title": "Zacks Industry Outlook Highlights ExxonMobil, Chevron, BP and Eni SpA",
+          "excerpt": "Integrated oil and gas stocks gain from favorable crude prices, sturdy midstream demand and diversification into renewables.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:52:00.000Z",
+          "tickers": [
+            "XOM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=146fdfa7f6fedfd2e3e1e544ffe8d77e226f7c8f0119b6f02325fbc8de4bb756",
+          "title": "Bloom Energy vs. NextEra Energy: Which Renewable Energy Stock Is a Better Buy in 2026?",
+          "excerpt": "Bloom Energy chases AI-driven growth with mounting losses and debt, while NextEra Energy delivers stable profits backed by 6 million utility customers.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T21:38:01.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b296fb5644b204cb9a4c9c86c51ddaac8e1b9a4f8eff1cda214d8256aae8f565",
+          "title": "How Low Can PG&E Stock Go When The Risk Is Its Own?",
+          "excerpt": "PG&E (PCG) trades at about $12.94, the bottom of its 52-week range and about 32% below its high. Over the past twelve months it lost 12.2% while the S&P 500 gained 18.5%. That gap did not come from a market crash. And in market shocks since 2007, its deepest fall includes a one-day break in PG&E's own price data.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T19:53:08.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=32c71325f25a23a654fa497484f41ab07e76a87ed9843f34678647762ef2307a",
+          "title": "Should NextEra’s US$1.9 Billion Google-Backed Nuclear Restart Require Action From NextEra Energy (NEE) Investors?",
+          "excerpt": "NextEra Energy disclosed that it secured a US$1.90 billion U.S. Department of Energy loan to restart the Duane Arnold nuclear plant in Iowa, which is targeted to return to service in early 2029 subject to regulatory approvals and backed by a 25-year power purchase agreement with Google. This federally supported nuclear restart aligns NextEra with fast-growing AI-driven power demand and deepens its long-term relationship with a major technology offtaker. Next, we’ll examine how the US$1.90...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T14:13:28.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=76a93f769797643d8b3106722ce0d86a9557d5936894df16ab7f866f0b0025f9",
+          "title": "Is It Worth Investing in NextEra (NEE) Based on Wall Street's Bullish Views?",
+          "excerpt": "Based on the average brokerage recommendation (ABR), NextEra (NEE) should be added to one's portfolio. Wall Street analysts' overly optimistic recommendations cast doubt on the effectiveness of this highly sought-after metric. So, is the stock worth buying?",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T13:30:02.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=086f7265026898a8f33e4019458d0e6c86461a4b81ade375dd11d9187e9d71cf",
+          "title": "AI Needs More Electricity, And NextEra Is Building Ahead Of Demand",
+          "excerpt": "NextEra Energy remains a strong buy as surging AI power demand and solid execution expand its upside potential to a $150 target. Learn more about NEE stock here.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2281706228/image_2281706228.jpg?io=getty-c-w1536",
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-09-22T07:00:36.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=9c402c9945813a6aeba56b01874404bd93d3f62866d27ff62273b94f6aa1a8db",
+          "title": "NextEra Energy: Undervalued, With A Dominion Energy Merger (Rating Upgrade)",
+          "excerpt": "NextEra Energy is the world's largest electric utility, with an almost $190 billion market capitalization. Find out why NEE stock is upgraded to a strong buy.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2289045867/image_2289045867.jpg?io=getty-c-w1536",
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-09-22T03:36:34.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=248c2e91f0a6514144e3f85acc59272fe8d3be758e36ee6f667194d0be25edf2",
+          "title": "2 Big Trump Breakthroughs Can Power Stock Markets Higher",
+          "excerpt": "President Donald Trump has woken up on the right side of bed to start the week–and so has the stock market.  Two potential breakthroughs, instigated by the Trump administration, are being cheered by Wall Street.  First, the president said he may be open to meeting his Iranian counterpart Masoud Pezeshkian at the U.N. General Assembly this week.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-21T11:44:00.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d0aabd873b275d8cda638bcd76c2f2362d77e2baafe8586a4220c78f2213409f",
+          "title": "NextEra (NEE) and Dominion (D) Unveil a Bigger Pitch for Virginia",
+          "excerpt": "On September 14, NextEra Energy, Inc. (NYSE:NEE) and Dominion Energy, Inc. (NYSE:D) announced a “transformational” Virginia benefits package to address concerns regarding their proposed $66.8 billion merger. The Virginia ​supplier program, worth up to $1 billion annually ‌for five years, will direct spending toward contractors, suppliers, and ​service providers in the state. Additionally, the companies […]",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-20T15:33:56.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=058b42e33ddeaad89da3f6c09ac37c499bde49e73dc8a74c30935aa412cd1798",
+          "title": "NextEra’s Nuclear Bet Just Got a $1.9 Billion Boost",
+          "excerpt": "NextEra Energy, Inc. (NYSE:NEE) announced on September 8 that it had secured a loan of up to $1.9 billion from the U.S. Department of Energy to support the restart of a shuttered nuclear power plant in Iowa. The Duane Arnold Energy Center ceased operations in 2020 after 45 years of service. The plant is now […]",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-20T15:24:38.000Z",
+          "tickers": [
+            "NEE"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": "finance",
+      "label": "פיננסים ומאקרו",
+      "blurb": "ריבית, אינפלציה, הפד, תשואות אג״ח ובנקים",
+      "accent": "#378add",
+      "ok": true,
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
+      "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=dce62041cc0d282beb5aeeb9be373633a1e45db7c344fd244bafb0311aabd9d0",
+          "title": "Kforce Inc. Announces Participation in the J.P. Morgan 2026 Ultimate Services Investor Conference",
+          "excerpt": "TAMPA, Fla., September 23, 2026--Kforce Inc. (NYSE: KFRC), a solutions firm that specializes in technology and other professional staffing services, today announced that management will participate in the J.P. Morgan Ultimate Services Investor Conference in New York on November 17, 2026. The investor presentation can be accessed at http://investor.kforce.com/ under \"Events and Presentations.\"",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T11:30:00.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=935f90908fc0257d087b0ee7f8afe537abfeacd2da3ffc1fad0d744a7b9bbe67",
+          "title": "JPMorgan Chase (JPM) Lands $20 Billion Mandate As Dealmaking Hits Record Levels",
+          "excerpt": "JPMorgan Chase (NYSE:JPM) and Qatar Investment Authority agreed a US$20b multi market investment partnership covering public equities and private credit. The alliance is led by J.P. Morgan Asset Management and allocates capital across several regions and asset classes for QIA. JPMorgan executives highlighted record global dealmaking and resilient M&A and IPO activity despite macroeconomic headwinds in recent commentary. The US$20b QIA partnership and record dealmaking only capture part of...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T08:18:21.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=cf75ee8f44109a3da909542732b323edf055ff660ae30fc6c0dc3595b50a038d",
+          "title": "JPMorgan Payments brings faster cross-border payments to more markets",
+          "excerpt": "Expanded capabilities with Thunes will help clients send faster payouts to bank accounts and mobile wallets across 100+ corridors",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T07:36:34.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=26ca675a787c9498b66bbec1747bad92fd1ec5692b90ddbb25b072e66499624e",
+          "title": "One AI Agent, Two Verdicts: Muse Lifts the Nasdaq to a Record and Knocks the Banks",
+          "excerpt": "Meta's AI agent Muse split Wall Street on Tuesday: the Nasdaq and Nasdaq 100 closed at records on chip strength and Shopify's commerce tie-up, while banks and software sold off on Moody's refinancing warning and fears of AI disruption. Oil kept sliding as diplomacy at the UN took center stage.",
+          "image": "https://www.chartmill.com/images/uploads/THUMBNAILS_CHARTMILL_1000_528_10_349262bbca.webp",
+          "domain": "ChartMill",
+          "country": null,
+          "seenAt": "2026-09-23T06:59:02.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQVGROaTNUbzBNRWdvU1J1SVRKaURrN0FDVHMteG50VExEUUhKN3UyQ0pMZ3F0ZUtXRHoyc2c2aDgzRkFrTFhHR01OdVROSVBWVnRLWmhqSjNDdW5FVjdHeEptYW5fUFg1VFVnX0xXZURtemZqOVNqNmRqc19yVjdYX3BwM1I1T0M4VUIwdDNqdmxFcnlXX2pKS3VCNllNbEJTQkZxZTJkd1NpNDZwOGpBSw?oc=5",
+          "title": "Gold loses shine as rate hike bets foster a stronger dollar - Reuters",
+          "excerpt": "Gold loses shine as rate hike bets foster a stronger dollar  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-23T04:53:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://www.brisbanetimes.com.au/business/companies/fuel-price-fears-for-australia-as-global-buffers-dry-up-20260923-p60zpk.html",
-          "title": "Australian fuel prices : Why global supply buffers are running low and what it means for motorists",
-          "domain": "brisbanetimes.com.au",
-          "country": "Australia",
-          "seenAt": "2026-09-23T08:15:00.000Z",
+          "url": "https://finnhub.io/api/news?id=6f4ea2a6d57ed9b07f7195212e6d91dbaedc9eab1625d82481c5cc3cec3aab3d",
+          "title": "'Private-Credit Firms Are Buzzing About Getting In on JPMorgan’s Card Empire' - WSJ",
+          "excerpt": "https://www.wsj.com/finance/banking/private-credit-firms-are-buzzing-about-getting-in-on-jpmorgans-card-empire-a738f517 ",
+          "image": null,
+          "domain": "Benzinga",
+          "country": null,
+          "seenAt": "2026-09-23T04:13:34.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPbVNmdlVNbHl0UDFJQll5ckV0NHkzNXZVTmhvdlVPNk1Bci1RSXJRV2RRc3FVRm4zTlNONm15dlNZOFhNTzlOYVFnVWJQUUJmWnMzZnJCdzV6RV9OblJldlBZMExybTBaVDk2X0VVbXVYNHVTNy1wcWF4TzdiVXZNbXBSYnpYZjhsVzNjZTJhWF8zR183OXBCX0lWMm1TamR5WjRJSjhrMWZ2UQ?oc=5",
+          "title": "Rupee slips as dollar gets Fed hike expectations tailwind - Reuters",
+          "excerpt": "Rupee slips as dollar gets Fed hike expectations tailwind  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-23T02:46:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://dailypioneer.com/news/rupee-rises-20-paise-to-close-at-9558-against-us-dollar",
-          "title": "Rupee rises 20 paise to close at 9558 against US dollar",
-          "domain": "dailypioneer.com",
-          "country": "India",
-          "seenAt": "2026-09-23T08:15:00.000Z",
+          "url": "https://finnhub.io/api/news?id=94b052d615ec29b6bece359f72dfc8c3e3c47ee65749ee672715e4228054947b",
+          "title": "Scott Bessent’s Husband Held Up to $250,000 in JPMorgan Stock Misreported as Cash, Ethics Review Found No ‘Knowing Violation:’ Report",
+          "excerpt": "Bessent’s spouse’s JPMorgan stock was mistakenly reported as cash; shares were sold, but an ethics review found no knowing violation.",
+          "image": "https://cdn.benzinga.com/files/images/story/2026/09/23/US-Treasury-Secretary-Scott-Bessent-walk.jpg?width=2048&height=1536",
+          "domain": "Benzinga",
+          "country": null,
+          "seenAt": "2026-09-23T02:18:55.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQZ09vVklTVy1TeFR1N3AzZE9MUHJnb0dWeTVVUXJOS1N1dE1lT0ZSX1BSZ3RnMzVoVTdXTHhldmxGZkhCYkVTaHRMLWFrU2FUQVJhbzZHWld6TnZ5OFdXTGNDWXNUbTl1NE9qSmV5a3ZiQ0FUa3laZUdZVjRZZmNwazFoNDlKVHlkdEVQdzVLM01pb3M0S0x2VkFqN0dJRzhOLVZkenlmQzNxTVRVVm9reFRUN1psM1ZkbW1ycUhYU0VMM28?oc=5",
+          "title": "Dollar hits near two-month high on Fed rate hike prospects - Reuters",
+          "excerpt": "Dollar hits near two-month high on Fed rate hike prospects  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-23T01:43:00.000Z",
           "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=8ece79b03113f63d00eab5816cce286df8cea82c7010cb63c61ae6511c9ab18c",
+          "title": "JPMorgan Drops 3.8% as $2.6 Billion AI Deal Meets Geopolitics",
+          "excerpt": "Victory Giant underwriting demonstrates fee access while Washington scrutiny expands the compliance burden.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T22:32:04.000Z",
+          "tickers": [
+            "JPM"
+          ]
         }
       ]
     },
     {
       "sector": "defense",
       "label": "ביטחון",
+      "blurb": "תקציבי ביטחון, עסקאות נשק וקבלני הביטחון",
+      "accent": "#888780",
       "ok": true,
-      "refreshedAt": "2026-09-23T00:43:04.044Z",
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
       "articles": [
         {
-          "url": "https://foreignpolicy.com/2026/09/22/canada-united-states-trade-economics-trump-threats-anita-anand/?tpcc=recirc_trending062921",
-          "title": "FP Live : Anita Anand on How Canada Is Navigating Trump Threats",
-          "domain": "foreignpolicy.com",
-          "country": "United States",
-          "seenAt": "2026-09-22T22:00:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://truthout.org/articles/trumps-fbi-scrapped-bribery-investigation-linked-to-sen-susan-collins/",
-          "title": "Trump FBI Scrapped Bribery Investigation Linked to Sen . Susan Collins",
-          "domain": "truthout.org",
-          "country": "United States",
-          "seenAt": "2026-09-22T20:15:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://www.wealthdaily.com/a-classified-doc-dump-just-opened-up-a-huge-opportunity-for-investors/",
-          "title": "A Classified Doc Dump Just Opened up a Huge Opportunity for Investors",
-          "domain": "wealthdaily.com",
-          "country": "United States",
-          "seenAt": "2026-09-22T18:15:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://www.defenseone.com/threats/2026/09/fbi-defense-bribery-investigation/416138/",
-          "title": "Trump FBI shut down investigation into defense contractor alleged bribes",
-          "domain": "defenseone.com",
-          "country": "United States",
-          "seenAt": "2026-09-22T18:00:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://www.aol.com/articles/defense-stocks-fall-while-oil-155213000.html",
-          "title": "Defense Stocks Fall While Oil Slides on Hormuz Reopening Report : Lockheed Martin and RTX Drop 3 %, Boeing Dips",
-          "domain": "aol.com",
-          "country": "United States",
-          "seenAt": "2026-09-22T16:30:00.000Z",
+          "url": "https://finnhub.io/api/news?id=c2f6a57ac068356bb0be2d95c8555f1dbf0e83c58cc347e4e8af3bc85b9dc807",
+          "title": "Mexico Expands C-130J Super Hercules Fleet with Second Aircraft",
+          "excerpt": "The Fuerza Aérea Mexicana (FAM) recently announced the acquisition of a second Lockheed Martin (NYSE: LMT) C‑130J‑30 Super Hercules tactical airlifter, solidifying Mexico's role as a regional leader in air mobility. The addition of the second Super Hercules follows the first aircraft acquisition announced in January 2026, which made Mexico the first nation in Latin America to join the global Super Hercules fleet.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:01:00.000Z",
           "tickers": [
-            "LMT",
-            "BA"
+            "LMT"
           ]
         },
         {
-          "url": "https://www.gilmermirror.com/2026/09/22/the-fbi-anti-corruption-squad-was-circling-susan-collins-until-trump-got-in-the-way/",
-          "title": "The FBI Anti - Corruption Squad Was Circling Susan Collins Until Trump Got in the Way",
-          "domain": "gilmermirror.com",
-          "country": "United States",
-          "seenAt": "2026-09-22T15:30:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://www.ibtimes.com.au/sunrise-energy-metals-shares-scandium-project-rally-1875729",
-          "title": "Sunrise Energy Metals Rallies 12 . 71 % to $20 . 48 , Nearing 52 - Week High on Scandium Momentum Once Again",
-          "domain": "ibtimes.com.au",
-          "country": "Australia",
-          "seenAt": "2026-09-22T07:15:00.000Z",
+          "url": "https://finnhub.io/api/news?id=33e5c099fb99bdb81bebff6c0fd54e8091520a75b72aab88313433c54175bb82",
+          "title": "1 Cash-Producing Stock on Our Buy List and 2 We Brush Off",
+          "excerpt": "A company that generates cash isn’t automatically a winner. Some businesses stockpile cash but fail to reinvest wisely, limiting their ability to expand.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T10:29:02.000Z",
           "tickers": [
-            "META"
+            "LMT"
           ]
         },
         {
-          "url": "https://thediplomat.com/2026/09/breaking-down-the-philippines-2027-budget/",
-          "title": "Breaking Down the Philippine 2027 Budget – The Diplomat",
-          "domain": "thediplomat.com",
-          "country": "China",
-          "seenAt": "2026-09-22T06:45:00.000Z",
-          "tickers": []
-        }
-      ]
-    },
-    {
-      "sector": "finance",
-      "label": "פיננסים",
-      "ok": true,
-      "refreshedAt": "2026-09-23T11:21:35.142Z",
-      "articles": [
-        {
-          "url": "https://dentonrc.com/elections/texas-senate-race-focuses-on-high-prices-but-what-can-talarico-or-paxton-actually-do/article_78ad2557-c7b9-44bd-beff-4131609c5756.html",
-          "title": "Texas Senate race focuses on high prices but what can Talarico or Paxton actually do about it ? ",
-          "domain": "dentonrc.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://www.finanzen.ch/nachrichten/aktien/asian-shares-mixed-ahead-of-xi-trump-summit-1036566756",
-          "title": "Asian Shares Mixed Ahead Of Xi - Trump Summit",
-          "domain": "finanzen.ch",
-          "country": "Switzerland",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "http://www.theuknews.com/news/279325299/uk-makes-military-pledge-to-saudi-arabia",
-          "title": "UK makes military pledge to Saudi Arabia",
-          "domain": "theuknews.com",
-          "country": "United Kingdom",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://www.business-standard.com/markets/capital-market-news/benchmarks-hold-firm-europe-opens-higher-after-saudi-arabia-restarts-east-west-pipeline-126092300575_1.html",
-          "title": "Benchmarks hold firm ; Europe opens higher after Saudi Arabia restarts east - west pipeline",
-          "domain": "business-standard.com",
-          "country": "India",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "http://www.sanantoniopost.com/news/279321994/amd-joins-usd1-trillion-club-as-shares-surge-to-record-high",
-          "title": "AMD joins $1 trillion club as shares surge to record high",
-          "domain": "sanantoniopost.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T09:00:00.000Z",
+          "url": "https://finnhub.io/api/news?id=35706c52a70e1124d7bf305f7ad018c102d6c5b0e3453b70f065990acb3fd622",
+          "title": "Lockheed Martin (LMT) Is Spending Ahead on JATM. Will a Multiyear Contract Follow?",
+          "excerpt": "Lockheed Martin Corporation (NYSE:LMT) signed a framework agreement with the U.S. Department of War on September 17 to accelerate production of the AIM-260 Joint Advanced Tactical Missile (JATM). The weapon is described as the most sophisticated U.S. air-to-air system and a direct response to China’s air threat. The agreement provides a long-term demand signal and […]",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T05:20:04.000Z",
           "tickers": [
-            "AMD"
+            "LMT"
           ]
         },
         {
-          "url": "https://www.arkansasonline.com/news/2026/sep/23/stock-market-holds-near-record-as-oil-prices-drop/",
-          "title": "Stock market holds near record as oil prices drop | The Arkansas Democrat - Gazette",
-          "domain": "arkansasonline.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=f8d18053c7e06c6004fa9b9508d189ad1388104787d8aac7f477ca49065c623d",
+          "title": "AeroVironment Stock And 2 Other Top Defense Stocks",
+          "excerpt": "The United States decision to reopen a Cold War era base in Greenland under a new long term security deal highlights how governments are rethinking Arctic defense and logistics. That kind of shift keeps attention on companies that build the aircraft, systems, and support services behind these military commitments. This article breaks down 3 stocks from the US aerospace and defense universe that align with that theme and explains what makes each one worth a closer look. The three stocks...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T02:14:54.000Z",
+          "tickers": [
+            "LMT"
+          ]
         },
         {
-          "url": "https://www.cityam.com/uk-growth-set-to-slow-in-2027-oecd-says/",
-          "title": "UK growth set to slow in 2027 , OECD says",
-          "domain": "cityam.com",
-          "country": "United Kingdom",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=365e8f2227e5c089b356c18cb976aa690ed3b395c46a5f57229900b876c5834f",
+          "title": "Detroit Automakers Turn Back the Clock on the Arsenal of Democracy -- Investors Should Cheer",
+          "excerpt": "The move to go after more incremental revenue through the defense business is encouraging, but there's more for investors to cheer about.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T22:25:00.000Z",
+          "tickers": [
+            "LMT"
+          ]
         },
         {
-          "url": "https://www.businesstimes.com.sg/singapore/economy-policy/singapore-core-inflation-picks-2-2-august-watchers-mixed-mas-response",
-          "title": "Singapore core inflation picks up to 2 . 2 % in August ; watchers mixed on MAS response",
-          "domain": "businesstimes.com.sg",
-          "country": "Singapore",
-          "seenAt": "2026-09-23T08:30:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=30919fd279a85391c2034eeb943a88135db7fd95ca062245e4a3842e364dfeb2",
+          "title": "Lockheed Martin (LMT) Stock Moves -2.44%: What You Should Know",
+          "excerpt": "In the latest trading session, Lockheed Martin (LMT) closed at $522.34, marking a -2.44% move from the previous day.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T22:00:06.000Z",
+          "tickers": [
+            "LMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=0e5c88ac14d9d4d46af0a5d8f25f0a990308833dcd2190ebcf9a53c36371a1c4",
+          "title": "What Do IBM (IBM) Lunar AI And Quantum Hub Moves Mean For Investors?",
+          "excerpt": "International Business Machines (NYSE: IBM) and NASA have released an open Lunar Foundation Model for scientific lunar research to the public. IBM, Lockheed Martin and ETH Zurich have created a quantum innovation hub to broaden access to quantum computing research and training. The ETH Zurich quantum hub is intended to support industrial use cases in areas such as materials science, financial services and aerospace. The open Lunar Foundation Model and the new ETH Zurich quantum hub matter,...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T17:12:18.000Z",
+          "tickers": [
+            "LMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=db9c50d96c661f38ea74c80b3eb86d05e320402f7d2a1077a9dd598c010bbeb9",
+          "title": "Varda Space Industries Signs Steve Layne as Chief Revenue Officer and Aaron Huber as Chief Financial Officer",
+          "excerpt": "Varda Space Industries, the leader in orbital pharmaceutical processing and hypersonic reentry, announced the appointments of Steve Layne as Chief Revenue Officer and Aaron Huber as Chief Financial Officer. The two appointments strengthen Varda's leadership team, as the company scales operations across its two primary markets: pharmaceutical development and government programs.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T16:08:00.000Z",
+          "tickers": [
+            "LMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e6ac32ea6c44f659ee8d460ce228bd95803a88be27c35e04657b02fd4751649c",
+          "title": "Defense Stocks Fall While Oil Slides on Hormuz Reopening Report: Lockheed Martin and RTX Drop 3%, Boeing Dips",
+          "excerpt": "Aerospace and defense shares are trading lower Tuesday morning after a Reuters report that Iran has offered to reopen the Strait of Hormuz within seven days if the U.S. takes initial steps toward easing military pressure. Crude oil is falling for a fourth session alongside the diplomatic signal, which suggests the market is compressing the […]",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T15:52:13.000Z",
+          "tickers": [
+            "LMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b6a76a985548bfcebb72d3976b7bc3acfb095564da3139c17237385207091991",
+          "title": "Is Ducommun (DCO) Outperforming Other Aerospace Stocks This Year?",
+          "excerpt": "Here is how Ducommun (DCO) and Lockheed Martin (LMT) have performed compared to their sector so far this year.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T13:40:03.000Z",
+          "tickers": [
+            "LMT"
+          ]
         }
       ]
     },
     {
       "sector": "trade",
       "label": "סחר ומכסים",
+      "blurb": "מכסים, סנקציות, מלחמות סחר ושרשראות אספקה",
+      "accent": "#d4537e",
       "ok": true,
-      "refreshedAt": "2026-09-23T11:21:35.142Z",
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
       "articles": [
         {
-          "url": "https://www.investegate.co.uk/announcement/eqs/rea-holdings--re./r-e-a-holdings-plc-half-yearly-results/9785891",
-          "title": "R . E . A . Holdings plc : Half yearly results | Company Announcement",
-          "domain": "investegate.co.uk",
-          "country": "United Kingdom",
-          "seenAt": "2026-09-23T09:00:00.000Z",
+          "url": "https://finnhub.io/api/news?id=a1f74df04dca4734d80f60f52e51e85b644bd137b08c0a26e12cc121f765fa51",
+          "title": "Walmart Just Posted Its Lowest Operating Margin in Nine Years. Here’s What to Expect Next.",
+          "excerpt": "Key TakeawaysWalmart’s Q2 FY27 earnings call was framed around a 17. 4% constant-currency jump in adjusted operating income, with CFO John David Rainey calling out incremental margins running twice the pace of the overall business.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T11:09:09.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=42d2a0982f047cdda2ae2012464c28f15b0c9cecb68a73dca68e1e8b90802a9c",
+          "title": "Why Costco has the luxury of sitting out the delivery arms race",
+          "excerpt": "People want the thrill of the Costco treasure hunt more than same-day delivery.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T07:00:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=824802cc784b585b85f963c426fb8f8579276c4f502df9eaa00bfc609cc52d16",
+          "title": "PhonePe moves closer to UAE launch with central bank initial approval",
+          "excerpt": "PhonePe described the authorisation as a “key milestone” in its international expansion journey.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T05:58:26.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=9a7ce928b44d351ac6b08da05ce6f31afd291c0435668ee8a2dad8891cf1d42a",
+          "title": "How Walmart, Home Depot, Lowe’s tariff refunds affect shoppers",
+          "excerpt": "Major retailers are receiving billions of dollars in tariff refunds, but research shows shoppers have already paid part of the cost.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T03:07:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=1edfbac7e6f877bc0fc0d2d97fac46c589696e7b684e9530e929e71e47d6b8c6",
+          "title": "Two years after a costly retreat, Walmart tries health again",
+          "excerpt": "The retail giant is testing a low-cost way to blend groceries, pharmacy, and health coaching into one shopper experience.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T02:17:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPRVVYazU2NVBYOUFueHpwS0lxNDJzbFgzYVhRZ1ZjcjRyTGdESUlaT0UzQ0MtbDcyYklsVkk0TVRseTZHUjI0dlU4UmhfVmhQNzEwVVAwY1FTMVFaSHByTDNXd19NUHc5bXRuMWYyaGhmbXBsRUo0TkQ5LVRBQm5ZbndBSEc1amtZR3BrN21XWkFsZw?oc=5",
+          "title": "Trump supports diesel export ban as fuel prices hit records - Reuters",
+          "excerpt": "Trump supports diesel export ban as fuel prices hit records  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-22T23:22:15.000Z",
           "tickers": []
         },
         {
-          "url": "https://www.prokerala.com/news/articles/a1815673.html",
-          "title": "India - Germany submarine deal awaits final Indian approval : German Ambassador",
-          "domain": "prokerala.com",
-          "country": "India",
-          "seenAt": "2026-09-23T09:00:00.000Z",
+          "url": "https://finnhub.io/api/news?id=03325dbe4b893c52a67cdb22b127fcf3172519a39fac67a8fef43b165b6a8922",
+          "title": "How Much Upside Is Left In eBay Stock?",
+          "excerpt": "eBay (EBAY) trades near $108 after a 22% return over the past year, against 18.5% for the S&P 500. The easy read is that the big gain is already in the price. But revenue grew 14.7% over the last twelve months, more than twice its three-year average. Management ties that growth to focused categories, preowned goods and newer lines such as eBay Live. A three-year scenario on eBay's own numbers shows how much of it could still reach the stock.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T21:10:49.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e8be11e7e2afec9a910280d2e4f78c37c39012aed0dc1eb2efc893ec3ea998b3",
+          "title": "These 4 Retail Stocks Are Winning the Race for Inflation-Weary Bargain Hunters",
+          "excerpt": "Value and convenience are still top of mind for inflation-weary shoppers, writes a Bernstein analyst.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T19:49:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOYUctWThWVWVEVTZjNnRhUnlxdXluSk9hQjdIVWg1d2V3T1NVckhjc1VtNjhnT2FpbjdyV3lCWUg1YlRZZ3ZqTy05WHpSVWMxcHJYWWNrVTBfd2RjYmtoZGRLZXBqTm1hdnJyRTNWRTNMQU9YQkhscHhKUG80U1JScXhTcGpGei1vdWVJdzNrSzlRb0NfdTM2bDhfMlc4WDJmYW1Pa0l3Vy1BaGxMNWNVWDVfTDZ6MVFKdEhmTFV0ODV1QlZqdGtmYQ?oc=5",
+          "title": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say - Reuters",
+          "excerpt": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-09-22T19:23:05.000Z",
           "tickers": []
         },
         {
-          "url": "https://www.arkansasonline.com/news/2026/sep/23/us-blacklist-clouds-trump-xi-meeting/",
-          "title": "US blacklist clouds Trump - Xi meeting | The Arkansas Democrat - Gazette",
-          "domain": "arkansasonline.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=d1a0fa717a3205c82feb1b910304a2237ef6e5907fe442d635e0bf4fae4efbd3",
+          "title": "Tuesday's session: top gainers and losers in the dow jones index",
+          "excerpt": "Uncover the latest developments among dow jones stocks in today's session. Stay tuned to the dow jones index's top gainers and losers on Tuesday.",
+          "image": "https://www.chartmill.com/images/uploads/CM_Top_Movers_Small_free_2b4ff2fc22.webp",
+          "domain": "ChartMill",
+          "country": null,
+          "seenAt": "2026-09-22T19:10:06.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": "consumer",
+      "label": "צריכה וקמעונאות",
+      "blurb": "הוצאות הצרכן, קמעונאות, מזון ומותגים",
+      "accent": "#97c459",
+      "ok": true,
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
+      "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=a1f74df04dca4734d80f60f52e51e85b644bd137b08c0a26e12cc121f765fa51",
+          "title": "Walmart Just Posted Its Lowest Operating Margin in Nine Years. Here’s What to Expect Next.",
+          "excerpt": "Key TakeawaysWalmart’s Q2 FY27 earnings call was framed around a 17. 4% constant-currency jump in adjusted operating income, with CFO John David Rainey calling out incremental margins running twice the pace of the overall business.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T11:09:09.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
-          "url": "http://www.bgnes.com/economy/trump-linked-billionaire-emerges-as-potential-buyer-of-lukoil-s-international-assets",
-          "title": "Trump - Linked Billionaire Emerges as Potential Buyer of Lukoil International Assets",
-          "domain": "bgnes.com",
-          "country": "Bulgaria",
-          "seenAt": "2026-09-23T09:00:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=42d2a0982f047cdda2ae2012464c28f15b0c9cecb68a73dca68e1e8b90802a9c",
+          "title": "Why Costco has the luxury of sitting out the delivery arms race",
+          "excerpt": "People want the thrill of the Costco treasure hunt more than same-day delivery.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T07:00:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
-          "url": "https://www.al-monitor.com/originals/2026/09/oil-prices-fall-after-trump-hails-good-talks-iran",
-          "title": "Oil prices fall after Trump hails  good  talks with Iran",
-          "domain": "al-monitor.com",
-          "country": "Israel",
-          "seenAt": "2026-09-23T08:45:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=824802cc784b585b85f963c426fb8f8579276c4f502df9eaa00bfc609cc52d16",
+          "title": "PhonePe moves closer to UAE launch with central bank initial approval",
+          "excerpt": "PhonePe described the authorisation as a “key milestone” in its international expansion journey.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T05:58:26.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
-          "url": "https://www.al-monitor.com/originals/2026/09/argentinas-milei-addresses-un-tensions-rise-over-falkland-islands",
-          "title": "Argentina Milei addresses UN as tensions rise over Falkland Islands",
-          "domain": "al-monitor.com",
-          "country": "Israel",
-          "seenAt": "2026-09-23T08:45:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=9a7ce928b44d351ac6b08da05ce6f31afd291c0435668ee8a2dad8891cf1d42a",
+          "title": "How Walmart, Home Depot, Lowe’s tariff refunds affect shoppers",
+          "excerpt": "Major retailers are receiving billions of dollars in tariff refunds, but research shows shoppers have already paid part of the cost.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T03:07:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
-          "url": "https://www.euronews.com/2026/09/22/eu-renews-russia-sanctions-but-removes-usmanov-at-frances-request",
-          "title": "EU renews Russia sanctions but removes Usmanov at France request",
-          "domain": "euronews.com",
-          "country": "United States",
-          "seenAt": "2026-09-23T08:30:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=1edfbac7e6f877bc0fc0d2d97fac46c589696e7b684e9530e929e71e47d6b8c6",
+          "title": "Two years after a costly retreat, Walmart tries health again",
+          "excerpt": "The retail giant is testing a low-cost way to blend groceries, pharmacy, and health coaching into one shopper experience.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T02:17:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
-          "url": "https://www.spotlightnepal.com/2026/09/23/gap-between-law-and-life/",
-          "title": "The Gap Between Law And Life | New Spotlight Magazine",
-          "domain": "spotlightnepal.com",
-          "country": "Nepal",
-          "seenAt": "2026-09-23T08:30:00.000Z",
-          "tickers": []
+          "url": "https://finnhub.io/api/news?id=03325dbe4b893c52a67cdb22b127fcf3172519a39fac67a8fef43b165b6a8922",
+          "title": "How Much Upside Is Left In eBay Stock?",
+          "excerpt": "eBay (EBAY) trades near $108 after a 22% return over the past year, against 18.5% for the S&P 500. The easy read is that the big gain is already in the price. But revenue grew 14.7% over the last twelve months, more than twice its three-year average. Management ties that growth to focused categories, preowned goods and newer lines such as eBay Live. A three-year scenario on eBay's own numbers shows how much of it could still reach the stock.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T21:10:49.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e8be11e7e2afec9a910280d2e4f78c37c39012aed0dc1eb2efc893ec3ea998b3",
+          "title": "These 4 Retail Stocks Are Winning the Race for Inflation-Weary Bargain Hunters",
+          "excerpt": "Value and convenience are still top of mind for inflation-weary shoppers, writes a Bernstein analyst.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T19:49:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d1a0fa717a3205c82feb1b910304a2237ef6e5907fe442d635e0bf4fae4efbd3",
+          "title": "Tuesday's session: top gainers and losers in the dow jones index",
+          "excerpt": "Uncover the latest developments among dow jones stocks in today's session. Stay tuned to the dow jones index's top gainers and losers on Tuesday.",
+          "image": "https://www.chartmill.com/images/uploads/CM_Top_Movers_Small_free_2b4ff2fc22.webp",
+          "domain": "ChartMill",
+          "country": null,
+          "seenAt": "2026-09-22T19:10:06.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=6ccc9dc6a79120c8e44b2f18d8d60024b434542a29a1917ee5f6dae3f6967ff8",
+          "title": "Walmart (WMT) Reverses Course On In Store Digital Wallet Payments",
+          "excerpt": "Walmart (NasdaqGS:WMT) is rolling out support for Apple Pay and Google Pay across its U.S. stores in a policy reversal. The retailer previously promoted its own Walmart Pay solution and had limited acceptance of third party digital wallets in stores. Apple Pay and Google Pay support is expected to cover in person checkout, with timing and specific rollout details still emerging. Walmart's move to support Apple Pay and Google Pay matters, but investors also need to think beyond this payments...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T18:14:51.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=fb1bcc02a1f77d65f8d855cd4d814b4de083a62b5eb3190550ea777befc10ca0",
+          "title": "Uncover the latest developments among dow jones stocks in today's session.",
+          "excerpt": "Let's have a look at the top dow jones gainers and losers in the middle of the day of today's session.",
+          "image": "https://www.chartmill.com/images/uploads/CM_Top_Movers_Small_free_2b4ff2fc22.webp",
+          "domain": "ChartMill",
+          "country": null,
+          "seenAt": "2026-09-22T16:40:07.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": "health",
+      "label": "בריאות ותרופות",
+      "blurb": "פארמה, ביוטק, אישורי FDA וביטוח בריאות",
+      "accent": "#5dcaa5",
+      "ok": true,
+      "refreshedAt": "2026-09-23T14:07:50.030Z",
+      "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=727c42f4ae256675ca85577fe38d81fc7370535193362ce50262aa54f20b79ae",
+          "title": "AutoZone (AZO) Posts Strong Earnings, But Is the Stock Ready to Rebound?",
+          "excerpt": "On September 22, AutoZone, Inc. (NYSE:AZO) reported results for its fourth quarter, which covered 16 weeks and ended August 29, 2026. The company delivered stronger-than-expected profits and the stock ended the session 3.26% higher. The company’s net sales increased 5.6% year-over-year to $6.6 billion, while operating profit rose 10.1% to $1.3 billion. Net income reached […]",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:41:29.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=39daa93f12fb1aaac7873cc98266cd588a5e81be0a76291af138bb4bd2206c12",
+          "title": "Novo Nordisk Stock Slides After Unveiling Long Term Pipeline Growth Targets",
+          "excerpt": "Key Stats for Novo Nordisk StockPrice change for Novo Nordisk stock in last 1 year: -35%$NVO Stock Price as of Sep. 22: $3952-Week High: $64$NVO Stock Price Target: $47What Happened?Novo Nordisk (NVO) stock dropped sharply on Monday after the company laid out new long-term goals that failed to convince investors it can hold its ground against fast-growing rivals in the weight loss drug market.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:41:26.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=c634d8f0a657e76defe36fa2ed5a71b251bdb98ee9b666cd89895d086a76bebc",
+          "title": "ProQR Announces Appointment of Chris Hart as Chief Data and AI Officer and Thomas Wolf to join the Board of Directors as Strategic AI Advisor",
+          "excerpt": "Appointments support ProQR’s strategy to scale AI across the discovery and development of medicines using its Axiomer RNA editing platform and pipelineAX-0811, the first ProQR program identified through its AI-enabled discovered engine in clinical testing, with target engagement data expected in early January 2027ProQR’s expanded AI strategy is directly supporting the ongoing development programs; the Company expects up to 5 clinical data readouts over the next 12 months across 4 development pro",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T12:00:00.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d0db740160a2b965b635a57c05836424b88ac56d1b2e2902dfe87a4b0229596b",
+          "title": "Vault CRM Extends Market Leadershipas Another Top 20 Biopharma Chooses Veeva",
+          "excerpt": "Veeva Systems (NYSE: VEEV) today announced a new top 20 biopharma commitment, adding to recent selections by Amgen, Biogen, Eli Lilly and Company, and Regeneron. With more than 190 live customers and global commitments from 14 of the top 20 biopharmas, Vault CRM is the next generation of CRM, delivering new agentic and core capabilities to increase field productivity and effectiveness.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T11:03:00.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d77a705211fd5251fbd7fe3488424964bfa3510811246eb3237f7b91d2b2b0dd",
+          "title": "Eli Lilly CEO Says Foundayo Wins One-Third of New Oral GLP-1 Patients as Company Captures 70% of New Seniors: 'Growing Week on Week'",
+          "excerpt": "Eli Lilly and Co.‘s CEO Dave Ricks announced a significant increase in the use of GLP-1 treatments among seniors, following Medicare’s July decision to cover obesity drugs. On Monday, Ricks said in an interview with CNBC that 70% of the...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T11:00:23.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=8980ca0ffa6210cbd24ba4b886d8d0eaa9f86b2f9832e95bf7acc20322fac27e",
+          "title": "Obesity titan could shake up Lilly and Novo after astonishing trial",
+          "excerpt": "The San Diego company’s flexible dosing results could carve out real market share in the obesity drug race.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T02:31:51.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=0bcef4d38a9b0e75e40be7f95e6c749ef6e3049ccf13e8c5d10b4ecdc3363f9b",
+          "title": "VKTX Stock On Track To Beat LLY, NVO This Month After Obesity Drug Data — Can Viking Win Over Wegovy And Zepbound Users?",
+          "excerpt": "Obesity specialist Lou Aronne said switching from a GLP-1 drug to a dual GLP-1/GIP drug could mean greater weight loss.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-23T02:22:42.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=7b855980ec00a52e76ee2f492f1147b1c126bc7cd4a7007d1043415f91d9420c",
+          "title": "Eli Lilly CEO reveals astonishing shift in GLP-1 pill market",
+          "excerpt": "Medicare coverage opens the obesity pill market to millions more Americans.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T22:17:00.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=35e71c066fb482c854f7192cdfeee67a0777a4c059b3dd81c3906c67c34014e9",
+          "title": "Lilly Rises Higher as Viking Preserves Up to 90% Monthly",
+          "excerpt": "Less-frequent injections could challenge chronic-treatment economics long before Viking reaches the market.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T21:35:39.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=45e5e7eaf49026d830274c69096823ff77b60acc0e94c79daa2bb2da978f9b51",
+          "title": "Novo Nordisk Just Made a Surprising Move Beyond Weight Loss",
+          "excerpt": "The company aims to launch more than five potential blockbuster drugs by 2030.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-09-22T21:24:49.000Z",
+          "tickers": [
+            "LLY"
+          ]
         }
       ]
     }
