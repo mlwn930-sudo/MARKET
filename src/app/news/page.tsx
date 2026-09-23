@@ -1,10 +1,11 @@
-import { getEnrichedFeed, isFeedStale } from "@/lib/news-store";
+import { isFeedStale } from "@/lib/news-store";
+import { feedSignature, getLiveFeed } from "@/lib/live-news";
 import { ArticleCard } from "@/components/ArticleCard";
 import { fmtRelative } from "@/lib/format";
 import { AccentTheme } from "@/components/AccentTheme";
 import { NewsAutoRefresh } from "@/components/NewsAutoRefresh";
 
-export const revalidate = 300;
+export const revalidate = 60;
 
 export const metadata = {
   title: "חדשות השוק — Market Intel",
@@ -13,8 +14,8 @@ export const metadata = {
 };
 
 export default async function NewsPage() {
-  const { refreshedAt, sectors, analysedCount, totalCount } =
-    await getEnrichedFeed();
+  const feed = await getLiveFeed();
+  const { refreshedAt, sectors, analysedCount, totalCount } = feed;
 
   const stale = isFeedStale(refreshedAt);
   const empty = sectors.length === 0;
@@ -28,7 +29,7 @@ export default async function NewsPage() {
           <h1 className="text-3xl">חדשות השוק</h1>
           <span className="flex items-center gap-2 text-[11px] text-ink-muted">
             <NewsAutoRefresh
-              refreshedAt={refreshedAt}
+              signature={feedSignature(feed)}
               analysedCount={analysedCount}
             />
             {refreshedAt && (

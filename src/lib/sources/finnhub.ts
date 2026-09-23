@@ -135,6 +135,25 @@ const newsItemSchema = z.object({
 
 export type NewsItem = z.infer<typeof newsItemSchema> & { publishedAt: Date };
 
+/**
+ * The general market wire.
+ *
+ * Cached for two minutes, which is the whole point: the page reads this on
+ * every visit, and without a shared cache a handful of open tabs would spend
+ * the minute's allowance on a feed that changes a few times an hour. Two
+ * minutes is short enough that a story reaches the site while it is still
+ * news and long enough that the cost does not scale with readers.
+ */
+export async function getGeneralNews(): Promise<NewsItem[]> {
+  const raw = await finnhubFetch("/news?category=general", 120);
+  const items = z.array(newsItemSchema).safeParse(raw);
+  if (!items.success) return [];
+  return items.data.map((i) => ({
+    ...i,
+    publishedAt: new Date(i.datetime * 1000),
+  }));
+}
+
 export async function getCompanyNews(
   symbol: string,
   from: string,

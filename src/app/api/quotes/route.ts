@@ -76,6 +76,10 @@ export async function GET(request: Request) {
             changePercent: quote.changePercent,
             high: quote.high,
             low: quote.low,
+            // Fixed for the session, and the reference the tick stream needs:
+            // a trade print carries a price and nothing else, so this is what
+            // lets the change percentage stay correct between polls.
+            previousClose: quote.previousClose,
             at: quote.at.toISOString(),
           }
         : { symbol, price: null };

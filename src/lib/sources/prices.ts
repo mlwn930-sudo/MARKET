@@ -43,11 +43,12 @@ const HEADERS = {
 async function fetchHistory(
   symbol: string,
   range: string,
+  interval = "1d",
 ): Promise<PriceHistory | null> {
   try {
     const url =
       `https://query1.finance.yahoo.com/v8/finance/chart/` +
-      `${encodeURIComponent(symbol)}?range=${range}&interval=1d`;
+      `${encodeURIComponent(symbol)}?range=${range}&interval=${interval}`;
 
     const res = await fetch(url, {
       headers: HEADERS,
@@ -83,7 +84,12 @@ async function fetchHistory(
       }
 
       candles.push({
-        date: new Date(timestamps[i] * 1000).toISOString().slice(0, 10),
+        // Intraday bars need the time as well, or every bar in a session
+        // collapses onto the same key. Daily bars keep the plain date.
+        date:
+          interval === "1d"
+            ? new Date(timestamps[i] * 1000).toISOString().slice(0, 10)
+            : new Date(timestamps[i] * 1000).toISOString(),
         open,
         high,
         low,
@@ -92,7 +98,11 @@ async function fetchHistory(
       });
     }
 
-    if (candles.length < 30) return null;
+    // A daily series too short to carry a moving average is not useful. An
+    // intraday one legitimately is short — a session two hours old holds a
+    // couple of dozen bars — so the floor only applies to daily data.
+    if (interval === "1d" && candles.length < 30) return null;
+    if (candles.length < 2) return null;
 
     return {
       symbol: result?.meta?.symbol ?? symbol.toUpperCase(),
@@ -115,6 +125,29 @@ export function getPriceHistory(
     () => fetchHistory(ticker, range),
     ["price-history-ohlc", ticker, range],
     { revalidate: 3600, tags: ["prices", `prices:${ticker}`] },
+  )();
+}
+
+/**
+ * Today's session in five-minute bars, for the sparklines on the dashboard.
+ *
+ * A card showing a price and a percentage tells you where a thing is. The
+ * same card with the session's shape behind it tells you how it got there,
+ * which is a different and more useful fact: down 0.4% having fallen all
+ * morning and down 0.4% having recovered from −2% are the same number about
+ * two different days.
+ *
+ * Cached for two minutes. These bars close every five, so a shorter cache
+ * would spend requests to receive the bar we already have.
+ */
+export function getIntradayHistory(
+  symbol: string,
+): Promise<PriceHistory | null> {
+  const ticker = symbol.toUpperCase();
+  return unstable_cache(
+    () => fetchHistory(ticker, "1d", "5m"),
+    ["price-history-intraday", ticker],
+    { revalidate: 120, tags: ["prices", `prices:${ticker}`] },
   )();
 }
 

@@ -18,7 +18,7 @@ import { writeFile, mkdir, readFile } from "node:fs/promises";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SECTORS, classify, isRelevant, tickersIn } from "./news-config.mjs";
+import { SECTORS, classify, isRelevant, tickersIn } from "../src/lib/news-sectors.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = resolve(ROOT, "content/news/latest.json");

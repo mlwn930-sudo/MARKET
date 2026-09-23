@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { getQuotes } from "@/lib/sources/finnhub";
-import { getEnrichedFeed } from "@/lib/news-store";
+import { getLiveFeed } from "@/lib/live-news";
 import { runScreen } from "@/lib/screener";
 import { AccentTheme } from "@/components/AccentTheme";
 import { TickerSearch } from "@/components/TickerSearch";
-import { LiveIndexStrip, LiveWatchlist } from "@/components/LiveQuotes";
+import { MarketDeck, type IndexCard } from "@/components/MarketDeck";
 import { ArticleCard } from "@/components/ArticleCard";
-import type { LiveQuote } from "@/lib/use-live-quotes";
+import { getIntradayHistory } from "@/lib/sources/prices";
+import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtCompact, fmtRelative } from "@/lib/format";
 
 // Finnhub's free tier does not carry index symbols, so we track the ETFs
@@ -78,11 +79,28 @@ async function seedQuotes(
   return seed;
 }
 
+/**
+ * Today's session for each index card, so the sparkline has a shape to draw
+ * before the first live tick arrives. A card that starts as a flat line and
+ * grows one is a card that looks broken for the first minute.
+ */
+async function indexCards(): Promise<IndexCard[]> {
+  return Promise.all(
+    INDEX_PROXIES.map(async (proxy) => {
+      const history = await getIntradayHistory(proxy.symbol).catch(() => null);
+      return {
+        ...proxy,
+        intraday: history?.candles.map((c) => c.close) ?? [],
+      };
+    }),
+  );
+}
+
 export default async function Home() {
-  const [indexSeed, watchSeed, feed, screen] = await Promise.all([
-    seedQuotes(INDEX_PROXIES.map((i) => i.symbol)),
-    seedQuotes(WATCHLIST),
-    getEnrichedFeed(),
+  const [seed, cards, feed, screen] = await Promise.all([
+    seedQuotes([...INDEX_PROXIES.map((i) => i.symbol), ...WATCHLIST]),
+    indexCards(),
+    getLiveFeed(),
     runScreen().catch(() => ({ builtAt: "", results: [] })),
   ]);
 
@@ -115,20 +133,14 @@ export default async function Home() {
       </header>
 
       <div className="mt-8">
-        <LiveIndexStrip items={INDEX_PROXIES} initial={indexSeed} />
-        <p className="mt-2 text-[11px] text-ink-faint">
-          המדדים מוצגים דרך קרנות הסל העוקבות אחריהם.
-        </p>
+        <MarketDeck
+          indices={cards}
+          watchlist={WATCHLIST}
+          initial={seed}
+        />
       </div>
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
-        <section aria-labelledby="watchlist">
-          <h2 id="watchlist" className="mb-3 text-base">
-            רשימת מעקב
-          </h2>
-          <LiveWatchlist symbols={WATCHLIST} initial={watchSeed} />
-        </section>
-
+      <div className="mt-10">
         <section aria-labelledby="picks">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 id="picks" className="text-base">

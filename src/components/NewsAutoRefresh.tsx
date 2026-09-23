@@ -4,53 +4,61 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 /**
- * Pulls the news page in again when the feed behind it has changed.
+ * Pulls the news page in again when the stories behind it have changed.
  *
- * The refresh workflow runs every twenty minutes, so this checks a little
- * more often than that and does nothing at all on the cycles where nothing
- * arrived — which is most of them. What it polls is a few bytes saying when
- * the feed was last built; the page itself is only re-fetched once that
- * answer changes.
+ * It polls a few bytes — a signature of the current article list — and only
+ * re-fetches the page when that signature moves. The feed itself is rebuilt
+ * on a timer whether or not anything arrived, so watching a timestamp would
+ * mean refreshing every couple of minutes over an unchanged list and
+ * announcing it each time.
  *
- * Two behaviours are deliberate.
+ * Three behaviours are deliberate.
  *
  * It stops while the tab is hidden and checks once on return. A page left
- * open in a background tab overnight would otherwise make a few hundred
- * requests to learn nothing.
+ * open overnight would otherwise make a few hundred requests to learn
+ * nothing.
  *
- * It refreshes without scrolling or moving anything. `router.refresh()`
- * replaces the server-rendered content in place and keeps scroll position
- * and open sections, so a reader halfway through an article's analysis
- * stays exactly where they were. The badge is the only thing that appears —
- * a page that reshuffles itself under someone reading it is worse than a
- * page that is five minutes out of date.
+ * It refreshes without moving anything. `router.refresh()` replaces the
+ * server-rendered content in place and keeps scroll position and open
+ * sections, so a reader halfway through an article's analysis stays exactly
+ * where they were. A page that reshuffles under someone reading it is worse
+ * than one that is a minute out of date.
+ *
+ * It does not announce the first change it sees after mounting if nothing
+ * actually differs from what was rendered — the badge is reserved for a
+ * genuine arrival, so that it keeps meaning something.
  */
 
-/** Slightly more often than the twenty-minute refresh cycle, so a new feed
- *  is picked up within a few minutes of landing without the polling itself
- *  becoming a load. */
-const CHECK_MS = 4 * 60 * 1000;
-const BADGE_MS = 6000;
+/** The feed behind this rebuilds every two minutes, so checking a little
+ *  more often than that catches a story without the polling becoming a load
+ *  in its own right. */
+const CHECK_MS = 60_000;
+const BADGE_MS = 5000;
 
-type Status = { refreshedAt: string | null; analysed: number; total: number };
+type Status = {
+  signature: string;
+  analysed: number;
+  total: number;
+};
 
 export function NewsAutoRefresh({
-  refreshedAt,
+  signature,
   analysedCount,
 }: {
-  refreshedAt: string | null;
+  /** The signature of the list as this render saw it. */
+  signature: string;
   analysedCount: number;
 }) {
   const router = useRouter();
   const [updated, setUpdated] = useState(false);
 
-  // Held in a ref rather than state: the effect must compare against the
-  // latest known values without re-subscribing every time they change.
-  const known = useRef({ refreshedAt, analysed: analysedCount });
+  // Held in a ref so the polling effect can compare against the latest
+  // render without re-subscribing every time the page re-renders.
+  const known = useRef({ signature, analysed: analysedCount });
 
   useEffect(() => {
-    known.current = { refreshedAt, analysed: analysedCount };
-  }, [refreshedAt, analysedCount]);
+    known.current = { signature, analysed: analysedCount };
+  }, [signature, analysedCount]);
 
   useEffect(() => {
     let cancelled = false;
@@ -67,23 +75,23 @@ export function NewsAutoRefresh({
         if (cancelled) return;
 
         const changed =
-          status.refreshedAt !== known.current.refreshedAt ||
+          status.signature !== known.current.signature ||
           status.analysed !== known.current.analysed;
 
-        if (changed) {
-          known.current = {
-            refreshedAt: status.refreshedAt,
-            analysed: status.analysed,
-          };
-          router.refresh();
-          setUpdated(true);
-          badgeTimer = setTimeout(() => {
-            if (!cancelled) setUpdated(false);
-          }, BADGE_MS);
-        }
+        if (!changed) return;
+
+        known.current = {
+          signature: status.signature,
+          analysed: status.analysed,
+        };
+        router.refresh();
+        setUpdated(true);
+        badgeTimer = setTimeout(() => {
+          if (!cancelled) setUpdated(false);
+        }, BADGE_MS);
       } catch {
-        // A failed check is not worth surfacing. The page on screen is
-        // still the page that was correct a few minutes ago.
+        // A failed check is not worth surfacing. What is on screen is still
+        // what was correct a minute ago.
       }
     }
 
@@ -108,7 +116,7 @@ export function NewsAutoRefresh({
       className="accent-chip enter rounded-full px-2.5 py-1 text-[11px]"
       role="status"
     >
-      הפיד התעדכן
+      כתבות חדשות נטענו
     </span>
   );
 }

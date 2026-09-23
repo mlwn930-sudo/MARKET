@@ -12,7 +12,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { isRelevant, tickersIn } from "./news-config.mjs";
+import { isRelevant, tickersIn } from "../src/lib/news-sectors.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const FILE = resolve(ROOT, "content/news/latest.json");

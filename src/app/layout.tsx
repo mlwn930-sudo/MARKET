@@ -42,6 +42,7 @@ export default function RootLayout({
             <AccentTheme />, so the background changes with the page without
             either of them knowing what is on it. */}
         <div className="ambient" aria-hidden="true" />
+        <div className="grid-layer" aria-hidden="true" />
         <div className="grain" aria-hidden="true" />
 
         <SiteNav />

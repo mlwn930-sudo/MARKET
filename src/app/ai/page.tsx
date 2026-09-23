@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getQuotes } from "@/lib/sources/finnhub";
-import { getEnrichedFeed } from "@/lib/news-store";
+import { getLiveFeed } from "@/lib/live-news";
 import { getFundamentalsFile } from "@/lib/fundamentals-store";
 import { identityFor, tint } from "@/lib/company-identity";
 import { ArticleCard } from "@/components/ArticleCard";
@@ -62,7 +62,7 @@ export default async function AiPage() {
 
   const [quotes, feed, fundamentals] = await Promise.all([
     getQuotes(allTickers),
-    getEnrichedFeed(),
+    getLiveFeed(),
     getFundamentalsFile(),
   ]);
 
