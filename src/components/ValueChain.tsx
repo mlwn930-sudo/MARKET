@@ -52,14 +52,7 @@ export function ValueChain({
           <Link
             key={link.symbol}
             href={`/company/${link.symbol}`}
-            className={`panel p-4 ${
-              direction === "up"
-                ? "flash-up"
-                : direction === "down"
-                  ? "flash-down"
-                  : ""
-            }`}
-            style={{ borderInlineStartWidth: 2, borderInlineStartColor: identity.accent }}
+            className="surface interactive p-4"
           >
             <div className="flex items-baseline justify-between gap-3">
               <div>

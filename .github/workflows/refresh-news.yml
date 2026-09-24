@@ -67,21 +67,14 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/summarize-news.mjs
 
-      # Fails loudly when the key is missing, rather than leaving the site
-      # showing unanalysed headlines for weeks with nothing to explain it.
-      # Checked through an env var rather than in an `if:` — the secrets
-      # context is not available to step conditions.
-      - name: Check the analysis key is configured
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          if [ -z "$GEMINI_API_KEY" ]; then
-            echo "::error::GEMINI_API_KEY is not set, so no article was analysed."
-            echo "::error::Add it under Settings > Secrets and variables > Actions."
-            exit 1
-          fi
-          echo "analysis key present"
-
+      # Commits FIRST, before anything is allowed to fail.
+      #
+      # An earlier version checked the analysis key here and exited 1 when
+      # it was missing. That stopped the job before this step, so a run
+      # would fetch the news and then throw it away — the feed went stale
+      # while the workflow reported a failure that had nothing to do with
+      # fetching. Whatever was retrieved gets saved; problems are reported
+      # afterwards.
       - name: Commit if anything changed
         run: |
           git config user.name "github-actions[bot]"
@@ -97,3 +90,40 @@ jobs:
             git pull --rebase --autostash origin main
             git push
           fi
+
+      # Reported as a warning, after the commit, and never as a failure.
+      # A missing optional key is a reason to tell someone, not a reason to
+      # discard a feed that was fetched successfully.
+      - name: Report the analysis key state
+        if: always()
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::warning::GEMINI_API_KEY is not set, so articles carry the"
+            echo "::warning::rule-based triage only. Add it under Settings >"
+            echo "::warning::Secrets and variables > Actions to get the full"
+            echo "::warning::three-lens analysis."
+          else
+            echo "analysis key present"
+          fi
+
+      # How many of the articles now on the page carry a full reading.
+      # Printed every run so a silent drift to zero is visible in the log
+      # rather than only on the site weeks later.
+      - name: Analysis coverage
+        if: always()
+        run: |
+          node -e "
+            const fs = require('fs');
+            const read = (p) => { try { return JSON.parse(fs.readFileSync(p,'utf8')); } catch { return null; } };
+            const feed = read('content/news/latest.json');
+            const sums = read('content/news/summaries.json');
+            if (!feed || !sums) { console.log('::warning::feed or summaries missing'); process.exit(0); }
+            const urls = new Set(feed.sectors.flatMap(s => s.articles.map(a => a.url)));
+            const done = Object.keys(sums.summaries || {}).filter(u => urls.has(u)).length;
+            console.log(\`coverage: \${done}/\${urls.size} articles analysed\`);
+            if (urls.size > 0 && done === 0) {
+              console.log('::warning::no article in the current feed has an analysis');
+            }
+          "

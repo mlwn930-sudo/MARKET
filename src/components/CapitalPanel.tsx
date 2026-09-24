@@ -46,7 +46,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
   // The spread bar is drawn against a fixed 30-point scale rather than
   // against the larger of the two values. A scale that rescales itself makes
   // a two-point spread and a twenty-point spread look identical, which is
-  // the opposite of the panel's purpose.
+  // the opposite of the surface's purpose.
   const SCALE = 30;
   const barWidth = (value: number | null) =>
     value === null ? 0 : Math.min(Math.abs(value) / SCALE, 1) * 100;
@@ -60,7 +60,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
     costOfCapital.wacc === null ? null : costOfCapital.wacc * 100;
 
   return (
-    <section className="reveal">
+    <section className="enter">
       <h2 className="mb-3 text-base">איכות הרווח</h2>
 
       {/* ---- The three dials ---- */}
@@ -138,7 +138,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* ---- ROIC against WACC ---- */}
-        <div className="panel accent-edge p-4">
+        <div className="surface border-s-2 border-accent p-4">
           <h3 className="text-sm">תשואה על ההון מול עלות ההון</h3>
 
           <div className="mt-4 space-y-3">
@@ -149,7 +149,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                   {number(roicPercent, 1, "%")}
                 </span>
               </div>
-              <div className="mt-1 h-2 overflow-hidden rounded-full bg-surface-raised">
+              <div className="mt-1 h-2 overflow-hidden rounded-full bg-overlay">
                 <div
                   className="h-full rounded-full"
                   style={{
@@ -167,7 +167,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                   {number(waccPercent, 1, "%")}
                 </span>
               </div>
-              <div className="mt-1 h-2 overflow-hidden rounded-full bg-surface-raised">
+              <div className="mt-1 h-2 overflow-hidden rounded-full bg-overlay">
                 <div
                   className="h-full rounded-full bg-ink-faint"
                   style={{ width: `${barWidth(waccPercent)}%` }}
@@ -195,7 +195,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
         </div>
 
         {/* ---- Stock-based compensation ---- */}
-        <div className="panel p-4">
+        <div className="surface p-4">
           <h3 className="text-sm">תגמול במניות מול תזרים</h3>
 
           <div className="mt-2">
@@ -237,7 +237,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
         </div>
 
         {/* ---- Cash cycle ---- */}
-        <div className="panel p-4">
+        <div className="surface p-4">
           <h3 className="text-sm">מחזור המרת המזומנים</h3>
 
           <div className="mt-2">
@@ -273,7 +273,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
         </div>
 
         {/* ---- Operating leverage ---- */}
-        <div className="panel p-4">
+        <div className="surface p-4">
           <h3 className="text-sm">מינוף תפעולי</h3>
 
           <div className="mt-2">
@@ -300,7 +300,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
 
       {/* ---- Capital allocation ---- */}
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <div className="panel p-4">
+        <div className="surface p-4">
           <h3 className="text-sm">לאן הולך התזרים</h3>
           <p className="mt-1 text-[11px] text-ink-faint">
             סך שלוש השנים האחרונות, כאחוז מהתזרים התפעולי
@@ -313,7 +313,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                   <span className="w-24 shrink-0 text-[12px] text-ink-muted">
                     {row.label}
                   </span>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface-raised">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-overlay">
                     <div
                       className="h-full rounded-full"
                       style={{
@@ -337,7 +337,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
         </div>
 
         {/* ---- Unit economics ---- */}
-        <div className="panel p-4">
+        <div className="surface p-4">
           <h3 className="text-sm">יחידת כלכלה</h3>
 
           <div className="mt-2">

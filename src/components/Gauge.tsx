@@ -81,7 +81,7 @@ export function Gauge({
   const needleAngle = START + SWEEP * (fraction ?? 0);
 
   return (
-    <div className="panel panel-interactive group relative p-4">
+    <div className="surface interactive group relative p-4">
       <div className="flex items-start justify-between gap-2">
         <span className="text-[11px] text-ink-muted">{label}</span>
         <span

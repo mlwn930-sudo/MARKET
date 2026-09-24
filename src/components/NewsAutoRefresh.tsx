@@ -113,7 +113,7 @@ export function NewsAutoRefresh({
 
   return (
     <span
-      className="accent-chip enter rounded-full px-2.5 py-1 text-[11px]"
+      className="badge enter rounded-full px-2.5 py-1 text-[11px]"
       role="status"
     >
       כתבות חדשות נטענו

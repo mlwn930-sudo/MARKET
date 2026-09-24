@@ -1,7 +1,7 @@
 import type { Thesis, ThesisPoint } from "@/lib/analysis/thesis";
 
 /**
- * The synthesis panel: what every framework on the page found, and where
+ * The synthesis surface: what every framework on the page found, and where
  * they disagree.
  *
  * Findings are grouped by kind rather than scored. A count of three
@@ -11,7 +11,7 @@ import type { Thesis, ThesisPoint } from "@/lib/analysis/thesis";
  * does not exist. "Net debt at 3.4x EBITDA" and "share count rose 2%" are
  * both concerns and they are not the same size.
  *
- * The disagreement panel is placed above the findings deliberately. When the
+ * The disagreement surface is placed above the findings deliberately. When the
  * frameworks conflict, that conflict is the most useful thing on the page,
  * and burying it under a list of bullet points is how a reader ends up
  * reading only the half that agrees with them.
@@ -37,7 +37,7 @@ function PointCard({ point }: { point: ThesisPoint }) {
   const style = KIND_STYLE[point.kind];
 
   return (
-    <article className="panel accent-edge p-4">
+    <article className="surface border-s-2 border-accent p-4">
       <div className="flex items-baseline justify-between gap-3">
         <h3 className={`text-sm ${style.className}`}>
           <span className="num ml-1.5 text-[10px] text-ink-faint" aria-hidden="true">
@@ -63,8 +63,8 @@ export function ThesisPanel({ thesis }: { thesis: Thesis }) {
     .filter((group) => group.points.length > 0);
 
   return (
-    <section className="reveal">
-      <div className="panel overflow-hidden">
+    <section className="enter">
+      <div className="surface overflow-hidden">
         <div className="h-0.5 w-full" style={{ background: "var(--accent)" }} aria-hidden="true" />
 
         <div className="p-5">
@@ -75,7 +75,7 @@ export function ThesisPanel({ thesis }: { thesis: Thesis }) {
           </p>
 
           {thesis.tension && (
-            <div className="accent-chip mt-4 rounded-xl px-4 py-3">
+            <div className="badge mt-4 rounded-xl px-4 py-3">
               <p className="text-[11px] tracking-wide opacity-80">
                 המסגרות לא מסכימות
               </p>
@@ -102,7 +102,7 @@ export function ThesisPanel({ thesis }: { thesis: Thesis }) {
       ))}
 
       {thesis.unknowns.length > 0 && (
-        <div className="panel mt-5 p-4">
+        <div className="surface mt-5 p-4">
           <h3 className="text-[11px] tracking-wide text-ink-faint">
             מה הנתונים לא יכולים לומר
           </h3>

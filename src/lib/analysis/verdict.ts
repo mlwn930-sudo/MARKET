@@ -69,6 +69,11 @@ const STANCE_LABEL: Record<Verdict["stance"], string> = {
   unknown: "אין די נתונים",
 };
 
+/** Hebrew counts one thing differently from several, and "1 בדיקות" is
+ *  the kind of seam that makes generated text read as generated. */
+const plural = (count: number, one: string, many: string) =>
+  count === 1 ? one : many;
+
 const metricValue = (fundamentals: Fundamentals, key: string): number | null => {
   for (const group of fundamentals.groups) {
     const found = group.metrics.find((m) => m.key === key);
@@ -263,10 +268,12 @@ export function buildVerdict(
     headline = `${companyName}: אין די נתונים מדווחים כדי להכריע. ${coreChecks.length} מתוך 6 בדיקות הליבה ניתנות לחישוב בלבד.`;
   } else if (stance === "passes") {
     headline = `${companyName} עוברת ${passed} מתוך ${evaluated.length} הבדיקות, כולל כל בדיקות הליבה.${
-      blockers.length > 0 ? ` מה שלא עבר: ${blockers.length} בדיקות משניות.` : ""
+      blockers.length > 0
+        ? ` מה שלא עבר: ${plural(blockers.length, "בדיקה משנית אחת", `${blockers.length} בדיקות משניות`)}.`
+        : ""
     }`;
   } else if (stance === "fails") {
-    headline = `${companyName} נכשלת ב-${coreFailed} מבדיקות הליבה. זו לא שאלה של תזמון — זו שאלה על העסק עצמו.`;
+    headline = `${companyName} ${plural(coreFailed, "נכשלת בבדיקת ליבה אחת", `נכשלת ב-${coreFailed} מבדיקות הליבה`)}. זו לא שאלה של תזמון — זו שאלה על העסק עצמו.`;
   } else {
     headline = `${companyName} עוברת ${passed} מתוך ${evaluated.length}. ${
       coreFailed > 0

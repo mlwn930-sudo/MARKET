@@ -32,7 +32,7 @@ export function RevenueChart({
   const zeroY = padTop + plot * (max / span);
 
   return (
-    <section className="panel p-4">
+    <section className="surface p-4">
       <h3 className="mb-1 text-sm text-ink-muted">{title}</h3>
       <svg
         viewBox={`0 0 ${width} ${height}`}

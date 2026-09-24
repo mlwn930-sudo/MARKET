@@ -2,30 +2,28 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Sparkline } from "./Sparkline";
+import { LiveBadge, Stat } from "./ui";
 import { useLiveTicks, type LiveQuote } from "@/lib/use-live-ticks";
+import { describeStatus } from "@/lib/market-hours";
 import { identityFor } from "@/lib/company-identity";
 import {
   directionClass,
   fmtChange,
+  fmtCompact,
   fmtPercent,
   fmtPrice,
   fmtTime,
 } from "@/lib/format";
 
 /**
- * The live surface of the dashboard: four index cards and a watchlist, all
+ * The live surface of the market page: the index strip and the stock table,
  * fed by one stream.
  *
- * One hook for the whole deck rather than one per card. Fifteen components
- * each opening their own connection would be fifteen sockets against an
- * allowance built for a handful, and they would tick out of step with each
- * other — the same index showing two prices half a second apart on one
- * screen, which looks like a bug because it is one.
- *
- * The pulse this reports upward is the share of the watchlist that is green.
- * The page tints its background with it, so the room warms on a strong tape
- * and cools on a weak one. That colour never touches a figure: the numbers
- * keep their own meaning, and only the air around them changes.
+ * One hook for the whole deck rather than one per component. The upstream
+ * feed accepts a single socket, and components each opening their own would
+ * tick out of step — the same symbol showing two prices half a second apart
+ * on one screen, which looks like a bug because it is one.
  */
 
 export type IndexCard = {
@@ -36,122 +34,277 @@ export type IndexCard = {
   intraday: number[];
 };
 
-function Sparkline({
-  points,
-  positive,
-  className = "",
+export type RowSeed = {
+  symbol: string;
+  name: string;
+  /** Recent daily closes, for the row's sparkline. */
+  trail: number[];
+};
+
+const directionOf = (change: number | null | undefined) =>
+  change == null || change === 0 ? "flat" : change > 0 ? "up" : "down";
+
+/* ------------------------------------------------------------------ */
+/* Index strip                                                         */
+/* ------------------------------------------------------------------ */
+
+function IndexStrip({
+  cards,
+  quotes,
+  tails,
 }: {
-  points: number[];
-  positive: boolean;
-  className?: string;
+  cards: IndexCard[];
+  quotes: Record<string, LiveQuote>;
+  tails: Record<string, number[]>;
 }) {
-  const path = useMemo(() => {
-    if (points.length < 2) return null;
-
-    const min = Math.min(...points);
-    const max = Math.max(...points);
-    const span = max - min || 1;
-
-    // Drawn in a 100×32 box and stretched by the SVG, so the component does
-    // not need to know how wide it will be rendered.
-    const step = 100 / (points.length - 1);
-    const line = points
-      .map((value, i) => {
-        const x = i * step;
-        const y = 30 - ((value - min) / span) * 28;
-        return `${i === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)}`;
-      })
-      .join(" ");
-
-    return { line, area: `${line} L 100 32 L 0 32 Z` };
-  }, [points]);
-
-  if (!path) return null;
-
-  const colour = positive ? "#1baf7a" : "#e24b4a";
-  const id = `spark-${positive ? "up" : "down"}`;
-
   return (
-    <svg
-      viewBox="0 0 100 32"
-      preserveAspectRatio="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={colour} stopOpacity="0.28" />
-          <stop offset="100%" stopColor={colour} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={path.area} fill={`url(#${id})`} />
-      <path
-        d={path.line}
-        fill="none"
-        stroke={colour}
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
+    <div className="surface grid grid-cols-2 lg:grid-cols-4">
+      {cards.map((card, i) => {
+        const quote = quotes[card.symbol];
+        const change = quote?.changePercent ?? null;
+        const points = [...card.intraday, ...(tails[card.symbol] ?? [])];
+
+        return (
+          <div
+            key={card.symbol}
+            className={`relative overflow-hidden px-5 py-4 ${
+              i % 2 === 1 ? "border-s border-line" : ""
+            } ${i >= 2 ? "border-t border-line lg:border-t-0" : ""} ${
+              i === 2 ? "lg:border-s lg:border-line" : ""
+            }`}
+          >
+            <div className="flex items-baseline justify-between">
+              <span className="text-[12px] text-ink-muted">{card.label}</span>
+              <span className="num text-[10px] text-ink-ghost">
+                {card.note}
+              </span>
+            </div>
+
+            <div className="num mt-2 text-[26px] leading-none tracking-tight">
+              {fmtPrice(quote?.price)}
+            </div>
+
+            <div className={`num mt-1.5 text-[13px] ${directionClass(change)}`}>
+              {fmtPercent(change)}
+            </div>
+
+            {/* The session's shape, in its own band under the figures. */}
+            <Sparkline
+              points={points}
+              direction={directionOf(change)}
+              area
+              className="mt-3 h-8 w-full"
+            />
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
-function FeedBadge({
-  feed,
-  market,
-  lastTickAt,
-  tickCount,
-}: {
-  feed: string;
-  market: { state: string; label: string };
-  lastTickAt: Date | null;
-  tickCount: number;
-}) {
-  const open = market.state === "open";
-  const streaming = feed === "live";
+/* ------------------------------------------------------------------ */
+/* Stock table                                                         */
+/* ------------------------------------------------------------------ */
 
-  // Four states, said plainly. A still number is only alarming when the page
-  // will not say which of these it is.
-  const text = !open
-    ? market.label
-    : streaming && tickCount > 0
-      ? "זרם חי"
-      : streaming
-        ? "מחובר — ממתין לעסקה"
-        : "רענון מחזורי";
+type SortKey = "symbol" | "price" | "change";
+
+function StockTable({
+  rows,
+  quotes,
+  flash,
+}: {
+  rows: RowSeed[];
+  quotes: Record<string, LiveQuote>;
+  flash: Record<string, "up" | "down" | undefined>;
+}) {
+  const [sort, setSort] = useState<{ key: SortKey; desc: boolean }>({
+    key: "change",
+    desc: true,
+  });
+
+  const ordered = useMemo(() => {
+    const value = (row: RowSeed) => {
+      const quote = quotes[row.symbol];
+      if (sort.key === "symbol") return row.symbol;
+      if (sort.key === "price") return quote?.price ?? -Infinity;
+      return quote?.changePercent ?? -Infinity;
+    };
+
+    return [...rows].sort((a, b) => {
+      const left = value(a);
+      const right = value(b);
+      const compared =
+        typeof left === "string" && typeof right === "string"
+          ? left.localeCompare(right)
+          : Number(left) - Number(right);
+      return sort.desc ? -compared : compared;
+    });
+  }, [rows, quotes, sort]);
+
+  const header = (key: SortKey, label: string, align = "text-end") => (
+    <th scope="col" className={`px-4 py-2.5 font-normal ${align}`}>
+      <button
+        type="button"
+        onClick={() =>
+          setSort((current) =>
+            current.key === key
+              ? { key, desc: !current.desc }
+              : { key, desc: true },
+          )
+        }
+        className="inline-flex items-center gap-1 transition-colors hover:text-ink"
+        aria-label={`מיין לפי ${label}`}
+      >
+        {label}
+        <span
+          className={`text-[9px] ${sort.key === key ? "text-accent" : "text-ink-ghost"}`}
+          aria-hidden="true"
+        >
+          {sort.key === key ? (sort.desc ? "▼" : "▲") : "▼"}
+        </span>
+      </button>
+    </th>
+  );
 
   return (
-    <span className="flex items-center gap-2 text-[11px]">
-      <span
-        className={`inline-block h-1.5 w-1.5 rounded-full ${
-          open && streaming ? "bg-up live-dot" : open ? "bg-gold" : "bg-ink-faint"
-        }`}
-        aria-hidden="true"
-      />
-      <span className={open && streaming ? "text-up" : "text-ink-muted"}>
-        {text}
-      </span>
-      {lastTickAt && (
-        <span className="num text-ink-faint">· {fmtTime(lastTickAt)}</span>
-      )}
-    </span>
+    <div className="surface overflow-hidden">
+      {/* Horizontal scroll on a phone rather than a stacked card per row:
+          the columns are the comparison, and stacking destroys it. */}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm">
+          <caption className="sr-only">
+            מחירים חיים. מתעדכן בכל עסקה שמתבצעת בבורסה. ניתן למיין לפי כל
+            עמודה.
+          </caption>
+          <thead>
+            <tr className="border-b border-line text-[11px] text-ink-faint">
+              {header("symbol", "חברה", "text-start")}
+              {header("price", "מחיר")}
+              {header("change", "שינוי")}
+              <th scope="col" className="px-4 py-2.5 text-end font-normal">
+                מגמה
+              </th>
+              <th scope="col" className="px-4 py-2.5 text-end font-normal">
+                טווח היום
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {ordered.map((row) => {
+              const quote = quotes[row.symbol];
+              const identity = identityFor(row.symbol);
+              const moved = flash[row.symbol];
+              const change = quote?.changePercent ?? null;
+
+              const range =
+                quote?.high != null &&
+                quote?.low != null &&
+                quote.high > quote.low
+                  ? ((quote.price ?? quote.low) - quote.low) /
+                    (quote.high - quote.low)
+                  : null;
+
+              return (
+                <tr
+                  key={row.symbol}
+                  className="group border-b border-line transition-colors last:border-0 hover:bg-raised"
+                >
+                  <td className="px-4 py-3">
+                    <Link
+                      href={`/company/${row.symbol}`}
+                      className="flex items-center gap-3"
+                    >
+                      <span
+                        className="h-7 w-[3px] shrink-0 rounded-full"
+                        style={{ background: identity.accent }}
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0">
+                        <span className="num block text-[13px] font-medium text-ink">
+                          {row.symbol}
+                        </span>
+                        <span className="block truncate text-[11px] text-ink-faint">
+                          {row.name}
+                        </span>
+                      </span>
+                    </Link>
+                  </td>
+
+                  <td
+                    className={`num px-4 py-3 text-end text-[15px] ${
+                      moved === "up"
+                        ? "settle-up"
+                        : moved === "down"
+                          ? "settle-down"
+                          : ""
+                    }`}
+                  >
+                    {fmtPrice(quote?.price)}
+                  </td>
+
+                  <td className="px-4 py-3 text-end">
+                    <span className={`num text-[13px] ${directionClass(change)}`}>
+                      {fmtPercent(change)}
+                    </span>
+                    <span className="num block text-[10px] text-ink-ghost">
+                      {fmtChange(quote?.change)}
+                    </span>
+                  </td>
+
+                  <td className="px-4 py-3">
+                    <Sparkline
+                      points={row.trail}
+                      direction={directionOf(change)}
+                      className="ms-auto h-7 w-24"
+                    />
+                  </td>
+
+                  <td className="px-4 py-3">
+                    {range === null ? (
+                      <span className="num block text-end text-ink-ghost">—</span>
+                    ) : (
+                      <div className="flex items-center justify-end gap-2">
+                        <span className="num text-[10px] text-ink-ghost">
+                          {fmtPrice(quote?.low)}
+                        </span>
+                        <span className="relative h-[3px] w-20 rounded-full bg-overlay">
+                          <span
+                            className="absolute top-1/2 h-2.5 w-[2px] -translate-y-1/2 rounded-full bg-ink transition-[inset-inline-start] duration-500"
+                            style={{ insetInlineStart: `${range * 100}%` }}
+                          />
+                        </span>
+                        <span className="num text-[10px] text-ink-ghost">
+                          {fmtPrice(quote?.high)}
+                        </span>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* Deck                                                                */
+/* ------------------------------------------------------------------ */
 
 export function MarketDeck({
   indices,
-  watchlist,
+  rows,
   initial,
 }: {
   indices: IndexCard[];
-  watchlist: string[];
+  rows: RowSeed[];
   initial: Record<string, LiveQuote>;
 }) {
   const symbols = useMemo(
-    () => [...new Set([...indices.map((i) => i.symbol), ...watchlist])],
-    [indices, watchlist],
+    () => [...new Set([...indices.map((i) => i.symbol), ...rows.map((r) => r.symbol)])],
+    [indices, rows],
   );
 
   const { quotes, flash, market, feed, lastTickAt, tickCount } = useLiveTicks(
@@ -187,224 +340,82 @@ export function MarketDeck({
 
   /* ---- The market's mood, published to the page ---- */
   useEffect(() => {
-    const measured = watchlist
-      .map((symbol) => quotes[symbol]?.changePercent)
-      .filter((v): v is number => typeof v === "number");
+    const measured = rows
+      .map((row) => quotes[row.symbol]?.changePercent)
+      .filter((value): value is number => typeof value === "number");
 
     if (measured.length === 0) return;
+    const green = measured.filter((value) => value > 0).length / measured.length;
 
-    const green = measured.filter((v) => v > 0).length / measured.length;
-    // Mapped through a dead zone around even, so a market that is genuinely
-    // mixed reads as neutral rather than flickering between two colours.
-    const pulse =
-      green > 0.6
-        ? `rgba(27, 175, 122, ${(0.28 + (green - 0.6) * 0.8).toFixed(2)})`
-        : green < 0.4
-          ? `rgba(226, 75, 74, ${(0.28 + (0.4 - green) * 0.8).toFixed(2)})`
-          : "rgba(147, 154, 166, 0.34)";
+    // A dead zone around even, so a genuinely mixed market reads as neutral
+    // rather than flickering between two colours.
+    document.documentElement.style.setProperty(
+      "--tint",
+      green > 0.62 ? "#26b87c" : green < 0.38 ? "#e5484d" : "#d9b04a",
+    );
+  }, [quotes, rows]);
 
-    document.documentElement.style.setProperty("--pulse", pulse);
-  }, [quotes, watchlist]);
+  const open = market.state === "open";
+  const streaming = feed === "live";
+  const state = open && streaming ? "live" : open ? "waiting" : "idle";
+  const label = !open
+    ? describeStatus(market)
+    : streaming && tickCount > 0
+      ? "זרם חי"
+      : streaming
+        ? "מחובר, ממתין לעסקה"
+        : "רענון מחזורי";
+
+  const advancing = rows.filter(
+    (row) => (quotes[row.symbol]?.changePercent ?? 0) > 0,
+  ).length;
 
   return (
-    <div className="space-y-8">
+    <>
       {/* ---- Indices ---- */}
-      <section aria-labelledby="indices">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <h2 id="indices" className="text-sm text-ink-muted">
-            מדדים מובילים
-          </h2>
-          <FeedBadge
-            feed={feed}
-            market={market}
-            lastTickAt={lastTickAt}
-            tickCount={tickCount}
-          />
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <span className="section-mark" aria-hidden="true" />
+          <span className="eyebrow">מדדים מובילים</span>
         </div>
-
-        <div className="stagger grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {indices.map((card) => {
-            const quote = quotes[card.symbol];
-            const up = (quote?.changePercent ?? 0) >= 0;
-            const points = [...card.intraday, ...(tails[card.symbol] ?? [])];
-            const direction = flash[card.symbol];
-
-            return (
-              <div
-                key={card.symbol}
-                className={`panel relative overflow-hidden ${
-                  direction === "up"
-                    ? "flash-up"
-                    : direction === "down"
-                      ? "flash-down"
-                      : ""
-                }`}
-              >
-                {/* The session's shape sits in its own band under the
-                    figures rather than behind them. Behind, the line crosses
-                    the change percentage at exactly the moment the reader
-                    wants to read it. */}
-                <div className="relative z-10 px-4 pb-2 pt-4">
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-[11px] tracking-wide text-ink-muted">
-                      {card.label}
-                    </span>
-                    <span className="num text-[10px] text-ink-faint">
-                      {card.note}
-                    </span>
-                  </div>
-
-                  <div
-                    className={`num mt-2 text-3xl leading-none ${
-                      direction
-                        ? direction === "up"
-                          ? "tick-up"
-                          : "tick-down"
-                        : ""
-                    }`}
-                  >
-                    {fmtPrice(quote?.price)}
-                  </div>
-
-                  <div
-                    className={`num mt-1 text-xs ${directionClass(quote?.changePercent)}`}
-                  >
-                    {fmtPercent(quote?.changePercent)}
-                  </div>
-                </div>
-
-                <Sparkline
-                  points={points}
-                  positive={up}
-                  className="block h-11 w-full"
-                />
-              </div>
-            );
-          })}
+        <div className="flex items-center gap-4">
+          <LiveBadge state={state} label={label} />
+          {lastTickAt && (
+            <span className="num text-[11px] text-ink-ghost">
+              {fmtTime(lastTickAt)}
+            </span>
+          )}
         </div>
+      </div>
 
-        <p className="mt-2 text-[10px] text-ink-faint">
-          המדדים מוצגים דרך קרנות הסל שעוקבות אחריהם. הגרף הוא מהלך היום
-          בפועל, בחלוקה לחמש דקות.
-        </p>
-      </section>
+      <IndexStrip cards={indices} quotes={quotes} tails={tails} />
 
-      {/* ---- Watchlist ---- */}
-      <section aria-labelledby="watchlist">
-        <h2 id="watchlist" className="mb-3 text-sm text-ink-muted">
-          רשימת מעקב
-        </h2>
+      <p className="mt-2 text-[11px] text-ink-ghost">
+        המדדים מוצגים דרך קרנות הסל שעוקבות אחריהם. הגרף הוא מהלך היום
+        בפועל, בחלוקה לחמש דקות.
+      </p>
 
-        <div className="panel overflow-hidden">
-          <table className="w-full text-sm">
-            <caption className="sr-only">
-              מחירים חיים לרשימת המעקב. מתעדכן בכל עסקה שמתבצעת בבורסה.
-            </caption>
-            <thead>
-              <tr className="border-b border-line text-[11px] text-ink-muted">
-                <th className="px-4 py-2.5 text-right font-normal">סימבול</th>
-                <th className="px-4 py-2.5 text-right font-normal">מחיר</th>
-                <th className="px-4 py-2.5 text-right font-normal">שינוי</th>
-                <th className="px-4 py-2.5 text-right font-normal">%</th>
-                <th className="hidden px-4 py-2.5 text-right font-normal sm:table-cell">
-                  טווח יומי
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {watchlist.map((symbol) => {
-                const quote = quotes[symbol];
-                const identity = identityFor(symbol);
-                const direction = flash[symbol];
-                const range =
-                  quote?.high != null &&
-                  quote?.low != null &&
-                  quote.high > quote.low
-                    ? ((quote.price ?? 0) - quote.low) / (quote.high - quote.low)
-                    : null;
-
-                return (
-                  <tr
-                    key={symbol}
-                    className={`border-b border-line last:border-0 ${
-                      direction === "up"
-                        ? "flash-up"
-                        : direction === "down"
-                          ? "flash-down"
-                          : ""
-                    }`}
-                  >
-                    <td className="px-4 py-3 text-right">
-                      <Link
-                        href={`/company/${symbol}`}
-                        className="num inline-flex items-center gap-2 font-medium transition-opacity hover:opacity-75"
-                        style={{ color: identity.accent }}
-                      >
-                        <span
-                          className="inline-block h-3.5 w-0.5 rounded-full"
-                          style={{ background: identity.accent }}
-                          aria-hidden="true"
-                        />
-                        {symbol}
-                      </Link>
-                    </td>
-
-                    <td
-                      className={`num px-4 py-3 text-right text-[15px] ${
-                        direction
-                          ? direction === "up"
-                            ? "tick-up"
-                            : "tick-down"
-                          : ""
-                      }`}
-                    >
-                      {fmtPrice(quote?.price)}
-                    </td>
-
-                    <td
-                      className={`num px-4 py-3 text-right ${directionClass(quote?.change)}`}
-                    >
-                      {fmtChange(quote?.change)}
-                    </td>
-
-                    <td
-                      className={`num px-4 py-3 text-right ${directionClass(quote?.changePercent)}`}
-                    >
-                      {fmtPercent(quote?.changePercent)}
-                    </td>
-
-                    <td className="hidden px-4 py-3 text-right sm:table-cell">
-                      {range === null ? (
-                        <span className="num text-ink-faint">—</span>
-                      ) : (
-                        <div className="flex items-center justify-end gap-2">
-                          <span className="num text-[10px] text-ink-faint">
-                            {fmtPrice(quote?.low)}
-                          </span>
-                          {/* Where the price sits inside today's range,
-                              which a pair of numbers alone does not show. */}
-                          <span className="relative h-1 w-16 rounded-full bg-line-strong">
-                            <span
-                              className="absolute top-1/2 h-2.5 w-0.5 -translate-y-1/2 rounded-full transition-[inset-inline-start] duration-300"
-                              style={{
-                                insetInlineStart: `${range * 100}%`,
-                                background: identity.accent,
-                              }}
-                            />
-                          </span>
-                          <span className="num text-[10px] text-ink-faint">
-                            {fmtPrice(quote?.high)}
-                          </span>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+      {/* ---- Breadth ---- */}
+      <div className="mt-10 flex flex-wrap items-end justify-between gap-4">
+        <div className="flex items-center gap-2.5">
+          <span className="section-mark" aria-hidden="true" />
+          <span className="eyebrow">רשימת מעקב</span>
         </div>
-      </section>
-    </div>
+        <Stat
+          label="עולות מתוך הרשימה"
+          value={
+            <>
+              {advancing}
+              <span className="text-ink-ghost">/{rows.length}</span>
+            </>
+          }
+          size="sm"
+        />
+      </div>
+
+      <div className="mt-4">
+        <StockTable rows={rows} quotes={quotes} flash={flash} />
+      </div>
+    </>
   );
 }

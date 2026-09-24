@@ -5,10 +5,9 @@ import { getPriceHistory } from "@/lib/sources/prices";
 import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
 import { getArticlesForTicker } from "@/lib/news-store";
 import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
-import { identityFor, tint } from "@/lib/company-identity";
+import { identityFor } from "@/lib/company-identity";
 import { buildThesis } from "@/lib/analysis/thesis";
 import { buildVerdict } from "@/lib/analysis/verdict";
-import { AccentTheme } from "@/components/AccentTheme";
 import { CompanyChart } from "@/components/CompanyChart";
 import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
 import { VerdictPanel } from "@/components/VerdictPanel";
@@ -17,6 +16,7 @@ import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
 import { ArticleCard } from "@/components/ArticleCard";
+import { Disclaimer, Page, Section, Stat } from "@/components/ui";
 import { fmtCompact, fmtDate, fmtMetric } from "@/lib/format";
 
 export const revalidate = 600;
@@ -29,11 +29,24 @@ export async function generateMetadata({
   const { ticker } = await params;
   const symbol = decodeURIComponent(ticker).toUpperCase();
   return {
-    title: `${symbol} — ניתוח מלא | Market Intel`,
+    title: `${symbol} — ניתוח מלא`,
     description: `ניתוח פונדמנטלי, טכני ואיכות הון של ${symbol}, מול חציון הסקטור ועם מחיר חי.`,
   };
 }
 
+/**
+ * A company, as a research terminal.
+ *
+ * The order is the argument: the verdict first, because a reader who
+ * scrolls no further should still leave with the answer; then the price;
+ * then the working, in descending order of how much it would change that
+ * answer. Metric tables sit last — they are the evidence, and evidence
+ * belongs after the case it supports.
+ *
+ * The page takes the company's colour as its ambient tint only. No figure
+ * on it changes colour: the same value has to look the same on every
+ * company page, or the colour starts carrying meaning it does not have.
+ */
 export default async function CompanyPage({
   params,
 }: {
@@ -61,15 +74,14 @@ export default async function CompanyPage({
   const { profile, marketCap, fundamentals, capital, title } = analysis;
   const name = profile?.name ?? title;
 
-  const thesis = buildThesis(fundamentals, capital, technical, sector, name);
   const verdict = buildVerdict(fundamentals, capital, technical, sector, name);
+  const thesis = buildThesis(fundamentals, capital, technical, sector, name);
 
   /**
-   * The frameworks' own levels, drawn on the chart.
-   *
-   * Computed here from the same technical read the analysis panel renders,
-   * so the line on the chart and the number in the table cannot disagree.
-   * The chart never decides where a pivot or a stop belongs.
+   * The frameworks' own levels, drawn on the chart. Computed from the same
+   * technical read the analysis panel renders, so a line on the chart and a
+   * number in the table cannot disagree. The chart never decides where a
+   * pivot or a stop belongs.
    */
   const chartLevels: ChartLevel[] = [];
   if (technical?.vcp.pivot != null) {
@@ -94,175 +106,186 @@ export default async function CompanyPage({
     }
   }
 
-  // Each contraction low, so the tightening the pattern claims is visible
-  // on the chart rather than only described beneath it.
   const chartMarkers: ChartMarker[] =
     technical?.vcp.contractions.map((contraction, i) => ({
       date: contraction.lowDate,
       label: `${i + 1} · ${contraction.depthPercent.toFixed(0)}%`,
     })) ?? [];
 
+  const metric = (key: string) => {
+    for (const group of fundamentals.groups) {
+      const found = group.metrics.find((m) => m.key === key);
+      if (found) return found;
+    }
+    return null;
+  };
+
+  const pe = metric("pe");
+  const growth = metric("rev_cagr_3");
+
   return (
-    <>
-      <AccentTheme accent={identity.accent} />
-      <main className="mx-auto max-w-6xl px-6 py-8">
-        <nav className="mb-5 text-xs text-ink-muted">
+    <Page tint={identity.accent}>
+      {/* ---- Masthead ---- */}
+      <header className="enter border-b border-line pb-8 pt-12 sm:pt-16">
+        <nav className="mb-6 text-[12px] text-ink-faint">
           <Link href="/" className="transition-colors hover:text-ink">
-            ← חזרה לדשבורד
+            שוק
           </Link>
+          <span className="mx-2 text-ink-ghost">/</span>
+          <span className="num text-ink-muted">{ticker}</span>
         </nav>
 
-        {/* The accent band is the whole visual identity of the page: it is
-            the first thing seen and it carries through to the ambient
-            background, the chart line and every hovered panel below. */}
-        <header
-          className="enter panel overflow-hidden"
-          style={{
-            background: `linear-gradient(135deg, ${tint(identity.accent, 0.16)}, transparent 62%)`,
-          }}
-        >
-          <div
-            className="h-1 w-full"
-            style={{ background: identity.accent }}
-            aria-hidden="true"
-          />
-          <div className="flex flex-wrap items-start justify-between gap-4 p-5">
-            <div>
-              <h1 className="text-3xl">{name}</h1>
-              <p className="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-ink-muted">
-                <span className="num accent-chip rounded px-1.5 py-0.5 font-medium">
-                  {ticker}
-                </span>
-                {profile?.exchange && <span>{profile.exchange}</span>}
-                {profile?.industry && <span>· {profile.industry}</span>}
-                {identity.sectorLabel && <span>· {identity.sectorLabel}</span>}
-              </p>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-3">
+              <span
+                className="h-8 w-[3px] rounded-full"
+                style={{ background: identity.accent }}
+                aria-hidden="true"
+              />
+              <h1 className="display">{name}</h1>
             </div>
 
-
-          </div>
-        </header>
-
-        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-ink-muted">
-          {marketCap !== null && (
-            <span>
-              שווי שוק{" "}
-              <span className="num text-ink">${fmtCompact(marketCap)}</span>
-            </span>
-          )}
-          {fundamentals.asOf && (
-            <span>
-              דוח אחרון{" "}
-              <span className="num text-ink">
-                {fmtDate(fundamentals.asOf.end)}
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-ink-faint">
+              <span className="num rounded border border-line px-1.5 py-0.5 text-ink-muted">
+                {ticker}
               </span>
-            </span>
-          )}
-          {sector && (
-            <span>
-              מושווה מול <span className="text-ink">{sector.label}</span>{" "}
-              {/* Only the digits carry .num. Wrapping the Hebrew word in it
-                  too forces the whole phrase left-to-right, which moves the
-                  closing bracket to the wrong side. */}
-              (<span className="num">{sector.peerCount}</span> חברות)
-            </span>
-          )}
-        </div>
-
-        {fundamentals.stale && (
-          <p className="panel mt-4 px-4 py-3 text-sm text-ink">
-            הנתונים הכספיים מבוססים על דוח שהוגש לפני יותר מ-120 יום. ייתכן
-            שהמצב העסקי השתנה מאז.
-          </p>
-        )}
-
-        <div className="mt-8">
-          <VerdictPanel verdict={verdict} />
-        </div>
-
-        <div className="mt-12">
-          <ThesisPanel thesis={thesis} />
-        </div>
-
-        {history && (
-          <section className="reveal mt-10">
-            <h2 className="mb-3 text-base">מחיר ומגמה</h2>
-            <CompanyChart
-              symbol={ticker}
-              name={name}
-              candles={history.candles}
-              accent={identity.accent}
-              levels={chartLevels}
-              markers={chartMarkers}
-              initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
-            />
-          </section>
-        )}
-
-        {technical && (
-          <div className="mt-10">
-            <TechnicalPanel technical={technical} />
-          </div>
-        )}
-
-        <div className="mt-10">
-          <CapitalPanel capital={capital} />
-        </div>
-
-        {fundamentals.groups.map((group) => (
-          <section key={group.title} className="reveal mt-10">
-            <h2 className="mb-3 text-base">{group.title}</h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              {group.metrics.map((metric) => {
-                const median = sector?.medians[metric.key] ?? null;
-                const comparison = compareToSector(metric.value, median);
-
-                return (
-                  <div
-                    key={metric.key}
-                    className="panel panel-interactive px-3 py-3"
-                  >
-                    <div className="num text-[11px] text-ink-muted">
-                      {metric.label}
-                    </div>
-                    <div
-                      className={`num mt-1 text-lg ${
-                        metric.value === null ? "text-ink-faint" : "text-ink"
-                      }`}
-                    >
-                      {fmtMetric(metric.value, metric.unit)}
-                    </div>
-
-                    {median !== null ? (
-                      <div className="mt-1.5 text-[10px] text-ink-muted">
-                        <span>
-                          סקטור{" "}
-                          <span className="num">
-                            {fmtMetric(median, metric.unit)}
-                          </span>
-                        </span>
-                        {comparison && (
-                          <span className="num mr-1.5 text-ink-faint">
-                            {comparison.higher ? "▲" : "▼"}
-                            {Math.abs(comparison.differencePercent).toFixed(0)}%
-                          </span>
-                        )}
-                      </div>
-                    ) : (
-                      metric.hint && (
-                        <div className="mt-1 text-[10px] leading-snug text-ink-faint">
-                          {metric.hint}
-                        </div>
-                      )
-                    )}
-                  </div>
-                );
-              })}
+              {profile?.exchange && <span>{profile.exchange}</span>}
+              {profile?.industry && <span>· {profile.industry}</span>}
+              {identity.sectorLabel && <span>· {identity.sectorLabel}</span>}
             </div>
-          </section>
-        ))}
+          </div>
 
-        <div className="reveal mt-10 grid gap-4 lg:grid-cols-2">
+          <div className="flex flex-wrap gap-x-10 gap-y-4">
+            {marketCap !== null && (
+              <Stat label="שווי שוק" value={`$${fmtCompact(marketCap)}`} />
+            )}
+            {pe && (
+              <Stat label="P/E" value={fmtMetric(pe.value, pe.unit)} />
+            )}
+            {growth && (
+              <Stat
+                label="צמיחת הכנסות 3ש׳"
+                value={fmtMetric(growth.value, growth.unit)}
+              />
+            )}
+            {fundamentals.asOf && (
+              <Stat
+                label="דוח אחרון"
+                value={
+                  <span className="text-base">
+                    {fmtDate(fundamentals.asOf.end)}
+                  </span>
+                }
+                sub={
+                  sector
+                    ? `מושווה מול ${sector.label} (${sector.peerCount})`
+                    : undefined
+                }
+              />
+            )}
+          </div>
+        </div>
+      </header>
+
+      {fundamentals.stale && (
+        <p className="surface mt-8 px-5 py-4 text-sm text-ink">
+          הנתונים הכספיים מבוססים על דוח שהוגש לפני יותר מ-120 יום. ייתכן
+          שהמצב העסקי השתנה מאז.
+        </p>
+      )}
+
+      {/* ---- The answer, first ---- */}
+      <Section eyebrow="השורה התחתונה">
+        <VerdictPanel verdict={verdict} />
+      </Section>
+
+      {/* ---- Price ---- */}
+      {history && (
+        <Section eyebrow="מחיר ומגמה" title="מה המחיר כבר עשה">
+          <CompanyChart
+            symbol={ticker}
+            name={name}
+            candles={history.candles}
+            levels={chartLevels}
+            markers={chartMarkers}
+            initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
+          />
+        </Section>
+      )}
+
+      {technical && (
+        <Section eyebrow="ניתוח טכני">
+          <TechnicalPanel technical={technical} />
+        </Section>
+      )}
+
+      <Section eyebrow="איכות הרווח">
+        <CapitalPanel capital={capital} />
+      </Section>
+
+      {/* ---- The findings ---- */}
+      <Section eyebrow="ממצאים" title="איפה המסגרות מסכימות, ואיפה לא">
+        <ThesisPanel thesis={thesis} />
+      </Section>
+
+      {/* ---- Evidence ---- */}
+      {fundamentals.groups.map((group) => (
+        <Section key={group.title} eyebrow="נתונים" title={group.title}>
+          <div className="surface grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+            {group.metrics.map((item, i) => {
+              const median = sector?.medians[item.key] ?? null;
+              const comparison = compareToSector(item.value, median);
+
+              return (
+                <div
+                  key={item.key}
+                  className={`px-4 py-4 ${
+                    i % 2 === 1 ? "border-s border-line" : ""
+                  } sm:[&:not(:nth-child(3n+1))]:border-s sm:border-line lg:[&:not(:nth-child(6n+1))]:border-s ${
+                    i >= 2 ? "border-t border-line" : ""
+                  }`}
+                >
+                  <div className="text-[11px] text-ink-faint">{item.label}</div>
+                  <div
+                    className={`num mt-1.5 text-[17px] ${
+                      item.value === null ? "text-ink-ghost" : "text-ink"
+                    }`}
+                  >
+                    {fmtMetric(item.value, item.unit)}
+                  </div>
+
+                  {median !== null ? (
+                    <div className="mt-1.5 flex items-center gap-1.5 text-[10px] text-ink-ghost">
+                      <span>
+                        סקטור{" "}
+                        <span className="num">
+                          {fmtMetric(median, item.unit)}
+                        </span>
+                      </span>
+                      {comparison && (
+                        <span className="num">
+                          {comparison.higher ? "▲" : "▼"}
+                          {Math.abs(comparison.differencePercent).toFixed(0)}%
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    item.hint && (
+                      <div className="mt-1.5 text-[10px] leading-snug text-ink-ghost">
+                        {item.hint}
+                      </div>
+                    )
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Section>
+      ))}
+
+      <Section eyebrow="מגמות רב-שנתיות">
+        <div className="grid gap-4 lg:grid-cols-2">
           <RevenueChart
             series={fundamentals.revenueSeries}
             title="הכנסות שנתיות"
@@ -274,34 +297,24 @@ export default async function CompanyPage({
             ariaLabel={`רווח תפעולי שנתי של ${ticker}`}
           />
         </div>
+      </Section>
 
-        <section className="reveal mt-12">
-          <h2 className="mb-3 text-base">חדשות על {name}</h2>
-          {articles.length === 0 ? (
-            <p className="panel px-4 py-4 text-xs text-ink-muted">
-              לא נמצאו כתבות עדכניות שמזכירות את החברה בפיד הנוכחי.
-            </p>
-          ) : (
-            <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {articles.map((article) => (
-                <ArticleCard
-                  key={article.url}
-                  article={article}
-                  accent={identity.accent}
-                />
-              ))}
-            </div>
-          )}
-        </section>
+      {/* ---- News ---- */}
+      <Section eyebrow="חדשות" title={`מה נכתב על ${name}`}>
+        {articles.length === 0 ? (
+          <p className="surface px-5 py-5 text-[13px] text-ink-muted">
+            לא נמצאו כתבות עדכניות שמזכירות את החברה בפיד הנוכחי.
+          </p>
+        ) : (
+          <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {articles.map((article) => (
+              <ArticleCard key={article.url} article={article} />
+            ))}
+          </div>
+        )}
+      </Section>
 
-        <p className="mt-12 text-xs leading-relaxed text-ink-faint">
-          הנתונים הכספיים נשאבים מדוחות שהחברה הגישה ל-SEC. מדד המוצג
-          כ-&quot;—&quot; אינו זמין בדוחות ולא הוערך. היסטוריית המחירים מגיעה
-          ממקור חיצוני ועשויה להיות חסרה. המסגרות הטכניות והפונדמנטליות
-          בעמוד מתארות את מה שכבר קרה ואינן תחזית. אין באמור ייעוץ השקעות,
-          שיווק השקעות או תחליף לייעוץ המתחשב בנתוניו של כל אדם.
-        </p>
-      </main>
-    </>
+      <Disclaimer extra="הנתונים הכספיים נשאבים מדוחות שהחברה הגישה ל-SEC. מדד המוצג כ-&quot;—&quot; אינו זמין בדוחות ולא הוערך." />
+    </Page>
   );
 }

@@ -29,7 +29,7 @@ import type { Candle } from "@/lib/sources/prices";
  * Everything drawn on top comes from `metrics/technical.ts`. The chart does
  * not decide where a pivot is or what the stop should be; it renders what
  * the frameworks computed, so the levels here and the numbers in the
- * analysis panel below cannot disagree.
+ * analysis surface below cannot disagree.
  *
  * The live half updates the final candle in place. A trade print arrives,
  * the session's close moves, and its high or low widens if the print went
@@ -58,9 +58,9 @@ const MA_STYLE: Record<number, { color: string; width: 1 | 2 }> = {
  *  stop is the losing side, the targets the winning one, and the pivot is
  *  neither until the price picks a direction. */
 const LEVEL_COLOR: Record<ChartLevel["kind"], string> = {
-  pivot: "#eceae5",
-  stop: "#e24b4a",
-  target: "#1baf7a",
+  pivot: "#e9ecf1",
+  stop: "#e5484d",
+  target: "#26b87c",
 };
 
 const toTime = (date: string): UTCTimestamp =>
@@ -82,7 +82,6 @@ function movingAverage(candles: Candle[], period: number) {
 export function LiveChart({
   candles,
   livePrice,
-  accent = "#c9a227",
   levels = [],
   markers = [],
   height = 460,
@@ -91,7 +90,6 @@ export function LiveChart({
   candles: Candle[];
   /** The last trade, applied to the final bar as it arrives. */
   livePrice?: number | null;
-  accent?: string;
   levels?: ChartLevel[];
   markers?: ChartMarker[];
   height?: number;
@@ -114,7 +112,7 @@ export function LiveChart({
       height,
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#939aa6",
+        textColor: "#8b94a3",
         fontFamily: "var(--font-plex-mono), ui-monospace, monospace",
         fontSize: 11,
         attributionLogo: false,
@@ -134,16 +132,16 @@ export function LiveChart({
       crosshair: {
         mode: 0,
         vertLine: {
-          color: accent,
+          color: "#d9b04a",
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: accent,
+          labelBackgroundColor: "#d9b04a",
         },
         horzLine: {
-          color: accent,
+          color: "#d9b04a",
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: accent,
+          labelBackgroundColor: "#d9b04a",
         },
       },
       // Touch: drag to pan, pinch to zoom. On by default, listed here
@@ -162,13 +160,13 @@ export function LiveChart({
     });
 
     const candleSeries = instance.addSeries(CandlestickSeries, {
-      upColor: "#1baf7a",
-      downColor: "#e24b4a",
-      borderUpColor: "#1baf7a",
-      borderDownColor: "#e24b4a",
-      wickUpColor: "rgba(27,175,122,0.7)",
-      wickDownColor: "rgba(226,75,74,0.7)",
-      priceLineColor: accent,
+      upColor: "#26b87c",
+      downColor: "#e5484d",
+      borderUpColor: "#26b87c",
+      borderDownColor: "#e5484d",
+      wickUpColor: "rgba(38,184,124,0.7)",
+      wickDownColor: "rgba(229,72,77,0.7)",
+      priceLineColor: "#d9b04a",
       priceLineStyle: LineStyle.Dotted,
     });
 
@@ -183,7 +181,7 @@ export function LiveChart({
     );
 
     // Volume on its own scale, pinned to the lower quarter so it reads as a
-    // sub-panel rather than as bars drawn over the price.
+    // sub-surface rather than as bars drawn over the price.
     const volume = instance.addSeries(HistogramSeries, {
       priceFormat: { type: "volume" },
       priceScaleId: "volume",
@@ -197,7 +195,7 @@ export function LiveChart({
         time: toTime(c.date),
         value: c.volume,
         color:
-          c.close >= c.open ? "rgba(27,175,122,0.32)" : "rgba(226,75,74,0.32)",
+          c.close >= c.open ? "rgba(38,184,124,0.3)" : "rgba(229,72,77,0.3)",
       })),
     );
 
@@ -221,7 +219,7 @@ export function LiveChart({
         markers.map((marker) => ({
           time: toTime(marker.date),
           position: "belowBar" as const,
-          color: accent,
+          color: "#d9b04a",
           shape: "arrowUp" as const,
           text: marker.label,
         })),
@@ -262,7 +260,7 @@ export function LiveChart({
       volumeSeries.current = null;
       lastBar.current = null;
     };
-  }, [candles, accent, height, levels, markers]);
+  }, [candles, height, levels, markers]);
 
   /* ---- Live: the final bar follows the tape. ---- */
   useEffect(() => {
@@ -291,14 +289,14 @@ export function LiveChart({
 
   if (candles.length === 0) {
     return (
-      <div className="panel flex h-64 items-center justify-center text-xs text-ink-faint">
+      <div className="surface flex h-64 items-center justify-center text-xs text-ink-faint">
         אין היסטוריית מחירים זמינה לסימבול הזה.
       </div>
     );
   }
 
   return (
-    <figure className="panel overflow-hidden p-3">
+    <figure className="surface overflow-hidden p-3">
       <figcaption className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 px-1 text-[10px] text-ink-faint">
         <span className="text-ink-muted">{label}</span>
         {([20, 50, 150, 200] as const).map((period) => (
@@ -316,7 +314,7 @@ export function LiveChart({
 
       {/* The chart is a canvas, so it carries no text for a screen reader.
           The figure is labelled and the numbers it draws are all repeated in
-          the analysis panel below, which is the accessible path to them. */}
+          the analysis surface below, which is the accessible path to them. */}
       <div
         ref={container}
         role="img"

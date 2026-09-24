@@ -18,6 +18,8 @@ export type MarketState = "open" | "pre" | "after" | "closed";
 export type MarketStatus = {
   state: MarketState;
   label: string;
+  /** Minutes until the regular session opens, when it is not open. */
+  opensInMinutes: number | null;
 };
 
 const LABELS: Record<MarketState, string> = {
@@ -26,6 +28,28 @@ const LABELS: Record<MarketState, string> = {
   after: "מסחר מאוחר",
   closed: "הבורסה סגורה",
 };
+
+/**
+ * "Closed" and "opens in 3 hours" are the same fact and a completely
+ * different message.
+ *
+ * A still price with no explanation reads as a broken page — which is
+ * exactly what it was taken for. Saying when trading resumes turns the
+ * same stillness into information, and it costs one line.
+ */
+export function describeStatus(status: MarketStatus): string {
+  if (status.state === "open") return status.label;
+  if (status.opensInMinutes === null) return status.label;
+
+  const minutes = status.opensInMinutes;
+  if (minutes < 60) return `${status.label} · נפתחת בעוד ${minutes} דקות`;
+
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `${status.label} · נפתחת בעוד ${hours} שעות`;
+
+  const days = Math.round(hours / 24);
+  return `${status.label} · נפתחת בעוד ${days} ימים`;
+}
 
 /* ------------------------------------------------------------------ */
 /* Cadence                                                             */
@@ -100,23 +124,45 @@ function nowInNewYork(): { day: number; minutes: number } {
   return { day, minutes: hour * 60 + minute };
 }
 
+const OPEN_MINUTE = 9 * 60 + 30;
+const CLOSE_MINUTE = 16 * 60;
+const PRE_START = 4 * 60;
+const AFTER_END = 20 * 60;
+
+/** Minutes from now until the next regular open, counting past weekends. */
+function minutesUntilOpen(day: number, minutes: number): number {
+  // Still before today's open on a weekday.
+  if (day >= 1 && day <= 5 && minutes < OPEN_MINUTE) {
+    return OPEN_MINUTE - minutes;
+  }
+
+  // Otherwise the next weekday's open. Friday after the bell and the
+  // weekend all land on Monday.
+  let daysAhead = 1;
+  let next = (day + 1) % 7;
+  while (next === 0 || next === 6) {
+    next = (next + 1) % 7;
+    daysAhead++;
+  }
+
+  return daysAhead * 24 * 60 - minutes + OPEN_MINUTE;
+}
+
 export function marketStatus(): MarketStatus {
   const { day, minutes } = nowInNewYork();
 
-  // Weekend.
-  if (day === 0 || day === 6) {
-    return { state: "closed", label: LABELS.closed };
-  }
-
-  const open = 9 * 60 + 30;
-  const close = 16 * 60;
-  const preStart = 4 * 60;
-  const afterEnd = 20 * 60;
+  const weekend = day === 0 || day === 6;
 
   let state: MarketState = "closed";
-  if (minutes >= open && minutes < close) state = "open";
-  else if (minutes >= preStart && minutes < open) state = "pre";
-  else if (minutes >= close && minutes < afterEnd) state = "after";
+  if (!weekend) {
+    if (minutes >= OPEN_MINUTE && minutes < CLOSE_MINUTE) state = "open";
+    else if (minutes >= PRE_START && minutes < OPEN_MINUTE) state = "pre";
+    else if (minutes >= CLOSE_MINUTE && minutes < AFTER_END) state = "after";
+  }
 
-  return { state, label: LABELS[state] };
+  return {
+    state,
+    label: LABELS[state],
+    opensInMinutes: state === "open" ? null : minutesUntilOpen(day, minutes),
+  };
 }

@@ -1,18 +1,28 @@
 import { isFeedStale } from "@/lib/news-store";
 import { feedSignature, getLiveFeed } from "@/lib/live-news";
 import { ArticleCard } from "@/components/ArticleCard";
-import { fmtRelative } from "@/lib/format";
-import { AccentTheme } from "@/components/AccentTheme";
+import { FeaturedStory } from "@/components/FeaturedStory";
 import { NewsAutoRefresh } from "@/components/NewsAutoRefresh";
+import { Disclaimer, Hero, Page, Section, Stat, StatBar, StatCell } from "@/components/ui";
+import { fmtRelative } from "@/lib/format";
 
 export const revalidate = 60;
 
 export const metadata = {
-  title: "חדשות השוק — Market Intel",
+  title: "חדשות השוק",
   description:
-    "חדשות שוק ההון האמריקאי לפי סקטור, עם סיכום וניתוח מנגנון השפעה בעברית.",
+    "חדשות שוק ההון האמריקאי לפי סקטור, כל כתבה נקראת דרך שלוש עדשות: זרז או רעש, תגובת מחיר, ושרשרת הערך.",
 };
 
+/**
+ * The newsroom.
+ *
+ * Laid out the way a financial desk reads rather than as a uniform grid:
+ * one story leads, a short column runs beside it, and the rest is a dense
+ * feed by sector. A grid of identical cards tells the reader that every
+ * story matters equally, which is the opposite of what this page exists to
+ * say — most of what arrives changes nothing.
+ */
 export default async function NewsPage() {
   const feed = await getLiveFeed();
   const { refreshedAt, sectors, analysedCount, totalCount } = feed;
@@ -20,128 +30,161 @@ export default async function NewsPage() {
   const stale = isFeedStale(refreshedAt);
   const empty = sectors.length === 0;
 
+  // One lead story, then a short column beside it. The lead is the most
+  // consequential recent item the analysis found; when nothing has been
+  // analysed yet it is simply the newest, which is still the right answer.
+  const all = [
+    ...new Map(
+      sectors.flatMap((sector) => sector.articles).map((a) => [a.url, a]),
+    ).values(),
+  ].sort((a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""));
+
+  const ranked = [
+    ...all.filter((a) => a.analysis?.significance === "high"),
+    ...all.filter(
+      (a) => !a.analysis && a.triage?.kind === "catalyst",
+    ),
+    ...all.filter(
+      (a) => a.analysis?.significance !== "high" && a.triage?.kind !== "catalyst",
+    ),
+  ];
+
+  const lead = ranked[0] ?? null;
+  const column = ranked.slice(1, 5);
+
+  const catalysts = all.filter(
+    (a) => a.analysis?.catalystKind === "catalyst" || a.triage?.kind === "catalyst",
+  ).length;
+
   return (
-    <>
-      <AccentTheme accent="#c96f2a" />
-    <main className="mx-auto max-w-6xl px-6 py-8">
-      <header className="border-b border-line pb-5">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h1 className="text-3xl">חדשות השוק</h1>
-          <span className="flex items-center gap-2 text-[11px] text-ink-muted">
-            <NewsAutoRefresh
-              signature={feedSignature(feed)}
-              analysedCount={analysedCount}
+    <Page tint="#c9772a">
+      <Hero
+        eyebrow="חדשות"
+        title="מה קרה, ומה זה בכלל משנה"
+        lede="חדשות מ-CNBC, רויטרס ומקורות שוק נוספים. כל כתבה נקראת דרך שלוש עדשות קבועות, והעמוד מתעדכן מעצמו כשהפיד מתרענן."
+        stats={
+          <StatBar>
+            <StatCell label="כתבות בפיד" value={totalCount} />
+            <StatCell label="זוהו כזרז" value={catalysts} />
+            <StatCell label="נותחו לעומק" value={analysedCount} />
+            <StatCell
+              label="עודכן"
+              value={
+                <span className="text-base">
+                  {refreshedAt ? fmtRelative(new Date(refreshedAt)) : "—"}
+                </span>
+              }
+              sub={
+                <NewsAutoRefresh
+                  signature={feedSignature(feed)}
+                  analysedCount={analysedCount}
+                />
+              }
             />
-            {refreshedAt && (
-              <>
-                <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-up" />
-                {/* No .num here. fmtRelative returns a Hebrew phrase, and
-                    the class forces its contents left-to-right — it exists
-                    to isolate figures, not sentences that contain one. */}
-                <span>עודכן {fmtRelative(new Date(refreshedAt))}</span>
-              </>
-            )}
-          </span>
-        </div>
+          </StatBar>
+        }
+      />
 
-        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-ink-muted">
-          חדשות מ-CNBC, רויטרס ומקורות שוק נוספים, ממוינות לסקטורים. כל כתבה
-          חדשה נקראת דרך שלוש עדשות קבועות: האם זה זרז או רעש, מה המחיר כבר
-          עשה, ומי עוד בשרשרת הערך. העמוד מתעדכן מעצמו כשהפיד מתרענן.
-          {totalCount > 0 && (
-            <>
-              {" "}
-              <span className="num">{analysedCount}</span> מתוך{" "}
-              <span className="num">{totalCount}</span> נותחו.
-            </>
-          )}
+      {stale && (
+        <p className="surface mt-8 px-5 py-4 text-sm text-ink">
+          הפיד לא התרענן מעל שלוש שעות. ייתכן שתהליך הרענון האוטומטי נתקע.
         </p>
-
-        <p className="mt-2 text-[11px] leading-relaxed text-ink-faint">
-          הניתוח מתאר מה הכתבה אומרת ואילו סקטורים עשויים להיות מושפעים וכיצד.
-          הוא אינו המלצה לקנות או למכור דבר.
-        </p>
-      </header>
+      )}
 
       {empty ? (
-        <p className="mt-6 panel px-4 py-4 text-sm text-ink-muted">
+        <p className="surface mt-10 px-5 py-5 text-sm text-ink-muted">
           הפיד עדיין לא אוכלס. הרץ{" "}
-          <code className="num">npm run refresh:news</code>.
+          <code className="num text-ink">npm run refresh:news</code>.
         </p>
       ) : (
         <>
-          {stale && (
-            <p className="mt-4 rounded-lg border border-line-strong bg-surface px-4 py-3 text-sm text-ink">
-              הפיד לא התרענן מעל שלוש שעות. ייתכן שתהליך הרענון האוטומטי נתקע.
-            </p>
+          {/* ---- The lead ---- */}
+          {lead && (
+            <Section eyebrow="הסיפור המרכזי">
+              <div className="grid gap-5 lg:grid-cols-[1.6fr_1fr]">
+                <FeaturedStory article={lead} />
+
+                <div className="surface divide-y divide-line">
+                  {column.map((article) => (
+                    <div key={article.url} className="p-4">
+                      <div className="mb-1.5 flex items-center gap-2">
+                        <span className="text-[10px] text-ink-ghost" dir="auto">
+                          {article.domain}
+                        </span>
+                        {article.seenAt && (
+                          <span className="text-[10px] text-ink-ghost">
+                            · {fmtRelative(new Date(article.seenAt))}
+                          </span>
+                        )}
+                      </div>
+                      <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[13px] font-medium leading-snug text-ink transition-colors hover:text-accent"
+                        dir="auto"
+                      >
+                        {article.title}
+                      </a>
+                      {article.analysis && (
+                        <p className="mt-1.5 line-clamp-2 text-[12px] leading-relaxed text-ink-faint">
+                          {article.analysis.summary}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Section>
           )}
 
-          <nav className="mt-6 flex flex-wrap gap-2">
-            {sectors.map((sector) => (
-              <a
-                key={sector.sector}
-                href={`#${sector.sector}`}
-                className="rounded-lg border px-3 py-1.5 text-xs transition-colors"
-                style={{
-                  borderColor: `${sector.accent}44`,
-                  color: sector.accent,
-                }}
-              >
-                {sector.label}
-                <span className="num mr-1.5 text-ink-faint">
-                  {sector.articles.length}
-                </span>
-              </a>
-            ))}
-          </nav>
+          {/* ---- Sector jump ---- */}
+          <Section eyebrow="לפי סקטור" title="כל הפיד">
+            <nav className="flex flex-wrap gap-2" aria-label="מעבר לסקטור">
+              {sectors.map((sector) => (
+                <a key={sector.sector} href={`#${sector.sector}`} className="pill">
+                  {sector.label}
+                  <span className="num text-ink-ghost">
+                    {sector.articles.length}
+                  </span>
+                </a>
+              ))}
+            </nav>
 
-          <div className="mt-8 space-y-12">
-            {sectors.map((sector) => (
-              <section
-                key={sector.sector}
-                id={sector.sector}
-                className="scroll-mt-6"
-              >
-                <div
-                  className="border-b-2 pb-2"
-                  style={{ borderColor: `${sector.accent}55` }}
-                >
-                  <h2 className="text-lg" style={{ color: sector.accent }}>
-                    {sector.label}
-                  </h2>
-                  {sector.blurb && (
-                    <p className="mt-0.5 text-[11px] text-ink-muted">
-                      {sector.blurb}
-                    </p>
-                  )}
-                </div>
+            <div className="mt-10 space-y-14">
+              {sectors.map((sector) => (
+                <section key={sector.sector} id={sector.sector}>
+                  <div className="mb-5 flex items-end justify-between gap-4 border-b border-line pb-3">
+                    <div>
+                      <h3 className="text-[17px] font-bold tracking-tight">
+                        {sector.label}
+                      </h3>
+                      {sector.blurb && (
+                        <p className="mt-1 text-[12px] text-ink-faint">
+                          {sector.blurb}
+                        </p>
+                      )}
+                    </div>
+                    <Stat
+                      label="כתבות"
+                      value={sector.articles.length}
+                      size="sm"
+                    />
+                  </div>
 
-                {sector.articles.length === 0 ? (
-                  <p className="mt-4 text-xs text-ink-faint">
-                    אין כרגע כתבות בסקטור הזה.
-                  </p>
-                ) : (
-                  <div className="stagger mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {sector.articles.map((article) => (
-                      <ArticleCard
-                        key={article.url}
-                        article={article}
-                        accent={sector.accent}
-                      />
+                      <ArticleCard key={article.url} article={article} />
                     ))}
                   </div>
-                )}
-              </section>
-            ))}
-          </div>
+                </section>
+              ))}
+            </div>
+          </Section>
         </>
       )}
 
-      <p className="mt-12 text-xs leading-relaxed text-ink-faint">
-        הכתבות מוצגות כפי שהתפרסמו במקורן ואינן מסוננות לפי אמינות המקור.
-        קישור לכתבה אינו המלצה, ואין באמור ייעוץ השקעות.
-      </p>
-    </main>
-    </>
+      <Disclaimer extra="הכתבות מוצגות כפי שהתפרסמו במקורן ואינן מסוננות לפי אמינות המקור. קישור לכתבה אינו המלצה." />
+    </Page>
   );
 }

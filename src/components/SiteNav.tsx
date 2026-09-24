@@ -1,47 +1,148 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+/**
+ * The bar.
+ *
+ * 68px, sticky, and translucent only once the page has scrolled — a bar
+ * that is blurred over the very top of a page is blurring nothing, and the
+ * hairline under it reads as a seam on a layout that has not moved yet.
+ *
+ * The active item is marked with a rule in the accent rather than with
+ * coloured text. Coloured text competes with the figures on the page for
+ * the eye, and on a site where each page tints its own light, a coloured
+ * label would change meaning from page to page.
+ *
+ * Search lives here rather than on the dashboard because it is the fastest
+ * path to the thing most readers came for, and putting it in the bar makes
+ * it reachable from every page instead of one.
+ */
 
 const LINKS = [
-  { href: "/", label: "דשבורד" },
-  { href: "/ai", label: "AI" },
+  { href: "/", label: "שוק" },
   { href: "/opportunities", label: "הזדמנויות" },
-  { href: "/institutional", label: "מעקב מוסדי" },
+  { href: "/institutional", label: "מוסדיים" },
+  { href: "/ai", label: "AI" },
   { href: "/news", label: "חדשות" },
-  { href: "/learn", label: "מרכז ידע" },
+  { href: "/learn", label: "ידע" },
   { href: "/launch/ttwo", label: "GTA VI" },
 ];
 
-/**
- * The site bar.
- *
- * Sticky and translucent so the ambient background moves behind it as the
- * page scrolls — the one place on the site where the chrome is allowed to
- * be atmospheric, because it carries no data.
- *
- * The active link is marked with an underline in the page's accent rather
- * than with a different text colour. On a site where every page has its own
- * accent, a coloured label would change meaning from page to page; a rule
- * under the current item means the same thing everywhere.
- */
+function Search() {
+  const router = useRouter();
+  const [value, setValue] = useState("");
+  const input = useRef<HTMLInputElement>(null);
+
+  // A slash focuses the field, the way every terminal does it — but not
+  // while the reader is typing into something else.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      const typing =
+        target?.tagName === "INPUT" || target?.tagName === "TEXTAREA";
+      if (event.key === "/" && !typing) {
+        event.preventDefault();
+        input.current?.focus();
+      }
+      if (event.key === "Escape") input.current?.blur();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const symbol = value.trim().toUpperCase();
+        if (!/^[A-Z.\-]{1,10}$/.test(symbol)) return;
+        setValue("");
+        input.current?.blur();
+        router.push(`/company/${symbol}`);
+      }}
+      role="search"
+      className="relative"
+    >
+      <label htmlFor="nav-search" className="sr-only">
+        חיפוש חברה לפי סימבול
+      </label>
+      <input
+        id="nav-search"
+        ref={input}
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+        placeholder="חיפוש סימבול"
+        autoComplete="off"
+        spellCheck={false}
+        className="num w-28 rounded-md border border-line bg-surface py-1.5 pe-7 ps-2.5 text-xs text-ink placeholder:font-sans placeholder:text-ink-faint focus:w-40 focus:border-line-strong focus:outline-none sm:w-36 sm:focus:w-48"
+        style={{ transition: "width 0.18s ease, border-color 0.18s ease" }}
+      />
+      <kbd
+        className="pointer-events-none absolute end-2 top-1/2 -translate-y-1/2 text-[10px] text-ink-ghost"
+        aria-hidden="true"
+      >
+        /
+      </kbd>
+    </form>
+  );
+}
+
 export function SiteNav() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // A navigation should not stay open across a navigation.
+  useEffect(() => setOpen(false), [pathname]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <nav className="sticky top-0 z-30 border-b border-line bg-[color-mix(in_oklab,var(--color-canvas)_78%,transparent)] backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-6 py-3">
-        <Link
-          href="/"
-          className="font-serif text-sm tracking-tight text-gold transition-opacity hover:opacity-80"
-        >
-          Market Intel
+    <header
+      className="sticky top-0 z-50"
+      style={{
+        background: scrolled
+          ? "color-mix(in oklab, var(--color-base) 82%, transparent)"
+          : "transparent",
+        backdropFilter: scrolled ? "blur(16px) saturate(150%)" : "none",
+        borderBottom: `1px solid ${scrolled ? "var(--color-line)" : "transparent"}`,
+        transition: "background-color 0.2s ease, border-color 0.2s ease",
+      }}
+    >
+      <nav
+        aria-label="ראשי"
+        className="mx-auto flex h-[68px] max-w-[1400px] items-center gap-6 px-5 sm:px-8"
+      >
+        <Link href="/" className="group flex items-center gap-2.5">
+          <span
+            className="grid h-7 w-7 place-items-center rounded-md text-[13px] font-bold"
+            style={{
+              background: "var(--color-accent-dim)",
+              color: "var(--color-accent)",
+              border: "1px solid var(--color-accent-line)",
+            }}
+            aria-hidden="true"
+          >
+            M
+          </span>
+          <span className="editorial hidden text-[15px] tracking-tight text-ink sm:block">
+            Market Intel
+          </span>
         </Link>
 
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink-muted">
+        {/* Desktop navigation, centred. */}
+        <div className="mx-auto hidden items-center gap-1 lg:flex">
           {LINKS.map((link) => {
             const active = isActive(link.href);
             return (
@@ -49,15 +150,15 @@ export function SiteNav() {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative py-1 transition-colors ${
-                  active ? "text-ink" : "hover:text-ink"
+                className={`relative rounded-md px-3 py-1.5 text-[13px] transition-colors ${
+                  active ? "text-ink" : "text-ink-muted hover:text-ink"
                 }`}
               >
                 {link.label}
                 {active && (
                   <span
-                    className="absolute inset-x-0 -bottom-px h-px"
-                    style={{ background: "var(--accent)" }}
+                    className="absolute inset-x-3 -bottom-[19px] h-[2px] rounded-full"
+                    style={{ background: "var(--color-accent)" }}
                     aria-hidden="true"
                   />
                 )}
@@ -65,7 +166,58 @@ export function SiteNav() {
             );
           })}
         </div>
-      </div>
-    </nav>
+
+        <div className="ms-auto flex items-center gap-2 lg:ms-0">
+          <Search />
+
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            aria-controls="nav-drawer"
+            className="btn btn-ghost px-2 py-1.5 lg:hidden"
+          >
+            <span className="sr-only">תפריט</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                d={open ? "M3 3l10 10M13 3L3 13" : "M2 4h12M2 8h12M2 12h12"}
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile drawer. Rendered rather than animated open, because a list
+          of seven links does not need a transition and an animated drawer
+          is the slowest part of a phone navigation. */}
+      {open && (
+        <div
+          id="nav-drawer"
+          className="border-t border-line bg-base/95 px-5 pb-4 pt-2 backdrop-blur-xl lg:hidden"
+        >
+          <ul className="grid grid-cols-2 gap-1">
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={`block rounded-md px-3 py-2.5 text-sm ${
+                    isActive(link.href)
+                      ? "bg-raised text-ink"
+                      : "text-ink-muted"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </header>
   );
 }

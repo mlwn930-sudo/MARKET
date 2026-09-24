@@ -35,7 +35,7 @@ export function TickerSearch() {
           placeholder="NVDA"
           aria-label="סימבול החברה"
           dir="ltr"
-          className="num w-full panel px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-line-strong focus:outline-none sm:w-40"
+          className="num w-full surface px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-line-strong focus:outline-none sm:w-40"
         />
         <button
           type="submit"

@@ -2,7 +2,9 @@
 
 import { useMemo } from "react";
 import { LiveChart, type ChartLevel, type ChartMarker } from "./LiveChart";
+import { LiveBadge } from "./ui";
 import { useLiveTicks, type LiveQuote } from "@/lib/use-live-ticks";
+import { describeStatus } from "@/lib/market-hours";
 import type { Candle } from "@/lib/sources/prices";
 import {
   directionClass,
@@ -16,18 +18,22 @@ import {
  * The price half of a company page: the headline quote and the chart,
  * driven by one subscription.
  *
- * They are one component rather than two because they have to share a
- * connection, and because they have to agree. The upstream feed accepts a
- * single socket; a separate live quote and a separate live chart would each
- * want one, and — even with the connection manager deduplicating them — the
+ * They are one component rather than two because they have to agree. A
+ * separate live quote and a separate live chart would each want their own
+ * subscription, and — even with the stream manager deduplicating them — the
  * number in the header and the last candle on the chart should be the same
- * print rather than two renders of the same feed a frame apart.
+ * print rather than two renders of one feed a frame apart.
+ *
+ * The status line is not decoration. A still price has three innocent
+ * explanations: the market is shut, it is open and nobody traded this
+ * minute, or the stream is down and the slower poll is holding the fort.
+ * A price that stops moving without saying which looks broken — so this
+ * says which, and when the market is shut it says when it opens.
  */
 export function CompanyChart({
   symbol,
   candles,
   initial,
-  accent,
   levels,
   markers,
   name,
@@ -35,17 +41,16 @@ export function CompanyChart({
   symbol: string;
   candles: Candle[];
   initial: LiveQuote | null;
-  accent: string;
   levels?: ChartLevel[];
   markers?: ChartMarker[];
   name: string;
 }) {
-  // Stable identity, or the hook re-subscribes on every parent render.
+  // Stable identities, or the hook resubscribes on every parent render.
+  const watch = useMemo(() => [symbol], [symbol]);
   const seed = useMemo(
     () => (initial ? { [symbol]: initial } : {}),
     [initial, symbol],
   );
-  const watch = useMemo(() => [symbol], [symbol]);
 
   const { quotes, flash, market, feed, lastTickAt, tickCount } = useLiveTicks(
     watch,
@@ -53,96 +58,82 @@ export function CompanyChart({
   );
 
   const quote = quotes[symbol];
-  const direction = flash[symbol];
+  const moved = flash[symbol];
   const open = market.state === "open";
   const streaming = feed === "live";
 
+  const state = open && streaming ? "live" : open ? "waiting" : "idle";
   const status = !open
-    ? market.label
+    ? describeStatus(market)
     : streaming && tickCount > 0
       ? "זרם חי — כל עסקה"
       : streaming
         ? "מחובר, ממתין לעסקה"
         : "רענון מחזורי";
 
+  const range =
+    quote?.high != null && quote?.low != null && quote.high > quote.low
+      ? ((quote.price ?? quote.low) - quote.low) / (quote.high - quote.low)
+      : null;
+
   return (
     <div className="space-y-4">
-      <div
-        className={`panel panel-lit flex flex-wrap items-end justify-between gap-4 p-5 ${
-          direction === "up"
-            ? "flash-up"
-            : direction === "down"
-              ? "flash-down"
-              : ""
-        }`}
-      >
+      <div className="surface flex flex-wrap items-end justify-between gap-6 p-6">
         <div>
           <div
-            className={`price-xl ${
-              direction ? (direction === "up" ? "tick-up" : "tick-down") : ""
+            className={`figure-xl ${
+              moved === "up"
+                ? "settle-up"
+                : moved === "down"
+                  ? "settle-down"
+                  : ""
             }`}
           >
             {fmtPrice(quote?.price)}
           </div>
 
           <div
-            className={`num mt-2 text-base ${directionClass(quote?.changePercent)}`}
+            className={`num mt-3 text-[15px] ${directionClass(quote?.changePercent)}`}
           >
             {fmtChange(quote?.change)} ({fmtPercent(quote?.changePercent)})
           </div>
         </div>
 
-        <div className="flex flex-col items-start gap-2 text-[11px] sm:items-end">
-          <span className="flex items-center gap-2">
-            <span
-              className={`inline-block h-1.5 w-1.5 rounded-full ${
-                open && streaming
-                  ? "bg-up live-dot"
-                  : open
-                    ? "bg-gold"
-                    : "bg-ink-faint"
-              }`}
-              aria-hidden="true"
-            />
-            <span className={open && streaming ? "text-up" : "text-ink-muted"}>
-              {status}
-            </span>
+        <div className="flex flex-col items-start gap-2.5 sm:items-end">
+          <div className="flex items-center gap-3">
+            <LiveBadge state={state} label={status} />
             {lastTickAt && (
-              <span className="num text-ink-faint">· {fmtTime(lastTickAt)}</span>
-            )}
-          </span>
-
-          {quote?.high != null &&
-            quote?.low != null &&
-            quote.high > quote.low && (
-              <span className="flex items-center gap-2 text-ink-faint">
-                <span className="num">{fmtPrice(quote.low)}</span>
-                {/* Where the price sits inside today's range — the context a
-                    pair of numbers alone does not give. */}
-                <span className="relative h-1 w-24 rounded-full bg-line-strong">
-                  <span
-                    className="absolute top-1/2 h-2.5 w-0.5 -translate-y-1/2 rounded-full transition-[inset-inline-start] duration-300"
-                    style={{
-                      insetInlineStart: `${
-                        (((quote.price ?? quote.low) - quote.low) /
-                          (quote.high - quote.low)) *
-                        100
-                      }%`,
-                      background: accent,
-                    }}
-                  />
-                </span>
-                <span className="num">{fmtPrice(quote.high)}</span>
-                <span>טווח היום</span>
+              <span className="num text-[11px] text-ink-ghost">
+                {fmtTime(lastTickAt)}
               </span>
             )}
+          </div>
+
+          {range !== null && (
+            <div className="flex items-center gap-2">
+              <span className="num text-[11px] text-ink-ghost">
+                {fmtPrice(quote?.low)}
+              </span>
+              {/* Where the price sits inside today's range — the context a
+                  pair of numbers alone does not give. */}
+              <span className="relative h-[3px] w-28 rounded-full bg-overlay">
+                <span
+                  className="absolute top-1/2 h-3 w-[2px] -translate-y-1/2 rounded-full bg-ink transition-[inset-inline-start] duration-500"
+                  style={{ insetInlineStart: `${range * 100}%` }}
+                />
+              </span>
+              <span className="num text-[11px] text-ink-ghost">
+                {fmtPrice(quote?.high)}
+              </span>
+              <span className="text-[11px] text-ink-ghost">טווח היום</span>
+            </div>
+          )}
         </div>
       </div>
 
       <LiveChart
         candles={candles}
         livePrice={quote?.price ?? null}
-        accent={accent}
         levels={levels}
         markers={markers}
         label={`גרף נרות יומי של ${name}, עם ממוצעים נעים 20, 50, 150 ו-200`}

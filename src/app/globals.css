@@ -1,83 +1,171 @@
 @import "tailwindcss";
 
-/* ==================================================================== */
-/* Tokens                                                               */
-/* ==================================================================== */
+/* ====================================================================
+   Design system
+   ====================================================================
+
+   One system, used by every page. No page writes its own colours,
+   spacing or surfaces — if something is needed twice it becomes a token
+   or a class here, which is the only way a site of this size stays
+   coherent as it grows.
+
+   The principle: the interface is quiet and the data is loud. Everything
+   below is in service of a figure being the brightest, sharpest thing on
+   any screen it appears on.
+   ==================================================================== */
 
 @theme {
-  --color-canvas: #05070b;
-  --color-surface: #0d1118;
-  --color-surface-raised: #141a24;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(255, 255, 255, 0.18);
+  /* --- Surface ladder -------------------------------------------------
+     Five steps from the page to a raised control, each a real step. A
+     ladder with steps too close together reads as noise; too far apart
+     and the interface looks like stacked boxes. These are blue-black
+     rather than neutral — a true grey dark mode looks like a switched-off
+     screen, and the blue undertone is what makes it read as a surface. */
+  --color-base: #080a0f;
+  --color-surface: #0d1117;
+  --color-raised: #12171f;
+  --color-overlay: #191f29;
+  --color-hover: #1d242f;
 
-  --color-ink: #eceae5;
-  --color-ink-muted: #939aa6;
-  --color-ink-faint: #666d79;
+  /* --- Lines ---------------------------------------------------------- */
+  --color-line: rgba(255, 255, 255, 0.06);
+  --color-line-strong: rgba(255, 255, 255, 0.12);
+  --color-line-bright: rgba(255, 255, 255, 0.2);
 
-  /* Direction only. Never decorative — see CLAUDE.md. */
-  --color-up: #1baf7a;
-  --color-down: #e24b4a;
+  /* --- Text ----------------------------------------------------------
+     Soft white, never pure. #fff on a dark background haloes, especially
+     on Hebrew, and the softer value reads as more deliberate. */
+  --color-ink: #e9ecf1;
+  --color-ink-muted: #8b94a3;
+  --color-ink-faint: #5b6472;
+  --color-ink-ghost: #3d4553;
 
-  --color-gold: #c9a227;
+  /* --- Direction ------------------------------------------------------
+     Green and red mean price direction. Nothing else on this site may
+     use them: a green panel tells the reader something before they have
+     read anything. */
+  --color-up: #26b87c;
+  --color-down: #e5484d;
+  --color-up-dim: rgba(38, 184, 124, 0.14);
+  --color-down-dim: rgba(229, 72, 77, 0.14);
+
+  /* --- Accent ---------------------------------------------------------
+     One accent for the whole system: a refined gold. It carries the
+     brand, marks the active item and highlights an emphasis, and it does
+     nothing else. Gold rather than the usual fintech blue because blue
+     is one hue away from the "up" green in peripheral vision, and
+     because a warm accent on a cold surface is what stops the interface
+     looking clinical. */
+  --color-accent: #d9b04a;
+  --color-accent-dim: rgba(217, 176, 74, 0.12);
+  --color-accent-line: rgba(217, 176, 74, 0.32);
 
   --font-sans: var(--font-heebo), system-ui, sans-serif;
   --font-serif: var(--font-frank), Georgia, serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* --- Radius ---------------------------------------------------------
+     Small. Large radii read as consumer software; financial interfaces
+     look more precise with tight corners. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
 }
 
-/**
- * Two variables drive the whole interface.
- *
- * --accent is the page's identity: set once per page, and the background
- * light, panel rims, chips, gauges and the active nav item all follow it.
- *
- * --pulse is the market's mood: a client component sets it from the live
- * feed, so the room warms green on a strong tape and cools red on a weak
- * one. It touches atmosphere only — never a figure, never a chart line.
- * Colouring data by market mood would make the same number look like two
- * different values on two different days.
- */
+/* --------------------------------------------------------------------
+   Per-page tint
+   --------------------------------------------------------------------
+   A page may set --tint to colour its own ambient light and its section
+   marks. It is NOT the accent: it never touches text, a control or a
+   figure, and a page that sets nothing simply gets the accent.
+   -------------------------------------------------------------------- */
 :root {
-  --accent: #c9a227;
-  --accent-soft: rgba(201, 162, 39, 0.14);
-  --accent-line: rgba(201, 162, 39, 0.34);
-  --pulse: rgba(147, 154, 166, 0.5);
+  --tint: #d9b04a;
+  --tint-dim: rgba(217, 176, 74, 0.1);
 }
 
 html {
-  background: var(--color-canvas);
+  background: var(--color-base);
   color-scheme: dark;
+  /* Anchored sections land below the sticky bar rather than under it. */
+  scroll-padding-top: 96px;
 }
 
 body {
-  background: var(--color-canvas);
+  background: var(--color-base);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: none;
 }
 
+/* ====================================================================
+   Typography
+   ==================================================================== */
+
+/**
+ * Headings are sans, heavy and tight. The serif was doing the work of
+ * signalling "considered", and at large sizes in Hebrew it read as
+ * decorative rather than authoritative. A tight, heavy sans is what the
+ * interfaces this is measured against use, and it leaves the serif free
+ * to mean something — it is now reserved for the wordmark and for
+ * editorial passages, where the change of voice is the point.
+ */
 h1,
 h2,
-h3 {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.12;
 }
 
-/* ==================================================================== */
-/* Numbers                                                              */
-/* ==================================================================== */
+.display {
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
 
-/* Every figure on this site aligns in its column. This single rule is what
-   separates a serious financial interface from an amateur one.
+.title {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+/* A small uppercase label above a section. Carries the structure so the
+   headings do not have to shout. */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.editorial {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ====================================================================
+   Figures
+   ==================================================================== */
+
+/**
+ * Every figure aligns in its column. This one rule is most of what
+ * separates a financial interface from a generic dashboard.
  *
- * direction/unicode-bidi are load-bearing, not cosmetic: inside an RTL page
- * the bidi algorithm moves a leading sign to the far side ("+2.30%" renders
- * as "2.30%+") and reverses ranges. Isolating each figure as LTR keeps signs
- * and ranges truthful. It belongs on digits and nothing else — wrapping a
- * Hebrew phrase in it reorders the words around the number. */
+ * direction/unicode-bidi are load-bearing, not cosmetic: inside an RTL
+ * page the bidi algorithm moves a leading sign to the far side, so
+ * "+2.30%" renders as "2.30%+" and a range reverses. Isolating each
+ * figure as LTR keeps signs and ranges truthful.
+ *
+ * It belongs on digits and nothing else. Wrapping a Hebrew phrase in it
+ * reorders the words around the number.
+ */
 .num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums lining-nums;
@@ -86,233 +174,292 @@ h3 {
   unicode-bidi: isolate;
 }
 
-/* The headline price. Oversized, tight, and optically aligned — this is the
-   one number on a page that should be readable across a room. */
-.price-xl {
+/* The figure that is the subject of its panel. Optically tightened,
+   because monospace digits at display size are too airy by default. */
+.figure-xl {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums lining-nums;
   direction: ltr;
   unicode-bidi: isolate;
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
   font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
 }
 
-/* ==================================================================== */
-/* Ambient background                                                   */
-/* ==================================================================== */
-
-/**
- * Four layers behind the content: the page's own light, the market's mood,
- * a measuring grid, and a film of grain.
- *
- * All of them are held low. The background's job is depth and context; the
- * moment it competes with a figure for attention it has failed, and the
- * figures are the product.
- */
-.ambient {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  overflow: hidden;
+.figure-lg {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
 }
 
-/* The page's accent — a wide, slow wash. */
-.ambient::before {
-  content: "";
-  position: absolute;
-  inset: -35%;
-  background:
-    radial-gradient(
-      44% 40% at 16% 8%,
-      color-mix(in oklab, var(--accent) 34%, transparent) 0%,
-      transparent 68%
-    ),
-    radial-gradient(
-      38% 46% at 88% 84%,
-      color-mix(in oklab, var(--accent) 22%, transparent) 0%,
-      transparent 70%
-    );
-  opacity: 0.4;
-  filter: blur(46px);
-  animation: drift 52s ease-in-out infinite alternate;
-}
-
-/* The market's mood, on its own layer so it can cross-fade independently of
-   the page accent as the tape turns. */
-.ambient::after {
-  content: "";
-  position: absolute;
-  inset: -20%;
-  background: radial-gradient(
-    54% 40% at 50% 104%,
-    var(--pulse) 0%,
-    transparent 72%
-  );
-  opacity: 0.3;
-  filter: blur(60px);
-  transition: background 2.4s ease;
-}
-
-.grid-layer {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 62px 62px;
-  mask-image: radial-gradient(120% 80% at 50% 0%, black 10%, transparent 76%);
-  opacity: 0.6;
-}
-
-@keyframes drift {
+/* A figure that changed. The tint fades rather than the value jumping,
+   so a fast tape stays readable. */
+@keyframes settle-up {
   from {
-    transform: translate3d(0, 0, 0) scale(1);
+    color: var(--color-up);
   }
   to {
-    transform: translate3d(2%, -3%, 0) scale(1.09);
+    color: inherit;
   }
 }
+@keyframes settle-down {
+  from {
+    color: var(--color-down);
+  }
+  to {
+    color: inherit;
+  }
+}
+.settle-up {
+  animation: settle-up 0.9s ease-out;
+}
+.settle-down {
+  animation: settle-down 0.9s ease-out;
+}
 
-/* Grain is what stops large dark areas banding on an 8-bit display, and is
-   most of why the surface reads as a material rather than as a hex value. */
+/* ====================================================================
+   Depth
+   ====================================================================
+   Layers behind the content, not cards floating on black. Held very low
+   — the background gives the page a horizon and nothing more.
+   ==================================================================== */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      70% 50% at 50% -8%,
+      color-mix(in oklab, var(--tint) 12%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      50% 40% at 92% 8%,
+      rgba(70, 110, 190, 0.09) 0%,
+      transparent 68%
+    );
+}
+
+/* A measuring grid, fading out below the fold so it reads as a horizon
+   rather than as wallpaper. */
+.backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(125% 70% at 50% 0%, black 4%, transparent 72%);
+}
+
+/* Grain stops large dark areas banding on an 8-bit display, and is most
+   of why the surface reads as a material rather than as a hex value. */
 .grain {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.022;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ==================================================================== */
-/* Glass surfaces                                                       */
-/* ==================================================================== */
+/* ====================================================================
+   Surfaces
+   ====================================================================
+   Three of them, and no page invents a fourth.
 
-/**
- * The standard panel: frosted, with a hairline of light along its top edge.
- *
- * The rim is the detail that does the work. A flat border reads as a box
- * drawn on a page; a border that catches light along one edge reads as a
- * physical pane sitting above the surface, which is what makes the whole
- * interface feel built rather than laid out.
- */
-.panel {
-  position: relative;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.045) 0%,
-      rgba(255, 255, 255, 0.012) 34%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    color-mix(in oklab, var(--color-surface) 72%, transparent);
+   `.surface` is a plain region — a background and a border. Most of the
+   site is this. It is deliberately flat: the previous design gave every
+   region a blur and a glow, which made a page of them look like a pile
+   of glass rather than one system.
+
+   `.raised` is for something genuinely above the page: a menu, a hover
+   card, a dialog.
+
+   `.inset` is a well — a table body, a code block, a chart floor.
+   ==================================================================== */
+
+.surface {
+  background: var(--color-surface);
   border: 1px solid var(--color-line);
-  border-radius: 16px;
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-radius: var(--radius-lg);
+}
+
+.raised {
+  background: var(--color-raised);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px -24px rgba(0, 0, 0, 0.85);
+}
+
+.inset {
+  background: var(--color-base);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+
+/* A region that leads somewhere. Only these react to a cursor — a panel
+   that lifts under the mouse and then does nothing when clicked is a
+   small lie, and the previous design told it on every card. */
+.interactive {
   transition:
-    border-color 0.28s ease,
-    transform 0.28s ease,
-    box-shadow 0.28s ease;
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+.interactive:hover {
+  background: var(--color-raised);
+  border-color: var(--color-line-strong);
 }
 
-/* The lit edge. A pseudo-element rather than a border so it can fade out
-   toward the corners, which is how real edge lighting behaves. */
-.panel::before {
-  content: "";
-  position: absolute;
-  inset-inline: 12%;
-  top: -1px;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in oklab, var(--accent) 65%, transparent),
-    transparent
-  );
-  opacity: 0.55;
-  pointer-events: none;
+/* The mark that opens a section. A short rule in the page's tint,
+   carrying the structure without a heading having to be coloured. */
+.section-mark {
+  display: block;
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--tint);
 }
 
-/* Only panels that lead somewhere react to the cursor. A card that lifts
-   under the mouse and then does nothing when clicked is a small lie. */
-a.panel:hover,
-.panel-interactive:hover {
-  border-color: var(--accent-line);
-  transform: translateY(-3px);
-  box-shadow:
-    0 18px 40px -24px rgba(0, 0, 0, 0.9),
-    0 0 0 1px var(--accent-soft),
-    0 0 34px -18px var(--accent);
+/* ====================================================================
+   Controls
+   ==================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
 }
 
-a.panel:hover::before,
-.panel-interactive:hover::before {
+.btn-primary {
+  background: var(--color-accent);
+  color: #12100a;
+}
+.btn-primary:hover {
+  background: color-mix(in oklab, var(--color-accent) 88%, white);
+}
+
+.btn-ghost {
+  border-color: var(--color-line-strong);
+  color: var(--color-ink-muted);
+}
+.btn-ghost:hover {
+  border-color: var(--color-line-bright);
+  color: var(--color-ink);
+  background: var(--color-raised);
+}
+
+/* A filter or segmented control. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  padding: 0.3rem 0.75rem;
+  font-size: 12px;
+  color: var(--color-ink-muted);
+  transition:
+    border-color 0.16s ease,
+    color 0.16s ease,
+    background-color 0.16s ease;
+}
+.pill:hover {
+  border-color: var(--color-line-strong);
+  color: var(--color-ink);
+}
+.pill[data-active="true"],
+.pill[aria-selected="true"] {
+  background: var(--color-accent-dim);
+  border-color: var(--color-accent-line);
+  color: var(--color-accent);
+}
+
+/* A status word. Never coloured green or red — those two mean price. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid var(--color-line-strong);
+  padding: 0.1rem 0.4rem;
+  font-size: 10px;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+
+/* ====================================================================
+   Rows
+   ====================================================================
+   The site's main unit, in place of a card per item. A row shows more
+   per screen, scans vertically, and aligns its figures into columns —
+   which a grid of cards structurally cannot do.
+   ==================================================================== */
+
+.row {
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--color-line);
+  transition: background-color 0.15s ease;
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.row:hover {
+  background: var(--color-raised);
+}
+
+/* Revealed on hover, so a row is calm until it is the one being read. */
+.row .on-hover {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.row:hover .on-hover {
   opacity: 1;
 }
 
-/* A panel that is the subject of its screen — the hero quote, the selected
-   ticker — gets the rim at full strength rather than as a hint. */
-.panel-lit {
-  border-color: var(--accent-line);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
-    0 0 42px -26px var(--accent);
+/* A table that keeps its header while the body scrolls. */
+.table-sticky thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--color-surface);
+  backdrop-filter: blur(8px);
 }
 
-.accent-edge {
-  border-inline-start: 2px solid var(--accent);
-}
+/* ====================================================================
+   Motion
+   ====================================================================
+   Short, and time-based.
 
-.accent-chip {
-  background: var(--accent-soft);
-  color: var(--accent);
-  border: 1px solid var(--accent-line);
-}
+   Scroll-driven reveals were tried on this site and removed: a section
+   taller than the viewport never completes its entry range, holds the
+   opening keyframe, and its numbers never appear. On a site whose whole
+   purpose is displaying figures that is not a trade worth making.
+   ==================================================================== */
 
-/* A label that has to read as a control rather than as text. */
-.chip {
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  transition:
-    border-color 0.2s ease,
-    color 0.2s ease,
-    background-color 0.2s ease;
-}
-.chip:hover {
-  border-color: var(--accent-line);
-  color: var(--color-ink);
-}
-.chip[aria-selected="true"],
-.chip[data-active="true"] {
-  background: var(--accent-soft);
-  border-color: var(--accent-line);
-  color: var(--accent);
-}
-
-/* ==================================================================== */
-/* Motion                                                               */
-/* ==================================================================== */
-
-/**
- * Content arrives rather than appearing: 400ms, eight pixels.
- *
- * Time-based, and that is a decision rather than a limitation. Scroll-driven
- * reveals were tried here and removed — a section taller than the viewport
- * never completes its entry range, holds the opening keyframe, and its
- * numbers never become visible. On a site whose purpose is to display
- * figures that is not a trade worth making. Scroll-linked motion is used on
- * the launch page instead, where it moves artwork.
- */
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -321,453 +468,105 @@ a.panel:hover::before,
 }
 
 .enter {
-  animation: rise 0.4s ease-out both;
-}
-
-.reveal {
-  animation: rise 0.55s ease-out both;
+  animation: rise 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .stagger > * {
-  animation: rise 0.45s ease-out both;
+  animation: rise 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .stagger > *:nth-child(1) { animation-delay: 0ms; }
-.stagger > *:nth-child(2) { animation-delay: 45ms; }
-.stagger > *:nth-child(3) { animation-delay: 90ms; }
-.stagger > *:nth-child(4) { animation-delay: 135ms; }
-.stagger > *:nth-child(5) { animation-delay: 180ms; }
-.stagger > *:nth-child(6) { animation-delay: 225ms; }
+.stagger > *:nth-child(2) { animation-delay: 35ms; }
+.stagger > *:nth-child(3) { animation-delay: 70ms; }
+.stagger > *:nth-child(4) { animation-delay: 105ms; }
+.stagger > *:nth-child(5) { animation-delay: 140ms; }
+.stagger > *:nth-child(6) { animation-delay: 175ms; }
 
-/* ==================================================================== */
-/* Live price feedback                                                  */
-/* ==================================================================== */
-
-/**
- * A price that just moved is tinted for a moment, in the direction it went.
- *
- * Short — 700ms — because at a real tick rate a longer flash from one trade
- * is still fading when the next arrives, and the row turns into a smear that
- * says nothing. Green up, red down, and nothing else on the site may use
- * those two colours.
- */
-@keyframes flash-up {
-  from {
-    background-color: rgba(27, 175, 122, 0.24);
-    box-shadow: inset 0 0 24px -6px rgba(27, 175, 122, 0.5);
-  }
-  to {
-    background-color: transparent;
-    box-shadow: inset 0 0 0 0 transparent;
-  }
-}
-
-@keyframes flash-down {
-  from {
-    background-color: rgba(226, 75, 74, 0.24);
-    box-shadow: inset 0 0 24px -6px rgba(226, 75, 74, 0.5);
-  }
-  to {
-    background-color: transparent;
-    box-shadow: inset 0 0 0 0 transparent;
-  }
-}
-
-.flash-up {
-  animation: flash-up 0.7s ease-out;
-}
-
-.flash-down {
-  animation: flash-down 0.7s ease-out;
-}
-
-/* The digits themselves take the direction colour briefly, which is what
-   makes a fast tape readable at a glance. */
-.tick-up {
-  color: var(--color-up);
-  transition: color 0.7s ease;
-}
-.tick-down {
-  color: var(--color-down);
-  transition: color 0.7s ease;
-}
-
-/* The needle sweeps in from the start of the scale rather than appearing at
-   its final angle. It is the one flourish on an otherwise sober instrument,
-   and it also makes the direction of travel legible on a dial whose scale a
-   reader has not yet studied. */
-@keyframes gauge-sweep {
-  from {
-    transform: rotate(var(--needle-start, 0deg));
-  }
-  to {
-    transform: rotate(var(--needle, 0deg));
-  }
-}
-
-@keyframes pulse-dot {
+/* The live indicator. Pulses only while data is arriving — an indicator
+   that keeps pulsing after the feed has died is worse than none. */
+@keyframes breathe {
   0%,
   100% {
     opacity: 1;
-    transform: scale(1);
   }
   50% {
-    opacity: 0.3;
-    transform: scale(0.78);
+    opacity: 0.25;
   }
 }
-
 .live-dot {
-  animation: pulse-dot 1.8s ease-in-out infinite;
+  animation: breathe 2s ease-in-out infinite;
 }
 
-/* ==================================================================== */
-/* The launch hero                                                      */
-/* ==================================================================== */
-
-/**
- * Parallax for the Take-Two page, and nowhere else on the site.
- *
- * Confined to this one component on purpose: here it moves artwork, so the
- * worst a browser without support can do is show a still image. Every
- * keyframe below translates or dims — none of them hides, and none starts
- * from opacity 0, so nothing in this hero can fail to appear.
- */
-.vice-hero {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  border-radius: 20px;
-  border: 1px solid var(--color-line);
-  min-height: 560px;
-}
-
-.vice-layer {
-  position: absolute;
-  inset: -8% 0 0 0;
-  will-change: transform;
-}
-
-.vice-fade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 7, 11, 0) 0%,
-    rgba(5, 7, 11, 0.5) 56%,
-    rgba(5, 7, 11, 0.94) 100%
-  );
-}
-
-/* Depth: the sky barely moves, the nearest palm moves most. That ratio is
-   the whole illusion — make it uniform and the scene reads as a flat image
-   sliding, which is worse than no parallax at all. */
-@keyframes vice-drift-sky {
-  to { transform: translate3d(0, 26px, 0); }
-}
-@keyframes vice-drift-far {
-  to { transform: translate3d(0, 46px, 0); }
-}
-@keyframes vice-drift-near {
-  to { transform: translate3d(0, 74px, 0); }
-}
-@keyframes vice-drift-water {
-  to { transform: translate3d(0, 96px, 0); }
-}
-@keyframes vice-drift-palms {
-  to { transform: translate3d(0, 130px, 0); }
-}
-
-@supports (animation-timeline: scroll()) {
-  .vice-layer-sky,
-  .vice-layer-far,
-  .vice-layer-near,
-  .vice-layer-water,
-  .vice-layer-palms {
-    animation: linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0 640px;
-  }
-  .vice-layer-sky { animation-name: vice-drift-sky; }
-  .vice-layer-far { animation-name: vice-drift-far; }
-  .vice-layer-near { animation-name: vice-drift-near; }
-  .vice-layer-water { animation-name: vice-drift-water; }
-  .vice-layer-palms { animation-name: vice-drift-palms; }
-}
-
-@keyframes vice-sun-breathe {
-  0%, 100% { opacity: 0.92; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.035); }
-}
-.vice-sun {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: vice-sun-breathe 9s ease-in-out infinite;
-}
-
-/* Windows never go dark — they dim. A city that blinks off is a power cut. */
-@keyframes vice-window-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.72; }
-}
-.vice-windows {
-  animation: vice-window-flicker 6.5s ease-in-out infinite;
-}
-
-@keyframes vice-ripple-shift {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-9px); }
-}
-.vice-ripples {
-  animation: vice-ripple-shift 11s ease-in-out infinite;
-}
-
-@keyframes vice-palm-sway {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(0.9deg); }
-}
-.vice-palm-near {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: vice-palm-sway 13s ease-in-out infinite;
-}
-.vice-palm-far {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: vice-palm-sway 17s ease-in-out infinite reverse;
-}
-
-/**
- * The launch page's own skin, applied to everything below the hero.
- *
- * The rest of the site is an analyst's terminal and should stay one. This
- * page is about a cultural event, and treating it with the same restraint
- * made the hero look like a banner someone had pasted above a spreadsheet.
- * So the neon carries all the way down: every panel is rimmed in pink and
- * lit from inside, section headings burn, chips glow, and a scanline wash
- * sits over the whole thing.
- *
- * One thing does NOT change, and it is the reason the page is still usable:
- * figures stay tabular and neutral, and green and red still mean price
- * direction. A neon percentage is unreadable at a glance, and a pink number
- * beside a green one implies a difference that does not exist.
- */
-.vice-page {
-  --accent: #ff2e88;
-  --vice-cyan: #22d3ee;
-  --vice-purple: #8b5cf6;
-  --vice-orange: #ff9f1c;
-  position: relative;
-}
-
-/* Scanlines. Very faint — the reference is a CRT, and an actual CRT is
-   unreadable. At 2.5% it registers as texture and nothing else. */
-.vice-page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.025) 0px,
-    rgba(255, 255, 255, 0.025) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-}
-
-/* Panels are lit from within and rimmed, rather than being dark boxes with
-   a hairline. The inset glow is what makes them read as signage. */
-.vice-page .panel {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 46, 136, 0.08) 0%,
-      rgba(139, 92, 246, 0.04) 45%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    color-mix(in oklab, #0f0a18 78%, transparent);
-  border-color: rgba(255, 46, 136, 0.3);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.07),
-    0 0 28px -20px #ff2e88;
-}
-
-.vice-page .panel::before {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--vice-cyan),
-    #ff2e88,
-    transparent
-  );
-  opacity: 0.8;
-}
-
-.vice-page a.panel:hover,
-.vice-page .panel-interactive:hover {
-  border-color: rgba(34, 211, 238, 0.6);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
-    0 0 40px -14px #22d3ee,
-    0 18px 40px -26px rgba(0, 0, 0, 0.9);
-}
-
-/* Section headings are the loudest thing on the page after the hero. The
-   gradient runs pink to cyan, which is the palette in two words. */
-.vice-page h2 {
-  background: linear-gradient(95deg, #ff2e88 0%, #ff9f1c 42%, #22d3ee 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 14px rgba(255, 46, 136, 0.35));
-  font-weight: 500;
-}
-
-.vice-page h3 {
-  color: #fdf2f8;
-}
-
-/* The rule under a heading, so a section announces itself before its
-   content does. */
-.vice-page section > h2::after {
-  content: "";
-  display: block;
-  height: 1px;
-  margin-top: 0.55rem;
-  background: linear-gradient(
-    90deg,
-    #ff2e88,
-    rgba(139, 92, 246, 0.5),
-    transparent
-  );
-}
-
-.vice-page .accent-chip {
-  background: rgba(255, 46, 136, 0.16);
-  border-color: rgba(255, 46, 136, 0.5);
-  color: #ffd6e8;
-  box-shadow: 0 0 20px -8px #ff2e88;
-}
-
-/* Figures keep the site's discipline. Tabular, neutral, aligned — the one
-   thing on this page that is not allowed to glow. */
-.vice-page .num {
-  color: inherit;
-  text-shadow: none;
-}
-
-.vice-page .accent-edge {
-  border-inline-start-color: var(--vice-cyan);
-}
-
-/**
- * Neon type for the launch page only.
- *
- * A text shadow is normally forbidden here because it costs legibility for
- * decoration. This heading is the exception the design rules allow for a
- * hero: it carries no data, and the glow is the subject.
- */
-.neon {
-  color: #fff;
-  text-shadow:
-    0 0 6px rgba(255, 46, 136, 0.85),
-    0 0 22px rgba(255, 46, 136, 0.55),
-    0 0 48px rgba(139, 92, 246, 0.4);
-}
-
-@keyframes neon-settle {
-  0% { opacity: 0.72; }
-  8% { opacity: 1; }
-  12% { opacity: 0.8; }
-  16% { opacity: 1; }
-  100% { opacity: 1; }
-}
-.neon-flicker {
-  animation: neon-settle 2.6s ease-out 1 both;
-}
-
-/* ==================================================================== */
-/* Chrome                                                               */
-/* ==================================================================== */
+/* ====================================================================
+   Chrome
+   ==================================================================== */
 
 ::selection {
-  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  background: color-mix(in oklab, var(--color-accent) 26%, transparent);
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-line-strong);
-  border-radius: 5px;
+  border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-line);
+  background: var(--color-line-bright);
 }
 
-/* Focus has to be visible on a dark glass surface, and the browser default
-   is a thin ring that disappears against it. */
+/* Visible on a dark surface, where the browser default disappears. */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
-/* ==================================================================== */
-/* Reduced motion                                                       */
-/* ==================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
 
-/**
- * Anyone who asked their system to reduce motion gets the information
- * without the movement — never the movement removed along with the
- * information. The price flash keeps its colour and loses its fade; entrance
- * animations resolve instantly rather than being cancelled, which matters
- * because an element cancelled mid-fade stays invisible.
- */
+/* ====================================================================
+   Reduced motion
+   ====================================================================
+   The information without the movement — never the movement removed
+   along with the information. Entrance animations resolve instantly
+   rather than being cancelled, because an element cancelled mid-fade
+   stays invisible.
+   ==================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
-  .flash-up,
-  .flash-down {
-    animation-duration: 0.01s;
-  }
-
-  .ambient::before,
-  .live-dot {
-    animation: none;
-  }
-
   .enter,
-  .reveal,
   .stagger > * {
     animation: none;
     opacity: 1;
     transform: none;
   }
 
-  .panel {
-    transition: none;
+  .settle-up,
+  .settle-down {
+    animation-duration: 0.01s;
   }
 
-  a.panel:hover,
-  .panel-interactive:hover {
-    transform: none;
-  }
-
-  /* The launch scene keeps every layer in place. It is still the same
-     picture — a sunset over a skyline — just not a moving one. */
-  .vice-layer,
-  .vice-sun,
-  .vice-windows,
-  .vice-ripples,
-  .vice-palm-near,
-  .vice-palm-far,
-  .neon-flicker {
+  .live-dot {
     animation: none;
-    transform: none;
-    opacity: 1;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
   }
 }

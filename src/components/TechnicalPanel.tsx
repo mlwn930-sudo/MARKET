@@ -5,7 +5,7 @@ import { fmtPrice } from "@/lib/format";
  * The technical frameworks, shown as their working rather than as a score.
  *
  * Three choices here are worth explaining, because each of them costs space
- * and each is the reason the panel is worth having.
+ * and each is the reason the surface is worth having.
  *
  * The trend template is listed criterion by criterion with its measurement
  * beside it. "Six of eight" is a number a reader can neither check nor use;
@@ -69,7 +69,7 @@ export function TechnicalPanel({
       : 0;
 
   return (
-    <section className="reveal">
+    <section className="enter">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="text-base">קריאה טכנית</h2>
         <p className="text-[11px] text-ink-faint">{technical.headline}</p>
@@ -77,7 +77,7 @@ export function TechnicalPanel({
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* ---- Stage and averages ---- */}
-        <div className="panel accent-edge p-4">
+        <div className="surface border-s-2 border-accent p-4">
           <h3 className="text-sm">{stage.label}</h3>
           <p className="mt-1.5 text-[13px] leading-relaxed text-ink-muted">
             {stage.note}
@@ -125,7 +125,7 @@ export function TechnicalPanel({
         </div>
 
         {/* ---- Trend template ---- */}
-        <div className="panel p-4">
+        <div className="surface p-4">
           <div className="flex items-baseline justify-between">
             <h3 className="text-sm">תבנית המגמה</h3>
             <span className="num text-[11px] text-ink-faint">
@@ -152,7 +152,7 @@ export function TechnicalPanel({
 
       {/* ---- Contraction pattern ---- */}
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <div className="panel p-4">
+        <div className="surface p-4">
           <div className="flex items-baseline justify-between">
             <h3 className="text-sm">התכווצות תנודתיות</h3>
             <span className="text-[11px] text-ink-faint">
@@ -173,7 +173,7 @@ export function TechnicalPanel({
                   <span className="num w-4 shrink-0 text-[10px] text-ink-faint">
                     {i + 1}
                   </span>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface-raised">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-overlay">
                     <div
                       className="h-full rounded-full"
                       style={{
@@ -218,7 +218,7 @@ export function TechnicalPanel({
         </div>
 
         {/* ---- Volume and risk ---- */}
-        <div className="panel p-4">
+        <div className="surface p-4">
           <h3 className="text-sm">מחזורים וסיכון</h3>
           <p className="mt-2 text-[12px] leading-relaxed text-ink-muted">
             {volume.note}

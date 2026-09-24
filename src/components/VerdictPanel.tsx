@@ -10,10 +10,10 @@ import { STANCE_LABEL, type Verdict } from "@/lib/analysis/verdict";
  * The stance is NOT colour-coded green and red. Those two colours mean
  * price direction on every other surface of this site, and a green
  * "passes" badge would read as a buy signal — which is exactly the reading
- * this panel is built to avoid. The stance is carried by the word, the
+ * this surface is built to avoid. The stance is carried by the word, the
  * score and the weight of the type instead.
  *
- * The caveat sits inside the panel rather than in the page footer. A reader
+ * The caveat sits inside the surface rather than in the page footer. A reader
  * who takes the score at face value should have to pass the sentence
  * explaining what the score does not know.
  */
@@ -71,7 +71,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
 
   return (
     <section className="enter">
-      <div className="panel panel-lit overflow-hidden">
+      <div className="surface overflow-hidden">
         <div
           className="h-1 w-full"
           style={{ background: "var(--accent)" }}
@@ -85,14 +85,14 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
 
           <div className="mt-3 flex flex-wrap items-end gap-x-6 gap-y-3">
             <div className="flex items-baseline gap-1">
-              <span className="price-xl">{verdict.passed}</span>
+              <span className="figure-xl">{verdict.passed}</span>
               <span className="num text-2xl text-ink-faint">
                 /{verdict.evaluated}
               </span>
             </div>
 
             <div className="pb-1">
-              <div className="accent-chip inline-block rounded-full px-3 py-1 text-xs">
+              <div className="badge inline-block rounded-full px-3 py-1 text-xs">
                 {STANCE_LABEL[verdict.stance]}
               </div>
               <p className="num mt-1.5 text-[11px] text-ink-faint">
@@ -104,7 +104,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
           {/* The score as a bar, so the proportion registers before the
               numbers are read. */}
           <div
-            className="mt-4 h-1.5 overflow-hidden rounded-full bg-surface-raised"
+            className="mt-4 h-1.5 overflow-hidden rounded-full bg-overlay"
             role="img"
             aria-label={`${verdict.passed} מתוך ${verdict.evaluated} בדיקות עברו`}
           >
@@ -122,7 +122,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
 
       {/* ---- Reasons and blockers, side by side ---- */}
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <div className="panel p-5">
+        <div className="surface p-5">
           <h3 className="text-sm">מה עובד כאן</h3>
           {verdict.reasonsFor.length === 0 ? (
             <p className="mt-2 text-[13px] text-ink-muted">
@@ -148,7 +148,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
           )}
         </div>
 
-        <div className="panel accent-edge p-5">
+        <div className="surface border-s-2 border-accent p-5">
           <h3 className="text-sm">מה עוצר</h3>
           {verdict.blockers.length === 0 ? (
             <p className="mt-2 text-[13px] text-ink-muted">
@@ -176,7 +176,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
       </div>
 
       {/* ---- The full checklist ---- */}
-      <div className="panel mt-4 p-5">
+      <div className="surface mt-4 p-5">
         <h3 className="text-sm">כל הבדיקות</h3>
         <p className="mt-1 text-[11px] text-ink-faint">
           לחיצה על שורה מסבירה למה השאלה הזו נמצאת ברשימה.
@@ -196,7 +196,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
       </div>
 
       {/* ---- What would make this wrong ---- */}
-      <div className="panel mt-4 p-5">
+      <div className="surface mt-4 p-5">
         <h3 className="text-sm">מה היה הופך את הקריאה הזו לשגויה</h3>
         <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">
           {verdict.falsification}

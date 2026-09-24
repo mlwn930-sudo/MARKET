@@ -8,208 +8,148 @@ import { TRIAGE_CAVEAT } from "@/lib/news-triage";
 import { fmtRelative } from "@/lib/format";
 
 /**
- * One story, with whatever analysis exists for it.
+ * One story.
  *
- * The image is decorative and deliberately fails quietly: publishers move
- * and expire them constantly, and a broken image icon in the middle of a
- * feed looks worse than no image at all.
+ * No image. Publisher thumbnails expire, arrive at wildly different crops,
+ * and — on a feed where the useful signal is "is this a catalyst" — a photo
+ * is the least informative thing on the card. The featured story on the
+ * news page is the one exception, and it gets its own component.
  *
- * Significance is a label, never a colour. Green and red mean price
- * direction everywhere on this site, and a consequential story is neither
- * good nor bad until you know which side of it you are on.
+ * Significance and the catalyst verdict are labels, never colours. Green
+ * and red mean price direction everywhere on this site, and a consequential
+ * story is neither good nor bad until you know which side of it you are on.
  */
+
 export function ArticleCard({
   article,
-  accent,
+  compact = false,
 }: {
   article: EnrichedArticle;
-  accent: string;
+  /** Drops the analysis body — for a dense list beside a featured story. */
+  compact?: boolean;
 }) {
-  const { analysis } = article;
-  const isMajor = analysis?.significance === "high";
+  const { analysis, triage } = article;
+
+  const verdict = analysis?.catalystKind
+    ? CATALYST_LABELS[analysis.catalystKind].label
+    : triage
+      ? triage.kind === "catalyst"
+        ? "זרז אפשרי"
+        : triage.kind === "noise"
+          ? "רעש"
+          : "לא הוכרע"
+      : null;
+
+  const verdictTitle = analysis?.catalystKind
+    ? CATALYST_LABELS[analysis.catalystKind].note
+    : TRIAGE_CAVEAT;
 
   return (
-    <article
-      className="group relative overflow-hidden panel panel-interactive"
-      style={isMajor ? { borderInlineStartWidth: 2, borderInlineStartColor: accent } : undefined}
-    >
-      {article.image && (
-        // Painted as a background rather than an <img> on purpose. Publisher
-        // images expire and move constantly, and a background that fails to
-        // load simply shows the surface colour — where a broken <img> shows
-        // a torn-page icon in the middle of the feed.
-        <div
-          className="relative h-32 w-full bg-surface-raised bg-cover bg-center"
-          style={{ backgroundImage: `url(${article.image})` }}
-          aria-hidden="true"
-        >
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent" />
+    <article className="surface interactive flex flex-col p-4">
+      <div className="mb-2.5 flex flex-wrap items-center gap-2">
+        {analysis && (
+          <span className="badge" style={{ color: "var(--color-accent)" }}>
+            {SIGNIFICANCE_LABELS[analysis.significance]}
+          </span>
+        )}
+        {verdict && (
+          <span className="badge" title={verdictTitle}>
+            {verdict}
+          </span>
+        )}
+        <span className="ms-auto text-[10px] text-ink-ghost" dir="auto">
+          {article.domain}
+          {article.seenAt && ` · ${fmtRelative(new Date(article.seenAt))}`}
+        </span>
+      </div>
+
+      <a
+        href={article.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[14px] font-medium leading-snug text-ink transition-colors hover:text-accent"
+        dir="auto"
+      >
+        {article.title}
+      </a>
+
+      {!compact && (
+        <div className="mt-2.5 flex-1 space-y-2">
+          {analysis ? (
+            <>
+              <p className="text-[13px] leading-relaxed text-ink-muted">
+                {analysis.summary}
+              </p>
+              <p className="text-[12px] leading-relaxed text-ink-faint">
+                <span className="text-ink-muted">השפעה: </span>
+                {analysis.impact}
+              </p>
+
+              {/* The three lenses, collapsed. The feed's job is to be
+                  scannable; a reader who wants the full reading of one
+                  story opens that story. */}
+              {(analysis.catalyst || analysis.reaction || analysis.chain) && (
+                <details className="pt-1">
+                  <summary className="cursor-pointer text-[11px] text-ink-ghost transition-colors hover:text-ink-muted">
+                    ניתוח בשלוש עדשות
+                  </summary>
+                  <dl className="mt-2 space-y-2 border-t border-line pt-2">
+                    {[
+                      { label: "זרז או רעש", body: analysis.catalyst },
+                      { label: "תגובת מחיר מול ציפיות", body: analysis.reaction },
+                      { label: "שרשרת הערך", body: analysis.chain },
+                    ]
+                      .filter((lens) => lens.body)
+                      .map((lens) => (
+                        <div key={lens.label}>
+                          <dt className="text-[10px] text-ink-ghost">
+                            {lens.label}
+                          </dt>
+                          <dd className="text-[12px] leading-relaxed text-ink-muted">
+                            {lens.body}
+                          </dd>
+                        </div>
+                      ))}
+                  </dl>
+                </details>
+              )}
+            </>
+          ) : (
+            <>
+              {article.excerpt && (
+                <p
+                  className="line-clamp-2 text-[12px] leading-relaxed text-ink-faint"
+                  dir="auto"
+                >
+                  {article.excerpt}
+                </p>
+              )}
+              {triage && (
+                <p className="text-[11px] leading-relaxed text-ink-ghost">
+                  <span className="text-ink-faint">סיווג ראשוני: </span>
+                  {triage.reason}
+                </p>
+              )}
+            </>
+          )}
         </div>
       )}
 
-      <div className="p-4">
-        <div className="flex items-start justify-between gap-3">
-          <a
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[13px] font-medium leading-snug text-ink hover:underline"
-            dir="auto"
-          >
-            {article.title}
-          </a>
-          {analysis && (
-            <div className="flex shrink-0 flex-col items-end gap-1">
-              <span
-                className="rounded-full border px-2 py-0.5 text-[10px]"
-                style={{ borderColor: `${accent}55`, color: accent }}
+      {(analysis?.tickers.length || article.tickers.length) > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-1.5">
+          {[...new Set([...(analysis?.tickers ?? []), ...article.tickers])]
+            .slice(0, 5)
+            .map((ticker) => (
+              <Link
+                key={ticker}
+                href={`/company/${ticker}`}
+                className="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
               >
-                {SIGNIFICANCE_LABELS[analysis.significance]}
-              </span>
-
-              {/* Shown on the card rather than hidden in the detail, because
-                  "this one changes nothing" is the single most useful thing
-                  the feed can tell a reader who is scanning it. */}
-              {analysis.catalystKind && (
-                <span
-                  className="rounded-full border border-line px-2 py-0.5 text-[10px] text-ink-muted"
-                  title={CATALYST_LABELS[analysis.catalystKind].note}
-                >
-                  {CATALYST_LABELS[analysis.catalystKind].label}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* No model reading yet: the rule-based verdict stands in, marked
-              as provisional so it is never mistaken for the real analysis. */}
-          {!analysis && article.triage && (
-            <span
-              className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[10px] text-ink-muted"
-              title={TRIAGE_CAVEAT}
-            >
-              {article.triage.kind === "catalyst"
-                ? "זרז אפשרי"
-                : article.triage.kind === "noise"
-                  ? "רעש"
-                  : "לא הוכרע"}
-            </span>
-          )}
+                {ticker}
+              </Link>
+            ))}
         </div>
-
-        {analysis ? (
-          <div className="mt-3 space-y-2">
-            <p className="text-[13px] leading-relaxed text-ink">
-              {analysis.summary}
-            </p>
-            <p className="text-[12px] leading-relaxed text-ink-muted">
-              <span style={{ color: accent }}>השפעה: </span>
-              {analysis.impact}
-            </p>
-
-            {/* The three lenses, when the analysis carries them. Collapsed
-                by default: the feed's job is to be scannable, and a reader
-                who wants the full reading of one story opens that story. */}
-            {(analysis.catalyst || analysis.reaction || analysis.chain) && (
-              <details className="pt-1">
-                <summary className="cursor-pointer text-[11px] text-ink-faint transition-colors hover:text-ink-muted">
-                  ניתוח בשלוש עדשות
-                </summary>
-
-                <div className="mt-2 space-y-2 border-t border-line pt-2">
-                  {analysis.catalyst && (
-                    <div>
-                      <span className="text-[11px] text-ink-faint">
-                        זרז או רעש
-                        {analysis.catalystKind && (
-                          <span className="mr-1.5 text-ink-muted">
-                            · {CATALYST_LABELS[analysis.catalystKind].label}
-                          </span>
-                        )}
-                      </span>
-                      <p className="text-[12px] leading-relaxed text-ink-muted">
-                        {analysis.catalyst}
-                      </p>
-                    </div>
-                  )}
-
-                  {analysis.reaction && (
-                    <div>
-                      <span className="text-[11px] text-ink-faint">
-                        תגובת מחיר מול ציפיות
-                      </span>
-                      <p className="text-[12px] leading-relaxed text-ink-muted">
-                        {analysis.reaction}
-                      </p>
-                    </div>
-                  )}
-
-                  {analysis.chain && (
-                    <div>
-                      <span className="text-[11px] text-ink-faint">
-                        שרשרת הערך
-                      </span>
-                      <p className="text-[12px] leading-relaxed text-ink-muted">
-                        {analysis.chain}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </details>
-            )}
-          </div>
-        ) : (
-          <div className="mt-2 space-y-2">
-            {article.excerpt && (
-              <p
-                className="line-clamp-2 text-[12px] leading-relaxed text-ink-muted"
-                dir="auto"
-              >
-                {article.excerpt}
-              </p>
-            )}
-
-            {article.triage && (
-              <p className="text-[11px] leading-relaxed text-ink-faint">
-                <span style={{ color: accent }}>סיווג ראשוני: </span>
-                {article.triage.reason}
-              </p>
-            )}
-          </div>
-        )}
-
-        {(analysis?.tickers.length || article.tickers.length) > 0 && (
-          <div className="mt-3 flex flex-wrap items-center gap-1.5">
-            {[
-              ...new Set([
-                ...(analysis?.tickers ?? []),
-                ...article.tickers,
-              ]),
-            ]
-              .slice(0, 5)
-              .map((ticker) => (
-                <Link
-                  key={ticker}
-                  href={`/company/${ticker}`}
-                  className="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-muted transition-colors hover:border-line-strong hover:text-ink"
-                >
-                  {ticker}
-                </Link>
-              ))}
-          </div>
-        )}
-
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px] text-ink-faint">
-          <span dir="auto">{article.domain}</span>
-          {article.seenAt && (
-            <>
-              <span>·</span>
-              <span>{fmtRelative(new Date(article.seenAt))}</span>
-            </>
-          )}
-          {!analysis && <span>· ניתוח מלא בהרצה הבאה</span>}
-        </div>
-      </div>
+      )}
     </article>
   );
 }

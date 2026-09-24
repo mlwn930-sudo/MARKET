@@ -1,25 +1,39 @@
-import Link from "next/link";
 import {
   CHANGE_LABELS,
   getInstitutional,
   type PositionChange,
 } from "@/lib/institutional-store";
+import {
+  Disclaimer,
+  Hero,
+  Page,
+  Section,
+  StatBar,
+  StatCell,
+} from "@/components/ui";
 import { fmtCompact, fmtDate } from "@/lib/format";
-import { AccentTheme } from "@/components/AccentTheme";
 
 export const revalidate = 3600;
 
-/** Moves are shown without colour on purpose. A fund increasing a position
- *  is not "good news" — it is information. Green and red on this page would
- *  read as a recommendation. */
+export const metadata = {
+  title: "מעקב מוסדי",
+  description:
+    "מה הגופים הגדולים מחזיקים ומה השתנה מהרבעון הקודם, לפי דוחות 13F שהוגשו ל-SEC.",
+};
+
+/**
+ * Moves are shown without colour on purpose. A fund increasing a position
+ * is not "good news" — it is information, and the fund's reasons are not in
+ * the filing. Green and red here would read as a recommendation.
+ */
 function ChangeRow({ change }: { change: PositionChange }) {
   return (
-    <li className="flex items-baseline justify-between gap-3 border-b border-line py-2 last:border-0">
-      <span className="text-[13px] leading-snug" dir="auto">
+    <li className="flex items-baseline justify-between gap-3 border-b border-line py-2.5 last:border-0">
+      <span className="text-[13px] leading-snug text-ink-muted" dir="auto">
         {change.issuer}
       </span>
-      <span className="flex shrink-0 items-baseline gap-2 text-[11px] text-ink-muted">
-        <span>{CHANGE_LABELS[change.kind]}</span>
+      <span className="flex shrink-0 items-baseline gap-2 text-[11px]">
+        <span className="badge">{CHANGE_LABELS[change.kind]}</span>
         {change.sharesChangePercent !== null &&
           change.kind !== "exited" &&
           change.kind !== "new" && (
@@ -38,121 +52,142 @@ export default async function InstitutionalPage() {
 
   if (institutions.length === 0) {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-8">
-        <h1 className="text-xl">מעקב מוסדי</h1>
-        <p className="mt-4 panel px-4 py-4 text-sm text-ink-muted">
-          הנתונים עדיין לא נבנו. הרץ{" "}
-          <code className="num">npm run build:institutional</code>.
-        </p>
-      </main>
+      <Page width="read">
+        <Hero
+          eyebrow="מעקב מוסדי"
+          title="הנתונים עדיין לא נבנו"
+          lede="הרץ npm run build:institutional כדי למשוך את דוחות ה-13F."
+        />
+        <Disclaimer />
+      </Page>
     );
   }
 
-  return (
-    <>
-      <AccentTheme accent="#378add" />
-    <main className="mx-auto max-w-5xl px-6 py-8">
-      <header className="border-b border-line pb-5">
-        <h1 className="text-xl">מעקב מוסדי</h1>
-        <p className="mt-1 text-xs leading-relaxed text-ink-muted">
-          מה הגופים הגדולים מחזיקים, ומה השתנה מהרבעון הקודם. הנתונים מדוחות
-          13F שמוגשים ל-SEC.{" "}
-          <span className="text-ink">
-            דוח 13F מוגש עד 45 יום אחרי סוף הרבעון
-          </span>{" "}
-          — כלומר התמונה תמיד מאחרת, וייתכן שהגוף כבר שינה את הפוזיציה. זו
-          מגבלת רגולציה, לא באג.
-        </p>
-      </header>
+  const totalValue = institutions.reduce(
+    (sum, inst) => sum + inst.totalValue,
+    0,
+  );
+  const newest = institutions
+    .map((inst) => inst.filedAt)
+    .sort()
+    .at(-1);
 
-      <div className="mt-6 space-y-4">
-        {institutions.map((inst) => (
-          <section
-            key={inst.cik}
-            className="panel p-4"
-          >
-            <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-3">
-              <div>
-                <h2 className="text-sm text-gold" dir="auto">
-                  {inst.name}
-                </h2>
-                <p className="mt-0.5 text-[11px] text-ink-muted">
-                  {inst.note} ·{" "}
-                  <span className="num">{inst.positionCount}</span> פוזיציות ·
-                  שווי <span className="num">${fmtCompact(inst.totalValue)}</span>
-                </p>
-              </div>
-              <p className="text-[11px] text-ink-faint">
-                רבעון שהסתיים{" "}
-                <span className="num">{fmtDate(inst.reportDate)}</span> · הוגש{" "}
-                <span className="num">{fmtDate(inst.filedAt)}</span>
-              </p>
+  return (
+    <Page tint="#3878b8">
+      <Hero
+        eyebrow="מעקב מוסדי"
+        title="מי עוד קונה את זה"
+        lede="מה הגופים הגדולים מחזיקים ומה השתנה מהרבעון הקודם, מתוך דוחות 13F שמוגשים ל-SEC."
+        stats={
+          <StatBar>
+            <StatCell label="גופים במעקב" value={institutions.length} />
+            <StatCell
+              label="שווי מצטבר"
+              value={`$${fmtCompact(totalValue)}`}
+            />
+            <StatCell
+              label="פוזיציות"
+              value={institutions.reduce(
+                (sum, inst) => sum + inst.positionCount,
+                0,
+              )}
+            />
+            <StatCell
+              label="הגשה אחרונה"
+              value={
+                <span className="text-base">
+                  {newest ? fmtDate(newest) : "—"}
+                </span>
+              }
+            />
+          </StatBar>
+        }
+      />
+
+      <p className="surface mt-10 px-5 py-4 text-[13px] leading-relaxed text-ink-muted">
+        <strong className="font-medium text-ink">
+          דוח 13F מוגש עד 45 יום אחרי סוף הרבעון.
+        </strong>{" "}
+        כלומר התמונה תמיד מאחרת, וייתכן שהגוף כבר שינה את הפוזיציה. זו מגבלת
+        רגולציה, לא באג — והיא הסיבה שהעמוד הזה מתאר מה נעשה, לא מה לעשות.
+      </p>
+
+      {institutions.map((inst) => (
+        <Section key={inst.cik} eyebrow={inst.note} title={inst.name}>
+          <div className="mb-5 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-[11px] text-ink-faint">
+            <span>
+              <span className="num text-ink-muted">{inst.positionCount}</span>{" "}
+              פוזיציות
+            </span>
+            <span>
+              שווי{" "}
+              <span className="num text-ink-muted">
+                ${fmtCompact(inst.totalValue)}
+              </span>
+            </span>
+            <span>
+              רבעון שהסתיים{" "}
+              <span className="num text-ink-muted">
+                {fmtDate(inst.reportDate)}
+              </span>
+            </span>
+            <span>
+              הוגש{" "}
+              <span className="num text-ink-muted">{fmtDate(inst.filedAt)}</span>
+            </span>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <div className="surface p-5">
+              <h3 className="eyebrow">אחזקות מובילות</h3>
+              <ul className="mt-3">
+                {inst.topHoldings.map((holding) => (
+                  <li
+                    key={holding.issuer}
+                    className="flex items-baseline justify-between gap-3 border-b border-line py-2.5 last:border-0"
+                  >
+                    <span
+                      className="text-[13px] leading-snug text-ink-muted"
+                      dir="auto"
+                    >
+                      {holding.issuer}
+                    </span>
+                    <span className="num shrink-0 text-[12px] text-ink">
+                      {holding.weight !== null
+                        ? `${holding.weight.toFixed(1)}%`
+                        : "—"}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="mt-3 grid gap-5 md:grid-cols-2">
-              <div>
-                <h3 className="mb-1 text-[11px] text-ink-muted">
-                  אחזקות מובילות
-                </h3>
-                <ul>
-                  {inst.topHoldings.map((holding) => (
-                    <li
-                      key={holding.issuer}
-                      className="flex items-baseline justify-between gap-3 border-b border-line py-2 last:border-0"
-                    >
-                      <span className="text-[13px] leading-snug" dir="auto">
-                        {holding.issuer}
-                      </span>
-                      <span className="num shrink-0 text-[11px] text-ink-muted">
-                        {holding.weight !== null
-                          ? `${holding.weight.toFixed(1)}%`
-                          : "—"}
-                      </span>
-                    </li>
+            <div className="surface p-5">
+              <h3 className="eyebrow">שינויים מהרבעון הקודם</h3>
+              {!inst.hasComparison ? (
+                <p className="mt-3 text-[12px] text-ink-ghost">
+                  אין דוח קודם להשוואה.
+                </p>
+              ) : inst.changes.length === 0 ? (
+                <p className="mt-3 text-[12px] text-ink-ghost">
+                  לא נרשמו שינויים מהותיים.
+                </p>
+              ) : (
+                <ul className="mt-3">
+                  {inst.changes.map((change) => (
+                    <ChangeRow
+                      key={`${change.issuer}-${change.kind}`}
+                      change={change}
+                    />
                   ))}
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="mb-1 text-[11px] text-ink-muted">
-                  שינויים מהרבעון הקודם
-                </h3>
-                {!inst.hasComparison ? (
-                  <p className="py-2 text-xs text-ink-faint">
-                    אין דוח קודם להשוואה.
-                  </p>
-                ) : inst.changes.length === 0 ? (
-                  <p className="py-2 text-xs text-ink-faint">
-                    לא נרשמו שינויים מהותיים.
-                  </p>
-                ) : (
-                  <ul>
-                    {inst.changes.map((change) => (
-                      <ChangeRow
-                        key={`${change.issuer}-${change.kind}`}
-                        change={change}
-                      />
-                    ))}
-                  </ul>
-                )}
-              </div>
+              )}
             </div>
-          </section>
-        ))}
-      </div>
+          </div>
+        </Section>
+      ))}
 
-      <p className="mt-8 text-xs leading-relaxed text-ink-faint">
-        דוחות 13F כוללים מניות אמריקאיות בלבד ואינם כוללים פוזיציות שורט,
-        אג״ח או מזומן — כלומר הם מראים חלק מהתמונה, לא את כולה. אין באמור
-        ייעוץ השקעות.
-      </p>
-
-      <p className="mt-4 text-xs">
-        <Link href="/" className="text-ink-muted hover:text-ink">
-          ← חזרה לדשבורד
-        </Link>
-      </p>
-    </main>
-    </>
+      <Disclaimer extra="דוחות 13F כוללים מניות אמריקאיות בלבד ואינם כוללים פוזיציות שורט, אג״ח או מזומן — כלומר הם מראים חלק מהתמונה, לא את כולה." />
+    </Page>
   );
 }
