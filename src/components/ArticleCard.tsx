@@ -6,6 +6,8 @@ import {
 } from "@/lib/news-store";
 import { TRIAGE_CAVEAT } from "@/lib/news-triage";
 import { fmtRelative } from "@/lib/format";
+import { AnalyzeArticleButton } from "@/components/AnalyzeArticleButton";
+import { hasGeminiKey } from "@/lib/sources/gemini";
 
 /**
  * One story.
@@ -129,6 +131,14 @@ export function ArticleCard({
                   <span className="text-ink-faint">סיווג ראשוני: </span>
                   {triage.reason}
                 </p>
+              )}
+
+              {/* The story has not been read yet. The scheduled job will
+                  reach it, and a reader who wants it now can spend the
+                  call themselves. Hidden entirely without a key, rather
+                  than offered and then refused. */}
+              {hasGeminiKey() && (
+                <AnalyzeArticleButton url={article.url} title={article.title} />
               )}
             </>
           )}

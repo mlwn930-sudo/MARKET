@@ -67,7 +67,7 @@ const KEYS = [
   },
   {
     name: "GEMINI_API_KEY",
-    needed: "ניתוח הכתבות בשלוש עדשות",
+    needed: "ניתוח הכתבות, הצ׳אט, מחקר העומק, התדריך וכפתור ניתוח כתבה",
     where: "aistudio.google.com/apikey",
     required: false,
   },

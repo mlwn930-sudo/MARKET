@@ -15,6 +15,7 @@ import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
 import { ArticleCard } from "@/components/ArticleCard";
+import { WatchButton } from "@/components/WatchButton";
 import { Disclaimer, Page, Section, Stat } from "@/components/ui";
 import { fmtCompact, fmtDate, fmtMetric } from "@/lib/format";
 
@@ -153,6 +154,24 @@ export default async function CompanyPage({
               {profile?.exchange && <span>{profile.exchange}</span>}
               {profile?.industry && <span>· {profile.industry}</span>}
               {identity.sectorLabel && <span>· {identity.sectorLabel}</span>}
+            </div>
+
+            {/* The three things a reader does next from here: follow it,
+                research it, or line it up against something else. */}
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <WatchButton ticker={ticker} />
+              <Link
+                href={`/research?ticker=${ticker}`}
+                className="btn btn-ghost px-2.5 py-1.5 text-[12px]"
+              >
+                מחקר עומק
+              </Link>
+              <Link
+                href={`/compare?tickers=${ticker}`}
+                className="btn btn-ghost px-2.5 py-1.5 text-[12px]"
+              >
+                השוואה
+              </Link>
             </div>
           </div>
 

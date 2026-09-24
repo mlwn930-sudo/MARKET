@@ -68,11 +68,28 @@ export async function getQuote(symbol: string): Promise<Quote> {
   };
 }
 
-/** Quotes for several symbols. Failures are isolated so one bad ticker
- *  never blanks the whole row. */
+/**
+ * Quotes for several symbols. Failures are isolated so one bad ticker never
+ * blanks the whole row.
+ *
+ * Issued in batches rather than all at once. The market map asks for
+ * forty-eight symbols in one call, and forty-eight simultaneous requests
+ * arrive at Finnhub as a burst that the free tier answers with 429s — which
+ * reach the page as missing prices on a third of the map. Twelve at a time
+ * costs a few hundred milliseconds and returns a complete map.
+ */
+const QUOTE_BATCH = 12;
+
 export async function getQuotes(symbols: string[]): Promise<(Quote | null)[]> {
-  const results = await Promise.allSettled(symbols.map(getQuote));
-  return results.map((r) => (r.status === "fulfilled" ? r.value : null));
+  const out: (Quote | null)[] = [];
+
+  for (let i = 0; i < symbols.length; i += QUOTE_BATCH) {
+    const batch = symbols.slice(i, i + QUOTE_BATCH);
+    const results = await Promise.allSettled(batch.map(getQuote));
+    out.push(...results.map((r) => (r.status === "fulfilled" ? r.value : null)));
+  }
+
+  return out;
 }
 
 const profileSchema = z.object({

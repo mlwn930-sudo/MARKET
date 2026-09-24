@@ -21,12 +21,30 @@ import { useEffect, useRef, useState } from "react";
  * it reachable from every page instead of one.
  */
 
+/**
+ * Seven in the bar, the rest behind "עוד".
+ *
+ * The site has thirteen pages now and a bar that lists all of them stops
+ * being navigation and becomes a wall of small text. The seven here are the
+ * ones a reader opens without having decided anything yet; the rest are
+ * places you go for a specific reason, and a reason is enough to open a
+ * menu.
+ */
 const LINKS = [
   { href: "/", label: "שוק" },
+  { href: "/brief", label: "תדריך" },
   { href: "/opportunities", label: "הזדמנויות" },
-  { href: "/institutional", label: "מוסדיים" },
-  { href: "/ai", label: "AI" },
+  { href: "/compare", label: "השוואה" },
+  { href: "/watchlist", label: "מעקב" },
   { href: "/news", label: "חדשות" },
+  { href: "/chat", label: "שאלות" },
+];
+
+const MORE = [
+  { href: "/heatmap", label: "מפת השוק" },
+  { href: "/research", label: "מחקר עומק" },
+  { href: "/institutional", label: "מוסדיים" },
+  { href: "/ai", label: "שרשרת ה-AI" },
   { href: "/learn", label: "ידע" },
   { href: "/launch/ttwo", label: "GTA VI" },
 ];
@@ -94,6 +112,8 @@ export function SiteNav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -103,7 +123,30 @@ export function SiteNav() {
   }, []);
 
   // A navigation should not stay open across a navigation.
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+    setMoreOpen(false);
+  }, [pathname]);
+
+  // A menu that only closes by clicking its own button is a trap on a
+  // touch screen, where there is no hover to signal it is still open.
+  useEffect(() => {
+    if (!moreOpen) return;
+
+    const onPointer = (event: MouseEvent) => {
+      if (!moreRef.current?.contains(event.target as Node)) setMoreOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMoreOpen(false);
+    };
+
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [moreOpen]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -165,6 +208,53 @@ export function SiteNav() {
               </Link>
             );
           })}
+
+          <div className="relative" ref={moreRef}>
+            <button
+              type="button"
+              onClick={() => setMoreOpen((value) => !value)}
+              aria-expanded={moreOpen}
+              aria-haspopup="menu"
+              className={`relative rounded-md px-3 py-1.5 text-[13px] transition-colors ${
+                MORE.some((link) => isActive(link.href))
+                  ? "text-ink"
+                  : "text-ink-muted hover:text-ink"
+              }`}
+            >
+              עוד
+              <span className="ms-1 text-[9px]" aria-hidden="true">
+                ▾
+              </span>
+              {MORE.some((link) => isActive(link.href)) && (
+                <span
+                  className="absolute inset-x-3 -bottom-[19px] h-[2px] rounded-full"
+                  style={{ background: "var(--color-accent)" }}
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+
+            {moreOpen && (
+              <div
+                role="menu"
+                className="absolute end-0 top-[calc(100%+14px)] w-48 overflow-hidden rounded-md border border-line bg-overlay py-1 shadow-xl"
+              >
+                {MORE.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    role="menuitem"
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    className={`block px-4 py-2 text-[13px] transition-colors hover:bg-hover ${
+                      isActive(link.href) ? "text-ink" : "text-ink-muted"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="ms-auto flex items-center gap-2 lg:ms-0">
@@ -200,7 +290,7 @@ export function SiteNav() {
           className="border-t border-line bg-base/95 px-5 pb-4 pt-2 backdrop-blur-xl lg:hidden"
         >
           <ul className="grid grid-cols-2 gap-1">
-            {LINKS.map((link) => (
+            {[...LINKS, ...MORE].map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
