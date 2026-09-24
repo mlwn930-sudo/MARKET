@@ -4,10 +4,11 @@ import { getPriceHistory } from "@/lib/sources/prices";
 import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
 import { getArticlesForTicker } from "@/lib/news-store";
 import { getSectorContext } from "@/lib/fundamentals-store";
-import { buildVerdict } from "@/lib/analysis/verdict";
+import { getCompanyIntelligence } from "@/lib/agents";
 import { CompanyChart } from "@/components/CompanyChart";
 import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
 import { VerdictPanel } from "@/components/VerdictPanel";
+import { IntelligencePanel } from "@/components/IntelligencePanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { ValueChain, type ChainLink } from "@/components/ValueChain";
@@ -138,7 +139,7 @@ async function seedQuotes(
 }
 
 export default async function TtwoLaunchPage() {
-  const [analysis, quote, history, technical, sector, articles, chainSeed] =
+  const [analysis, quote, history, technical, sector, articles, chainSeed, intelligence] =
     await Promise.all([
       getCompanyAnalysis("TTWO"),
       getQuote("TTWO").catch(() => null),
@@ -147,6 +148,7 @@ export default async function TtwoLaunchPage() {
       getSectorContext("TTWO"),
       getArticlesForTicker("TTWO", 6),
       seedQuotes(CHAIN.map((link) => link.symbol)),
+      getCompanyIntelligence("TTWO"),
     ]);
 
   const metricOf = (key: string) =>
@@ -192,15 +194,6 @@ export default async function TtwoLaunchPage() {
       label: `${i + 1} · ${contraction.depthPercent.toFixed(0)}%`,
     })) ?? [];
 
-  const verdict =
-    analysis &&
-    buildVerdict(
-      analysis.fundamentals,
-      analysis.capital,
-      technical,
-      sector,
-      analysis.profile?.name ?? "Take-Two",
-    );
 
   return (
     <Page tint="#b0468c">
@@ -239,11 +232,25 @@ export default async function TtwoLaunchPage() {
         }
       />
 
-      {/* ---- The answer, first ---- */}
-      {verdict && (
-        <Section eyebrow="השורה התחתונה">
-          <VerdictPanel verdict={verdict} />
-        </Section>
+      {/* ---- Core Test, then the thesis. Take-Two is the case these two
+           were split for: it fails the trailing checklist while the
+           forward-looking question stays open. ---- */}
+      {intelligence && (
+        <>
+          <Section
+            eyebrow="מבחן הליבה"
+            description="בדיקה כמותית על מה שכבר דווח ברבעונים שלפני ההשקה."
+          >
+            <VerdictPanel verdict={intelligence.verdict} />
+          </Section>
+
+          <Section
+            eyebrow="תזת השקעה"
+            title="האם יש סיבה מבוססת להמשיך לעקוב"
+          >
+            <IntelligencePanel intelligence={intelligence} />
+          </Section>
+        </>
       )}
 
       {/* ---- Accounting mechanics ---- */}

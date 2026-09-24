@@ -98,10 +98,11 @@ async function fetchHistory(
       });
     }
 
-    // A daily series too short to carry a moving average is not useful. An
-    // intraday one legitimately is short — a session two hours old holds a
-    // couple of dozen bars — so the floor only applies to daily data.
-    if (interval === "1d" && candles.length < 30) return null;
+    // A two-year daily series too short to carry a moving average is not
+    // useful. Shorter ranges legitimately hold fewer bars — a session two
+    // hours old has a couple of dozen — so the floor applies only to the
+    // long daily pull the analysis is built on.
+    if (interval === "1d" && range === "2y" && candles.length < 30) return null;
     if (candles.length < 2) return null;
 
     return {
@@ -125,6 +126,52 @@ export function getPriceHistory(
     () => fetchHistory(ticker, range),
     ["price-history-ohlc", ticker, range],
     { revalidate: 3600, tags: ["prices", `prices:${ticker}`] },
+  )();
+}
+
+/**
+ * The ranges a reader can switch a chart to.
+ *
+ * Each one pairs a window with a bar size, because the two are not
+ * independent: a year of five-minute bars is seventy thousand candles that
+ * render as a smear, and a day of daily bars is one candle. The interval is
+ * chosen so every range lands between roughly 80 and 500 bars, which is the
+ * band where a candle chart is legible.
+ *
+ * `1D` carries a caveat worth knowing: on a closed market it returns the
+ * last session that traded, not an empty chart. That is the right
+ * behaviour — a reader opening the site at midnight wants to see the day
+ * that happened.
+ */
+export const RANGES = {
+  "1D": { label: "יום", range: "1d", interval: "5m", daily: false },
+  "1W": { label: "שבוע", range: "5d", interval: "30m", daily: false },
+  "1M": { label: "חודש", range: "1mo", interval: "1d", daily: true },
+  "1Y": { label: "שנה", range: "1y", interval: "1d", daily: true },
+  "5Y": { label: "5 שנים", range: "5y", interval: "1wk", daily: true },
+} as const;
+
+export type RangeKey = keyof typeof RANGES;
+
+/** The range the analysis frameworks are defined against. Two years of
+ *  daily bars is what a 200-day average and a stage read need. */
+export const ANALYSIS_RANGE = "2y";
+
+export function getRangeHistory(
+  symbol: string,
+  key: RangeKey,
+): Promise<PriceHistory | null> {
+  const ticker = symbol.toUpperCase();
+  const spec = RANGES[key];
+
+  // Intraday bars are cached briefly because they are still forming;
+  // daily and weekly bars do not change until the session closes.
+  const revalidate = spec.daily ? 3600 : 120;
+
+  return unstable_cache(
+    () => fetchHistory(ticker, spec.range, spec.interval),
+    ["price-history-range", ticker, key],
+    { revalidate, tags: ["prices", `prices:${ticker}`] },
   )();
 }
 

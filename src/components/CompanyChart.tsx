@@ -132,6 +132,7 @@ export function CompanyChart({
       </div>
 
       <LiveChart
+        symbol={symbol}
         candles={candles}
         livePrice={quote?.price ?? null}
         levels={levels}

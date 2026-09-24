@@ -166,3 +166,223 @@ export async function getCompanyNews(
   const items = z.array(newsItemSchema).parse(raw);
   return items.map((i) => ({ ...i, publishedAt: new Date(i.datetime * 1000) }));
 }
+
+/* ==================================================================== */
+/* Company intelligence                                                 */
+/* ==================================================================== */
+
+/**
+ * The endpoints below were verified against the free tier before being
+ * built on, because the plan's limits are not documented in one place and
+ * guessing wrong means a feature that works in development and returns 403
+ * in production.
+ *
+ * Available: basic financials (including multi-year ratio series), EPS
+ * surprises, the peer list, the analyst distribution, the earnings
+ * calendar.
+ *
+ * NOT available: price targets and revenue consensus, which return 403.
+ * Nothing in this project may present an estimate it cannot fetch, so
+ * forward revenue and target prices simply do not appear on the site.
+ */
+
+export type MetricSeriesPoint = { period: string; v: number };
+
+export type BasicFinancials = {
+  symbol: string;
+  /** Point-in-time figures: 133 of them, keyed as Finnhub names them. */
+  metric: Record<string, number | string | null>;
+  /** Ratio history — the basis for comparing a multiple to the company's
+   *  own past rather than only to its sector. */
+  annual: Record<string, MetricSeriesPoint[]>;
+  quarterly: Record<string, MetricSeriesPoint[]>;
+};
+
+export async function getBasicFinancials(
+  symbol: string,
+): Promise<BasicFinancials | null> {
+  try {
+    const raw = await finnhubFetch(
+      `/stock/metric?symbol=${encodeURIComponent(symbol)}&metric=all`,
+      3600,
+    );
+    if (!raw?.metric) return null;
+    return {
+      symbol: symbol.toUpperCase(),
+      metric: raw.metric ?? {},
+      annual: raw.series?.annual ?? {},
+      quarterly: raw.series?.quarterly ?? {},
+    };
+  } catch {
+    return null;
+  }
+}
+
+export type EarningsSurprise = {
+  period: string;
+  year: number;
+  quarter: number;
+  /** What analysts expected. Null on the rare row that carries no estimate. */
+  estimate: number | null;
+  /** What the company reported. Null for a quarter not yet reported — which
+   *  is how the forthcoming quarter's estimate arrives. */
+  actual: number | null;
+  surprise: number | null;
+  surprisePercent: number | null;
+};
+
+/**
+ * Reported earnings against what was expected.
+ *
+ * The most recent row is usually the quarter that has NOT been reported
+ * yet: an estimate with a null actual. That row is the only forward-looking
+ * figure this project has, and it is labelled as an estimate everywhere it
+ * appears rather than being folded in with reported results.
+ */
+export async function getEarningsSurprises(
+  symbol: string,
+): Promise<EarningsSurprise[]> {
+  try {
+    const raw = await finnhubFetch(
+      `/stock/earnings?symbol=${encodeURIComponent(symbol)}`,
+      3600,
+    );
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .map((row) => ({
+        period: String(row.period ?? ""),
+        year: Number(row.year ?? 0),
+        quarter: Number(row.quarter ?? 0),
+        estimate: Number.isFinite(row.estimate) ? row.estimate : null,
+        actual: Number.isFinite(row.actual) ? row.actual : null,
+        surprise: Number.isFinite(row.surprise) ? row.surprise : null,
+        surprisePercent: Number.isFinite(row.surprisePercent)
+          ? row.surprisePercent
+          : null,
+      }))
+      .filter((row) => row.period)
+      .sort((a, b) => a.period.localeCompare(b.period));
+  } catch {
+    return [];
+  }
+}
+
+/** Who the data provider considers this company's peers. Used rather than a
+ *  hand-written list so the comparison does not encode our own assumptions
+ *  about who competes with whom. */
+export async function getPeers(symbol: string): Promise<string[]> {
+  try {
+    const raw = await finnhubFetch(
+      `/stock/peers?symbol=${encodeURIComponent(symbol)}`,
+      86_400,
+    );
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .filter((s): s is string => typeof s === "string")
+      .map((s) => s.toUpperCase())
+      .filter((s) => s !== symbol.toUpperCase())
+      .slice(0, 8);
+  } catch {
+    return [];
+  }
+}
+
+export type AnalystView = {
+  period: string;
+  strongBuy: number;
+  buy: number;
+  hold: number;
+  sell: number;
+  strongSell: number;
+};
+
+/**
+ * How sell-side analysts are positioned.
+ *
+ * Carried as sentiment, not as a signal. A wall of "buy" on a stock that
+ * has already tripled says more about what has happened than about what
+ * will, and the page frames it that way.
+ */
+export async function getAnalystViews(
+  symbol: string,
+): Promise<AnalystView[]> {
+  try {
+    const raw = await finnhubFetch(
+      `/stock/recommendation?symbol=${encodeURIComponent(symbol)}`,
+      86_400,
+    );
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .map((row) => ({
+        period: String(row.period ?? ""),
+        strongBuy: Number(row.strongBuy ?? 0),
+        buy: Number(row.buy ?? 0),
+        hold: Number(row.hold ?? 0),
+        sell: Number(row.sell ?? 0),
+        strongSell: Number(row.strongSell ?? 0),
+      }))
+      .filter((row) => row.period)
+      .sort((a, b) => b.period.localeCompare(a.period));
+  } catch {
+    return [];
+  }
+}
+
+export type EarningsDate = {
+  symbol: string;
+  date: string;
+  hour: string;
+  epsEstimate: number | null;
+  revenueEstimate: number | null;
+};
+
+/**
+ * Upcoming reporting dates.
+ *
+ * The one genuinely scheduled future event this project can know about, and
+ * therefore the backbone of the catalyst list. Everything else a launch
+ * page might call a catalyst is an expectation; this is a date.
+ *
+ * Fetched for a window rather than per symbol — the calendar is one request
+ * for the whole market, and asking per company would be dozens.
+ */
+export async function getEarningsCalendar(
+  from: string,
+  to: string,
+): Promise<Map<string, EarningsDate>> {
+  try {
+    const raw = await finnhubFetch(
+      `/calendar/earnings?from=${from}&to=${to}`,
+      21_600,
+    );
+    const rows: unknown[] = raw?.earningsCalendar ?? [];
+    const bySymbol = new Map<string, EarningsDate>();
+
+    for (const row of rows as Record<string, unknown>[]) {
+      const symbol = typeof row.symbol === "string" ? row.symbol : null;
+      const date = typeof row.date === "string" ? row.date : null;
+      if (!symbol || !date) continue;
+
+      // Keep the nearest date per symbol; the window can contain more than
+      // one when a company reports twice inside it.
+      const existing = bySymbol.get(symbol);
+      if (existing && existing.date <= date) continue;
+
+      bySymbol.set(symbol, {
+        symbol,
+        date,
+        hour: typeof row.hour === "string" ? row.hour : "",
+        epsEstimate: Number.isFinite(row.epsEstimate)
+          ? (row.epsEstimate as number)
+          : null,
+        revenueEstimate: Number.isFinite(row.revenueEstimate)
+          ? (row.revenueEstimate as number)
+          : null,
+      });
+    }
+
+    return bySymbol;
+  } catch {
+    return new Map();
+  }
+}

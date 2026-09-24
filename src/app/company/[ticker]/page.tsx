@@ -6,12 +6,11 @@ import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
 import { getArticlesForTicker } from "@/lib/news-store";
 import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
 import { identityFor } from "@/lib/company-identity";
-import { buildThesis } from "@/lib/analysis/thesis";
-import { buildVerdict } from "@/lib/analysis/verdict";
+import { getCompanyIntelligence } from "@/lib/agents";
 import { CompanyChart } from "@/components/CompanyChart";
 import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
 import { VerdictPanel } from "@/components/VerdictPanel";
-import { ThesisPanel } from "@/components/ThesisPanel";
+import { IntelligencePanel } from "@/components/IntelligencePanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
@@ -59,9 +58,12 @@ export default async function CompanyPage({
   // Filings and metrics come from the hourly cache; the quote is fetched
   // fresh, because a price cached for an hour is a wrong price. Each of the
   // rest can fail without taking the page down.
-  const [analysis, quote, history, technical, sector, articles] =
+  const [analysis, intelligence, quote, history, technical, sector, articles] =
     await Promise.all([
       getCompanyAnalysis(ticker),
+      // The full agent pipeline, cached as its finished report. See
+      // lib/agents/index.ts for why not every agent runs on every request.
+      getCompanyIntelligence(ticker),
       getQuote(ticker).catch(() => null),
       getPriceHistory(ticker).catch(() => null),
       getTechnicalRead(ticker).catch(() => null),
@@ -74,8 +76,6 @@ export default async function CompanyPage({
   const { profile, marketCap, fundamentals, capital, title } = analysis;
   const name = profile?.name ?? title;
 
-  const verdict = buildVerdict(fundamentals, capital, technical, sector, name);
-  const thesis = buildThesis(fundamentals, capital, technical, sector, name);
 
   /**
    * The frameworks' own levels, drawn on the chart. Computed from the same
@@ -195,10 +195,15 @@ export default async function CompanyPage({
         </p>
       )}
 
-      {/* ---- The answer, first ---- */}
-      <Section eyebrow="השורה התחתונה">
-        <VerdictPanel verdict={verdict} />
-      </Section>
+      {/* ---- The Core Test: quantitative, trailing, pass or fail ---- */}
+      {intelligence && (
+        <Section
+          eyebrow="מבחן הליבה"
+          description="בדיקה כמותית על מה שכבר דווח. היא מסתכלת אחורה בהגדרה — וחברה יכולה להיכשל בה ועדיין להיות מעניינת, וזה בדיוק מה שהתזה שמתחת בודקת."
+        >
+          <VerdictPanel verdict={intelligence.verdict} />
+        </Section>
+      )}
 
       {/* ---- Price ---- */}
       {history && (
@@ -224,10 +229,16 @@ export default async function CompanyPage({
         <CapitalPanel capital={capital} />
       </Section>
 
-      {/* ---- The findings ---- */}
-      <Section eyebrow="ממצאים" title="איפה המסגרות מסכימות, ואיפה לא">
-        <ThesisPanel thesis={thesis} />
-      </Section>
+      {/* ---- The Investment Thesis: forward-looking, evidence-bound ---- */}
+      {intelligence && (
+        <Section
+          eyebrow="תזת השקעה"
+          title="האם יש סיבה מבוססת שהשוק יתמחר אחרת"
+          description="שאלה אחרת לגמרי ממבחן הליבה. כאן נבדק אם קיים גורם מתועד — אירוע, מגמה או פער תמחור — שעשוי לשנות את התמונה קדימה."
+        >
+          <IntelligencePanel intelligence={intelligence} />
+        </Section>
+      )}
 
       {/* ---- Evidence ---- */}
       {fundamentals.groups.map((group) => (
