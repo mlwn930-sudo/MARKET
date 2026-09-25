@@ -62,6 +62,8 @@ export default async function NewsPage() {
         eyebrow="חדשות"
         title="מה קרה, ומה זה בכלל משנה"
         lede="חדשות מ-CNBC, רויטרס ומקורות שוק נוספים. כל כתבה נקראת דרך שלוש עדשות קבועות, והעמוד מתעדכן מעצמו כשהפיד מתרענן."
+        image="/hero/newsroom.webp"
+        imageAlt="חדר חדשות פיננסי — הרקע של עמוד החדשות"
         stats={
           <StatBar>
             <StatCell label="כתבות בפיד" value={totalCount} />

@@ -16,6 +16,10 @@ import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
 import { ArticleCard } from "@/components/ArticleCard";
 import { WatchButton } from "@/components/WatchButton";
+import { OutlookPanel } from "@/components/OutlookPanel";
+import { ChartExplainer } from "@/components/ChartExplainer";
+import { buildOutlook } from "@/lib/analysis/outlook";
+import { readChart } from "@/lib/analysis/chart-read";
 import { Disclaimer, Page, Section, Stat } from "@/components/ui";
 import { fmtCompact, fmtDate, fmtMetric } from "@/lib/format";
 
@@ -124,6 +128,22 @@ export default async function CompanyPage({
   const pe = metric("pe");
   const growth = metric("rev_cagr_3");
 
+  // The forward-looking view and the chart's reading. Both are pure
+  // functions over what has already been fetched — neither adds a request.
+  const outlook = intelligence
+    ? buildOutlook({
+        ticker,
+        companyName: name,
+        price: quote?.price ?? null,
+        intelligence,
+        fundamentals,
+        sector,
+        technical,
+      })
+    : null;
+
+  const chartReading = readChart(technical, { rangeLabel: "שנתיים" });
+
   return (
     <Page tint={identity.accent}>
       {/* ---- Masthead ---- */}
@@ -214,6 +234,20 @@ export default async function CompanyPage({
         </p>
       )}
 
+      {/* ---- The view, before anything else.
+           A reader who stops here should still leave with the position, the
+           condition it rests on, and what would break it. Everything below
+           is the evidence for arguing with it. ---- */}
+      {outlook && (
+        <Section
+          eyebrow="השורה התחתונה"
+          title={`מה אומרים הנתונים על ${name}`}
+          description="עמדה מנומקת, לא דירוג: מה הנתונים מראים, מה צריך לקרות כדי שזה יעבוד, ומה היה הופך את התמונה. כולל מה שעדיין לא נמצא בדוחות."
+        >
+          <OutlookPanel outlook={outlook} ticker={ticker} />
+        </Section>
+      )}
+
       {/* ---- The Core Test: quantitative, trailing, pass or fail ---- */}
       {intelligence && (
         <Section
@@ -235,6 +269,10 @@ export default async function CompanyPage({
             markers={chartMarkers}
             initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
           />
+
+          {/* The caption, not a chapter: a chart nobody can read is a
+              decoration, and the numbers it is drawn from are already here. */}
+          {chartReading && <ChartExplainer reading={chartReading} />}
         </Section>
       )}
 

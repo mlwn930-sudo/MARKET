@@ -30,6 +30,30 @@ jobs:
 
       - run: npm ci
 
+      # Named, before anything downloads. SEC refuses a request with no
+      # User-Agent outright, and a run that discovers that inside a fetch
+      # loop reports an exit code instead of a cause.
+      - name: Check required secrets
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: |
+          missing=0
+          if [ -z "$FINNHUB_API_KEY" ]; then
+            echo "::error::FINNHUB_API_KEY is not set (https://finnhub.io/register)"
+            missing=1
+          fi
+          if [ -z "$SEC_USER_AGENT" ]; then
+            echo "::error::SEC_USER_AGENT is not set. EDGAR rejects requests"
+            echo "::error::without one. Format: \"Name email@example.com\""
+            missing=1
+          fi
+          if [ "$missing" = "1" ]; then
+            echo "::error::Add them under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          echo "secrets present"
+
       - name: Rebuild fundamentals
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}

@@ -50,6 +50,26 @@ jobs:
         with:
           node-version: 22
 
+      # Fails here rather than inside the fetch script, and names what is
+      # missing.
+      #
+      # This exists because of the failure emails. A run that dies inside
+      # node sends "Process completed with exit code 1", which tells the
+      # person reading it nothing about which secret to add or where. The
+      # check below costs a second and turns that email into an instruction.
+      - name: Check required secrets
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: |
+          if [ -z "$FINNHUB_API_KEY" ]; then
+            echo "::error::FINNHUB_API_KEY is not set in this repository."
+            echo "::error::Add it under Settings > Secrets and variables > Actions"
+            echo "::error::> New repository secret. The free key is issued at"
+            echo "::error::https://finnhub.io/register — no card required."
+            exit 1
+          fi
+          echo "FINNHUB_API_KEY present"
+
       # Refreshes the stored feed. The site does not depend on this for
       # freshness any more — it is the fallback the live wire degrades to,
       # and it is the list the analysis step works from.
