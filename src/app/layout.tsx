@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
+import { SideRail } from "@/components/SideRail";
 
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
@@ -57,9 +58,17 @@ export default function RootLayout({
             deep in a scroll. Renders nothing until it is opened. */}
         <CommandCenter />
 
-        <SiteNav />
-        <div className="min-h-[60vh]">{children}</div>
-        <SiteFooter />
+        {/* The rail owns the map of the site on a desktop; the bar keeps
+            search, refresh and the mobile menu. The content column is
+            inset to clear the rail, and only at lg — below that the rail
+            is not rendered at all. */}
+        <SideRail />
+
+        <div className="lg:ps-[224px]">
+          <SiteNav />
+          <div className="min-h-[60vh]">{children}</div>
+          <SiteFooter />
+        </div>
       </body>
     </html>
   );

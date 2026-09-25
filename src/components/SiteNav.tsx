@@ -142,7 +142,7 @@ export function SiteNav() {
         aria-label="ראשי"
         className="mx-auto flex h-[68px] max-w-[1400px] items-center gap-6 px-5 sm:px-8"
       >
-        <Link href="/" className="group flex items-center gap-2.5">
+        <Link href="/" className="group flex items-center gap-2.5 lg:hidden">
           <span
             className="grid h-7 w-7 place-items-center rounded-md text-[13px] font-bold"
             style={{
@@ -154,13 +154,13 @@ export function SiteNav() {
           >
             M
           </span>
-          <span className="editorial hidden text-[15px] tracking-tight text-ink sm:block">
+          <span className="editorial hidden text-[15px] tracking-tight text-ink sm:block lg:hidden">
             Market Intel
           </span>
         </Link>
 
         {/* Desktop navigation, centred. */}
-        <div className="mx-auto hidden items-center gap-1 lg:flex">
+        <div className="mx-auto hidden items-center gap-1 md:flex lg:hidden">
           {LINKS.map((link) => {
             const active = isActive(link.href);
             return (

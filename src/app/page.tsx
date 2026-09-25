@@ -5,6 +5,7 @@ import { getLiveFeed } from "@/lib/live-news";
 import { runScreen } from "@/lib/screener";
 import { MarketDeck, type IndexCard, type RowSeed } from "@/components/MarketDeck";
 import { ArticleCard } from "@/components/ArticleCard";
+import { WhatMattersToday } from "@/components/WhatMattersToday";
 import { Disclaimer, Hero, MoreLink, Page, Section } from "@/components/ui";
 import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtRelative } from "@/lib/format";
@@ -114,6 +115,18 @@ export default async function MarketPage() {
       <div className="mt-20">
         <MarketDeck indices={cards} rows={rows} initial={seed} />
       </div>
+
+      {/* ---- What matters, before what is new.
+           The feed is sorted by time; this is sorted by consequence, and
+           it is the first thing under the prices for that reason. ---- */}
+      <Section
+        eyebrow="מה חשוב היום"
+        title="מה מזה באמת משנה משהו"
+        description="רק כתבות שהניתוח סיווג כאירוע שמשנה תזרים, תחרות או רגולציה. כל השאר נשאר בפיד."
+        action={<MoreLink href="/news">כל החדשות</MoreLink>}
+      >
+        <WhatMattersToday articles={unique} />
+      </Section>
 
       {/* ---- Screener ---- */}
       {topPicks.length > 0 && (
