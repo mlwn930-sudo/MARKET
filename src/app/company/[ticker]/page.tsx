@@ -19,6 +19,10 @@ import { WatchButton } from "@/components/WatchButton";
 import { OutlookPanel } from "@/components/OutlookPanel";
 import { ChartExplainer } from "@/components/ChartExplainer";
 import { buildOutlook } from "@/lib/analysis/outlook";
+import { whyMoving } from "@/lib/analysis/why-moving";
+import { WhyMovingPanel } from "@/components/WhyMovingPanel";
+import { getSectorViews } from "@/lib/sectors";
+import { getFallbackQuote } from "@/lib/sources/prices";
 import { readChart } from "@/lib/analysis/chart-read";
 import { Disclaimer, Page, Section, Stat } from "@/components/ui";
 import { fmtCompact, fmtDate, fmtMetric } from "@/lib/format";
@@ -143,6 +147,29 @@ export default async function CompanyPage({
     : null;
 
   const chartReading = readChart(technical, { rangeLabel: "שנתיים" });
+
+  /* Why it moved today. Deterministic: the index, the sector and the
+     coverage are all figures the site already holds, and the panel says
+     so rather than picking a headline and calling it a cause. */
+  const [benchmarkToday, sectorViews] = await Promise.all([
+    getFallbackQuote("^GSPC").catch(() => null),
+    getSectorViews().catch(() => []),
+  ]);
+
+  const sectorToday = sectorViews.find((view) =>
+    view.members.some((member) => member.ticker === ticker),
+  );
+
+  const movement = whyMoving({
+    ticker,
+    changePercent: quote?.changePercent ?? null,
+    indexChange: benchmarkToday?.changePercent ?? null,
+    sectorChange: sectorToday?.averageMove ?? null,
+    sectorLabel: sectorToday?.label ?? null,
+    peersAdvancing: sectorToday?.advancing ?? 0,
+    peersQuoted: sectorToday?.quoted ?? 0,
+    articles,
+  });
 
   return (
     <Page tint={identity.accent}>
@@ -272,6 +299,8 @@ export default async function CompanyPage({
 
           {/* The caption, not a chapter: a chart nobody can read is a
               decoration, and the numbers it is drawn from are already here. */}
+          {movement && <WhyMovingPanel reading={movement} />}
+
           {chartReading && <ChartExplainer reading={chartReading} />}
         </Section>
       )}

@@ -5,6 +5,7 @@ import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
 import { SideRail } from "@/components/SideRail";
+import { MobileTabs } from "@/components/MobileTabs";
 
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
@@ -68,7 +69,13 @@ export default function RootLayout({
           <SiteNav />
           <div className="min-h-[60vh]">{children}</div>
           <SiteFooter />
+
+          {/* Clears the fixed bottom bar so the footer is not trapped
+              under it on a phone. */}
+          <div className="h-16 lg:hidden" aria-hidden="true" />
         </div>
+
+        <MobileTabs />
       </body>
     </html>
   );
