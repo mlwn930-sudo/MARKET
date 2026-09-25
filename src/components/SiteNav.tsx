@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { RefreshButton } from "./RefreshButton";
 
 /**
  * The bar.
@@ -36,11 +37,13 @@ const LINKS = [
   { href: "/opportunities", label: "הזדמנויות" },
   { href: "/compare", label: "השוואה" },
   { href: "/watchlist", label: "מעקב" },
+  { href: "/israel", label: "תל אביב" },
   { href: "/news", label: "חדשות" },
   { href: "/chat", label: "שאלות" },
 ];
 
 const MORE = [
+  { href: "/portfolio", label: "בניית תיק" },
   { href: "/heatmap", label: "מפת השוק" },
   { href: "/research", label: "מחקר עומק" },
   { href: "/institutional", label: "מוסדיים" },
@@ -259,6 +262,7 @@ export function SiteNav() {
 
         <div className="ms-auto flex items-center gap-2 lg:ms-0">
           <Search />
+          <RefreshButton />
 
           <button
             type="button"

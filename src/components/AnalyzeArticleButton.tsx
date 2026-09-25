@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 // From news-shape and not news-store: the store reads files, and importing
 // it here would pull node:fs into the browser bundle.
-import { CATALYST_LABELS, type ArticleSummary } from "@/lib/news-shape";
+import {
+  CATALYST_LABELS,
+  catalystMeaning,
+  type ArticleSummary,
+} from "@/lib/news-shape";
 
 /**
  * Read this story now.
@@ -30,6 +34,7 @@ export function AnalyzeArticleButton({
   title,
   auto = false,
   order = 0,
+  hasStored = false,
 }: {
   url: string;
   title: string;
@@ -44,6 +49,9 @@ export function AnalyzeArticleButton({
   auto?: boolean;
   /** Position in the auto queue. Calls are spaced by it. */
   order?: number;
+  /** True when the feed already carries a reading for this story. Changes
+   *  what the button offers: a second reading rather than the first. */
+  hasStored?: boolean;
 }) {
   const [analysis, setAnalysis] = useState<ArticleSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -122,6 +130,12 @@ export function AnalyzeArticleButton({
           {analysis.impact}
         </p>
 
+        {catalystMeaning(analysis.catalystKind) && (
+          <p className="text-[12px] leading-relaxed text-ink-muted">
+            {catalystMeaning(analysis.catalystKind)}
+          </p>
+        )}
+
         {(analysis.catalyst || analysis.reaction || analysis.chain) && (
           <details>
             <summary className="cursor-pointer text-[11px] text-ink-ghost transition-colors hover:text-ink-muted">
@@ -175,7 +189,13 @@ export function AnalyzeArticleButton({
         disabled={busy}
         className="btn btn-ghost px-2.5 py-1 text-[11px]"
       >
-        {busy ? "קורא את הכתבה…" : auto ? "ממתין בתור לניתוח" : "נתח כתבה"}
+        {busy
+          ? "קורא את הכתבה…"
+          : auto
+            ? "ממתין בתור לניתוח"
+            : hasStored
+              ? "נתח כתבה מחדש"
+              : "נתח כתבה"}
       </button>
       {error && (
         <p className="mt-2 text-[11px] leading-relaxed text-ink-ghost">{error}</p>

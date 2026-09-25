@@ -40,6 +40,64 @@ const HEADERS = {
     "(KHTML, like Gecko) Chrome/131.0 Safari/537.36",
 };
 
+/**
+ * A price when Finnhub did not give one.
+ *
+ * Finnhub's free tier answers sixty calls a minute for the whole site, and
+ * the calls that lose that race come back null — which reached the daily
+ * brief as three of its four index cards showing a dash while the fourth
+ * showed a number. Yahoo carries the same ETFs, on a different budget, so
+ * the second attempt costs nothing that matters.
+ *
+ * Deliberately a fallback and not the primary: this endpoint is
+ * undocumented, and the site should lean on the provider it has terms
+ * with. Delayed by up to fifteen minutes, which the caller states.
+ */
+export type FallbackQuote = {
+  symbol: string;
+  price: number | null;
+  changePercent: number | null;
+  at: Date | null;
+};
+
+export function getFallbackQuote(
+  symbol: string,
+): Promise<FallbackQuote | null> {
+  const ticker = symbol.toUpperCase();
+
+  return unstable_cache(
+    async () => {
+      try {
+        const res = await fetch(
+          `https://query1.finance.yahoo.com/v8/finance/chart/` +
+            `${encodeURIComponent(ticker)}?range=1d&interval=1d`,
+          { headers: HEADERS, signal: AbortSignal.timeout(15_000) },
+        );
+        if (!res.ok) return null;
+
+        const meta = (await res.json())?.chart?.result?.[0]?.meta;
+        if (!meta || typeof meta.regularMarketPrice !== "number") return null;
+
+        return {
+          symbol: ticker,
+          price: meta.regularMarketPrice,
+          changePercent:
+            typeof meta.regularMarketChangePercent === "number"
+              ? meta.regularMarketChangePercent
+              : null,
+          at: meta.regularMarketTime
+            ? new Date(meta.regularMarketTime * 1000)
+            : null,
+        };
+      } catch {
+        return null;
+      }
+    },
+    ["fallback-quote", ticker],
+    { revalidate: 120, tags: ["quotes"] },
+  )();
+}
+
 async function fetchHistory(
   symbol: string,
   range: string,

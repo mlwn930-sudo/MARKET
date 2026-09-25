@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   CATALYST_LABELS,
   SIGNIFICANCE_LABELS,
+  catalystMeaning,
   type EnrichedArticle,
 } from "@/lib/news-store";
 import { TRIAGE_CAVEAT } from "@/lib/news-triage";
@@ -93,6 +94,14 @@ export function ArticleCard({
                 {analysis.impact}
               </p>
 
+              {/* The bottom line for a reader who stops here: does this
+                  change the business, or only the headline. */}
+              {catalystMeaning(analysis.catalystKind) && (
+                <p className="text-[12px] leading-relaxed text-ink-muted">
+                  {catalystMeaning(analysis.catalystKind)}
+                </p>
+              )}
+
               {/* The three lenses, collapsed. The feed's job is to be
                   scannable; a reader who wants the full reading of one
                   story opens that story. */}
@@ -138,20 +147,21 @@ export function ArticleCard({
                   {triage.reason}
                 </p>
               )}
-
-              {/* The story has not been read yet. The scheduled job will
-                  reach it, and a reader who wants it now can spend the
-                  call themselves. Hidden entirely without a key, rather
-                  than offered and then refused. */}
-              {hasGeminiKey() && (
-                <AnalyzeArticleButton
-                  url={article.url}
-                  title={article.title}
-                  auto={autoAnalyse}
-                  order={order}
-                />
-              )}
             </>
+          )}
+
+          {/* The button sits on every card, read or unread.
+              On an unread story it is the reading; on one the scheduled job
+              already read, it is a second opinion written against the
+              article's own text rather than against the feed's summary. */}
+          {hasGeminiKey() && (
+            <AnalyzeArticleButton
+              url={article.url}
+              title={article.title}
+              auto={autoAnalyse}
+              order={order}
+              hasStored={Boolean(analysis)}
+            />
           )}
         </div>
       )}

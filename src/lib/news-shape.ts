@@ -124,3 +124,28 @@ export const CATALYST_LABELS: Record<
   },
 };
 
+
+/**
+ * What the catalyst verdict means for someone holding the stock, in one
+ * line, followed by the line that must always accompany it.
+ *
+ * The three lenses explain the mechanism; this says what the mechanism
+ * amounts to. It is the difference between a reader finishing the card
+ * informed and finishing it merely entertained — most of what reaches a
+ * feed is the second thing, and saying so plainly is the point of the
+ * "noise" verdict.
+ */
+export function catalystMeaning(
+  kind: ArticleSummary["catalystKind"] | undefined,
+): string {
+  switch (kind) {
+    case "catalyst":
+      return "משמעות: האירוע נוגע לתזרים, לתחרות או לרגולציה של החברה — כלומר יש כאן שינוי בעסק ולא רק בכותרת. זו קביעה על המנגנון, לא המלצה לפעולה.";
+    case "noise":
+      return "משמעות: הכתבה מייצרת כותרת ומשאירה את העסק כפי שהיה. אין כאן מה לפעול לפיו, וזו תשובה שימושית בפני עצמה.";
+    case "unclear":
+      return "משמעות: מהכתבה לבדה אי אפשר להכריע אם זה משנה את העסק. חוסר הכרעה עדיף על ניחוש.";
+    default:
+      return "";
+  }
+}

@@ -24,6 +24,7 @@ import { getQuotes } from "@/lib/sources/finnhub";
 import { getFundamentalsFile } from "@/lib/fundamentals-store";
 import { getLiveFeed } from "@/lib/live-news";
 import { getSeries } from "@/lib/sources/fred";
+import { getFallbackQuote } from "@/lib/sources/prices";
 import { describeStatus, marketStatus } from "@/lib/market-hours";
 import { fmtMetric, fmtPercent, fmtPrice } from "@/lib/format";
 import { BRIEF_SYSTEM } from "@/lib/analysis/prompts";
@@ -160,14 +161,34 @@ async function buildSnapshot(): Promise<MarketSnapshot> {
     });
   }
 
+  // An index card showing a dash next to three that show numbers reads as
+  // a broken page rather than as a rate limit, so a miss is retried
+  // against the fallback source before it is given up on.
+  const indexes = await Promise.all(
+    INDEX_PROXIES.map(async (proxy, index) => {
+      const quote = indexQuotes[index];
+      if (quote) {
+        return {
+          symbol: proxy.symbol,
+          label: proxy.label,
+          price: quote.price,
+          changePercent: quote.changePercent,
+        };
+      }
+
+      const fallback = await getFallbackQuote(proxy.symbol).catch(() => null);
+      return {
+        symbol: proxy.symbol,
+        label: proxy.label,
+        price: fallback?.price ?? null,
+        changePercent: fallback?.changePercent ?? null,
+      };
+    }),
+  );
+
   return {
     statusText: describeStatus(marketStatus()),
-    indexes: INDEX_PROXIES.map((proxy, index) => ({
-      symbol: proxy.symbol,
-      label: proxy.label,
-      price: indexQuotes[index]?.price ?? null,
-      changePercent: indexQuotes[index]?.changePercent ?? null,
-    })),
+    indexes,
     // Split by sign rather than by position. Taking the top five and the
     // bottom five of one sorted list puts the same company in both columns
     // on a day when fewer than ten quotes came back, which reads as a bug
