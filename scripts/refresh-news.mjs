@@ -118,7 +118,19 @@ function dedupe(articles) {
 async function main() {
   const key = loadEnvFile();
   if (!key) {
-    console.error("FINNHUB_API_KEY is not set.");
+    // This is the failure that has been emailing every scheduled run. The
+    // message has to say where to put the key, because the email shows
+    // nothing but the exit code and the last lines of stdout.
+    console.error("");
+    console.error("FINNHUB_API_KEY is not set, so there is nothing to fetch.");
+    console.error("");
+    console.error("  Locally:  add it to .env.local");
+    console.error("  In CI:    Settings > Secrets and variables > Actions >");
+    console.error("            New repository secret, named FINNHUB_API_KEY");
+    console.error("");
+    console.error("  A free key is issued at https://finnhub.io/register");
+    console.error("");
+    console.error("A key set in one of those places is NOT set in the other.");
     process.exit(1);
   }
 

@@ -30,7 +30,7 @@ export default async function ResearchPage({
   const initial = params.ticker ? (normaliseTicker(params.ticker) ?? "") : "";
 
   return (
-    <Page tint="#c9a227" width="read">
+    <Page tint="#8b5cf6" width="read">
       <Hero
         eyebrow="מחקר עומק"
         title="שאלה אחת, מפורקת לחלקים שאפשר לענות עליהם"

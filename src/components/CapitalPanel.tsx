@@ -77,7 +77,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
           display={number(roicPercent, 1, "%")}
           bands={[
             { from: 0, to: 8, color: "#e24b4a" },
-            { from: 8, to: 15, color: "#c9a227" },
+            { from: 8, to: 15, color: "#f59e0b" },
             { from: 15, to: 40, color: "#1baf7a" },
           ]}
           meaning={
@@ -101,7 +101,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
           }
           bands={[
             { from: -60, to: 0, color: "#1baf7a" },
-            { from: 0, to: 90, color: "#c9a227" },
+            { from: 0, to: 90, color: "#f59e0b" },
             { from: 90, to: 180, color: "#e24b4a" },
           ]}
           meaning={
@@ -121,7 +121,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
           display={number(stockComp.shareOfFcf, 0, "%")}
           bands={[
             { from: 0, to: 15, color: "#1baf7a" },
-            { from: 15, to: 30, color: "#c9a227" },
+            { from: 15, to: 30, color: "#f59e0b" },
             { from: 30, to: 60, color: "#e24b4a" },
           ]}
           meaning={

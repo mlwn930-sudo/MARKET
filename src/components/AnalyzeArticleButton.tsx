@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 // From news-shape and not news-store: the store reads files, and importing
 // it here would pull node:fs into the browser bundle.
 import { CATALYST_LABELS, type ArticleSummary } from "@/lib/news-shape";
@@ -28,16 +28,35 @@ import { CATALYST_LABELS, type ArticleSummary } from "@/lib/news-shape";
 export function AnalyzeArticleButton({
   url,
   title,
+  auto = false,
+  order = 0,
 }: {
   url: string;
   title: string;
+  /**
+   * Analyse without being asked.
+   *
+   * The feed is supposed to arrive read, not with a row of buttons on it.
+   * But a page that fires twenty model calls the moment it opens spends
+   * the day's free quota on one visit, so the page marks only its first
+   * few unread stories as `auto` and the rest keep the button.
+   */
+  auto?: boolean;
+  /** Position in the auto queue. Calls are spaced by it. */
+  order?: number;
 }) {
   const [analysis, setAnalysis] = useState<ArticleSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  async function analyse() {
-    if (busy || analysis) return;
+  /** Guards the queued call: a card that scrolled out of the list, or one
+   *  the reader pressed first, must not fire a second request. */
+  const started = useRef(false);
+
+  const analyse = useCallback(async () => {
+    if (started.current) return;
+    started.current = true;
+
     setBusy(true);
     setError(null);
 
@@ -59,7 +78,23 @@ export function AnalyzeArticleButton({
     } finally {
       setBusy(false);
     }
-  }
+  }, [url, title]);
+
+  /**
+   * The queue.
+   *
+   * Spaced rather than parallel, because the model client serialises calls
+   * anyway and ten at once would simply queue inside the server with the
+   * reader watching a row of spinners. Two and a half seconds apart also
+   * keeps a page open in a background tab from draining the minute budget
+   * the scheduled news job shares.
+   */
+  useEffect(() => {
+    if (!auto || started.current) return;
+
+    const timer = setTimeout(() => analyse(), 600 + order * 2_500);
+    return () => clearTimeout(timer);
+  }, [auto, order, analyse]);
 
   if (analysis) {
     const verdict = analysis.catalystKind
@@ -140,7 +175,7 @@ export function AnalyzeArticleButton({
         disabled={busy}
         className="btn btn-ghost px-2.5 py-1 text-[11px]"
       >
-        {busy ? "קורא את הכתבה…" : "נתח כתבה"}
+        {busy ? "קורא את הכתבה…" : auto ? "ממתין בתור לניתוח" : "נתח כתבה"}
       </button>
       {error && (
         <p className="mt-2 text-[11px] leading-relaxed text-ink-ghost">{error}</p>

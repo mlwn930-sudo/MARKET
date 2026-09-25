@@ -21,44 +21,63 @@
      and the interface looks like stacked boxes. These are blue-black
      rather than neutral — a true grey dark mode looks like a switched-off
      screen, and the blue undertone is what makes it read as a surface. */
-  --color-base: #080a0f;
-  --color-surface: #0d1117;
-  --color-raised: #12171f;
-  --color-overlay: #191f29;
-  --color-hover: #1d242f;
+  --color-deep: #020617;
+  --color-base: #060b14;
+  --color-surface: #0e1424;
+  --color-raised: #141e32;
+  --color-overlay: #1e293b;
+  --color-hover: #243350;
+  /* The flat element fill — inputs, inset wells, chart panels. */
+  --color-element: #111827;
 
-  /* --- Lines ---------------------------------------------------------- */
-  --color-line: rgba(255, 255, 255, 0.06);
-  --color-line-strong: rgba(255, 255, 255, 0.12);
-  --color-line-bright: rgba(255, 255, 255, 0.2);
+  /* --- Lines ----------------------------------------------------------
+     Built from the palette's border slate rather than from white at low
+     alpha. A white hairline over a blue-black surface reads grey-violet;
+     a slate hairline belongs to the same family as the surfaces it
+     divides, which is what makes a dense table look engineered rather
+     than sketched. */
+  --color-line: rgba(51, 65, 85, 0.5);
+  --color-line-strong: #334155;
+  --color-line-bright: #475569;
 
   /* --- Text ----------------------------------------------------------
-     Soft white, never pure. #fff on a dark background haloes, especially
-     on Hebrew, and the softer value reads as more deliberate. */
-  --color-ink: #e9ecf1;
-  --color-ink-muted: #8b94a3;
-  --color-ink-faint: #5b6472;
-  --color-ink-ghost: #3d4553;
+     Four steps, from the headline figure down to a footnote. */
+  --color-ink: #f8fafc;
+  --color-ink-muted: #cbd5e1;
+  --color-ink-faint: #94a3b8;
+  --color-ink-ghost: #64748b;
 
   /* --- Direction ------------------------------------------------------
      Green and red mean price direction. Nothing else on this site may
      use them: a green panel tells the reader something before they have
      read anything. */
-  --color-up: #26b87c;
-  --color-down: #e5484d;
-  --color-up-dim: rgba(38, 184, 124, 0.14);
-  --color-down-dim: rgba(229, 72, 77, 0.14);
+  --color-up: #22c55e;
+  --color-down: #ef4444;
+  --color-up-dim: rgba(34, 197, 94, 0.14);
+  --color-down-dim: rgba(239, 68, 68, 0.14);
 
   /* --- Accent ---------------------------------------------------------
-     One accent for the whole system: a refined gold. It carries the
-     brand, marks the active item and highlights an emphasis, and it does
-     nothing else. Gold rather than the usual fintech blue because blue
-     is one hue away from the "up" green in peripheral vision, and
-     because a warm accent on a cold surface is what stops the interface
-     looking clinical. */
-  --color-accent: #d9b04a;
-  --color-accent-dim: rgba(217, 176, 74, 0.12);
-  --color-accent-line: rgba(217, 176, 74, 0.32);
+     One brand colour for the whole system. It carries the wordmark,
+     marks the active item and highlights an emphasis, and it does
+     nothing else — it never colours a figure.
+
+     A page may override --color-accent locally (a company page takes the
+     company's own colour), which is why everything downstream reads the
+     token rather than the hex. */
+  --color-accent: #0a84ff;
+  --color-accent-dim: rgba(10, 132, 255, 0.12);
+  --color-accent-line: rgba(10, 132, 255, 0.34);
+  --color-accent-soft: #3b82f6;
+
+  /* --- Meaning --------------------------------------------------------
+     Three hues with one job each, so a colour never means two things:
+     cyan marks data and chart series, violet marks an interpretation the
+     system produced rather than measured, pink marks breaking news, and
+     amber marks a caveat. */
+  --color-data: #06b6d4;
+  --color-insight: #8b5cf6;
+  --color-news: #ec4899;
+  --color-warning: #f59e0b;
 
   --font-sans: var(--font-heebo), system-ui, sans-serif;
   --font-serif: var(--font-frank), Georgia, serif;
@@ -73,6 +92,19 @@
 }
 
 /* --------------------------------------------------------------------
+   Brand gradients
+   --------------------------------------------------------------------
+   Two, and they are reserved. A gradient on every surface is how an
+   interface stops looking like an instrument; these appear on the
+   wordmark, on a primary action, and on the thin rule that marks an
+   AI-produced section — nowhere else, and never behind a figure.
+   -------------------------------------------------------------------- */
+:root {
+  --gradient-brand: linear-gradient(90deg, #0a84ff 0%, #06b6d4 100%);
+  --gradient-insight: linear-gradient(90deg, #6366f1 0%, #0a84ff 100%);
+}
+
+/* --------------------------------------------------------------------
    Per-page tint
    --------------------------------------------------------------------
    A page may set --tint to colour its own ambient light and its section
@@ -80,8 +112,8 @@
    figure, and a page that sets nothing simply gets the accent.
    -------------------------------------------------------------------- */
 :root {
-  --tint: #d9b04a;
-  --tint-dim: rgba(217, 176, 74, 0.1);
+  --tint: #0a84ff;
+  --tint-dim: rgba(10, 132, 255, 0.1);
 }
 
 html {
@@ -301,7 +333,7 @@ h4 {
 }
 
 .inset {
-  background: var(--color-base);
+  background: var(--color-element);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
 }
@@ -348,12 +380,16 @@ h4 {
     color 0.16s ease;
 }
 
+/* The one place the brand gradient is allowed on a control. White text
+   rather than dark: #0A84FF is a mid-tone blue, and dark text on it fails
+   contrast at this size where dark text on the old gold passed. */
 .btn-primary {
-  background: var(--color-accent);
-  color: #12100a;
+  background: var(--gradient-brand);
+  color: #f8fafc;
+  border-color: transparent;
 }
 .btn-primary:hover {
-  background: color-mix(in oklab, var(--color-accent) 88%, white);
+  filter: brightness(1.12);
 }
 
 .btn-ghost {

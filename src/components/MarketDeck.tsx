@@ -351,7 +351,7 @@ export function MarketDeck({
     // rather than flickering between two colours.
     document.documentElement.style.setProperty(
       "--tint",
-      green > 0.62 ? "#26b87c" : green < 0.38 ? "#e5484d" : "#d9b04a",
+      green > 0.62 ? "#22c55e" : green < 0.38 ? "#ef4444" : "#94a3b8",
     );
   }, [quotes, rows]);
 

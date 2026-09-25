@@ -31,7 +31,7 @@ export const sectorSchema = z.object({
   label: z.string(),
   blurb: z.string().optional().default(""),
   /** Hex colour that identifies the sector across the site. */
-  accent: z.string().optional().default("#c9a227"),
+  accent: z.string().optional().default("#0a84ff"),
   ok: z.boolean(),
   // Per-sector, because a sector with nothing new keeps its previous
   // articles and is therefore older than the feed as a whole.

@@ -13,6 +13,8 @@ import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { ValueChain, type ChainLink } from "@/components/ValueChain";
 import { ArticleCard } from "@/components/ArticleCard";
+import { OutlookPanel } from "@/components/OutlookPanel";
+import { buildOutlook } from "@/lib/analysis/outlook";
 import {
   Disclaimer,
   Hero,
@@ -194,6 +196,19 @@ export default async function TtwoLaunchPage() {
       label: `${i + 1} · ${contraction.depthPercent.toFixed(0)}%`,
     })) ?? [];
 
+  const outlook =
+    intelligence && analysis
+      ? buildOutlook({
+          ticker: "TTWO",
+          companyName: analysis.profile?.name ?? analysis.title,
+          price: quote?.price ?? null,
+          intelligence,
+          fundamentals: analysis.fundamentals,
+          sector,
+          technical,
+        })
+      : null;
+
 
   return (
     <Page tint="#b0468c">
@@ -231,6 +246,20 @@ export default async function TtwoLaunchPage() {
           <MoreLink href="/company/TTWO">לעמוד החברה המלא</MoreLink>
         }
       />
+
+      {/* ---- The position, first.
+           This page existed to explain how a launch passes through the
+           accounts, and said nothing about where that leaves the company —
+           which is the only question a reader arrives with. ---- */}
+      {outlook && (
+        <Section
+          eyebrow="השורה התחתונה"
+          title="איפה זה משאיר את Take-Two"
+          description="ההשקה היא האירוע המרכזי של החברה הזאת, והיא עדיין לא נמצאת באף שורה בדוחות. זו בדיוק הסיבה שהבדיקות הכמותיות לבדן אינן מספיקות כאן."
+        >
+          <OutlookPanel outlook={outlook} ticker="TTWO" />
+        </Section>
+      )}
 
       {/* ---- Core Test, then the thesis. Take-Two is the case these two
            were split for: it fails the trailing checklist while the

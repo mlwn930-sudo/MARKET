@@ -56,6 +56,22 @@ export default async function NewsPage() {
     (a) => a.analysis?.catalystKind === "catalyst" || a.triage?.kind === "catalyst",
   ).length;
 
+  /**
+   * The stories this page reads by itself.
+   *
+   * A feed should arrive read, not with a row of buttons on it — but the
+   * free model tier is a few hundred calls a day shared with the scheduled
+   * job, and a page that fires one per card would spend it on a single
+   * visit. So the newest unread stories are queued, the rest keep the
+   * button, and every result is cached by URL for a day: the second reader
+   * of the same headline costs nothing.
+   */
+  const AUTO_TOTAL = 8;
+  const autoQueue = all
+    .filter((article) => !article.analysis)
+    .slice(0, AUTO_TOTAL)
+    .map((article) => article.url);
+
   return (
     <Page tint="#c9772a">
       <Hero
@@ -175,9 +191,17 @@ export default async function NewsPage() {
                   </div>
 
                   <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {sector.articles.map((article) => (
-                      <ArticleCard key={article.url} article={article} />
-                    ))}
+                    {sector.articles.map((article) => {
+                      const queued = autoQueue.indexOf(article.url);
+                      return (
+                        <ArticleCard
+                          key={article.url}
+                          article={article}
+                          autoAnalyse={queued >= 0}
+                          order={Math.max(queued, 0)}
+                        />
+                      );
+                    })}
                   </div>
                 </section>
               ))}

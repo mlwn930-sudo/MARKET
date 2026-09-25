@@ -57,15 +57,15 @@ export type ChartMarker = {
 
 const MA_STYLE: Record<number, { color: string; width: 1 | 2 }> = {
   20: { color: "#60a5fa", width: 1 },
-  50: { color: "#d9b04a", width: 1 },
+  50: { color: "#f59e0b", width: 1 },
   150: { color: "#a78bfa", width: 2 },
   200: { color: "#94a3b8", width: 2 },
 };
 
 const LEVEL_COLOR: Record<ChartLevel["kind"], string> = {
   pivot: "#e9ecf1",
-  stop: "#e5484d",
-  target: "#26b87c",
+  stop: "#ef4444",
+  target: "#22c55e",
 };
 
 /** Handles both bar shapes: a daily bar is "YYYY-MM-DD", an intraday bar is
@@ -220,13 +220,13 @@ export function LiveChart({
           color: "rgba(217,176,74,0.6)",
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#d9b04a",
+          labelBackgroundColor: "#f59e0b",
         },
         horzLine: {
           color: "rgba(217,176,74,0.6)",
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#d9b04a",
+          labelBackgroundColor: "#f59e0b",
         },
       },
       // A chart that traps a phone's vertical scroll is worse than no
@@ -240,10 +240,10 @@ export function LiveChart({
     });
 
     const candleSeries = instance.addSeries(CandlestickSeries, {
-      upColor: "#26b87c",
-      downColor: "#e5484d",
-      borderUpColor: "#26b87c",
-      borderDownColor: "#e5484d",
+      upColor: "#22c55e",
+      downColor: "#ef4444",
+      borderUpColor: "#22c55e",
+      borderDownColor: "#ef4444",
       wickUpColor: "rgba(38,184,124,0.7)",
       wickDownColor: "rgba(229,72,77,0.7)",
       priceLineColor: "rgba(217,176,74,0.5)",
@@ -361,7 +361,7 @@ export function LiveChart({
       instance
         .addSeries(
           LineSeries,
-          { color: "#d9b04a", lineWidth: 1, priceLineVisible: false },
+          { color: "#f59e0b", lineWidth: 1, priceLineVisible: false },
           index,
         )
         .setData(seriesFrom(candles, signal));
@@ -391,7 +391,7 @@ export function LiveChart({
           markers.map((marker) => ({
             time: toTime(marker.date),
             position: "belowBar" as const,
-            color: "#d9b04a",
+            color: "#f59e0b",
             shape: "arrowUp" as const,
             text: marker.label,
           })),

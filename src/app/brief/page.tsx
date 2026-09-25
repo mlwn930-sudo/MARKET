@@ -32,7 +32,7 @@ export default async function BriefPage() {
   const { snapshot, narrative, failure } = await getMarketBrief();
 
   return (
-    <Page tint="#c9a227" width="wide">
+    <Page tint="#06b6d4" width="wide">
       <Hero
         eyebrow="תדריך"
         title={narrative?.headline ?? "התמונה של היום, מהנתונים כלפי מעלה"}

@@ -25,10 +25,16 @@ import { hasGeminiKey } from "@/lib/sources/gemini";
 export function ArticleCard({
   article,
   compact = false,
+  autoAnalyse = false,
+  order = 0,
 }: {
   article: EnrichedArticle;
   /** Drops the analysis body — for a dense list beside a featured story. */
   compact?: boolean;
+  /** Reads the story without being asked. The page decides how many of
+   *  its cards get this; the rest keep the button. */
+  autoAnalyse?: boolean;
+  order?: number;
 }) {
   const { analysis, triage } = article;
 
@@ -138,7 +144,12 @@ export function ArticleCard({
                   call themselves. Hidden entirely without a key, rather
                   than offered and then refused. */}
               {hasGeminiKey() && (
-                <AnalyzeArticleButton url={article.url} title={article.title} />
+                <AnalyzeArticleButton
+                  url={article.url}
+                  title={article.title}
+                  auto={autoAnalyse}
+                  order={order}
+                />
               )}
             </>
           )}
