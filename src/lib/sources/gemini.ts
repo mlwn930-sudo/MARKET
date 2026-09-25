@@ -27,9 +27,45 @@
 
 const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models";
 
-/** Same default as scripts/summarize-news.mjs. The two must move together,
- *  or the feed and the site start reading stories with different models. */
-const MODEL = process.env.GEMINI_MODEL ?? "gemini-flash-latest";
+/**
+ * The model, and what to do when it will not answer.
+ *
+ * Three names rather than one, tried in order, because "this model is
+ * currently experiencing high demand" is a 503 that arrives on a perfectly
+ * valid key — measured here, on this project's key, against the model this
+ * file used to hardcode. A research page that goes blank because Google is
+ * busy is a worse failure than one that answers from the lighter model.
+ *
+ * The lite model leads deliberately. Measured on the same prompt: 1.2
+ * seconds against 3.2, with Hebrew that is just as usable for reading a
+ * news story or answering a question about figures that were handed to it.
+ * The site's job is to supply the numbers; the model's job is to explain
+ * them, and that does not need the largest model available.
+ *
+ * GEMINI_MODEL still overrides, and when it does it goes to the front of
+ * the queue rather than replacing it — an override should change the
+ * preference, not remove the safety net.
+ */
+const MODEL_CHAIN = [
+  ...(process.env.GEMINI_MODEL ? [process.env.GEMINI_MODEL] : []),
+  "gemini-flash-lite-latest",
+  "gemini-3.1-flash-lite",
+  "gemini-flash-latest",
+];
+
+const MODEL = MODEL_CHAIN[0];
+
+/**
+ * Headroom for models that think before they write.
+ *
+ * The newer flash models spend hundreds of tokens reasoning, and those
+ * tokens come out of the same budget as the answer. Measured: a 400-token
+ * cap produced 462 thought tokens and fifteen tokens of visible text, cut
+ * mid-sentence. Every cap this module is given is therefore raised by this
+ * much before it is sent, so a caller asking for "about 900 tokens of
+ * Hebrew" gets 900 tokens of Hebrew.
+ */
+const THINKING_HEADROOM = 900;
 
 const MAX_PER_MINUTE = 10;
 const MAX_PER_DAY = 600;
@@ -157,52 +193,85 @@ function bodyFor(options: GenerateOptions) {
     contents,
     generationConfig: {
       temperature: options.temperature ?? 0.3,
-      maxOutputTokens: options.maxOutputTokens ?? 1200,
+      maxOutputTokens: (options.maxOutputTokens ?? 1200) + THINKING_HEADROOM,
       ...(options.json ? { responseMimeType: "application/json" } : {}),
     },
   };
+}
+
+/** A failure the next model in the chain might not have. Anything else is
+ *  a problem with the request, and retrying it elsewhere just spends the
+ *  budget twice to receive the same answer. */
+function isRetryable(status: number, body: string): boolean {
+  return (
+    status === 503 ||
+    status === 500 ||
+    status === 429 ||
+    body.includes("UNAVAILABLE") ||
+    body.includes("high demand")
+  );
 }
 
 export async function generateText(options: GenerateOptions): Promise<string> {
   const key = apiKey();
 
   return schedule(async () => {
-    let res: Response;
-    try {
-      res = await fetch(`${ENDPOINT}/${MODEL}:generateContent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-        body: JSON.stringify(bodyFor(options)),
-        signal: AbortSignal.timeout(options.timeoutMs ?? 60_000),
-        cache: "no-store",
-      });
-    } catch {
-      throw new GeminiError("upstream", "request failed or timed out");
-    }
+    let lastProblem = "no model answered";
 
-    const raw = await res.text();
-    if (res.status === 429) {
-      throw new GeminiError("rate-limit", "Gemini returned 429");
-    }
-    if (!res.ok) {
-      throw new GeminiError(
-        "upstream",
-        `Gemini ${res.status}: ${raw.slice(0, 160)}`,
-      );
-    }
+    for (const model of MODEL_CHAIN) {
+      let res: Response;
+      try {
+        res = await fetch(`${ENDPOINT}/${model}:generateContent`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+          body: JSON.stringify(bodyFor(options)),
+          signal: AbortSignal.timeout(options.timeoutMs ?? 60_000),
+          cache: "no-store",
+        });
+      } catch {
+        lastProblem = `${model}: request failed or timed out`;
+        continue;
+      }
 
-    let text: string | undefined;
-    try {
-      const payload = JSON.parse(raw);
-      text = payload?.candidates?.[0]?.content?.parts
-        ?.map((part: { text?: string }) => part?.text ?? "")
+      const raw = await res.text();
+
+      if (!res.ok) {
+        lastProblem = `${model}: ${res.status} ${raw.slice(0, 120)}`;
+        if (isRetryable(res.status, raw)) continue;
+        throw new GeminiError("upstream", lastProblem);
+      }
+
+      let payload: {
+        candidates?: {
+          finishReason?: string;
+          content?: { parts?: { text?: string }[] };
+        }[];
+      };
+      try {
+        payload = JSON.parse(raw);
+      } catch {
+        lastProblem = `${model}: unparseable response`;
+        continue;
+      }
+
+      const candidate = payload?.candidates?.[0];
+      const text = candidate?.content?.parts
+        ?.map((part) => part?.text ?? "")
         .join("");
-    } catch {
-      throw new GeminiError("upstream", "unparseable response");
+
+      if (text) return text;
+
+      // A thinking model that spent the whole budget reasoning returns a
+      // candidate with no text and MAX_TOKENS. Saying so is more useful
+      // than "empty response", which sends the next person looking at the
+      // network layer.
+      lastProblem =
+        candidate?.finishReason === "MAX_TOKENS"
+          ? `${model}: spent its token budget thinking and produced no text`
+          : `${model}: empty response`;
     }
 
-    if (!text) throw new GeminiError("upstream", "empty response");
-    return text;
+    throw new GeminiError("upstream", lastProblem);
   });
 }
 
@@ -240,25 +309,47 @@ export async function* streamText(
 ): AsyncGenerator<string> {
   const key = apiKey();
 
+  // Same chain as the single call. A busy model is the most common failure
+  // on the free tier, and a chat that answers from the lighter model beats
+  // one that reports an outage.
   const res = await schedule(async () => {
-    try {
-      return await fetch(`${ENDPOINT}/${MODEL}:streamGenerateContent?alt=sse`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-        body: JSON.stringify(bodyFor(options)),
-        signal: AbortSignal.timeout(options.timeoutMs ?? 90_000),
-        cache: "no-store",
-      });
-    } catch {
-      throw new GeminiError("upstream", "stream failed to open");
+    let lastStatus = 0;
+
+    for (const model of MODEL_CHAIN) {
+      let attempt: Response;
+      try {
+        attempt = await fetch(
+          `${ENDPOINT}/${model}:streamGenerateContent?alt=sse`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": key,
+            },
+            body: JSON.stringify(bodyFor(options)),
+            signal: AbortSignal.timeout(options.timeoutMs ?? 90_000),
+            cache: "no-store",
+          },
+        );
+      } catch {
+        lastStatus = 0;
+        continue;
+      }
+
+      if (attempt.ok && attempt.body) return attempt;
+
+      lastStatus = attempt.status;
+      if (!isRetryable(attempt.status, "")) break;
     }
+
+    throw new GeminiError(
+      lastStatus === 429 ? "rate-limit" : "upstream",
+      `no model accepted the stream (last status ${lastStatus})`,
+    );
   });
 
-  if (res.status === 429) {
-    throw new GeminiError("rate-limit", "Gemini returned 429");
-  }
-  if (!res.ok || !res.body) {
-    throw new GeminiError("upstream", `Gemini ${res.status}`);
+  if (!res.body) {
+    throw new GeminiError("upstream", "stream opened with no body");
   }
 
   const reader = res.body.getReader();
@@ -271,13 +362,21 @@ export async function* streamText(
 
     buffer += decoder.decode(value, { stream: true });
 
-    // SSE frames are separated by a blank line, and a frame can arrive
-    // split across two network chunks — so only complete ones are read.
-    const frames = buffer.split("\n\n");
+    /* SSE frames are separated by a blank line, and a frame can arrive
+       split across two network chunks — so only complete ones are read.
+
+       The separator is matched with \r? on both newlines, and that is not
+       defensive programming: Google sends CRLF. Splitting on "\n\n" alone
+       never finds a frame boundary, so every token stays in the buffer and
+       the stream ends having yielded nothing — which reached the page as a
+       chat that answered with silence and then said it was done. */
+    const frames = buffer.split(/\r?\n\r?\n/);
     buffer = frames.pop() ?? "";
 
     for (const frame of frames) {
-      const line = frame.split("\n").find((l) => l.startsWith("data:"));
+      const line = frame
+        .split(/\r?\n/)
+        .find((l) => l.startsWith("data:"));
       if (!line) continue;
 
       const data = line.slice(5).trim();

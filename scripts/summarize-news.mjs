@@ -33,7 +33,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const FEED = resolve(ROOT, "content/news/latest.json");
 const OUT = resolve(ROOT, "content/news/summaries.json");
 
-const MODEL = process.env.GEMINI_MODEL ?? "gemini-flash-latest";
+const MODEL = process.env.GEMINI_MODEL ?? "gemini-flash-lite-latest";
 const API_KEY = process.env.GEMINI_API_KEY;
 
 /**
