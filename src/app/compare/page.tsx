@@ -48,7 +48,7 @@ export default async function ComparePage({
     .map((company) => ({ ticker: company.ticker, name: company.name }));
 
   return (
-    <Page tint="#5dcaa5" width="wide">
+    <Page tint="#06b6d4" width="wide">
       <Hero
         eyebrow="השוואה"
         title="אותן שאלות, על כמה חברות בבת אחת"

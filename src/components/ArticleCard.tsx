@@ -9,6 +9,7 @@ import { TRIAGE_CAVEAT } from "@/lib/news-triage";
 import { fmtRelative } from "@/lib/format";
 import { AnalyzeArticleButton } from "@/components/AnalyzeArticleButton";
 import { hasGeminiKey } from "@/lib/sources/gemini";
+import { AiMark } from "@/components/ui";
 
 /**
  * One story.
@@ -54,7 +55,7 @@ export function ArticleCard({
     : TRIAGE_CAVEAT;
 
   return (
-    <article className="surface interactive flex flex-col p-4">
+    <article className="surface lift flex flex-col p-4">
       <div className="mb-2.5 flex flex-wrap items-center gap-2">
         {analysis && (
           <span className="badge" style={{ color: "var(--color-accent)" }}>
@@ -86,6 +87,17 @@ export function ArticleCard({
         <div className="mt-2.5 flex-1 space-y-2">
           {analysis ? (
             <>
+              {/* The boundary between the publisher's words and the
+                  model's. Everything above this rule was written by a
+                  newsroom; everything below it was written by a machine
+                  reading that newsroom, and the reader is entitled to know
+                  which sentence is which before they act on one. */}
+              <div className="flex items-center gap-2 pt-0.5">
+                <AiMark />
+                <span className="text-[10px] text-ink-ghost">קריאת מודל</span>
+                <span className="ai-rule flex-1 opacity-40" aria-hidden="true" />
+              </div>
+
               <p className="text-[13px] leading-relaxed text-ink-muted">
                 {analysis.summary}
               </p>

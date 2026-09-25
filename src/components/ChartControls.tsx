@@ -100,10 +100,13 @@ export function ChartControls({
                   onClick={() => onToggle(item.key)}
                   className="flex w-full items-start gap-2.5 rounded-md px-2 py-2 text-start transition-colors hover:bg-overlay"
                 >
+                  {/* White on the accent, not dark. #0A84FF is a mid-tone
+                      blue: dark glyph on it fails contrast at this size,
+                      where it passed on the gold this site used to use. */}
                   <span
                     className={`mt-0.5 grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border text-[9px] ${
                       on
-                        ? "border-accent bg-accent text-[#12100a]"
+                        ? "border-accent bg-accent text-white"
                         : "border-line-strong text-transparent"
                     }`}
                     aria-hidden="true"

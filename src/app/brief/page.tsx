@@ -2,7 +2,10 @@ import Link from "next/link";
 import { getMarketBrief } from "@/lib/analysis/brief";
 import { GEMINI_FAILURE_TEXT } from "@/lib/sources/gemini";
 import {
+  AiBlock,
+  AiMark,
   Disclaimer,
+  Empty,
   Hero,
   MoreLink,
   Page,
@@ -35,6 +38,20 @@ export default async function BriefPage() {
     <Page tint="#06b6d4" width="wide">
       <Hero
         eyebrow="תדריך"
+        /* The headline of this page is the one place on the site where a
+           model writes the largest type on the screen. It gets the mark
+           for that reason: a generated sentence set at 68 pixels is the
+           easiest thing here to mistake for an editor's judgement. */
+        meta={
+          narrative ? (
+            <span className="flex items-center gap-2">
+              <AiMark />
+              <span className="text-[11px] text-ink-faint">
+                הכותרת והקריאה נכתבו על ידי מודל מעל הנתונים שבעמוד
+              </span>
+            </span>
+          ) : undefined
+        }
         title={narrative?.headline ?? "התמונה של היום, מהנתונים כלפי מעלה"}
         lede={
           narrative?.lede ??
@@ -69,41 +86,71 @@ export default async function BriefPage() {
           ))}
       </p>
 
-      {/* The reading */}
+      {/* The reading.
+           One block with one frame, rather than a card per paragraph. The
+           sections are a single argument in four movements, and boxing
+           each of them separately was what made a continuous reading look
+           like four unrelated notes. */}
       {narrative ? (
         <Section eyebrow="הקריאה" title="מה זה אומר">
-          <div className="grid gap-4 md:grid-cols-2">
-            {narrative.sections.map((section) => (
-              <article key={section.title} className="surface p-5">
-                <h3 className="title text-[16px]">{section.title}</h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-ink-muted" dir="auto">
-                  {section.body}
-                </p>
-              </article>
-            ))}
-          </div>
-
-          {narrative.watch.length > 0 && (
-            <div className="surface mt-4 p-5">
-              <div className="mb-3 flex items-center gap-2.5">
-                <span className="section-mark" aria-hidden="true" />
-                <span className="eyebrow">מה לשים לב אליו</span>
-              </div>
-              <ul className="space-y-2">
-                {narrative.watch.map((item) => (
-                  <li key={item} className="text-[13px] leading-relaxed text-ink-muted">
-                    {item}
-                  </li>
-                ))}
-              </ul>
+          <AiBlock
+            title="קריאת התדריך"
+            sources={[
+              "ציטוטים חיים",
+              "קובץ המדדים הלילי",
+              "פיד החדשות המנותח",
+              ...snapshot.macro.map((item) => item.label),
+            ]}
+            at={`נבנה ${fmtRelative(new Date(snapshot.builtAt))}`}
+          >
+            <div className="grid gap-x-10 gap-y-7 md:grid-cols-2">
+              {narrative.sections.map((section) => (
+                <article key={section.title}>
+                  <h3 className="text-[15px] font-bold tracking-tight text-ink">
+                    {section.title}
+                  </h3>
+                  <p
+                    className="mt-2 text-[13px] leading-relaxed text-ink-muted"
+                    dir="auto"
+                  >
+                    {section.body}
+                  </p>
+                </article>
+              ))}
             </div>
-          )}
+
+            {narrative.watch.length > 0 && (
+              <div className="mt-8 border-t border-line pt-5">
+                <h3 className="eyebrow mb-3">מה לשים לב אליו</h3>
+                <ul className="space-y-2.5">
+                  {narrative.watch.map((item, index) => (
+                    <li
+                      key={`${index}-${item}`}
+                      className="flex gap-2.5 text-[13px] leading-relaxed text-ink-muted"
+                    >
+                      <span
+                        className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-data"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </AiBlock>
         </Section>
       ) : (
         <Section eyebrow="הקריאה" title="התדריך המילולי אינו זמין כרגע">
-          <p className="surface px-5 py-5 text-[13px] leading-relaxed text-ink-muted">
-            {GEMINI_FAILURE_TEXT[failure ?? "upstream"]}
-          </p>
+          <Empty
+            title="הקריאה המילולית לא נבנתה בסבב הזה"
+            reason={GEMINI_FAILURE_TEXT[failure ?? "upstream"]}
+            links={[
+              { href: "/news", label: "החדשות המנותחות" },
+              { href: "/macro", label: "לוח המאקרו" },
+              { href: "/heatmap", label: "מפת השוק" },
+            ]}
+          />
         </Section>
       )}
 
@@ -159,13 +206,18 @@ export default async function BriefPage() {
         action={<MoreLink href="/news">כל החדשות</MoreLink>}
       >
         {snapshot.stories.length === 0 ? (
-          <p className="surface px-5 py-5 text-[13px] text-ink-muted">
-            אין כרגע כתבות מנותחות בפיד.
-          </p>
+          <Empty
+            title="אין כרגע כתבה שעברה קריאה מלאה"
+            reason="הפיד נמשך כל עשרים דקות, והקריאה המלאה רצה על מנה קטנה בכל סבב כדי לא לחרוג ממכסת המודל החינמית. אחרי הסבב הבא יהיו כאן כתבות."
+            links={[
+              { href: "/news", label: "הפיד הגולמי" },
+              { href: "/heatmap", label: "מה זז היום" },
+            ]}
+          />
         ) : (
           <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {snapshot.stories.map((story) => (
-              <article key={story.url} className="surface flex flex-col p-4">
+              <article key={story.url} className="surface lift flex flex-col p-4">
                 <div className="mb-2 flex flex-wrap items-center gap-2">
                   <span className="badge">{story.sector}</span>
                   <span className="ms-auto text-[10px] text-ink-ghost">

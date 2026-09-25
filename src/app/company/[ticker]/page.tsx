@@ -27,7 +27,15 @@ import { WhyMovingPanel } from "@/components/WhyMovingPanel";
 import { getSectorViews } from "@/lib/sectors";
 import { getFallbackQuote } from "@/lib/sources/prices";
 import { readChart } from "@/lib/analysis/chart-read";
-import { Disclaimer, Page, Section, Stat } from "@/components/ui";
+import {
+  Band,
+  Disclaimer,
+  Empty,
+  Field,
+  Page,
+  Section,
+  Stat,
+} from "@/components/ui";
 import { fmtCompact, fmtDate, fmtMetric } from "@/lib/format";
 
 export const revalidate = 600;
@@ -187,39 +195,46 @@ export default async function CompanyPage({
 
   return (
     <Page tint={identity.accent}>
-      {/* ---- Masthead ---- */}
-      <header className="enter border-b border-line pb-8 pt-12 sm:pt-16">
-        <nav className="mb-6 text-[12px] text-ink-faint">
+      {/* ---- Masthead ----
+           The company's colour appears exactly twice: as the rule beside
+           its name, and as the page's ambient tint. Not on one figure. */}
+      <header className="enter border-b border-line pb-9 pt-12 sm:pt-16">
+        <nav className="mb-7 text-[12px] text-ink-faint">
           <Link href="/" className="transition-colors hover:text-ink">
             שוק
           </Link>
           <span className="mx-2 text-ink-ghost">/</span>
+          {identity.sectorLabel && (
+            <>
+              <span className="text-ink-faint">{identity.sectorLabel}</span>
+              <span className="mx-2 text-ink-ghost">/</span>
+            </>
+          )}
           <span className="num text-ink-muted">{ticker}</span>
         </nav>
 
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-7">
+          <div className="min-w-0">
+            <div className="flex items-center gap-3.5">
               <span
-                className="h-8 w-[3px] rounded-full"
+                className="h-9 w-[3px] shrink-0 rounded-full"
                 style={{ background: identity.accent }}
                 aria-hidden="true"
               />
-              <h1 className="display">{name}</h1>
+              <h1 className="display min-w-0">{name}</h1>
             </div>
 
-            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-ink-faint">
+            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[12px] text-ink-faint">
               <span className="num rounded border border-line px-1.5 py-0.5 text-ink-muted">
                 {ticker}
               </span>
               {profile?.exchange && <span>{profile.exchange}</span>}
               {profile?.industry && <span>· {profile.industry}</span>}
-              {identity.sectorLabel && <span>· {identity.sectorLabel}</span>}
             </div>
 
             {/* The three things a reader does next from here: follow it,
                 research it, or line it up against something else. */}
-            <div className="mt-4 flex flex-wrap items-center gap-2">
+            <div className="mt-5 flex flex-wrap items-center gap-2">
               <WatchButton ticker={ticker} />
               <Link
                 href={`/research?ticker=${ticker}`}
@@ -236,17 +251,30 @@ export default async function CompanyPage({
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-10 gap-y-4">
+          <div className="flex flex-wrap gap-x-10 gap-y-5">
             {marketCap !== null && (
               <Stat label="שווי שוק" value={`$${fmtCompact(marketCap)}`} />
             )}
             {pe && (
-              <Stat label="P/E" value={fmtMetric(pe.value, pe.unit)} />
+              <Stat
+                label="P/E"
+                value={fmtMetric(pe.value, pe.unit)}
+                sub={
+                  sector?.medians.pe != null
+                    ? `חציון ${sector.label} ${fmtMetric(sector.medians.pe, "x")}`
+                    : undefined
+                }
+              />
             )}
             {growth && (
               <Stat
                 label="צמיחת הכנסות 3ש׳"
                 value={fmtMetric(growth.value, growth.unit)}
+                sub={
+                  sector?.medians.rev_cagr_3 != null
+                    ? `חציון ${fmtMetric(sector.medians.rev_cagr_3, "%")}`
+                    : undefined
+                }
               />
             )}
             {fundamentals.asOf && (
@@ -269,11 +297,24 @@ export default async function CompanyPage({
       </header>
 
       {fundamentals.stale && (
-        <p className="surface mt-8 px-5 py-4 text-sm text-ink">
+        <p
+          className="surface mt-8 border-s-2 px-5 py-4 text-sm text-ink"
+          style={{ borderInlineStartColor: "var(--color-warning)" }}
+        >
           הנתונים הכספיים מבוססים על דוח שהוגש לפני יותר מ-120 יום. ייתכן
           שהמצב העסקי השתנה מאז.
         </p>
       )}
+
+      {/* A flex column, so the phone can lead with the price without the
+          desktop losing its argument.
+
+          The desktop order is deliberate — the view first, then the
+          evidence — but on a phone that buries the last price four
+          scrolls down, and the price is the reason most visits to a
+          company page happen at all. `order-first` moves one section and
+          leaves every other in place. */}
+      <div className="flex flex-col">
 
       {/* ---- The view, before anything else.
            A reader who stops here should still leave with the position, the
@@ -312,7 +353,11 @@ export default async function CompanyPage({
 
       {/* ---- Price ---- */}
       {history && (
-        <Section eyebrow="מחיר ומגמה" title="מה המחיר כבר עשה">
+        <Section
+          eyebrow="מחיר ומגמה"
+          title="מה המחיר כבר עשה"
+          className="max-lg:order-first"
+        >
           <CompanyChart
             symbol={ticker}
             name={name}
@@ -351,58 +396,57 @@ export default async function CompanyPage({
         </Section>
       )}
 
-      {/* ---- Evidence ---- */}
+      {/* ---- Evidence ----
+           One border around the whole group and hairlines inside it,
+           rather than a panel per metric. Twenty-three boxed cards was
+           the single loudest thing on a company page, and the figures
+           inside them were the quietest. */}
       {fundamentals.groups.map((group) => (
         <Section key={group.title} eyebrow="נתונים" title={group.title}>
-          <div className="surface grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
-            {group.metrics.map((item, i) => {
+          <Band columns={6}>
+            {group.metrics.map((item) => {
               const median = sector?.medians[item.key] ?? null;
               const comparison = compareToSector(item.value, median);
 
               return (
-                <div
+                <Field
                   key={item.key}
-                  className={`px-4 py-4 ${
-                    i % 2 === 1 ? "border-s border-line" : ""
-                  } sm:[&:not(:nth-child(3n+1))]:border-s sm:border-line lg:[&:not(:nth-child(6n+1))]:border-s ${
-                    i >= 2 ? "border-t border-line" : ""
-                  }`}
-                >
-                  <div className="text-[11px] text-ink-faint">{item.label}</div>
-                  <div
-                    className={`num mt-1.5 text-[17px] ${
-                      item.value === null ? "text-ink-ghost" : "text-ink"
-                    }`}
-                  >
-                    {fmtMetric(item.value, item.unit)}
-                  </div>
-
-                  {median !== null ? (
-                    <div className="mt-1.5 flex items-center gap-1.5 text-[10px] text-ink-ghost">
-                      <span>
-                        סקטור{" "}
-                        <span className="num">
-                          {fmtMetric(median, item.unit)}
+                  label={item.label}
+                  value={
+                    <span
+                      className={item.value === null ? "text-ink-ghost" : ""}
+                    >
+                      {fmtMetric(item.value, item.unit)}
+                    </span>
+                  }
+                  /* Rule 5: a figure never appears without what it should
+                     be measured against. When the sector has no median for
+                     this metric, the hint says why rather than the cell
+                     going quiet. */
+                  context={
+                    median !== null ? (
+                      <span className="flex items-center gap-1.5">
+                        <span>
+                          סקטור{" "}
+                          <span className="num">
+                            {fmtMetric(median, item.unit)}
+                          </span>
                         </span>
+                        {comparison && (
+                          <span className="num text-ink-ghost">
+                            {comparison.higher ? "▲" : "▼"}
+                            {Math.abs(comparison.differencePercent).toFixed(0)}%
+                          </span>
+                        )}
                       </span>
-                      {comparison && (
-                        <span className="num">
-                          {comparison.higher ? "▲" : "▼"}
-                          {Math.abs(comparison.differencePercent).toFixed(0)}%
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    item.hint && (
-                      <div className="mt-1.5 text-[10px] leading-snug text-ink-ghost">
-                        {item.hint}
-                      </div>
+                    ) : (
+                      item.hint
                     )
-                  )}
-                </div>
+                  }
+                />
               );
             })}
-          </div>
+          </Band>
         </Section>
       ))}
 
@@ -424,9 +468,18 @@ export default async function CompanyPage({
       {/* ---- News ---- */}
       <Section eyebrow="חדשות" title={`מה נכתב על ${name}`}>
         {articles.length === 0 ? (
-          <p className="surface px-5 py-5 text-[13px] text-ink-muted">
-            לא נמצאו כתבות עדכניות שמזכירות את החברה בפיד הנוכחי.
-          </p>
+          <Empty
+            title="אין כרגע כתבה בפיד שמזכירה את החברה"
+            reason="הפיד נבנה מכמה עשרות מקורות ומתרענן כל עשרים דקות. חברה שלא הייתה בכותרות ביממה האחרונה פשוט לא מופיעה בו — זה לא סימן לכלום."
+            links={[
+              { href: "/news", label: "כל החדשות" },
+              {
+                href: `/research?ticker=${ticker}`,
+                label: `מחקר עומק על ${ticker}`,
+              },
+              { href: "/brief", label: "התדריך של היום" },
+            ]}
+          />
         ) : (
           <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (
@@ -435,6 +488,7 @@ export default async function CompanyPage({
           </div>
         )}
       </Section>
+      </div>
 
       <Disclaimer extra="הנתונים הכספיים נשאבים מדוחות שהחברה הגישה ל-SEC. מדד המוצג כ-&quot;—&quot; אינו זמין בדוחות ולא הוערך." />
     </Page>

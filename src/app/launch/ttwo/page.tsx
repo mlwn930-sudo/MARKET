@@ -211,7 +211,7 @@ export default async function TtwoLaunchPage() {
 
 
   return (
-    <Page tint="#b0468c">
+    <Page tint="#fcaf17">
       <Hero
         eyebrow="השקה גדולה"
         title="GTA VI, דרך העדשה של שוק ההון"

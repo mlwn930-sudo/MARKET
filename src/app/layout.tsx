@@ -65,7 +65,7 @@ export default function RootLayout({
             is not rendered at all. */}
         <SideRail />
 
-        <div className="lg:ps-[224px]">
+        <div className="lg:ps-[232px]">
           <SiteNav />
           <div className="min-h-[60vh]">{children}</div>
           <SiteFooter />

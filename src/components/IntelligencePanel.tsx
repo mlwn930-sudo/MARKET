@@ -49,9 +49,13 @@ function List({
         <p className="mt-2.5 text-[12px] text-ink-ghost">{empty}</p>
       ) : (
         <ul className="mt-2.5 space-y-2">
-          {items.map((item) => (
+          {/* Keyed by position as well as by text. Two agents can reach the
+              same sentence — "העדיפות מול המדד כבר ארוכה" arrives from both
+              the contrarian and the catalyst pass — and a list keyed on the
+              string alone silently drops the second one. */}
+          {items.map((item, index) => (
             <li
-              key={item}
+              key={`${index}-${item}`}
               className="flex gap-2.5 text-[13px] leading-relaxed text-ink-muted"
             >
               <span
@@ -377,9 +381,9 @@ export function IntelligencePanel({
                   >
                     <h4 className="eyebrow">מה לא נבדק</h4>
                     <ul className="mt-2 space-y-1.5">
-                      {report.gaps.map((gap) => (
+                      {report.gaps.map((gap, index) => (
                         <li
-                          key={gap}
+                          key={`${index}-${gap}`}
                           className="text-[11px] leading-relaxed text-ink-ghost"
                         >
                           — {gap}

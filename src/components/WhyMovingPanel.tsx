@@ -1,5 +1,6 @@
 import type { WhyMoving } from "@/lib/analysis/why-moving";
 import { directionClass, fmtPercent } from "@/lib/format";
+import { Reading } from "@/components/ui";
 
 /**
  * Why is this moving, shown as candidates rather than as an answer.
@@ -62,11 +63,12 @@ export function WhyMovingPanel({ reading }: { reading: WhyMoving }) {
         ))}
       </ul>
 
-      {reading.unexplained && (
-        <p className="mt-4 border-t border-line pt-3 text-[12px] leading-relaxed text-ink-muted">
-          {reading.unexplained}
-        </p>
-      )}
+      {/* The residual, set as the panel's conclusion rather than as
+          another footnote. It is the most interesting sentence here — the
+          part of today's move that the index, the sector and the coverage
+          together do not account for — and it was previously indented to
+          the same weight as the caveat under it. */}
+      {reading.unexplained && <Reading>{reading.unexplained}</Reading>}
 
       <p className="mt-4 border-t border-line pt-3 text-[11px] leading-relaxed text-ink-ghost">
         אלה מועמדים להסבר, לא סיבות מוכחות. התאמה בכיוון בין מדד למניה אינה

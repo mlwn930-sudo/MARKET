@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Empty, SkeletonTable } from "@/components/ui";
 import {
   PRICE_MOVE_THRESHOLD,
   WATCHLIST_EVENT,
@@ -226,15 +227,17 @@ export function WatchlistBoard() {
 
       {/* The list */}
       {tickers.length === 0 ? (
-        <div className="surface px-5 py-8 text-center">
-          <p className="text-[14px] text-ink">הרשימה ריקה.</p>
-          <p className="mx-auto mt-2 max-w-md text-[12px] leading-relaxed text-ink-muted">
-            הוסף חברה מהשדה למעלה, או מכפתור המעקב בעמוד של כל חברה. הרשימה
-            נשמרת בדפדפן הזה בלבד — אין חשבונות ואין שרת שמחזיק אותה.
-          </p>
-        </div>
+        <Empty
+          title="הרשימה ריקה"
+          reason="הוסף חברה מהשדה למעלה, או מכפתור המעקב בעמוד של כל חברה. הרשימה נשמרת בדפדפן הזה בלבד — אין חשבונות ואין שרת שמחזיק אותה."
+          links={[
+            { href: "/opportunities", label: "הציונים הגבוהים בסורק" },
+            { href: "/heatmap", label: "מה זז היום" },
+            { href: "/sectors", label: "לפי סקטור" },
+          ]}
+        />
       ) : loading && rows.length === 0 ? (
-        <p className="surface px-5 py-6 text-[13px] text-ink-muted">טוען…</p>
+        <SkeletonTable rows={Math.min(tickers.length, 8)} columns={5} />
       ) : (
         <div className="surface overflow-hidden">
           {rows.map((row) => (

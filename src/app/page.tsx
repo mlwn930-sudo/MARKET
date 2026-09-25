@@ -107,22 +107,43 @@ export default async function MarketPage() {
 
   return (
     <Page>
+      {/* The opener carries the whole product in four lines, in the order
+          the brief for this design demanded and for the reason behind it:
+          a label to place you, one large statement, a small line of
+          context, and then the way in. Anything else here is a number the
+          reader could already be looking at. */}
       <Hero
-        eyebrow="סקירת שוק"
-        title="כל השוק במקום אחד"
-        lede="מדדים, מחירים חיים וחדשות מנותחות — והמספרים תמיד מול ההקשר שהופך אותם למשמעותיים."
+        eyebrow="Market Intel"
+        title={
+          <>
+            מודיעין פיננסי,
+            <br />
+            <span className="text-ink-muted">לפני ההחלטה.</span>
+          </>
+        }
+        lede="מדדים ומחירים חיים, דוחות SEC מנורמלים, מעקב מוסדי וחדשות שנקראו דרך שלוש עדשות קבועות — וכל מספר מוצג מול ההקשר שהופך אותו לידע: חציון הסקטור, האחוזון ההיסטורי, או מה שהמחיר כבר מגלם."
         image="/hero/markets.webp"
         imageAlt=""
+        action={
+          <div className="flex flex-wrap items-center gap-3">
+            <Link href="/opportunities" className="btn btn-primary">
+              לרדאר ההזדמנויות
+            </Link>
+            <Link href="/brief" className="btn btn-ghost">
+              התדריך של היום
+            </Link>
+          </div>
+        }
       />
 
       {/* The pulse first: equities, the price of money, and what that did
           to hard assets — one band, because those three read together are
           a story and read apart are trivia. */}
-      <div className="mt-16">
+      <div className="gap-section">
         <MarketPulse instruments={macro.instruments} />
       </div>
 
-      <div className="mt-14">
+      <div className="gap-section-tight">
         <MarketDeck indices={cards} rows={rows} initial={seed} />
       </div>
 
@@ -186,6 +207,12 @@ export default async function MarketPage() {
                   <span className="num text-[13px]">
                     <span className="text-ink">{result.score}</span>
                     <span className="text-ink-ghost">/{result.maxScore}</span>
+                  </span>
+                  <span
+                    className="on-hover text-ink-ghost"
+                    aria-hidden="true"
+                  >
+                    ←
                   </span>
                 </span>
               </Link>

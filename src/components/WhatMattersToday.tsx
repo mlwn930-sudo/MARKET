@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { EnrichedArticle } from "@/lib/news-shape";
 import { catalystMeaning } from "@/lib/news-shape";
 import { fmtRelative } from "@/lib/format";
+import { AiMark, Empty } from "@/components/ui";
 
 /**
  * What matters today.
@@ -50,16 +51,15 @@ export function WhatMattersToday({
 
   if (matters.length === 0) {
     return (
-      <div className="surface px-5 py-6">
-        <p className="text-[14px] text-ink">
-          אף כתבה שנקראה היום לא סווגה כאירוע שמשנה עסק.
-        </p>
-        <p className="mt-2 text-[12px] leading-relaxed text-ink-muted">
-          זה לא אומר שלא קרה כלום — זה אומר שמה שקרה עד עכשיו הוא רעש לפי
-          הסיווג של האתר. יום שקט הוא מידע, וכאן הוא נאמר במפורש במקום
-          להציג שלוש כותרות אקראיות.
-        </p>
-      </div>
+      <Empty
+        title="אף כתבה שנקראה היום לא סווגה כאירוע שמשנה עסק"
+        reason="זה לא אומר שלא קרה כלום — זה אומר שמה שקרה עד עכשיו הוא רעש לפי הסיווג של האתר. יום שקט הוא מידע, וכאן הוא נאמר במפורש במקום להציג שלוש כותרות אקראיות."
+        links={[
+          { href: "/news", label: "הפיד המלא" },
+          { href: "/brief", label: "התדריך של היום" },
+          { href: "/macro", label: "מה קורה במאקרו" },
+        ]}
+      />
     );
   }
 
@@ -72,9 +72,12 @@ export function WhatMattersToday({
         ].slice(0, 4);
 
         return (
-          <article key={article.url} className="surface p-5">
-            <div className="flex items-baseline gap-3">
-              <span className="num text-[13px] text-ink-ghost">
+          <article key={article.url} className="surface lift p-5">
+            <div className="flex items-baseline gap-4">
+              {/* The rank as a set numeral rather than a bullet. It is the
+                  only thing on the card telling the reader this list is
+                  ordered by consequence and not by time. */}
+              <span className="num text-[22px] leading-none text-ink-ghost/70">
                 {index + 1}
               </span>
 
@@ -91,6 +94,19 @@ export function WhatMattersToday({
 
                 {analysis ? (
                   <>
+                    {/* Where the publisher's sentence ends and the model's
+                        begins. Marked on every card that carries one. */}
+                    <div className="mt-3 flex items-center gap-2">
+                      <AiMark />
+                      <span className="text-[10px] text-ink-ghost">
+                        קריאת מודל
+                      </span>
+                      <span
+                        className="ai-rule flex-1 opacity-40"
+                        aria-hidden="true"
+                      />
+                    </div>
+
                     <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">
                       {analysis.summary}
                     </p>

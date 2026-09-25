@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CONFIDENCE_LABELS } from "@/lib/agents/types";
 import { normaliseTicker } from "@/lib/company-names";
+import { AiMark } from "@/components/ui";
 
 /**
  * Deep research, watched while it runs.
@@ -359,11 +360,14 @@ export function ResearchConsole({
         </section>
       ))}
 
-      {/* The synthesis */}
+      {/* The synthesis.
+          Marked with the site's AI language rather than a section rule:
+          this is the one passage on the page written entirely by a model,
+          and it is also the passage a reader is most likely to quote. */}
       {report.synthesis && (
-        <section className="surface p-5">
-          <div className="mb-3 flex items-center gap-2.5">
-            <span className="section-mark" aria-hidden="true" />
+        <section className="ai-block p-5">
+          <div className="mb-4 flex items-center gap-2.5">
+            <AiMark />
             <span className="eyebrow">סינתזה</span>
           </div>
 

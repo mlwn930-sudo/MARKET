@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { AiMark } from "@/components/ui";
 
 /**
  * The chat.
@@ -53,13 +54,23 @@ function Bubble({ message }: { message: Message }) {
         className={
           isUser
             ? "max-w-[85%] rounded-lg border border-line-strong bg-raised px-4 py-2.5"
-            : "w-full"
+            : /* The answer is inset behind a cyan rule rather than put in
+                 a bubble. A bubble makes this a conversation with a
+                 character; a rule makes it a passage written by a machine
+                 over the site's own data, which is the more honest and
+                 more useful framing. */
+              "w-full border-s ps-4"
+        }
+        style={
+          isUser
+            ? undefined
+            : { borderColor: "color-mix(in oklab, var(--color-data) 40%, transparent)" }
         }
       >
         {!isUser && (
-          <div className="mb-2 flex items-center gap-2">
-            <span className="section-mark" aria-hidden="true" />
-            <span className="eyebrow">התשובה</span>
+          <div className="mb-3 flex items-center gap-2.5">
+            <AiMark />
+            <span className="eyebrow">תשובה מתוך נתוני האתר</span>
           </div>
         )}
 
@@ -94,8 +105,15 @@ function Bubble({ message }: { message: Message }) {
                 </p>
               );
             })}
+          {/* The wait, described rather than spun. The evidence block is
+              assembled before the model is called, and saying so is more
+              reassuring than a spinner — the reader learns the delay has a
+              reason instead of assuming the page has stalled. */}
           {message.role === "model" && message.text.length === 0 && (
-            <p className="text-ink-faint">קורא את הנתונים…</p>
+            <p className="flex items-center gap-2 text-ink-faint">
+              <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-data" />
+              אוסף את הנתונים ומרכיב תשובה…
+            </p>
           )}
         </div>
 
@@ -271,7 +289,7 @@ export function ChatPanel({
               type="button"
               disabled={!enabled}
               onClick={() => send(starter)}
-              className="surface interactive px-4 py-3 text-start text-[13px] text-ink-muted disabled:cursor-not-allowed disabled:opacity-50"
+              className="surface lift px-4 py-3 text-start text-[13px] text-ink-muted disabled:cursor-not-allowed disabled:opacity-50"
             >
               {starter}
             </button>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { Empty } from "@/components/ui";
 import {
   LEVEL_LABELS,
   PORTFOLIO_EVENT,
@@ -148,13 +149,15 @@ export function PortfolioBuilder() {
       </form>
 
       {holdings.length === 0 ? (
-        <div className="surface px-5 py-8 text-center">
-          <p className="text-[14px] text-ink">התיק ריק.</p>
-          <p className="mx-auto mt-2 max-w-md text-[12px] leading-relaxed text-ink-muted">
-            הוסף שתי חברות לפחות כדי לראות במה התיק מרוכז, מה המכפיל שהוא
-            משלם, ומה בו לא ניתן למדוד.
-          </p>
-        </div>
+        <Empty
+          title="התיק ריק"
+          reason="הוסף שתי חברות לפחות כדי לראות במה התיק מרוכז, מה המכפיל שהוא משלם, ומה בו לא ניתן למדוד."
+          links={[
+            { href: "/watchlist", label: "מרשימת המעקב" },
+            { href: "/opportunities", label: "מהסורק" },
+            { href: "/sectors", label: "לפי סקטור" },
+          ]}
+        />
       ) : (
         <>
           {/* Holdings */}

@@ -3,6 +3,7 @@ import { runScreen, type ScreenResult } from "@/lib/screener";
 import { identityFor } from "@/lib/company-identity";
 import {
   Disclaimer,
+  Empty,
   Hero,
   Meter,
   Page,
@@ -97,8 +98,19 @@ export default async function OpportunitiesPage() {
         <Hero
           eyebrow="רדאר הזדמנויות"
           title="הסורק עדיין לא נבנה"
-          lede="הרץ npm run build:fundamentals כדי לאכלס את יקום ההשוואה."
+          lede="הסורק קורא קובץ מדדים שנבנה מדוחות SEC בסקריפט לילי. עד שהוא רץ פעם אחת אין ליקום ההשוואה חציונים, ובלי חציון אין מול מה לבדוק."
         />
+        <div className="gap-section-tight">
+          <Empty
+            title="קובץ המדדים ריק"
+            reason="הרצה אחת של npm run build:fundamentals מושכת את הדוחות ובונה את החציונים לתשעת הסקטורים."
+            links={[
+              { href: "/heatmap", label: "מפת השוק" },
+              { href: "/sectors", label: "סקטורים" },
+              { href: "/news", label: "חדשות" },
+            ]}
+          />
+        </div>
         <Disclaimer />
       </Page>
     );
@@ -109,7 +121,7 @@ export default async function OpportunitiesPage() {
   const median = results[Math.floor(results.length / 2)]?.score ?? 0;
 
   return (
-    <Page tint="#3f86c4">
+    <Page tint="#0a84ff">
       <Hero
         eyebrow="רדאר הזדמנויות"
         title="לא מי הכי טובה — מי חזקה במה"
@@ -138,7 +150,10 @@ export default async function OpportunitiesPage() {
         }
       />
 
-      <p className="surface mt-10 px-5 py-4 text-[13px] leading-relaxed text-ink-muted">
+      <p
+        className="surface gap-section-tight border-s-2 px-5 py-4 text-[13px] leading-relaxed text-ink-muted"
+        style={{ borderInlineStartColor: "var(--color-warning)" }}
+      >
         <strong className="font-medium text-ink">זה סינון, לא המלצה.</strong>{" "}
         ציון גבוה אומר שהחברה עברה יותר מבחנים כמותיים — לא שכדאי לקנות אותה.
         קריטריון שאי אפשר לחשב נספר ככישלון, כי נתון חסר אינו הוכחה לאיכות.
@@ -150,7 +165,12 @@ export default async function OpportunitiesPage() {
       </p>
 
       <Section eyebrow="הפרופילים" title="כל החברות ביקום ההשוואה">
-        <div className="space-y-2">
+        {/* One surface, forty-eight rows, hairlines between them — not
+            forty-eight floating panels. A card per company made the list
+            read as a shelf of products; a divided list reads as a register,
+            which is what it is, and it lets the four profile meters line up
+            into columns the eye can run down. */}
+        <div className="surface divide-y divide-line overflow-hidden">
           {results.map((result) => {
             const axes = profile(result);
             const identity = identityFor(result.company.ticker);
@@ -159,7 +179,7 @@ export default async function OpportunitiesPage() {
             return (
               <details
                 key={result.company.ticker}
-                className="surface interactive group overflow-hidden"
+                className="group transition-colors open:bg-raised/40 hover:bg-raised/25"
               >
                 <summary className="grid cursor-pointer grid-cols-1 items-center gap-4 p-4 lg:grid-cols-[minmax(200px,1.1fr)_2.4fr_auto]">
                   {/* Identity */}

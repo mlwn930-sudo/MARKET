@@ -79,6 +79,18 @@
   --color-news: #ec4899;
   --color-warning: #f59e0b;
 
+  /* --- Measurement -----------------------------------------------------
+     The colour of a bar, a gauge or a filled segment — anything that is a
+     figure drawn as a shape rather than printed as digits.
+
+     Neutral slate, and it must stay neutral. These were drawn in the page
+     tint, which on a company page is that company's own brand colour: a
+     "10 of 11 checks passed" bar rendered in NVIDIA green reads as an
+     endorsement of the company rather than as a count, which is precisely
+     the reading the verdict panel exists to prevent. The same argument
+     rules out the accent — a measure is not a brand moment. */
+  --color-measure: #94a3b8;
+
   --font-sans: var(--font-heebo), system-ui, sans-serif;
   --font-serif: var(--font-frank), Georgia, serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
@@ -90,6 +102,24 @@
   --radius-md: 10px;
   --radius-lg: 14px;
 }
+
+/* ====================================================================
+   Everything below is a component layer
+   ====================================================================
+
+   Not bookkeeping. Tailwind emits `@layer theme, base, components,
+   utilities`, and a rule written outside those layers beats every
+   utility no matter where it sits in the file. `.btn` defined here was
+   therefore overriding `lg:hidden` on the same element, and the phone’s
+   menu button rendered on every desktop screen; `.surface` was beating
+   any `bg-*` put on it for the same reason.
+
+   Inside `components`, a utility always wins. That is the correct
+   relationship: these classes are the default, and a utility on an
+   element is the exception its author asked for.
+   ==================================================================== */
+@layer components {
+
 
 /* --------------------------------------------------------------------
    Brand gradients
@@ -130,6 +160,34 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: none;
+
+  /* `clip`, not `hidden`.
+     A full-bleed hero band is wider than the column it is written inside,
+     and with the rail taking 232px of the viewport it was overflowing far
+     enough to push the rail itself off-screen and put a horizontal
+     scrollbar on every page. `hidden` would fix that and break the sticky
+     bar with it — it makes this element a scroll container, and a sticky
+     child then sticks to a container with no height instead of to the
+     viewport. `clip` cuts the overflow without creating one. */
+  overflow-x: clip;
+}
+
+/**
+ * The width of the rail, as a number the content can do arithmetic with.
+ *
+ * A full-bleed element lives inside the inset column and has to undo that
+ * inset to sit on the viewport's centre line. Hard-coding 232px in the
+ * component would mean two places to change when the rail changes width,
+ * and the one that gets forgotten is a hero that is off-centre by half a
+ * rail on every page.
+ */
+:root {
+  --rail-w: 0px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --rail-w: 232px;
+  }
 }
 
 /* ====================================================================
@@ -605,4 +663,447 @@ h4 {
   *::after {
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ====================================================================
+   ═══════════════════════════════════════════════════════════════════
+   The premium layer
+   ═══════════════════════════════════════════════════════════════════
+
+   Added in one pass with a single question in front of it: does this
+   look like an instrument someone pays for, or like a dashboard someone
+   generated. The answer, nearly every time, came down to rhythm,
+   restraint, and one visual language per kind of meaning — not to more
+   effects.
+   ==================================================================== */
+
+/* --------------------------------------------------------------------
+   Motion constants
+   --------------------------------------------------------------------
+   One curve and three durations for the whole site. A transition that is
+   250ms in one component and 400ms in the next reads as two products
+   glued together, and nobody can say why.
+   -------------------------------------------------------------------- */
+:root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur: 190ms;
+  --dur-slow: 260ms;
+}
+
+/* --------------------------------------------------------------------
+   Rhythm
+   --------------------------------------------------------------------
+   The page reads TITLE, then CONTEXT, then PRIMARY DATA, then
+   INTERPRETATION, then DETAIL — and the distance between those steps is
+   what makes the order visible without a single rule being drawn.
+
+   Held as tokens rather than typed per section, because the value of a
+   rhythm is that it is identical everywhere, and a number typed per
+   component stops being identical within a week.
+   -------------------------------------------------------------------- */
+:root {
+  /* Between one section and the next: the largest silence on the page. */
+  --gap-section: clamp(3.75rem, 6.5vw, 6.5rem);
+  --gap-section-tight: clamp(2.25rem, 3.5vw, 3.25rem);
+  /* Between a section head and its body. */
+  --gap-head: clamp(1.25rem, 2vw, 1.75rem);
+  /* Between blocks inside one section. */
+  --gap-block: clamp(1rem, 1.6vw, 1.5rem);
+}
+
+.gap-section {
+  margin-top: var(--gap-section);
+}
+.gap-section-tight {
+  margin-top: var(--gap-section-tight);
+}
+.gap-head {
+  margin-bottom: var(--gap-head);
+}
+
+/* --------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------- */
+
+/**
+ * The opening line of the whole product. Larger and tighter than
+ * `.display`, used at most once per page — a page with two of these has
+ * no headline at all.
+ */
+.display-xl {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.042em;
+  line-height: 0.99;
+}
+
+/**
+ * The sentence under a headline. Wider leading, and a measure that stops
+ * it running the full width of a 1400px page — a line that long is one
+ * the eye cannot track back from.
+ */
+.lede {
+  font-size: clamp(0.95rem, 1.3vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+  max-width: 62ch;
+}
+
+/** A footnote: a source, an as-of date, a caveat. Never a finding. */
+.caption {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--color-ink-ghost);
+}
+
+/**
+ * What a figure means, set directly beneath it.
+ *
+ * This class is how rule 5 of the project is enforced in CSS: the figure
+ * is the statement, this is the comparison that turns it into knowledge,
+ * and it is styled as a caption so it can never compete with the number
+ * it qualifies.
+ */
+.context-line {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--color-ink-faint);
+}
+
+/* --------------------------------------------------------------------
+   Figures
+   --------------------------------------------------------------------
+   A step above `.figure-xl`, for the one number a page is about: a last
+   price, an index level. The optical tightening grows with the size —
+   monospace digits sit on a fixed advance, and at display size those
+   gaps read as a stutter unless they are pulled back.
+   -------------------------------------------------------------------- */
+.figure-hero {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: clamp(2.5rem, 5.5vw, 3.75rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+/**
+ * The change beside a price.
+ *
+ * A tinted chip rather than coloured text. Coloured text at 13px on a
+ * blue-black surface is legible but not scannable — the eye finds a
+ * filled shape down a column far faster than it finds a hue applied to
+ * four characters, and scanning a column is this element's entire job.
+ */
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 4px;
+  padding: 0.15rem 0.4rem;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.delta[data-dir="up"] {
+  background: var(--color-up-dim);
+  color: var(--color-up);
+}
+.delta[data-dir="down"] {
+  background: var(--color-down-dim);
+  color: var(--color-down);
+}
+.delta[data-dir="flat"] {
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--color-ink-faint);
+}
+
+/* --------------------------------------------------------------------
+   Institutional tables
+   --------------------------------------------------------------------
+   A table is the densest thing on this site, and therefore the one most
+   worth getting exactly right.
+
+   Headers are small, uppercase and dim, because a header is read once
+   and a value is read every time. Rows are divided by a hairline rather
+   than striped: stripes introduce a second visual rhythm competing with
+   the columns, which is why they left professional terminals and stayed
+   in report generators.
+   -------------------------------------------------------------------- */
+
+.dt {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+
+.dt thead th {
+  padding: 0.65rem 1rem;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  color: var(--color-ink-ghost);
+  text-align: start;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--color-line-strong);
+}
+
+/* A sortable header is a control and says so on hover, but only then. A
+   column heading that looks like a button at rest turns a table into a
+   toolbar. */
+.dt thead th button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: inherit;
+  transition: color var(--dur-fast) var(--ease);
+}
+.dt thead th button:hover {
+  color: var(--color-ink-muted);
+}
+
+.dt tbody td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: middle;
+}
+.dt tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dt tbody tr {
+  transition: background-color var(--dur-fast) var(--ease);
+}
+/* Barely there: a hover that lights a row up competes with the price
+   colours already inside it. */
+.dt tbody tr:hover {
+  background: rgba(255, 255, 255, 0.022);
+}
+
+/* Selected is the one row state allowed the accent, and it is a rule on
+   the leading edge plus the faintest wash — not a filled row. */
+.dt tbody tr[data-selected="true"] {
+  background: var(--color-accent-dim);
+}
+.dt tbody tr[data-selected="true"] > td:first-child {
+  position: relative;
+}
+.dt tbody tr[data-selected="true"] > td:first-child::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 2px;
+  background: var(--color-accent);
+}
+
+/* A numeric cell. Aligned to the end of its column — in an RTL page that
+   is the left, and it is correct, because that is the edge the eye
+   returns to when comparing magnitudes. */
+.dt .n,
+.dt th.n {
+  text-align: end;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+/* Without this, an RTL table puts a numeric column's sort arrow on the
+   far side of its label. */
+.dt th.n button {
+  flex-direction: row-reverse;
+}
+
+/* --------------------------------------------------------------------
+   The AI language
+   --------------------------------------------------------------------
+   Anything on this site written by a model has to be identifiable as
+   such at a glance, because the difference between a measured figure and
+   a generated sentence is the most important distinction the interface
+   makes.
+
+   It is marked with a cyan-to-blue hairline and a small glyph — never a
+   bubble, an avatar or a sparkle. Those say chatbot, and a chatbot is a
+   thing you talk to; this is a thing that shows its work, which is why
+   every block carrying the mark also carries a confidence, its sources
+   and the time it was produced.
+
+   Violet stays what it was: an interpretation the system derived in
+   code. Two different claims, two different colours.
+   -------------------------------------------------------------------- */
+
+.ai-rule {
+  height: 1px;
+  background: var(--gradient-brand);
+  opacity: 0.85;
+}
+
+.ai-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: rgba(6, 182, 212, 0.11);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: var(--color-data);
+  flex-shrink: 0;
+}
+
+/* The block: the hairline across the top, and otherwise nothing a normal
+   panel does not have. The restraint is the point — a generated passage
+   that is visually louder than a measured one inverts the hierarchy the
+   whole site is built on. */
+.ai-block {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.ai-block::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: var(--gradient-brand);
+  opacity: 0.85;
+}
+
+/* Confidence, as three segments. A percentage would imply a calibration
+   nobody has measured; three states is the resolution these actually
+   have. */
+.conf {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.conf i {
+  display: block;
+  width: 3px;
+  height: 9px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.11);
+}
+.conf[data-level="high"] i,
+.conf[data-level="medium"] i:nth-child(-n + 2),
+.conf[data-level="low"] i:nth-child(1) {
+  background: var(--color-data);
+}
+
+/* --------------------------------------------------------------------
+   Skeletons
+   --------------------------------------------------------------------
+   Shaped like the thing that is coming, never a spinner. A spinner says
+   "wait"; a skeleton says "a table of six rows is arriving", and the
+   reader has already started reading the page around it.
+   -------------------------------------------------------------------- */
+
+@keyframes sheen {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.sk {
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.035) 0%,
+    rgba(255, 255, 255, 0.075) 50%,
+    rgba(255, 255, 255, 0.035) 100%
+  );
+  background-size: 200% 100%;
+  animation: sheen 1.5s linear infinite;
+}
+
+/* --------------------------------------------------------------------
+   Hover
+   --------------------------------------------------------------------
+   A quiet lift for a whole clickable region: a story card, a sector
+   tile. Colour only, no transform — a card that moves under the cursor
+   shifts the sentence the reader is in the middle of.
+   -------------------------------------------------------------------- */
+.lift {
+  transition:
+    border-color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
+}
+.lift:hover {
+  border-color: color-mix(in oklab, var(--tint) 32%, var(--color-line-strong));
+  background: var(--color-raised);
+}
+
+/* --------------------------------------------------------------------
+   Command palette
+   -------------------------------------------------------------------- */
+
+@keyframes palette-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes veil-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.palette {
+  animation: palette-in 0.18s var(--ease) both;
+}
+.veil {
+  animation: veil-in 0.16s ease both;
+}
+
+/* A keyboard hint. Set in the mono face, so a key cap lines up with the
+   figures instead of floating in the sans. */
+.kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 4px;
+  border: 1px solid var(--color-line-strong);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  color: var(--color-ink-ghost);
+}
+
+/* --------------------------------------------------------------------
+   Reduced motion, for everything above
+   -------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .sk {
+    animation: none;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .palette,
+  .veil {
+    animation: none;
+  }
+}
+
 }

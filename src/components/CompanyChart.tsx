@@ -2,17 +2,11 @@
 
 import { useMemo } from "react";
 import { LiveChart, type ChartLevel, type ChartMarker } from "./LiveChart";
-import { LiveBadge } from "./ui";
+import { LiveBadge, Quote } from "./ui";
 import { useLiveTicks, type LiveQuote } from "@/lib/use-live-ticks";
 import { describeStatus } from "@/lib/market-hours";
 import type { Candle } from "@/lib/sources/prices";
-import {
-  directionClass,
-  fmtChange,
-  fmtPercent,
-  fmtPrice,
-  fmtTime,
-} from "@/lib/format";
+import { fmtChange, fmtPrice, fmtTime } from "@/lib/format";
 
 /**
  * The price half of a company page: the headline quote and the chart,
@@ -78,39 +72,42 @@ export function CompanyChart({
 
   return (
     <div className="space-y-4">
-      <div className="surface flex flex-wrap items-end justify-between gap-6 p-6">
-        <div>
-          <div
-            className={`figure-xl ${
-              moved === "up"
-                ? "settle-up"
-                : moved === "down"
-                  ? "settle-down"
-                  : ""
-            }`}
-          >
-            {fmtPrice(quote?.price)}
-          </div>
+      {/* NUMBER, then CHANGE, then CONTEXT — in that order, at those three
+          weights. The price is the largest figure on the page and the only
+          one set at display size; the change is a chip the eye finds
+          without reading; the feed state and the day's range are the small
+          print that explains what the first two mean right now. */}
+      <div className="surface flex flex-wrap items-end justify-between gap-x-10 gap-y-6 p-6">
+        <Quote
+          price={
+            <span
+              className={
+                moved === "up"
+                  ? "settle-up"
+                  : moved === "down"
+                    ? "settle-down"
+                    : undefined
+              }
+            >
+              {fmtPrice(quote?.price)}
+            </span>
+          }
+          change={quote?.changePercent}
+          absolute={
+            quote?.change != null ? fmtChange(quote.change) : undefined
+          }
+          live={<LiveBadge state={state} label={status} />}
+          context={
+            lastTickAt ? (
+              <span className="num">עדכון אחרון {fmtTime(lastTickAt)}</span>
+            ) : undefined
+          }
+        />
 
-          <div
-            className={`num mt-3 text-[15px] ${directionClass(quote?.changePercent)}`}
-          >
-            {fmtChange(quote?.change)} ({fmtPercent(quote?.changePercent)})
-          </div>
-        </div>
-
-        <div className="flex flex-col items-start gap-2.5 sm:items-end">
-          <div className="flex items-center gap-3">
-            <LiveBadge state={state} label={status} />
-            {lastTickAt && (
-              <span className="num text-[11px] text-ink-ghost">
-                {fmtTime(lastTickAt)}
-              </span>
-            )}
-          </div>
-
-          {range !== null && (
-            <div className="flex items-center gap-2">
+        {range !== null && (
+          <div className="pb-1">
+            <div className="text-[11px] text-ink-faint">טווח היום</div>
+            <div className="mt-2 flex items-center gap-2.5">
               <span className="num text-[11px] text-ink-ghost">
                 {fmtPrice(quote?.low)}
               </span>
@@ -125,10 +122,9 @@ export function CompanyChart({
               <span className="num text-[11px] text-ink-ghost">
                 {fmtPrice(quote?.high)}
               </span>
-              <span className="text-[11px] text-ink-ghost">טווח היום</span>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <LiveChart

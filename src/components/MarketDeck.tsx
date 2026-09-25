@@ -3,18 +3,11 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Sparkline } from "./Sparkline";
-import { LiveBadge, Stat } from "./ui";
+import { Delta, LiveBadge, Stat } from "./ui";
 import { useLiveTicks, type LiveQuote } from "@/lib/use-live-ticks";
 import { describeStatus } from "@/lib/market-hours";
 import { identityFor } from "@/lib/company-identity";
-import {
-  directionClass,
-  fmtChange,
-  fmtCompact,
-  fmtPercent,
-  fmtPrice,
-  fmtTime,
-} from "@/lib/format";
+import { fmtChange, fmtPrice, fmtTime } from "@/lib/format";
 
 /**
  * The live surface of the market page: the index strip and the stock table,
@@ -65,27 +58,34 @@ function IndexStrip({
         const points = [...card.intraday, ...(tails[card.symbol] ?? [])];
 
         return (
+          /* NAME, then NUMBER, then CHANGE, then SHAPE. The index label is
+             small because it does not change; the level is large because
+             it is what the reader came for. The previous version set the
+             two at nearly the same weight, which made the strip read as
+             four captions with numbers attached. */
           <div
             key={card.symbol}
-            className={`relative overflow-hidden px-5 py-4 ${
+            className={`group relative overflow-hidden px-5 py-5 ${
               i % 2 === 1 ? "border-s border-line" : ""
             } ${i >= 2 ? "border-t border-line lg:border-t-0" : ""} ${
               i === 2 ? "lg:border-s lg:border-line" : ""
             }`}
           >
-            <div className="flex items-baseline justify-between">
-              <span className="text-[12px] text-ink-muted">{card.label}</span>
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-[12px] font-medium text-ink-muted">
+                {card.label}
+              </span>
               <span className="num text-[10px] text-ink-ghost">
                 {card.note}
               </span>
             </div>
 
-            <div className="num mt-2 text-[26px] leading-none tracking-tight">
+            <div className="num mt-2.5 text-[28px] leading-none tracking-[-0.03em] text-ink">
               {fmtPrice(quote?.price)}
             </div>
 
-            <div className={`num mt-1.5 text-[13px] ${directionClass(change)}`}>
-              {fmtPercent(change)}
+            <div className="mt-2.5">
+              <Delta value={change} />
             </div>
 
             {/* The session's shape, in its own band under the figures. */}
@@ -93,7 +93,7 @@ function IndexStrip({
               points={points}
               direction={directionOf(change)}
               area
-              className="mt-3 h-8 w-full"
+              className="mt-4 h-9 w-full"
             />
           </div>
         );
@@ -141,8 +141,11 @@ function StockTable({
     });
   }, [rows, quotes, sort]);
 
-  const header = (key: SortKey, label: string, align = "text-end") => (
-    <th scope="col" className={`px-4 py-2.5 font-normal ${align}`}>
+  /* A sortable column header. The arrow is only tinted on the column
+     actually sorting the table — an arrow on every header at full
+     strength is five controls competing to look active. */
+  const header = (key: SortKey, label: string, numeric = true) => (
+    <th scope="col" className={numeric ? "n" : undefined}>
       <button
         type="button"
         onClick={() =>
@@ -152,12 +155,13 @@ function StockTable({
               : { key, desc: true },
           )
         }
-        className="inline-flex items-center gap-1 transition-colors hover:text-ink"
         aria-label={`מיין לפי ${label}`}
       >
         {label}
         <span
-          className={`text-[9px] ${sort.key === key ? "text-accent" : "text-ink-ghost"}`}
+          className={`text-[8px] ${
+            sort.key === key ? "text-accent" : "text-ink-ghost/50"
+          }`}
           aria-hidden="true"
         >
           {sort.key === key ? (sort.desc ? "▼" : "▲") : "▼"}
@@ -171,20 +175,20 @@ function StockTable({
       {/* Horizontal scroll on a phone rather than a stacked card per row:
           the columns are the comparison, and stacking destroys it. */}
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[640px] text-sm">
+        <table className="dt min-w-[640px]">
           <caption className="sr-only">
             מחירים חיים. מתעדכן בכל עסקה שמתבצעת בבורסה. ניתן למיין לפי כל
             עמודה.
           </caption>
           <thead>
-            <tr className="border-b border-line text-[11px] text-ink-faint">
-              {header("symbol", "חברה", "text-start")}
+            <tr>
+              {header("symbol", "חברה", false)}
               {header("price", "מחיר")}
               {header("change", "שינוי")}
-              <th scope="col" className="px-4 py-2.5 text-end font-normal">
+              <th scope="col" className="n">
                 מגמה
               </th>
-              <th scope="col" className="px-4 py-2.5 text-end font-normal">
+              <th scope="col" className="n">
                 טווח היום
               </th>
             </tr>
@@ -205,15 +209,16 @@ function StockTable({
                   : null;
 
               return (
-                <tr
-                  key={row.symbol}
-                  className="group border-b border-line transition-colors last:border-0 hover:bg-raised"
-                >
-                  <td className="px-4 py-3">
+                <tr key={row.symbol} className="group">
+                  <td>
                     <Link
                       href={`/company/${row.symbol}`}
                       className="flex items-center gap-3"
                     >
+                      {/* The company's own colour, as a three-pixel rule.
+                          It is the only place a brand colour is allowed in
+                          a table: it identifies the row and touches no
+                          figure in it. */}
                       <span
                         className="h-7 w-[3px] shrink-0 rounded-full"
                         style={{ background: identity.accent }}
@@ -231,7 +236,7 @@ function StockTable({
                   </td>
 
                   <td
-                    className={`num px-4 py-3 text-end text-[15px] ${
+                    className={`n text-[15px] text-ink ${
                       moved === "up"
                         ? "settle-up"
                         : moved === "down"
@@ -242,16 +247,16 @@ function StockTable({
                     {fmtPrice(quote?.price)}
                   </td>
 
-                  <td className="px-4 py-3 text-end">
-                    <span className={`num text-[13px] ${directionClass(change)}`}>
-                      {fmtPercent(change)}
-                    </span>
-                    <span className="num block text-[10px] text-ink-ghost">
-                      {fmtChange(quote?.change)}
-                    </span>
+                  <td className="text-end">
+                    <Delta
+                      value={change}
+                      absolute={
+                        quote?.change != null ? fmtChange(quote.change) : undefined
+                      }
+                    />
                   </td>
 
-                  <td className="px-4 py-3">
+                  <td>
                     <Sparkline
                       points={row.trail}
                       direction={directionOf(change)}
@@ -259,10 +264,14 @@ function StockTable({
                     />
                   </td>
 
-                  <td className="px-4 py-3">
+                  <td>
                     {range === null ? (
                       <span className="num block text-end text-ink-ghost">—</span>
                     ) : (
+                      /* Where in today's range the last trade sat. A
+                         position on a line rather than two numbers: "near
+                         the high" is the reading, and a reader should not
+                         have to do the subtraction to get it. */
                       <div className="flex items-center justify-end gap-2">
                         <span className="num text-[10px] text-ink-ghost">
                           {fmtPrice(quote?.low)}
@@ -354,6 +363,18 @@ export function MarketDeck({
       green > 0.62 ? "#22c55e" : green < 0.38 ? "#ef4444" : "#94a3b8",
     );
   }, [quotes, rows]);
+
+  /* Put it back on the way out.
+     This writes to the document element, not to the page, and a client-side
+     navigation away from here left the value behind — so every page that
+     does not set its own tint carried the market's mood from whenever the
+     dashboard was last open, which on a red day meant a page about
+     terminology opening in alarm red. */
+  useEffect(() => {
+    return () => {
+      document.documentElement.style.removeProperty("--tint");
+    };
+  }, []);
 
   const open = market.state === "open";
   const streaming = feed === "live";

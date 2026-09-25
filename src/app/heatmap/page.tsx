@@ -87,7 +87,7 @@ export default async function HeatmapPage() {
   const advancing = moved.filter((tile) => (tile.changePercent ?? 0) > 0).length;
 
   return (
-    <Page tint="#4ea3c4" width="wide">
+    <Page tint="#06b6d4" width="wide">
       <Hero
         eyebrow="מפת השוק"
         title="מי זז, וכמה ממנו יש"

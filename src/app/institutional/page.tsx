@@ -73,7 +73,7 @@ export default async function InstitutionalPage() {
     .at(-1);
 
   return (
-    <Page tint="#3878b8">
+    <Page tint="#0a84ff">
       <Hero
         eyebrow="מעקב מוסדי"
         title="מי עוד קונה את זה"

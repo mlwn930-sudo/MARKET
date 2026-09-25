@@ -70,7 +70,7 @@ export default async function AiPage() {
   const aiSector = feed.sectors.find((sector) => sector.sector === "ai");
 
   return (
-    <Page tint="#7b6fd4">
+    <Page tint="#8b5cf6">
       <Hero
         eyebrow="שרשרת ערך"
         title="שלוש חוליות, שלוש חשיפות שונות"

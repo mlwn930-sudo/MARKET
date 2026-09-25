@@ -54,7 +54,7 @@ export function Gauge({
   display,
   bands = [],
   meaning,
-  accent = "var(--accent)",
+  accent = "var(--color-measure)",
   /** Drawn as a second, thinner needle — the level the value is judged
    *  against, such as WACC beneath ROIC. */
   reference,

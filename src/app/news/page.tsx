@@ -3,7 +3,16 @@ import { feedSignature, getLiveFeed } from "@/lib/live-news";
 import { ArticleCard } from "@/components/ArticleCard";
 import { FeaturedStory } from "@/components/FeaturedStory";
 import { NewsAutoRefresh } from "@/components/NewsAutoRefresh";
-import { Disclaimer, Hero, Page, Section, Stat, StatBar, StatCell } from "@/components/ui";
+import {
+  Disclaimer,
+  Empty,
+  Hero,
+  Page,
+  Section,
+  Stat,
+  StatBar,
+  StatCell,
+} from "@/components/ui";
 import { fmtRelative } from "@/lib/format";
 
 export const revalidate = 60;
@@ -73,7 +82,7 @@ export default async function NewsPage() {
     .map((article) => article.url);
 
   return (
-    <Page tint="#c9772a">
+    <Page tint="#ec4899">
       <Hero
         eyebrow="חדשות"
         title="מה קרה, ומה זה בכלל משנה"
@@ -104,16 +113,26 @@ export default async function NewsPage() {
       />
 
       {stale && (
-        <p className="surface mt-8 px-5 py-4 text-sm text-ink">
+        <p
+          className="surface mt-8 border-s-2 px-5 py-4 text-sm text-ink"
+          style={{ borderInlineStartColor: "var(--color-warning)" }}
+        >
           הפיד לא התרענן מעל שלוש שעות. ייתכן שתהליך הרענון האוטומטי נתקע.
         </p>
       )}
 
       {empty ? (
-        <p className="surface mt-10 px-5 py-5 text-sm text-ink-muted">
-          הפיד עדיין לא אוכלס. הרץ{" "}
-          <code className="num text-ink">npm run refresh:news</code>.
-        </p>
+        <div className="gap-section-tight">
+          <Empty
+            title="הפיד עדיין לא אוכלס"
+            reason="החדשות נמשכות בתהליך נפרד שרץ כל עשרים דקות. אם זו הפעלה ראשונה, הרצה אחת של npm run refresh:news תמלא אותו."
+            links={[
+              { href: "/brief", label: "התדריך של היום" },
+              { href: "/heatmap", label: "מה זז בשוק" },
+              { href: "/macro", label: "לוח המאקרו" },
+            ]}
+          />
+        </div>
       ) : (
         <>
           {/* ---- The lead ---- */}

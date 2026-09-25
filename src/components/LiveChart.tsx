@@ -55,6 +55,37 @@ export type ChartMarker = {
   label: string;
 };
 
+/**
+ * The palette the canvas draws with.
+ *
+ * Held here as literals rather than read from CSS because the chart is a
+ * canvas: it cannot resolve `var(--color-up)`, and a mismatch between what
+ * the chart paints and what the panel beside it paints is the fastest way
+ * to make one product look like two. These are the token values, and they
+ * move together with them.
+ */
+const PAINT = {
+  up: "#22c55e",
+  down: "#ef4444",
+  upWick: "rgba(34,197,94,0.75)",
+  downWick: "rgba(239,68,68,0.75)",
+  upVolume: "rgba(34,197,94,0.22)",
+  downVolume: "rgba(239,68,68,0.22)",
+  /* The grid is barely above the surface it sits on. A chart whose grid
+     competes with its own series is a chart nobody reads a level off. */
+  grid: "rgba(255,255,255,0.028)",
+  axis: "rgba(51,65,85,0.65)",
+  axisText: "#64748b",
+  /* Slate, not amber. The crosshair was inherited from a gold-accented
+     version of this site and was the only warm thing left on any screen —
+     and amber means "caveat" everywhere else here, which made a reader
+     hovering a bar look like a warning. */
+  crosshair: "rgba(148,163,184,0.55)",
+  crosshairLabel: "#1e293b",
+  data: "#06b6d4",
+  insight: "#a78bfa",
+} as const;
+
 const MA_STYLE: Record<number, { color: string; width: 1 | 2 }> = {
   20: { color: "#60a5fa", width: 1 },
   50: { color: "#f59e0b", width: 1 },
@@ -63,7 +94,7 @@ const MA_STYLE: Record<number, { color: string; width: 1 | 2 }> = {
 };
 
 const LEVEL_COLOR: Record<ChartLevel["kind"], string> = {
-  pivot: "#e9ecf1",
+  pivot: "#f8fafc",
   stop: "#ef4444",
   target: "#22c55e",
 };
@@ -196,37 +227,37 @@ export function LiveChart({
       height: height + extraPanes * 110,
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#8b94a3",
+        textColor: PAINT.axisText,
         fontFamily: "var(--font-plex-mono), ui-monospace, monospace",
         fontSize: 11,
         attributionLogo: false,
       },
       grid: {
-        vertLines: { color: "rgba(255,255,255,0.035)" },
-        horzLines: { color: "rgba(255,255,255,0.035)" },
+        vertLines: { color: PAINT.grid },
+        horzLines: { color: PAINT.grid },
       },
       rightPriceScale: {
-        borderColor: "rgba(255,255,255,0.07)",
-        scaleMargins: { top: 0.08, bottom: 0.26 },
+        borderColor: PAINT.axis,
+        scaleMargins: { top: 0.12, bottom: 0.26 },
       },
       timeScale: {
-        borderColor: "rgba(255,255,255,0.07)",
+        borderColor: PAINT.axis,
         timeVisible: intraday,
         secondsVisible: false,
       },
       crosshair: {
         mode: 0,
         vertLine: {
-          color: "rgba(217,176,74,0.6)",
+          color: PAINT.crosshair,
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#f59e0b",
+          labelBackgroundColor: PAINT.crosshairLabel,
         },
         horzLine: {
-          color: "rgba(217,176,74,0.6)",
+          color: PAINT.crosshair,
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#f59e0b",
+          labelBackgroundColor: PAINT.crosshairLabel,
         },
       },
       // A chart that traps a phone's vertical scroll is worse than no
@@ -240,13 +271,13 @@ export function LiveChart({
     });
 
     const candleSeries = instance.addSeries(CandlestickSeries, {
-      upColor: "#22c55e",
-      downColor: "#ef4444",
-      borderUpColor: "#22c55e",
-      borderDownColor: "#ef4444",
-      wickUpColor: "rgba(38,184,124,0.7)",
-      wickDownColor: "rgba(229,72,77,0.7)",
-      priceLineColor: "rgba(217,176,74,0.5)",
+      upColor: PAINT.up,
+      downColor: PAINT.down,
+      borderUpColor: PAINT.up,
+      borderDownColor: PAINT.down,
+      wickUpColor: PAINT.upWick,
+      wickDownColor: PAINT.downWick,
+      priceLineColor: "rgba(248,250,252,0.35)",
       priceLineStyle: LineStyle.Dotted,
     });
 
@@ -263,6 +294,11 @@ export function LiveChart({
     const volume = instance.addSeries(HistogramSeries, {
       priceFormat: { type: "volume" },
       priceScaleId: "volume",
+      // Without these the volume scale prints its last value as a filled
+      // red tag on the price axis — a nine-digit share count sitting under
+      // the last price, in the colour this site reserves for a fall.
+      lastValueVisible: false,
+      priceLineVisible: false,
     });
     instance
       .priceScale("volume")
@@ -272,8 +308,7 @@ export function LiveChart({
       candles.map((c) => ({
         time: toTime(c.date),
         value: c.volume,
-        color:
-          c.close >= c.open ? "rgba(38,184,124,0.28)" : "rgba(229,72,77,0.28)",
+        color: c.close >= c.open ? PAINT.upVolume : PAINT.downVolume,
       })),
     );
 
@@ -391,7 +426,10 @@ export function LiveChart({
           markers.map((marker) => ({
             time: toTime(marker.date),
             position: "belowBar" as const,
-            color: "#f59e0b",
+            // Cyan: these mark measured contractions, which is data. Amber
+            // on this site means a caveat, and a caveat under every low of
+            // a base would be reading the pattern as a warning.
+            color: PAINT.data,
             shape: "arrowUp" as const,
             text: marker.label,
           })),
@@ -489,80 +527,160 @@ export function LiveChart({
 
   if (initialCandles.length === 0) {
     return (
-      <div className="surface flex h-64 items-center justify-center text-[13px] text-ink-ghost">
-        אין היסטוריית מחירים זמינה לסימבול הזה.
+      <div className="surface flex h-64 flex-col items-center justify-center gap-2 px-6 text-center">
+        <p className="text-[13px] text-ink-muted">
+          אין היסטוריית מחירים זמינה ל-{symbol}.
+        </p>
+        <p className="caption max-w-sm">
+          הספק מחזיר סדרה ריקה לסימבול הזה — בדרך כלל מניה שנמחקה מהמסחר,
+          שינתה סימבול, או נסחרת בבורסה שהמקור אינו מכסה.
+        </p>
       </div>
     );
   }
 
+  /**
+   * The bar the legend describes: the one under the crosshair, or the last
+   * one when the pointer is elsewhere.
+   *
+   * Always populated, which is the point. The previous version showed a
+   * hint line until the reader hovered, so the most-read numbers on the
+   * page — today's open, high and low — were only available by pointing at
+   * something, and not available at all on a phone.
+   */
+  const latest = candles[candles.length - 1];
+  const latestChange =
+    latest.open > 0 ? ((latest.close - latest.open) / latest.open) * 100 : 0;
+
+  const legend: Hover = hover ?? {
+    date: HEBREW_DATE.format(
+      new Date(
+        latest.date.length === 10 ? `${latest.date}T00:00:00Z` : latest.date,
+      ),
+    ),
+    price: money(latest.close),
+    change: `${latestChange >= 0 ? "+" : "−"}${Math.abs(latestChange).toFixed(2)}%`,
+    direction: latestChange > 0 ? "up" : latestChange < 0 ? "down" : "flat",
+    open: money(latest.open),
+    high: money(latest.high),
+    low: money(latest.low),
+    volume: latest.volume.toLocaleString("en-US", {
+      notation: "compact",
+      maximumFractionDigits: 1,
+    }),
+  };
+
   return (
-    <figure className="surface overflow-hidden p-4">
-      <ChartControls
-        range={range}
-        onRange={load}
-        indicators={indicators}
-        onToggle={toggle}
-        loading={loading}
-        note={
-          intraday
-            ? "רמות הניתוח מוצגות בטווחים ארוכים בלבד"
-            : `${candles.length} נרות`
-        }
-      />
+    <figure className="surface overflow-hidden">
+      <div className="border-b border-line px-4 pt-3">
+        <ChartControls
+          range={range}
+          onRange={load}
+          indicators={indicators}
+          onToggle={toggle}
+          loading={loading}
+          note={
+            intraday
+              ? "רמות הניתוח מוצגות בטווחים ארוכים בלבד"
+              : `${candles.length} נרות`
+          }
+        />
+      </div>
 
-      {/* The read-out. Fixed height so the chart does not jump as the
-          crosshair enters and leaves. */}
-      <div className="mb-2 flex h-9 flex-wrap items-center gap-x-5 gap-y-1 px-1 text-[11px]">
-        {hover ? (
-          <>
-            <span className="text-ink-muted">{hover.date}</span>
-            <span className="num text-ink">
-              {hover.price}
-              <span
-                className={`ms-2 ${
-                  hover.direction === "up"
-                    ? "text-up"
-                    : hover.direction === "down"
-                      ? "text-down"
-                      : "text-ink-faint"
-                }`}
-              >
-                {hover.change}
-              </span>
-            </span>
-            <span className="num hidden text-ink-ghost sm:inline">
-              פתיחה {hover.open} · גבוה {hover.high} · נמוך {hover.low}
-            </span>
-            <span className="num hidden text-ink-ghost md:inline">
-              מחזור {hover.volume}
-            </span>
-          </>
-        ) : (
-          <span className="text-ink-ghost">
-            ריחוף לנתוני נר · גלגלת לזום · גרירה להזזה
+      <div className="relative">
+        {/* The legend, over the chart rather than beside it.
+            This is where a terminal puts it, and the reason is not
+            convention: a read-out in its own row costs a strip of vertical
+            space on every screen and makes the eye leave the price action
+            to read a price. Absolute and pointer-transparent, so it never
+            takes a drag meant for the chart. */}
+        {/* `dir="ltr"` and a wide physical right padding are both load
+            bearing. The canvas draws its price scale on the physical
+            right and its time axis left to right, and a legend laid out
+            RTL starts exactly on top of that price scale — so the readout
+            follows the chart's own orientation, and reserves the axis its
+            column. */}
+        <div
+          dir="ltr"
+          className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-wrap items-baseline gap-x-4 gap-y-1 px-4 pr-20 pt-3 text-[11px]"
+        >
+          <span className="num text-[13px] text-ink">{legend.price}</span>
+          <span
+            className={
+              legend.direction === "up"
+                ? "num text-up"
+                : legend.direction === "down"
+                  ? "num text-down"
+                  : "num text-ink-faint"
+            }
+          >
+            {legend.change}
           </span>
-        )}
+          <span className="text-ink-faint">{legend.date}</span>
+          <span className="num hidden text-ink-ghost sm:inline">
+            O {legend.open} · H {legend.high} · L {legend.low}
+          </span>
+          <span className="num hidden text-ink-ghost md:inline">
+            Vol {legend.volume}
+          </span>
 
-        {indicators.has("ma") && (
-          <span className="ms-auto hidden items-center gap-3 lg:flex">
-            {([20, 50, 150, 200] as const).map((period) => (
-              <span key={period} className="flex items-center gap-1.5">
-                <span
-                  className="inline-block h-0.5 w-3.5 rounded-full"
-                  style={{ background: MA_STYLE[period].color }}
-                  aria-hidden="true"
-                />
-                <span className="num text-ink-ghost">MA{period}</span>
-              </span>
-            ))}
-          </span>
+          {indicators.has("ma") && (
+            <span className="hidden items-center gap-3 lg:flex">
+              {([20, 50, 150, 200] as const).map((period) => (
+                <span key={period} className="flex items-center gap-1.5">
+                  <span
+                    className="inline-block h-0.5 w-3.5 rounded-full"
+                    style={{ background: MA_STYLE[period].color }}
+                    aria-hidden="true"
+                  />
+                  <span className="num text-ink-ghost">MA{period}</span>
+                </span>
+              ))}
+            </span>
+          )}
+        </div>
+
+        {/* The chart is a canvas and carries no text for a screen reader.
+            The figure is labelled, and every number it draws is repeated in
+            the analysis panels below — which is the accessible path to it. */}
+        <div ref={container} role="img" aria-label={label} className="w-full" />
+
+        {/* A range switch leaves the previous chart in place and veils it,
+            rather than emptying the frame. The reader keeps the shape they
+            were looking at until the new one is ready to replace it. */}
+        {loading && (
+          <div
+            className="absolute inset-0 z-20 grid place-items-center bg-base/45 backdrop-blur-[1px]"
+            aria-hidden="true"
+          >
+            <span className="badge">טוען טווח…</span>
+          </div>
         )}
       </div>
 
-      {/* The chart is a canvas and carries no text for a screen reader. The
-          figure is labelled, and every number it draws is repeated in the
-          analysis panels below — which is the accessible path to it. */}
-      <div ref={container} role="img" aria-label={label} className="w-full" />
+      <figcaption className="caption flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-line px-4 py-2.5">
+        <span>ריחוף לנתוני נר · גלגלת לזום · גרירה להזזה</span>
+        {levels.length > 0 && !intraday && (
+          <span className="ms-auto hidden items-center gap-3 sm:flex">
+            {(["pivot", "stop", "target"] as const)
+              .filter((kind) => levels.some((level) => level.kind === kind))
+              .map((kind) => (
+                <span key={kind} className="flex items-center gap-1.5">
+                  <span
+                    className="inline-block h-0.5 w-3.5 rounded-full"
+                    style={{ background: LEVEL_COLOR[kind] }}
+                    aria-hidden="true"
+                  />
+                  {kind === "pivot"
+                    ? "רמת ייחוס"
+                    : kind === "stop"
+                      ? "עצירה"
+                      : "יעדים"}
+                </span>
+              ))}
+          </span>
+        )}
+      </figcaption>
     </figure>
   );
 }

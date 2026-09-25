@@ -178,7 +178,7 @@ export function TechnicalPanel({
                       className="h-full rounded-full"
                       style={{
                         width: `${deepest > 0 ? (contraction.depthPercent / deepest) * 100 : 0}%`,
-                        background: "var(--accent)",
+                        background: "var(--color-measure)",
                         opacity: 0.35 + (i / Math.max(1, vcp.contractions.length)) * 0.5,
                       }}
                     />

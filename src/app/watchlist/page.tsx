@@ -17,7 +17,7 @@ export const metadata = {
  */
 export default function WatchlistPage() {
   return (
-    <Page tint="#4ea3c4" width="wide">
+    <Page tint="#0a84ff" width="wide">
       <Hero
         eyebrow="מעקב"
         title="מה השתנה בחברות שאתה עוקב אחריהן"

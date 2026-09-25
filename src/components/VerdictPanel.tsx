@@ -70,69 +70,71 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
     verdict.evaluated > 0 ? verdict.passed / verdict.evaluated : 0;
 
   return (
-    <section className="enter">
-      <div className="surface overflow-hidden">
-        <div
-          className="h-1 w-full"
-          style={{ background: "var(--accent)" }}
-          aria-hidden="true"
-        />
+    /* One surface, divided — not five stacked panels.
+       The score, the reasons, the checklist and the falsification are one
+       argument read top to bottom, and giving each of them its own rounded
+       card was what made a single verdict look like five findings that
+       happened to be printed near each other. */
+    <section className="enter surface overflow-hidden">
+      {/* No coloured bar across the top. It was drawn in the page tint,
+          which on a company page is that company's brand colour — a band
+          of NVIDIA green over "10 of 11 passed" is an endorsement, and
+          this panel's whole design is built to not give one. The border
+          and the spacing carry the panel on their own. */}
 
-        <div className="p-6">
-          <p className="text-[11px] tracking-wide text-ink-faint">
-            האם החברה עוברת את הבדיקות
-          </p>
+      {/* ---- The score ---- */}
+      <div className="p-6">
+        <p className="eyebrow">האם החברה עוברת את הבדיקות</p>
 
-          <div className="mt-3 flex flex-wrap items-end gap-x-6 gap-y-3">
-            <div className="flex items-baseline gap-1">
-              <span className="figure-xl">{verdict.passed}</span>
-              <span className="num text-2xl text-ink-faint">
-                /{verdict.evaluated}
-              </span>
-            </div>
-
-            <div className="pb-1">
-              <div className="badge inline-block rounded-full px-3 py-1 text-xs">
-                {STANCE_LABEL[verdict.stance]}
-              </div>
-              <p className="num mt-1.5 text-[11px] text-ink-faint">
-                בדיקות ליבה: {verdict.corePassed}/{verdict.coreEvaluated}
-              </p>
-            </div>
+        <div className="mt-4 flex flex-wrap items-end gap-x-7 gap-y-3">
+          <div className="flex items-baseline gap-1">
+            <span className="figure-xl text-ink">{verdict.passed}</span>
+            <span className="num text-2xl text-ink-ghost">
+              /{verdict.evaluated}
+            </span>
           </div>
 
-          {/* The score as a bar, so the proportion registers before the
-              numbers are read. */}
-          <div
-            className="mt-4 h-1.5 overflow-hidden rounded-full bg-overlay"
-            role="img"
-            aria-label={`${verdict.passed} מתוך ${verdict.evaluated} בדיקות עברו`}
-          >
-            <div
-              className="h-full rounded-full transition-[width] duration-700"
-              style={{ width: `${share * 100}%`, background: "var(--accent)" }}
-            />
+          <div className="pb-1.5">
+            <div className="badge inline-block rounded-full px-3 py-1 text-xs">
+              {STANCE_LABEL[verdict.stance]}
+            </div>
+            <p className="num mt-2 text-[11px] text-ink-faint">
+              בדיקות ליבה: {verdict.corePassed}/{verdict.coreEvaluated}
+            </p>
           </div>
-
-          <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-ink">
-            {verdict.headline}
-          </p>
         </div>
+
+        {/* The score as a bar, so the proportion registers before the
+            numbers are read. */}
+        <div
+          className="mt-5 h-1.5 overflow-hidden rounded-full bg-overlay"
+          role="img"
+          aria-label={`${verdict.passed} מתוך ${verdict.evaluated} בדיקות עברו`}
+        >
+          <div
+            className="h-full rounded-full transition-[width] duration-700"
+            style={{ width: `${share * 100}%`, background: "var(--color-measure)" }}
+          />
+        </div>
+
+        <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-ink">
+          {verdict.headline}
+        </p>
       </div>
 
       {/* ---- Reasons and blockers, side by side ---- */}
-      <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <div className="surface p-5">
-          <h3 className="text-sm">מה עובד כאן</h3>
+      <div className="grid border-t border-line lg:grid-cols-2">
+        <div className="border-b border-line p-6 lg:border-b-0 lg:border-e">
+          <h3 className="eyebrow">מה עובד כאן</h3>
           {verdict.reasonsFor.length === 0 ? (
-            <p className="mt-2 text-[13px] text-ink-muted">
+            <p className="mt-3 text-[13px] text-ink-faint">
               אף אחת מבדיקות הליבה לא עברה.
             </p>
           ) : (
-            <ul className="mt-3 space-y-2">
-              {verdict.reasonsFor.map((reason) => (
+            <ul className="mt-3.5 space-y-2.5">
+              {verdict.reasonsFor.map((reason, index) => (
                 <li
-                  key={reason}
+                  key={`${index}-${reason}`}
                   className="flex gap-2.5 text-[13px] leading-relaxed text-ink-muted"
                 >
                   <span
@@ -148,17 +150,17 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
           )}
         </div>
 
-        <div className="surface border-s-2 border-accent p-5">
-          <h3 className="text-sm">מה עוצר</h3>
+        <div className="p-6">
+          <h3 className="eyebrow">מה עוצר</h3>
           {verdict.blockers.length === 0 ? (
-            <p className="mt-2 text-[13px] text-ink-muted">
+            <p className="mt-3 text-[13px] text-ink-faint">
               אף בדיקה לא נכשלה.
             </p>
           ) : (
-            <ul className="mt-3 space-y-2">
-              {verdict.blockers.map((blocker) => (
+            <ul className="mt-3.5 space-y-2.5">
+              {verdict.blockers.map((blocker, index) => (
                 <li
-                  key={blocker}
+                  key={`${index}-${blocker}`}
                   className="flex gap-2.5 text-[13px] leading-relaxed text-ink"
                 >
                   <span
@@ -176,12 +178,12 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
       </div>
 
       {/* ---- The full checklist ---- */}
-      <div className="surface mt-4 p-5">
-        <h3 className="text-sm">כל הבדיקות</h3>
-        <p className="mt-1 text-[11px] text-ink-faint">
+      <div className="border-t border-line p-6">
+        <h3 className="eyebrow">כל הבדיקות</h3>
+        <p className="mt-1.5 text-[11px] text-ink-faint">
           לחיצה על שורה מסבירה למה השאלה הזו נמצאת ברשימה.
         </p>
-        <div className="mt-2">
+        <div className="mt-3">
           {verdict.checks.map((check) => (
             <CheckRow
               key={check.key}
@@ -196,12 +198,12 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
       </div>
 
       {/* ---- What would make this wrong ---- */}
-      <div className="surface mt-4 p-5">
-        <h3 className="text-sm">מה היה הופך את הקריאה הזו לשגויה</h3>
-        <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">
+      <div className="border-t border-line bg-base/40 p-6">
+        <h3 className="eyebrow">מה היה הופך את הקריאה הזו לשגויה</h3>
+        <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-ink-muted">
           {verdict.falsification}
         </p>
-        <p className="mt-4 border-t border-line pt-3 text-[11px] leading-relaxed text-ink-faint">
+        <p className="mt-4 border-t border-line pt-3.5 text-[11px] leading-relaxed text-ink-ghost">
           {verdict.caveat}
         </p>
       </div>

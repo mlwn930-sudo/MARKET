@@ -154,7 +154,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                   className="h-full rounded-full"
                   style={{
                     width: `${barWidth(roicPercent)}%`,
-                    background: "var(--accent)",
+                    background: "var(--color-measure)",
                   }}
                 />
               </div>
@@ -318,7 +318,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                       className="h-full rounded-full"
                       style={{
                         width: `${Math.min(row.share, 100)}%`,
-                        background: "var(--accent)",
+                        background: "var(--color-measure)",
                         opacity: 0.7,
                       }}
                     />

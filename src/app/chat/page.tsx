@@ -28,7 +28,7 @@ export default async function ChatPage({
   const { q } = await searchParams;
 
   return (
-    <Page tint="#7b6fd4" width="read">
+    <Page tint="#8b5cf6" width="read">
       <Hero
         eyebrow="שאלות"
         title="שאל על מה שהאתר כבר יודע"
