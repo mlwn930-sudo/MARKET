@@ -46,6 +46,8 @@ const PAGES: Item[] = [
   { id: "p-watch", group: "עמודים", label: "מעקב", hint: "מה השתנה מאז הביקור הקודם", href: "/watchlist", keywords: "watchlist" },
   { id: "p-portfolio", group: "עמודים", label: "בניית תיק", hint: "במה התיק מרוכז", href: "/portfolio", keywords: "portfolio risk תיק" },
   { id: "p-israel", group: "עמודים", label: "הבורסה בתל אביב", hint: "ת״א 35, ת״א 125 ומניות מובילות", href: "/israel", keywords: "tase israel ישראל" },
+  { id: "p-sectors", group: "עמודים", label: "סקטורים", hint: "תשעה סקטורים לפי תנועה וחציונים", href: "/sectors", keywords: "sectors sector" },
+  { id: "p-macro", group: "עמודים", label: "מאקרו", hint: "ריבית, תנודתיות, סחורות ומטבעות", href: "/macro", keywords: "macro rates vix" },
   { id: "p-heatmap", group: "עמודים", label: "מפת השוק", hint: "48 חברות לפי סקטור", href: "/heatmap", keywords: "heatmap map" },
   { id: "p-news", group: "עמודים", label: "חדשות", hint: "כל כתבה בשלוש עדשות", href: "/news", keywords: "news" },
   { id: "p-chat", group: "עמודים", label: "שאלות", hint: "צ׳אט על נתוני האתר", href: "/chat", keywords: "chat ai שאלות" },
@@ -79,8 +81,8 @@ const SECTORS: Item[] = (
   id: `s-${key}`,
   group: "סקטורים" as const,
   label,
-  hint: "לסורק ההזדמנויות",
-  href: `/opportunities#${key}`,
+  hint: "לעמוד הסקטור",
+  href: `/sectors/${key}`,
   keywords: key,
 }));
 

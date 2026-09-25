@@ -1,6 +1,9 @@
 import { unstable_cache } from "next/cache";
 import { getFundamentalsFile } from "@/lib/fundamentals-store";
-import { getQuotes } from "@/lib/sources/finnhub";
+import {
+  getBoardQuotes,
+  type BoardQuote,
+} from "@/lib/sources/board-quotes";
 import { SECTOR_LABELS, type SectorKey } from "@/lib/universe";
 import {
   Heatmap,
@@ -32,7 +35,7 @@ const loadMap = unstable_cache(
   async (): Promise<HeatSector[]> => {
     const { companies } = await getFundamentalsFile();
     const tickers = companies.map((company) => company.ticker);
-    const quotes = await getQuotes(tickers).catch(() => []);
+    const quotes = await getBoardQuotes(tickers).catch((): Record<string, BoardQuote> => ({}));
 
     const bySector = new Map<string, HeatSector>();
 
@@ -50,7 +53,7 @@ const loadMap = unstable_cache(
         ticker: company.ticker,
         name: company.name,
         marketCap: company.marketCap,
-        changePercent: quotes[index]?.changePercent ?? null,
+        changePercent: quotes[company.ticker]?.changePercent ?? null,
       });
 
       bySector.set(key, sector);

@@ -40,6 +40,8 @@ const GROUPS: { title: string; items: Entry[] }[] = [
     title: "מחקר",
     items: [
       { href: "/opportunities", label: "הזדמנויות" },
+      { href: "/sectors", label: "סקטורים" },
+      { href: "/macro", label: "מאקרו" },
       { href: "/compare", label: "השוואה" },
       { href: "/institutional", label: "מוסדיים" },
       { href: "/ai", label: "שרשרת ה-AI" },
