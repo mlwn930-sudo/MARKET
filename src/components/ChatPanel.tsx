@@ -68,14 +68,32 @@ function Bubble({ message }: { message: Message }) {
             message.failed ? "text-ink-faint" : isUser ? "text-ink" : "text-ink-muted"
           }`}
         >
-          {clean(message.text)
+          {/* The answer arrives with named sections — a short answer, then
+              the mechanism, then what the price implies. Rendering them as
+              one block of prose would waste the structure the prompt works
+              hard to produce, so a line that is only a heading becomes a
+              heading. */}
+          {message.text
             .split("\n")
             .filter((line) => line.trim().length > 0)
-            .map((line, i) => (
-              <p key={i} dir="auto">
-                {line}
-              </p>
-            ))}
+            .map((line, i) => {
+              const heading = line.trim().match(/^\*\*(.+?)\*\*:?$/);
+
+              if (heading) {
+                return (
+                  <div key={i} className="flex items-center gap-2 pt-2 first:pt-0">
+                    <span className="section-mark" aria-hidden="true" />
+                    <span className="eyebrow">{heading[1]}</span>
+                  </div>
+                );
+              }
+
+              return (
+                <p key={i} dir="auto">
+                  {clean(line)}
+                </p>
+              );
+            })}
           {message.role === "model" && message.text.length === 0 && (
             <p className="text-ink-faint">קורא את הנתונים…</p>
           )}

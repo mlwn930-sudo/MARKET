@@ -5,6 +5,7 @@ import {
   RESEARCH_PLAN_SYSTEM,
   RESEARCH_SECTION_SYSTEM,
   RESEARCH_SYNTHESIS_SYSTEM,
+  RESEARCH_CONTRARIAN_SYSTEM,
 } from "@/lib/analysis/prompts";
 import {
   GEMINI_FAILURE_TEXT,
@@ -52,6 +53,14 @@ type SectionAnswer = {
   gaps?: string[];
   confidence?: "high" | "medium" | "low";
   confidenceWhy?: string;
+};
+
+type Contrarian = {
+  strongestCounter?: string;
+  fragileAssumption?: string;
+  alreadyPriced?: string;
+  contradicting?: string[];
+  whatWouldProveYouWrong?: string;
 };
 
 type Synthesis = {
@@ -220,6 +229,40 @@ export async function POST(request: Request) {
           whatWouldChangeIt: strings(synthesis.whatWouldChangeIt, 4),
           gaps: strings(synthesis.gaps, 4),
         });
+
+        /* ---- The attack ----
+
+           Runs last, is told what the synthesis concluded, and is asked to
+           break it rather than to balance it. Kept as its own call and its
+           own section: merged into the synthesis, a model softens its own
+           conclusion into "interesting, but there are risks", which is
+           what every analysis says and no analysis means. */
+        if (synthesis.answer) {
+          send({
+            type: "status",
+            step: "contrarian",
+            label: "תוקף את המסקנה",
+          });
+
+          const contrarian = await generateJson<Contrarian>({
+            system: RESEARCH_CONTRARIAN_SYSTEM,
+            prompt:
+              `המסקנה שנוסחה:\n${synthesis.answer}\n\n---\n\nהנתונים שעליהם היא נשענת:\n\n${evidence.text}`,
+            temperature: 0.45,
+            maxOutputTokens: 900,
+          }).catch(() => null);
+
+          if (contrarian?.strongestCounter) {
+            send({
+              type: "contrarian",
+              strongestCounter: contrarian.strongestCounter,
+              fragileAssumption: contrarian.fragileAssumption ?? "",
+              alreadyPriced: contrarian.alreadyPriced ?? "",
+              contradicting: strings(contrarian.contradicting, 4),
+              whatWouldProveYouWrong: contrarian.whatWouldProveYouWrong ?? "",
+            });
+          }
+        }
 
         send({ type: "done" });
       } catch (error) {

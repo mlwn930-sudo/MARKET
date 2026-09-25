@@ -20,12 +20,18 @@
  */
 
 import { getCompanyIntelligence } from "@/lib/agents";
-import { getCompanyAnalysis } from "@/lib/company-analysis";
+import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
 import { getFundamentalsFile, getSectorContext } from "@/lib/fundamentals-store";
 import { getInstitutional } from "@/lib/institutional-store";
 import { getArticlesForTicker } from "@/lib/news-store";
 import { getLiveFeed } from "@/lib/live-news";
-import { getQuote, getQuotes } from "@/lib/sources/finnhub";
+import {
+  getEarningsSurprises,
+  getQuote,
+  getQuotes,
+} from "@/lib/sources/finnhub";
+import { buildOutlook } from "@/lib/analysis/outlook";
+import { buildExpectationGap } from "@/lib/analysis/expectation-gap";
 import { marketStatus, describeStatus } from "@/lib/market-hours";
 import { fmtCompact, fmtMetric, fmtPercent, fmtPrice } from "@/lib/format";
 import { STANCE_LABELS, CONFIDENCE_LABELS } from "@/lib/agents/types";
@@ -96,12 +102,13 @@ async function holdersOf(companyName: string): Promise<string[]> {
 export async function companyEvidence(ticker: string): Promise<Evidence | null> {
   const symbol = ticker.toUpperCase();
 
-  const [analysis, intelligence, sector, quote, articles] = await Promise.all([
+  const [analysis, intelligence, sector, quote, articles, technical] = await Promise.all([
     getCompanyAnalysis(symbol),
     getCompanyIntelligence(symbol).catch(() => null),
     getSectorContext(symbol),
     getQuote(symbol).catch(() => null),
     getArticlesForTicker(symbol, 5).catch(() => []),
+    getTechnicalRead(symbol).catch(() => null),
   ]);
 
   if (!analysis) return null;
@@ -225,6 +232,83 @@ export async function companyEvidence(ticker: string): Promise<Evidence | null> 
     if (gaps.length > 0) {
       parts.push("\n### מה האתר לא יכול לחשב על החברה הזאת");
       for (const gap of gaps.slice(0, 8)) parts.push(`- ${gap}`);
+    }
+  }
+
+  /* ---- The forward half ----
+
+     Without this block the model receives only what already happened, and
+     an answer built on it can never get past "the margin is negative". The
+     thesis, the scenarios, the premium the price carries and the events
+     that are not in any filing yet are what turn a metric recital into a
+     view — and every one of them is computed here, not invented there. */
+  if (intelligence) {
+    const outlook = buildOutlook({
+      ticker: symbol,
+      companyName: name,
+      price: quote?.price ?? null,
+      intelligence,
+      fundamentals: analysis.fundamentals,
+      sector,
+      technical,
+    });
+
+    if (outlook.worksIf.length > 0) {
+      parts.push("\n### התזה עובדת אם");
+      for (const item of outlook.worksIf) parts.push(`- ${item}`);
+    }
+    if (outlook.breaksIf.length > 0) {
+      parts.push("\n### התזה נשברת אם");
+      for (const item of outlook.breaksIf) parts.push(`- ${item}`);
+    }
+
+    if (outlook.knownEvents.length > 0) {
+      parts.push("\n### אירועים ידועים שטרם נכנסו לדוחות (הוזנו ידנית, עם מקור)");
+      for (const event of outlook.knownEvents) {
+        parts.push(
+          `- ${event.title}${event.window ? ` (${event.window})` : " (החברה טרם מסרה מועד)"}: ${event.why}\n  מה לבדוק: ${event.watch}\n  מקור: ${event.source}`,
+        );
+      }
+    }
+
+    if (outlook.scenarios.length > 0) {
+      parts.push("\n### תרחישים מכניים לשנה קדימה (חישוב, לא תחזית)");
+      for (const scenario of outlook.scenarios) {
+        parts.push(
+          `- ${scenario.label}: מחיר משתמע ${scenario.impliedPrice?.toFixed(2) ?? "—"} (${fmtPercent(scenario.impliedReturn)}). הנחות: ${scenario.assumptions.join(" · ")}`,
+        );
+      }
+    }
+  }
+
+  /* ---- What the price is already saying ---- */
+  const surprises = await getEarningsSurprises(symbol).catch(() => []);
+  const gap = buildExpectationGap({
+    companyName: name,
+    fundamentals: analysis.fundamentals,
+    sector,
+    surprises,
+  });
+
+  if (gap) {
+    parts.push("\n### פער הציפיות");
+    parts.push(line("שורה תחתונה", gap.headline));
+    for (const side of gap.market) {
+      parts.push(line(`המחיר מגלם — ${side.label}`, `${side.figure}. ${side.body}`));
+    }
+    for (const side of gap.delivered) {
+      parts.push(line(`הדוחות מראים — ${side.label}`, `${side.figure}. ${side.body}`));
+    }
+    if (gap.record) {
+      parts.push(
+        line(
+          "מול תחזיות אנליסטים",
+          `${gap.record.beats} הכאות ו-${gap.record.misses} פספוסים ב-${gap.record.quarters} רבעונים. ${gap.record.note}`,
+        ),
+      );
+    }
+    if (gap.wouldClose.length > 0) {
+      parts.push(line("מה היה סוגר את הפער", gap.wouldClose.join(" · ")));
     }
   }
 

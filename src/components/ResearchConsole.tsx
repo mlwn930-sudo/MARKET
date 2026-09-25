@@ -37,6 +37,14 @@ type Synthesis = {
   gaps: string[];
 };
 
+type Contrarian = {
+  strongestCounter: string;
+  fragileAssumption: string;
+  alreadyPriced: string;
+  contradicting: string[];
+  whatWouldProveYouWrong: string;
+};
+
 type Report = {
   ticker: string;
   question: string;
@@ -44,6 +52,7 @@ type Report = {
   plan: { id: string; question: string; why: string }[];
   sections: Section[];
   synthesis: Synthesis | null;
+  contrarian: Contrarian | null;
   finishedAt: string | null;
 };
 
@@ -56,6 +65,7 @@ const EMPTY: Report = {
   plan: [],
   sections: [],
   synthesis: null,
+  contrarian: null,
   finishedAt: null,
 };
 
@@ -159,6 +169,9 @@ export function ResearchConsole({
               break;
             case "synthesis":
               update({ synthesis: event as unknown as Synthesis });
+              break;
+            case "contrarian":
+              update({ contrarian: event as unknown as Contrarian });
               break;
             case "done":
               update({ finishedAt: new Date().toISOString() });
@@ -403,6 +416,71 @@ export function ResearchConsole({
                 ))}
               </ul>
             </div>
+          )}
+        </section>
+      )}
+
+      {/* The attack on the conclusion above it */}
+      {report.contrarian && (
+        <section
+          className="surface p-5"
+          style={{ borderColor: "color-mix(in oklab, var(--color-insight) 35%, transparent)" }}
+        >
+          <div className="mb-3 flex items-center gap-2.5">
+            <span
+              className="block h-[2px] w-7 rounded-full"
+              style={{ background: "var(--color-insight)" }}
+              aria-hidden="true"
+            />
+            <span className="eyebrow">הצד השני</span>
+          </div>
+
+          <p className="text-[14px] leading-relaxed text-ink">
+            {report.contrarian.strongestCounter}
+          </p>
+
+          <dl className="mt-4 space-y-3 border-t border-line pt-4">
+            {[
+              {
+                label: "ההנחה השברירית ביותר",
+                body: report.contrarian.fragileAssumption,
+              },
+              {
+                label: "מה כנראה כבר מתומחר",
+                body: report.contrarian.alreadyPriced,
+              },
+              {
+                label: "מה היה מפריך דווקא את ההתנגדות הזאת",
+                body: report.contrarian.whatWouldProveYouWrong,
+              },
+            ]
+              .filter((row) => row.body)
+              .map((row) => (
+                <div key={row.label}>
+                  <dt className="text-[11px] text-ink-ghost">{row.label}</dt>
+                  <dd className="mt-0.5 text-[13px] leading-relaxed text-ink-muted">
+                    {row.body}
+                  </dd>
+                </div>
+              ))}
+          </dl>
+
+          {report.contrarian.contradicting.length > 0 ? (
+            <div className="mt-4 border-t border-line pt-4">
+              <h4 className="eyebrow mb-2">ראיות בנתונים שסותרות את המסקנה</h4>
+              <ul className="space-y-1.5">
+                {report.contrarian.contradicting.map((item, i) => (
+                  <li key={i} className="text-[12px] leading-relaxed text-ink-faint">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p className="mt-4 border-t border-line pt-4 text-[12px] leading-relaxed text-ink-faint">
+              לא נמצאה בנתונים ראיה שסותרת את המסקנה. זה ממצא בפני עצמו — הוא
+              אומר שהמסקנה לא נתקלת בהתנגדות בתוך מה שנמדד, ולא שהיא נכונה.
+            </p>
           )}
         </section>
       )}
