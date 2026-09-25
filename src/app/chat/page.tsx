@@ -19,8 +19,13 @@ export const metadata = {
  * to believe the numbers in it. Saying where they come from, before the
  * first question, is what makes the feature usable at all.
  */
-export default function ChatPage() {
+export default async function ChatPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
   const enabled = hasGeminiKey();
+  const { q } = await searchParams;
 
   return (
     <Page tint="#7b6fd4" width="read">
@@ -50,7 +55,7 @@ export default function ChatPage() {
         title="מה תרצה לדעת"
         description="שאלה על חברה שאינה ביקום של האתר תעבוד גם — כל עוד היא מגישה דוחות ל-SEC."
       >
-        <ChatPanel enabled={enabled} />
+        <ChatPanel enabled={enabled} initialQuestion={q?.slice(0, 500)} />
       </Section>
 
       <Disclaimer extra="התשובות נכתבות על ידי מודל שפה שקורא נתונים שנאספו כאן. הוא אינו מדרג, אינו ממליץ ואינו מתחזה לאנליסט." />

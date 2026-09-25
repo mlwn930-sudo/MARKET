@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { RefreshButton } from "./RefreshButton";
+import { COMMAND_EVENT } from "./CommandCenter";
 
 /**
  * The bar.
@@ -52,62 +53,33 @@ const MORE = [
   { href: "/launch/ttwo", label: "GTA VI" },
 ];
 
+/**
+ * The search control.
+ *
+ * A button rather than a field, because the real search is the command
+ * palette: one place that resolves a symbol, a company name, a page, a
+ * sector or a whole question. A second input in the bar that only knew
+ * how to handle tickers would be the slower half of the same feature.
+ */
 function Search() {
-  const router = useRouter();
-  const [value, setValue] = useState("");
-  const input = useRef<HTMLInputElement>(null);
-
-  // A slash focuses the field, the way every terminal does it — but not
-  // while the reader is typing into something else.
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement | null;
-      const typing =
-        target?.tagName === "INPUT" || target?.tagName === "TEXTAREA";
-      if (event.key === "/" && !typing) {
-        event.preventDefault();
-        input.current?.focus();
-      }
-      if (event.key === "Escape") input.current?.blur();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        const symbol = value.trim().toUpperCase();
-        if (!/^[A-Z.\-]{1,10}$/.test(symbol)) return;
-        setValue("");
-        input.current?.blur();
-        router.push(`/company/${symbol}`);
-      }}
-      role="search"
-      className="relative"
+    <button
+      type="button"
+      onClick={() =>
+        window.dispatchEvent(new CustomEvent(COMMAND_EVENT))
+      }
+      className="flex items-center gap-2 rounded-md border border-line bg-surface px-2.5 py-1.5 text-[12px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink-muted"
+      aria-label="חיפוש ופקודות"
     >
-      <label htmlFor="nav-search" className="sr-only">
-        חיפוש חברה לפי סימבול
-      </label>
-      <input
-        id="nav-search"
-        ref={input}
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-        placeholder="חיפוש סימבול"
-        autoComplete="off"
-        spellCheck={false}
-        className="num w-28 rounded-md border border-line bg-surface py-1.5 pe-7 ps-2.5 text-xs text-ink placeholder:font-sans placeholder:text-ink-faint focus:w-40 focus:border-line-strong focus:outline-none sm:w-36 sm:focus:w-48"
-        style={{ transition: "width 0.18s ease, border-color 0.18s ease" }}
-      />
-      <kbd
-        className="pointer-events-none absolute end-2 top-1/2 -translate-y-1/2 text-[10px] text-ink-ghost"
-        aria-hidden="true"
-      >
-        /
+      <svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true">
+        <circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M11 11l3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      </svg>
+      <span className="hidden sm:inline">חיפוש</span>
+      <kbd className="num hidden rounded border border-line px-1 text-[10px] text-ink-ghost sm:inline">
+        ⌘K
       </kbd>
-    </form>
+    </button>
   );
 }
 

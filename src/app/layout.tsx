@@ -3,6 +3,7 @@ import { Heebo, Frank_Ruhl_Libre, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
+import { CommandCenter } from "@/components/CommandCenter";
 
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
@@ -51,6 +52,10 @@ export default function RootLayout({
             without either layer knowing what is on it. */}
         <div className="backdrop" aria-hidden="true" />
         <div className="grain" aria-hidden="true" />
+
+        {/* Global, so ⌘K works from every page including a company page
+            deep in a scroll. Renders nothing until it is opened. */}
+        <CommandCenter />
 
         <SiteNav />
         <div className="min-h-[60vh]">{children}</div>

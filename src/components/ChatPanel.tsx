@@ -114,7 +114,16 @@ function Bubble({ message }: { message: Message }) {
   );
 }
 
-export function ChatPanel({ enabled }: { enabled: boolean }) {
+export function ChatPanel({
+  enabled,
+  initialQuestion,
+}: {
+  enabled: boolean;
+  /** Sent once on mount. The command palette hands a typed question
+   *  straight to the chat rather than dropping the reader into an empty
+   *  box with their sentence lost. */
+  initialQuestion?: string;
+}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
@@ -126,6 +135,14 @@ export function ChatPanel({ enabled }: { enabled: boolean }) {
   }, [messages]);
 
   useEffect(() => () => abort.current?.abort(), []);
+
+  const asked = useRef(false);
+  useEffect(() => {
+    if (!enabled || asked.current || !initialQuestion?.trim()) return;
+    asked.current = true;
+    void send(initialQuestion);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, initialQuestion]);
 
   async function send(question: string) {
     const text = question.trim();
