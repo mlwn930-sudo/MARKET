@@ -20,6 +20,9 @@ import { OutlookPanel } from "@/components/OutlookPanel";
 import { ChartExplainer } from "@/components/ChartExplainer";
 import { buildOutlook } from "@/lib/analysis/outlook";
 import { whyMoving } from "@/lib/analysis/why-moving";
+import { buildExpectationGap } from "@/lib/analysis/expectation-gap";
+import { ExpectationGapPanel } from "@/components/ExpectationGapPanel";
+import { getEarningsSurprises } from "@/lib/sources/finnhub";
 import { WhyMovingPanel } from "@/components/WhyMovingPanel";
 import { getSectorViews } from "@/lib/sectors";
 import { getFallbackQuote } from "@/lib/sources/prices";
@@ -151,10 +154,21 @@ export default async function CompanyPage({
   /* Why it moved today. Deterministic: the index, the sector and the
      coverage are all figures the site already holds, and the panel says
      so rather than picking a headline and calling it a cause. */
-  const [benchmarkToday, sectorViews] = await Promise.all([
+  const [benchmarkToday, sectorViews, surprises] = await Promise.all([
     getFallbackQuote("^GSPC").catch(() => null),
     getSectorViews().catch(() => []),
+    getEarningsSurprises(ticker).catch(() => []),
   ]);
+
+  /* What the price implies against what the filings delivered. The panel
+     is the site's answer to "is the problem the business or the price",
+     and it is computed rather than judged. */
+  const gap = buildExpectationGap({
+    companyName: name,
+    fundamentals,
+    sector,
+    surprises,
+  });
 
   const sectorToday = sectorViews.find((view) =>
     view.members.some((member) => member.ticker === ticker),
@@ -272,6 +286,17 @@ export default async function CompanyPage({
           description="עמדה מנומקת, לא דירוג: מה הנתונים מראים, מה צריך לקרות כדי שזה יעבוד, ומה היה הופך את התמונה. כולל מה שעדיין לא נמצא בדוחות."
         >
           <OutlookPanel outlook={outlook} ticker={ticker} />
+        </Section>
+      )}
+
+      {/* ---- What the market is paying for, against what arrived ---- */}
+      {gap && (
+        <Section
+          eyebrow="פער ציפיות"
+          title="מה המחיר מגלם, ומה הדוחות מראים"
+          description="מכפיל הוא משפט על העתיד שנכתב במספר אחד. כאן הוא מוצג מול מה שכבר דווח — וכשהשניים לא מסתדרים, אי-ההסכמה היא הממצא."
+        >
+          <ExpectationGapPanel gap={gap} />
         </Section>
       )}
 

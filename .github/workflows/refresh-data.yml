@@ -34,38 +34,45 @@ jobs:
       # User-Agent outright, and a run that discovers that inside a fetch
       # loop reports an exit code instead of a cause.
       - name: Check required secrets
+        id: preflight
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: |
-          missing=0
-          if [ -z "$FINNHUB_API_KEY" ]; then
-            echo "::error::FINNHUB_API_KEY is not set (https://finnhub.io/register)"
-            missing=1
+          missing=""
+          [ -z "$FINNHUB_API_KEY" ] && missing="$missing FINNHUB_API_KEY"
+          [ -z "$SEC_USER_AGENT" ] && missing="$missing SEC_USER_AGENT"
+
+          if [ -n "$missing" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::missing secrets:$missing — nothing was rebuilt."
+            {
+              echo "## לא רץ: חסרים מפתחות"
+              echo ""
+              echo "חסר:\`$missing\`"
+              echo ""
+              echo "Settings → Secrets and variables → Actions → New repository secret"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "secrets present"
           fi
-          if [ -z "$SEC_USER_AGENT" ]; then
-            echo "::error::SEC_USER_AGENT is not set. EDGAR rejects requests"
-            echo "::error::without one. Format: \"Name email@example.com\""
-            missing=1
-          fi
-          if [ "$missing" = "1" ]; then
-            echo "::error::Add them under Settings > Secrets and variables > Actions."
-            exit 1
-          fi
-          echo "secrets present"
 
       - name: Rebuild fundamentals
+        if: steps.preflight.outputs.ready == 'true'
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: npm run build:fundamentals
 
       - name: Rebuild institutional holdings
+        if: steps.preflight.outputs.ready == 'true'
         env:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: npm run build:institutional
 
       - name: Commit if anything changed
+        if: steps.preflight.outputs.ready == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

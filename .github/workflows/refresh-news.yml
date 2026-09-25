@@ -50,30 +50,51 @@ jobs:
         with:
           node-version: 22
 
-      # Fails here rather than inside the fetch script, and names what is
-      # missing.
+      # Decides whether there is anything to do, and does NOT fail if there
+      # is not.
       #
-      # This exists because of the failure emails. A run that dies inside
-      # node sends "Process completed with exit code 1", which tells the
-      # person reading it nothing about which secret to add or where. The
-      # check below costs a second and turns that email into an instruction.
+      # An earlier version exited 1 when the key was missing, which was
+      # correct as engineering and wrong as behaviour: a scheduled job that
+      # cannot run for a known, unchanged reason emailed a failure every
+      # half hour. The first of those emails is information; the hundredth
+      # is noise that teaches the reader to ignore the alert that finally
+      # matters.
+      #
+      # So a missing key is now a warning, a job summary that says exactly
+      # what to add and where, and a green run that did nothing.
       - name: Check required secrets
+        id: preflight
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: |
           if [ -z "$FINNHUB_API_KEY" ]; then
-            echo "::error::FINNHUB_API_KEY is not set in this repository."
-            echo "::error::Add it under Settings > Secrets and variables > Actions"
-            echo "::error::> New repository secret. The free key is issued at"
-            echo "::error::https://finnhub.io/register — no card required."
-            exit 1
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::FINNHUB_API_KEY is not set — nothing was fetched."
+            {
+              echo "## לא רץ: חסר מפתח"
+              echo ""
+              echo "ה-workflow לא ביצע דבר כי הסוד \`FINNHUB_API_KEY\` אינו מוגדר במאגר."
+              echo ""
+              echo "**להוספה:** Settings → Secrets and variables → Actions → New repository secret"
+              echo ""
+              echo "| Secret | בשביל מה | מאיפה |"
+              echo "|---|---|---|"
+              echo "| \`FINNHUB_API_KEY\` | משיכת החדשות | https://finnhub.io/register |"
+              echo "| \`GEMINI_API_KEY\` | ניתוח הכתבות | https://aistudio.google.com/apikey |"
+              echo "| \`SEC_USER_AGENT\` | דוחות SEC | פורמט: \"שם mail@example.com\" |"
+              echo ""
+              echo "ההרצה מסומנת כמוצלחת בכוונה — כדי שלא יישלח מייל כישלון בכל חצי שעה על אותה סיבה."
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "FINNHUB_API_KEY present"
           fi
-          echo "FINNHUB_API_KEY present"
 
       # Refreshes the stored feed. The site does not depend on this for
       # freshness any more — it is the fallback the live wire degrades to,
       # and it is the list the analysis step works from.
       - name: Fetch latest news
+        if: steps.preflight.outputs.ready == 'true'
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: node scripts/refresh-news.mjs
@@ -82,6 +103,7 @@ jobs:
       # missing key or an unreachable article leaves the feed intact without
       # analysis, which is still a working feed.
       - name: Write Hebrew analysis
+        if: steps.preflight.outputs.ready == 'true'
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -96,6 +118,7 @@ jobs:
       # fetching. Whatever was retrieved gets saved; problems are reported
       # afterwards.
       - name: Commit if anything changed
+        if: steps.preflight.outputs.ready == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

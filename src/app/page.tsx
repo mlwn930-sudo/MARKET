@@ -6,6 +6,8 @@ import { runScreen } from "@/lib/screener";
 import { MarketDeck, type IndexCard, type RowSeed } from "@/components/MarketDeck";
 import { ArticleCard } from "@/components/ArticleCard";
 import { WhatMattersToday } from "@/components/WhatMattersToday";
+import { MarketPulse } from "@/components/MarketPulse";
+import { getMacroBoard } from "@/lib/sources/macro";
 import { Disclaimer, Hero, MoreLink, Page, Section } from "@/components/ui";
 import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtRelative } from "@/lib/format";
@@ -78,7 +80,7 @@ async function watchRows(): Promise<RowSeed[]> {
 }
 
 export default async function MarketPage() {
-  const [seed, cards, rows, feed, screen] = await Promise.all([
+  const [seed, cards, rows, feed, screen, macro] = await Promise.all([
     seedQuotes([
       ...INDEX_PROXIES.map((i) => i.symbol),
       ...WATCHLIST.map((w) => w.symbol),
@@ -87,6 +89,7 @@ export default async function MarketPage() {
     watchRows(),
     getLiveFeed(),
     runScreen().catch(() => ({ builtAt: "", results: [] })),
+    getMacroBoard().catch(() => ({ instruments: [], builtAt: "" })),
   ]);
 
   // The stories carrying an analysis marked high, newest first. Falls back
@@ -112,7 +115,14 @@ export default async function MarketPage() {
         imageAlt=""
       />
 
-      <div className="mt-20">
+      {/* The pulse first: equities, the price of money, and what that did
+          to hard assets — one band, because those three read together are
+          a story and read apart are trivia. */}
+      <div className="mt-16">
+        <MarketPulse instruments={macro.instruments} />
+      </div>
+
+      <div className="mt-14">
         <MarketDeck indices={cards} rows={rows} initial={seed} />
       </div>
 
