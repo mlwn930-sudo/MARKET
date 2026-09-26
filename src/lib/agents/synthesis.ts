@@ -162,6 +162,16 @@ export function synthesise({
     whyNow.push(growthShift.body);
   }
 
+  /* A headline a model read and called a catalyst belongs in "why now" —
+     it is the only input here that can be hours old. It enters as the
+     headline itself rather than as the model's paraphrase, and it is
+     labelled as a story, so the reader weighs it as one. */
+  const story = all.find((f) => f.id === "narrative-catalyst");
+  const lead = story?.evidence.find((item) => item.label === "כותרת מובילה");
+  if (lead && /זרז/.test(story!.title)) {
+    whyNow.push(`כותרת שסווגה כזרז: "${lead.value}"`);
+  }
+
   const conditions: string[] = [];
   if (coreFailed) {
     for (const blocker of verdict.blockers.slice(0, 3)) {
@@ -275,6 +285,8 @@ function buildMatrix(
   const spread = find("spread");
   const stage = find("stage");
   const dilution = find("dilution");
+  const ownershipChange = find("ownership-change");
+  const ownershipHolders = find("ownership-holders");
 
   return [
     {
@@ -313,6 +325,19 @@ function buildMatrix(
       factor: "דילול",
       status: fromStance(dilution),
       evidence: evidenceOf(dilution, "אין היסטוריית ספירת מניות"),
+    },
+    {
+      factor: "בעלות מוסדית",
+      status: ownershipChange
+        ? fromStance(ownershipChange)
+        : ownershipHolders
+          ? "adequate"
+          : "unknown",
+      evidence: ownershipChange
+        ? ownershipChange.title
+        : ownershipHolders
+          ? evidenceOf(ownershipHolders, "")
+          : "אף מנהל מהרשימה הנסקרת אינו מדווח על החזקה",
     },
     {
       factor: "זרזים",

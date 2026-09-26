@@ -88,13 +88,20 @@ export async function getEnrichedFeed(): Promise<EnrichedFeed> {
   return { refreshedAt: feed.refreshedAt, sectors, analysedCount, totalCount };
 }
 
-/** Every article that mentions a ticker, newest first. Used by the company
- *  page to show what is being written about that company right now. */
-export async function getArticlesForTicker(
+/**
+ * Every article that mentions a ticker, newest first, together with the
+ * moment the feed itself was last refreshed.
+ *
+ * The second half is the part that matters to a caller reasoning about
+ * coverage. A company nobody wrote about this week and a feed that has not
+ * run since Tuesday produce the same empty list, and only the refresh time
+ * tells them apart.
+ */
+export async function getTickerCoverage(
   ticker: string,
   limit = 8,
-): Promise<EnrichedArticle[]> {
-  const { sectors } = await getEnrichedFeed();
+): Promise<{ refreshedAt: string | null; articles: EnrichedArticle[] }> {
+  const { sectors, refreshedAt } = await getEnrichedFeed();
   const symbol = ticker.toUpperCase();
   const byUrl = new Map<string, EnrichedArticle>();
 
@@ -107,9 +114,20 @@ export async function getArticlesForTicker(
     }
   }
 
-  return [...byUrl.values()]
+  const articles = [...byUrl.values()]
     .sort((a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""))
     .slice(0, limit);
+
+  return { refreshedAt, articles };
+}
+
+/** The article list on its own, for the callers that only render it. */
+export async function getArticlesForTicker(
+  ticker: string,
+  limit = 8,
+): Promise<EnrichedArticle[]> {
+  const { articles } = await getTickerCoverage(ticker, limit);
+  return articles;
 }
 
 /** True when the feed is older than three hours. GitHub throttles scheduled

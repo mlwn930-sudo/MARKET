@@ -63,7 +63,7 @@ const evidenceSchema = z.object({
   label: z.string(),
   value: z.string(),
   source: z.object({
-    origin: z.enum(["SEC", "Finnhub", "Yahoo", "FRED", "חישוב"]),
+    origin: z.enum(["SEC", "Finnhub", "Yahoo", "FRED", "חישוב", "מודל"]),
     asOf: z.string().nullable(),
     note: z.string().optional(),
   }),

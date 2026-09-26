@@ -257,10 +257,9 @@ export async function get13FHoldings(
   const rows = parsed?.informationTable?.infoTable;
   if (!rows) return [];
 
-  const inThousands = filedAt < "2023-01-01";
   const list = Array.isArray(rows) ? rows : [rows];
 
-  return list
+  const holdings = list
     .map((row): Holding | null => {
       const value = Number(row?.value);
       const shares = Number(row?.shrsOrPrnAmt?.sshPrnamt);
@@ -269,27 +268,76 @@ export async function get13FHoldings(
       return {
         issuer,
         cusip: String(row?.cusip ?? "").trim(),
-        value: inThousands ? value * 1000 : value,
+        value: filedAt < "2023-01-01" ? value * 1000 : value,
         shares: Number.isFinite(shares) ? shares : 0,
       };
     })
     .filter((h): h is Holding => h !== null);
+
+  return inWholeDollars(holdings);
 }
 
-/** Positions merged by issuer. A filer lists the same company several times
- *  across share classes and investment discretion categories, so the raw
- *  table double-counts. */
+/**
+ * The units check that the filing date alone does not pass.
+ *
+ * The date rule above is the stated one, and it is not sufficient: filers
+ * still submit the value column in thousands years after the amendment
+ * took effect. Baupost's June 2026 table reports Amazon at 892,310 against
+ * 3.74 million shares, which prices Amazon at 24 cents.
+ *
+ * So the filing is asked a question it cannot answer wrongly: what does
+ * this table imply a share costs? The median across the positions is used
+ * rather than the mean, because a 13F also carries bond principal amounts
+ * and options, and those are not prices. A median under a dollar means the
+ * column is in thousands, whatever the date on the cover says.
+ *
+ * The correction is a factor of exactly 1000 or nothing at all. A "scale
+ * until it looks right" adjustment would quietly rewrite real figures.
+ */
+function inWholeDollars(holdings: Holding[]): Holding[] {
+  const prices = holdings
+    .filter((holding) => holding.shares > 0 && holding.value > 0)
+    .map((holding) => holding.value / holding.shares)
+    .sort((a, b) => a - b);
+
+  if (prices.length < 5) return holdings;
+
+  const median = prices[Math.floor(prices.length / 2)];
+  if (median >= 1) return holdings;
+
+  return holdings.map((holding) => ({
+    ...holding,
+    value: holding.value * 1000,
+  }));
+}
+
+/**
+ * Positions merged by issuer. A filer lists the same company several times
+ * across share classes and investment discretion categories, so the raw
+ * table double-counts.
+ *
+ * The merged row keeps the CUSIP of its largest component rather than of
+ * whichever row the XML happened to list first. Callers diff two quarters
+ * by CUSIP, and a key that depends on file order would flip between
+ * quarters for no reason and report a position as closed and reopened.
+ */
 export function mergeByIssuer(holdings: Holding[]): Holding[] {
-  const byName = new Map<string, Holding>();
+  const byName = new Map<string, Holding & { anchorValue: number }>();
   for (const h of holdings) {
     const key = h.issuer.toUpperCase();
     const existing = byName.get(key);
-    if (existing) {
-      existing.value += h.value;
-      existing.shares += h.shares;
-    } else {
-      byName.set(key, { ...h, issuer: h.issuer });
+    if (!existing) {
+      byName.set(key, { ...h, anchorValue: h.value });
+      continue;
+    }
+    existing.value += h.value;
+    existing.shares += h.shares;
+    if (h.value > existing.anchorValue) {
+      existing.cusip = h.cusip;
+      existing.anchorValue = h.value;
     }
   }
-  return [...byName.values()].sort((a, b) => b.value - a.value);
+  return [...byName.values()]
+    .map(({ anchorValue: _anchorValue, ...holding }) => holding)
+    .sort((a, b) => b.value - a.value);
 }

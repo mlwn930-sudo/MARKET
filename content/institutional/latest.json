@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-22T14:27:01.153Z",
+  "builtAt": "2026-09-26T17:15:00.574Z",
   "institutions": [
     {
       "cik": 1067983,
@@ -83,19 +83,11 @@
         },
         {
           "issuer": "BANK OF AMER CORP",
-          "kind": "new",
+          "kind": "decreased",
           "value": 27543790975,
           "shares": 483394015,
-          "previousShares": 0,
-          "sharesChangePercent": null
-        },
-        {
-          "issuer": "CHUBB LIMITED",
-          "kind": "new",
-          "value": 11670066615,
-          "shares": 34249183,
-          "previousShares": 0,
-          "sharesChangePercent": null
+          "previousShares": 513624165,
+          "sharesChangePercent": -5.885655710922402
         },
         {
           "issuer": "DELTA AIR LINES INC",
@@ -162,11 +154,11 @@
           "sharesChangePercent": null
         },
         {
-          "issuer": "BANK AMERICA CORP",
+          "issuer": "CONSTELLATION BRANDS INC",
           "kind": "exited",
           "value": 0,
           "shares": 0,
-          "previousShares": 513624165,
+          "previousShares": 632890,
           "sharesChangePercent": -100
         }
       ],
@@ -660,11 +652,11 @@
         },
         {
           "issuer": "ISHARES TR",
-          "kind": "increased",
+          "kind": "new",
           "value": 515293639,
           "shares": 5308783,
-          "previousShares": 3608645,
-          "sharesChangePercent": 47.11291911506951
+          "previousShares": 0,
+          "sharesChangePercent": null
         },
         {
           "issuer": "NETFLIX INC.",
@@ -863,66 +855,66 @@
       "reportDate": "2026-06-30",
       "filedAt": "2026-08-13",
       "previousReportDate": "2026-03-31",
-      "totalValue": 5415853,
+      "totalValue": 5415853000,
       "positionCount": 23,
       "topHoldings": [
         {
           "issuer": "AMAZON COM INC",
-          "value": 892310,
+          "value": 892310000,
           "shares": 3743854,
           "weight": 16.475890316816205
         },
         {
           "issuer": "ELEVANCE HEALTH INC FORMERLY",
-          "value": 493140,
+          "value": 493140000,
           "shares": 1275154,
           "weight": 9.105490861734983
         },
         {
           "issuer": "RESTAURANT BRANDS INTL INC",
-          "value": 489612,
+          "value": 489612000,
           "shares": 6753112,
           "weight": 9.040348768698117
         },
         {
           "issuer": "ALPHABET INC",
-          "value": 484744,
+          "value": 484744000,
           "shares": 1371931,
           "weight": 8.950464497466973
         },
         {
           "issuer": "FERGUSON ENTERPRISES INC",
-          "value": 344269,
+          "value": 344269000,
           "shares": 1450594,
           "weight": 6.356690257287263
         },
         {
           "issuer": "GENUINE PARTS CO",
-          "value": 332253,
+          "value": 332253000,
           "shares": 2816178,
           "weight": 6.13482308327054
         },
         {
           "issuer": "UNION PAC CORP",
-          "value": 322427,
+          "value": 322427000,
           "shares": 1185395,
           "weight": 5.953392752720578
         },
         {
           "issuer": "VISA INC",
-          "value": 240628,
+          "value": 240628000,
           "shares": 701355,
           "weight": 4.443030488456758
         },
         {
           "issuer": "WESCO INTL INC",
-          "value": 228979,
+          "value": 228979000,
           "shares": 662881,
           "weight": 4.227939716975331
         },
         {
           "issuer": "AON PLC",
-          "value": 227871,
+          "value": 227871000,
           "shares": 687000,
           "weight": 4.207481259184841
         }
@@ -931,7 +923,7 @@
         {
           "issuer": "AMAZON COM INC",
           "kind": "increased",
-          "value": 892310,
+          "value": 892310000,
           "shares": 3743854,
           "previousShares": 3118754,
           "sharesChangePercent": 20.043260866358807
@@ -939,7 +931,7 @@
         {
           "issuer": "RESTAURANT BRANDS INTL INC",
           "kind": "decreased",
-          "value": 489612,
+          "value": 489612000,
           "shares": 6753112,
           "previousShares": 8080112,
           "sharesChangePercent": -16.42303968063809
@@ -947,7 +939,7 @@
         {
           "issuer": "ALPHABET INC",
           "kind": "increased",
-          "value": 484744,
+          "value": 484744000,
           "shares": 1371931,
           "previousShares": 1181131,
           "sharesChangePercent": 16.154008319144957
@@ -955,7 +947,7 @@
         {
           "issuer": "GENUINE PARTS CO",
           "kind": "increased",
-          "value": 332253,
+          "value": 332253000,
           "shares": 2816178,
           "previousShares": 1490348,
           "sharesChangePercent": 88.96110170242117
@@ -963,7 +955,7 @@
         {
           "issuer": "UNION PAC CORP",
           "kind": "decreased",
-          "value": 322427,
+          "value": 322427000,
           "shares": 1185395,
           "previousShares": 1540995,
           "sharesChangePercent": -23.07599959766255
@@ -971,7 +963,7 @@
         {
           "issuer": "WESCO INTL INC",
           "kind": "decreased",
-          "value": 228979,
+          "value": 228979000,
           "shares": 662881,
           "previousShares": 1436881,
           "sharesChangePercent": -53.86667371897882
@@ -979,7 +971,7 @@
         {
           "issuer": "AON PLC",
           "kind": "decreased",
-          "value": 227871,
+          "value": 227871000,
           "shares": 687000,
           "previousShares": 769000,
           "sharesChangePercent": -10.663198959687907
@@ -987,7 +979,7 @@
         {
           "issuer": "TELEFLEX INCORPORATED",
           "kind": "decreased",
-          "value": 178605,
+          "value": 178605000,
           "shares": 1409000,
           "previousShares": 1595000,
           "sharesChangePercent": -11.661442006269592
@@ -995,7 +987,7 @@
         {
           "issuer": "NORWEGIAN CRUISE LINE HLDGS",
           "kind": "increased",
-          "value": 163180,
+          "value": 163180000,
           "shares": 7730000,
           "previousShares": 3630000,
           "sharesChangePercent": 112.94765840220387
@@ -1003,7 +995,7 @@
         {
           "issuer": "CME GROUP INC",
           "kind": "new",
-          "value": 136694,
+          "value": 136694000,
           "shares": 619000,
           "previousShares": 0,
           "sharesChangePercent": null
@@ -1011,7 +1003,7 @@
         {
           "issuer": "EAGLE MATLS INC",
           "kind": "decreased",
-          "value": 119422,
+          "value": 119422000,
           "shares": 530763,
           "previousShares": 892763,
           "sharesChangePercent": -40.54827541015925
@@ -1019,7 +1011,7 @@
         {
           "issuer": "GDS HLDGS LTD",
           "kind": "increased",
-          "value": 113208,
+          "value": 113208000,
           "shares": 3769818,
           "previousShares": 3044818,
           "sharesChangePercent": 23.810946992562446
@@ -1252,11 +1244,11 @@
         },
         {
           "issuer": "BRUKER CORP",
-          "kind": "decreased",
+          "kind": "new",
           "value": 13137181,
           "shares": 48334,
-          "previousShares": 250000,
-          "sharesChangePercent": -80.66640000000001
+          "previousShares": 0,
+          "sharesChangePercent": null
         },
         {
           "issuer": "UNITEDHEALTH GROUP INC",

@@ -53,15 +53,29 @@ type Change = {
   sharesChangePercent: number | null;
 };
 
+/**
+ * The key a position is tracked by between two quarters.
+ *
+ * The CUSIP, when the filing carries one. Issuer names are not stable —
+ * Berkshire filed "BANK AMERICA CORP" one quarter and "BANK OF AMER CORP"
+ * the next for a position it has held for years, and a diff keyed on the
+ * name reported that as one company exited and another opened. The CUSIP
+ * is the identifier the security actually has; the name is how the filer
+ * happened to type it that quarter.
+ */
+function positionKey(holding: Holding): string {
+  return holding.cusip
+    ? `cusip:${holding.cusip.toUpperCase()}`
+    : `name:${holding.issuer.toUpperCase()}`;
+}
+
 function diff(current: Holding[], previous: Holding[]): Change[] {
-  const prevByIssuer = new Map(
-    previous.map((h) => [h.issuer.toUpperCase(), h]),
-  );
-  const currByIssuer = new Map(current.map((h) => [h.issuer.toUpperCase(), h]));
+  const prevByIssuer = new Map(previous.map((h) => [positionKey(h), h]));
+  const currByIssuer = new Map(current.map((h) => [positionKey(h), h]));
   const changes: Change[] = [];
 
   for (const holding of current) {
-    const key = holding.issuer.toUpperCase();
+    const key = positionKey(holding);
     const prior = prevByIssuer.get(key);
 
     if (!prior) {
@@ -91,7 +105,7 @@ function diff(current: Holding[], previous: Holding[]): Change[] {
   }
 
   for (const holding of previous) {
-    if (currByIssuer.has(holding.issuer.toUpperCase())) continue;
+    if (currByIssuer.has(positionKey(holding))) continue;
     changes.push({
       issuer: holding.issuer,
       kind: "exited",

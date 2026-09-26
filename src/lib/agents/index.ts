@@ -12,10 +12,14 @@ import {
   type CompanyAnalysis,
 } from "@/lib/company-analysis";
 import { getSectorContext } from "@/lib/fundamentals-store";
+import { getInstitutional } from "@/lib/institutional-store";
+import { getTickerCoverage } from "@/lib/news-store";
 import { buildVerdict, type Verdict } from "@/lib/analysis/verdict";
 import { financialAnalyst } from "./financial";
 import { valuationAnalyst, type BusinessVsPrice } from "./valuation";
 import { growthAnalyst } from "./growth";
+import { ownershipAnalyst } from "./ownership";
+import { narrativeAgent } from "./narrative";
 import { catalystAgent, competitiveAgent, technicalAgent, type Catalyst } from "./catalyst";
 import { contrarianAgent, riskAnalyst } from "./contrarian";
 import {
@@ -60,7 +64,7 @@ export type CompanyIntelligence = {
 /** Bumped whenever the shape changes. The cache holds a serialised object
  *  and does not know the code reading it has grown a field — without this,
  *  adding one ships a page that crashes until the hour expires. */
-const SHAPE_VERSION = "v1";
+const SHAPE_VERSION = "v2";
 
 function isoDaysFromNow(days: number): string {
   return new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
@@ -78,19 +82,34 @@ async function build(
   // Everything that can be fetched in parallel is. Each one degrades to a
   // null or an empty list rather than throwing: a missing peer list should
   // cost the peer section, not the page.
-  const [technical, sector, financials, surprises, peers, analysts, calendar] =
-    await Promise.all([
-      getTechnicalRead(symbol).catch(() => null),
-      getSectorContext(symbol),
-      getBasicFinancials(symbol).catch(() => null),
-      getEarningsSurprises(symbol).catch(() => []),
-      getPeers(symbol).catch(() => []),
-      getAnalystViews(symbol).catch(() => []),
-      getEarningsCalendar(
-        isoDaysFromNow(-7),
-        isoDaysFromNow(120),
-      ).catch(() => new Map()),
-    ]);
+  const [
+    technical,
+    sector,
+    financials,
+    surprises,
+    peers,
+    analysts,
+    calendar,
+    institutional,
+    coverage,
+  ] = await Promise.all([
+    getTechnicalRead(symbol).catch(() => null),
+    getSectorContext(symbol),
+    getBasicFinancials(symbol).catch(() => null),
+    getEarningsSurprises(symbol).catch(() => []),
+    getPeers(symbol).catch(() => []),
+    getAnalystViews(symbol).catch(() => []),
+    getEarningsCalendar(isoDaysFromNow(-7), isoDaysFromNow(120)).catch(
+      () => new Map(),
+    ),
+    // Both of these read a file a scheduled job wrote: no request quota,
+    // and they work under plain Node as well as inside a request.
+    getInstitutional().catch(() => ({ builtAt: "", institutions: [] })),
+    getTickerCoverage(symbol, 20).catch(() => ({
+      refreshedAt: null,
+      articles: [],
+    })),
+  ]);
 
   const { fundamentals, capital, profile, title } = analysis;
   const name = profile?.name ?? title;
@@ -116,6 +135,17 @@ async function build(
     technical,
   );
   const competitive = competitiveAgent(symbol, peers);
+  const ownership = ownershipAnalyst(
+    symbol,
+    name,
+    institutional.institutions,
+    institutional.builtAt || null,
+  );
+  const narrative = narrativeAgent(
+    symbol,
+    coverage.articles,
+    coverage.refreshedAt,
+  );
 
   // The contrarian runs last and is told which way the others are leaning,
   // so it argues against the emerging conclusion rather than picking a side
@@ -124,6 +154,7 @@ async function build(
     financial,
     valuation.report,
     growth,
+    ownership,
     technicalReport,
     risk,
     catalystReport,
@@ -150,7 +181,7 @@ async function build(
     leaning,
   );
 
-  const reports = [...soFar, competitive, contrarian];
+  const reports = [...soFar, competitive, narrative, contrarian];
 
   const { thesis, matrix } = synthesise({
     companyName: name,

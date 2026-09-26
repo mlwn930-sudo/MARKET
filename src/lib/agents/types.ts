@@ -20,9 +20,18 @@
 
 export type Confidence = "high" | "medium" | "low";
 
-/** Where a number came from. Attached to every piece of evidence. */
+/**
+ * Where a number came from. Attached to every piece of evidence.
+ *
+ * "מודל" is kept apart from "חישוב" on purpose. A computation is
+ * reproducible from the same inputs; a classification a language model
+ * wrote is not, and a reader deciding how much weight to give a line needs
+ * to know which of the two produced it. The site already separates
+ * measurement from interpretation in its colours — this is the same
+ * distinction, in the data rather than the paint.
+ */
 export type SourceRef = {
-  origin: "SEC" | "Finnhub" | "Yahoo" | "FRED" | "חישוב";
+  origin: "SEC" | "Finnhub" | "Yahoo" | "FRED" | "חישוב" | "מודל";
   /** The date the underlying data describes, not when we fetched it. */
   asOf: string | null;
   note?: string;
@@ -97,6 +106,14 @@ export const yahoo = (asOf: string | null, note?: string): SourceRef => ({
 export const derived = (note: string): SourceRef => ({
   origin: "חישוב",
   asOf: null,
+  note,
+});
+
+/** A reading a language model produced. Never a measurement, and printed
+ *  as its own origin so it cannot be mistaken for one. */
+export const model = (asOf: string | null, note?: string): SourceRef => ({
+  origin: "מודל",
+  asOf,
   note,
 });
 
