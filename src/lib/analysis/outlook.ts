@@ -326,9 +326,21 @@ export function buildOutlook({
 
   const events = knownEventsFor(ticker);
   if (events.length > 0) {
+    /* Named with its date when the company has given one. The previous
+       wording said only that an event exists, which read as vague on a
+       company whose event has a confirmed calendar date — and vagueness
+       about a known fact is the thing this site is built to avoid. */
+    const described = events
+      .map((event) =>
+        event.status === "confirmed" && event.window
+          ? `${event.title} — ${event.window}`
+          : event.title,
+      )
+      .join(", ");
+
     argument.push(
       `הבדיקות למעלה מתארות את מה שכבר דווח. על ${companyName} יש גם אירוע ידוע שטרם ` +
-        `נכנס לדוחות — ${events.map((event) => event.title).join(", ")} — ולכן קריאה של ` +
+        `נכנס לדוחות — ${described} — ולכן קריאה של ` +
         `הרבעונים האחרונים בלבד מפספסת את החלק שהשוק מתמחר קדימה.`,
     );
   } else if (catalysts.length > 0) {

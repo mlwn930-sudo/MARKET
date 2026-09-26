@@ -345,6 +345,32 @@ export type OperatingLeverage = {
   previousIncrementalMargin: number | null;
   turning: "inflecting" | "eroding" | "steady" | null;
   note: string;
+  /** The arithmetic, printed. */
+  formula: string;
+  /** The two fiscal year ends the change was measured between. */
+  periods: { from: string; to: string } | null;
+  /**
+   * True when the earlier year posted an operating loss.
+   *
+   * This is the field that keeps the whole metric honest. An incremental
+   * margin is the change in operating profit over the change in revenue,
+   * and when the starting point is a loss the numerator is dominated by
+   * that loss narrowing rather than by the economics of the new revenue.
+   * Take-Two swung from a multi-billion impairment year, which produced a
+   * reading over four hundred percent — arithmetically correct, and
+   * meaningless as a margin.
+   */
+  baseWasLoss: boolean;
+  /**
+   * Whether the reading describes incremental economics at all.
+   *
+   * False when the base year was a loss, or when the result lands outside
+   * the range a margin can occupy. A number that cannot be a margin must
+   * not be presented as one.
+   */
+  meaningful: boolean;
+  /** What this reading does not establish. Always populated. */
+  limits: string[];
 };
 
 /**
@@ -361,6 +387,9 @@ export function operatingLeverage(
   revenueSeries: { end: string; val: number }[],
   operatingSeries: { end: string; val: number }[],
 ): OperatingLeverage {
+  const FORMULA =
+    "(רווח תפעולי בשנה האחרונה − רווח תפעולי בשנה שלפניה) ÷ (הכנסות בשנה האחרונה − הכנסות בשנה שלפניה)";
+
   const empty: OperatingLeverage = {
     ratio: null,
     incrementalMargin: null,
@@ -368,6 +397,13 @@ export function operatingLeverage(
     previousIncrementalMargin: null,
     turning: null,
     note: "אין די שנים של דוחות שנתיים לחישוב מינוף תפעולי.",
+    formula: FORMULA,
+    periods: null,
+    baseWasLoss: false,
+    meaningful: false,
+    limits: [
+      "נדרשים שלושה דוחות שנתיים רצופים כדי למדוד שינוי ולהשוות אותו לשינוי הקודם.",
+    ],
   };
 
   // Align the two series by fiscal year end. A company that restated or
@@ -409,23 +445,64 @@ export function operatingLeverage(
       ? operatingGrowth / revenueGrowth
       : null;
 
+  /* ---- Is this a margin at all ----
+     The numerator is a change in operating profit. When the earlier year
+     was a loss, most of that change is the loss going away, and dividing
+     it by the revenue added produces a number that is arithmetically
+     right and economically empty. Over 100% it is not a margin by
+     definition: no dollar of revenue can add more than a dollar of
+     profit unless something other than that dollar moved. */
+  const baseWasLoss = paired[last - 1].operating < 0;
+  const outOfRange =
+    incrementalMargin !== null && Math.abs(incrementalMargin) > 100;
+  const meaningful =
+    incrementalMargin !== null &&
+    currentMargin !== null &&
+    !baseWasLoss &&
+    !outOfRange;
+
   let turning: OperatingLeverage["turning"] = null;
   let note: string;
 
   if (incrementalMargin === null || currentMargin === null) {
     note = "ההכנסות לא השתנו מספיק בשנה האחרונה כדי למדוד מינוף.";
+  } else if (baseWasLoss) {
+    /* Named for what it is. The previous wording turned a loss recovery
+       into "419 cents of every extra dollar reached operating profit",
+       which describes an economy that does not exist. */
+    note = `בשנה הקודמת הרווח התפעולי היה שלילי, ולכן היחס הזה אינו מרווח. רוב השינוי ברווח התפעולי מגיע מהצטמצמות ההפסד — לרוב מחיקות חד-פעמיות שיצאו מהבסיס — ולא מהרווחיות של ההכנסה החדשה. המרווח התפעולי הנוכחי, ${currentMargin.toFixed(1)}%, הוא המספר שכן אומר משהו כאן.`;
+  } else if (outOfRange) {
+    note = `היחס יצא מחוץ לטווח שמרווח יכול לתפוס (${incrementalMargin.toFixed(0)}%), כלומר סעיף חד-פעמי בשורה התפעולית שלט בשינוי ולא ההכנסה שנוספה. לא מוצג כמרווח.`;
   } else if (incrementalMargin > currentMargin + 5) {
     turning = "inflecting";
-    note = `מכל דולר הכנסה נוסף, ${incrementalMargin.toFixed(0)} סנט הגיעו לרווח התפעולי — לעומת מרווח נוכחי של ${currentMargin.toFixed(0)}%. העסק החדש רווחי מהממוצע, ולכן המרווח המדווח צפוי לעלות אם הקצב יימשך.`;
+    note = `מכל דולר הכנסה שנוסף בשנה האחרונה, ${incrementalMargin.toFixed(0)} סנט הגיעו לרווח התפעולי — לעומת מרווח נוכחי של ${currentMargin.toFixed(0)}%. זו מדידה על שנה אחת, לא קצב שנקבע: היא אומרת שההכנסה שנוספה הייתה רווחית מהממוצע, ולא שכל דולר עתידי יתנהג כך.`;
   } else if (incrementalMargin < currentMargin - 5) {
     turning = "eroding";
-    note = `מכל דולר הכנסה נוסף הגיעו רק ${incrementalMargin.toFixed(0)} סנט לרווח התפעולי, פחות מהמרווח הנוכחי ${currentMargin.toFixed(0)}%. הצמיחה החדשה פחות רווחית מהעסק הקיים ומושכת את המרווח מטה.`;
+    note = `מכל דולר הכנסה שנוסף הגיעו ${incrementalMargin.toFixed(0)} סנט לרווח התפעולי, פחות מהמרווח הנוכחי ${currentMargin.toFixed(0)}%. ההכנסה שנוספה בשנה האחרונה הייתה פחות רווחית מהעסק הקיים.`;
   } else {
     turning = "steady";
-    note = "הרווחיות של ההכנסה החדשה דומה לרווחיות הקיימת. אין מינוף תפעולי לכאן או לכאן.";
+    note = "הרווחיות של ההכנסה שנוספה דומה לרווחיות הקיימת. אין מינוף תפעולי לכאן או לכאן.";
   }
 
+  const limits = [
+    "מדידה על שינוי בין שתי שנים בלבד. שנה אחת אינה קצב, ומחיקה, רכישה או שינוי תקינה חשבונאית נכנסים לשורה התפעולית ומזיזים אותה בלי קשר לכלכלת ההכנסה החדשה.",
+    "אין כאן הנחה שהדולר הבא יתנהג כמו הדולר האחרון. זה תיאור של מה שקרה, לא פונקציית עלות.",
+    ...(baseWasLoss
+      ? [
+          "שנת הבסיס הייתה הפסד תפעולי, ולכן המונה נשלט על ידי ההפסד שהצטמצם. היחס אינו מרווח ואינו מוצג ככזה.",
+        ]
+      : []),
+    ...(outOfRange && !baseWasLoss
+      ? ["התוצאה מחוץ לטווח של מרווח, כלומר סעיף חד-פעמי שלט בשינוי."]
+      : []),
+  ];
+
   return {
+    formula: FORMULA,
+    periods: { from: paired[last - 1].end, to: paired[last].end },
+    baseWasLoss,
+    meaningful,
+    limits,
     ratio,
     incrementalMargin,
     currentMargin,

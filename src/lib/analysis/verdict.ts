@@ -173,11 +173,15 @@ export function buildVerdict(
     key: "operating_leverage",
     question: "הצמיחה החדשה לא פחות רווחית מהקיימת?",
     passed: leverage.turning === null ? null : leverage.turning !== "eroding",
-    detail:
-      leverage.incrementalMargin === null
-        ? "לא ניתן לחשב"
-        : `מרווח על ההכנסה השולית ${leverage.incrementalMargin.toFixed(0)}%`,
-    why: "המרווח המדווח הוא ממוצע של העבר. המרווח על ההכנסה החדשה הוא מה שהעסק עושה עכשיו.",
+    /* The same guard the panel uses. A reading the metric itself marked
+       as not-a-margin must not be printed as one here, where it appears
+       next to nine genuine percentages and inherits their credibility. */
+    detail: !leverage.meaningful
+      ? leverage.baseWasLoss
+        ? "שנת הבסיס בהפסד — היחס אינו מרווח"
+        : "לא ניתן לחשב"
+      : `מרווח על ההכנסה שנוספה ${leverage.incrementalMargin!.toFixed(0)}%`,
+    why: "המרווח המדווח הוא ממוצע של העבר. המרווח על ההכנסה שנוספה בשנה האחרונה הוא מה שהעסק עשה לאחרונה — מדידה על שנה אחת, לא קצב.",
     core: false,
   });
 

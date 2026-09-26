@@ -32,19 +32,45 @@ export type KnownEvent = {
   title: string;
   /** As the company stated it. Null when the company has not given one. */
   window: string | null;
+  /** The confirmed calendar date, when the company has given one. */
+  date: string | null;
+  /**
+   * Whether the company has committed to the date or merely indicated a
+   * period. A confirmed date and an indicated window are different claims
+   * and the interface prints them differently.
+   */
+  status: "confirmed" | "indicated" | "unannounced";
+  /** Where relevant: what the announcement covers, and what it does not. */
+  scope?: string[];
   /** The mechanism: which part of the business this moves, and how. */
   why: string;
   /** What to watch for that would confirm or break it. */
   watch: string;
   /** Where this came from. Printed next to the entry. */
   source: string;
+  sourceUrl?: string;
+  /** When this entry was last checked against the source. */
+  verifiedAt: string;
+  /** Previous dates the company gave, when it has moved them. */
+  history?: { date: string; note: string }[];
 };
 
 const EVENTS: KnownEvent[] = [
   {
     ticker: "TTWO",
     title: "השקת GTA VI",
-    window: null,
+    window: "19 בנובמבר 2026",
+    date: "2026-11-19",
+    status: "confirmed",
+    /* Named explicitly, because the most common way this gets reported
+       wrong is by assuming a PC version ships alongside. Rockstar's
+       statement covers two consoles and says nothing about PC, and the
+       absence is the fact here. */
+    scope: [
+      "PlayStation 5",
+      "Xbox Series X|S",
+      "גרסת PC לא הוכרזה — היעדר הכרזה, לא דחייה שהוכרזה",
+    ],
     why:
       "ההשקה מזיזה את ההכנסות של Take-Two בסדר גודל שהדוחות הקודמים אינם " +
       "מתארים. שני מנגנונים פועלים בכיוונים הפוכים: הוצאות השיווק וההפחתה " +
@@ -53,8 +79,18 @@ const EVENTS: KnownEvent[] = [
       "מהמציאות הכלכלית שלו.",
     watch:
       "הנחיית ההנהלה ל-Bookings (ולא להכנסות המוכרות), קצב ההוצאה השיווקית " +
-      "ברבעונים שלפני, ותאריך שהחברה מאשרת ולא מקדמת.",
-    source: "עמוד ההשקה של האתר · הודעות Take-Two",
+      "ברבעונים שלפני, והאם התאריך מוחזק — הוא כבר נדחה פעמיים.",
+    source: "Rockstar Games Newswire",
+    sourceUrl:
+      "https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026",
+    verifiedAt: "2026-09-26",
+    /* The delays are part of the fact, not trivia. A date that has moved
+       twice carries different weight from one given once, and a reader
+       deciding how much to lean on it needs both. */
+    history: [
+      { date: "2025", note: "החלון המקורי שהוכרז" },
+      { date: "2026-05-26", note: "נדחה, ואז נדחה שוב" },
+    ],
   },
 ];
 

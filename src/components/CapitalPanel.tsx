@@ -272,29 +272,104 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
           </p>
         </div>
 
-        {/* ---- Operating leverage ---- */}
+        {/* ---- Operating leverage ----
+             Called a signal, not a margin, and the distinction is the
+             point. The reading is a change measured between two fiscal
+             years; presenting it as "X cents of every additional dollar"
+             implied a cost function the filings do not contain, and when
+             the base year was a loss it produced readings over 400% that
+             described an economy that does not exist. */}
         <div className="surface p-4">
-          <h3 className="text-sm">מינוף תפעולי</h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-sm">אות מינוף תפעולי</h3>
+            {!leverage.meaningful && leverage.incrementalMargin !== null && (
+              <span
+                className="badge"
+                style={{ color: "var(--color-warning)" }}
+                title="היחס חושב אך אינו מתאר מרווח"
+              >
+                לא מוצג כמרווח
+              </span>
+            )}
+          </div>
 
           <div className="mt-2">
             <Row
               label="מרווח תפעולי נוכחי"
               value={number(leverage.currentMargin, 1, "%")}
+              hint="מדווח"
             />
+            {/* The incremental reading is only shown as a margin when it
+                can be one. Otherwise the row says so rather than printing
+                a number the reader would have to know to distrust. */}
             <Row
-              label="מרווח על ההכנסה השולית"
-              value={number(leverage.incrementalMargin, 1, "%")}
-              hint="השנה האחרונה"
+              label="מרווח על ההכנסה שנוספה"
+              value={
+                leverage.meaningful
+                  ? number(leverage.incrementalMargin, 1, "%")
+                  : "לא ישים"
+              }
+              hint={
+                leverage.periods
+                  ? `${leverage.periods.from} ← ${leverage.periods.to}`
+                  : undefined
+              }
             />
-            <Row
-              label="אותו מדד שנה קודם"
-              value={number(leverage.previousIncrementalMargin, 1, "%")}
-            />
+            {leverage.meaningful && (
+              <Row
+                label="אותו מדד שנה קודם"
+                value={number(leverage.previousIncrementalMargin, 1, "%")}
+              />
+            )}
           </div>
 
           <p className="mt-3 text-[13px] leading-relaxed text-ink-muted">
             {leverage.note}
           </p>
+
+          <details className="group mt-3 border-t border-line pt-2.5">
+            <summary className="flex cursor-pointer items-center justify-between gap-3 text-[11px] text-ink-ghost transition-colors hover:text-ink-muted">
+              <span>הנוסחה, התקופות והמגבלות</span>
+              <span
+                className="transition-transform group-open:rotate-180"
+                aria-hidden="true"
+              >
+                ▾
+              </span>
+            </summary>
+
+            <div className="mt-2.5 space-y-2.5">
+              <div>
+                <p className="eyebrow mb-1">נוסחה</p>
+                <p className="text-[11px] leading-relaxed text-ink-faint">
+                  {leverage.formula}
+                </p>
+              </div>
+
+              {leverage.periods && (
+                <div>
+                  <p className="eyebrow mb-1">נמדד בין</p>
+                  <p className="num text-[11px] text-ink-faint">
+                    {leverage.periods.from} ← {leverage.periods.to}
+                  </p>
+                </div>
+              )}
+
+              <div>
+                <p className="eyebrow mb-1">מה זה לא אומר</p>
+                <ul className="space-y-1.5">
+                  {leverage.limits.map((limit, index) => (
+                    <li
+                      key={`${index}-${limit.slice(0, 16)}`}
+                      className="text-[11px] leading-relaxed text-ink-ghost"
+                    >
+                      — {limit}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
 

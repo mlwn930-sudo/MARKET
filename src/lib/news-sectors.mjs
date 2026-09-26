@@ -232,6 +232,113 @@ export function isRelevant(article) {
  * tagging a story to NVDA is a stronger signal than the word "chip"
  * appearing somewhere in the summary.
  */
+/**
+ * Subjects that share vocabulary with a sector without belonging to it.
+ *
+ * The bug this fixes, observed in production: an article about Bitcoin
+ * dominance was filed under artificial intelligence. It got there because
+ * crypto coverage borrows the same nouns — data centre, GPU, compute,
+ * power draw — and a single keyword hit was enough to classify.
+ *
+ * The rule is not "drop crypto". An article about a chipmaker selling
+ * into mining rigs is genuinely a semis story. The rule is that shared
+ * vocabulary alone cannot carry an article into a sector: when a
+ * disqualifying subject is present, the sector has to be established by
+ * something stronger than borrowed words — a ticker, or several
+ * independent keywords.
+ */
+const CROSS_TALK = [
+  "bitcoin",
+  "ethereum",
+  "crypto",
+  "blockchain",
+  "stablecoin",
+  "token price",
+  "altcoin",
+  "mining rig",
+  "halving",
+];
+
+/** Sectors whose vocabulary crypto coverage borrows most heavily. */
+const GUARDED = new Set(["ai", "semis", "power"]);
+
+/**
+ * How a company is named in prose, so a provider's tag can be checked
+ * against the article's own text.
+ *
+ * Only the names that actually appear in headlines. This is not a
+ * directory — it exists so that "tagged to NVDA" can be tested against
+ * "does this article mention Nvidia", and a bounded list answers that
+ * for the companies whose tags go wrong.
+ */
+const ALIASES = {
+  NVDA: ["nvidia"],
+  AMD: ["advanced micro"],
+  INTC: ["intel"],
+  AVGO: ["broadcom"],
+  MU: ["micron"],
+  TSM: ["tsmc", "taiwan semiconductor"],
+  AAPL: ["apple"],
+  MSFT: ["microsoft"],
+  GOOGL: ["alphabet", "google"],
+  AMZN: ["amazon"],
+  META: ["meta platforms", "facebook"],
+  TSLA: ["tesla"],
+  NFLX: ["netflix"],
+  ORCL: ["oracle"],
+  CRM: ["salesforce"],
+  ADBE: ["adobe"],
+  TTWO: ["take-two", "rockstar"],
+  XOM: ["exxon"],
+  CVX: ["chevron"],
+  LLY: ["eli lilly"],
+  JNJ: ["johnson & johnson"],
+  PFE: ["pfizer"],
+  JPM: ["jpmorgan", "jp morgan"],
+  WMT: ["walmart"],
+  COST: ["costco"],
+  BA: ["boeing"],
+};
+
+/**
+ * Whether the article itself supports the provider's tag.
+ *
+ * `direct` — the ticker or the company's name appears in the text.
+ * `indirect` — the provider attached it and the article never says so.
+ *
+ * The distinction was forced by a real case: a story headlined "Bitcoin
+ * Now Accounts for Less Than 60% of Total Crypto Market Value" arrived
+ * tagged to NVDA, with Nvidia mentioned nowhere in it. Treating that tag
+ * as evidence put a crypto article into the artificial-intelligence
+ * section. An indirect tag is still recorded — it may be a genuine
+ * second-order link — but it cannot carry an article into a sector on
+ * its own.
+ */
+export function entityRelationship(ticker, text) {
+  const symbol = String(ticker).toUpperCase();
+  const haystack = text.toLowerCase();
+
+  if (new RegExp(`\\b${symbol.toLowerCase()}\\b`).test(haystack)) {
+    return { ticker: symbol, relationship: "direct", confidence: "high" };
+  }
+  for (const alias of ALIASES[symbol] ?? []) {
+    if (haystack.includes(alias)) {
+      return { ticker: symbol, relationship: "direct", confidence: "high" };
+    }
+  }
+  return { ticker: symbol, relationship: "indirect", confidence: "low" };
+}
+
+/**
+ * The floor for a classification.
+ *
+ * One generic keyword is not a subject. Two independent keywords, or a
+ * single ticker the provider tagged, is — which is why a ticker is worth
+ * three and a keyword one.
+ */
+const MIN_SCORE = 2;
+const TICKER_WEIGHT = 3;
+
 export function classify(article) {
   const text = `${article.headline ?? ""} ${article.summary ?? ""}`.toLowerCase();
   const related = String(article.related ?? "")
@@ -239,14 +346,67 @@ export function classify(article) {
     .map((t) => t.trim().toUpperCase())
     .filter(Boolean);
 
+  const crossTalk = CROSS_TALK.some((term) => text.includes(term));
+
+  /* Tags the article's own text supports, and tags only the provider
+     asserts. Both count — dropping the second deleted a third of the
+     feed, because plenty of legitimate coverage names a company once in
+     a paragraph the summary cuts. They count differently, and only the
+     first can carry an article past the cross-talk guard. */
+  const direct = [];
+  const indirect = [];
+  for (const ticker of related) {
+    const entity = entityRelationship(ticker, text);
+    (entity.relationship === "direct" ? direct : indirect).push(ticker);
+  }
+
   const scored = SECTORS.map((sector) => {
     const keywordHits = sector.keywords.filter((k) => text.includes(k)).length;
-    const tickerHits = related.filter((t) => sector.tickers.includes(t)).length;
-    return { sector: sector.sector, score: keywordHits + tickerHits * 2 };
+    const directHits = direct.filter((t) => sector.tickers.includes(t)).length;
+    const indirectHits = indirect.filter((t) =>
+      sector.tickers.includes(t),
+    ).length;
+
+    let score = keywordHits + directHits * TICKER_WEIGHT + indirectHits;
+
+    /* A guarded sector reached only through borrowed vocabulary or an
+       unsupported tag does not count. A directly-named company still
+       carries it — a story that actually discusses Nvidia is a semis
+       story whatever else it mentions. This is the line the Bitcoin
+       article failed: tagged to NVDA, Nvidia named nowhere in it. */
+    if (crossTalk && GUARDED.has(sector.sector) && directHits === 0) {
+      score = 0;
+    }
+
+    return { sector: sector.sector, score };
   }).filter((s) => s.score > 0);
 
   scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, 2).map((s) => s.sector);
+
+  /* The threshold decides confidence, not survival.
+     Raising it to two was right — one borrowed word is not a subject —
+     but applied as a hard filter it also deleted real market news: a
+     story about the ten-year Treasury yield hitting a nineteen-year high
+     scored one on finance and vanished from the feed entirely. So an
+     article that reaches nothing confidently still goes to its best
+     single match rather than nowhere. What it does not get is a second
+     sector, and the crypto guard above runs first — a story zeroed there
+     scores nothing to fall back on. */
+  const confident = scored.filter((s) => s.score >= MIN_SCORE);
+  if (confident.length === 0) {
+    return scored.length > 0 ? [scored[0].sector] : [];
+  }
+
+  /* A second sector only when it is genuinely comparable. An export ban
+     on AI chips is both a semis story and a trade story; a story that
+     scored six on one sector and two on another is one story with a
+     stray word in it, and filing it twice puts it in front of a reader
+     it has nothing to say to. */
+  const top = confident
+    .slice(0, 2)
+    .filter((s, i) => i === 0 || s.score >= confident[0].score * 0.6);
+
+  return top.map((s) => s.sector);
 }
 
 /** Tickers the article is about, limited to ones we can show a page for. */

@@ -14,7 +14,9 @@ import { CapitalPanel } from "@/components/CapitalPanel";
 import { ValueChain, type ChainLink } from "@/components/ValueChain";
 import { ArticleCard } from "@/components/ArticleCard";
 import { OutlookPanel } from "@/components/OutlookPanel";
+import { ReleasePanel } from "@/components/ReleasePanel";
 import { buildOutlook } from "@/lib/analysis/outlook";
+import { knownEventsFor } from "@/lib/analysis/known-events";
 import {
   Disclaimer,
   Hero,
@@ -210,6 +212,8 @@ export default async function TtwoLaunchPage() {
       : null;
 
 
+  const launchEvent = knownEventsFor("TTWO")[0] ?? null;
+
   return (
     <Page tint="#fcaf17">
       <Hero
@@ -246,6 +250,21 @@ export default async function TtwoLaunchPage() {
           <MoreLink href="/company/TTWO">לעמוד החברה המלא</MoreLink>
         }
       />
+
+      {/* ---- The date, before anything else ----
+           The one fact every reader of this page arrives wanting, and the
+           one the page used to leave as an absence. It is a company
+           statement, so it is shown with its source, when it was last
+           checked, and the two previous dates it replaced. */}
+      {launchEvent && (
+        <Section
+          eyebrow="מועד"
+          title="מתי, ועל מה זה מבוסס"
+          description="תאריך שהחברה מסרה, לא אומדן של האתר. הוא כבר נדחה פעמיים, וזה חלק מהעובדה ולא הערת שוליים."
+        >
+          <ReleasePanel event={launchEvent} />
+        </Section>
+      )}
 
       {/* ---- The position, first.
            This page existed to explain how a launch passes through the
