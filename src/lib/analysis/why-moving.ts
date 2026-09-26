@@ -31,7 +31,7 @@ import {
 } from "@/lib/intel/confidence";
 
 export type Driver = {
-  key: "market" | "sector" | "news" | "ordinary";
+  key: "market" | "sector" | "news" | "ordinary" | "volume" | "analysts";
   title: string;
   /** The measurement, formatted. Always present — a driver without a
    *  figure is a story. */
@@ -79,6 +79,8 @@ export function whyMoving({
   peersAdvancing,
   peersQuoted,
   articles,
+  volume,
+  analysts,
 }: {
   ticker: string;
   changePercent: number | null;
@@ -90,6 +92,10 @@ export function whyMoving({
   peersQuoted: number;
   /** Stories naming this company, newest first. */
   articles: EnrichedArticle[];
+  /** Today's turnover against its own recent average. */
+  volume?: { today: number; average: number } | null;
+  /** How the sell side's mix shifted between the last two periods. */
+  analysts?: { bullishNow: number; bullishBefore: number; total: number } | null;
 }): WhyMoving | null {
   if (changePercent === null || !Number.isFinite(changePercent)) return null;
 
@@ -202,6 +208,62 @@ export function whyMoving({
     });
   }
 
+  /* ---- How much agreement was behind it ----
+     Volume is not a cause and is never presented as one. It is a
+     qualifier on the move: the same 3% on twice the usual turnover is a
+     repricing a lot of people took part in, and on half of it is a thin
+     tape. Saying "it fell on heavy volume" as though the volume did the
+     falling is one of the most common ways this figure is misused. */
+  if (volume && volume.average > 0 && Number.isFinite(volume.today)) {
+    const relative = volume.today / volume.average;
+
+    if (relative >= 1.5 || relative <= 0.6) {
+      drivers.push({
+        key: "volume",
+        title:
+          relative >= 1.5
+            ? "המחזור גבוה מהרגיל"
+            : "המחזור דל מהרגיל",
+        figure: `${relative.toFixed(1)}× מהממוצע`,
+        body:
+          relative >= 1.5
+            ? `המחזור היום הוא ${relative.toFixed(1)} מהממוצע של החמישים ימים האחרונים. זה אומר שהרבה משתתפים תמחרו מחדש, לא שמשהו מסוים קרה — מחזור הוא מידה של הסכמה, לא של סיבה.`
+            : `המחזור היום הוא ${relative.toFixed(1)} מהממוצע של החמישים ימים האחרונים. תנועה על מחזור דל מתהפכת בקלות רבה יותר, כי מעט מאוד עסקאות קבעו אותה.`,
+        share: null,
+        /* Confirmed as a measurement — the turnover is a print — and it is
+           labelled as a qualifier rather than a candidate cause, which is
+           why it is excluded from the "best explanation" pick below. */
+        grade: "confirmed",
+        limits:
+          "מחזור אומר כמה הסכמה עמדה מאחורי התנועה, לא מה גרם לה. מחזור גבוה מלווה גם עליות וגם ירידות.",
+      });
+    }
+  }
+
+  /* ---- The sell side moved ---- */
+  if (analysts && analysts.total > 0) {
+    const shift = analysts.bullishNow - analysts.bullishBefore;
+
+    if (Math.abs(shift) >= 2) {
+      drivers.push({
+        key: "analysts",
+        title:
+          shift > 0
+            ? "אנליסטים עברו לצד החיובי"
+            : "אנליסטים עברו לצד השלילי",
+        figure: `${shift > 0 ? "+" : "−"}${Math.abs(shift)} מתוך ${analysts.total}`,
+        body: `תמהיל ההמלצות זז ב-${Math.abs(shift)} דירוגים בין שתי התקופות האחרונות שפורסמו. תיקון דירוג מתפרסם בתאריך ידוע אחד ומגיע לנתונים כאן בתדירות חודשית, ולכן אי אפשר לקשור אותו ליום מסחר מסוים.`,
+        share: null,
+        /* Monthly resolution against a daily move. The direction is a
+           fact; the timing is not, and the timing is what a causal claim
+           about today would need. */
+        grade: "speculative",
+        limits:
+          "הנתון מתעדכן חודשית ואינו נושא את תאריך התיקון עצמו, ולכן הוא לא יכול להסביר יום מסחר בודד.",
+      });
+    }
+  }
+
   /* ---- What is left ---- */
   const explained =
     (indexChange !== null && indexChange * changePercent > 0) ||
@@ -217,10 +279,18 @@ export function whyMoving({
 
      Ties keep their original order, and the drivers are pushed strongest
      evidence first — the index before the sector before a headline — so a
-     tie resolves towards arithmetic rather than towards a story. */
+     tie resolves towards arithmetic rather than towards a story.
+
+     Volume is excluded along with the size check. It is confirmed as a
+     measurement and would therefore always win, but it is a qualifier on
+     the move rather than a candidate cause — letting it become the
+     "best explanation" would have the panel conclude that a stock fell
+     because people traded it. */
   const strongest =
     drivers
-      .filter((driver) => driver.key !== "ordinary")
+      .filter(
+        (driver) => driver.key !== "ordinary" && driver.key !== "volume",
+      )
       .slice()
       .sort(byGrade)[0] ?? null;
 

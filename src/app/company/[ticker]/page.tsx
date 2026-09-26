@@ -22,7 +22,7 @@ import { buildOutlook } from "@/lib/analysis/outlook";
 import { whyMoving } from "@/lib/analysis/why-moving";
 import { buildExpectationGap } from "@/lib/analysis/expectation-gap";
 import { ExpectationGapPanel } from "@/components/ExpectationGapPanel";
-import { getEarningsSurprises } from "@/lib/sources/finnhub";
+import { getAnalystViews, getEarningsSurprises } from "@/lib/sources/finnhub";
 import { WhyMovingPanel } from "@/components/WhyMovingPanel";
 import { getSectorViews } from "@/lib/sectors";
 import { getFallbackQuote } from "@/lib/sources/prices";
@@ -173,11 +173,27 @@ export default async function CompanyPage({
   /* Why it moved today. Deterministic: the index, the sector and the
      coverage are all figures the site already holds, and the panel says
      so rather than picking a headline and calling it a cause. */
-  const [benchmarkToday, sectorViews, surprises] = await Promise.all([
-    getFallbackQuote("^GSPC").catch(() => null),
-    getSectorViews().catch(() => []),
-    getEarningsSurprises(ticker).catch(() => []),
-  ]);
+  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote] =
+    await Promise.all([
+      getFallbackQuote("^GSPC").catch(() => null),
+      getSectorViews().catch(() => []),
+      getEarningsSurprises(ticker).catch(() => []),
+      /* Cached for a day upstream, so this is nearly free — and the agent
+         pipeline has already warmed it on most visits. */
+      getAnalystViews(ticker).catch(() => []),
+      /* A second opinion on today's move, from the other provider.
+         This page spends seven Finnhub calls before it renders, and when
+         the quote is the one that loses the race to the rate limit, the
+         whole "why is this moving" panel disappeared — the reading needs
+         a change percent and had none. Yahoo carries the same figure and
+         is already a dependency here. */
+      getFallbackQuote(ticker).catch(() => null),
+    ]);
+
+  /* Finnhub first: it is the real-time feed and it carries the day's high
+     and low that the header's range bar needs. Yahoo is the backstop for
+     the one field the analysis cannot do without. */
+  const changeToday = quote?.changePercent ?? fallbackQuote?.changePercent ?? null;
 
   /* What the price implies against what the filings delivered. The panel
      is the site's answer to "is the problem the business or the price",
@@ -193,15 +209,50 @@ export default async function CompanyPage({
     view.members.some((member) => member.ticker === ticker),
   );
 
+  /* Today's turnover against its own fifty-day average. Computed from
+     candles the chart already loaded, so it costs nothing — and it is the
+     one figure that separates a repricing many participants took part in
+     from a drift on a thin tape. */
+  const recentCandles = history?.candles.slice(-51) ?? [];
+  const volumeRead =
+    recentCandles.length === 51
+      ? {
+          today: recentCandles[recentCandles.length - 1].volume,
+          average:
+            recentCandles
+              .slice(0, 50)
+              .reduce((total, candle) => total + candle.volume, 0) / 50,
+        }
+      : null;
+
+  /* How the sell side's mix moved between the last two published
+     periods. Monthly resolution, which is why `why-moving` grades it as
+     speculative rather than treating it as an explanation for a day. */
+  const analystShift =
+    analystViews.length >= 2
+      ? {
+          bullishNow: analystViews[0].strongBuy + analystViews[0].buy,
+          bullishBefore: analystViews[1].strongBuy + analystViews[1].buy,
+          total:
+            analystViews[0].strongBuy +
+            analystViews[0].buy +
+            analystViews[0].hold +
+            analystViews[0].sell +
+            analystViews[0].strongSell,
+        }
+      : null;
+
   const movement = whyMoving({
     ticker,
-    changePercent: quote?.changePercent ?? null,
+    changePercent: changeToday,
     indexChange: benchmarkToday?.changePercent ?? null,
     sectorChange: sectorToday?.averageMove ?? null,
     sectorLabel: sectorToday?.label ?? null,
     peersAdvancing: sectorToday?.advancing ?? 0,
     peersQuoted: sectorToday?.quoted ?? 0,
     articles,
+    volume: volumeRead,
+    analysts: analystShift,
   });
 
   /* ---- The intelligence layer ----
