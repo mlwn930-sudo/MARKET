@@ -1,0 +1,107 @@
+name: Rebuild the thesis history
+
+# Daily, and separate from the fundamentals workflow on purpose.
+#
+# Fundamentals run weekly because filings change a few times a year. The
+# thesis history is the only part of this product with a memory, and what
+# it records is *when* a reading changed — a change detected six days late
+# is a change nobody can act on. It is also the expensive one: the full
+# agent pipeline for forty-eight companies, paced against a sixty-a-minute
+# Finnhub limit, is roughly fifteen minutes of mostly waiting.
+#
+# It commits the result back to the repository, which is the project's
+# durable store. Vercel Hobby has an ephemeral read-only filesystem at
+# request time and DATABASE_URL is unset, so a file in git is what
+# survives a deploy — with the side benefit that the history of the
+# history is itself a git log.
+on:
+  schedule:
+    # 03:10 UTC — after the US close and its late filings, before the
+    # morning in Israel.
+    - cron: "10 3 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-thesis
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    # The pacing loop alone is fifteen minutes; the default six-hour
+    # ceiling would let a hung fetch burn the account's minutes.
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Named, before anything downloads. SEC refuses a request with no
+      # User-Agent outright, and a run that discovers that inside a fetch
+      # loop reports an exit code instead of a cause.
+      - name: Check required secrets
+        id: preflight
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: |
+          missing=""
+          [ -z "$FINNHUB_API_KEY" ] && missing="$missing FINNHUB_API_KEY"
+          [ -z "$SEC_USER_AGENT" ] && missing="$missing SEC_USER_AGENT"
+
+          if [ -n "$missing" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::missing secrets:$missing — the thesis history was not rebuilt."
+            {
+              echo "## לא רץ: חסרים מפתחות"
+              echo ""
+              echo "חסר:\`$missing\`"
+              echo ""
+              echo "Settings → Secrets and variables → Actions → New repository secret"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "secrets present"
+          fi
+
+      - name: Rebuild the thesis history
+        if: steps.preflight.outputs.ready == 'true'
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: npm run build:thesis | tee thesis-run.log
+
+      # The changes detected go into the run summary, so the workflow page
+      # answers "did anything move" without anyone opening the JSON.
+      - name: Summarise
+        if: steps.preflight.outputs.ready == 'true'
+        run: |
+          {
+            echo "## זיכרון התזה"
+            echo ""
+            echo '```'
+            tail -20 thesis-run.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit if anything changed
+        if: steps.preflight.outputs.ready == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/intel
+          if git diff --staged --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore: record the thesis history"
+            git push
+          fi

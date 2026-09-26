@@ -27,6 +27,17 @@ import { WhyMovingPanel } from "@/components/WhyMovingPanel";
 import { getSectorViews } from "@/lib/sectors";
 import { getFallbackQuote } from "@/lib/sources/prices";
 import { readChart } from "@/lib/analysis/chart-read";
+import { changesFor, historyFor } from "@/lib/intel/history-store";
+import { buildExpectationEngine } from "@/lib/intel/surprise";
+import { readEarnings } from "@/lib/intel/earnings";
+import { buildCompanyGraph } from "@/lib/intel/graph";
+import { sectorOf } from "@/lib/universe";
+import { ThesisChangePanel } from "@/components/ThesisChangePanel";
+import {
+  EarningsReadPanel,
+  ExpectationEnginePanel,
+} from "@/components/ExpectationPanel";
+import { ConnectionIndex } from "@/components/ConnectionIndex";
 import {
   Band,
   Disclaimer,
@@ -193,6 +204,40 @@ export default async function CompanyPage({
     articles,
   });
 
+  /* ---- The intelligence layer ----
+     All four of these are pure composition over data this page already
+     loaded, plus two reads of a file the nightly job writes. None of them
+     adds a request, which is why they can sit on a page that already fans
+     out to SEC and two quote providers. */
+  const [thesisChanges, thesisHistory] = await Promise.all([
+    changesFor(ticker).catch(() => []),
+    historyFor(ticker).catch(() => []),
+  ]);
+
+  /* What the multiple implies, converted into a growth rate, and the
+     specific measurements that would break it. */
+  const expectations = buildExpectationEngine({
+    companyName: name,
+    fundamentals,
+    sector,
+    surprises,
+  });
+
+  /* The last quarter against four yardsticks rather than one. */
+  const earnings = readEarnings({ ticker, surprises, fundamentals });
+
+  /* Everything this company is attached to, as a navigable index. */
+  const graph = buildCompanyGraph({
+    ticker,
+    companyName: name,
+    sectorKey: sectorOf(ticker),
+    intelligence,
+    sector: sectorToday ?? null,
+    articles,
+    fundamentals,
+    history: thesisHistory,
+  });
+
   return (
     <Page tint={identity.accent}>
       {/* ---- Masthead ----
@@ -316,6 +361,26 @@ export default async function CompanyPage({
           leaves every other in place. */}
       <div className="flex flex-col">
 
+      {/* ---- Did anything change ----
+           Above the view rather than below it, because a reader returning
+           to a company they already read does not need the position
+           restated — they need to know whether it still says what it said.
+           Absent entirely on a company whose measurements have not moved,
+           which is most of them on most days. */}
+      {thesisChanges.length > 0 && (
+        <Section
+          eyebrow="שינוי בתזה"
+          title="מה האתר אמר קודם, ומה הוא אומר עכשיו"
+          description="זוהה בהשוואה בין שתי מדידות שמורות. ההבחנה שהכול תלוי בה היא האם הקלטים המדודים השתנו — דוח חדש — או שרק המחיר זז ואיתו המכפיל."
+        >
+          <div className="space-y-4">
+            {thesisChanges.slice(0, 2).map((change) => (
+              <ThesisChangePanel key={change.to} change={change} />
+            ))}
+          </div>
+        </Section>
+      )}
+
       {/* ---- The view, before anything else.
            A reader who stops here should still leave with the position, the
            condition it rests on, and what would break it. Everything below
@@ -338,6 +403,35 @@ export default async function CompanyPage({
           description="מכפיל הוא משפט על העתיד שנכתב במספר אחד. כאן הוא מוצג מול מה שכבר דווח — וכשהשניים לא מסתדרים, אי-ההסכמה היא הממצא."
         >
           <ExpectationGapPanel gap={gap} />
+        </Section>
+      )}
+
+      {/* ---- The same question, made falsifiable ----
+           The gap above says the premium exists. This converts it into a
+           growth rate and names the measurements that would break it,
+           which is the difference between "expensive" — an opinion nobody
+           can check — and a threshold next quarter either crosses or does
+           not. */}
+      {expectations && (
+        <Section
+          eyebrow="מנוע הציפיות"
+          title="מה היה מפתיע את השוק"
+          description="המרה אריתמטית מפרמיית מכפיל לקצב צמיחה נדרש, ומולה הקצב שנמסר בפועל. כל הנחה שהחישוב נשען עליה מודפסת מתחתיו."
+          tight
+        >
+          <ExpectationEnginePanel engine={expectations} />
+        </Section>
+      )}
+
+      {/* ---- The last report, against four yardsticks ---- */}
+      {earnings && (
+        <Section
+          eyebrow="הדוח האחרון"
+          title="מה הוא אמר, מול ארבע אמות מידה"
+          description="הכאה מול קונצנזוס שנחתך פעמיים ברבעון אינה אותו אירוע כמו הכאה מול המספר שהוחזק כל הדרך. לכן ההשוואה נעשית גם מול הרבעון הקודם, גם מול אותו רבעון אשתקד, וגם מול שיא ההכאות."
+          tight
+        >
+          <EarningsReadPanel read={earnings} />
         </Section>
       )}
 
@@ -463,6 +557,18 @@ export default async function CompanyPage({
             ariaLabel={`רווח תפעולי שנתי של ${ticker}`}
           />
         </div>
+      </Section>
+
+      {/* ---- Everything this connects to ----
+           Near the end on purpose. It is the index out of this page and
+           into the rest of the site, and an index belongs after the thing
+           it indexes. */}
+      <Section
+        eyebrow="קשרים"
+        title={`מה עוד מחובר ל-${ticker}`}
+        description={`${graph.count} קשרים, כל אחד עם הסיבה שהוא קיים ועם דרגת הראיות שמאחוריה. קישור מאקרו מסומן כהשערה ויושב ליד קישור סקטור שמסומן כמאושש — וההשוואה הזאת היא מה שדיאגרמה הייתה משטחת.`}
+      >
+        <ConnectionIndex graph={graph} />
       </Section>
 
       {/* ---- News ---- */}

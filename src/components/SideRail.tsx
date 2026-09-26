@@ -42,6 +42,9 @@ type Entry = { href: string; label: string; icon: string };
 /** All drawn on a 16-unit grid, stroked, never filled. */
 const ICON = {
   market: "M2 11.5l3.5-4 3 2.5L13 4.5M13 4.5h-3M13 4.5v3",
+  /* Three readings and a line through them: a signal being taken, which
+     is what this page does to everything the site already holds. */
+  intel: "M2 12.5l3-4 3 2 3-5 3 3M3 2.5v11M2.5 13.5h11",
   brief: "M4 2.5h8v11H4zM6 6h4M6 8.5h4M6 11h2",
   heatmap: "M2.5 2.5h5v5h-5zM8.5 2.5h5v5h-5zM2.5 8.5h5v5h-5zM8.5 8.5h5v5h-5z",
   globe: "M8 2a6 6 0 100 12A6 6 0 008 2zM2.4 6.4h11.2M2.4 9.6h11.2M8 2c1.6 1.8 2.4 3.8 2.4 6S9.6 12.2 8 14c-1.6-1.8-2.4-3.8-2.4-6S6.4 3.8 8 2z",
@@ -65,6 +68,7 @@ const GROUPS: { title: string; items: Entry[] }[] = [
     title: "מבט",
     items: [
       { href: "/", label: "שוק", icon: ICON.market },
+      { href: "/intel", label: "מודיעין", icon: ICON.intel },
       { href: "/brief", label: "תדריך", icon: ICON.brief },
       { href: "/heatmap", label: "מפת השוק", icon: ICON.heatmap },
       { href: "/israel", label: "תל אביב", icon: ICON.globe },

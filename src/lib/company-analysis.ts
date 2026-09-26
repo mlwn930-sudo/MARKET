@@ -92,6 +92,21 @@ async function build(ticker: string): Promise<CompanyAnalysis | null> {
  */
 const SHAPE_VERSION = "v2";
 
+/**
+ * The same work, without the cache wrapper.
+ *
+ * Exported for the offline scripts. `unstable_cache` needs a Next request
+ * context to resolve its store, and a `tsx` script running under plain
+ * Node has none — so the nightly job that rebuilds the thesis history
+ * calls this directly rather than going through the cached door and
+ * throwing on the first company.
+ */
+export function buildCompanyAnalysis(
+  ticker: string,
+): Promise<CompanyAnalysis | null> {
+  return build(ticker.toUpperCase());
+}
+
 export function getCompanyAnalysis(
   ticker: string,
 ): Promise<CompanyAnalysis | null> {

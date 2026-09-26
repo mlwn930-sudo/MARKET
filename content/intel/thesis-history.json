@@ -1,0 +1,1868 @@
+{
+  "builtAt": "2026-09-25T20:49:35.722Z",
+  "history": {
+    "NVDA": [
+      {
+        "ticker": "NVDA",
+        "at": "2026-09-25T20:47:55.197Z",
+        "status": "positive",
+        "headline": "NVIDIA Corp עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "כל דולר כבול 155 ימים"
+        ],
+        "metrics": {
+          "pe": 28.06100129179929,
+          "ev_ebitda": 26.873447318300013,
+          "operating_margin": 65.21426284537361,
+          "fcf_margin": 30.502460647789047,
+          "rev_cagr_3": 100.04509499443964,
+          "roic": 86.94354104746995,
+          "net_debt_ebitda": -0.19101314624889365
+        },
+        "filingEnd": "2026-07-26"
+      }
+    ],
+    "AMD": [
+      {
+        "ticker": "AMD",
+        "at": "2026-09-25T20:47:57.250Z",
+        "status": "high-risk",
+        "headline": "Advanced Micro Devices Inc: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 5,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "rich",
+          "verdict": "עסק חזק, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "כל דולר כבול 123 ימים",
+          "דילול מתמשך",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "רוב התזה כבר מתומחרת"
+        ],
+        "metrics": {
+          "pe": 159.65980395622327,
+          "ev_ebitda": 152.30032614585937,
+          "operating_margin": 15.707541459871685,
+          "fcf_margin": 9.68405762014284,
+          "rev_cagr_3": 13.643599335368428,
+          "roic": 9.673939249760338,
+          "net_debt_ebitda": -1.4797904191616766
+        },
+        "filingEnd": "2026-06-27"
+      }
+    ],
+    "INTC": [
+      {
+        "ticker": "INTC",
+        "at": "2026-09-25T20:47:59.225Z",
+        "status": "high-risk",
+        "headline": "Intel Corp: יש סיבה להסתכל, אבל 3 סיכונים מדודים עומדים מולה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 1,
+          "evaluated": 7,
+          "corePassed": 0,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "weak",
+          "priceLevel": "fair",
+          "verdict": "עסק חלש, תמחור ממוצע"
+        },
+        "conditions": [
+          "שהמדד הבא יתהפך: העסק מייצר מזומן חופשי — FCF Margin -40.9%",
+          "שהמדד הבא יתהפך: ההכנסות צומחות בשלוש השנים האחרונות — -5.7% בשנה",
+          "שהמדד הבא יתהפך: המינוף הפיננסי בשליטה — חוב נטו / EBITDA 169.2x",
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "הפעילות מפסידה ברמה התפעולית",
+          "מינוף פיננסי גבוה",
+          "התגמול במניות מדלל את בעלי המניות"
+        ],
+        "metrics": {
+          "pe": null,
+          "ev_ebitda": 5643.959083603109,
+          "operating_margin": -0.1350119231308739,
+          "fcf_margin": -40.856010660681726,
+          "rev_cagr_3": -5.712887978236014,
+          "roic": -0.056141095688127585,
+          "net_debt_ebitda": 169.1869918699187
+        },
+        "filingEnd": "2026-06-27"
+      }
+    ],
+    "AVGO": [
+      {
+        "ticker": "AVGO",
+        "at": "2026-09-25T20:48:01.155Z",
+        "status": "watch",
+        "headline": "Broadcom Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "rich",
+          "verdict": "עסק חזק, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "דילול מתמשך",
+          "רוב התזה כבר מתומחרת",
+          "רוב התזה כבר מתומחרת",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 43.70806010015925,
+          "ev_ebitda": 39.89192599926645,
+          "operating_margin": 48.04947028191776,
+          "fcf_margin": 25.418611959059078,
+          "rev_cagr_3": 24.378426000041763,
+          "roic": 29.957144703842143,
+          "net_debt_ebitda": 0.827860045779418
+        },
+        "filingEnd": "2026-08-02"
+      }
+    ],
+    "QCOM": [
+      {
+        "ticker": "QCOM",
+        "at": "2026-09-25T20:48:03.488Z",
+        "status": "watch",
+        "headline": "Qualcomm Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 123 ימים",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 22.03460854481134,
+          "ev_ebitda": 17.713240807574536,
+          "operating_margin": 23.188636002632236,
+          "fcf_margin": 32.12689191948989,
+          "rev_cagr_3": 0.06330832838727929,
+          "roic": 24.728854981588135,
+          "net_debt_ebitda": 0.5443069931835395
+        },
+        "filingEnd": "2026-06-28"
+      }
+    ],
+    "TXN": [
+      {
+        "ticker": "TXN",
+        "at": "2026-09-25T20:48:05.761Z",
+        "status": "watch",
+        "headline": "Texas Instruments Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 5,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 224 ימים",
+          "הצמיחה החדשה פחות רווחית מהקיימת",
+          "הצמיחה מאטה"
+        ],
+        "metrics": {
+          "pe": 40.84112365239886,
+          "ev_ebitda": 35.045696215097585,
+          "operating_margin": 37.28987816789184,
+          "fcf_margin": 2.657687760242636,
+          "rev_cagr_3": -4.067756491132624,
+          "roic": 25.361663546247286,
+          "net_debt_ebitda": 0.9720154397573753
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "MU": [
+      {
+        "ticker": "MU",
+        "at": "2026-09-25T20:48:07.709Z",
+        "status": "watch",
+        "headline": "Micron Technology Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "כל דולר כבול 181 ימים",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 24.180053014779674,
+          "ev_ebitda": 17.582018571848028,
+          "operating_margin": 65.62576157033033,
+          "fcf_margin": 1.2838691095996633,
+          "rev_cagr_3": 6.7134897269362614,
+          "roic": 62.92887139697595,
+          "net_debt_ebitda": -0.2974184663169924
+        },
+        "filingEnd": "2026-05-28"
+      }
+    ],
+    "MSFT": [
+      {
+        "ticker": "MSFT",
+        "at": "2026-09-25T20:48:09.674Z",
+        "status": "positive",
+        "headline": "Microsoft Corp עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": 27.644332286824437,
+          "ev_ebitda": 23.582346985773246,
+          "operating_margin": 46.780818408927225,
+          "fcf_margin": 20.18659651216403,
+          "rev_cagr_3": 16.12397915820203,
+          "roic": 30.83171575171484,
+          "net_debt_ebitda": -0.23544000463806952
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "ORCL": [
+      {
+        "ticker": "ORCL",
+        "at": "2026-09-25T20:48:11.805Z",
+        "status": "watch",
+        "headline": "Oracle Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "דילול מתמשך",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 22.422922146661985,
+          "ev_ebitda": 17.003691982206643,
+          "operating_margin": 32.12355104770397,
+          "fcf_margin": 7.002340615247436,
+          "rev_cagr_3": 10.476732816565715,
+          "roic": 48.895252636667266,
+          "net_debt_ebitda": -1.295832068352344
+        },
+        "filingEnd": "2026-08-31"
+      }
+    ],
+    "CRM": [
+      {
+        "ticker": "CRM",
+        "at": "2026-09-25T20:48:14.018Z",
+        "status": "watch",
+        "headline": "Salesforce Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 20.291353913378142,
+          "ev_ebitda": 21.899086789659652,
+          "operating_margin": 19.88028585734444,
+          "fcf_margin": 34.48950794301061,
+          "rev_cagr_3": 9.820006113830493,
+          "roic": 10.260820559878123,
+          "net_debt_ebitda": 2.726872677488754
+        },
+        "filingEnd": "2026-07-31"
+      }
+    ],
+    "ADBE": [
+      {
+        "ticker": "ADBE",
+        "at": "2026-09-25T20:48:16.250Z",
+        "status": "watch",
+        "headline": "Adobe Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "cheap",
+          "verdict": "עסק חזק, תמחור נמוך"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 12.766551326135328,
+          "ev_ebitda": 9.291647814750123,
+          "operating_margin": 35.69888332691567,
+          "fcf_margin": 31.212938005390832,
+          "rev_cagr_3": 10.522339932516122,
+          "roic": 58.26514820459728,
+          "net_debt_ebitda": 0.07178266904620266
+        },
+        "filingEnd": "2026-08-28"
+      }
+    ],
+    "NOW": [
+      {
+        "ticker": "NOW",
+        "at": "2026-09-25T20:48:18.924Z",
+        "status": "watch",
+        "headline": "ServiceNow Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "דילול מתמשך",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 85.30809506879822,
+          "ev_ebitda": 61.73216600037937,
+          "operating_margin": 11.403746945424926,
+          "fcf_margin": 33.55959815367907,
+          "rev_cagr_3": 22.376517864742617,
+          "roic": 7.7812995535737315,
+          "net_debt_ebitda": 1.2119796091758708
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "INTU": [
+      {
+        "ticker": "INTU",
+        "at": "2026-09-25T20:48:20.903Z",
+        "status": "watch",
+        "headline": "Intuit Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "cheap",
+          "verdict": "עסק חזק, תמחור נמוך"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 16.21969063297937,
+          "ev_ebitda": 13.001207924912269,
+          "operating_margin": 27.43379336068631,
+          "fcf_margin": 4.653114509511376,
+          "rev_cagr_3": 14.286998540558393,
+          "roic": 20.833673758617103,
+          "net_debt_ebitda": 0.41468388851121685
+        },
+        "filingEnd": "2026-07-31"
+      }
+    ],
+    "GOOGL": [
+      {
+        "ticker": "GOOGL",
+        "at": "2026-09-25T20:48:23.018Z",
+        "status": "watch",
+        "headline": "Alphabet Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "cheap",
+          "verdict": "עסק חזק, תמחור נמוך"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 17.14568825372126,
+          "ev_ebitda": 27.39827674966809,
+          "operating_margin": 33.1103963971238,
+          "fcf_margin": 14.157841145097406,
+          "rev_cagr_3": 12.511745609215975,
+          "roic": 24.18154163635167,
+          "net_debt_ebitda": -0.9639770233289078
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "META": [
+      {
+        "ticker": "META",
+        "at": "2026-09-25T20:48:24.944Z",
+        "status": "positive",
+        "headline": "Meta Platforms Inc עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 29.089183672330645,
+          "ev_ebitda": 19.219649056874463,
+          "operating_margin": 38.08445199957941,
+          "fcf_margin": 19.42404752725106,
+          "rev_cagr_3": 19.89383144293926,
+          "roic": 26.56200470447581,
+          "net_debt_ebitda": -0.06421089521436081
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "NFLX": [
+      {
+        "ticker": "NFLX",
+        "at": "2026-09-25T20:48:27.032Z",
+        "status": "positive",
+        "headline": "Netflix Inc עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 7,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": 21.879121287950657,
+          "ev_ebitda": 20.63017550307844,
+          "operating_margin": 29.676018762077028,
+          "fcf_margin": 23.055259164399388,
+          "rev_cagr_3": 12.639718371360665,
+          "roic": 33.62240899554201,
+          "net_debt_ebitda": 0.3518313489755605
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "AMZN": [
+      {
+        "ticker": "AMZN",
+        "at": "2026-09-25T20:48:28.956Z",
+        "status": "watch",
+        "headline": "Amazon.com Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 8,
+          "corePassed": 3,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [
+          "שהמדד הבא יתהפך: העסק מייצר מזומן חופשי — FCF Margin -1.5%",
+          "שהמדד הבא יתהפך: בעל המניות לא מדולל — ספירת המניות +6.3% בשלוש שנים"
+        ],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "שריפת מזומן",
+          "דילול מתמשך"
+        ],
+        "metrics": {
+          "pe": 19.88373196845958,
+          "ev_ebitda": 15.979487214793384,
+          "operating_margin": 12.081270627062707,
+          "fcf_margin": -1.4986850247524752,
+          "rev_cagr_3": 11.731283601806396,
+          "roic": 12.936407877742667,
+          "net_debt_ebitda": 0.05467935966657194
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "BKNG": [
+      {
+        "ticker": "BKNG",
+        "at": "2026-09-25T20:48:30.841Z",
+        "status": "watch",
+        "headline": "Booking Holdings Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "rich",
+          "verdict": "עסק חזק, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "רוב התזה כבר מתומחרת",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "רוב התזה כבר מתומחרת"
+        ],
+        "metrics": {
+          "pe": 46.35755001185895,
+          "ev_ebitda": 12.302465631482136,
+          "operating_margin": 32.874190007436,
+          "fcf_margin": 41.23437555327361,
+          "rev_cagr_3": 16.34869878187224,
+          "roic": null,
+          "net_debt_ebitda": 0.30096397767630645
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "JNJ": [
+      {
+        "ticker": "JNJ",
+        "at": "2026-09-25T20:48:32.963Z",
+        "status": "positive",
+        "headline": "Johnson & Johnson עוברת את מבחן הליבה, ו3 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 7,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 140 ימים"
+        ],
+        "metrics": {
+          "pe": 31.007812026579572,
+          "ev_ebitda": 23.278357615458305,
+          "operating_margin": 22.226306814120434,
+          "fcf_margin": 10.301340767290588,
+          "rev_cagr_3": 6.155151118952151,
+          "roic": 16.04709620421755,
+          "net_debt_ebitda": 0.9671990970345795
+        },
+        "filingEnd": "2026-06-28"
+      }
+    ],
+    "PFE": [
+      {
+        "ticker": "PFE",
+        "at": "2026-09-25T20:48:35.138Z",
+        "status": "high-risk",
+        "headline": "Pfizer Inc: יש סיבה להסתכל, אבל 0 סיכונים מדודים עומדים מולה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 3,
+          "evaluated": 5,
+          "corePassed": 2,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 186 ימים",
+          "הצמיחה מאטה"
+        ],
+        "metrics": {
+          "pe": 37.370810371188355,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": 6.921941723185129,
+          "rev_cagr_3": -14.797605157261929,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-28"
+      }
+    ],
+    "MRK": [
+      {
+        "ticker": "MRK",
+        "at": "2026-09-25T20:48:37.079Z",
+        "status": "positive",
+        "headline": "Merck & Co Inc עוברת את מבחן הליבה, ו1 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 4,
+          "evaluated": 5,
+          "corePassed": 3,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "rich",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [],
+        "metrics": {
+          "pe": 115.06210603493962,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": 10.004656822244588,
+          "rev_cagr_3": 3.122213027882159,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "LLY": [
+      {
+        "ticker": "LLY",
+        "at": "2026-09-25T20:48:39.292Z",
+        "status": "positive",
+        "headline": "Eli Lilly and Co עוברת את מבחן הליבה, ו1 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 4,
+          "evaluated": 5,
+          "corePassed": 3,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 387 ימים"
+        ],
+        "metrics": {
+          "pe": 41.652520724766056,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": 11.005962467834054,
+          "rev_cagr_3": 31.687374880620432,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "ABBV": [
+      {
+        "ticker": "ABBV",
+        "at": "2026-09-25T20:48:41.349Z",
+        "status": "watch",
+        "headline": "AbbVie Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "מינוף פיננסי גבוה",
+          "מינוף פיננסי",
+          "המרווח על ההכנסה החדשה כבר השתפר",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 74.24692826969928,
+          "ev_ebitda": 31.083705831760664,
+          "operating_margin": 26.201348119156336,
+          "fcf_margin": 19.92513900537384,
+          "rev_cagr_3": 1.7525049181538188,
+          "roic": 24.522292885886955,
+          "net_debt_ebitda": 3.31262596324837
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "UNH": [
+      {
+        "ticker": "UNH",
+        "at": "2026-09-25T20:48:43.506Z",
+        "status": "positive",
+        "headline": "UnitedHealth Group Inc עוברת את מבחן הליבה, ו3 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה החדשה פחות רווחית מהקיימת"
+        ],
+        "metrics": {
+          "pe": 22.632088477964228,
+          "ev_ebitda": 14.578292513106659,
+          "operating_margin": 4.81550844313519,
+          "fcf_margin": 6.370396042023509,
+          "rev_cagr_3": 11.352161443193465,
+          "roic": 12.662153752349548,
+          "net_debt_ebitda": 1.6124186279419128
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "JPM": [
+      {
+        "ticker": "JPM",
+        "at": "2026-09-25T20:48:45.482Z",
+        "status": "watch",
+        "headline": "JPMorgan Chase & Co אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 3,
+          "evaluated": 3,
+          "corePassed": 2,
+          "coreEvaluated": 2
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": 13.841423944751124,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": null,
+          "rev_cagr_3": 12.337567967520657,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2014-12-31"
+      }
+    ],
+    "BAC": [
+      {
+        "ticker": "BAC",
+        "at": "2026-09-25T20:48:47.336Z",
+        "status": "watch",
+        "headline": "Bank of America Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 3,
+          "evaluated": 3,
+          "corePassed": 2,
+          "coreEvaluated": 2
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": 11.647997753219814,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": null,
+          "rev_cagr_3": 6.003133969580876,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "WFC": [
+      {
+        "ticker": "WFC",
+        "at": "2026-09-25T20:48:49.204Z",
+        "status": "high-risk",
+        "headline": "Wells Fargo & Co: יש סיבה להסתכל, אבל 0 סיכונים מדודים עומדים מולה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 2,
+          "evaluated": 3,
+          "corePassed": 1,
+          "coreEvaluated": 2
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "ההכנסות מצטמקות",
+          "הקריאה נשענת על דוח ישן",
+          "הקריאה נשענת על דוח ישן"
+        ],
+        "metrics": {
+          "pe": 11.425929234851836,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": null,
+          "rev_cagr_3": -1.2249079523734885,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2020-09-30"
+      }
+    ],
+    "GS": [
+      {
+        "ticker": "GS",
+        "at": "2026-09-25T20:48:51.071Z",
+        "status": "insufficient",
+        "headline": "אין די נתונים מדווחים כדי לבנות תזה על Goldman Sachs Group Inc.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 2,
+          "evaluated": 2,
+          "corePassed": 1,
+          "coreEvaluated": 1
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": 12.818178306120206,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": null,
+          "rev_cagr_3": null,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "MS": [
+      {
+        "ticker": "MS",
+        "at": "2026-09-25T20:48:53.007Z",
+        "status": "watch",
+        "headline": "Morgan Stanley אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 3,
+          "evaluated": 3,
+          "corePassed": 2,
+          "coreEvaluated": 2
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "הקריאה נשענת על דוח ישן",
+          "הקריאה נשענת על דוח ישן"
+        ],
+        "metrics": {
+          "pe": 15.298118182175545,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": null,
+          "rev_cagr_3": 2.0749544501010853,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2018-03-31"
+      }
+    ],
+    "XOM": [
+      {
+        "ticker": "XOM",
+        "at": "2026-09-25T20:48:54.899Z",
+        "status": "insufficient",
+        "headline": "אין די נתונים מדווחים כדי לבנות תזה על Exxonmobil Holdings Corp.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 0,
+          "evaluated": 0,
+          "corePassed": 0,
+          "coreEvaluated": 0
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "unknown",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": null,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": null,
+          "rev_cagr_3": null,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "CVX": [
+      {
+        "ticker": "CVX",
+        "at": "2026-09-25T20:48:57.215Z",
+        "status": "watch",
+        "headline": "Chevron Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 4,
+          "evaluated": 5,
+          "corePassed": 2,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה מאטה",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה"
+        ],
+        "metrics": {
+          "pe": 19.731805783471202,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": 3.171370938762212,
+          "rev_cagr_3": -7.852874895364959,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "COP": [
+      {
+        "ticker": "COP",
+        "at": "2026-09-25T20:48:59.465Z",
+        "status": "watch",
+        "headline": "ConocoPhillips אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 4,
+          "evaluated": 5,
+          "corePassed": 2,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "fair",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה מאטה"
+        ],
+        "metrics": {
+          "pe": 16.74003350200246,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": 26.24129847989771,
+          "rev_cagr_3": -5.314358606609759,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "SLB": [
+      {
+        "ticker": "SLB",
+        "at": "2026-09-25T20:49:01.395Z",
+        "status": "positive",
+        "headline": "SLB NV עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 24.614475617479876,
+          "ev_ebitda": 8.896574035379672,
+          "operating_margin": 18.647050735597414,
+          "fcf_margin": 0.6984738072322287,
+          "rev_cagr_3": 8.326017106596773,
+          "roic": 15.716219514666241,
+          "net_debt_ebitda": 0.9022832006702974
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "EOG": [
+      {
+        "ticker": "EOG",
+        "at": "2026-09-25T20:49:03.482Z",
+        "status": "watch",
+        "headline": "EOG Resources Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 5,
+          "evaluated": 6,
+          "corePassed": 3,
+          "coreEvaluated": 4
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "cheap",
+          "verdict": "תמונה מעורבת, תמחור נמוך"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה מאטה",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה"
+        ],
+        "metrics": {
+          "pe": 10.89794007816817,
+          "ev_ebitda": 5.668501743563434,
+          "operating_margin": 32.949752090579445,
+          "fcf_margin": null,
+          "rev_cagr_3": -4.151496091687889,
+          "roic": 19.9740400157619,
+          "net_debt_ebitda": 0.21953170447934847
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "WMT": [
+      {
+        "ticker": "WMT",
+        "at": "2026-09-25T20:49:05.701Z",
+        "status": "watch",
+        "headline": "Walmart Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "שריפת מזומן",
+          "רוב התזה כבר מתומחרת",
+          "רוב התזה כבר מתומחרת"
+        ],
+        "metrics": {
+          "pe": 40.0499451893459,
+          "ev_ebitda": 19.26298925548308,
+          "operating_margin": 4.431229460263073,
+          "fcf_margin": -0.23940719264866173,
+          "rev_cagr_3": 5.250406806733099,
+          "roic": 19.56220012606148,
+          "net_debt_ebitda": 0.5995609313321935
+        },
+        "filingEnd": "2026-07-31"
+      }
+    ],
+    "COST": [
+      {
+        "ticker": "COST",
+        "at": "2026-09-25T20:49:07.846Z",
+        "status": "watch",
+        "headline": "Costco Wholesale Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "החברה מפספסת את הציפיות לעיתים קרובות",
+          "הקריאה נשענת על דוח ישן",
+          "הקריאה נשענת על דוח ישן"
+        ],
+        "metrics": {
+          "pe": 44.984147842931755,
+          "ev_ebitda": 27.79143572413567,
+          "operating_margin": 3.8233981749873123,
+          "fcf_margin": 3.5158232483045913,
+          "rev_cagr_3": 6.640442726947482,
+          "roic": 41.00880838516221,
+          "net_debt_ebitda": -1.0388687454677303
+        },
+        "filingEnd": "2026-05-10"
+      }
+    ],
+    "HD": [
+      {
+        "ticker": "HD",
+        "at": "2026-09-25T20:49:09.945Z",
+        "status": "positive",
+        "headline": "Home Depot Inc עוברת את מבחן הליבה, ו2 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "הצמיחה החדשה פחות רווחית מהקיימת"
+        ],
+        "metrics": {
+          "pe": 20.483800092255088,
+          "ev_ebitda": 13.58586512614694,
+          "operating_margin": 12.426112450938668,
+          "fcf_margin": 10.678819690736274,
+          "rev_cagr_3": 1.5185146415588768,
+          "roic": 26.666029670591367,
+          "net_debt_ebitda": 1.7538661362990624
+        },
+        "filingEnd": "2026-08-02"
+      }
+    ],
+    "NKE": [
+      {
+        "ticker": "NKE",
+        "at": "2026-09-25T20:49:12.181Z",
+        "status": "watch",
+        "headline": "Nike Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 4,
+          "evaluated": 5,
+          "corePassed": 2,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "cheap",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "הצמיחה מאטה"
+        ],
+        "metrics": {
+          "pe": 17.178609261276883,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": 0.13578171472908315,
+          "rev_cagr_3": -3.2401823147472864,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-05-31"
+      }
+    ],
+    "MCD": [
+      {
+        "ticker": "MCD",
+        "at": "2026-09-25T20:49:14.457Z",
+        "status": "positive",
+        "headline": "McDonald's Corp עוברת את מבחן הליבה, ו3 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 7,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": 19.08787852775587,
+          "ev_ebitda": 15.605402307715961,
+          "operating_margin": 46.2204894953433,
+          "fcf_margin": 28.01602772363006,
+          "rev_cagr_3": 5.062275280891337,
+          "roic": 26.38588253707399,
+          "net_debt_ebitda": 2.9659758854559155
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "AAPL": [
+      {
+        "ticker": "AAPL",
+        "at": "2026-09-25T20:49:16.348Z",
+        "status": "watch",
+        "headline": "Apple Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "רוב התזה כבר מתומחרת",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "רוב התזה כבר מתומחרת"
+        ],
+        "metrics": {
+          "pe": 38.024328556674725,
+          "ev_ebitda": 29.49025372377932,
+          "operating_margin": 33.17295848747812,
+          "fcf_margin": 31.33264642059196,
+          "rev_cagr_3": 1.8125357434793932,
+          "roic": 100.4676935558912,
+          "net_debt_ebitda": 0.11950849823565006
+        },
+        "filingEnd": "2026-06-27"
+      }
+    ],
+    "CAT": [
+      {
+        "ticker": "CAT",
+        "at": "2026-09-25T20:49:18.545Z",
+        "status": "watch",
+        "headline": "Caterpillar Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 927 ימים",
+          "הצמיחה החדשה פחות רווחית מהקיימת"
+        ],
+        "metrics": {
+          "pe": 34.137526009979425,
+          "ev_ebitda": 25.807781948562273,
+          "operating_margin": 17.519303081802246,
+          "fcf_margin": 5.920057808882763,
+          "rev_cagr_3": 4.38323160905727,
+          "roic": 20.64215631226357,
+          "net_debt_ebitda": 1.8821666343481351
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "BA": [
+      {
+        "ticker": "BA",
+        "at": "2026-09-25T20:49:20.509Z",
+        "status": "high-risk",
+        "headline": "Boeing Co: יש סיבה להסתכל, אבל 3 סיכונים מדודים עומדים מולה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 3,
+          "evaluated": 8,
+          "corePassed": 2,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהמדד הבא יתהפך: העסק מייצר מזומן חופשי — FCF Margin -9.0%",
+          "שהמדד הבא יתהפך: המינוף הפיננסי בשליטה — חוב נטו / EBITDA 4.4x",
+          "שהמדד הבא יתהפך: בעל המניות לא מדולל — ספירת המניות +28.1% בשלוש שנים",
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "מינוף פיננסי גבוה",
+          "התגמול במניות מדלל את בעלי המניות",
+          "כל דולר כבול 250 ימים",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 63.878771803248185,
+          "ev_ebitda": 27.322514617555818,
+          "operating_margin": 4.89387733390074,
+          "fcf_margin": -8.999414862492685,
+          "rev_cagr_3": 10.333066303739024,
+          "roic": 11.164443764948986,
+          "net_debt_ebitda": 4.43481459682166
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "GE": [
+      {
+        "ticker": "GE",
+        "at": "2026-09-25T20:49:22.784Z",
+        "status": "positive",
+        "headline": "General Electric Co עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 7,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [],
+        "metrics": {
+          "pe": 36.98079843789479,
+          "ev_ebitda": 14.564838559938265,
+          "operating_margin": 44.56929578577353,
+          "fcf_margin": 5.975749437181563,
+          "rev_cagr_3": 16.315435597034412,
+          "roic": 71.16366142993333,
+          "net_debt_ebitda": 0.41835081436002386
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "HON": [
+      {
+        "ticker": "HON",
+        "at": "2026-09-25T20:49:25.856Z",
+        "status": "watch",
+        "headline": "Honeywell International Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "cheap",
+          "verdict": "תמונה מעורבת, תמחור נמוך"
+        },
+        "conditions": [],
+        "breakers": [
+          "שריפת מזומן"
+        ],
+        "metrics": {
+          "pe": 8.172984954289415,
+          "ev_ebitda": 9.427356454315792,
+          "operating_margin": 21.982815250808,
+          "fcf_margin": -3.2267388391097565,
+          "rev_cagr_3": 1.82371617394117,
+          "roic": 15.451699254277306,
+          "net_debt_ebitda": 2.5427692307692307
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "UNP": [
+      {
+        "ticker": "UNP",
+        "at": "2026-09-25T20:49:27.920Z",
+        "status": "watch",
+        "headline": "Union Pacific Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 7,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה מאטה",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה"
+        ],
+        "metrics": {
+          "pe": 22.21258822607526,
+          "ev_ebitda": 18.70448055226936,
+          "operating_margin": 40.027548209366394,
+          "fcf_margin": 20.464384100747736,
+          "rev_cagr_3": -0.4915242301498868,
+          "roic": 16.29896750845922,
+          "net_debt_ebitda": 2.696391701897552
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "T": [
+      {
+        "ticker": "T",
+        "at": "2026-09-25T20:49:29.829Z",
+        "status": "positive",
+        "headline": "AT&T Inc עוברת את מבחן הליבה, ו4 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "cheap",
+          "verdict": "תמונה מעורבת, תמחור נמוך"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": 8.089489371895816,
+          "ev_ebitda": 6.500374334043715,
+          "operating_margin": 20.121975180565705,
+          "fcf_margin": 10.705837046817408,
+          "rev_cagr_3": 1.3367419328691454,
+          "roic": 9.013496831279621,
+          "net_debt_ebitda": 2.707568508046977
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "VZ": [
+      {
+        "ticker": "VZ",
+        "at": "2026-09-25T20:49:32.018Z",
+        "status": "watch",
+        "headline": "Verizon Communications Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "מינוף פיננסי גבוה",
+          "מינוף פיננסי"
+        ],
+        "metrics": {
+          "pe": 11.53721847524991,
+          "ev_ebitda": 7.457187756217546,
+          "operating_margin": 20.54069620936679,
+          "fcf_margin": 11.422297418913569,
+          "rev_cagr_3": 0.3292396665705022,
+          "roic": 8.152762280907073,
+          "net_debt_ebitda": 3.4294573969348496
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ],
+    "TMUS": [
+      {
+        "ticker": "TMUS",
+        "at": "2026-09-25T20:49:34.216Z",
+        "status": "positive",
+        "headline": "T-Mobile US Inc עוברת את מבחן הליבה, ו3 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה החדשה פחות רווחית מהקיימת"
+        ],
+        "metrics": {
+          "pe": 16.796047166958655,
+          "ev_ebitda": 8.01411956909157,
+          "operating_margin": 19.799542244736358,
+          "fcf_margin": 19.95791254921954,
+          "rev_cagr_3": 3.5340930856178288,
+          "roic": 9.908926067872185,
+          "net_debt_ebitda": 2.5847618464552466
+        },
+        "filingEnd": "2026-06-30"
+      }
+    ]
+  },
+  "changes": [],
+  "catalysts": [
+    {
+      "ticker": "NVDA",
+      "companyName": "NVIDIA Corp",
+      "title": "דוח רבעוני",
+      "when": "בעוד 52 ימים",
+      "date": "2026-11-17",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 2.52 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "HD",
+      "companyName": "Home Depot Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 52 ימים",
+      "date": "2026-11-17",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 3.96 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "INTU",
+      "companyName": "Intuit Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 53 ימים",
+      "date": "2026-11-18",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 2.77 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "WMT",
+      "companyName": "Walmart Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 54 ימים",
+      "date": "2026-11-19",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 0.64 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "CRM",
+      "companyName": "Salesforce Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 66 ימים",
+      "date": "2026-12-01",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 3.47 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "ORCL",
+      "companyName": "Oracle Corp",
+      "title": "דוח רבעוני",
+      "when": "בעוד 73 ימים",
+      "date": "2026-12-08",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 1.93 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "AVGO",
+      "companyName": "Broadcom Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 74 ימים",
+      "date": "2026-12-09",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 3.90 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "ADBE",
+      "companyName": "Adobe Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 74 ימים",
+      "date": "2026-12-09",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 6.46 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "COST",
+      "companyName": "Costco Wholesale Corp",
+      "title": "דוח רבעוני",
+      "when": "בעוד 74 ימים",
+      "date": "2026-12-09",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 4.96 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "MU",
+      "companyName": "Micron Technology Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 80 ימים",
+      "date": "2026-12-15",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 35.86 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "NKE",
+      "companyName": "Nike Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 81 ימים",
+      "date": "2026-12-16",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 0.53 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "INTC",
+      "companyName": "Intel Corp",
+      "title": "דוח רבעוני",
+      "when": "בעוד 116 ימים",
+      "date": "2027-01-20",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 0.43 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "GE",
+      "companyName": "General Electric Co",
+      "title": "דוח רבעוני",
+      "when": "בעוד 116 ימים",
+      "date": "2027-01-20",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 2.10 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "SLB",
+      "companyName": "SLB NV",
+      "title": "דוח רבעוני",
+      "when": "בעוד 117 ימים",
+      "date": "2027-01-21",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 0.79 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    }
+  ]
+}

@@ -47,6 +47,7 @@ type Item = {
 
 const PAGES: Item[] = [
   { id: "p-home", group: "עמודים", label: "שוק", hint: "מדדים, תנועות וחדשות", href: "/", keywords: "home market dashboard" },
+  { id: "p-intel", group: "עמודים", label: "מודיעין", hint: "מה השתנה היום ולמה זה משנה", href: "/intel", keywords: "intel intelligence signal thesis change" },
   { id: "p-brief", group: "עמודים", label: "תדריך יומי", hint: "מה קרה היום ומה זה אומר", href: "/brief", keywords: "brief daily" },
   { id: "p-opps", group: "עמודים", label: "הזדמנויות", hint: "הסורק — עשר בדיקות על כל חברה", href: "/opportunities", keywords: "screener opportunities" },
   { id: "p-compare", group: "עמודים", label: "השוואה", hint: "עד ארבע חברות זו מול זו", href: "/compare", keywords: "compare" },

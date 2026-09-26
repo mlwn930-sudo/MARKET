@@ -1106,4 +1106,116 @@ h4 {
   }
 }
 
+/* --------------------------------------------------------------------
+   The evidence grade
+   --------------------------------------------------------------------
+   Four levels, and the colour of each is chosen from meanings the site
+   already has rather than invented for this scale.
+
+   Confirmed is ink: it is a fact, and a fact is the plainest thing on
+   the page. Likely is cyan, the colour this site uses for a measured
+   data series. Possible is the neutral measurement slate. Speculative is
+   amber — the colour that already means "caveat" everywhere here, which
+   is exactly what an unmeasured mechanism is.
+
+   Deliberately not a green-to-red ramp. Green and red mean price
+   direction on every other surface, and a green "confirmed" badge over a
+   confirmed piece of bad news would read as reassurance.
+   -------------------------------------------------------------------- */
+.grade {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-line-strong);
+  padding: 0.1rem 0.4rem;
+  font-size: 10px;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: var(--color-ink-faint);
+}
+.grade::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.grade[data-grade="confirmed"] {
+  color: var(--color-ink);
+  border-color: var(--color-line-bright);
+}
+.grade[data-grade="likely"] {
+  color: var(--color-data);
+  border-color: rgba(6, 182, 212, 0.35);
+}
+.grade[data-grade="possible"] {
+  color: var(--color-measure);
+  border-color: var(--color-line-strong);
+}
+.grade[data-grade="speculative"] {
+  color: var(--color-warning);
+  border-color: rgba(245, 158, 11, 0.32);
+}
+
+/* --------------------------------------------------------------------
+   System-derived interpretation
+   --------------------------------------------------------------------
+   Violet, and the distinction it carries is the one the whole
+   intelligence layer rests on: cyan marks a passage a *model* wrote,
+   violet marks a conclusion the *code* derived. A reader who cannot tell
+   those apart cannot tell which sentence they are allowed to check.
+   -------------------------------------------------------------------- */
+.derived-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: rgba(139, 92, 246, 0.11);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: var(--color-insight);
+  flex-shrink: 0;
+}
+
+/* A chain of reasoning, drawn as steps rather than as arrows between
+   boxes. The rule down the inline-start edge is what makes four
+   paragraphs read as one argument. */
+.chain-step {
+  position: relative;
+  padding-inline-start: 1.5rem;
+  padding-bottom: 1.25rem;
+}
+.chain-step:last-child {
+  padding-bottom: 0;
+}
+.chain-step::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 4px;
+  top: 6px;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-line-strong);
+}
+.chain-step:last-child::before {
+  display: none;
+}
+.chain-step::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line-bright);
+  background: var(--color-surface);
+}
+.chain-step[data-terminal="true"]::after {
+  background: var(--color-insight);
+  border-color: var(--color-insight);
+}
+
 }

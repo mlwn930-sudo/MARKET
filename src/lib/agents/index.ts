@@ -6,7 +6,11 @@ import {
   getEarningsSurprises,
   getPeers,
 } from "@/lib/sources/finnhub";
-import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
+import {
+  getCompanyAnalysis,
+  getTechnicalRead,
+  type CompanyAnalysis,
+} from "@/lib/company-analysis";
 import { getSectorContext } from "@/lib/fundamentals-store";
 import { buildVerdict, type Verdict } from "@/lib/analysis/verdict";
 import { financialAnalyst } from "./financial";
@@ -62,8 +66,13 @@ function isoDaysFromNow(days: number): string {
   return new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
 }
 
-async function build(symbol: string): Promise<CompanyIntelligence | null> {
-  const analysis = await getCompanyAnalysis(symbol);
+async function build(
+  symbol: string,
+  /** Already-loaded analysis, for a caller with no Next request context.
+   *  See `buildCompanyIntelligence` below. */
+  provided?: CompanyAnalysis | null,
+): Promise<CompanyIntelligence | null> {
+  const analysis = provided ?? (await getCompanyAnalysis(symbol));
   if (!analysis) return null;
 
   // Everything that can be fetched in parallel is. Each one degrades to a
@@ -169,6 +178,21 @@ async function build(symbol: string): Promise<CompanyIntelligence | null> {
  * than a price should be cached and about right for everything else here:
  * filings do not change intraday, and neither does a peer list.
  */
+/**
+ * The pipeline without the cache wrapper, for the offline scripts.
+ *
+ * The caller passes the analysis it already loaded, which is the whole
+ * point: `unstable_cache` resolves its store from a Next request context,
+ * and the nightly job runs under plain Node where there is none. Going
+ * through the cached door there throws on the first company.
+ */
+export function buildCompanyIntelligence(
+  ticker: string,
+  analysis: CompanyAnalysis,
+): Promise<CompanyIntelligence | null> {
+  return build(ticker.toUpperCase(), analysis);
+}
+
 export function getCompanyIntelligence(
   ticker: string,
 ): Promise<CompanyIntelligence | null> {

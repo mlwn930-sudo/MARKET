@@ -23,6 +23,12 @@
  */
 
 import type { EnrichedArticle } from "@/lib/news-shape";
+import {
+  byGrade,
+  gradeByShare,
+  type Grade,
+  type GradedClaim,
+} from "@/lib/intel/confidence";
 
 export type Driver = {
   key: "market" | "sector" | "news" | "ordinary";
@@ -33,6 +39,18 @@ export type Driver = {
   body: string;
   /** How much of the move this accounts for, when that is computable. */
   share: number | null;
+  /**
+   * How much evidence stands behind this candidate.
+   *
+   * The reason each driver carries its own grade rather than the panel
+   * carrying one: on a given day the index explaining 80% of a move is
+   * near-certain arithmetic, and a headline published the same morning is
+   * a coincidence with a timestamp. Printing both under one confidence
+   * would average a fact with a guess.
+   */
+  grade: Grade;
+  /** What this driver does not establish. */
+  limits: string;
 };
 
 export type WhyMoving = {
@@ -40,6 +58,9 @@ export type WhyMoving = {
   drivers: Driver[];
   /** Said out loud when the evidence does not reach a conclusion. */
   unexplained: string | null;
+  /** The strongest candidate, and how good it is. Null when nothing
+   *  reached even "possible". */
+  best: GradedClaim | null;
 };
 
 /** Below this, a move is a market being open. Stated on the page rather
@@ -83,6 +104,12 @@ export function whyMoving({
       figure: pct(changePercent),
       body: `תנועה של פחות מ-${ORDINARY_MOVE}% ביום אינה אירוע שדורש הסבר — זה הטווח שבו מניה נסחרת בלי שקרה דבר. חיפוש סיבה לתנועה בגודל הזה הוא הדרך המהירה למצוא קשר שלא קיים.`,
       share: null,
+      /* The one claim on this panel that is a measurement about the move
+         itself rather than about its cause, which is why it is the only
+         one that can be confirmed. */
+      grade: "confirmed",
+      limits:
+        "זו אמירה על גודל התנועה, לא על סיבתה. יום רגיל יכול בהחלט להכיל חדשה — הוא פשוט לא ראיה לכך.",
     });
   }
 
@@ -107,6 +134,14 @@ export function whyMoving({
           }`
         : `המדד זז ${pct(indexChange)} והמניה ${pct(changePercent)} — לכיוון ההפוך. תנועה נגד השוק היא בדרך כלל ספציפית לחברה.`,
       share: sameWay ? share : 0,
+      /* The strongest candidate available on most days, and the only one
+         with real arithmetic behind it: when the index moved most of the
+         way, a company-specific story has to explain why the stock did
+         *not* move further. */
+      grade: sameWay ? gradeByShare(share) : "possible",
+      limits: sameWay
+        ? "המדד והמניה זזו יחד, וזו הבחנה על שיעורים — לא הוכחה שהמדד הוא שגרר. ביום כזה כל מניה בשוק נראית מוסברת."
+        : "תנועה נגד המדד מצמצמת את החיפוש לחברה, ואינה מצביעה על מה בחברה.",
     });
   }
 
@@ -122,6 +157,16 @@ export function whyMoving({
         ? `${peersAdvancing} מתוך ${peersQuoted} החברות בסקטור נסחרות בירוק, והסקטור כולו ${pct(sectorChange)}. כשעמיתים עושים אותו דבר, זו לא חדשה על החברה הזאת.`
         : `הסקטור ${pct(sectorChange)} והמניה ${pct(changePercent)}. פער מול העמיתים הוא הסימן החזק ביותר שמשהו ספציפי לחברה קרה.`,
       share: together ? 0.5 : 0,
+      /* Breadth is what lifts this above a coincidence: nine of eleven
+         peers moving the same way is a group event, three of eleven is
+         not. */
+      grade:
+        together && peersQuoted > 0 && peersAdvancing / peersQuoted > 0.7
+          ? "likely"
+          : "possible",
+      limits: together
+        ? "סקטור שזז יחד לא אומר שהסקטור הוא הסיבה — ביום שבו השוק כולו זז, כל הסקטורים זזים איתו."
+        : "היפרדות מהסקטור מצמצמת את החיפוש לחברה ואינה מצביעה על מה בה.",
     });
   }
 
@@ -147,6 +192,13 @@ export function whyMoving({
         ? `"${catalyst.title}" — ${catalyst.analysis?.impact ?? catalyst.triage?.reason ?? ""}. הסיווג כזרז אומר שהאירוע נוגע לתזרים, לתחרות או לרגולציה; הוא אינו מוכיח שהמחיר זז בגללו.`
         : `${today.length} כתבות הזכירו את ${ticker} ביממה האחרונה, ואף אחת מהן לא סווגה כאירוע שמשנה את העסק. סיקור אינו סיבה.`,
       share: null,
+      /* Never better than "possible", and usually worse. A story and a
+         price move sharing a morning is the single most over-claimed
+         connection in financial writing: it fits every outcome, which is
+         exactly what makes it worthless as evidence. */
+      grade: catalyst ? "possible" : "speculative",
+      limits:
+        "הקרבה בזמן בין פרסום לתנועה אינה ראיה לקשר. כתבה מתפרסמת בכל בוקר, והמחיר זז בכל בוקר.",
     });
   }
 
@@ -157,11 +209,33 @@ export function whyMoving({
     today.length > 0 ||
     size < ORDINARY_MOVE;
 
+  /* ---- The best candidate, graded ----
+     The panel's bottom line. It is the strongest single driver rather than
+     a combination, because combining a "likely" market explanation with a
+     "speculative" news one produces something better than either — which
+     is arithmetic doing the opposite of what evidence should do.
+
+     Ties keep their original order, and the drivers are pushed strongest
+     evidence first — the index before the sector before a headline — so a
+     tie resolves towards arithmetic rather than towards a story. */
+  const strongest =
+    drivers
+      .filter((driver) => driver.key !== "ordinary")
+      .slice()
+      .sort(byGrade)[0] ?? null;
+
   return {
     changePercent,
     drivers,
     unexplained: explained
       ? null
       : `אין בנתונים שיש לאתר די כדי להסביר את התנועה של היום. המדד והסקטור לא זזו לאותו כיוון, ולא נקלטה כתבה שמזכירה את ${ticker}. זו תשובה לגיטימית — הסברים לתנועות יומיות נכתבים לרוב אחרי מעשה, ומתאימים לכל תוצאה.`,
+    best: strongest
+      ? {
+          grade: strongest.grade,
+          basis: `${strongest.title} · ${strongest.figure}`,
+          limits: strongest.limits,
+        }
+      : null,
   };
 }

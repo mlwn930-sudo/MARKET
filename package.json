@@ -15,7 +15,8 @@
     "build:institutional": "tsx scripts/build-institutional.ts",
     "summarize:news": "node --env-file-if-exists=.env.local scripts/summarize-news.mjs",
     "filter:news": "node --env-file-if-exists=.env.local scripts/filter-news.mjs",
-    "doctor": "node --env-file-if-exists=.env.local scripts/doctor.mjs"
+    "doctor": "node --env-file-if-exists=.env.local scripts/doctor.mjs",
+    "build:thesis": "tsx scripts/build-thesis-history.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

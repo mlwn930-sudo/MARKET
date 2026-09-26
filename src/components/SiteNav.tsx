@@ -44,6 +44,7 @@ const LINKS = [
 ];
 
 const MORE = [
+  { href: "/intel", label: "מודיעין" },
   { href: "/portfolio", label: "בניית תיק" },
   { href: "/heatmap", label: "מפת השוק" },
   { href: "/research", label: "מחקר עומק" },
