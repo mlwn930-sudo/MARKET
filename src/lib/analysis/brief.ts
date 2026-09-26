@@ -132,6 +132,14 @@ async function buildSnapshot(): Promise<MarketSnapshot> {
     (a, b) => (b.changePercent ?? 0) - (a.changePercent ?? 0),
   );
 
+  /* One card per story, not one per sector it was filed under.
+     The classifier files a story in every sector its text supports, which
+     is correct for the feed and wrong here: an eight-card brief was
+     printing the same headline twice, and React was dropping the second
+     copy for sharing a key with the first — so the brief silently showed
+     seven stories and claimed eight. Deduplicated by URL, first filing
+     wins. */
+  const seen = new Set<string>();
   const stories: BriefStory[] = (feed?.sectors ?? [])
     .flatMap((sector) =>
       sector.articles
@@ -146,6 +154,11 @@ async function buildSnapshot(): Promise<MarketSnapshot> {
           tickers: article.analysis!.tickers,
         })),
     )
+    .filter((story) => {
+      if (seen.has(story.url)) return false;
+      seen.add(story.url);
+      return true;
+    })
     .sort((a, b) => {
       const rank = { high: 0, medium: 1, low: 2 } as const;
       return rank[a.significance] - rank[b.significance];
