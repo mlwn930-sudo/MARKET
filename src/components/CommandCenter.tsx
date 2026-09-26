@@ -340,7 +340,7 @@ export function CommandCenter() {
         type="button"
         aria-label="סגור"
         onClick={() => setOpen(false)}
-        className="veil absolute inset-0 cursor-default bg-deep/75 backdrop-blur-[3px]"
+        className="veil absolute inset-0 cursor-default bg-deep/40 backdrop-blur-[3px]"
       />
 
       <div className="palette raised relative w-full max-w-xl overflow-hidden">
@@ -458,7 +458,7 @@ export function CommandCenter() {
           )}
         </div>
 
-        <div className="flex items-center gap-4 border-t border-line bg-base/50 px-4 py-2.5 text-[10px] text-ink-ghost">
+        <div className="flex items-center gap-4 border-t border-line bg-element/70 px-4 py-2.5 text-[10px] text-ink-ghost">
           <span className="flex items-center gap-1.5">
             <kbd className="kbd">↑</kbd>
             <kbd className="kbd">↓</kbd>

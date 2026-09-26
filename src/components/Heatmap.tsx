@@ -37,7 +37,7 @@ const SATURATION_AT = 4;
 
 function background(change: number | null): string {
   if (change === null || !Number.isFinite(change) || change === 0) {
-    return "rgba(255,255,255,0.04)";
+    return "rgba(11,18,32,0.05)";
   }
   const intensity = Math.min(Math.abs(change) / SATURATION_AT, 1);
   const weight = 10 + intensity * 46;

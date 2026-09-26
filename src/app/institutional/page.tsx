@@ -85,7 +85,7 @@ export default async function InstitutionalPage() {
     : null;
 
   return (
-    <Page tint="#0a84ff">
+    <Page tint="#2855f5">
       <Hero
         eyebrow="מעקב מוסדי"
         title="מי עוד קונה את זה"

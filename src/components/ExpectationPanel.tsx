@@ -125,7 +125,7 @@ export function ExpectationEnginePanel({
         </div>
       )}
 
-      <div className="border-t border-line bg-base/40 p-6">
+      <div className="border-t border-line bg-element/70 p-6">
         <h3 className="eyebrow mb-2.5">ההנחות שהחישוב נשען עליהן</h3>
         <ul className="space-y-1.5">
           {engine.assumptions.map((assumption, index) => (
@@ -221,7 +221,7 @@ export function EarningsReadPanel({ read }: { read: EarningsRead }) {
       {/* Stated, not filled. Guidance is usually what moves the price more
           than the result, and the free tier does not carry it — so the
           absence is named rather than replaced with an estimate. */}
-      <div className="border-t border-line bg-base/40 px-5 py-4">
+      <div className="border-t border-line bg-element/70 px-5 py-4">
         <h3 className="eyebrow mb-2.5">מה לא נמדד כאן</h3>
         <ul className="space-y-1.5">
           {read.missing.map((item, index) => (

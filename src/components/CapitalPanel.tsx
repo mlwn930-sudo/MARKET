@@ -149,7 +149,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                   {number(roicPercent, 1, "%")}
                 </span>
               </div>
-              <div className="mt-1 h-2 overflow-hidden rounded-full bg-overlay">
+              <div className="mt-1 h-2 overflow-hidden rounded-full bg-track">
                 <div
                   className="h-full rounded-full"
                   style={{
@@ -167,7 +167,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                   {number(waccPercent, 1, "%")}
                 </span>
               </div>
-              <div className="mt-1 h-2 overflow-hidden rounded-full bg-overlay">
+              <div className="mt-1 h-2 overflow-hidden rounded-full bg-track">
                 <div
                   className="h-full rounded-full bg-ink-faint"
                   style={{ width: `${barWidth(waccPercent)}%` }}
@@ -388,7 +388,7 @@ export function CapitalPanel({ capital }: { capital: CapitalQuality }) {
                   <span className="w-24 shrink-0 text-[12px] text-ink-muted">
                     {row.label}
                   </span>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-overlay">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-track">
                     <div
                       className="h-full rounded-full"
                       style={{

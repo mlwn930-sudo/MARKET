@@ -20,7 +20,7 @@ export const metadata = {
  */
 export default function PortfolioPage() {
   return (
-    <Page tint="#0a84ff" width="wide">
+    <Page tint="#2855f5" width="wide">
       <Hero
         eyebrow="תיק"
         title="במה התיק הזה באמת מרוכז"

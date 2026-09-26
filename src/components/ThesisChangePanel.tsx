@@ -131,7 +131,7 @@ export function ThesisChangePanel({
         </div>
       )}
 
-      <div className="border-t border-line bg-base/40 px-5 py-3.5">
+      <div className="border-t border-line bg-element/70 px-5 py-3.5">
         <p className="num text-[11px] leading-relaxed text-ink-faint">
           {change.claim.basis}
         </p>

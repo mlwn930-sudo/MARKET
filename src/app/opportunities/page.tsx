@@ -123,7 +123,7 @@ export default async function OpportunitiesPage() {
   const median = results[Math.floor(results.length / 2)]?.score ?? 0;
 
   return (
-    <Page tint="#0a84ff">
+    <Page tint="#2855f5">
       <Hero
         eyebrow="רדאר הזדמנויות"
         title="לא מי הכי טובה — מי חזקה במה"
@@ -181,7 +181,7 @@ export default async function OpportunitiesPage() {
             return (
               <details
                 key={result.company.ticker}
-                className="group transition-colors open:bg-raised/40 hover:bg-raised/25"
+                className="group transition-colors open:bg-element hover:bg-element/60"
               >
                 <summary className="grid cursor-pointer grid-cols-1 items-center gap-4 p-4 lg:grid-cols-[minmax(200px,1.1fr)_2.4fr_auto]">
                   {/* Identity */}
@@ -240,7 +240,7 @@ export default async function OpportunitiesPage() {
                 </summary>
 
                 {/* The working, on demand */}
-                <div className="border-t border-line bg-base/40 p-4">
+                <div className="border-t border-line bg-element/70 p-4">
                   <div className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
                     {result.criteria.map((criterion) => (
                       <div

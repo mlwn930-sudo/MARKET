@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ====================================================================
-   Design system
+   The design system
    ====================================================================
 
    One system, used by every page. No page writes its own colours,
@@ -9,52 +9,87 @@
    or a class here, which is the only way a site of this size stays
    coherent as it grows.
 
-   The principle: the interface is quiet and the data is loud. Everything
-   below is in service of a figure being the brightest, sharpest thing on
-   any screen it appears on.
+   The identity, in one line: a bright editorial publication that happens
+   to be a financial terminal. Light content, dark cinematic openings,
+   blue intelligence marks — and the data always the loudest thing on
+   screen.
+
+   Why light. The previous system was dark everywhere, and dark has a
+   cost this product kept paying: every panel had to earn separation with
+   a glow or a blur, so the page filled with effects, and the figures had
+   to compete with them. On white, separation is free — a hairline and a
+   shadow are enough — which leaves contrast available for the numbers.
+   The dark did not disappear; it became a material, used where an
+   opening should feel like an opening.
    ==================================================================== */
 
 @theme {
-  /* --- Surface ladder -------------------------------------------------
-     Five steps from the page to a raised control, each a real step. A
-     ladder with steps too close together reads as noise; too far apart
-     and the interface looks like stacked boxes. These are blue-black
-     rather than neutral — a true grey dark mode looks like a switched-off
-     screen, and the blue undertone is what makes it read as a surface. */
-  --color-deep: #020617;
-  --color-base: #060b14;
-  --color-surface: #0e1424;
-  --color-raised: #141e32;
-  --color-overlay: #1e293b;
-  --color-hover: #243350;
-  /* The flat element fill — inputs, inset wells, chart panels. */
-  --color-element: #111827;
+  /* --- Canonical palette ----------------------------------------------
+     Named for what they mean, not for what they look like. Everything
+     downstream reads these, and the legacy names below are aliases onto
+     them, so there is exactly one definition of every colour. */
 
-  /* --- Lines ----------------------------------------------------------
-     Built from the palette's border slate rather than from white at low
-     alpha. A white hairline over a blue-black surface reads grey-violet;
-     a slate hairline belongs to the same family as the surfaces it
-     divides, which is what makes a dense table look engineered rather
-     than sketched. */
-  --color-line: rgba(51, 65, 85, 0.5);
-  --color-line-strong: #334155;
-  --color-line-bright: #475569;
+  --color-background: #f5f7fb;
+  --color-surface-plain: #ffffff;
+  --color-surface-secondary: #eef3fa;
+  --color-surface-elevated: #ffffff;
 
-  /* --- Text ----------------------------------------------------------
+  --color-text-primary: #0b1220;
+  --color-text-secondary: #344054;
+  --color-text-muted: #667085;
+  --color-text-subtle: #98a2b3;
+
+  --color-border-default: #dde4ef;
+  --color-border-strong: #c9d4e5;
+  --color-border-bright: #aebdd4;
+
+  --color-brand: #2855f5;
+  --color-intelligence: #00b8e6;
+  --color-intelligence-deep: #6757e8;
+
+  --color-positive: #12a66a;
+  --color-negative: #e4575d;
+  --color-event: #d6a84a;
+
+  /* The dark material. Two steps, because a single flat navy reads as a
+     block and two read as depth. */
+  --color-hero: #0f172a;
+  --color-hero-2: #16233d;
+
+  /* --- Surface ladder --------------------------------------------------
+     Four steps from the page to a raised control. On light, the steps are
+     small on purpose: the difference between a page and a card is a
+     hairline and a shadow, and pushing the greys apart to make the
+     separation obvious is what turns an interface into a stack of boxes. */
+  --color-deep: var(--color-hero);
+  --color-base: var(--color-background);
+  --color-surface: var(--color-surface-plain);
+  --color-raised: var(--color-surface-plain);
+  --color-overlay: var(--color-surface-plain);
+  --color-hover: var(--color-surface-secondary);
+  /* The flat element fill — inputs, inset wells, chart floors. */
+  --color-element: var(--color-surface-secondary);
+
+  /* --- Lines ---------------------------------------------------------- */
+  --color-line: var(--color-border-default);
+  --color-line-strong: var(--color-border-strong);
+  --color-line-bright: var(--color-border-bright);
+
+  /* --- Text -----------------------------------------------------------
      Four steps, from the headline figure down to a footnote. */
-  --color-ink: #f8fafc;
-  --color-ink-muted: #cbd5e1;
-  --color-ink-faint: #94a3b8;
-  --color-ink-ghost: #64748b;
+  --color-ink: var(--color-text-primary);
+  --color-ink-muted: var(--color-text-secondary);
+  --color-ink-faint: var(--color-text-muted);
+  --color-ink-ghost: var(--color-text-subtle);
 
   /* --- Direction ------------------------------------------------------
      Green and red mean price direction. Nothing else on this site may
      use them: a green panel tells the reader something before they have
      read anything. */
-  --color-up: #22c55e;
-  --color-down: #ef4444;
-  --color-up-dim: rgba(34, 197, 94, 0.14);
-  --color-down-dim: rgba(239, 68, 68, 0.14);
+  --color-up: var(--color-positive);
+  --color-down: var(--color-negative);
+  --color-up-dim: rgba(18, 166, 106, 0.1);
+  --color-down-dim: rgba(228, 87, 93, 0.1);
 
   /* --- Accent ---------------------------------------------------------
      One brand colour for the whole system. It carries the wordmark,
@@ -64,34 +99,39 @@
      A page may override --color-accent locally (a company page takes the
      company's own colour), which is why everything downstream reads the
      token rather than the hex. */
-  --color-accent: #0a84ff;
-  --color-accent-dim: rgba(10, 132, 255, 0.12);
-  --color-accent-line: rgba(10, 132, 255, 0.34);
-  --color-accent-soft: #3b82f6;
+  --color-accent: var(--color-brand);
+  --color-accent-dim: rgba(40, 85, 245, 0.08);
+  --color-accent-line: rgba(40, 85, 245, 0.28);
+  --color-accent-soft: #5b7ff8;
 
   /* --- Meaning --------------------------------------------------------
-     Three hues with one job each, so a colour never means two things:
-     cyan marks data and chart series, violet marks an interpretation the
-     system produced rather than measured, pink marks breaking news, and
-     amber marks a caveat. */
-  --color-data: #06b6d4;
-  --color-insight: #8b5cf6;
-  --color-news: #ec4899;
-  --color-warning: #f59e0b;
+     Hues with one job each, so a colour never means two things: cyan
+     marks data and chart series, indigo marks an interpretation the
+     system produced rather than measured, magenta marks breaking news,
+     gold marks a scheduled event or a caveat. */
+  --color-data: var(--color-intelligence);
+  --color-insight: var(--color-intelligence-deep);
+  --color-news: #c2317a;
+  --color-warning: var(--color-event);
 
   /* --- Measurement -----------------------------------------------------
      The colour of a bar, a gauge or a filled segment — anything that is a
      figure drawn as a shape rather than printed as digits.
 
-     Neutral slate, and it must stay neutral. These were drawn in the page
+     Neutral, and it must stay neutral. These were once drawn in the page
      tint, which on a company page is that company's own brand colour: a
      "10 of 11 checks passed" bar rendered in NVIDIA green reads as an
      endorsement of the company rather than as a count, which is precisely
      the reading the verdict panel exists to prevent. The same argument
      rules out the accent — a measure is not a brand moment. */
-  --color-measure: #94a3b8;
+  --color-measure: #7d8ba1;
 
-  --font-sans: var(--font-heebo), system-ui, sans-serif;
+  /* The empty part of a bar, a gauge or a meter. It is not a surface —
+     it is the unfilled half of a figure — and on white the two need
+     different values, which is why it is its own token. */
+  --color-track: rgba(11, 18, 32, 0.08);
+
+  --font-sans: var(--font-assistant), system-ui, sans-serif;
   --font-serif: var(--font-frank), Georgia, serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
@@ -109,10 +149,9 @@
 
    Not bookkeeping. Tailwind emits `@layer theme, base, components,
    utilities`, and a rule written outside those layers beats every
-   utility no matter where it sits in the file. `.btn` defined here was
-   therefore overriding `lg:hidden` on the same element, and the phone’s
-   menu button rendered on every desktop screen; `.surface` was beating
-   any `bg-*` put on it for the same reason.
+   utility no matter where it sits in the file. `.btn` defined outside
+   was therefore overriding `lg:hidden` on the same element, and the
+   phone's menu button rendered on every desktop screen.
 
    Inside `components`, a utility always wins. That is the correct
    relationship: these classes are the default, and a utility on an
@@ -120,18 +159,39 @@
    ==================================================================== */
 @layer components {
 
+/* --------------------------------------------------------------------
+   Elevation
+   --------------------------------------------------------------------
+   What replaced the glow. On a dark page, separation came from light
+   bleeding out of a panel; on a light page it comes from the shadow a
+   panel casts, which is both cheaper to read and the reason the result
+   looks like paper rather than like a screen effect.
+
+   Three steps and no more. The tint is navy rather than black — a black
+   shadow over a blue-white canvas reads as dirt.
+   -------------------------------------------------------------------- */
+:root {
+  --shadow-sm: 0 1px 2px rgba(11, 18, 32, 0.05);
+  --shadow-md:
+    0 1px 2px rgba(11, 18, 32, 0.05), 0 8px 24px -12px rgba(11, 18, 32, 0.14);
+  --shadow-lg:
+    0 2px 4px rgba(11, 18, 32, 0.04), 0 24px 56px -24px rgba(11, 18, 32, 0.22);
+  --shadow-hero: 0 40px 80px -40px rgba(15, 23, 42, 0.55);
+}
 
 /* --------------------------------------------------------------------
    Brand gradients
    --------------------------------------------------------------------
    Two, and they are reserved. A gradient on every surface is how an
    interface stops looking like an instrument; these appear on the
-   wordmark, on a primary action, and on the thin rule that marks an
+   monogram, on a primary action, and on the thin rule that marks an
    AI-produced section — nowhere else, and never behind a figure.
    -------------------------------------------------------------------- */
 :root {
-  --gradient-brand: linear-gradient(90deg, #0a84ff 0%, #06b6d4 100%);
-  --gradient-insight: linear-gradient(90deg, #6366f1 0%, #0a84ff 100%);
+  --gradient-brand: linear-gradient(90deg, #2855f5 0%, #00b8e6 100%);
+  --gradient-insight: linear-gradient(90deg, #6757e8 0%, #2855f5 100%);
+  /* The cinematic opening. Used by .hero-dark and nothing else. */
+  --gradient-hero: linear-gradient(160deg, #0f172a 0%, #16233d 58%, #1b2b4d 100%);
 }
 
 /* --------------------------------------------------------------------
@@ -139,22 +199,22 @@
    --------------------------------------------------------------------
    A page may set --tint to colour its own ambient light and its section
    marks. It is NOT the accent: it never touches text, a control or a
-   figure, and a page that sets nothing simply gets the accent.
+   figure, and a page that sets nothing simply gets the brand.
    -------------------------------------------------------------------- */
 :root {
-  --tint: #0a84ff;
-  --tint-dim: rgba(10, 132, 255, 0.1);
+  --tint: var(--color-brand);
+  --tint-dim: rgba(40, 85, 245, 0.08);
 }
 
 html {
-  background: var(--color-base);
-  color-scheme: dark;
+  background: var(--color-background);
+  color-scheme: light;
   /* Anchored sections land below the sticky bar rather than under it. */
-  scroll-padding-top: 96px;
+  scroll-padding-top: 104px;
 }
 
 body {
-  background: var(--color-base);
+  background: var(--color-background);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -162,74 +222,89 @@ body {
   overscroll-behavior-y: none;
 
   /* `clip`, not `hidden`.
-     A full-bleed hero band is wider than the column it is written inside,
-     and with the rail taking 232px of the viewport it was overflowing far
-     enough to push the rail itself off-screen and put a horizontal
-     scrollbar on every page. `hidden` would fix that and break the sticky
-     bar with it — it makes this element a scroll container, and a sticky
-     child then sticks to a container with no height instead of to the
-     viewport. `clip` cuts the overflow without creating one. */
+     A full-bleed band is wider than the column it is written inside, and
+     `hidden` would contain it — at the cost of making this element a
+     scroll container, which breaks every sticky child in the document.
+     `clip` cuts the overflow without creating one. */
   overflow-x: clip;
 }
 
 /**
- * The width of the rail, as a number the content can do arithmetic with.
+ * The rail is gone, and the token stays at zero.
  *
- * A full-bleed element lives inside the inset column and has to undo that
- * inset to sit on the viewport's centre line. Hard-coding 232px in the
- * component would mean two places to change when the rail changes width,
- * and the one that gets forgotten is a hero that is off-centre by half a
- * rail on every page.
+ * Eighteen destinations in a fixed column was the old answer to a site
+ * that had outgrown its bar. The new answer is three grouped menus in
+ * the header, which gives the content the full width it needs to read
+ * as a publication. Full-bleed bands do arithmetic against this token
+ * to undo their column's inset; at zero the arithmetic is a no-op, and
+ * the token stays so those components keep one way of being centred.
  */
 :root {
   --rail-w: 0px;
 }
-@media (min-width: 1024px) {
-  :root {
-    --rail-w: 232px;
-  }
-}
 
 /* ====================================================================
    Typography
+   ====================================================================
+
+   Seven steps, and each one has a job:
+
+     .display-xl   the opening line of a page, at most once
+     .display      a section opener that is the subject of its screen
+     .title        a section heading (h2)
+     .subtitle     a block heading inside a section (h3)
+     body          15px, the default
+     .num          any figure
+     .caption      a source, an as-of, a caveat
+
+   Headings are sans, heavy and tight. The serif is reserved: it carries
+   the wordmark and editorial passages, where a change of voice is the
+   point.
    ==================================================================== */
 
-/**
- * Headings are sans, heavy and tight. The serif was doing the work of
- * signalling "considered", and at large sizes in Hebrew it read as
- * decorative rather than authoritative. A tight, heavy sans is what the
- * interfaces this is measured against use, and it leaves the serif free
- * to mean something — it is now reserved for the wordmark and for
- * editorial passages, where the change of voice is the point.
- */
 h1,
 h2,
 h3,
 h4 {
   font-weight: 700;
   letter-spacing: -0.022em;
-  line-height: 1.12;
+  line-height: 1.14;
+  color: var(--color-ink);
 }
 
-.display {
-  font-size: clamp(2rem, 4.2vw, 3.25rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
+.display-xl {
+  font-size: clamp(2.5rem, 5.6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.038em;
   line-height: 1.02;
 }
 
-.title {
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+.display {
+  font-size: clamp(1.9rem, 3.8vw, 2.9rem);
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.032em;
+  line-height: 1.06;
+}
+
+.title {
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.024em;
+}
+
+.subtitle {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--color-ink);
 }
 
 /* A small uppercase label above a section. Carries the structure so the
    headings do not have to shout. */
 .eyebrow {
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.11em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-ink-faint);
 }
@@ -238,6 +313,39 @@ h4 {
   font-family: var(--font-serif);
   font-weight: 400;
   letter-spacing: 0;
+}
+
+/**
+ * The sentence under a headline. Wider leading, and a measure that stops
+ * it running the full width of a 1400px page — a line that long is one
+ * the eye cannot track back from.
+ */
+.lede {
+  font-size: clamp(0.975rem, 1.25vw, 1.0625rem);
+  line-height: 1.68;
+  color: var(--color-ink-muted);
+  max-width: 64ch;
+}
+
+/** A footnote: a source, an as-of date, a caveat. Never a finding. */
+.caption {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--color-ink-faint);
+}
+
+/**
+ * What a figure means, set directly beneath it.
+ *
+ * This class is how rule 5 of the project is enforced in CSS: the figure
+ * is the statement, this is the comparison that turns it into knowledge,
+ * and it is styled as a caption so it can never compete with the number
+ * it qualifies.
+ */
+.context-line {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--color-ink-faint);
 }
 
 /* ====================================================================
@@ -264,17 +372,26 @@ h4 {
   unicode-bidi: isolate;
 }
 
-/* The figure that is the subject of its panel. Optically tightened,
-   because monospace digits at display size are too airy by default. */
+.figure-hero {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-size: clamp(2.5rem, 5.5vw, 3.75rem);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.048em;
+}
+
 .figure-xl {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums lining-nums;
   direction: ltr;
   unicode-bidi: isolate;
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-size: clamp(2rem, 4.4vw, 3rem);
   font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 0.98;
+  letter-spacing: -0.038em;
 }
 
 .figure-lg {
@@ -282,9 +399,9 @@ h4 {
   font-variant-numeric: tabular-nums lining-nums;
   direction: ltr;
   unicode-bidi: isolate;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-size: clamp(1.45rem, 2.4vw, 1.9rem);
   font-weight: 500;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.028em;
 }
 
 /* A figure that changed. The tint fades rather than the value jumping,
@@ -313,10 +430,12 @@ h4 {
 }
 
 /* ====================================================================
-   Depth
+   Ambient light
    ====================================================================
-   Layers behind the content, not cards floating on black. Held very low
-   — the background gives the page a horizon and nothing more.
+   Held very low. The background gives the page a horizon and nothing
+   more — the moment it competes with a figure for attention it has
+   failed. On white this is two soft washes and a measuring grid that
+   dissolves before the fold.
    ==================================================================== */
 
 .backdrop {
@@ -326,39 +445,86 @@ h4 {
   pointer-events: none;
   background:
     radial-gradient(
-      70% 50% at 50% -8%,
+      68% 44% at 50% -6%,
       color-mix(in oklab, var(--tint) 12%, transparent) 0%,
-      transparent 62%
+      transparent 64%
     ),
     radial-gradient(
-      50% 40% at 92% 8%,
-      rgba(70, 110, 190, 0.09) 0%,
-      transparent 68%
+      44% 34% at 94% 4%,
+      rgba(0, 184, 230, 0.07) 0%,
+      transparent 70%
     );
 }
 
-/* A measuring grid, fading out below the fold so it reads as a horizon
-   rather than as wallpaper. */
 .backdrop::after {
   content: "";
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(125% 70% at 50% 0%, black 4%, transparent 72%);
+    linear-gradient(to right, rgba(11, 18, 32, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11, 18, 32, 0.035) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: radial-gradient(120% 62% at 50% 0%, black 2%, transparent 70%);
 }
 
-/* Grain stops large dark areas banding on an 8-bit display, and is most
-   of why the surface reads as a material rather than as a hex value. */
-.grain {
-  position: fixed;
+/* ====================================================================
+   The dark material
+   ====================================================================
+   A cinematic band at the top of a page, and a few panels that belong
+   to it. Everything inside re-points the text and line tokens at their
+   light-on-dark values, which is what keeps a component written for the
+   page working unchanged when it is dropped onto the dark — no
+   component needs to know which material it is sitting on.
+   ==================================================================== */
+
+.on-dark {
+  --color-ink: #ffffff;
+  --color-ink-muted: rgba(255, 255, 255, 0.76);
+  --color-ink-faint: rgba(255, 255, 255, 0.58);
+  --color-ink-ghost: rgba(255, 255, 255, 0.42);
+  --color-line: rgba(255, 255, 255, 0.14);
+  --color-line-strong: rgba(255, 255, 255, 0.22);
+  --color-line-bright: rgba(255, 255, 255, 0.34);
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-raised: rgba(255, 255, 255, 0.09);
+  --color-element: rgba(255, 255, 255, 0.05);
+  --color-measure: rgba(255, 255, 255, 0.55);
+  color: var(--color-ink);
+}
+
+.hero-dark {
+  position: relative;
+  background: var(--gradient-hero);
+  color: #ffffff;
+  overflow: hidden;
+}
+
+/* The light inside the band: one wash in the page tint, one cyan, both
+   far enough from the text to stay atmosphere. */
+.hero-dark::before {
+  content: "";
+  position: absolute;
   inset: 0;
-  z-index: -1;
   pointer-events: none;
-  opacity: 0.022;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background:
+    radial-gradient(
+      52% 60% at 82% 0%,
+      color-mix(in oklab, var(--tint) 34%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(40% 50% at 8% 100%, rgba(0, 184, 230, 0.16) 0%, transparent 66%);
+}
+
+.hero-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(90% 90% at 70% 0%, black 0%, transparent 72%);
 }
 
 /* ====================================================================
@@ -366,12 +532,10 @@ h4 {
    ====================================================================
    Three of them, and no page invents a fourth.
 
-   `.surface` is a plain region — a background and a border. Most of the
-   site is this. It is deliberately flat: the previous design gave every
-   region a blur and a glow, which made a page of them look like a pile
-   of glass rather than one system.
+   `.surface` is a plain region — white, a hairline, the smallest shadow
+   that separates it from the canvas. Most of the site is this.
 
-   `.raised` is for something genuinely above the page: a menu, a hover
+   `.raised` is something genuinely above the page: a menu, a hover
    card, a dialog.
 
    `.inset` is a well — a table body, a code block, a chart floor.
@@ -381,13 +545,14 @@ h4 {
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .raised {
-  background: var(--color-raised);
-  border: 1px solid var(--color-line-strong);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
-  box-shadow: 0 16px 40px -24px rgba(0, 0, 0, 0.85);
+  box-shadow: var(--shadow-lg);
 }
 
 .inset {
@@ -396,27 +561,43 @@ h4 {
   border-radius: var(--radius-md);
 }
 
+/* On the dark material a shadow does nothing, so a surface there is a
+   tinted pane instead. */
+.on-dark .surface,
+.on-dark .inset {
+  box-shadow: none;
+  backdrop-filter: blur(10px);
+}
+
 /* A region that leads somewhere. Only these react to a cursor — a panel
    that lifts under the mouse and then does nothing when clicked is a
    small lie, and the previous design told it on every card. */
 .interactive {
   transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease;
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
 }
 .interactive:hover {
-  background: var(--color-raised);
   border-color: var(--color-line-strong);
+  box-shadow: var(--shadow-md);
 }
 
 /* The mark that opens a section. A short rule in the page's tint,
    carrying the structure without a heading having to be coloured. */
 .section-mark {
   display: block;
-  width: 28px;
+  width: 26px;
   height: 2px;
   border-radius: 2px;
   background: var(--tint);
+}
+
+/* A hairline that divides content rather than bounding it. */
+.divider {
+  height: 1px;
+  background: var(--color-line);
+  border: 0;
 }
 
 /* ====================================================================
@@ -433,31 +614,44 @@ h4 {
   padding: 0.5rem 0.9rem;
   border: 1px solid transparent;
   transition:
-    background-color 0.16s ease,
-    border-color 0.16s ease,
-    color 0.16s ease;
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
 }
 
-/* The one place the brand gradient is allowed on a control. White text
-   rather than dark: #0A84FF is a mid-tone blue, and dark text on it fails
-   contrast at this size where dark text on the old gold passed. */
+/* The one place the brand gradient is allowed on a control. */
 .btn-primary {
   background: var(--gradient-brand);
-  color: #f8fafc;
+  color: #ffffff;
   border-color: transparent;
+  box-shadow: 0 6px 16px -8px rgba(40, 85, 245, 0.7);
 }
 .btn-primary:hover {
-  filter: brightness(1.12);
+  filter: brightness(1.06);
+  box-shadow: 0 10px 22px -10px rgba(40, 85, 245, 0.75);
 }
 
 .btn-ghost {
-  border-color: var(--color-line-strong);
+  border-color: var(--color-line);
+  background: var(--color-surface);
   color: var(--color-ink-muted);
+  box-shadow: var(--shadow-sm);
 }
 .btn-ghost:hover {
-  border-color: var(--color-line-bright);
+  border-color: var(--color-line-strong);
   color: var(--color-ink);
-  background: var(--color-raised);
+  box-shadow: var(--shadow-md);
+}
+
+.on-dark .btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: none;
+}
+.on-dark .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 
 /* A filter or segmented control. */
@@ -467,13 +661,14 @@ h4 {
   gap: 0.35rem;
   border-radius: 999px;
   border: 1px solid var(--color-line);
-  padding: 0.3rem 0.75rem;
+  background: var(--color-surface);
+  padding: 0.3rem 0.8rem;
   font-size: 12px;
   color: var(--color-ink-muted);
   transition:
-    border-color 0.16s ease,
-    color 0.16s ease,
-    background-color 0.16s ease;
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
 }
 .pill:hover {
   border-color: var(--color-line-strong);
@@ -484,18 +679,74 @@ h4 {
   background: var(--color-accent-dim);
   border-color: var(--color-accent-line);
   color: var(--color-accent);
+  font-weight: 600;
 }
 
 /* A status word. Never coloured green or red — those two mean price. */
 .badge {
   display: inline-flex;
   align-items: center;
-  border-radius: 4px;
-  border: 1px solid var(--color-line-strong);
-  padding: 0.1rem 0.4rem;
-  font-size: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface-secondary);
+  padding: 0.12rem 0.5rem;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.on-dark .badge {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* --------------------------------------------------------------------
+   Status pill
+   --------------------------------------------------------------------
+   The one element allowed to carry a state colour, and it carries it as
+   a dot plus a word — never as a filled block. A filled green pill in a
+   column of prices reads as a price.
+   -------------------------------------------------------------------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  padding: 0.18rem 0.6rem;
+  font-size: 11.5px;
+  font-weight: 500;
   color: var(--color-ink-muted);
   white-space: nowrap;
+}
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.status[data-tone="live"] {
+  color: var(--color-positive);
+  border-color: rgba(18, 166, 106, 0.3);
+  background: rgba(18, 166, 106, 0.07);
+}
+.status[data-tone="closed"] {
+  color: var(--color-ink-faint);
+}
+.status[data-tone="event"] {
+  color: #a37a22;
+  border-color: rgba(214, 168, 74, 0.4);
+  background: rgba(214, 168, 74, 0.1);
+}
+.status[data-tone="brand"] {
+  color: var(--color-brand);
+  border-color: var(--color-accent-line);
+  background: var(--color-accent-dim);
 }
 
 /* ====================================================================
@@ -510,21 +761,21 @@ h4 {
   display: grid;
   align-items: center;
   gap: 1rem;
-  padding: 0.7rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--color-line);
-  transition: background-color 0.15s ease;
+  transition: background-color var(--dur-fast) var(--ease);
 }
 .row:last-child {
   border-bottom: 0;
 }
 .row:hover {
-  background: var(--color-raised);
+  background: var(--color-surface-secondary);
 }
 
 /* Revealed on hover, so a row is calm until it is the one being read. */
 .row .on-hover {
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity var(--dur-fast) var(--ease);
 }
 .row:hover .on-hover {
   opacity: 1;
@@ -536,7 +787,6 @@ h4 {
   top: 0;
   z-index: 2;
   background: var(--color-surface);
-  backdrop-filter: blur(8px);
 }
 
 /* ====================================================================
@@ -550,10 +800,17 @@ h4 {
    purpose is displaying figures that is not a trade worth making.
    ==================================================================== */
 
+:root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur: 190ms;
+  --dur-slow: 260ms;
+}
+
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -562,18 +819,18 @@ h4 {
 }
 
 .enter {
-  animation: rise 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.4s var(--ease) both;
 }
 
 .stagger > * {
-  animation: rise 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.4s var(--ease) both;
 }
 .stagger > *:nth-child(1) { animation-delay: 0ms; }
-.stagger > *:nth-child(2) { animation-delay: 35ms; }
-.stagger > *:nth-child(3) { animation-delay: 70ms; }
-.stagger > *:nth-child(4) { animation-delay: 105ms; }
-.stagger > *:nth-child(5) { animation-delay: 140ms; }
-.stagger > *:nth-child(6) { animation-delay: 175ms; }
+.stagger > *:nth-child(2) { animation-delay: 40ms; }
+.stagger > *:nth-child(3) { animation-delay: 80ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 200ms; }
 
 /* The live indicator. Pulses only while data is arriving — an indicator
    that keeps pulsing after the feed has died is worse than none. */
@@ -591,124 +848,16 @@ h4 {
 }
 
 /* ====================================================================
-   Chrome
-   ==================================================================== */
-
-::selection {
-  background: color-mix(in oklab, var(--color-accent) 26%, transparent);
-}
-
-::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-line-strong);
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-line-bright);
-}
-
-/* Visible on a dark surface, where the browser default disappears. */
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* ====================================================================
-   Reduced motion
-   ====================================================================
-   The information without the movement — never the movement removed
-   along with the information. Entrance animations resolve instantly
-   rather than being cancelled, because an element cancelled mid-fade
-   stays invisible.
-   ==================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .enter,
-  .stagger > * {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-
-  .settle-up,
-  .settle-down {
-    animation-duration: 0.01s;
-  }
-
-  .live-dot {
-    animation: none;
-  }
-
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ====================================================================
-   ═══════════════════════════════════════════════════════════════════
-   The premium layer
-   ═══════════════════════════════════════════════════════════════════
-
-   Added in one pass with a single question in front of it: does this
-   look like an instrument someone pays for, or like a dashboard someone
-   generated. The answer, nearly every time, came down to rhythm,
-   restraint, and one visual language per kind of meaning — not to more
-   effects.
-   ==================================================================== */
-
-/* --------------------------------------------------------------------
-   Motion constants
-   --------------------------------------------------------------------
-   One curve and three durations for the whole site. A transition that is
-   250ms in one component and 400ms in the next reads as two products
-   glued together, and nobody can say why.
-   -------------------------------------------------------------------- */
-:root {
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-fast: 140ms;
-  --dur: 190ms;
-  --dur-slow: 260ms;
-}
-
-/* --------------------------------------------------------------------
    Rhythm
-   --------------------------------------------------------------------
+   ====================================================================
    The page reads TITLE, then CONTEXT, then PRIMARY DATA, then
    INTERPRETATION, then DETAIL — and the distance between those steps is
    what makes the order visible without a single rule being drawn.
-
-   Held as tokens rather than typed per section, because the value of a
-   rhythm is that it is identical everywhere, and a number typed per
-   component stops being identical within a week.
-   -------------------------------------------------------------------- */
+   ==================================================================== */
 :root {
-  /* Between one section and the next: the largest silence on the page. */
-  --gap-section: clamp(3.75rem, 6.5vw, 6.5rem);
+  --gap-section: clamp(3.5rem, 6vw, 6rem);
   --gap-section-tight: clamp(2.25rem, 3.5vw, 3.25rem);
-  /* Between a section head and its body. */
   --gap-head: clamp(1.25rem, 2vw, 1.75rem);
-  /* Between blocks inside one section. */
   --gap-block: clamp(1rem, 1.6vw, 1.5rem);
 }
 
@@ -722,111 +871,56 @@ h4 {
   margin-bottom: var(--gap-head);
 }
 
-/* --------------------------------------------------------------------
-   Typography
-   -------------------------------------------------------------------- */
-
-/**
- * The opening line of the whole product. Larger and tighter than
- * `.display`, used at most once per page — a page with two of these has
- * no headline at all.
- */
-.display-xl {
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
-  font-weight: 800;
-  letter-spacing: -0.042em;
-  line-height: 0.99;
-}
-
-/**
- * The sentence under a headline. Wider leading, and a measure that stops
- * it running the full width of a 1400px page — a line that long is one
- * the eye cannot track back from.
- */
-.lede {
-  font-size: clamp(0.95rem, 1.3vw, 1.0625rem);
-  line-height: 1.65;
-  color: var(--color-ink-muted);
-  max-width: 62ch;
-}
-
-/** A footnote: a source, an as-of date, a caveat. Never a finding. */
-.caption {
-  font-size: 11px;
-  line-height: 1.6;
-  color: var(--color-ink-ghost);
-}
-
-/**
- * What a figure means, set directly beneath it.
- *
- * This class is how rule 5 of the project is enforced in CSS: the figure
- * is the statement, this is the comparison that turns it into knowledge,
- * and it is styled as a caption so it can never compete with the number
- * it qualifies.
- */
-.context-line {
-  font-size: 11px;
-  line-height: 1.5;
-  color: var(--color-ink-faint);
-}
-
-/* --------------------------------------------------------------------
-   Figures
-   --------------------------------------------------------------------
-   A step above `.figure-xl`, for the one number a page is about: a last
-   price, an index level. The optical tightening grows with the size —
-   monospace digits sit on a fixed advance, and at display size those
-   gaps read as a stutter unless they are pulled back.
-   -------------------------------------------------------------------- */
-.figure-hero {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums lining-nums;
-  direction: ltr;
-  unicode-bidi: isolate;
-  font-size: clamp(2.5rem, 5.5vw, 3.75rem);
-  font-weight: 500;
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-}
-
-/**
- * The change beside a price.
- *
- * A tinted chip rather than coloured text. Coloured text at 13px on a
- * blue-black surface is legible but not scannable — the eye finds a
- * filled shape down a column far faster than it finds a hue applied to
- * four characters, and scanning a column is this element's entire job.
- */
+/* ====================================================================
+   The change chip
+   ====================================================================
+   A tinted chip rather than coloured text. The eye finds a filled shape
+   down a column far faster than it finds a hue applied to four
+   characters, and scanning a column is this element's entire job.
+   ==================================================================== */
 .delta {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  border-radius: 4px;
-  padding: 0.15rem 0.4rem;
+  border-radius: 5px;
+  padding: 0.16rem 0.42rem;
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums lining-nums;
   direction: ltr;
   unicode-bidi: isolate;
   font-size: 12px;
+  font-weight: 500;
   line-height: 1.35;
 }
 .delta[data-dir="up"] {
   background: var(--color-up-dim);
-  color: var(--color-up);
+  color: #0e8c59;
 }
 .delta[data-dir="down"] {
   background: var(--color-down-dim);
-  color: var(--color-down);
+  color: #c93d43;
 }
 .delta[data-dir="flat"] {
-  background: rgba(148, 163, 184, 0.1);
+  background: rgba(102, 112, 133, 0.1);
   color: var(--color-ink-faint);
 }
 
-/* --------------------------------------------------------------------
+.on-dark .delta[data-dir="up"] {
+  background: rgba(18, 166, 106, 0.18);
+  color: #46d99a;
+}
+.on-dark .delta[data-dir="down"] {
+  background: rgba(228, 87, 93, 0.18);
+  color: #ff8f93;
+}
+.on-dark .delta[data-dir="flat"] {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* ====================================================================
    Institutional tables
-   --------------------------------------------------------------------
+   ====================================================================
    A table is the densest thing on this site, and therefore the one most
    worth getting exactly right.
 
@@ -835,22 +929,22 @@ h4 {
    than striped: stripes introduce a second visual rhythm competing with
    the columns, which is why they left professional terminals and stayed
    in report generators.
-   -------------------------------------------------------------------- */
+   ==================================================================== */
 
 .dt {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 13px;
+  font-size: 13.5px;
 }
 
 .dt thead th {
-  padding: 0.65rem 1rem;
+  padding: 0.7rem 1rem;
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.085em;
+  font-weight: 600;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--color-ink-ghost);
+  color: var(--color-ink-faint);
   text-align: start;
   white-space: nowrap;
   border-bottom: 1px solid var(--color-line-strong);
@@ -867,11 +961,11 @@ h4 {
   transition: color var(--dur-fast) var(--ease);
 }
 .dt thead th button:hover {
-  color: var(--color-ink-muted);
+  color: var(--color-ink);
 }
 
 .dt tbody td {
-  padding: 0.7rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--color-line);
   vertical-align: middle;
 }
@@ -882,10 +976,8 @@ h4 {
 .dt tbody tr {
   transition: background-color var(--dur-fast) var(--ease);
 }
-/* Barely there: a hover that lights a row up competes with the price
-   colours already inside it. */
 .dt tbody tr:hover {
-  background: rgba(255, 255, 255, 0.022);
+  background: var(--color-surface-secondary);
 }
 
 /* Selected is the one row state allowed the accent, and it is a rule on
@@ -922,28 +1014,28 @@ h4 {
   flex-direction: row-reverse;
 }
 
-/* --------------------------------------------------------------------
+/* ====================================================================
    The AI language
-   --------------------------------------------------------------------
+   ====================================================================
    Anything on this site written by a model has to be identifiable as
    such at a glance, because the difference between a measured figure and
    a generated sentence is the most important distinction the interface
    makes.
 
-   It is marked with a cyan-to-blue hairline and a small glyph — never a
+   It is marked with a blue-to-cyan hairline and a small glyph — never a
    bubble, an avatar or a sparkle. Those say chatbot, and a chatbot is a
    thing you talk to; this is a thing that shows its work, which is why
    every block carrying the mark also carries a confidence, its sources
    and the time it was produced.
 
-   Violet stays what it was: an interpretation the system derived in
+   Indigo stays what it was: an interpretation the system derived in
    code. Two different claims, two different colours.
-   -------------------------------------------------------------------- */
+   ==================================================================== */
 
 .ai-rule {
-  height: 1px;
+  height: 2px;
   background: var(--gradient-brand);
-  opacity: 0.85;
+  border-radius: 2px;
 }
 
 .ai-mark {
@@ -952,21 +1044,18 @@ h4 {
   width: 18px;
   height: 18px;
   border-radius: 5px;
-  background: rgba(6, 182, 212, 0.11);
-  border: 1px solid rgba(6, 182, 212, 0.3);
-  color: var(--color-data);
+  background: rgba(0, 184, 230, 0.1);
+  border: 1px solid rgba(0, 184, 230, 0.32);
+  color: #0091b8;
   flex-shrink: 0;
 }
 
-/* The block: the hairline across the top, and otherwise nothing a normal
-   panel does not have. The restraint is the point — a generated passage
-   that is visually louder than a measured one inverts the hierarchy the
-   whole site is built on. */
 .ai-block {
   position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 .ai-block::before {
@@ -974,9 +1063,8 @@ h4 {
   position: absolute;
   inset-inline: 0;
   top: 0;
-  height: 1px;
+  height: 2px;
   background: var(--gradient-brand);
-  opacity: 0.85;
 }
 
 /* Confidence, as three segments. A percentage would imply a calibration
@@ -992,21 +1080,24 @@ h4 {
   width: 3px;
   height: 9px;
   border-radius: 1px;
-  background: rgba(255, 255, 255, 0.11);
+  background: rgba(11, 18, 32, 0.12);
 }
 .conf[data-level="high"] i,
 .conf[data-level="medium"] i:nth-child(-n + 2),
 .conf[data-level="low"] i:nth-child(1) {
-  background: var(--color-data);
+  background: #0091b8;
+}
+.on-dark .conf i {
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* --------------------------------------------------------------------
+/* ====================================================================
    Skeletons
-   --------------------------------------------------------------------
+   ====================================================================
    Shaped like the thing that is coming, never a spinner. A spinner says
    "wait"; a skeleton says "a table of six rows is arriving", and the
    reader has already started reading the page around it.
-   -------------------------------------------------------------------- */
+   ==================================================================== */
 
 @keyframes sheen {
   from {
@@ -1018,37 +1109,38 @@ h4 {
 }
 
 .sk {
-  border-radius: 4px;
+  border-radius: 5px;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.035) 0%,
-    rgba(255, 255, 255, 0.075) 50%,
-    rgba(255, 255, 255, 0.035) 100%
+    rgba(11, 18, 32, 0.05) 0%,
+    rgba(11, 18, 32, 0.09) 50%,
+    rgba(11, 18, 32, 0.05) 100%
   );
   background-size: 200% 100%;
   animation: sheen 1.5s linear infinite;
 }
 
-/* --------------------------------------------------------------------
+/* ====================================================================
    Hover
-   --------------------------------------------------------------------
+   ====================================================================
    A quiet lift for a whole clickable region: a story card, a sector
-   tile. Colour only, no transform — a card that moves under the cursor
-   shifts the sentence the reader is in the middle of.
-   -------------------------------------------------------------------- */
+   tile. Elevation and border only, no transform — a card that moves
+   under the cursor shifts the sentence the reader is in the middle of.
+   ==================================================================== */
 .lift {
   transition:
     border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
 }
 .lift:hover {
-  border-color: color-mix(in oklab, var(--tint) 32%, var(--color-line-strong));
-  background: var(--color-raised);
+  border-color: color-mix(in oklab, var(--tint) 34%, var(--color-line-strong));
+  box-shadow: var(--shadow-md);
 }
 
-/* --------------------------------------------------------------------
+/* ====================================================================
    Command palette
-   -------------------------------------------------------------------- */
+   ==================================================================== */
 
 @keyframes palette-in {
   from {
@@ -1070,6 +1162,7 @@ h4 {
 }
 .palette {
   animation: palette-in 0.18s var(--ease) both;
+  box-shadow: var(--shadow-lg);
 }
 .veil {
   animation: veil-in 0.16s ease both;
@@ -1084,52 +1177,39 @@ h4 {
   height: 17px;
   padding: 0 4px;
   border-radius: 4px;
-  border: 1px solid var(--color-line-strong);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-line);
+  background: var(--color-surface-secondary);
   font-family: var(--font-mono);
   font-size: 10px;
   line-height: 1;
-  color: var(--color-ink-ghost);
+  color: var(--color-ink-faint);
 }
 
-/* --------------------------------------------------------------------
-   Reduced motion, for everything above
-   -------------------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .sk {
-    animation: none;
-    background: rgba(255, 255, 255, 0.05);
-  }
-  .palette,
-  .veil {
-    animation: none;
-  }
-}
-
-/* --------------------------------------------------------------------
+/* ====================================================================
    The evidence grade
-   --------------------------------------------------------------------
+   ====================================================================
    Four levels, and the colour of each is chosen from meanings the site
    already has rather than invented for this scale.
 
    Confirmed is ink: it is a fact, and a fact is the plainest thing on
    the page. Likely is cyan, the colour this site uses for a measured
    data series. Possible is the neutral measurement slate. Speculative is
-   amber — the colour that already means "caveat" everywhere here, which
+   gold — the colour that already means "caveat" everywhere here, which
    is exactly what an unmeasured mechanism is.
 
    Deliberately not a green-to-red ramp. Green and red mean price
    direction on every other surface, and a green "confirmed" badge over a
    confirmed piece of bad news would read as reassurance.
-   -------------------------------------------------------------------- */
+   ==================================================================== */
 .grade {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  border-radius: 4px;
-  border: 1px solid var(--color-line-strong);
-  padding: 0.1rem 0.4rem;
-  font-size: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  padding: 0.12rem 0.5rem;
+  font-size: 10.5px;
   line-height: 1.5;
   white-space: nowrap;
   color: var(--color-ink-faint);
@@ -1147,34 +1227,34 @@ h4 {
   border-color: var(--color-line-bright);
 }
 .grade[data-grade="likely"] {
-  color: var(--color-data);
-  border-color: rgba(6, 182, 212, 0.35);
+  color: #0091b8;
+  border-color: rgba(0, 184, 230, 0.4);
 }
 .grade[data-grade="possible"] {
   color: var(--color-measure);
   border-color: var(--color-line-strong);
 }
 .grade[data-grade="speculative"] {
-  color: var(--color-warning);
-  border-color: rgba(245, 158, 11, 0.32);
+  color: #a37a22;
+  border-color: rgba(214, 168, 74, 0.45);
 }
 
-/* --------------------------------------------------------------------
+/* ====================================================================
    System-derived interpretation
-   --------------------------------------------------------------------
-   Violet, and the distinction it carries is the one the whole
+   ====================================================================
+   Indigo, and the distinction it carries is the one the whole
    intelligence layer rests on: cyan marks a passage a *model* wrote,
-   violet marks a conclusion the *code* derived. A reader who cannot tell
+   indigo marks a conclusion the *code* derived. A reader who cannot tell
    those apart cannot tell which sentence they are allowed to check.
-   -------------------------------------------------------------------- */
+   ==================================================================== */
 .derived-mark {
   display: inline-grid;
   place-items: center;
   width: 18px;
   height: 18px;
   border-radius: 5px;
-  background: rgba(139, 92, 246, 0.11);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: rgba(103, 87, 232, 0.1);
+  border: 1px solid rgba(103, 87, 232, 0.3);
   color: var(--color-insight);
   flex-shrink: 0;
 }
@@ -1224,11 +1304,98 @@ h4 {
   height: 5px;
   flex: 1 1 0%;
   border-radius: 1px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(11, 18, 32, 0.08);
 }
 .meter-seg[data-on="true"] {
   background: var(--color-measure);
-  opacity: 0.8;
+}
+.on-dark .meter-seg {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ====================================================================
+   Chrome
+   ==================================================================== */
+
+::selection {
+  background: color-mix(in oklab, var(--color-brand) 18%, transparent);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 999px;
+  border: 2px solid var(--color-background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-line-bright);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ====================================================================
+   Reduced motion
+   ====================================================================
+   The information without the movement — never the movement removed
+   along with the information. Entrance animations resolve instantly
+   rather than being cancelled, because an element cancelled mid-fade
+   stays invisible.
+   ==================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .enter,
+  .stagger > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .settle-up,
+  .settle-down {
+    animation-duration: 0.01s;
+  }
+
+  .live-dot {
+    animation: none;
+  }
+
+  .sk {
+    animation: none;
+    background: rgba(11, 18, 32, 0.07);
+  }
+
+  .palette,
+  .veil {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 }

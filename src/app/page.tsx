@@ -199,7 +199,7 @@ export default async function MarketPage() {
                           background:
                             i < result.score
                               ? "var(--color-accent)"
-                              : "rgba(255,255,255,0.07)",
+                              : "rgba(11,18,32,0.08)",
                         }}
                       />
                     ))}

@@ -4,7 +4,7 @@ import {
   THESIS_LABELS,
   type CompanyIntelligence,
 } from "@/lib/agents";
-import { Section } from "./ui";
+import { EvidenceRow, Section } from "./ui";
 
 /**
  * The Investment Thesis, and the reason it is a separate panel from the
@@ -112,7 +112,7 @@ export function IntelligencePanel({
         {/* The point of the whole module: why a company that failed the
             Core Test is still worth tracking. */}
         {thesis.whyStillTracked && (
-          <div className="border-b border-line bg-base/40 p-6">
+          <div className="border-b border-line bg-element/70 p-6">
             <h3 className="eyebrow">למה החברה עדיין במעקב</h3>
             <p className="mt-2.5 max-w-3xl text-[13px] leading-relaxed text-ink-muted">
               {thesis.whyStillTracked}
@@ -322,7 +322,7 @@ export function IntelligencePanel({
                 </span>
               </summary>
 
-              <div className="border-t border-line bg-base/40 p-5">
+              <div className="border-t border-line bg-element/70 p-5">
                 {report.findings.length > 0 && (
                   <div className="space-y-5">
                     {report.findings.map((finding) => (
@@ -341,26 +341,23 @@ export function IntelligencePanel({
                         </p>
 
                         {finding.evidence.length > 0 && (
-                          <dl className="mt-2.5 flex flex-wrap gap-x-6 gap-y-1.5">
+                          /* One row per figure, each ending in the badge
+                             that says where it came from. The origin used
+                             to be set in parentheses at ten pixels, which
+                             is where a reader stops reading it — and the
+                             origin is the one thing on this panel that
+                             decides how much the figure is worth. */
+                          <div className="mt-3">
                             {finding.evidence.map((item) => (
-                              <div
+                              <EvidenceRow
                                 key={`${item.label}-${item.value}`}
-                                className="flex items-baseline gap-1.5"
-                              >
-                                <dt className="text-[10px] text-ink-ghost">
-                                  {item.label}
-                                </dt>
-                                <dd className="num text-[11px] text-ink-faint">
-                                  {item.value}
-                                </dd>
-                                <dd className="text-[10px] text-ink-ghost">
-                                  ({item.source.origin}
-                                  {item.source.asOf && ` · ${item.source.asOf}`}
-                                  )
-                                </dd>
-                              </div>
+                                label={item.label}
+                                value={item.value}
+                                source={item.source.origin}
+                                asOf={item.source.asOf}
+                              />
                             ))}
-                          </dl>
+                          </div>
                         )}
 
                         <p className="mt-2 text-[10px] leading-relaxed text-ink-ghost">

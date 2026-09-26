@@ -45,11 +45,59 @@ export function Page({
     <main
       style={style}
       className={`mx-auto px-5 pb-28 sm:px-8 ${
-        width === "wide" ? "max-w-[1400px]" : "max-w-[860px]"
+        width === "wide" ? "max-w-[1440px]" : "max-w-[880px]"
       }`}
     >
       {children}
     </main>
+  );
+}
+
+/**
+ * The head of a section, on its own.
+ *
+ * Extracted from `Section` because half the site needs the heading
+ * without the wrapper — inside a panel, above a table, at the top of a
+ * column — and the alternative was every page inventing its own eyebrow and
+ * title markup, which is how two headings on one screen end up two
+ * different sizes.
+ */
+export function SectionHeader({
+  eyebrow,
+  title,
+  description,
+  action,
+  size = "md",
+}: {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  action?: ReactNode;
+  size?: "sm" | "md";
+}) {
+  return (
+    <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+      <div className="max-w-2xl">
+        {eyebrow && (
+          <div className="mb-3 flex items-center gap-2.5">
+            <span className="section-mark" aria-hidden="true" />
+            <span className="eyebrow">{eyebrow}</span>
+          </div>
+        )}
+        {title &&
+          (size === "sm" ? (
+            <h3 className="subtitle">{title}</h3>
+          ) : (
+            <h2 className="title">{title}</h2>
+          ))}
+        {description && (
+          <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink-muted">
+            {description}
+          </p>
+        )}
+      </div>
+      {action && <div className="shrink-0">{action}</div>}
+    </div>
   );
 }
 
@@ -90,22 +138,13 @@ export function Section({
       className={`${tight ? "gap-section-tight" : "gap-section"} ${className}`}
     >
       {(eyebrow || title) && (
-        <div className="gap-head flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-          <div className="max-w-2xl">
-            {eyebrow && (
-              <div className="mb-3 flex items-center gap-2.5">
-                <span className="section-mark" aria-hidden="true" />
-                <span className="eyebrow">{eyebrow}</span>
-              </div>
-            )}
-            {title && <h2 className="title">{title}</h2>}
-            {description && (
-              <p className="mt-2.5 text-[13px] leading-relaxed text-ink-muted">
-                {description}
-              </p>
-            )}
-          </div>
-          {action && <div className="shrink-0">{action}</div>}
+        <div className="gap-head">
+          <SectionHeader
+            eyebrow={eyebrow}
+            title={title}
+            description={description}
+            action={action}
+          />
         </div>
       )}
       {children}
@@ -118,21 +157,28 @@ export function Section({
 /* ------------------------------------------------------------------ */
 
 /**
- * The opener: a label, a headline, a line of context, the action, and
- * then the figures.
+ * The opener.
  *
- * That order is the whole design. A small uppercase label says where you
- * are; the headline is the only large type on the screen; the lede is
- * deliberately small, because a subtitle set nearly as large as its
- * headline destroys both. Everything after is data.
+ * A dark cinematic band under a light masthead, full width, with the
+ * page's own light inside it. Everything after it is white.
+ *
+ * That contrast is the identity of the product: the band is the cover of
+ * an issue, the content below is the issue. It also solves a problem the
+ * all-dark design could not — when every panel is dark, nothing can open
+ * a page, so each page opened with a slightly larger heading and hoped.
+ *
+ * The order inside is fixed and is the whole design. A small uppercase
+ * label says where you are; the headline is the only display type on the
+ * screen; the lede is deliberately small, because a subtitle set nearly
+ * as large as its headline destroys both. Everything after is data.
  *
  * Deliberately not full-height. A hero that fills the viewport costs the
  * reader a scroll before they see a single number, which on a research
  * tool is the entire product pushed below the fold.
  *
- * The image is a band behind the text rather than a backdrop for the
- * page, and it appears once per page — the moment a photograph repeats
- * down a page it stops being atmosphere and becomes decoration.
+ * `tone="light"` exists for the pages that are a continuation rather
+ * than an arrival — a company page reached from a table does not need a
+ * curtain raised in front of it.
  */
 export function Hero({
   eyebrow,
@@ -143,6 +189,8 @@ export function Hero({
   image,
   imageAlt,
   meta,
+  tone = "dark",
+  aside,
 }: {
   eyebrow: string;
   title: ReactNode;
@@ -153,63 +201,76 @@ export function Hero({
   imageAlt?: string;
   /** A line of status beside the eyebrow: a clock, a feed state. */
   meta?: ReactNode;
+  tone?: "dark" | "light";
+  /** A figure, a chart or a quote set beside the headline on a wide
+   *  screen, and below it on a narrow one. */
+  aside?: ReactNode;
 }) {
+  const body = (
+    <>
+      <div className={aside ? "grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end" : ""}>
+        <div>
+          <div className="enter flex flex-wrap items-center gap-x-5 gap-y-2">
+            <span className="flex items-center gap-2.5">
+              <span className="section-mark" aria-hidden="true" />
+              <span className="eyebrow">{eyebrow}</span>
+            </span>
+            {meta}
+          </div>
+
+          <h1 className="display-xl enter mt-5 max-w-4xl text-balance">{title}</h1>
+
+          {lede && <p className="lede enter mt-5">{lede}</p>}
+
+          {action && <div className="enter mt-7">{action}</div>}
+        </div>
+
+        {aside && <div className="enter">{aside}</div>}
+      </div>
+
+      {stats && <div className="enter mt-10">{stats}</div>}
+    </>
+  );
+
+  if (tone === "light") {
+    return <div className="relative pt-12 sm:pt-16">{body}</div>;
+  }
+
   return (
-    <div className="relative">
+    /* Full-bleed rather than held to the content column. The band is the
+       page's horizon, and a horizon that stops at a margin reads as a
+       picture someone placed there.
+
+       The negative start margin undoes whatever inset the column has.
+       It reads --rail-w, which is zero now that the rail is gone, so the
+       arithmetic is a no-op — and stays, because it is the one place
+       that knows how to re-centre a full-bleed band if a column ever
+       gains an inset again. */
+    <div
+      className="hero-dark on-dark relative start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2"
+      style={{ marginInlineStart: "calc(var(--rail-w) / -2)" }}
+    >
       {image && (
-        /* Full-bleed rather than held to the content column: the band is
-           the page's horizon, and a horizon that stops at a margin reads as
-           a picture someone placed there.
-
-           The negative start margin is what undoes the rail. This element
-           is centred on the column it lives in, and that column is inset
-           by the rail — so without pulling it back by half a rail the
-           image sits off-centre by 116px on every desktop page, and its
-           far edge lands outside the viewport. Body-level `overflow-x:
-           clip` catches whatever the scrollbar's own width adds.
-
-           Not negatively z-indexed. A negative z-index paints the band
-           behind the opaque body background, which is why an earlier
-           version loaded the image and showed nothing at all. */
-        <div
-          className="pointer-events-none absolute start-1/2 top-0 h-[360px] w-screen -translate-x-1/2 overflow-hidden rtl:translate-x-1/2 sm:h-[460px]"
-          style={{ marginInlineStart: "calc(var(--rail-w) / -2)" }}
-        >
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <Image
             src={image}
             alt={imageAlt ?? ""}
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-[0.42]"
+            className="object-cover object-center opacity-[0.28]"
           />
-          {/* Three washes rather than one. The first darkens the image
-              enough for text to sit on it at contrast; the second dissolves
-              its bottom edge so the band ends rather than stops; the third
-              pulls the leading edge down, which is what keeps a busy
-              photograph from fighting the headline set over it. */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(6,11,20,0.55)_0%,rgba(6,11,20,0.78)_52%,var(--color-base)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_left,transparent_35%,rgba(6,11,20,0.7)_100%)]" />
+          {/* Two washes rather than one. The first sinks the image far
+              enough for text to sit on it at contrast; the second pulls
+              the leading edge down, which is what keeps a busy photograph
+              from fighting the headline set over it. */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(15,23,42,0.72)_0%,rgba(15,23,42,0.86)_60%,rgba(15,23,42,0.96)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_left,transparent_30%,rgba(15,23,42,0.75)_100%)]" />
         </div>
       )}
 
-      <div className={`relative pt-14 sm:pt-16 ${image ? "sm:pt-32" : ""}`}>
-        <div className="enter flex flex-wrap items-center gap-x-5 gap-y-2">
-          <span className="flex items-center gap-2.5">
-            <span className="section-mark" aria-hidden="true" />
-            <span className="eyebrow">{eyebrow}</span>
-          </span>
-          {meta}
-        </div>
-
-        <h1 className="display-xl enter mt-5 max-w-4xl text-balance">
-          {title}
-        </h1>
-
-        {lede && <p className="lede enter mt-5">{lede}</p>}
-
-        {action && <div className="enter mt-7">{action}</div>}
-        {stats && <div className="enter mt-9">{stats}</div>}
+      <div className="relative mx-auto max-w-[1440px] px-5 pb-14 pt-14 sm:px-8 sm:pb-16 sm:pt-20">
+        {body}
       </div>
     </div>
   );
@@ -606,7 +667,7 @@ export function AiBlock({
       <div className="px-5 py-5">{children}</div>
 
       {(sources?.length || at) && (
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-line bg-base/40 px-5 py-2.5">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-line bg-element/70 px-5 py-2.5">
           {sources && sources.length > 0 && (
             <span className="caption">
               מקורות: <span className="text-ink-faint">{sources.join(" · ")}</span>
@@ -851,3 +912,414 @@ export function Disclaimer({ extra }: { extra?: string }) {
     </p>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* The card set                                                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * A figure that is the subject of its own card.
+ *
+ * `Field` and `Stat` above are figures *inside* something — a band, a
+ * row, a panel. This is the one that stands alone, and it is the only
+ * one allowed a border, because a card is a claim that this number is
+ * worth a frame of its own.
+ *
+ * The order is fixed: label, value, change, context. The context line is
+ * not optional decoration — it is rule 5 of this project, the comparison
+ * that turns a figure into knowledge, and a MetricCard without one is a
+ * number sitting on a white rectangle.
+ */
+export function MetricCard({
+  label,
+  value,
+  change,
+  context,
+  tone = "neutral",
+  href,
+  footer,
+}: {
+  label: string;
+  value: ReactNode;
+  /** Percent change, rendered as the standard chip. */
+  change?: number | null;
+  context?: ReactNode;
+  tone?: "neutral" | "up" | "down";
+  href?: string;
+  /** A sparkline, a meter, a source line. */
+  footer?: ReactNode;
+}) {
+  const toneClass =
+    tone === "up" ? "text-up" : tone === "down" ? "text-down" : "text-ink";
+
+  const inner = (
+    <>
+      <div className="flex items-start justify-between gap-3">
+        <span className="text-[11.5px] font-medium text-ink-faint">{label}</span>
+        {change !== undefined && <Delta value={change} size="sm" />}
+      </div>
+      <div className={`figure-lg mt-3 ${toneClass}`}>{value}</div>
+      {context && <div className="context-line mt-2">{context}</div>}
+      {footer && <div className="mt-4">{footer}</div>}
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link href={href} className="surface lift block px-5 py-4">
+        {inner}
+      </Link>
+    );
+  }
+
+  return <div className="surface px-5 py-4">{inner}</div>;
+}
+
+/**
+ * The frame every table on this site sits in.
+ *
+ * A caption above, the table inside a clipped surface, a source line
+ * below. Writing that markup per page is how one table ends up with a
+ * border and the next with a shadow.
+ */
+export function DataTable({
+  title,
+  description,
+  action,
+  children,
+  note,
+  scroll = true,
+}: {
+  title?: string;
+  description?: string;
+  action?: ReactNode;
+  /** A `<table className="dt">`. */
+  children: ReactNode;
+  /** The source, the as-of, the caveat. */
+  note?: ReactNode;
+  scroll?: boolean;
+}) {
+  return (
+    <div>
+      {(title || action) && (
+        <div className="mb-3">
+          <SectionHeader
+            title={title}
+            description={description}
+            action={action}
+            size="sm"
+          />
+        </div>
+      )}
+      <div className="surface overflow-hidden">
+        <div className={scroll ? "overflow-x-auto" : undefined}>{children}</div>
+      </div>
+      {note && <p className="caption mt-2.5">{note}</p>}
+    </div>
+  );
+}
+
+/**
+ * A reading the system produced, framed as one.
+ *
+ * Carries the indigo mark rather than the cyan one: indigo means the
+ * code derived this, cyan means a model wrote it. Two claims, two
+ * colours, and a reader who cannot tell them apart cannot tell which
+ * sentence they are allowed to check.
+ */
+export function InsightCard({
+  title,
+  children,
+  tone = "derived",
+  meta,
+  action,
+}: {
+  title: string;
+  children: ReactNode;
+  /** `derived` — computed here. `model` — written by a model. */
+  tone?: "derived" | "model";
+  meta?: ReactNode;
+  action?: ReactNode;
+}) {
+  return (
+    <div className={tone === "model" ? "ai-block" : "surface"}>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-line px-5 py-3">
+        {tone === "model" ? (
+          <AiMark />
+        ) : (
+          <span className="derived-mark" title="נגזר בקוד">
+            <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true">
+              <path
+                d="M2.5 6.5l2.5 2.5 4.5-5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+            </svg>
+          </span>
+        )}
+        <span className="text-[13px] font-semibold text-ink">{title}</span>
+        {meta}
+        {action && <span className="ms-auto">{action}</span>}
+      </div>
+      <div className="px-5 py-4 text-[13.5px] leading-relaxed text-ink-muted">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Where a figure came from.
+ *
+ * Six origins, and one of them is not like the others: "מודל" is a
+ * classification a language model wrote, and it is tinted cyan so it can
+ * never be mistaken for a measurement at a glance.
+ */
+export function SourceBadge({
+  source,
+  asOf,
+}: {
+  source: string;
+  asOf?: string | null;
+}) {
+  const model = source === "מודל";
+  return (
+    <span
+      className="badge num"
+      style={
+        model
+          ? {
+              color: "#0091b8",
+              borderColor: "rgba(0, 184, 230, 0.35)",
+              background: "rgba(0, 184, 230, 0.07)",
+            }
+          : undefined
+      }
+      title={asOf ? `לפי נתון מ-${asOf}` : undefined}
+    >
+      {source}
+      {asOf && <span className="opacity-60">{` · ${asOf}`}</span>}
+    </span>
+  );
+}
+
+/**
+ * One line of evidence: what it is, what it says, where it came from.
+ *
+ * The source is not a footnote here — it sits on the same line as the
+ * value, because the entire contract of this product is that a figure
+ * arrives with its origin attached.
+ */
+export function EvidenceRow({
+  label,
+  value,
+  source,
+  asOf,
+}: {
+  label: string;
+  value: ReactNode;
+  /** SEC, Finnhub, Yahoo, FRED, חישוב, מודל. */
+  source?: string;
+  asOf?: string | null;
+}) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-line py-2 last:border-0">
+      <span className="text-[11.5px] text-ink-faint">{label}</span>
+      <span className="num text-[12.5px] text-ink">{value}</span>
+      {source && (
+        <span className="ms-auto">
+          <SourceBadge source={source} asOf={asOf} />
+        </span>
+      )}
+    </div>
+  );
+}
+
+/** Confidence, as a badge rather than as a line of text. */
+export function ConfidenceBadge({
+  level,
+}: {
+  level: "high" | "medium" | "low";
+}) {
+  return (
+    <span className="badge gap-1.5">
+      <span className="conf" data-level={level} aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </span>
+      {level === "high" ? "גבוה" : level === "medium" ? "בינוני" : "נמוך"}
+    </span>
+  );
+}
+
+/**
+ * A state, as a dot and a word.
+ *
+ * Never a filled block. A filled green pill in a column that also
+ * contains prices reads as a price, which is the one thing colour on
+ * this site is reserved for.
+ */
+export function StatusPill({
+  tone = "neutral",
+  children,
+}: {
+  tone?: "neutral" | "live" | "closed" | "event" | "brand";
+  children: ReactNode;
+}) {
+  return (
+    <span className="status" data-tone={tone === "neutral" ? undefined : tone}>
+      {children}
+    </span>
+  );
+}
+
+/** Whether a market is trading, said in one chip. */
+export function MarketStatus({ open, label }: { open: boolean; label: string }) {
+  return (
+    <StatusPill tone={open ? "live" : "closed"}>
+      <span className={open ? "live-dot" : undefined}>{label}</span>
+    </StatusPill>
+  );
+}
+
+/**
+ * The frame around a chart.
+ *
+ * A chart without a title is a picture; a chart without a source is a
+ * claim. This supplies both, plus the row where a control strip belongs,
+ * so no page has to invent its own chart chrome.
+ */
+export function ChartContainer({
+  title,
+  meta,
+  controls,
+  children,
+  note,
+  padded = true,
+}: {
+  title?: string;
+  meta?: ReactNode;
+  controls?: ReactNode;
+  children: ReactNode;
+  note?: ReactNode;
+  padded?: boolean;
+}) {
+  return (
+    <div className="surface overflow-hidden">
+      {(title || controls) && (
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line px-5 py-3">
+          {title && (
+            <span className="text-[13px] font-semibold text-ink">{title}</span>
+          )}
+          {meta}
+          {controls && <span className="ms-auto">{controls}</span>}
+        </div>
+      )}
+      <div className={padded ? "p-4 sm:p-5" : undefined}>{children}</div>
+      {note && (
+        <div className="border-t border-line px-5 py-2.5">
+          <span className="caption">{note}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A company, as a card.
+ *
+ * Ticker first and large, name second and small — the reverse of how a
+ * consumer app would set it, and correct here: a reader scanning for
+ * NVDA is scanning for four capital letters, not for "NVIDIA Corporation".
+ */
+export function CompanyCard({
+  ticker,
+  name,
+  price,
+  change,
+  context,
+  accent,
+}: {
+  ticker: string;
+  name?: string;
+  price?: ReactNode;
+  change?: number | null;
+  context?: ReactNode;
+  /** The company's own colour, used for the leading rule only. */
+  accent?: string;
+}) {
+  return (
+    <Link
+      href={`/company/${ticker}`}
+      className="surface lift relative block overflow-hidden px-5 py-4"
+    >
+      {accent && (
+        <span
+          className="absolute inset-y-0 start-0 w-[3px]"
+          style={{ background: accent }}
+          aria-hidden="true"
+        />
+      )}
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="num text-[15px] font-medium text-ink">{ticker}</span>
+        {change !== undefined && <Delta value={change} size="sm" />}
+      </div>
+      {name && (
+        <div className="mt-0.5 truncate text-[12px] text-ink-faint">{name}</div>
+      )}
+      {price && <div className="num mt-3 text-[19px] text-ink">{price}</div>}
+      {context && <div className="context-line mt-1.5">{context}</div>}
+    </Link>
+  );
+}
+
+/**
+ * Something with a date on it.
+ *
+ * Gold, because gold is what this site already uses for a scheduled
+ * event and for a caveat, and an earnings date is both. The date is set
+ * in the mono face so a column of them lines up.
+ */
+export function EventCard({
+  when,
+  title,
+  body,
+  status,
+  source,
+}: {
+  when: string;
+  title: string;
+  body?: ReactNode;
+  status?: string;
+  source?: ReactNode;
+}) {
+  return (
+    <div className="surface flex gap-4 px-5 py-4">
+      <span
+        className="mt-0.5 h-8 w-[3px] shrink-0 rounded-full"
+        style={{ background: "var(--color-event)" }}
+        aria-hidden="true"
+      />
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="num text-[12px] font-medium text-ink">{when}</span>
+          {status && <span className="badge">{status}</span>}
+        </div>
+        <p className="mt-1.5 text-[13.5px] font-medium text-ink">{title}</p>
+        {body && (
+          <div className="mt-1.5 text-[12.5px] leading-relaxed text-ink-muted">
+            {body}
+          </div>
+        )}
+        {source && <div className="caption mt-2">{source}</div>}
+      </div>
+    </div>
+  );
+}
+
+/** The brief's name for `Empty`. Same component, one vocabulary. */
+export { Empty as EmptyState };

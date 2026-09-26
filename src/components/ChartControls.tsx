@@ -60,7 +60,7 @@ export function ChartControls({
               onClick={() => onRange(key)}
               className={`num rounded-[5px] px-2.5 py-1 text-[11px] transition-colors ${
                 active
-                  ? "bg-overlay text-ink"
+                  ? "bg-track text-ink"
                   : "text-ink-faint hover:text-ink-muted"
               }`}
             >
@@ -98,7 +98,7 @@ export function ChartControls({
                   role="switch"
                   aria-checked={on}
                   onClick={() => onToggle(item.key)}
-                  className="flex w-full items-start gap-2.5 rounded-md px-2 py-2 text-start transition-colors hover:bg-overlay"
+                  className="flex w-full items-start gap-2.5 rounded-md px-2 py-2 text-start transition-colors hover:bg-track"
                 >
                   {/* White on the accent, not dark. #0A84FF is a mid-tone
                       blue: dark glyph on it fails contrast at this size,

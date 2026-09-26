@@ -276,7 +276,7 @@ function StockTable({
                         <span className="num text-[10px] text-ink-ghost">
                           {fmtPrice(quote?.low)}
                         </span>
-                        <span className="relative h-[3px] w-20 rounded-full bg-overlay">
+                        <span className="relative h-[3px] w-20 rounded-full bg-track">
                           <span
                             className="absolute top-1/2 h-2.5 w-[2px] -translate-y-1/2 rounded-full bg-ink transition-[inset-inline-start] duration-500"
                             style={{ insetInlineStart: `${range * 100}%` }}
@@ -360,7 +360,7 @@ export function MarketDeck({
     // rather than flickering between two colours.
     document.documentElement.style.setProperty(
       "--tint",
-      green > 0.62 ? "#22c55e" : green < 0.38 ? "#ef4444" : "#94a3b8",
+      green > 0.62 ? "#12a66a" : green < 0.38 ? "#e4575d" : "#7d8ba1",
     );
   }, [quotes, rows]);
 

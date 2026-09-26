@@ -107,7 +107,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
         {/* The score as a bar, so the proportion registers before the
             numbers are read. */}
         <div
-          className="mt-5 h-1.5 overflow-hidden rounded-full bg-overlay"
+          className="mt-5 h-1.5 overflow-hidden rounded-full bg-track"
           role="img"
           aria-label={`${verdict.passed} מתוך ${verdict.evaluated} בדיקות עברו`}
         >
@@ -198,7 +198,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
       </div>
 
       {/* ---- What would make this wrong ---- */}
-      <div className="border-t border-line bg-base/40 p-6">
+      <div className="border-t border-line bg-element/70 p-6">
         <h3 className="eyebrow">מה היה הופך את הקריאה הזו לשגויה</h3>
         <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-ink-muted">
           {verdict.falsification}

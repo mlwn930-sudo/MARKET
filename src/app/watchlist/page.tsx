@@ -29,7 +29,7 @@ export default async function WatchlistPage() {
   const briefing = await getIntelBriefing();
 
   return (
-    <Page tint="#0a84ff" width="wide">
+    <Page tint="#2855f5" width="wide">
       <Hero
         eyebrow="מעקב"
         title="מה השתנה בחברות שאתה עוקב אחריהן"

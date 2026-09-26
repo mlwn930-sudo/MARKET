@@ -4,7 +4,14 @@ import {
   type Instrument,
 } from "@/lib/sources/macro";
 import { getSeries, FRED_SERIES, type FredSeriesId } from "@/lib/sources/fred";
-import { Disclaimer, Hero, Page, Section } from "@/components/ui";
+import {
+  Disclaimer,
+  Hero,
+  MetricCard,
+  Page,
+  Section,
+  SourceBadge,
+} from "@/components/ui";
 import { directionClass, fmtPercent, fmtRelative } from "@/lib/format";
 
 export const revalidate = 300;
@@ -179,22 +186,19 @@ export default async function MacroPage() {
                 latest && previous ? latest.value - previous.value : null;
 
               return (
-                <article key={series!.id} className="surface p-4">
-                  <h3 className="text-[13px] text-ink">
-                    {FRED_SERIES[series!.id as FredSeriesId]}
-                  </h3>
-                  <div className="num mt-2 text-[22px] text-ink">
-                    {latest ? latest.value.toFixed(2) : "—"}
-                  </div>
-                  <div className="num text-[12px] text-ink-muted">
-                    {delta === null
-                      ? "—"
-                      : `${delta > 0 ? "+" : "−"}${Math.abs(delta).toFixed(2)} מהפרסום הקודם`}
-                  </div>
-                  <p className="mt-3 border-t border-line pt-2 text-[10px] text-ink-ghost">
-                    נכון ל-{latest?.date ?? "—"} · FRED
-                  </p>
-                </article>
+                <MetricCard
+                  key={series!.id}
+                  label={FRED_SERIES[series!.id as FredSeriesId]}
+                  value={latest ? latest.value.toFixed(2) : "—"}
+                  context={
+                    delta === null
+                      ? "אין פרסום קודם להשוואה"
+                      : `${delta > 0 ? "+" : "−"}${Math.abs(delta).toFixed(2)} מהפרסום הקודם`
+                  }
+                  footer={
+                    <SourceBadge source="FRED" asOf={latest?.date ?? null} />
+                  }
+                />
               );
             })}
           </div>

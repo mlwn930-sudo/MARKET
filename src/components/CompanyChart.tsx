@@ -113,7 +113,7 @@ export function CompanyChart({
               </span>
               {/* Where the price sits inside today's range — the context a
                   pair of numbers alone does not give. */}
-              <span className="relative h-[3px] w-28 rounded-full bg-overlay">
+              <span className="relative h-[3px] w-28 rounded-full bg-track">
                 <span
                   className="absolute top-1/2 h-3 w-[2px] -translate-y-1/2 rounded-full bg-ink transition-[inset-inline-start] duration-500"
                   style={{ insetInlineStart: `${range * 100}%` }}

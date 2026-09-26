@@ -105,12 +105,12 @@ export function Gauge({
                 gradient with more than that stops reading as metal and
                 starts reading as a gradient. */}
             <linearGradient id={`face-${label}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="rgba(255,255,255,0.08)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0.01)" />
+              <stop offset="0%" stopColor="rgba(11,18,32,0.07)" />
+              <stop offset="100%" stopColor="rgba(11,18,32,0.01)" />
             </linearGradient>
             <radialGradient id={`hub-${label}`}>
-              <stop offset="0%" stopColor="rgba(255,255,255,0.5)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0.08)" />
+              <stop offset="0%" stopColor="rgba(52,64,84,0.55)" />
+              <stop offset="100%" stopColor="rgba(52,64,84,0.1)" />
             </radialGradient>
           </defs>
 
@@ -119,14 +119,14 @@ export function Gauge({
             cy={CENTRE}
             r={RADIUS + 9}
             fill={`url(#face-${label})`}
-            stroke="rgba(255,255,255,0.07)"
+            stroke="rgba(11,18,32,0.09)"
           />
 
           {/* The track. */}
           <path
             d={arcPath(0, 1, RADIUS)}
             fill="none"
-            stroke="rgba(255,255,255,0.09)"
+            stroke="rgba(11,18,32,0.12)"
             strokeWidth="7"
             strokeLinecap="round"
           />
@@ -157,7 +157,7 @@ export function Gauge({
                 y1={inner.y}
                 x2={outer.x}
                 y2={outer.y}
-                stroke="rgba(255,255,255,0.22)"
+                stroke="rgba(11,18,32,0.24)"
                 strokeWidth={i % 5 === 0 ? 1.4 : 0.7}
               />
             );

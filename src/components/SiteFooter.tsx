@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wordmark } from "./Wordmark";
 
 /**
  * The footer.
@@ -36,26 +37,11 @@ const SOURCES = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-28 border-t border-line">
-      <div className="mx-auto max-w-[1400px] px-5 py-14 sm:px-8">
+    <footer className="mt-28 border-t border-line bg-[var(--color-surface-plain)]">
+      <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span
-                className="grid h-7 w-7 place-items-center rounded-md text-[13px] font-bold"
-                style={{
-                  background: "var(--color-accent-dim)",
-                  color: "var(--color-accent)",
-                  border: "1px solid var(--color-accent-line)",
-                }}
-                aria-hidden="true"
-              >
-                M
-              </span>
-              <span className="editorial text-[15px] text-ink">
-                Market Intel
-              </span>
-            </div>
+            <Wordmark />
             <p className="mt-3 max-w-xs text-[12px] leading-relaxed text-ink-faint">
               מודיעין שוק ההון האמריקאי — מה החברה שווה, מי עוד קונה אותה,
               ומה קורה בעולם שישפיע עליה.

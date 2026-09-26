@@ -63,7 +63,7 @@ export default async function SectorPage({
   ];
 
   return (
-    <Page tint="#0a84ff" width="wide">
+    <Page tint="#2855f5" width="wide">
       <Hero
         eyebrow="סקטור"
         title={view.label}
@@ -209,7 +209,7 @@ export default async function SectorPage({
                 </tr>
               ))}
 
-              <tr className="border-t border-line-strong bg-raised/40">
+              <tr className="border-t border-line-strong bg-element">
                 <th scope="row" className="px-5 py-3 text-start text-[12px] font-normal text-ink">
                   חציון הסקטור
                 </th>

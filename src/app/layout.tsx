@@ -1,21 +1,29 @@
 import type { Metadata } from "next";
-import { Heebo, Frank_Ruhl_Libre, IBM_Plex_Mono } from "next/font/google";
+import { Assistant, Frank_Ruhl_Libre, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { SiteNav } from "@/components/SiteNav";
+import { AppHeader } from "@/components/AppHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
-import { SideRail } from "@/components/SideRail";
 import { MobileTabs } from "@/components/MobileTabs";
 
-const heebo = Heebo({
+/**
+ * The interface face.
+ *
+ * Assistant, not Heebo. Heebo is a Hebrew companion to Roboto, and
+ * Roboto is the sound of an Android system dialog — correct, neutral,
+ * and the reason the old pages read as software rather than as a
+ * publication. Assistant is drawn with more open counters and a
+ * humanist axis, which is what carries a 4rem headline in Hebrew
+ * without it turning into a slab.
+ */
+const assistant = Assistant({
   subsets: ["hebrew", "latin"],
-  // 800 is the display weight. Without it the browser synthesises a bold,
-  // which on Hebrew smears the counters at large sizes.
-  weight: ["400", "500", "700", "800"],
-  variable: "--font-heebo",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-assistant",
   display: "swap",
 });
 
+/** Reserved: the wordmark's long form and editorial passages. */
 const frank = Frank_Ruhl_Libre({
   subsets: ["hebrew", "latin"],
   weight: ["400", "500"],
@@ -23,6 +31,7 @@ const frank = Frank_Ruhl_Libre({
   display: "swap",
 });
 
+/** Every figure on the site. Tabular by construction. */
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -46,34 +55,29 @@ export default function RootLayout({
     <html
       lang="he"
       dir="rtl"
-      className={`${heebo.variable} ${frank.variable} ${plexMono.variable}`}
+      className={`${assistant.variable} ${frank.variable} ${plexMono.variable}`}
     >
       <body className="min-h-screen bg-base text-ink">
-        {/* Two fixed layers behind everything. They read --tint, which each
+        {/* One fixed layer behind everything. It reads --tint, which each
             page sets, so the light behind the content belongs to the page
-            without either layer knowing what is on it. */}
+            without the layer knowing what is on it.
+
+            The grain layer that used to sit here is gone: film grain over
+            a large dark field stops it banding, and over white it only
+            makes the page look dirty. */}
         <div className="backdrop" aria-hidden="true" />
-        <div className="grain" aria-hidden="true" />
 
         {/* Global, so ⌘K works from every page including a company page
             deep in a scroll. Renders nothing until it is opened. */}
         <CommandCenter />
 
-        {/* The rail owns the map of the site on a desktop; the bar keeps
-            search, refresh and the mobile menu. The content column is
-            inset to clear the rail, and only at lg — below that the rail
-            is not rendered at all. */}
-        <SideRail />
+        <AppHeader />
+        <div className="min-h-[60vh]">{children}</div>
+        <SiteFooter />
 
-        <div className="lg:ps-[232px]">
-          <SiteNav />
-          <div className="min-h-[60vh]">{children}</div>
-          <SiteFooter />
-
-          {/* Clears the fixed bottom bar so the footer is not trapped
-              under it on a phone. */}
-          <div className="h-16 lg:hidden" aria-hidden="true" />
-        </div>
+        {/* Clears the fixed bottom bar so the footer is not trapped
+            under it on a phone. */}
+        <div className="h-16 md:hidden" aria-hidden="true" />
 
         <MobileTabs />
       </body>

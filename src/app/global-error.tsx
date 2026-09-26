@@ -36,8 +36,8 @@ export default function GlobalError({
           display: "grid",
           placeItems: "center",
           padding: "24px",
-          background: "#060b14",
-          color: "#f8fafc",
+          background: "#f5f7fb",
+          color: "#0b1220",
           fontFamily: "system-ui, -apple-system, sans-serif",
         }}
       >
@@ -48,7 +48,7 @@ export default function GlobalError({
               fontSize: "11px",
               letterSpacing: "0.11em",
               textTransform: "uppercase",
-              color: "#f59e0b",
+              color: "#a37a22",
             }}
           >
             תקלה
@@ -70,7 +70,7 @@ export default function GlobalError({
               margin: "18px 0 0",
               fontSize: "15px",
               lineHeight: 1.65,
-              color: "#cbd5e1",
+              color: "#344054",
             }}
           >
             התקלה היא במסגרת של האתר עצמו ולא בנתונים. רשימת המעקב והתיק
@@ -82,7 +82,7 @@ export default function GlobalError({
               style={{
                 margin: "20px 0 0",
                 fontSize: "11px",
-                color: "#64748b",
+                color: "#667085",
                 fontFamily: "ui-monospace, monospace",
                 direction: "ltr",
                 textAlign: "right",
@@ -102,8 +102,8 @@ export default function GlobalError({
               border: "none",
               cursor: "pointer",
               fontSize: "14px",
-              color: "#f8fafc",
-              background: "linear-gradient(90deg, #0a84ff 0%, #06b6d4 100%)",
+              color: "#ffffff",
+              background: "linear-gradient(90deg, #2855f5 0%, #00b8e6 100%)",
             }}
           >
             טען מחדש

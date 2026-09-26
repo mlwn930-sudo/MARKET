@@ -32,7 +32,7 @@ export default async function SectorsPage() {
   );
 
   return (
-    <Page tint="#0a84ff" width="wide">
+    <Page tint="#2855f5" width="wide">
       <Hero
         eyebrow="סקטורים"
         title="איפה הכסף זז היום, ולמה"
@@ -83,7 +83,7 @@ export default async function SectorsPage() {
               {/* A bar that reads as a share rather than as a gauge: how
                   many of the sector's members are up. */}
               <span className="hidden w-24 self-center sm:block">
-                <span className="flex h-[5px] w-full overflow-hidden rounded-full bg-overlay">
+                <span className="flex h-[5px] w-full overflow-hidden rounded-full bg-track">
                   <span
                     className="h-full bg-up"
                     style={{

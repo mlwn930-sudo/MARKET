@@ -65,38 +65,40 @@ export type ChartMarker = {
  * move together with them.
  */
 const PAINT = {
-  up: "#22c55e",
-  down: "#ef4444",
-  upWick: "rgba(34,197,94,0.75)",
-  downWick: "rgba(239,68,68,0.75)",
-  upVolume: "rgba(34,197,94,0.22)",
-  downVolume: "rgba(239,68,68,0.22)",
+  up: "#12a66a",
+  down: "#e4575d",
+  upWick: "rgba(18,166,106,0.8)",
+  downWick: "rgba(228,87,93,0.8)",
+  upVolume: "rgba(18,166,106,0.2)",
+  downVolume: "rgba(228,87,93,0.2)",
   /* The grid is barely above the surface it sits on. A chart whose grid
-     competes with its own series is a chart nobody reads a level off. */
-  grid: "rgba(255,255,255,0.028)",
-  axis: "rgba(51,65,85,0.65)",
-  axisText: "#64748b",
-  /* Slate, not amber. The crosshair was inherited from a gold-accented
-     version of this site and was the only warm thing left on any screen —
-     and amber means "caveat" everywhere else here, which made a reader
-     hovering a bar look like a warning. */
-  crosshair: "rgba(148,163,184,0.55)",
-  crosshairLabel: "#1e293b",
-  data: "#06b6d4",
-  insight: "#a78bfa",
+     competes with its own series is a chart nobody reads a level off.
+     On white that means a navy at 5%, not a white at 3%. */
+  grid: "rgba(11,18,32,0.055)",
+  axis: "rgba(11,18,32,0.14)",
+  axisText: "#667085",
+  /* Slate, not gold. Gold means "caveat" everywhere else here, which
+     made a reader hovering a bar look like a warning. */
+  crosshair: "rgba(52,64,84,0.5)",
+  crosshairLabel: "#0b1220",
+  data: "#00b8e6",
+  insight: "#6757e8",
 } as const;
 
+/* The moving averages. Four hues that stay apart on white and none of
+   them green or red, because those two mean direction on this site and a
+   50-day line is not a direction. */
 const MA_STYLE: Record<number, { color: string; width: 1 | 2 }> = {
-  20: { color: "#60a5fa", width: 1 },
-  50: { color: "#f59e0b", width: 1 },
-  150: { color: "#a78bfa", width: 2 },
-  200: { color: "#94a3b8", width: 2 },
+  20: { color: "#2855f5", width: 1 },
+  50: { color: "#d6a84a", width: 1 },
+  150: { color: "#6757e8", width: 2 },
+  200: { color: "#7d8ba1", width: 2 },
 };
 
 const LEVEL_COLOR: Record<ChartLevel["kind"], string> = {
-  pivot: "#f8fafc",
-  stop: "#ef4444",
-  target: "#22c55e",
+  pivot: "#0b1220",
+  stop: "#e4575d",
+  target: "#12a66a",
 };
 
 /** Handles both bar shapes: a daily bar is "YYYY-MM-DD", an intraday bar is
@@ -331,7 +333,7 @@ export function LiveChart({
 
     if (indicators.has("ema") && candles.length >= 21) {
       const line = instance.addSeries(LineSeries, {
-        color: "#f472b6",
+        color: "#c2317a",
         lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: false,
@@ -348,7 +350,7 @@ export function LiveChart({
       const index = pane++;
       const line = instance.addSeries(
         LineSeries,
-        { color: "#a78bfa", lineWidth: 1, priceLineVisible: false },
+        { color: "#6757e8", lineWidth: 1, priceLineVisible: false },
         index,
       );
       line.setData(seriesFrom(candles, rsi(candles)));
@@ -359,7 +361,7 @@ export function LiveChart({
       for (const level of [70, 30]) {
         line.createPriceLine({
           price: level,
-          color: "rgba(255,255,255,0.14)",
+          color: "rgba(11,18,32,0.16)",
           lineWidth: 1,
           lineStyle: LineStyle.Dotted,
           axisLabelVisible: true,
@@ -388,7 +390,7 @@ export function LiveChart({
       instance
         .addSeries(
           LineSeries,
-          { color: "#60a5fa", lineWidth: 1, priceLineVisible: false },
+          { color: "#2855f5", lineWidth: 1, priceLineVisible: false },
           index,
         )
         .setData(seriesFrom(candles, line));
@@ -396,7 +398,7 @@ export function LiveChart({
       instance
         .addSeries(
           LineSeries,
-          { color: "#f59e0b", lineWidth: 1, priceLineVisible: false },
+          { color: "#d6a84a", lineWidth: 1, priceLineVisible: false },
           index,
         )
         .setData(seriesFrom(candles, signal));
@@ -650,7 +652,7 @@ export function LiveChart({
             were looking at until the new one is ready to replace it. */}
         {loading && (
           <div
-            className="absolute inset-0 z-20 grid place-items-center bg-base/45 backdrop-blur-[1px]"
+            className="absolute inset-0 z-20 grid place-items-center bg-base/70 backdrop-blur-[1px]"
             aria-hidden="true"
           >
             <span className="badge">טוען טווח…</span>

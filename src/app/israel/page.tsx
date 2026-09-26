@@ -107,7 +107,7 @@ function Row({ quote, sector }: { quote: TaseQuote; sector: string }) {
           <span className="text-[11px] text-ink-ghost">—</span>
         ) : (
           <>
-            <span className="relative block h-[3px] w-full rounded-full bg-overlay">
+            <span className="relative block h-[3px] w-full rounded-full bg-track">
               <span
                 className="absolute top-1/2 h-2.5 w-[2px] -translate-y-1/2 rounded-full bg-ink"
                 style={{ insetInlineStart: `${Math.max(0, Math.min(range, 1)) * 100}%` }}
@@ -388,7 +388,7 @@ export default async function IsraelPage() {
             </table>
           </div>
 
-          <div className="border-t border-line bg-base/40 px-5 py-4">
+          <div className="border-t border-line bg-element/70 px-5 py-4">
             <p className="num text-[11px] text-ink-faint">
               {crossListing.claim.basis}
             </p>

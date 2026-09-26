@@ -53,7 +53,7 @@ function Bubble({ message }: { message: Message }) {
       <div
         className={
           isUser
-            ? "max-w-[85%] rounded-lg border border-line-strong bg-raised px-4 py-2.5"
+            ? "max-w-[85%] rounded-lg border border-line-strong bg-element px-4 py-2.5"
             : /* The answer is inset behind a cyan rule rather than put in
                  a bubble. A bubble makes this a conversation with a
                  character; a rule makes it a passage written by a machine

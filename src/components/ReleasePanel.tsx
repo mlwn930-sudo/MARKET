@@ -110,7 +110,7 @@ export function ReleasePanel({ event }: { event: KnownEvent }) {
         </div>
       </div>
 
-      <div className="border-t border-line bg-base/40 px-6 py-3.5">
+      <div className="border-t border-line bg-element/70 px-6 py-3.5">
         <p className="text-[11px] leading-relaxed text-ink-ghost">
           מקור:{" "}
           {event.sourceUrl ? (

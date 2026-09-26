@@ -52,14 +52,14 @@ function Row({ connection }: { connection: Connection }) {
       href={connection.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="block px-5 py-3.5 transition-colors hover:bg-raised/40"
+      className="block px-5 py-3.5 transition-colors hover:bg-element"
     >
       {body}
     </a>
   ) : (
     <Link
       href={connection.href}
-      className="block px-5 py-3.5 transition-colors hover:bg-raised/40"
+      className="block px-5 py-3.5 transition-colors hover:bg-element"
     >
       {body}
     </Link>

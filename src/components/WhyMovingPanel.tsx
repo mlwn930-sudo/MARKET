@@ -41,7 +41,7 @@ export function WhyMovingPanel({ reading }: { reading: WhyMoving }) {
 
             {driver.share !== null && driver.share > 0 && (
               <span
-                className="mt-1.5 block h-[4px] w-full max-w-[200px] overflow-hidden rounded-full bg-overlay"
+                className="mt-1.5 block h-[4px] w-full max-w-[200px] overflow-hidden rounded-full bg-track"
                 role="img"
                 aria-label={`מסביר כ-${Math.round(driver.share * 100)}% מהתנועה`}
               >

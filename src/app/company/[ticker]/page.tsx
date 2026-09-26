@@ -292,9 +292,20 @@ export default async function CompanyPage({
   return (
     <Page tint={identity.accent}>
       {/* ---- Masthead ----
-           The company's colour appears exactly twice: as the rule beside
-           its name, and as the page's ambient tint. Not on one figure. */}
-      <header className="enter border-b border-line pb-9 pt-12 sm:pt-16">
+           The one dark band on the page, and the reason it is here rather
+           than on a marketing page: this is where a reader arrives from a
+           table, and the change of material is what tells them they have
+           arrived somewhere rather than filtered something.
+
+           The company's colour appears exactly twice inside it — as the
+           rule beside the name, and as the ambient light in the band.
+           Never on a figure: the same P/E has to look the same on every
+           page of this site. */}
+      <header
+        className="hero-dark on-dark enter relative start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2"
+        style={{ marginInlineStart: "calc(var(--rail-w) / -2)" }}
+      >
+      <div className="relative mx-auto max-w-[1440px] px-5 pb-10 pt-10 sm:px-8 sm:pb-12 sm:pt-14">
         <nav className="mb-7 text-[12px] text-ink-faint">
           <Link href="/" className="transition-colors hover:text-ink">
             שוק
@@ -390,6 +401,7 @@ export default async function CompanyPage({
             )}
           </div>
         </div>
+      </div>
       </header>
 
       {fundamentals.stale && (

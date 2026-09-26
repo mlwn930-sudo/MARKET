@@ -33,7 +33,7 @@ export function FeaturedStory({ article }: { article: EnrichedArticle }) {
     <article className="surface interactive flex flex-col overflow-hidden">
       {article.image && (
         <div
-          className="relative h-48 w-full bg-overlay bg-cover bg-center sm:h-60"
+          className="relative h-48 w-full bg-track bg-cover bg-center sm:h-60"
           style={{ backgroundImage: `url(${article.image})` }}
           aria-hidden="true"
         >

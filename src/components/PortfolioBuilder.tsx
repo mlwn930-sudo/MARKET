@@ -184,7 +184,7 @@ export function PortfolioBuilder() {
                   <span className="num block text-[14px] text-ink">
                     {row.share.toFixed(1)}%
                   </span>
-                  <span className="num block h-[3px] w-16 rounded-full bg-overlay">
+                  <span className="num block h-[3px] w-16 rounded-full bg-track">
                     <span
                       className="block h-full rounded-full"
                       style={{
@@ -256,7 +256,7 @@ export function PortfolioBuilder() {
                       <span className="w-32 shrink-0 text-[12px] text-ink-muted">
                         {entry.sector}
                       </span>
-                      <span className="h-[6px] flex-1 rounded-full bg-overlay">
+                      <span className="h-[6px] flex-1 rounded-full bg-track">
                         <span
                           className="block h-full rounded-full"
                           style={{

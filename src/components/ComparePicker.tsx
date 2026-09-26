@@ -49,7 +49,7 @@ export function ComparePicker({
         {selected.map((ticker) => (
           <span
             key={ticker}
-            className="inline-flex items-center gap-2 rounded-md border border-line-strong bg-raised px-2.5 py-1"
+            className="inline-flex items-center gap-2 rounded-md border border-line-strong bg-element px-2.5 py-1"
           >
             <span className="num text-[12px] text-ink">{ticker}</span>
             <button

@@ -173,7 +173,7 @@ export function TechnicalPanel({
                   <span className="num w-4 shrink-0 text-[10px] text-ink-faint">
                     {i + 1}
                   </span>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-overlay">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-track">
                     <div
                       className="h-full rounded-full"
                       style={{
