@@ -29,6 +29,20 @@ export const TASE_LEADERS: {
   symbol: string;
   name: string;
   sector: string;
+  /**
+   * The ticker the same company trades under in New York, when it does.
+   *
+   * This is the most useful field on the list and the reason it exists.
+   * A company with a US listing files with SEC, which means the site can
+   * run its whole apparatus on it — the Core Test, the thesis, the sector
+   * comparison — under the American symbol. A company without one is a
+   * price and nothing more, because nothing here can be computed from
+   * filings that were never made in a form this site reads.
+   *
+   * It is also what makes the parity check possible: two prices for one
+   * business, in two currencies, closing five hours apart.
+   */
+  usTicker?: string;
 }[] = [
   { symbol: "LUMI.TA", name: "בנק לאומי", sector: "פיננסים" },
   { symbol: "POLI.TA", name: "בנק הפועלים", sector: "פיננסים" },
@@ -36,15 +50,21 @@ export const TASE_LEADERS: {
   { symbol: "DSCT.TA", name: "בנק דיסקונט", sector: "פיננסים" },
   { symbol: "PHOE.TA", name: "הפניקס", sector: "פיננסים" },
 
-  { symbol: "ESLT.TA", name: "אלביט מערכות", sector: "ביטחוניות" },
+  { symbol: "ESLT.TA", name: "אלביט מערכות", sector: "ביטחוניות", usTicker: "ESLT" },
 
-  { symbol: "NICE.TA", name: "נייס", sector: "טכנולוגיה" },
-  { symbol: "NVMI.TA", name: "נובה", sector: "טכנולוגיה" },
-  { symbol: "CAMT.TA", name: "קמטק", sector: "טכנולוגיה" },
-  { symbol: "TSEM.TA", name: "טאואר", sector: "טכנולוגיה" },
+  { symbol: "NICE.TA", name: "נייס", sector: "טכנולוגיה", usTicker: "NICE" },
+  { symbol: "NVMI.TA", name: "נובה", sector: "טכנולוגיה", usTicker: "NVMI" },
+  { symbol: "CAMT.TA", name: "קמטק", sector: "טכנולוגיה", usTicker: "CAMT" },
+  { symbol: "TSEM.TA", name: "טאואר", sector: "טכנולוגיה", usTicker: "TSEM" },
 
-  { symbol: "TEVA.TA", name: "טבע", sector: "בריאות" },
-  { symbol: "ICL.TA", name: "כיל", sector: "חומרים" },
-  { symbol: "ORA.TA", name: "אורמת", sector: "אנרגיה" },
+  { symbol: "TEVA.TA", name: "טבע", sector: "בריאות", usTicker: "TEVA" },
+  { symbol: "ICL.TA", name: "כיל", sector: "חומרים", usTicker: "ICL" },
+  { symbol: "ORA.TA", name: "אורמת", sector: "אנרגיה", usTicker: "ORA" },
   { symbol: "ELAL.TA", name: "אל על", sector: "תעופה" },
 ];
+
+/** The eight that trade on both sides, in the order the page shows them. */
+export const DUAL_LISTED = TASE_LEADERS.filter(
+  (leader): leader is (typeof TASE_LEADERS)[number] & { usTicker: string } =>
+    typeof leader.usTicker === "string",
+);

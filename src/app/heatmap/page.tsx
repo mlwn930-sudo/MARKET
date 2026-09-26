@@ -39,7 +39,7 @@ const loadMap = unstable_cache(
 
     const bySector = new Map<string, HeatSector>();
 
-    companies.forEach((company, index) => {
+    companies.forEach((company) => {
       const key = company.sector;
       const sector =
         bySector.get(key) ??

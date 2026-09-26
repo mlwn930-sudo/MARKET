@@ -2,8 +2,10 @@ import Link from "next/link";
 import { runScreen, type ScreenResult } from "@/lib/screener";
 import { identityFor } from "@/lib/company-identity";
 import {
+  Band,
   Disclaimer,
   Empty,
+  Field,
   Hero,
   Meter,
   Page,
@@ -245,6 +247,14 @@ export default async function OpportunitiesPage() {
                         key={criterion.key}
                         className="flex items-start justify-between gap-3 border-b border-line py-2 last:border-b-0"
                       >
+                        {/* The label and the result, and not the
+                            explanation. Every criterion's explanation is
+                            identical for all forty-eight companies, and
+                            emitting it inside each row shipped the same
+                            ten Hebrew sentences four hundred and eighty
+                            times — three megabytes of HTML on a page a
+                            reader opens on a phone. They are printed once,
+                            in the glossary below. */}
                         <span className="flex items-start gap-2">
                           <span
                             className={`num mt-px w-3 shrink-0 text-[11px] ${
@@ -254,13 +264,8 @@ export default async function OpportunitiesPage() {
                           >
                             {criterion.passed ? "✓" : "✕"}
                           </span>
-                          <span>
-                            <span className="block text-[12px] text-ink-muted">
-                              {criterion.label}
-                            </span>
-                            <span className="block text-[10px] leading-snug text-ink-ghost">
-                              {criterion.explanation}
-                            </span>
+                          <span className="text-[12px] text-ink-muted">
+                            {criterion.label}
                           </span>
                         </span>
                         <span className="num shrink-0 text-[11px] text-ink-faint">
@@ -288,6 +293,33 @@ export default async function OpportunitiesPage() {
             );
           })}
         </div>
+      </Section>
+
+      {/* ---- The glossary ----
+           Every criterion, explained once. Taken from the first result
+           rather than from a second table, because the explanations are a
+           property of the test and not of the company — deriving them here
+           means the wording on this page cannot drift from the wording the
+           screener actually ran. */}
+      <Section
+        eyebrow="מה נבדק"
+        title="עשרת הקריטריונים, ומה כל אחד שואל"
+        description="הרוב נמדדים מול חציון הסקטור ולא מול סף מוחלט, כי מכפיל של 15 אומר דבר אחד בבנק ודבר אחר בחברת שבבים. קריטריון שאי אפשר לחשב נספר ככישלון."
+      >
+        <Band columns={2}>
+          {results[0].criteria.map((criterion) => (
+            <Field
+              key={criterion.key}
+              label={criterion.label}
+              value={
+                <span className="text-[13px] leading-snug text-ink-muted">
+                  {criterion.explanation}
+                </span>
+              }
+              context={`${results.filter((r) => r.criteria.find((c) => c.key === criterion.key)?.passed).length} מתוך ${results.length} החברות עוברות אותו`}
+            />
+          ))}
+        </Band>
       </Section>
 
       <Disclaimer />

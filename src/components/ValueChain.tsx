@@ -46,13 +46,13 @@ export function ValueChain({
       {links.map((link) => {
         const quote = quotes[link.symbol];
         const identity = identityFor(link.symbol);
-        const direction = flash[link.symbol];
+        const moved = flash[link.symbol];
 
         return (
           <Link
             key={link.symbol}
             href={`/company/${link.symbol}`}
-            className="surface interactive p-4"
+            className="surface lift p-4"
           >
             <div className="flex items-baseline justify-between gap-3">
               <div>
@@ -65,8 +65,23 @@ export function ValueChain({
                 <span className="mr-2 text-[11px] text-ink-muted">{link.role}</span>
               </div>
 
+              {/* The tick flash, which this component computed and then
+                  never used. Every other live surface on the site settles
+                  a changed price from its direction colour; leaving one
+                  page out made the same data look like two different
+                  feeds. */}
               <div className="text-left">
-                <div className="num text-sm">{fmtPrice(quote?.price)}</div>
+                <div
+                  className={`num text-sm ${
+                    moved === "up"
+                      ? "settle-up"
+                      : moved === "down"
+                        ? "settle-down"
+                        : ""
+                  }`}
+                >
+                  {fmtPrice(quote?.price)}
+                </div>
                 <div
                   className={`num text-[11px] ${directionClass(quote?.changePercent)}`}
                 >

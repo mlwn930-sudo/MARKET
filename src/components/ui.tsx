@@ -494,17 +494,15 @@ export function Meter({
             in the accent turns a page of measurements into a page of
             highlights, and on a company page the tint is that company's
             brand colour — which would make a filled segment look like
-            approval rather than a count. */}
+            approval rather than a count.
+
+            Styled by attribute rather than by an inline style object. The
+            screener renders roughly eight hundred of these segments, and
+            an inline style is serialised twice on a server-rendered page —
+            once into the HTML and once into the payload React hydrates
+            from. A class costs nothing in either. */}
         {Array.from({ length: max }, (_, i) => (
-          <span
-            key={i}
-            className="h-[5px] flex-1 rounded-[1px]"
-            style={{
-              background:
-                i < filled ? "var(--color-measure)" : "rgba(255,255,255,0.07)",
-              opacity: i < filled ? 0.45 + (i / max) * 0.55 : 1,
-            }}
-          />
+          <span key={i} className="meter-seg" data-on={i < filled} />
         ))}
       </div>
       {hint && <p className="mt-1 text-[10px] text-ink-ghost">{hint}</p>}

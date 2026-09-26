@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
@@ -32,6 +32,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.7",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.6",
     "@types/react": "^19.0.7",
@@ -39,6 +40,8 @@
     "@types/ws": "^8.18.1",
     "dotenv": "^18.0.2",
     "drizzle-kit": "^0.30.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.26",
     "postcss": "^8.5.1",
     "tailwindcss": "^4.0.0",
     "tsx": "^4.23.15",

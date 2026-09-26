@@ -15,11 +15,8 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { z } from "zod";
 import {
-  articleSchema,
   feedSchema,
-  sectorSchema,
   summariesFileSchema,
-  summarySchema,
   type ArticleSummary,
   type EnrichedArticle,
   type EnrichedSector,

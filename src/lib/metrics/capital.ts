@@ -465,10 +465,7 @@ export type CapitalAllocation = {
  * The figures are what the cash flow statement says. Whether the choices
  * were good ones is a judgement this cannot make, and the page says so.
  */
-export function capitalAllocation(
-  facts: CompanyFacts,
-  base: FinancialBase,
-): CapitalAllocation {
+export function capitalAllocation(facts: CompanyFacts): CapitalAllocation {
   const sumRecent = (candidates: string[]): number | null => {
     const series = annualSeries(facts, candidates, 3);
     if (series.length === 0) return null;
@@ -635,7 +632,7 @@ export function computeCapitalQuality(
     stockComp: stockCompensation(facts, base, series.shareCount),
     costOfCapital: costOfCapital(base, market.beta, market.riskFree),
     leverage: operatingLeverage(series.revenue, series.operating),
-    allocation: capitalAllocation(facts, base),
+    allocation: capitalAllocation(facts),
     unitEconomics: unitEconomics(facts, base),
   };
 }

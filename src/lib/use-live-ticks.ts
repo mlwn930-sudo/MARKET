@@ -264,7 +264,6 @@ export function useLiveTicks(
         );
       },
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
   return { quotes, flash, market, feed, lastTickAt, tickCount };

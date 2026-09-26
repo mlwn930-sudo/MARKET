@@ -1218,4 +1218,17 @@ h4 {
   border-color: var(--color-insight);
 }
 
+/* One segment of a measure. See `Meter` in ui.tsx for why this is a class
+   and not an inline style. */
+.meter-seg {
+  height: 5px;
+  flex: 1 1 0%;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+.meter-seg[data-on="true"] {
+  background: var(--color-measure);
+  opacity: 0.8;
+}
+
 }
