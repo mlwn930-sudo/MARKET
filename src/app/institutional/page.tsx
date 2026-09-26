@@ -72,6 +72,18 @@ export default async function InstitutionalPage() {
     .sort()
     .at(-1);
 
+  /* The period the positions describe, not the day the form was filed.
+     Those are two different dates and the gap between them is the whole
+     point of the caveat below. */
+  const newestReport = institutions
+    .map((inst) => inst.reportDate)
+    .sort()
+    .at(-1);
+
+  const positionsAgeDays = newestReport
+    ? Math.round((Date.now() - Date.parse(newestReport)) / 86_400_000)
+    : null;
+
   return (
     <Page tint="#0a84ff">
       <Hero
@@ -104,12 +116,30 @@ export default async function InstitutionalPage() {
         }
       />
 
-      <p className="surface mt-10 px-5 py-4 text-[13px] leading-relaxed text-ink-muted">
+      {/* The rule was already stated here. What was missing is the figure
+          it produces today — "up to 45 days" is a regulation, and "these
+          positions are 96 days old" is the thing a reader can act on. The
+          site's own principle: a number never appears without the context
+          that turns it into knowledge, and a caveat without one is a
+          sentence the eye learns to skip. */}
+      <p
+        className="surface mt-10 border-s-2 px-5 py-4 text-[13px] leading-relaxed text-ink-muted"
+        style={{ borderInlineStartColor: "var(--color-warning)" }}
+      >
         <strong className="font-medium text-ink">
           דוח 13F מוגש עד 45 יום אחרי סוף הרבעון.
         </strong>{" "}
         כלומר התמונה תמיד מאחרת, וייתכן שהגוף כבר שינה את הפוזיציה. זו מגבלת
         רגולציה, לא באג — והיא הסיבה שהעמוד הזה מתאר מה נעשה, לא מה לעשות.
+        {positionsAgeDays !== null && (
+          <span className="mt-2 block text-[12px] text-ink-faint">
+            בפועל: הפוזיציות כאן נכונות ל-
+            <span className="num">{fmtDate(newestReport!)}</span>, כלומר לפני{" "}
+            <span className="num">{positionsAgeDays}</span> ימים.
+            {positionsAgeDays > 120 &&
+              " זה יותר מרבעון שלם — סביר שכבר הוגש דוח חדש שטרם נקלט כאן."}
+          </span>
+        )}
       </p>
 
       {institutions.map((inst) => (

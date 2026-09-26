@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getSectorViews } from "@/lib/sectors";
+import { describeStatus, marketStatus } from "@/lib/market-hours";
 import { Disclaimer, Hero, Page, Section } from "@/components/ui";
 import { directionClass, fmtCompact, fmtMetric, fmtPercent } from "@/lib/format";
 
@@ -24,6 +25,12 @@ export const metadata = {
 export default async function SectorsPage() {
   const sectors = await getSectorViews();
 
+  const quoted = sectors.reduce((total, sector) => total + sector.quoted, 0);
+  const members = sectors.reduce(
+    (total, sector) => total + sector.members.length,
+    0,
+  );
+
   return (
     <Page tint="#0a84ff" width="wide">
       <Hero
@@ -31,6 +38,18 @@ export default async function SectorsPage() {
         title="איפה הכסף זז היום, ולמה"
         lede="תשעה סקטורים, ממוינים לפי התנועה של היום. התנועה מחושבת כממוצע שווה בין החברות ולא לפי שווי שוק — ביום שבו ענקית אחת עולה ותשע חברות יורדות, הממוצע המשוקלל היה אומר שהסקטור עלה, וזה נכון וחסר תועלת."
       />
+
+      {/* When, and out of how many. The page showed nine sector moves with
+          nothing saying whether the market was even open — a reader
+          arriving on a Sunday had no way to tell that Friday's close was
+          what they were looking at. */}
+      <p className="mt-6 text-[11px] text-ink-ghost">
+        {describeStatus(marketStatus())} ·{" "}
+        <span className="num">
+          {quoted}/{members}
+        </span>{" "}
+        חברות החזירו ציטוט · מתעדכן כל שתי דקות
+      </p>
 
       <Section eyebrow="היום" title="הסקטורים לפי תנועה" className="mt-10">
         <div className="surface overflow-hidden">
