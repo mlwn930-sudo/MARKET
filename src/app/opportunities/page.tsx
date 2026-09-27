@@ -1,3 +1,179 @@
+import Link from "next/link";
+import { runScreen, type ScreenResult } from "@/lib/screener";
+import { identityFor } from "@/lib/company-identity";
+import {
+  Band,
+  Disclaimer,
+  Empty,
+  Field,
+  Hero,
+  Meter,
+  Page,
+  Section,
+  StatBar,
+  StatCell,
+} from "@/components/ui";
+import { fmtCompact, fmtDate } from "@/lib/format";
+
+export const revalidate = 3600;
+
+export const metadata = {
+  title: "רדאר הזדמנויות",
+  description:
+    "48 חברות מול קריטריונים של איכות, צמיחה, תמחור ואיתנות — כל אחת עם הפרופיל שלה, לא עם ציון בודד.",
+};
+
+/**
+ * The radar.
+ *
+ * The screener produces a score, and a score is the least useful thing it
+ * knows. Two companies on seven out of ten can be opposites — one cheap and
+ * shrinking, one expensive and compounding — and a list sorted by the total
+ * hides exactly that.
+ *
+ * So each company is shown as a profile across four axes instead. The score
+ * is still there, small, as an index into the list; the shape beside it is
+ * what actually distinguishes one row from the next. The reader compares
+ * shapes, which is a thing eyes are good at, rather than reading forty
+ * numbers.
+ *
+ * No overall ranking of "best". The site presents the measurements; which
+ * of them matters is the reader's call and depends on what they already own.
+ */
+
+/** The screener's criteria, grouped into the four questions they answer.
+ *  Keys come from lib/screener.ts — the grouping is presentation only and
+ *  changes nothing about how a criterion is evaluated. */
+const AXES: { key: string; label: string; matches: string[]; hint: string }[] = [
+  {
+    key: "quality",
+    label: "איכות",
+    matches: ["roic", "margin", "fcf", "gross"],
+    hint: "תשואה על ההון ורווחיות",
+  },
+  {
+    key: "growth",
+    label: "צמיחה",
+    matches: ["growth", "cagr", "rev"],
+    hint: "הכנסות ורווח לאורך זמן",
+  },
+  {
+    key: "value",
+    label: "תמחור",
+    matches: ["pe", "ps", "ev", "yield"],
+    hint: "מכפילים מול חציון הסקטור",
+  },
+  {
+    key: "strength",
+    label: "איתנות",
+    matches: ["debt", "current", "altman", "interest", "share"],
+    hint: "מאזן, חוב ודילול",
+  },
+];
+
+/** Splits a company's criteria across the four axes. A criterion that
+ *  matches nothing lands in quality, which is the default bucket rather
+ *  than a judgement. */
+function profile(result: ScreenResult) {
+  return AXES.map((axis) => {
+    const inAxis = result.criteria.filter((criterion) =>
+      axis.matches.some((needle) => criterion.key.includes(needle)),
+    );
+    /* Only what could actually be tested. A criterion the filings do not
+       support is not a miss on the meter — it is absent from it, which is
+       why the denominator is the evaluated count and not the whole pool. */
+    const evaluated = inAxis.filter((c) => c.status !== "insufficient-data");
+    return {
+      ...axis,
+      passed: evaluated.filter((c) => c.status === "pass").length,
+      total: evaluated.length,
+    };
+  }).filter((axis) => axis.total > 0);
+}
+
+export default async function OpportunitiesPage() {
+  const { builtAt, results } = await runScreen().catch(() => ({
+    builtAt: "",
+    results: [] as ScreenResult[],
+  }));
+
+  if (results.length === 0) {
+    return (
+      <Page width="read">
+        <Hero
+          eyebrow="רדאר הזדמנויות"
+          title="הסורק עדיין לא נבנה"
+          lede="הסורק קורא קובץ מדדים שנבנה מדוחות SEC בסקריפט לילי. עד שהוא רץ פעם אחת אין ליקום ההשוואה חציונים, ובלי חציון אין מול מה לבדוק."
+        />
+        <div className="gap-section-tight">
+          <Empty
+            title="קובץ המדדים ריק"
+            reason="הרצה אחת של npm run build:fundamentals מושכת את הדוחות ובונה את החציונים לתשעת הסקטורים."
+            links={[
+              { href: "/heatmap", label: "מפת השוק" },
+              { href: "/sectors", label: "סקטורים" },
+              { href: "/news", label: "חדשות" },
+            ]}
+          />
+        </div>
+        <Disclaimer />
+      </Page>
+    );
+  }
+
+  const maxScore = results[0]?.maxScore ?? 0;
+  // Measured against what could be tested, not against every criterion —
+  // otherwise a company is marked down for a figure its filings never carried.
+  const strong = results.filter(
+    (r) => r.evaluatedCount > 0 && r.score >= r.evaluatedCount * 0.7,
+  ).length;
+  const median = results[Math.floor(results.length / 2)]?.score ?? 0;
+
+  return (
+    <Page tint="#2855f5">
+      <Hero
+        eyebrow="רדאר הזדמנויות"
+        title="לא מי הכי טובה — מי חזקה במה"
+        lede="כל חברה נבדקת מול קריטריונים כמותיים, רובם מול חציון הסקטור שלה. מה שמוצג הוא הפרופיל, לא דירוג: שתי חברות באותו ציון יכולות להיות הפוכות זו מזו."
+        image="/hero/opportunities.webp"
+        imageAlt=""
+        stats={
+          <StatBar>
+            <StatCell label="חברות נבדקו" value={results.length} />
+            <StatCell label="קריטריונים" value={maxScore} />
+            <StatCell
+              label="עברו 70% ומעלה"
+              value={strong}
+              sub="ציון גבוה אינו המלצה"
+            />
+            <StatCell
+              label="ציון חציוני"
+              value={
+                <>
+                  {median}
+                  <span className="text-ink-ghost">/{maxScore}</span>
+                </>
+              }
+            />
+          </StatBar>
+        }
+      />
+
+      <p
+        className="surface gap-section-tight border-s-2 px-5 py-4 text-[13px] leading-relaxed text-ink-muted"
+        style={{ borderInlineStartColor: "var(--color-warning)" }}
+      >
+        <strong className="font-medium text-ink">זה סינון, לא המלצה.</strong>{" "}
+        ציון גבוה אומר שהחברה עברה יותר מבחנים כמותיים — לא שכדאי לקנות אותה.
+        קריטריון שאי אפשר לחשב מסומן כ"אין נתון" ואינו נספר ככישלון: נתון
+        חסר אינו הוכחה לאיכות, אבל גם אינו ראיה נגדה.
+        {builtAt && (
+          <span className="mt-1 block text-[11px] text-ink-ghost">
+            נבנה <span className="num">{fmtDate(builtAt.slice(0, 10))}</span>
+          </span>
+        )}
+      </p>
+
       <Section eyebrow="הפרופילים" title="כל החברות ביקום ההשוואה">
         {/* One surface, forty-eight rows, hairlines between them — not
             forty-eight floating panels. A card per company made the list
