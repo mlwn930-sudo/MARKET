@@ -20,6 +20,7 @@ export type Criterion = {
   key: string;
   label: string;
   explanation: string;
+  status: "pass" | "fail" | "insufficient-data";
   passed: boolean;
   /** What the company reported, already formatted for display. */
   detail: string;
@@ -47,11 +48,13 @@ function test(
   predicate: (v: number) => boolean,
 ): Criterion {
   const usable = value !== null && Number.isFinite(value);
+  const passed = usable ? predicate(value) : false;
   return {
     key,
     label,
     explanation,
-    passed: usable ? predicate(value) : false,
+    status: !usable ? "insufficient-data" : passed ? "pass" : "fail",
+    passed,
     detail: fmt(value, suffix),
   };
 }
