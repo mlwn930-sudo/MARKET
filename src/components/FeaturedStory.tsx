@@ -5,6 +5,7 @@ import {
   type EnrichedArticle,
 } from "@/lib/news-store";
 import { fmtRelative } from "@/lib/format";
+import { AiBlock } from "@/components/ui";
 
 /**
  * The lead story.
@@ -67,35 +68,50 @@ export function FeaturedStory({ article }: { article: EnrichedArticle }) {
 
         {analysis ? (
           <div className="mt-4 space-y-3">
-            <p className="text-[14px] leading-relaxed text-ink-muted">
-              {analysis.summary}
-            </p>
-            <p className="text-[13px] leading-relaxed text-ink-faint">
-              <span className="text-ink-muted">השפעה: </span>
-              {analysis.impact}
-            </p>
-
-            {/* On the lead story the lenses are open rather than folded
-                away. This is the one article the reader is most likely to
-                actually want the full reading of. */}
-            {(analysis.catalyst || analysis.reaction || analysis.chain) && (
-              <dl className="grid gap-3 border-t border-line pt-3 sm:grid-cols-3">
-                {[
-                  { label: "זרז או רעש", body: analysis.catalyst },
-                  { label: "תגובת מחיר", body: analysis.reaction },
-                  { label: "שרשרת הערך", body: analysis.chain },
-                ]
-                  .filter((lens) => lens.body)
-                  .map((lens) => (
-                    <div key={lens.label}>
-                      <dt className="eyebrow">{lens.label}</dt>
-                      <dd className="mt-1.5 text-[12px] leading-relaxed text-ink-faint">
-                        {lens.body}
-                      </dd>
-                    </div>
-                  ))}
-              </dl>
+            {article.excerpt && (
+              <div className="rounded-md border border-line bg-element/60 p-4">
+                <div className="mb-1.5 text-[10px] font-medium tracking-[0.08em] text-ink-ghost">
+                  מהמקור
+                </div>
+                <p className="text-[13px] leading-relaxed text-ink-muted" dir="auto">
+                  {article.excerpt}
+                </p>
+              </div>
             )}
+
+            <AiBlock
+              title="קריאת מודל"
+              confidence={analysis.catalystKind === "unclear" ? "low" : "medium"}
+              sources={[article.domain]}
+              at={analysis.writtenAt ? fmtRelative(new Date(analysis.writtenAt)) : undefined}
+            >
+              <p className="text-[14px] leading-relaxed text-ink-muted">
+                {analysis.summary}
+              </p>
+              <p className="mt-2 text-[13px] leading-relaxed text-ink-faint">
+                <span className="text-ink-muted">השפעה: </span>
+                {analysis.impact}
+              </p>
+
+              {(analysis.catalyst || analysis.reaction || analysis.chain) && (
+                <dl className="mt-4 grid gap-3 border-t border-line pt-3 sm:grid-cols-3">
+                  {[
+                    { label: "זרז או רעש", body: analysis.catalyst },
+                    { label: "תגובת מחיר", body: analysis.reaction },
+                    { label: "שרשרת הערך", body: analysis.chain },
+                  ]
+                    .filter((lens) => lens.body)
+                    .map((lens) => (
+                      <div key={lens.label}>
+                        <dt className="eyebrow">{lens.label}</dt>
+                        <dd className="mt-1.5 text-[12px] leading-relaxed text-ink-faint">
+                          {lens.body}
+                        </dd>
+                      </div>
+                    ))}
+                </dl>
+              )}
+            </AiBlock>
           </div>
         ) : (
           <div className="mt-4 space-y-2">
