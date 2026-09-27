@@ -31,6 +31,8 @@ export type ScreenResult = {
   sectorLabel: string;
   score: number;
   maxScore: number;
+  evaluatedCount: number;
+  insufficientCount: number;
   criteria: Criterion[];
 };
 
@@ -153,8 +155,10 @@ function screenCompany(
   return {
     company,
     sectorLabel,
-    score: criteria.filter((c) => c.passed).length,
+    score: criteria.filter((c) => c.status === "pass").length,
     maxScore: criteria.length,
+    evaluatedCount: criteria.filter((c) => c.status !== "insufficient-data").length,
+    insufficientCount: criteria.filter((c) => c.status === "insufficient-data").length,
     criteria,
   };
 }
