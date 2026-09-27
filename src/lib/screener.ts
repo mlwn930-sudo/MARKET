@@ -20,6 +20,7 @@ export type Criterion = {
   key: string;
   label: string;
   explanation: string;
+  status: "pass" | "fail" | "insufficient-data";
   passed: boolean;
   /** What the company reported, already formatted for display. */
   detail: string;
@@ -30,6 +31,8 @@ export type ScreenResult = {
   sectorLabel: string;
   score: number;
   maxScore: number;
+  evaluatedCount: number;
+  insufficientCount: number;
   criteria: Criterion[];
 };
 
@@ -47,11 +50,13 @@ function test(
   predicate: (v: number) => boolean,
 ): Criterion {
   const usable = value !== null && Number.isFinite(value);
+  const passed = usable ? predicate(value) : false;
   return {
     key,
     label,
     explanation,
-    passed: usable ? predicate(value) : false,
+    status: !usable ? "insufficient-data" : passed ? "pass" : "fail",
+    passed,
     detail: fmt(value, suffix),
   };
 }
@@ -150,8 +155,10 @@ function screenCompany(
   return {
     company,
     sectorLabel,
-    score: criteria.filter((c) => c.passed).length,
+    score: criteria.filter((c) => c.status === "pass").length,
     maxScore: criteria.length,
+    evaluatedCount: criteria.filter((c) => c.status !== "insufficient-data").length,
+    insufficientCount: criteria.filter((c) => c.status === "insufficient-data").length,
     criteria,
   };
 }
