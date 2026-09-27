@@ -1,4 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
+import { CinematicHero } from "@/components/market/CinematicHero";
+import { SignalCanvas } from "@/components/market/SignalCanvas";
+import { WorkflowLinks } from "@/components/market/WorkflowLinks";
 import { getQuotes } from "@/lib/sources/finnhub";
 import { getIntradayHistory, getPriceHistory } from "@/lib/sources/prices";
 import { getLiveFeed } from "@/lib/live-news";
@@ -11,7 +15,6 @@ import { getMacroBoard } from "@/lib/sources/macro";
 import {
   Disclaimer,
   EventCard,
-  Hero,
   MoreLink,
   Page,
   Section,
@@ -19,7 +22,6 @@ import {
 } from "@/components/ui";
 import { upcomingEvents } from "@/lib/analysis/known-events";
 import { WatchlistStrip } from "@/components/WatchlistStrip";
-import { Observatory } from "@/components/observatory/Observatory";
 import { marketSignal, marketStatus, type MarketSignalKind } from "@/lib/market-hours";
 import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtRelative } from "@/lib/format";
@@ -153,56 +155,29 @@ export default async function MarketPage() {
 
   return (
     <Page>
-      {/* The opener carries the whole product in four lines, in the order
-          the brief for this design demanded and for the reason behind it:
-          a label to place you, one large statement, a small line of
-          context, and then the way in. Anything else here is a number the
-          reader could already be looking at. */}
-      <Hero
-        eyebrow="Market Intel"
-        title={
-          <>
-            מודיעין פיננסי,
-            <br />
-            <span className="text-ink-muted">לפני שהשוק מדבר.</span>
-          </>
-        }
-        lede="נתונים, הקשר ומחקר מבוסס־AI — במקום אחד."
-        meta={
-          <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <StatusPill tone={SIGNAL_TONE[signal.kind]}>{signal.label}</StatusPill>
-            {signal.detail && (
-              <span className="text-[11px] text-ink-faint">{signal.detail}</span>
-            )}
-          </span>
-        }
-        action={
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/opportunities" className="btn btn-primary">
-              לרדאר ההזדמנויות
-            </Link>
-            <Link href="/brief" className="btn btn-ghost">
-              התדריך של היום
-            </Link>
-          </div>
-        }
-        /* The observatory is decoration with a job: it says "instrument"
-           before a single figure has been read. It is also the one thing
-           on this page that may fail — so it ships as a drawing and only
-           becomes 3D when the device says yes. */
-        aside={
-          <Observatory
-            sceneUrl={process.env.NEXT_PUBLIC_SPLINE_SCENE_URL}
-            className="mx-auto max-w-[300px] sm:max-w-[380px] lg:max-w-[460px]"
-          />
-        }
-        asideSize="wide"
+      <CinematicHero
+        image="/hero/market-city.webp"
+        eyebrow={<span><span className="micro-label">FINANCIAL INTELLIGENCE</span><StatusPill tone={SIGNAL_TONE[signal.kind]}>{signal.label}</StatusPill></span>}
+        title={<>לראות את השוק.<br /><em>להבין את התמונה.</em></>}
+        description="מהנתון הראשון ועד לתזת ההשקעה. חברות, חדשות והכוחות שמחברים ביניהן — במקום אחד."
+        actions={<>
+          <Link href="/brief" className="btn btn-editorial">לתדריך השוק <span aria-hidden="true">←</span></Link>
+          <Link href="/research">לפתוח מחקר</Link>
+        </>}
+        aside={<SignalCanvas indices={cards} quotes={seed} detail={signal.detail} />}
+        footer={<nav className="journey-rail" aria-label="מסלול המחקר">
+          <a href="#market-data"><span className="num">01</span>נתונים</a>
+          <a href="#what-matters"><span className="num">02</span>הקשר</a>
+          <Link href="/intel"><span className="num">03</span>מודיעין</Link>
+          <Link href="/research"><span className="num">04</span>תזה</Link>
+          <Link href="/watchlist"><span className="num">05</span>מעקב</Link>
+        </nav>}
       />
 
       {/* The pulse first: equities, the price of money, and what that did
           to hard assets — one band, because those three read together are
           a story and read apart are trivia. */}
-      <div className="gap-section">
+      <div id="market-data" className="market-pulse-band">
         <MarketPulse instruments={macro.instruments} />
       </div>
 
@@ -222,13 +197,24 @@ export default async function MarketPage() {
            The feed is sorted by time; this is sorted by consequence, and
            it is the first thing under the prices for that reason. ---- */}
       <Section
-        eyebrow="מה חשוב היום"
-        title="מה מזה באמת משנה משהו"
+        id="what-matters"
+        eyebrow="02 / הקשר"
+        title="האירועים שמאחורי התנועה"
         description="רק כתבות שהניתוח סיווג כאירוע שמשנה תזרים, תחרות או רגולציה. כל השאר נשאר בפיד."
         action={<MoreLink href="/news">כל החדשות</MoreLink>}
       >
         <WhatMattersToday articles={unique} />
       </Section>
+
+      <section className="editorial-feature" aria-labelledby="featured-research">
+        <div className="editorial-feature-media"><Image src="/hero/ttwo-story.webp" alt="איור מערכתי: מיאמי בשקיעה" fill sizes="(max-width: 767px) 100vw, 45vw" className="object-cover object-left" /></div>
+        <div className="editorial-feature-copy">
+          <span className="micro-label">THE BIG PICTURE / TTWO</span>
+          <h2 id="featured-research">כולם מחכים למשחק.<br />אנחנו בוחנים את התזה.</h2>
+          <p>GTA VI דרך הדוחות של Take-Two: מועד ההשקה, הציפיות, ההכנסות שעוד לא הוכרו ומה יכול לשנות את הסיפור.</p>
+          <Link href="/launch/ttwo">לסיפור ההשקעה <span aria-hidden="true">←</span></Link>
+        </div>
+      </section>
 
       {/* ---- Screener ---- */}
       {topPicks.length > 0 && (
@@ -372,6 +358,8 @@ export default async function MarketPage() {
           </div>
         </Section>
       )}
+
+      <WorkflowLinks />
 
       <Disclaimer />
     </Page>

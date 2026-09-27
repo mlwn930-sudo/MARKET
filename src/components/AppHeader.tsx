@@ -144,12 +144,17 @@ export function AppHeader() {
   // A menu that only closes by clicking its own button is a trap on a
   // touch screen, where there is no hover to signal it is still open.
   useEffect(() => {
-    if (!open) return;
+    if (!open && !drawer) return;
     const onPointer = (event: MouseEvent) => {
       if (!barRef.current?.contains(event.target as Node)) setOpen(null);
     };
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(null);
+      if (event.key === "Escape") {
+        const trigger = barRef.current?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]');
+        setOpen(null);
+        setDrawer(false);
+        trigger?.focus();
+      }
     };
     document.addEventListener("mousedown", onPointer);
     document.addEventListener("keydown", onKey);
@@ -157,7 +162,7 @@ export function AppHeader() {
       document.removeEventListener("mousedown", onPointer);
       document.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [open, drawer]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -165,17 +170,7 @@ export function AppHeader() {
   const current = groupOf(pathname);
 
   return (
-    <header
-      className="sticky top-0 z-50"
-      style={{
-        background: scrolled
-          ? "color-mix(in oklab, var(--color-surface) 88%, transparent)"
-          : "color-mix(in oklab, var(--color-background) 70%, transparent)",
-        backdropFilter: "blur(18px) saturate(140%)",
-        borderBottom: `1px solid ${scrolled ? "var(--color-line)" : "transparent"}`,
-        transition: "background-color var(--dur) var(--ease), border-color var(--dur) var(--ease)",
-      }}
-    >
+    <header className="market-masthead sticky top-0 z-50" data-scrolled={scrolled}>
       <div ref={barRef} className="mx-auto max-w-[1440px] px-5 sm:px-8">
         <nav
           aria-label="ראשי"
@@ -197,8 +192,8 @@ export function AppHeader() {
                     onClick={() => setOpen(expanded ? null : group.key)}
                     onMouseEnter={() => open && setOpen(group.key)}
                     aria-expanded={expanded}
-                    aria-haspopup="menu"
-                    className={`flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
+
+                    className={`flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[15px] font-medium transition-colors ${
                       active || expanded
                         ? "text-ink"
                         : "text-ink-muted hover:text-ink"
@@ -222,14 +217,14 @@ export function AppHeader() {
 
                   {expanded && (
                     <div
-                      role="menu"
+
                       className="raised palette absolute start-1/2 top-[calc(100%+12px)] w-[336px] -translate-x-1/2 overflow-hidden p-1.5 rtl:translate-x-1/2"
                     >
                       {group.items.map((item) => (
                         <Link
                           key={item.href}
                           href={item.href}
-                          role="menuitem"
+
                           aria-current={isActive(item.href) ? "page" : undefined}
                           className={`block rounded-md px-3 py-2.5 transition-colors ${
                             isActive(item.href)
@@ -238,13 +233,13 @@ export function AppHeader() {
                           }`}
                         >
                           <span
-                            className={`block text-[13.5px] font-medium ${
+                            className={`block text-[15px] font-medium ${
                               isActive(item.href) ? "text-[var(--color-brand)]" : "text-ink"
                             }`}
                           >
                             {item.label}
                           </span>
-                          <span className="mt-0.5 block text-[11.5px] leading-snug text-ink-faint">
+                          <span className="mt-0.5 block text-[12px] leading-snug text-ink-faint">
                             {item.note}
                           </span>
                         </Link>
@@ -261,7 +256,7 @@ export function AppHeader() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent(COMMAND_EVENT))}
-              className="flex items-center gap-2 rounded-md border border-line bg-surface px-2.5 py-1.5 text-[12.5px] text-ink-faint shadow-[var(--shadow-sm)] transition-colors hover:border-line-strong hover:text-ink-muted"
+              className="flex items-center gap-2 rounded-md border border-line bg-surface px-2.5 py-1.5 text-[14px] text-ink-faint shadow-[var(--shadow-sm)] transition-colors hover:border-line-strong hover:text-ink-muted"
               aria-label="חיפוש ופקודות"
             >
               <Icon path={GLYPH.search} size={14} />
@@ -272,7 +267,7 @@ export function AppHeader() {
             <Link
               href={CHAT}
               aria-current={isActive(CHAT) ? "page" : undefined}
-              className={`hidden items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[12.5px] transition-colors sm:flex ${
+              className={`hidden items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[14px] transition-colors sm:flex ${
                 isActive(CHAT)
                   ? "text-[var(--color-brand)]"
                   : "text-ink-muted hover:text-ink"
@@ -285,7 +280,7 @@ export function AppHeader() {
             <Link
               href={WATCHLIST}
               aria-current={isActive(WATCHLIST) ? "page" : undefined}
-              className={`hidden items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[12.5px] transition-colors sm:flex ${
+              className={`hidden items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[14px] transition-colors sm:flex ${
                 isActive(WATCHLIST)
                   ? "text-[var(--color-brand)]"
                   : "text-ink-muted hover:text-ink"
@@ -300,8 +295,8 @@ export function AppHeader() {
                 type="button"
                 onClick={() => setOpen(open === "account" ? null : "account")}
                 aria-expanded={open === "account"}
-                aria-haspopup="menu"
-                aria-label="החשבון שלי"
+
+                aria-label="כלים אישיים"
                 className="grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-ink-muted shadow-[var(--shadow-sm)] transition-colors hover:border-line-strong hover:text-ink"
               >
                 <Icon path={GLYPH.user} size={15} />
@@ -309,20 +304,20 @@ export function AppHeader() {
 
               {open === "account" && (
                 <div
-                  role="menu"
+
                   className="raised palette absolute end-0 top-[calc(100%+12px)] w-56 overflow-hidden p-1.5"
                 >
                   {ACCOUNT.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      role="menuitem"
+
                       className="block rounded-md px-3 py-2 transition-colors hover:bg-[var(--color-surface-secondary)]"
                     >
                       <span className="block text-[13px] font-medium text-ink">
                         {item.label}
                       </span>
-                      <span className="block text-[11px] text-ink-faint">
+                      <span className="block text-[12px] text-ink-faint">
                         {item.note}
                       </span>
                     </Link>
@@ -364,7 +359,7 @@ export function AppHeader() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative whitespace-nowrap px-3 py-2.5 text-[12.5px] transition-colors ${
+                  className={`relative whitespace-nowrap px-3 py-2.5 text-[14px] transition-colors ${
                     active ? "text-ink" : "text-ink-faint hover:text-ink-muted"
                   }`}
                 >

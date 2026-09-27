@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Assistant, Frank_Ruhl_Libre, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import "./market.css";
+import { RouteTransition } from "@/components/market/RouteTransition";
 import { AppHeader } from "@/components/AppHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
@@ -57,7 +59,8 @@ export default function RootLayout({
       dir="rtl"
       className={`${assistant.variable} ${frank.variable} ${plexMono.variable}`}
     >
-      <body className="min-h-screen bg-base text-ink">
+      <body className="market-app min-h-screen bg-base text-ink">
+        <a href="#main-content" className="skip-link">דלג לתוכן</a>
         {/* One fixed layer behind everything. It reads --tint, which each
             page sets, so the light behind the content belongs to the page
             without the layer knowing what is on it.
@@ -72,7 +75,7 @@ export default function RootLayout({
         <CommandCenter />
 
         <AppHeader />
-        <div className="min-h-[60vh]">{children}</div>
+        <RouteTransition>{children}</RouteTransition>
         <SiteFooter />
 
         {/* Clears the fixed bottom bar so the footer is not trapped

@@ -70,12 +70,12 @@ function Bubble({ message }: { message: Message }) {
         {!isUser && (
           <div className="mb-3 flex items-center gap-2.5">
             <AiMark />
-            <span className="eyebrow">תשובה מתוך נתוני האתר</span>
+            <span className="eyebrow">פרשנות AI · מבוססת נתוני האתר</span>
           </div>
         )}
 
         <div
-          className={`space-y-2.5 text-[14px] leading-relaxed ${
+          className={`space-y-2.5 text-[16px] leading-relaxed ${
             message.failed ? "text-ink-faint" : isUser ? "text-ink" : "text-ink-muted"
           }`}
         >
@@ -123,7 +123,7 @@ function Bubble({ message }: { message: Message }) {
               <Link
                 key={ticker}
                 href={`/company/${ticker}`}
-                className="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
+                className="num rounded border border-line px-1.5 py-0.5 text-[12px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
               >
                 {ticker}
               </Link>
@@ -133,12 +133,12 @@ function Bubble({ message }: { message: Message }) {
 
         {message.sources && message.sources.length > 0 && (
           <details className="mt-3 border-t border-line pt-2">
-            <summary className="cursor-pointer text-[11px] text-ink-ghost transition-colors hover:text-ink-muted">
+            <summary className="cursor-pointer text-[12px] text-ink-ghost transition-colors hover:text-ink-muted">
               על מה התשובה נשענת ({message.sources.length} מקורות)
             </summary>
             <ul className="mt-2 space-y-1">
               {message.sources.map((source) => (
-                <li key={source} className="text-[11px] text-ink-faint">
+                <li key={source} className="text-[12px] text-ink-faint">
                   {source}
                 </li>
               ))}

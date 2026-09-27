@@ -56,7 +56,7 @@ function List({
           {items.map((item, index) => (
             <li
               key={`${index}-${item}`}
-              className="flex gap-2.5 text-[13px] leading-relaxed text-ink-muted"
+              className="flex gap-2.5 text-[15px] leading-relaxed text-ink-muted"
             >
               <span
                 className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-ink-ghost"
@@ -87,7 +87,7 @@ export function IntelligencePanel({
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-2.5">
-                <span className="text-[13px] text-accent" aria-hidden="true">
+                <span className="text-[15px] text-accent" aria-hidden="true">
                   {status.mark}
                 </span>
                 <span className="text-[15px] font-bold tracking-tight">
@@ -104,7 +104,7 @@ export function IntelligencePanel({
             </span>
           </div>
 
-          <p className="mt-4 border-t border-line pt-3 text-[11px] leading-relaxed text-ink-ghost">
+          <p className="mt-4 border-t border-line pt-3 text-[12px] leading-relaxed text-ink-ghost">
             {thesis.confidenceReason}
           </p>
         </div>
@@ -114,7 +114,7 @@ export function IntelligencePanel({
         {thesis.whyStillTracked && (
           <div className="border-b border-line bg-element/70 p-6">
             <h3 className="eyebrow">למה החברה עדיין במעקב</h3>
-            <p className="mt-2.5 max-w-3xl text-[13px] leading-relaxed text-ink-muted">
+            <p className="mt-2.5 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
               {thesis.whyStillTracked}
             </p>
           </div>
@@ -153,7 +153,7 @@ export function IntelligencePanel({
         <div className="surface p-6">
           <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
             <div>
-              <div className="text-[11px] text-ink-faint">איכות העסק</div>
+              <div className="text-[12px] text-ink-faint">איכות העסק</div>
               <div className="mt-1 text-[17px] font-bold tracking-tight">
                 {quadrant.businessQuality === "strong"
                   ? "חזק"
@@ -168,7 +168,7 @@ export function IntelligencePanel({
             <div className="hidden h-9 w-px bg-line sm:block" aria-hidden="true" />
 
             <div>
-              <div className="text-[11px] text-ink-faint">רמת המחיר</div>
+              <div className="text-[12px] text-ink-faint">רמת המחיר</div>
               <div className="mt-1 text-[17px] font-bold tracking-tight">
                 {quadrant.priceLevel === "cheap"
                   ? "נמוך"
@@ -183,14 +183,14 @@ export function IntelligencePanel({
             <div className="hidden h-9 w-px bg-line sm:block" aria-hidden="true" />
 
             <div className="min-w-0 flex-1">
-              <div className="text-[11px] text-ink-faint">הצירוף</div>
+              <div className="text-[12px] text-ink-faint">הצירוף</div>
               <div className="mt-1 text-[15px] font-medium text-accent">
                 {quadrant.verdict}
               </div>
             </div>
           </div>
 
-          <p className="mt-5 border-t border-line pt-4 text-[13px] leading-relaxed text-ink-muted">
+          <p className="mt-5 border-t border-line pt-4 text-[15px] leading-relaxed text-ink-muted">
             {quadrant.implication}
           </p>
         </div>
@@ -206,7 +206,7 @@ export function IntelligencePanel({
           <div className="overflow-x-auto">
             <table className="w-full min-w-[560px] text-sm">
               <thead>
-                <tr className="border-b border-line text-[11px] text-ink-faint">
+                <tr className="border-b border-line text-[12px] text-ink-faint">
                   <th scope="col" className="px-5 py-3 text-start font-normal">
                     גורם
                   </th>
@@ -224,13 +224,13 @@ export function IntelligencePanel({
                     key={row.factor}
                     className="border-b border-line last:border-0"
                   >
-                    <td className="px-5 py-3 text-[13px] text-ink">
+                    <td className="px-5 py-3 text-[15px] text-ink">
                       {row.factor}
                     </td>
                     <td className="px-5 py-3">
                       <span className="flex items-center gap-2">
                         <span
-                          className="num text-[11px] tracking-tighter text-accent"
+                          className="num text-[12px] tracking-tighter text-accent"
                           aria-hidden="true"
                         >
                           {MATRIX_MARK[row.status]}
@@ -265,20 +265,20 @@ export function IntelligencePanel({
                 className="grid gap-3 p-5 sm:grid-cols-[190px_1fr] sm:gap-6"
               >
                 <div>
-                  <div className="text-[13px] font-medium text-ink">
+                  <div className="text-[15px] font-medium text-ink">
                     {catalyst.title}
                   </div>
                   <div className="mt-1 text-[12px] text-accent">
                     {catalyst.when}
                   </div>
                   {catalyst.date && (
-                    <div className="num mt-0.5 text-[10px] text-ink-ghost">
+                    <div className="num mt-0.5 text-[12px] text-ink-ghost">
                       {catalyst.date}
                     </div>
                   )}
                 </div>
                 <div>
-                  <p className="text-[13px] leading-relaxed text-ink-muted">
+                  <p className="text-[15px] leading-relaxed text-ink-muted">
                     {catalyst.why}
                   </p>
                   <p className="mt-2 text-[12px] leading-relaxed text-ink-faint">
@@ -302,20 +302,20 @@ export function IntelligencePanel({
             <details key={report.agent} className="surface interactive group">
               <summary className="flex cursor-pointer items-center justify-between gap-4 p-4">
                 <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <span className="text-[13px] font-medium text-ink">
+                  <span className="text-[15px] font-medium text-ink">
                     {report.label}
                   </span>
-                  <span className="num text-[11px] text-ink-ghost">
+                  <span className="num text-[12px] text-ink-ghost">
                     {report.findings.length} ממצאים
                   </span>
                   {report.gaps.length > 0 && (
-                    <span className="num text-[11px] text-ink-ghost">
+                    <span className="num text-[12px] text-ink-ghost">
                       · {report.gaps.length} פערים
                     </span>
                   )}
                 </span>
                 <span
-                  className="text-[11px] text-ink-ghost transition-transform group-open:rotate-180"
+                  className="text-[12px] text-ink-ghost transition-transform group-open:rotate-180"
                   aria-hidden="true"
                 >
                   ▾
@@ -328,7 +328,7 @@ export function IntelligencePanel({
                     {report.findings.map((finding) => (
                       <div key={finding.id}>
                         <div className="flex flex-wrap items-baseline gap-2">
-                          <span className="text-[13px] font-medium text-ink">
+                          <span className="text-[15px] font-medium text-ink">
                             {finding.title}
                           </span>
                           <span className="badge">
@@ -360,7 +360,7 @@ export function IntelligencePanel({
                           </div>
                         )}
 
-                        <p className="mt-2 text-[10px] leading-relaxed text-ink-ghost">
+                        <p className="mt-2 text-[12px] leading-relaxed text-ink-ghost">
                           {finding.confidenceReason}
                         </p>
                       </div>
@@ -381,7 +381,7 @@ export function IntelligencePanel({
                       {report.gaps.map((gap, index) => (
                         <li
                           key={`${index}-${gap}`}
-                          className="text-[11px] leading-relaxed text-ink-ghost"
+                          className="text-[12px] leading-relaxed text-ink-ghost"
                         >
                           — {gap}
                         </li>
@@ -395,7 +395,7 @@ export function IntelligencePanel({
         </div>
 
         {gaps.length > 0 && (
-          <p className="mt-4 text-[11px] leading-relaxed text-ink-ghost">
+          <p className="mt-4 text-[12px] leading-relaxed text-ink-ghost">
             המערכת מדווחת על {gaps.length} פערי נתונים שונים. הם מוצגים
             במכוון: פער הוא מידע על גבולות הניתוח, והסתרתו גורמת לשאר להיראות
             שלם יותר משהוא.

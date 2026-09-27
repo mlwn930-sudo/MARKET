@@ -73,12 +73,14 @@ const EMPTY: Report = {
 export function ResearchConsole({
   enabled,
   initialTicker = "",
+  initialQuestion = "",
 }: {
   enabled: boolean;
   initialTicker?: string;
+  initialQuestion?: string;
 }) {
   const [ticker, setTicker] = useState(initialTicker);
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState(initialQuestion);
   const [report, setReport] = useState<Report>(EMPTY);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -203,6 +205,13 @@ export function ResearchConsole({
 
   return (
     <div className="space-y-8">
+      {!report.finishedAt && <div className="research-prompt-list" aria-label="שאלות מחקר לדוגמה">
+        {[
+          { ticker: "NVDA", text: "האם צמיחת ההכנסות מצדיקה את התמחור?" },
+          { ticker: "MSFT", text: "מה הפער בין הרווח המדווח לתזרים החופשי?" },
+          { ticker: "TTWO", text: "איזה נתון יכול לשנות את תזת ההשקעה?" },
+        ].map((item) => <button key={item.ticker} type="button" disabled={busy} onClick={() => { setTicker(item.ticker); setQuestion(item.text); document.getElementById("research-question")?.focus(); }}><span className="num">{item.ticker}</span><span>{item.text}</span><span className="ms-auto" aria-hidden="true">↖</span></button>)}
+      </div>}
       {/* The request */}
       <form
         onSubmit={(event) => {
@@ -213,7 +222,7 @@ export function ResearchConsole({
       >
         <div className="flex flex-wrap items-end gap-3">
           <div>
-            <label htmlFor="research-ticker" className="block text-[11px] text-ink-faint">
+            <label htmlFor="research-ticker" className="block text-[12px] text-ink-faint">
               חברה
             </label>
             <input
@@ -223,11 +232,11 @@ export function ResearchConsole({
               placeholder="NVDA"
               autoComplete="off"
               spellCheck={false}
-              className="num mt-1 w-32 rounded-md border border-line bg-base px-3 py-2 text-[13px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
+              className="num mt-1 w-32 rounded-md border border-line bg-base px-3 py-2 text-[14px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
             />
           </div>
-          <div className="min-w-[240px] flex-1">
-            <label htmlFor="research-question" className="block text-[11px] text-ink-faint">
+          <div className="min-w-0 basis-64 flex-1">
+            <label htmlFor="research-question" className="block text-[12px] text-ink-faint">
               שאלת המחקר (אפשר להשאיר ריק)
             </label>
             <input
@@ -235,14 +244,14 @@ export function ResearchConsole({
               value={question}
               onChange={(event) => setQuestion(event.target.value)}
               placeholder="למשל: האם המרווח שנשמר השנה בר-קיימא?"
-              className="mt-1 w-full rounded-md border border-line bg-base px-3 py-2 text-[13px] text-ink placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
+              className="mt-1 w-full rounded-md border border-line bg-base px-3 py-2 text-[14px] text-ink placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
             />
           </div>
           {busy ? (
             <button
               type="button"
               onClick={() => abort.current?.abort()}
-              className="btn btn-ghost px-4 py-2 text-[13px]"
+              className="btn btn-ghost px-4 py-2 text-[14px]"
             >
               עצור
             </button>
@@ -250,29 +259,28 @@ export function ResearchConsole({
             <button
               type="submit"
               disabled={!enabled || ticker.trim().length === 0}
-              className="btn btn-primary px-5 py-2 text-[13px] disabled:opacity-40"
+              className="btn btn-primary px-5 py-2 text-[14px] disabled:opacity-40"
             >
               הרץ מחקר
             </button>
           )}
         </div>
 
-        <p className="text-[11px] leading-relaxed text-ink-ghost">
+        <p className="text-[12px] leading-relaxed text-ink-ghost">
           המחקר רץ בשלושה שלבים: פירוק השאלה, מענה על כל שאלת משנה מול
-          הנתונים, ואיתור המקומות שבהם הממצאים לא מסכימים. חמש קריאות מודל,
-          כשלושים שניות.
+          הנתונים, ואיתור המקומות שבהם הממצאים לא מסכימים. זמן ההשלמה תלוי בזמינות הנתונים והמודל.
         </p>
       </form>
 
       {status && (
-        <p className="flex items-center gap-2 text-[13px] text-ink-muted">
+        <p role="status" className="flex items-center gap-2 text-[14px] text-ink-muted">
           <span className="live-dot inline-block h-[5px] w-[5px] rounded-full bg-accent" aria-hidden="true" />
           {status}…
         </p>
       )}
 
       {error && (
-        <p className="surface px-5 py-4 text-[13px] leading-relaxed text-ink-faint">
+        <p role="alert" className="surface px-5 py-4 text-[14px] leading-relaxed text-ink-faint">
           {error}
         </p>
       )}
@@ -293,16 +301,16 @@ export function ResearchConsole({
                     {index + 1}
                   </span>
                   <span className="flex-1">
-                    <span className="block text-[13px] text-ink">
+                    <span className="block text-[14px] text-ink">
                       {item.question}
                     </span>
                     {item.why && (
-                      <span className="mt-0.5 block text-[11px] text-ink-faint">
+                      <span className="mt-0.5 block text-[12px] text-ink-faint">
                         {item.why}
                       </span>
                     )}
                   </span>
-                  <span className="text-[11px] text-ink-ghost">
+                  <span className="text-[12px] text-ink-ghost">
                     {answered ? "נענה" : busy ? "ממתין" : "—"}
                   </span>
                 </li>
@@ -330,7 +338,7 @@ export function ResearchConsole({
 
           {section.evidence.length > 0 && (
             <dl className="mt-4 border-t border-line pt-3">
-              <dt className="text-[11px] text-ink-ghost">הנתונים שמאחורי התשובה</dt>
+              <dt className="text-[12px] text-ink-ghost">הנתונים שמאחורי התשובה</dt>
               {section.evidence.map((item, i) => (
                 <dd key={i} className="mt-1 text-[12px] leading-relaxed text-ink-faint">
                   {item}
@@ -342,7 +350,7 @@ export function ResearchConsole({
           <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-3">
             <span className="badge">{CONFIDENCE_LABELS[section.confidence]}</span>
             {section.confidenceWhy && (
-              <span className="text-[11px] text-ink-faint">
+              <span className="text-[12px] text-ink-faint">
                 {section.confidenceWhy}
               </span>
             )}
@@ -351,7 +359,7 @@ export function ResearchConsole({
           {section.gaps.length > 0 && (
             <ul className="mt-3 space-y-1">
               {section.gaps.map((gap, i) => (
-                <li key={i} className="text-[11px] text-ink-ghost">
+                <li key={i} className="text-[12px] text-ink-ghost">
                   חסר: {gap}
                 </li>
               ))}
@@ -387,7 +395,7 @@ export function ResearchConsole({
               <h4 className="eyebrow mb-2">איפה המסגרות לא מסכימות</h4>
               <ul className="space-y-2">
                 {report.synthesis.tensions.map((tension, i) => (
-                  <li key={i} className="text-[13px] leading-relaxed text-ink-muted">
+                  <li key={i} className="text-[14px] leading-relaxed text-ink-muted">
                     <span className="text-ink">{tension.between}: </span>
                     {tension.detail}
                   </li>
@@ -401,7 +409,7 @@ export function ResearchConsole({
               <h4 className="eyebrow mb-2">מה היה משנה את התשובה</h4>
               <ul className="space-y-1.5">
                 {report.synthesis.whatWouldChangeIt.map((item, i) => (
-                  <li key={i} className="text-[13px] leading-relaxed text-ink-muted">
+                  <li key={i} className="text-[14px] leading-relaxed text-ink-muted">
                     {item}
                   </li>
                 ))}
@@ -461,8 +469,8 @@ export function ResearchConsole({
               .filter((row) => row.body)
               .map((row) => (
                 <div key={row.label}>
-                  <dt className="text-[11px] text-ink-ghost">{row.label}</dt>
-                  <dd className="mt-0.5 text-[13px] leading-relaxed text-ink-muted">
+                  <dt className="text-[12px] text-ink-ghost">{row.label}</dt>
+                  <dd className="mt-0.5 text-[14px] leading-relaxed text-ink-muted">
                     {row.body}
                   </dd>
                 </div>
@@ -495,7 +503,7 @@ export function ResearchConsole({
           <h4 className="eyebrow mb-2">מקורות הנתונים במחקר הזה</h4>
           <ul className="space-y-1">
             {report.sources.map((source) => (
-              <li key={source} className="text-[11px] text-ink-faint">
+              <li key={source} className="text-[12px] text-ink-faint">
                 {source}
               </li>
             ))}

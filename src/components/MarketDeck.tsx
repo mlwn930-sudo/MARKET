@@ -347,35 +347,6 @@ export function MarketDeck({
     }
   }, [quotes, indices]);
 
-  /* ---- The market's mood, published to the page ---- */
-  useEffect(() => {
-    const measured = rows
-      .map((row) => quotes[row.symbol]?.changePercent)
-      .filter((value): value is number => typeof value === "number");
-
-    if (measured.length === 0) return;
-    const green = measured.filter((value) => value > 0).length / measured.length;
-
-    // A dead zone around even, so a genuinely mixed market reads as neutral
-    // rather than flickering between two colours.
-    document.documentElement.style.setProperty(
-      "--tint",
-      green > 0.62 ? "#12a66a" : green < 0.38 ? "#e4575d" : "#7d8ba1",
-    );
-  }, [quotes, rows]);
-
-  /* Put it back on the way out.
-     This writes to the document element, not to the page, and a client-side
-     navigation away from here left the value behind — so every page that
-     does not set its own tint carried the market's mood from whenever the
-     dashboard was last open, which on a red day meant a page about
-     terminology opening in alarm red. */
-  useEffect(() => {
-    return () => {
-      document.documentElement.style.removeProperty("--tint");
-    };
-  }, []);
-
   const open = market.state === "open";
   const streaming = feed === "live";
   const state = open && streaming ? "live" : open ? "waiting" : "idle";

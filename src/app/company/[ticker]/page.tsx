@@ -1,3 +1,6 @@
+import { ChapterNav } from "@/components/market/ChapterNav";
+import { EvidenceKey } from "@/components/market/EvidenceKey";
+import { WorkflowLinks } from "@/components/market/WorkflowLinks";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getQuote } from "@/lib/sources/finnhub";
@@ -297,7 +300,7 @@ export default async function CompanyPage({
   });
 
   return (
-    <Page tint={identity.accent}>
+    <Page>
       {/* ---- Masthead ----
            The one dark band on the page, and the reason it is here rather
            than on a marketing page: this is where a reader arrives from a
@@ -309,7 +312,8 @@ export default async function CompanyPage({
            Never on a figure: the same P/E has to look the same on every
            page of this site. */}
       <header
-        className="hero-dark on-dark enter relative start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2"
+        id="company-overview"
+        className="company-masthead hero-dark on-dark enter relative start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2"
         style={{ marginInlineStart: "calc(var(--rail-w) / -2)" }}
       >
       <div className="relative mx-auto max-w-[1440px] px-5 pb-10 pt-10 sm:px-8 sm:pb-12 sm:pt-14">
@@ -411,6 +415,16 @@ export default async function CompanyPage({
       </div>
       </header>
 
+      <ChapterNav label="ניווט בניתוח החברה" chapters={[
+        { id: "company-overview", label: "מבט חברה" },
+        ...(history ? [{ id: "company-price", label: "מחיר ומגמה" }] : []),
+        { id: "company-capital", label: "איכות הרווח" },
+        ...(intelligence ? [{ id: "company-thesis", label: "התזה" }] : []),
+        ...(fundamentals.groups.length ? [{ id: "company-financials", label: "נתונים כספיים" }] : []),
+        { id: "company-connections", label: "קשרים" },
+        { id: "company-news", label: "חדשות" },
+      ]} />
+      <div className="mt-6"><EvidenceKey /></div>
       {fundamentals.stale && (
         <p
           className="surface mt-8 border-s-2 px-5 py-4 text-sm text-ink"
@@ -609,6 +623,7 @@ export default async function CompanyPage({
       {/* ---- Price ---- */}
       {history && (
         <Section
+          id="company-price"
           eyebrow="מחיר ומגמה"
           title="מה המחיר כבר עשה"
           className="max-lg:order-first"
@@ -636,13 +651,14 @@ export default async function CompanyPage({
         </Section>
       )}
 
-      <Section eyebrow="איכות הרווח">
+      <Section id="company-capital" eyebrow="איכות הרווח">
         <CapitalPanel capital={capital} />
       </Section>
 
       {/* ---- The Investment Thesis: forward-looking, evidence-bound ---- */}
       {intelligence && (
         <Section
+          id="company-thesis"
           eyebrow="תזת השקעה"
           title="האם יש סיבה מבוססת שהשוק יתמחר אחרת"
           description="שאלה אחרת לגמרי ממבחן הליבה. כאן נבדק אם קיים גורם מתועד — אירוע, מגמה או פער תמחור — שעשוי לשנות את התמונה קדימה."
@@ -656,8 +672,8 @@ export default async function CompanyPage({
            rather than a panel per metric. Twenty-three boxed cards was
            the single loudest thing on a company page, and the figures
            inside them were the quietest. */}
-      {fundamentals.groups.map((group) => (
-        <Section key={group.title} eyebrow="נתונים" title={group.title}>
+      {fundamentals.groups.map((group, index) => (
+        <Section id={index === 0 ? "company-financials" : undefined} key={group.title} eyebrow="נתונים" title={group.title}>
           <Band columns={6}>
             {group.metrics.map((item) => {
               const median = sector?.medians[item.key] ?? null;
@@ -725,6 +741,7 @@ export default async function CompanyPage({
            into the rest of the site, and an index belongs after the thing
            it indexes. */}
       <Section
+        id="company-connections"
         eyebrow="קשרים"
         title={`מה עוד מחובר ל-${ticker}`}
         description={`${graph.count} קשרים, כל אחד עם הסיבה שהוא קיים ועם דרגת הראיות שמאחוריה. קישור מאקרו מסומן כהשערה ויושב ליד קישור סקטור שמסומן כמאושש — וההשוואה הזאת היא מה שדיאגרמה הייתה משטחת.`}
@@ -733,7 +750,7 @@ export default async function CompanyPage({
       </Section>
 
       {/* ---- News ---- */}
-      <Section eyebrow="חדשות" title={`מה נכתב על ${name}`}>
+      <Section id="company-news" eyebrow="חדשות" title={`מה נכתב על ${name}`}>
         {articles.length === 0 ? (
           <Empty
             title="אין כרגע כתבה בפיד שמזכירה את החברה"
@@ -756,6 +773,8 @@ export default async function CompanyPage({
         )}
       </Section>
       </div>
+
+      <WorkflowLinks ticker={ticker} title="מהראיות אל השאלה הבאה" />
 
       <Disclaimer extra="הנתונים הכספיים נשאבים מדוחות שהחברה הגישה ל-SEC. מדד המוצג כ-&quot;—&quot; אינו זמין בדוחות ולא הוערך." />
     </Page>

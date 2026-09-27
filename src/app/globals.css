@@ -1,27 +1,8 @@
 @import "tailwindcss";
 
-/* ====================================================================
-   The design system
-   ====================================================================
-
-   One system, used by every page. No page writes its own colours,
-   spacing or surfaces — if something is needed twice it becomes a token
-   or a class here, which is the only way a site of this size stays
-   coherent as it grows.
-
-   The identity, in one line: a bright editorial publication that happens
-   to be a financial terminal. Light content, dark cinematic openings,
-   blue intelligence marks — and the data always the loudest thing on
-   screen.
-
-   Why light. The previous system was dark everywhere, and dark has a
-   cost this product kept paying: every panel had to earn separation with
-   a glow or a blur, so the page filled with effects, and the figures had
-   to compete with them. On white, separation is free — a hairline and a
-   shadow are enough — which leaves contrast available for the numbers.
-   The dark did not disappear; it became a material, used where an
-   opening should feel like an opening.
-   ==================================================================== */
+/* MARKET: midnight canvas, editorial openings, calm analytical surfaces.
+   Semantic tokens are shared by every route. Cyan identifies evidence;
+   indigo identifies interpretation; green/red are reserved for direction. */
 
 @theme {
   /* --- Canonical palette ----------------------------------------------
@@ -29,32 +10,32 @@
      downstream reads these, and the legacy names below are aliases onto
      them, so there is exactly one definition of every colour. */
 
-  --color-background: #f5f7fb;
-  --color-surface-plain: #ffffff;
-  --color-surface-secondary: #eef3fa;
-  --color-surface-elevated: #ffffff;
+  --color-background: #080f1b;
+  --color-surface-plain: #101b2b;
+  --color-surface-secondary: #152236;
+  --color-surface-elevated: #18263a;
 
-  --color-text-primary: #0b1220;
-  --color-text-secondary: #344054;
-  --color-text-muted: #667085;
-  --color-text-subtle: #98a2b3;
+  --color-text-primary: #eef4fc;
+  --color-text-secondary: #bdcadd;
+  --color-text-muted: #93a6bf;
+  --color-text-subtle: #8194ad;
 
-  --color-border-default: #dde4ef;
-  --color-border-strong: #c9d4e5;
-  --color-border-bright: #aebdd4;
+  --color-border-default: #23334a;
+  --color-border-strong: #344863;
+  --color-border-bright: #536987;
 
-  --color-brand: #2855f5;
-  --color-intelligence: #00b8e6;
-  --color-intelligence-deep: #6757e8;
+  --color-brand: #7da1ff;
+  --color-intelligence: #6bd8ed;
+  --color-intelligence-deep: #b1a3ff;
 
-  --color-positive: #12a66a;
-  --color-negative: #e4575d;
-  --color-event: #d6a84a;
+  --color-positive: #6bd5ac;
+  --color-negative: #f28b99;
+  --color-event: #e6bc76;
 
   /* The dark material. Two steps, because a single flat navy reads as a
      block and two read as depth. */
-  --color-hero: #0f172a;
-  --color-hero-2: #16233d;
+  --color-hero: #080f1b;
+  --color-hero-2: #101d32;
 
   /* --- Surface ladder --------------------------------------------------
      Four steps from the page to a raised control. On light, the steps are
@@ -100,8 +81,8 @@
      company's own colour), which is why everything downstream reads the
      token rather than the hex. */
   --color-accent: var(--color-brand);
-  --color-accent-dim: rgba(40, 85, 245, 0.08);
-  --color-accent-line: rgba(40, 85, 245, 0.28);
+  --color-accent-dim: rgba(125, 161, 255, 0.12);
+  --color-accent-line: rgba(125, 161, 255, 0.32);
   --color-accent-soft: #5b7ff8;
 
   /* --- Meaning --------------------------------------------------------
@@ -124,12 +105,12 @@
      endorsement of the company rather than as a count, which is precisely
      the reading the verdict panel exists to prevent. The same argument
      rules out the accent — a measure is not a brand moment. */
-  --color-measure: #7d8ba1;
+  --color-measure: #98acc6;
 
   /* The empty part of a bar, a gauge or a meter. It is not a surface —
      it is the unfilled half of a figure — and on white the two need
      different values, which is why it is its own token. */
-  --color-track: rgba(11, 18, 32, 0.08);
+  --color-track: rgba(180, 202, 230, 0.12);
 
   --font-sans: var(--font-assistant), system-ui, sans-serif;
   --font-serif: var(--font-frank), Georgia, serif;
@@ -139,8 +120,8 @@
      Small. Large radii read as consumer software; financial interfaces
      look more precise with tight corners. */
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
 }
 
 /* ====================================================================
@@ -188,8 +169,8 @@
    AI-produced section — nowhere else, and never behind a figure.
    -------------------------------------------------------------------- */
 :root {
-  --gradient-brand: linear-gradient(90deg, #2855f5 0%, #00b8e6 100%);
-  --gradient-insight: linear-gradient(90deg, #6757e8 0%, #2855f5 100%);
+  --gradient-brand: linear-gradient(110deg, #a0b9ff 0%, #7ae1ed 100%);
+  --gradient-insight: linear-gradient(90deg, #b1a3ff 0%, #7da1ff 100%);
   /* The cinematic opening. Used by .hero-dark and nothing else. */
   --gradient-hero: linear-gradient(160deg, #0f172a 0%, #16233d 58%, #1b2b4d 100%);
 }
@@ -208,7 +189,7 @@
 
 html {
   background: var(--color-background);
-  color-scheme: light;
+  color-scheme: dark;
   /* Anchored sections land below the sticky bar rather than under it. */
   scroll-padding-top: 104px;
 }
@@ -287,13 +268,13 @@ h4 {
 }
 
 .title {
-  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
   font-weight: 700;
   letter-spacing: -0.024em;
 }
 
 .subtitle {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.012em;
   color: var(--color-ink);
@@ -302,7 +283,7 @@ h4 {
 /* A small uppercase label above a section. Carries the structure so the
    headings do not have to shout. */
 .eyebrow {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -329,7 +310,7 @@ h4 {
 
 /** A footnote: a source, an as-of date, a caveat. Never a finding. */
 .caption {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.6;
   color: var(--color-ink-faint);
 }
@@ -343,7 +324,7 @@ h4 {
  * it qualifies.
  */
 .context-line {
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.5;
   color: var(--color-ink-faint);
 }
@@ -478,7 +459,7 @@ h4 {
    ==================================================================== */
 
 .on-dark {
-  --color-ink: #ffffff;
+  --color-ink: #eef4fc;
   --color-ink-muted: rgba(255, 255, 255, 0.76);
   --color-ink-faint: rgba(255, 255, 255, 0.58);
   --color-ink-ghost: rgba(255, 255, 255, 0.42);
@@ -495,7 +476,7 @@ h4 {
 .hero-dark {
   position: relative;
   background: var(--gradient-hero);
-  color: #ffffff;
+  color: #eef4fc;
   overflow: hidden;
 }
 
@@ -590,7 +571,7 @@ h4 {
   width: 26px;
   height: 2px;
   border-radius: 2px;
-  background: var(--tint);
+  background: var(--color-intelligence);
 }
 
 /* A hairline that divides content rather than bounding it. */
@@ -623,7 +604,7 @@ h4 {
 /* The one place the brand gradient is allowed on a control. */
 .btn-primary {
   background: var(--gradient-brand);
-  color: #ffffff;
+  color: #eef4fc;
   border-color: transparent;
   box-shadow: 0 6px 16px -8px rgba(40, 85, 245, 0.7);
 }
@@ -647,7 +628,7 @@ h4 {
 .on-dark .btn-ghost {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  color: #eef4fc;
   box-shadow: none;
 }
 .on-dark .btn-ghost:hover {
@@ -717,7 +698,7 @@ h4 {
   border: 1px solid var(--color-line);
   background: var(--color-surface);
   padding: 0.18rem 0.6rem;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-ink-muted);
   white-space: nowrap;

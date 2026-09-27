@@ -47,7 +47,7 @@ export function RevenueChart({
           x2={width}
           y1={zeroY}
           y2={zeroY}
-          stroke="rgba(11,18,32,0.14)"
+          stroke="rgba(180,202,230,0.17)"
           strokeWidth="1"
         />
         {series.map((point, i) => {

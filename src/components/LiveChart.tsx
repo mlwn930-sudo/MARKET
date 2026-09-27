@@ -65,40 +65,40 @@ export type ChartMarker = {
  * move together with them.
  */
 const PAINT = {
-  up: "#12a66a",
-  down: "#e4575d",
-  upWick: "rgba(18,166,106,0.8)",
-  downWick: "rgba(228,87,93,0.8)",
-  upVolume: "rgba(18,166,106,0.2)",
-  downVolume: "rgba(228,87,93,0.2)",
+  up: "#6bd5ac",
+  down: "#f28b99",
+  upWick: "rgba(107,213,172,0.8)",
+  downWick: "rgba(242,139,153,0.8)",
+  upVolume: "rgba(107,213,172,0.2)",
+  downVolume: "rgba(242,139,153,0.2)",
   /* The grid is barely above the surface it sits on. A chart whose grid
      competes with its own series is a chart nobody reads a level off.
      On white that means a navy at 5%, not a white at 3%. */
-  grid: "rgba(11,18,32,0.055)",
-  axis: "rgba(11,18,32,0.14)",
-  axisText: "#667085",
+  grid: "rgba(180,202,230,0.07)",
+  axis: "rgba(180,202,230,0.17)",
+  axisText: "#93a6bf",
   /* Slate, not gold. Gold means "caveat" everywhere else here, which
      made a reader hovering a bar look like a warning. */
-  crosshair: "rgba(52,64,84,0.5)",
+  crosshair: "rgba(180,202,230,0.5)",
   crosshairLabel: "#0b1220",
-  data: "#00b8e6",
-  insight: "#6757e8",
+  data: "#6bd8ed",
+  insight: "#b1a3ff",
 } as const;
 
 /* The moving averages. Four hues that stay apart on white and none of
    them green or red, because those two mean direction on this site and a
    50-day line is not a direction. */
 const MA_STYLE: Record<number, { color: string; width: 1 | 2 }> = {
-  20: { color: "#2855f5", width: 1 },
-  50: { color: "#d6a84a", width: 1 },
-  150: { color: "#6757e8", width: 2 },
+  20: { color: "#7da1ff", width: 1 },
+  50: { color: "#e6bc76", width: 1 },
+  150: { color: "#b1a3ff", width: 2 },
   200: { color: "#7d8ba1", width: 2 },
 };
 
 const LEVEL_COLOR: Record<ChartLevel["kind"], string> = {
-  pivot: "#0b1220",
-  stop: "#e4575d",
-  target: "#12a66a",
+  pivot: "#bdcadd",
+  stop: "#f28b99",
+  target: "#6bd5ac",
 };
 
 /** Handles both bar shapes: a daily bar is "YYYY-MM-DD", an intraday bar is
@@ -350,7 +350,7 @@ export function LiveChart({
       const index = pane++;
       const line = instance.addSeries(
         LineSeries,
-        { color: "#6757e8", lineWidth: 1, priceLineVisible: false },
+        { color: "#b1a3ff", lineWidth: 1, priceLineVisible: false },
         index,
       );
       line.setData(seriesFrom(candles, rsi(candles)));
@@ -361,7 +361,7 @@ export function LiveChart({
       for (const level of [70, 30]) {
         line.createPriceLine({
           price: level,
-          color: "rgba(11,18,32,0.16)",
+          color: "rgba(180,202,230,0.2)",
           lineWidth: 1,
           lineStyle: LineStyle.Dotted,
           axisLabelVisible: true,
@@ -390,7 +390,7 @@ export function LiveChart({
       instance
         .addSeries(
           LineSeries,
-          { color: "#2855f5", lineWidth: 1, priceLineVisible: false },
+          { color: "#7da1ff", lineWidth: 1, priceLineVisible: false },
           index,
         )
         .setData(seriesFrom(candles, line));
@@ -398,7 +398,7 @@ export function LiveChart({
       instance
         .addSeries(
           LineSeries,
-          { color: "#d6a84a", lineWidth: 1, priceLineVisible: false },
+          { color: "#e6bc76", lineWidth: 1, priceLineVisible: false },
           index,
         )
         .setData(seriesFrom(candles, signal));

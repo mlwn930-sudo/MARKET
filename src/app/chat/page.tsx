@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { EvidenceKey } from "@/components/market/EvidenceKey";
+import { WorkflowLinks } from "@/components/market/WorkflowLinks";
 import { ChatPanel } from "@/components/ChatPanel";
 import { Disclaimer, Hero, Page, Section } from "@/components/ui";
 import { hasGeminiKey } from "@/lib/sources/gemini";
@@ -28,27 +31,15 @@ export default async function ChatPage({
   const { q } = await searchParams;
 
   return (
-    <Page tint="#8b5cf6" width="read">
+    <Page width="read">
       <Hero
-        eyebrow="שאלות"
-        title="שאל על מה שהאתר כבר יודע"
-        lede="כל תשובה נבנית משני שלבים: קודם הקוד אוסף את הנתונים הרלוונטיים — דוחות SEC, המדדים שחושבו כאן, חציוני הסקטור, מחיר חי וחדשות מנותחות — ורק אז המודל קורא אותם ומסביר. מספר שאינו בנתונים לא ייכנס לתשובה."
+        eyebrow="MARKET / AI INTELLIGENCE"
+        title="לחבר בין הנתונים. לבחון את הסיפור."
+        lede="שאלות על חברה, סקטור או אירוע. הפרשנות נשענת על נתוני האתר, עם המקורות הזמינים והפערים שצריך להביא בחשבון."
+        action={<EvidenceKey />}
       />
 
-      {!enabled && (
-        <div className="surface mt-8 p-5">
-          <p className="text-[13px] leading-relaxed text-ink">
-            הצ׳אט כבוי כרגע: אין <span className="num">GEMINI_API_KEY</span>{" "}
-            בסביבה הזו.
-          </p>
-          <p className="mt-2 text-[12px] leading-relaxed text-ink-muted">
-            המפתח חינמי ומונפק בלי כרטיס אשראי ב-aistudio.google.com. הוא נדרש
-            בשני מקומות נפרדים: בקובץ{" "}
-            <span className="num">.env.local</span> להרצה מקומית, וכמשתנה
-            סביבה בפרויקט ב-Vercel לאתר החי. הגדרה באחד אינה מכסה את השני.
-          </p>
-        </div>
-      )}
+      {!enabled && <div className="mt-8 border-s-2 border-event bg-element p-5"><p>פרשנות AI אינה זמינה כרגע.</p><p className="mt-2 text-sm text-ink-muted">הנתונים והניתוח המחושב זמינים בעמודי החברות.</p><Link href="/opportunities" className="btn btn-ghost mt-4">לחקור חברות</Link></div>}
 
       <Section
         eyebrow="שיחה"
@@ -58,6 +49,7 @@ export default async function ChatPage({
         <ChatPanel enabled={enabled} initialQuestion={q?.slice(0, 500)} />
       </Section>
 
+      <WorkflowLinks title="מתשובה לתהליך מחקר" />
       <Disclaimer extra="התשובות נכתבות על ידי מודל שפה שקורא נתונים שנאספו כאן. הוא אינו מדרג, אינו ממליץ ואינו מתחזה לאנליסט." />
     </Page>
   );

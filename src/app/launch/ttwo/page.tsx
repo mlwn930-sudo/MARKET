@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { CinematicHero } from "@/components/market/CinematicHero";
+import { ChapterNav } from "@/components/market/ChapterNav";
+import { WorkflowLinks } from "@/components/market/WorkflowLinks";
+import { EvidenceKey } from "@/components/market/EvidenceKey";
+import { WatchButton } from "@/components/WatchButton";
 import { getQuote, getQuotes } from "@/lib/sources/finnhub";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
@@ -19,15 +24,13 @@ import { buildOutlook } from "@/lib/analysis/outlook";
 import { knownEventsFor } from "@/lib/analysis/known-events";
 import {
   Disclaimer,
-  Hero,
-  MoreLink,
   Page,
   Section,
   StatBar,
   StatCell,
 } from "@/components/ui";
 import type { LiveQuote } from "@/lib/use-live-ticks";
-import { fmtCompact, fmtMetric } from "@/lib/format";
+import { fmtCompact, fmtMetric, fmtPrice, fmtPercent, fmtDate } from "@/lib/format";
 
 export const revalidate = 600;
 
@@ -37,23 +40,12 @@ export const metadata = {
     "מה השקה בסדר גודל כזה עושה לדוחות של Take-Two, איפה הסיכונים, ומי עוד בשרשרת הערך.",
 };
 
-/**
- * The launch page.
- *
- * One image, at the top, and then the site's ordinary financial language
- * all the way down. The previous version ran neon through every panel on
- * the page, which turned a research page into a poster: the figures were
- * the same but nobody was going to read them.
- *
- * The framing the whole page is built on: GTA VI viewed through the lens of
- * the stock market. Not the game — the accounting it passes through, the
- * companies around it, and what the filing will say when it lands.
- */
+/** The same research system, with an editorial entrance and chapter navigation. */
 
 const MECHANICS = [
   {
     title: "ההכנסה לא נרשמת ביום ההשקה",
-    body: "משחק עם רכיב מקוון נרשם כהכנסה נדחית ומתפרס על פני תקופת השירות הצפויה. זו הסיבה שרבעון השקה יכול להראות חלש בשורת ההכנסות בזמן שהמכירות בפועל שברו שיא — המספר שמסגיר את האמת הוא Net Bookings, לא Revenue.",
+    body: "חלק מהתמורה עשוי להיות מוכר לאורך תקופת השירות, בהתאם להתחייבויות הביצוע. Net Bookings מודד מכירות נטו בתקופה לפי הגדרת החברה; הוא אינו זהה להכנסות GAAP או לתזרים המזומנים. צריך לקרוא את שלושתם יחד.",
   },
   {
     title: "ההוצאה מגיעה לפני ההכנסה",
@@ -61,11 +53,11 @@ const MECHANICS = [
   },
   {
     title: "הזנב ארוך מהפתיחה",
-    body: "אצל כותרי GTA הקודמים ההכנסה מתוכן מקוון נמשכה שנים אחרי ההשקה והייתה גדולה מהמכירה הראשונית. מי שמסתכל רק על שבוע הפתיחה מודד את החלק הקטן.",
+    body: "GTA Online מדגים כיצד תוכן ורכישות בתוך המשחק עשויים להאריך את חיי המוצר. הצלחת ההשקה אינה מבטיחה שימור שחקנים או הוצאות חוזרות; את שניהם צריך לבדוק בדיווחים הבאים.",
   },
   {
     title: "דחייה היא הסיכון המרכזי",
-    body: "בתעשייה הזו דחיות נפוצות, והן מזיזות הכנסה שלמה משנת כספים אחת לאחרת. זה לא משנה את שווי הכותר, אבל כן משנה לגמרי איך נראים הדוחות בדרך — ואיך השוק מגיב להם.",
+    body: "בתעשייה הזו דחיות נפוצות, והן מזיזות הכנסה שלמה משנת כספים אחת לאחרת. דחייה עלולה לשנות את עיתוי התזרים, עלויות הפיתוח והשיווק, ואת הערך הנוכחי של ההכנסות הצפויות.",
   },
 ];
 
@@ -79,11 +71,11 @@ const MECHANICS = [
 const WATCH_LIST = [
   {
     line: "Net Bookings",
-    why: "המכירות בפועל ברבעון, לפני פריסת ההכנסה. זה המספר שאומר אם הכותר נמכר — שורת ההכנסות לא תגיד את זה.",
+    why: "מדד המכירות נטו לפי הגדרת Take-Two. יש להשוות להנחיית ההנהלה ולהצליב עם Revenue ותזרים, ולא לקרוא אותו כמזומן שנגבה.",
   },
   {
     line: "Deferred revenue",
-    why: "קפיצה בהכנסה נדחית היא כסף שכבר נגבה ויירשם ברבעונים הבאים. מדד מקדים להמשך, לא לעבר.",
+    why: "תמורה שהתקבלה או הפכה לחייבת לפני שהחברה השלימה את ההכרה בהכנסה. לבחון יחד עם יתרות הלקוחות, תנאי ההכרה והתזרים.",
   },
   {
     line: "מרווח תפעולי",
@@ -215,41 +207,44 @@ export default async function TtwoLaunchPage() {
   const launchEvent = knownEventsFor("TTWO")[0] ?? null;
 
   return (
-    <Page tint="#fcaf17">
-      <Hero
-        eyebrow="השקה גדולה"
-        title="GTA VI, דרך העדשה של שוק ההון"
-        lede="השקה בסדר הגודל הזה היא אירוע פיננסי, לא רק אירוע תרבותי. העמוד מסביר איך היא עוברת דרך הדוחות של Take-Two — ולמה רבעון ההשקה בדרך כלל נראה בדיוק הפוך ממה שמצפים."
-        image="/hero/launch.webp"
-        imageAlt="איור בסגנון מיאמי בשקיעה, הרקע של עמוד ההשקה"
-        stats={
-          analysis && (
-            <StatBar>
-              <StatCell
-                label="שווי שוק"
-                value={
-                  analysis.marketCap
-                    ? `$${fmtCompact(analysis.marketCap)}`
-                    : "—"
-                }
-              />
-              {headline.slice(0, 3).map((item) => {
-                const metric = metricOf(item.key);
-                return (
-                  <StatCell
-                    key={item.key}
-                    label={item.label}
-                    value={fmtMetric(metric?.value ?? null, metric?.unit ?? "")}
-                  />
-                );
-              })}
-            </StatBar>
-          )
-        }
-        action={
-          <MoreLink href="/company/TTWO">לעמוד החברה המלא</MoreLink>
-        }
+    <Page>
+      <CinematicHero
+        variant="story"
+        image="/hero/ttwo-story.webp"
+        eyebrow={<span><span className="micro-label">MARKET STORIES / 001</span><span>מחקר מיוחד · NASDAQ: TTWO</span></span>}
+        title={<><bdi>GTA <span>VI</span></bdi><small>הסיפור שמאחורי הציפיות.</small></>}
+        description="אירוע תרבותי. מבחן פיננסי. מסע מהעולם של Rockstar אל הדוחות, התמחור והתזה של Take-Two."
+        actions={<><a href="#legacy" className="btn btn-editorial">לגלות את הסיפור <span aria-hidden="true">↓</span></a><Link href="#investment">ישר לניתוח הפיננסי</Link></>}
+        aside={<div className="story-ticket">
+          <div><span className="micro-label">NASDAQ / TTWO</span><p className="mt-1 text-sm text-ink-muted">Take-Two Interactive</p></div>
+          <div><strong className="num">{fmtPrice(quote?.price)}</strong><span className={"num text-sm " + ((quote?.changePercent ?? 0) >= 0 ? "text-up" : "text-down")}>{fmtPercent(quote?.changePercent ?? null)}</span></div>
+          <p className="mt-2 text-xs text-ink-faint">{quote?.at ? "ציטוט: " + fmtDate(quote.at.toISOString()) : "ציטוט אינו זמין כרגע"}</p>
+          <Link href="/company/TTWO">לעמוד החברה <span aria-hidden="true">↗</span></Link>
+        </div>}
+        footer={<div className="story-facts">
+          <div><span className="micro-label">THE CATALYST</span><strong>Grand Theft Auto VI</strong><p>הכותר הבא של Rockstar Games</p></div>
+          <div><span className="micro-label">THE COMPANY</span><strong>Take-Two Interactive</strong><p>חברה שלמה, מעבר להשקה אחת</p></div>
+          <div><span className="micro-label">THE QUESTION</span><strong>כמה כבר מגולם במחיר?</strong><p>ציפייה אינה תוצאה מדווחת</p></div>
+        </div>}
       />
+      <ChapterNav label="פרקי הסיפור של Take-Two" chapters={[
+        { id: "legacy", label: "המורשת" },
+        ...(launchEvent ? [{ id: "release", label: "ההשקה" }] : []),
+        { id: "investment", label: "ממשחק להשקעה" },
+        { id: "economics", label: "המספרים" },
+        { id: "expectations", label: "הציפיות" },
+        { id: "risks", label: "הסיכונים" },
+        { id: "monitor", label: "מה לעקוב" },
+        ...(intelligence ? [{ id: "thesis", label: "התזה" }] : []),
+      ]} />
+
+      <section id="legacy" className="legacy-section">
+        <div><div className="chapter-kicker"><span className="num">01</span>המורשת / THE LEGACY</div><h2 className="legacy-title"><bdi>GTA V.</bdi><small>ממשחק לעולם מתמשך.</small></h2></div>
+        <div className="legacy-copy"><p>GTA V יצא ב־2013. GTA Online המשיך את הקשר עם השחקנים מעבר לסיפור הראשי. למשקיע, השאלה היא איך כותר חדש הופך למערכת של תוכן, מעורבות והוצאות חוזרות לאורך זמן.</p>
+          <div className="legacy-facts"><div><strong>פתיחה חזקה</strong><p>המכירה הראשונית בונה בסיס שחקנים. היא רק תחילת המחזור הכלכלי.</p></div><div><strong>קשר מתמשך</strong><p>שימור, תוכן ותשלומים חוזרים קובעים את אורך החיים של ההכנסה.</p></div></div>
+          <p className="mt-5 !text-xs"><a href="https://www.rockstargames.com/newswire/article/o349k552518949/grand-theft-auto-v-now-available.html" target="_blank" rel="noopener noreferrer">מקור: Rockstar, השקת GTA V · 17.09.2013 ↗</a></p>
+        </div>
+      </section>
 
       {/* ---- The date, before anything else ----
            The one fact every reader of this page arrives wanting, and the
@@ -258,13 +253,27 @@ export default async function TtwoLaunchPage() {
            checked, and the two previous dates it replaced. */}
       {launchEvent && (
         <Section
-          eyebrow="מועד"
+          id="release"
+          eyebrow="02 / ההשקה"
           title="מתי, ועל מה זה מבוסס"
           description="תאריך שהחברה מסרה, לא אומדן של האתר. הוא כבר נדחה פעמיים, וזה חלק מהעובדה ולא הערת שוליים."
         >
           <ReleasePanel event={launchEvent} />
         </Section>
       )}
+
+      <section id="investment" className="investment-bridge">
+        <div className="chapter-kicker"><span className="num">03</span>FROM THE GAME TO THE BUSINESS</div>
+        <h2>המשחק יוצר את ההתרגשות.<br /><span>התזרים צריך להצדיק את המחיר.</span></h2>
+        <p className="lede">מכאן עוברים מהסיפור אל החברה: מה היא מוכרת, מתי ההכנסה מוכרת ומה נשאר לבעלי המניות.</p>
+        <div className="bridge-steps">
+          <div><span className="num">01 / DEMAND</span><h3>ביקוש</h3><p>כמה שחקנים יקנו, באיזה מחיר, ועל אילו פלטפורמות.</p></div>
+          <div><span className="num">02 / BOOKINGS</span><h3>מכירות נטו</h3><p>המדד של החברה למכירות בתקופה, לפי הגדרתה.</p></div>
+          <div><span className="num">03 / CASH FLOW</span><h3>מזומן</h3><p>גבייה פחות פיתוח, שיווק והוצאות תפעול.</p></div>
+          <div><span className="num">04 / VALUATION</span><h3>שווי</h3><p>כמה מהצמיחה כבר משתקפת במחיר ששולם.</p></div>
+        </div>
+        {analysis && <div className="mt-9"><StatBar><StatCell label="שווי שוק" value={analysis.marketCap ? "$" + fmtCompact(analysis.marketCap) : "—"} />{headline.slice(0,3).map((item) => { const metric = metricOf(item.key); return <StatCell key={item.key} label={item.label} value={fmtMetric(metric?.value ?? null, metric?.unit ?? "")} />; })}</StatBar><p className="caption mt-3">מדדים מדווחים היסטוריים; הם אינם תחזית ל־GTA VI. המקור וההשוואה לסקטור בעמוד החברה.</p></div>}
+      </section>
 
       {/* ---- The position, first.
            This page existed to explain how a launch passes through the
@@ -280,44 +289,42 @@ export default async function TtwoLaunchPage() {
         </Section>
       )}
 
-      {/* ---- Core Test, then the thesis. Take-Two is the case these two
-           were split for: it fails the trailing checklist while the
-           forward-looking question stays open. ---- */}
-      {intelligence && (
-        <>
-          <Section
-            eyebrow="מבחן הליבה"
-            description="בדיקה כמותית על מה שכבר דווח ברבעונים שלפני ההשקה."
-          >
-            <VerdictPanel verdict={intelligence.verdict} />
-          </Section>
-
-          <Section
-            eyebrow="תזת השקעה"
-            title="האם יש סיבה מבוססת להמשיך לעקוב"
-          >
-            <IntelligencePanel intelligence={intelligence} />
-          </Section>
-        </>
-      )}
-
       {/* ---- Accounting mechanics ---- */}
       <Section
-        eyebrow="חשבונאות"
+        id="economics"
+        eyebrow="04 / העסק"
         title="איך השקה נראית בדוחות"
         description="ארבעה מנגנונים שהופכים רבעון השקה למטעה אם קוראים אותו כמו רבעון רגיל."
       >
-        <div className="stagger grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
-          {MECHANICS.map((item) => (
-            <article key={item.title} className="bg-surface p-5">
-              <h3 className="text-[15px] font-bold tracking-tight">
+        <div className="editorial-rows">
+          {MECHANICS.map((item, index) => (
+            <article key={item.title}><span className="num">0{index + 1}</span>
+              <h3 className="font-bold tracking-tight">
                 {item.title}
               </h3>
-              <p className="mt-2.5 text-[13px] leading-relaxed text-ink-muted">
+              <p className="text-ink-muted">
                 {item.body}
               </p>
             </article>
           ))}
+        </div>
+      </Section>
+
+      <Section id="expectations" eyebrow="05 / ציפיות" title="השקה מוצלחת יכולה עדיין לא להספיק" description="התשואה תלויה גם בפער בין התוצאה לבין מה שכבר ציפו לו. מחיר המניה לבדו אינו מגלה במדויק את תחזית המכירות שהשוק מניח.">
+        <EvidenceKey />
+        <div className="editorial-rows mt-6">
+          <article><span className="num">01</span><h3>מה ידוע</h3><p>מועד ההשקה והפלטפורמות מפורטים בהודעת החברה. הדוחות מתארים את העסק לפני תרומת הכותר החדש.</p></article>
+          <article><span className="num">02</span><h3>מה צריך להשוות</h3><p>הנחיות Net Bookings, תוצאות בפועל והוצאות. לבדוק שינוי בהנחיה מול הגרסה הקודמת, ולא רק צמיחה שנתית.</p></article>
+          <article><span className="num">03</span><h3>מה עדיין חסר</h3><p>מודל קונצנזוס מאומת לכותר וניתוח הפוך של השווי אינם מוצגים כאן. לכן אין מספר מומצא ל״מכירות שמגולמות במחיר״.</p></article>
+        </div>
+        <Link href="/research?ticker=TTWO" className="btn btn-ghost mt-6">לבחון את הציפיות במחקר</Link>
+      </Section>
+
+      <Section id="risks" eyebrow="06 / סיכונים" title="מה יכול לשנות את הסיפור">
+        <div className="editorial-rows">
+          <article><span className="num">01</span><h3>לוח הזמנים</h3><p>דחייה משנה את עיתוי התזרים ואת חשיפת ההוצאות. שינוי מועד מחייב לבדוק מחדש את שנת הכספים הרלוונטית.</p></article>
+          <article><span className="num">02</span><h3>איכות ההשקה</h3><p>תקלות, החזרים או מעורבות נמוכה עלולים לשנות את הקשר בין מכירות הפתיחה לבין ערך לאורך זמן.</p></article>
+          <article><span className="num">03</span><h3>רווח למניה</h3><p>עלויות, דילול ותמחור גבוה יכולים לצמצם את התועלת לבעל המניות גם כשנתוני המכירות נראים חזקים.</p></article>
         </div>
       </Section>
 
@@ -349,7 +356,8 @@ export default async function TtwoLaunchPage() {
 
       {/* ---- What to read in the filing ---- */}
       <Section
-        eyebrow="הכנה"
+        id="monitor"
+        eyebrow="07 / מעקב"
         title="מה לקרוא בדוח כשהוא יגיע"
         description="הרשימה נכתבה מראש בכוונה. להחליט מה היה משנה את דעתך לפני שהמספר מגיע היא הגרסה היחידה של התרגיל הזה ששווה משהו — לעשות את זה אחרי קוראים לזה הסבר."
       >
@@ -389,6 +397,31 @@ export default async function TtwoLaunchPage() {
           </div>
         </Section>
       )}
+
+      {/* ---- Core Test, then the thesis. Take-Two is the case these two
+           were split for: it fails the trailing checklist while the
+           forward-looking question stays open. ---- */}
+      {intelligence && (
+        <>
+          <Section
+            eyebrow="מבחן הליבה"
+            description="בדיקה כמותית על מה שכבר דווח ברבעונים שלפני ההשקה."
+          >
+            <VerdictPanel verdict={intelligence.verdict} />
+          </Section>
+
+          <Section
+            id="thesis"
+            eyebrow="MARKET / תזת השקעה"
+            title="האם יש סיבה מבוססת להמשיך לעקוב"
+          >
+            <IntelligencePanel intelligence={intelligence} />
+          </Section>
+        </>
+      )}
+
+      <div className="mt-10 flex flex-wrap items-center gap-4"><WatchButton ticker="TTWO" /><Link href="/research?ticker=TTWO" className="btn btn-ghost">לחקור את Take-Two</Link></div>
+      <WorkflowLinks ticker="TTWO" title="מהסיפור לתהליך ההשקעה" />
 
       <p className="mt-16 text-[11px] leading-relaxed text-ink-ghost">
         העמוד מסביר מנגנונים חשבונאיים ואינו תחזית לגבי ביצועי הכותר, מועד
