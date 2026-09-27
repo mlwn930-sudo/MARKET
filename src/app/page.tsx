@@ -10,12 +10,14 @@ import { MarketPulse } from "@/components/MarketPulse";
 import { getMacroBoard } from "@/lib/sources/macro";
 import {
   Disclaimer,
+  EventCard,
   Hero,
   MoreLink,
   Page,
   Section,
   StatusPill,
 } from "@/components/ui";
+import { upcomingEvents } from "@/lib/analysis/known-events";
 import { Observatory } from "@/components/observatory/Observatory";
 import { marketSignal, marketStatus, type MarketSignalKind } from "@/lib/market-hours";
 import type { LiveQuote } from "@/lib/use-live-ticks";
@@ -130,6 +132,11 @@ export default async function MarketPage() {
   ].slice(0, 3);
 
   const topPicks = screen.results.slice(0, 6);
+
+  /* The hand-kept table, read across companies. Four is the ceiling rather
+     than the target — the table is short on purpose, and a page that
+     padded it would be inventing catalysts to fill a grid. */
+  const catalysts = upcomingEvents().slice(0, 4);
 
   /* What the numbers beside the headline ARE — live, last session, late, or
      missing. Derived from the freshest quote that actually arrived rather
@@ -304,6 +311,47 @@ export default async function MarketPage() {
           <div className="stagger grid gap-4 md:grid-cols-3">
             {headlines.map((article) => (
               <ArticleCard key={article.url} article={article} />
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {/* ---- What is still ahead ----
+           Read from the same table the launch page reads, rather than
+           restated here. The date on this one has already moved twice,
+           which is exactly why there is only ever one copy of it. */}
+      {catalysts.length > 0 && (
+        <Section
+          eyebrow="מה עוד לפנינו"
+          title="זרזים מתוזמנים"
+          description="אירועים שהדוחות אינם מכילים, מתוך טבלה שנכתבת ביד ונבדקת מול מקור. לא תחזיות — תאריכים שהחברה עצמה מסרה."
+          action={<MoreLink href="/launch/ttwo">לניתוח המלא</MoreLink>}
+        >
+          <div className="stagger grid gap-4 md:grid-cols-2">
+            {catalysts.map((event) => (
+              <EventCard
+                key={`${event.ticker}-${event.title}`}
+                when={event.window ?? "טרם הוכרז"}
+                title={`${event.ticker} · ${event.title}`}
+                status={
+                  event.status === "confirmed"
+                    ? "תאריך מאושר"
+                    : event.status === "indicated"
+                      ? "חלון שהוכרז"
+                      : "לא הוכרז"
+                }
+                body={event.why}
+                source={
+                  <>
+                    {event.source}
+                    {event.history && event.history.length > 0 && (
+                      <span className="text-ink-ghost">
+                        {" · "}נדחה {event.history.length === 1 ? "פעם" : `${event.history.length} פעמים`}
+                      </span>
+                    )}
+                  </>
+                }
+              />
             ))}
           </div>
         </Section>

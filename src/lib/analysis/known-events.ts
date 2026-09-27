@@ -98,3 +98,36 @@ export function knownEventsFor(ticker: string): KnownEvent[] {
   const symbol = ticker.toUpperCase();
   return EVENTS.filter((event) => event.ticker === symbol);
 }
+
+/**
+ * Everything still ahead, nearest first — the table read across companies
+ * rather than down one.
+ *
+ * This exists so a second page can show these events without keeping its
+ * own copy of them. A catalyst written down twice is a catalyst that will
+ * eventually disagree with itself, and the date is the field most likely
+ * to move: GTA VI has already been given three different ones.
+ *
+ * An entry with no date is not filtered out. "Unannounced" is a real
+ * state of the world and dropping it would quietly turn a company with an
+ * uncommitted release into a company with nothing coming — the opposite
+ * of what the reader needs to know. Those sort last, after everything
+ * with a date, because a date is the stronger claim.
+ *
+ * `asOf` is a parameter rather than a call to Date.now() so the boundary
+ * can be tested. Callers pass nothing.
+ */
+export function upcomingEvents(asOf: Date = new Date()): KnownEvent[] {
+  /* Compared as calendar days, not instants: an event dated today is
+     still ahead of a reader opening the page that morning. */
+  const today = asOf.toISOString().slice(0, 10);
+
+  return EVENTS.filter((event) => event.date === null || event.date >= today).sort(
+    (a, b) => {
+      if (a.date && b.date) return a.date.localeCompare(b.date);
+      if (a.date) return -1;
+      if (b.date) return 1;
+      return a.ticker.localeCompare(b.ticker);
+    },
+  );
+}
