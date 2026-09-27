@@ -323,13 +323,28 @@ export async function generateJson<T>(options: GenerateOptions): Promise<T> {
     }
   };
 
-  const first = parse(await generateText({ ...options, json: true }));
-  if (first !== null) return first;
+  const first = await generateText({ ...options, json: true });
+  const parsedFirst = parse(first);
+  if (parsedFirst !== null) return parsedFirst;
 
-  const second = parse(await generateText({ ...options, json: true }));
-  if (second !== null) return second;
+  const second = await generateText({ ...options, json: true });
+  const parsedSecond = parse(second);
+  if (parsedSecond !== null) return parsedSecond;
 
-  throw new GeminiError("upstream", "model did not return valid JSON");
+  /* What came back, so the next failure explains itself.
+   *
+   * "Model did not return valid JSON" is true and useless: it says the
+   * answer was wrong without saying how, and the first guess at the cause
+   * here — a token cap — was wrong precisely because nobody had looked at
+   * the text. A hundred characters is enough to tell prose from a fence
+   * from a cut object, and this string never reaches a reader: pages show
+   * GEMINI_FAILURE_TEXT, and this goes to the server log. */
+  throw new GeminiError(
+    "upstream",
+    `model did not return valid JSON. second answer began: ${JSON.stringify(
+      second.slice(0, 100),
+    )}`,
+  );
 }
 
 /** The outermost {...} or [...] in a string, or null when there is none.
