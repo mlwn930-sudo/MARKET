@@ -9,7 +9,7 @@ import { TRIAGE_CAVEAT } from "@/lib/news-triage";
 import { fmtRelative } from "@/lib/format";
 import { AnalyzeArticleButton } from "@/components/AnalyzeArticleButton";
 import { hasGeminiKey } from "@/lib/sources/gemini";
-import { AiMark } from "@/components/ui";
+import { AiBlock } from "@/components/ui";
 
 /**
  * One story.
@@ -87,61 +87,63 @@ export function ArticleCard({
         <div className="mt-2.5 flex-1 space-y-2">
           {analysis ? (
             <>
-              {/* The boundary between the publisher's words and the
-                  model's. Everything above this rule was written by a
-                  newsroom; everything below it was written by a machine
-                  reading that newsroom, and the reader is entitled to know
-                  which sentence is which before they act on one. */}
-              <div className="flex items-center gap-2 pt-0.5">
-                <AiMark />
-                <span className="text-[10px] text-ink-ghost">קריאת מודל</span>
-                <span className="ai-rule flex-1 opacity-40" aria-hidden="true" />
-              </div>
+              {article.excerpt && (
+                <div className="rounded-md border border-line bg-element/60 p-3">
+                  <div className="mb-1.5 text-[10px] font-medium tracking-[0.08em] text-ink-ghost">
+                    מהמקור
+                  </div>
+                  <p className="text-[12px] leading-relaxed text-ink-muted" dir="auto">
+                    {article.excerpt}
+                  </p>
+                </div>
+              )}
 
-              <p className="text-[13px] leading-relaxed text-ink-muted">
-                {analysis.summary}
-              </p>
-              <p className="text-[12px] leading-relaxed text-ink-faint">
-                <span className="text-ink-muted">השפעה: </span>
-                {analysis.impact}
-              </p>
-
-              {/* The bottom line for a reader who stops here: does this
-                  change the business, or only the headline. */}
-              {catalystMeaning(analysis.catalystKind) && (
-                <p className="text-[12px] leading-relaxed text-ink-muted">
-                  {catalystMeaning(analysis.catalystKind)}
+              <AiBlock
+                title="קריאת מודל"
+                confidence={analysis.catalystKind === "unclear" ? "low" : "medium"}
+                sources={[article.domain]}
+                at={analysis.writtenAt ? fmtRelative(new Date(analysis.writtenAt)) : undefined}
+              >
+                <p className="text-[13px] leading-relaxed text-ink-muted">
+                  {analysis.summary}
                 </p>
-              )}
+                <p className="mt-2 text-[12px] leading-relaxed text-ink-faint">
+                  <span className="text-ink-muted">השפעה: </span>
+                  {analysis.impact}
+                </p>
 
-              {/* The three lenses, collapsed. The feed's job is to be
-                  scannable; a reader who wants the full reading of one
-                  story opens that story. */}
-              {(analysis.catalyst || analysis.reaction || analysis.chain) && (
-                <details className="pt-1">
-                  <summary className="cursor-pointer text-[11px] text-ink-ghost transition-colors hover:text-ink-muted">
-                    ניתוח בשלוש עדשות
-                  </summary>
-                  <dl className="mt-2 space-y-2 border-t border-line pt-2">
-                    {[
-                      { label: "זרז או רעש", body: analysis.catalyst },
-                      { label: "תגובת מחיר מול ציפיות", body: analysis.reaction },
-                      { label: "שרשרת הערך", body: analysis.chain },
-                    ]
-                      .filter((lens) => lens.body)
-                      .map((lens) => (
-                        <div key={lens.label}>
-                          <dt className="text-[10px] text-ink-ghost">
-                            {lens.label}
-                          </dt>
-                          <dd className="text-[12px] leading-relaxed text-ink-muted">
-                            {lens.body}
-                          </dd>
-                        </div>
-                      ))}
-                  </dl>
-                </details>
-              )}
+                {catalystMeaning(analysis.catalystKind) && (
+                  <p className="mt-2 text-[12px] leading-relaxed text-ink-muted">
+                    {catalystMeaning(analysis.catalystKind)}
+                  </p>
+                )}
+
+                {(analysis.catalyst || analysis.reaction || analysis.chain) && (
+                  <details className="mt-3 border-t border-line pt-3">
+                    <summary className="cursor-pointer text-[11px] text-ink-ghost transition-colors hover:text-ink-muted">
+                      ניתוח בשלוש עדשות
+                    </summary>
+                    <dl className="mt-2 space-y-2">
+                      {[
+                        { label: "זרז או רעש", body: analysis.catalyst },
+                        { label: "תגובת מחיר מול ציפיות", body: analysis.reaction },
+                        { label: "שרשרת הערך", body: analysis.chain },
+                      ]
+                        .filter((lens) => lens.body)
+                        .map((lens) => (
+                          <div key={lens.label}>
+                            <dt className="text-[10px] text-ink-ghost">
+                              {lens.label}
+                            </dt>
+                            <dd className="text-[12px] leading-relaxed text-ink-muted">
+                              {lens.body}
+                            </dd>
+                          </div>
+                        ))}
+                    </dl>
+                  </details>
+                )}
+              </AiBlock>
             </>
           ) : (
             <>
