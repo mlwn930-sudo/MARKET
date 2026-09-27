@@ -20,6 +20,7 @@ import { Observatory } from "@/components/observatory/Observatory";
 import { marketSignal, marketStatus, type MarketSignalKind } from "@/lib/market-hours";
 import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtRelative } from "@/lib/format";
+import { IntelligenceReadout } from "@/components/IntelligenceReadout";
 
 export const revalidate = 30;
 
@@ -200,6 +201,14 @@ export default async function MarketPage() {
       <div className="gap-section-tight">
         <MarketDeck indices={cards} rows={rows} initial={seed} />
       </div>
+
+      <IntelligenceReadout
+        signal={{ label: signal.label, detail: signal.detail }}
+        quotes={seed}
+        articles={unique}
+        instruments={macro.instruments}
+        opportunityCount={screen.results.length}
+      />
 
       {/* ---- What matters, before what is new.
            The feed is sorted by time; this is sorted by consequence, and
