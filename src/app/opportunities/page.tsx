@@ -121,6 +121,11 @@ export default async function OpportunitiesPage() {
   const maxScore = results[0]?.maxScore ?? 0;
   const strong = results.filter((r) => r.score >= maxScore * 0.7).length;
   const median = results[Math.floor(results.length / 2)]?.score ?? 0;
+  const insufficient = results.reduce(
+    (sum, result) =>
+      sum + result.criteria.filter((criterion) => criterion.status === "insufficient-data").length,
+    0,
+  );
 
   return (
     <Page tint="#2855f5">
@@ -148,6 +153,11 @@ export default async function OpportunitiesPage() {
                 </>
               }
             />
+            <StatCell
+              label="בדיקות ללא נתון"
+              value={insufficient}
+              sub="לא נספרות ככישלון"
+            />
           </StatBar>
         }
       />
@@ -158,7 +168,8 @@ export default async function OpportunitiesPage() {
       >
         <strong className="font-medium text-ink">זה סינון, לא המלצה.</strong>{" "}
         ציון גבוה אומר שהחברה עברה יותר מבחנים כמותיים — לא שכדאי לקנות אותה.
-        קריטריון שאי אפשר לחשב נספר ככישלון, כי נתון חסר אינו הוכחה לאיכות.
+        קריטריון שאי אפשר לחשב מסומן "אין נתון" ואינו נספר ככישלון; נתון חסר אינו
+        ראיה לאיכות, אבל גם אינו ראיה לחולשה.
         {builtAt && (
           <span className="mt-1 block text-[11px] text-ink-ghost">
             נבנה <span className="num">{fmtDate(builtAt.slice(0, 10))}</span>
@@ -258,14 +269,25 @@ export default async function OpportunitiesPage() {
                         <span className="flex items-start gap-2">
                           <span
                             className={`num mt-px w-3 shrink-0 text-[11px] ${
-                              criterion.passed ? "text-ink" : "text-ink-ghost"
+                              criterion.status === "pass"
+                                ? "text-ink"
+                                : criterion.status === "fail"
+                                  ? "text-ink-ghost"
+                                  : "text-ink-ghost/70"
                             }`}
                             aria-hidden="true"
                           >
-                            {criterion.passed ? "✓" : "✕"}
+                            {criterion.status === "pass"
+                              ? "✓"
+                              : criterion.status === "fail"
+                                ? "✕"
+                                : "·"}
                           </span>
                           <span className="text-[12px] text-ink-muted">
                             {criterion.label}
+                            {criterion.status === "insufficient-data" && (
+                              <span className="ms-2 text-[10px] text-ink-ghost">אין נתון</span>
+                            )}
                           </span>
                         </span>
                         <span className="num shrink-0 text-[11px] text-ink-faint">
@@ -277,9 +299,14 @@ export default async function OpportunitiesPage() {
 
                   <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                     <p className="text-[11px] text-ink-ghost">
-                      {failed.length === 0
+                      {failed.length === 0 && missing.length === 0
                         ? "כל הקריטריונים עברו."
-                        : `לא עברו: ${failed.map((c) => c.label).join(" · ")}`}
+                        : [
+                            failed.length > 0 ? `לא עברו: ${failed.map((c) => c.label).join(" · ")}` : "",
+                            missing.length > 0 ? `אין נתון: ${missing.map((c) => c.label).join(" · ")}` : "",
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")}
                     </p>
                     <Link
                       href={`/company/${result.company.ticker}`}
@@ -304,7 +331,7 @@ export default async function OpportunitiesPage() {
       <Section
         eyebrow="מה נבדק"
         title="עשרת הקריטריונים, ומה כל אחד שואל"
-        description="הרוב נמדדים מול חציון הסקטור ולא מול סף מוחלט, כי מכפיל של 15 אומר דבר אחד בבנק ודבר אחר בחברת שבבים. קריטריון שאי אפשר לחשב נספר ככישלון."
+        description="הרוב נמדדים מול חציון הסקטור ולא מול סף מוחלט, כי מכפיל של 15 אומר דבר אחד בבנק ודבר אחר בחברת שבבים. קריטריון שאי אפשר לחשב מסומן כ"אין נתון" ואינו נספר ככישלון."
       >
         <Band columns={2}>
           {results[0].criteria.map((criterion) => (
