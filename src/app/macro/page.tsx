@@ -6,6 +6,7 @@ import {
 import { getSeries, FRED_SERIES, type FredSeriesId } from "@/lib/sources/fred";
 import {
   Disclaimer,
+  ErrorState,
   Hero,
   MetricCard,
   Page,
@@ -165,18 +166,11 @@ export default async function MacroPage() {
         description="אלה אינם מחירי שוק אלא פרסומים רשמיים של הפד ושל הלשכה לסטטיסטיקה, ומגיעים מ-FRED."
       >
         {available.length === 0 ? (
-          <div className="surface p-5">
-            <p className="text-[13px] text-ink">
-              הסדרות הרשמיות אינן זמינות בסביבה הזו.
-            </p>
-            <p className="mt-2 text-[12px] leading-relaxed text-ink-muted">
-              הן דורשות מפתח <span className="num">FRED_API_KEY</span>, שאינו
-              מוגדר. המפתח חינמי ומונפק מיידית ב-
-              <span className="num">fredaccount.stlouisfed.org/apikeys</span>.
-              עד אז המספרים למעלה — שהם מחירי שוק — עובדים כרגיל, ואינם
-              מוחלפים בהערכה של הסדרות החסרות.
-            </p>
-          </div>
+          <ErrorState
+            title="הסדרות הרשמיות אינן זמינות בסביבה הזו"
+            detail="הן דורשות מפתח FRED_API_KEY, שאינו מוגדר. המפתח חינמי ומונפק מיידית ב-fredaccount.stlouisfed.org/apikeys. עד אז המספרים למעלה — שהם מחירי שוק — עובדים כרגיל, ואינם מוחלפים בהערכה של הסדרות החסרות."
+            source="FRED"
+          />
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {available.map((series) => {

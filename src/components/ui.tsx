@@ -770,6 +770,114 @@ export function Empty({
 }
 
 /* ------------------------------------------------------------------ */
+/* When a source does not answer                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * A provider that failed, said in the reader's terms.
+ *
+ * Separate from Empty on purpose, because the two are different
+ * sentences. Empty says the question has no answer yet — nothing filed,
+ * nothing built, nothing to show. This says the answer exists and we
+ * could not reach it, which is what tells a reader whether coming back
+ * later is worth anything.
+ *
+ * It takes no error object, and that is the whole design. There is no
+ * parameter through which a stack trace, an exception message or a raw
+ * provider payload could arrive, so none of them can reach the screen by
+ * accident. The caller is forced to write a sentence instead of forwarding
+ * one, which is the only reliable way to keep internals off the page.
+ *
+ * The gold edge is the token for a caveat — the same one the screener's
+ * warning paragraph carries. Red stays reserved for a price going down.
+ */
+export function ErrorState({
+  title,
+  detail,
+  source,
+  links,
+  compact = false,
+}: {
+  /** What is unavailable, named the way a reader would name it. */
+  title: string;
+  /** Why, and whether it is worth returning. A cause, not an apology. */
+  detail?: string;
+  /** Which provider went quiet, where naming it tells the reader something. */
+  source?: string;
+  /** Where to go instead. */
+  links?: { href: string; label: string; hint?: string }[];
+  compact?: boolean;
+}) {
+  return (
+    <div
+      className={`surface border-s-2 ${compact ? "px-5 py-6" : "px-6 py-9"}`}
+      style={{ borderInlineStartColor: "var(--color-warning)" }}
+      role="status"
+    >
+      <div className="flex items-start gap-3.5">
+        <span
+          className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-md border border-line-strong"
+          style={{ color: "var(--color-warning)" }}
+          aria-hidden="true"
+        >
+          <svg width="13" height="13" viewBox="0 0 16 16">
+            <path
+              d="M8 4.5v4M8 11.2v.05"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <circle
+              cx="8"
+              cy="8"
+              r="6"
+              stroke="currentColor"
+              strokeWidth="1.3"
+              fill="none"
+              opacity="0.5"
+            />
+          </svg>
+        </span>
+
+        <div className="min-w-0">
+          <p className="text-[14px] font-medium text-ink">{title}</p>
+          {detail && (
+            <p className="mt-1.5 max-w-xl text-[12px] leading-relaxed text-ink-faint">
+              {detail}
+            </p>
+          )}
+          {source && (
+            <p className="caption mt-2 text-ink-ghost">
+              המקור שלא ענה: <span className="num">{source}</span>
+            </p>
+          )}
+
+          {links && links.length > 0 && (
+            <>
+              <p className="eyebrow mt-5">מה כן אפשר לבדוק</p>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
+                {links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="pill hover:border-line-bright"
+                      title={link.hint}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* Waiting                                                             */
 /* ------------------------------------------------------------------ */
 
