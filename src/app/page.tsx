@@ -18,6 +18,7 @@ import {
   StatusPill,
 } from "@/components/ui";
 import { upcomingEvents } from "@/lib/analysis/known-events";
+import { WatchlistStrip } from "@/components/WatchlistStrip";
 import { Observatory } from "@/components/observatory/Observatory";
 import { marketSignal, marketStatus, type MarketSignalKind } from "@/lib/market-hours";
 import type { LiveQuote } from "@/lib/use-live-ticks";
@@ -315,6 +316,21 @@ export default async function MarketPage() {
           </div>
         </Section>
       )}
+
+      {/* ---- The reader's own list ----
+           The only thing on this page that differs per visitor, and the
+           MONITOR end of the product. It renders unconditionally because
+           the empty state is a one-line invitation rather than a panel —
+           gating it on a list the server cannot see is not possible
+           anyway, since the list is in the browser. */}
+      <Section
+        eyebrow="מה שאתה עוקב אחריו"
+        title="הרשימה שלך"
+        description="נשמרת בדפדפן שלך בלבד. אין כאן חשבונות, ואין שרת שיודע אחרי מי אתה עוקב."
+        action={<MoreLink href="/watchlist">ללוח המלא</MoreLink>}
+      >
+        <WatchlistStrip />
+      </Section>
 
       {/* ---- What is still ahead ----
            Read from the same table the launch page reads, rather than
