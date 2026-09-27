@@ -8,7 +8,16 @@ import { ArticleCard } from "@/components/ArticleCard";
 import { WhatMattersToday } from "@/components/WhatMattersToday";
 import { MarketPulse } from "@/components/MarketPulse";
 import { getMacroBoard } from "@/lib/sources/macro";
-import { Disclaimer, Hero, MoreLink, Page, Section } from "@/components/ui";
+import {
+  Disclaimer,
+  Hero,
+  MoreLink,
+  Page,
+  Section,
+  StatusPill,
+} from "@/components/ui";
+import { Observatory } from "@/components/observatory/Observatory";
+import { marketSignal, marketStatus, type MarketSignalKind } from "@/lib/market-hours";
 import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtRelative } from "@/lib/format";
 
@@ -79,6 +88,22 @@ async function watchRows(): Promise<RowSeed[]> {
   );
 }
 
+/**
+ * The status chip's colour, by what the figures on the page actually are.
+ * Gold is this site's caveat colour, so a delayed feed wears it; an
+ * unreachable one is not a caveat but an absence, and stays neutral.
+ */
+const SIGNAL_TONE: Record<
+  MarketSignalKind,
+  "live" | "closed" | "brand" | "event" | "neutral"
+> = {
+  open: "live",
+  extended: "brand",
+  closed: "closed",
+  delayed: "event",
+  unavailable: "neutral",
+};
+
 export default async function MarketPage() {
   const [seed, cards, rows, feed, screen, macro] = await Promise.all([
     seedQuotes([
@@ -105,6 +130,18 @@ export default async function MarketPage() {
 
   const topPicks = screen.results.slice(0, 6);
 
+  /* What the numbers beside the headline ARE — live, last session, late, or
+     missing. Derived from the freshest quote that actually arrived rather
+     than from the clock alone: an open exchange and a feed that answered
+     twenty minutes ago are different claims. */
+  const quoteTimes = Object.values(seed)
+    .map((quote) => (quote.at ? Date.parse(quote.at) : Number.NaN))
+    .filter((time) => Number.isFinite(time));
+  const signal = marketSignal({
+    status: marketStatus(),
+    quotedAt: quoteTimes.length > 0 ? new Date(Math.max(...quoteTimes)) : null,
+  });
+
   return (
     <Page>
       {/* The opener carries the whole product in four lines, in the order
@@ -118,12 +155,18 @@ export default async function MarketPage() {
           <>
             מודיעין פיננסי,
             <br />
-            <span className="text-ink-muted">לפני ההחלטה.</span>
+            <span className="text-ink-muted">לפני שהשוק מדבר.</span>
           </>
         }
-        lede="מדדים ומחירים חיים, דוחות SEC מנורמלים, מעקב מוסדי וחדשות שנקראו דרך שלוש עדשות קבועות — וכל מספר מוצג מול ההקשר שהופך אותו לידע: חציון הסקטור, האחוזון ההיסטורי, או מה שהמחיר כבר מגלם."
-        image="/hero/markets.webp"
-        imageAlt=""
+        lede="נתונים, הקשר ומחקר מבוסס־AI — במקום אחד."
+        meta={
+          <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <StatusPill tone={SIGNAL_TONE[signal.kind]}>{signal.label}</StatusPill>
+            {signal.detail && (
+              <span className="text-[11px] text-ink-faint">{signal.detail}</span>
+            )}
+          </span>
+        }
         action={
           <div className="flex flex-wrap items-center gap-3">
             <Link href="/opportunities" className="btn btn-primary">
@@ -134,6 +177,17 @@ export default async function MarketPage() {
             </Link>
           </div>
         }
+        /* The observatory is decoration with a job: it says "instrument"
+           before a single figure has been read. It is also the one thing
+           on this page that may fail — so it ships as a drawing and only
+           becomes 3D when the device says yes. */
+        aside={
+          <Observatory
+            sceneUrl={process.env.NEXT_PUBLIC_SPLINE_SCENE_URL}
+            className="mx-auto max-w-[300px] sm:max-w-[380px] lg:max-w-[460px]"
+          />
+        }
+        asideSize="wide"
       />
 
       {/* The pulse first: equities, the price of money, and what that did

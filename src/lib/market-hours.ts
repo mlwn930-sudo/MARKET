@@ -52,6 +52,87 @@ export function describeStatus(status: MarketStatus): string {
 }
 
 /* ------------------------------------------------------------------ */
+/* What the numbers on screen actually are                             */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Five states, because "closed" and "we could not reach the feed" are not
+ * the same claim and a reader deciding whether to trust a price needs to
+ * know which one they are looking at.
+ *
+ * The distinction this exists for is DELAYED. A quote that arrived twenty
+ * minutes ago during an open session looks identical to a live one on the
+ * page; saying so is the difference between a stale number and a lie.
+ */
+export type MarketSignalKind =
+  | "open"
+  | "extended"
+  | "closed"
+  | "delayed"
+  | "unavailable";
+
+export type MarketSignal = {
+  kind: MarketSignalKind;
+  label: string;
+  /** The second line: what the figures beside it are, in one phrase. */
+  detail: string | null;
+};
+
+/** Past this, a quote taken during an open session is no longer current. */
+const DELAY_MINUTES = 15;
+
+export function marketSignal({
+  status,
+  quotedAt,
+  now = new Date(),
+}: {
+  status: MarketStatus;
+  /** When the freshest quote on the page was taken. Null when none came. */
+  quotedAt: Date | null;
+  now?: Date;
+}): MarketSignal {
+  if (!quotedAt || Number.isNaN(quotedAt.getTime())) {
+    return {
+      kind: "unavailable",
+      label: "אין נתונים כרגע",
+      detail: "ספק הציטוטים לא נענה בטעינה הזו",
+    };
+  }
+
+  const ageMinutes = Math.max(0, (now.getTime() - quotedAt.getTime()) / 60000);
+  const trading = status.state === "open" || status.state === "pre" || status.state === "after";
+
+  if (trading && ageMinutes > DELAY_MINUTES) {
+    return {
+      kind: "delayed",
+      label: "נתונים בעיכוב",
+      detail: `הציטוט האחרון בן ${Math.round(ageMinutes)} דקות`,
+    };
+  }
+
+  if (status.state === "open") {
+    return { kind: "open", label: "הבורסה פתוחה", detail: null };
+  }
+
+  if (status.state === "pre" || status.state === "after") {
+    return {
+      kind: "extended",
+      label: status.label,
+      detail: "מחוץ לשעות המסחר הרגילות, נזילות דקה",
+    };
+  }
+
+  return {
+    kind: "closed",
+    label: "הבורסה סגורה",
+    detail: `נתוני הסשן האחרון · ${quotedAt.toLocaleDateString("he-IL", {
+      day: "2-digit",
+      month: "2-digit",
+    })}`,
+  };
+}
+
+/* ------------------------------------------------------------------ */
 /* Cadence                                                             */
 /* ------------------------------------------------------------------ */
 

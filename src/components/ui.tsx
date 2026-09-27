@@ -191,6 +191,7 @@ export function Hero({
   meta,
   tone = "dark",
   aside,
+  asideSize = "narrow",
 }: {
   eyebrow: string;
   title: ReactNode;
@@ -205,10 +206,21 @@ export function Hero({
   /** A figure, a chart or a quote set beside the headline on a wide
    *  screen, and below it on a narrow one. */
   aside?: ReactNode;
+  /** `wide` gives the aside nearly half the band — for a hero object
+   *  rather than a readout. */
+  asideSize?: "narrow" | "wide";
 }) {
   const body = (
     <>
-      <div className={aside ? "grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end" : ""}>
+      <div
+        className={
+          !aside
+            ? ""
+            : asideSize === "wide"
+              ? "grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,46%)] lg:items-center"
+              : "grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end"
+        }
+      >
         <div>
           <div className="enter flex flex-wrap items-center gap-x-5 gap-y-2">
             <span className="flex items-center gap-2.5">

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
+    "@splinetool/runtime": "^2.0.58",
     "drizzle-orm": "^0.38.3",
     "fast-xml-parser": "^5.11.1",
     "lightweight-charts": "^5.2.1",
