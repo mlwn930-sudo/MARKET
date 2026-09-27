@@ -9,6 +9,7 @@
             const axes = profile(result);
             const identity = identityFor(result.company.ticker);
             const failed = result.criteria.filter((c) => c.status === "fail");
+            const missing = result.criteria.filter((c) => c.status === "insufficient-data");
 
             return (
               <details
@@ -58,9 +59,16 @@
 
                   {/* Score, small: an index into the list, not a verdict */}
                   <div className="flex items-center justify-between gap-3 lg:justify-end">
-                    <span className="num text-[15px]">
-                      <span className="text-ink">{result.score}</span>
-                      <span className="text-ink-ghost">/{result.maxScore}</span>
+                    <span className="text-end">
+                      <span className="num text-[15px]">
+                        <span className="text-ink">{result.score}</span>
+                        <span className="text-ink-ghost">/{result.evaluatedCount}</span>
+                      </span>
+                      {result.insufficientCount > 0 && (
+                        <span className="mt-0.5 block text-[9px] text-ink-ghost">
+                          {result.insufficientCount} ללא נתון
+                        </span>
+                      )}
                     </span>
                     <span
                       className="text-[11px] text-ink-ghost transition-transform group-open:rotate-180"
@@ -164,7 +172,7 @@
                   {criterion.explanation}
                 </span>
               }
-              context={`${results.filter((r) => r.criteria.find((c) => c.key === criterion.key)?.passed).length} מתוך ${results.length} החברות עוברות אותו`}
+              context={`${results.filter((r) => r.criteria.find((c) => c.key === criterion.key)?.status === "pass").length} עוברות · ${results.filter((r) => r.criteria.find((c) => c.key === criterion.key)?.status === "insufficient-data").length} ללא נתון`}
             />
           ))}
         </Band>
