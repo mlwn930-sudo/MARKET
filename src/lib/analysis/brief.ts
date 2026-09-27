@@ -309,7 +309,12 @@ const buildBrief = unstable_cache(
       system: BRIEF_SYSTEM,
       prompt: snapshotToText(snapshot),
       temperature: 0.4,
-      maxOutputTokens: 1_200,
+      // A headline, a two-line lede, up to four sections of up to four
+      // lines, and up to four things to watch — all in Hebrew, which costs
+      // roughly two to three tokens a word. 1,200 covered that on a quiet
+      // day and ran out on a busy one, and a cut object loses the whole
+      // narrative rather than its last paragraph.
+      maxOutputTokens: 2_000,
     });
 
     return { snapshot, narrative: cleanNarrative(raw), failure: null };

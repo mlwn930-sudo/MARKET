@@ -259,32 +259,117 @@ export async function generateText(options: GenerateOptions): Promise<string> {
         ?.map((part) => part?.text ?? "")
         .join("");
 
-      if (text) return text;
+      const truncated = candidate?.finishReason === "MAX_TOKENS";
+
+      // Half a sentence still reads. Half an object does not parse, and
+      // returning it as a success is what turned a budget that was merely
+      // too small into "model did not return valid JSON" — an error that
+      // points at the model's behaviour instead of at the cap that caused
+      // it. So prose keeps whatever arrived; JSON treats a cut answer as
+      // the failure it is, and says which one it was.
+      if (text && !(options.json && truncated)) return text;
 
       // A thinking model that spent the whole budget reasoning returns a
       // candidate with no text and MAX_TOKENS. Saying so is more useful
       // than "empty response", which sends the next person looking at the
       // network layer.
-      lastProblem =
-        candidate?.finishReason === "MAX_TOKENS"
-          ? `${model}: spent its token budget thinking and produced no text`
-          : `${model}: empty response`;
+      lastProblem = truncated
+        ? text
+          ? `${model}: ran out of tokens mid-object — raise maxOutputTokens`
+          : `${model}: spent its token budget thinking and produced no text`
+        : `${model}: empty response`;
     }
 
     throw new GeminiError("upstream", lastProblem);
   });
 }
 
-/** A JSON answer, parsed. Throws `upstream` when the model returns prose
- *  where an object was demanded — better than handing a half-parsed shape
- *  to a page that will render "undefined" into it. */
+/**
+ * A JSON answer, parsed.
+ *
+ * Asking for JSON is not the same as getting it. Measured on this key:
+ * the daily brief failed to parse twice during ordinary builds while the
+ * same prompt succeeded on every deliberate attempt to reproduce it — the
+ * model is stochastic, and once in a while it answers around the object
+ * instead of with it. The page degrades correctly when that happens, but
+ * it degrades by losing the whole narrative, which is a lot to lose to a
+ * stray sentence.
+ *
+ * So two cheap recoveries before giving up, in order of cost:
+ *
+ *   1. Carve the object out of the text. Prose wrapped around a valid
+ *      object costs nothing to fix and spends no budget.
+ *   2. Ask once more. Temperature is above zero, so the second answer is
+ *      genuinely a different draw rather than the same one retried.
+ *
+ * Still `upstream` when both fail, because a shape that was never parsed
+ * is worse on a page than an absent one — it renders "undefined" into
+ * somewhere a reader is trying to read a number.
+ */
 export async function generateJson<T>(options: GenerateOptions): Promise<T> {
-  const text = await generateText({ ...options, json: true });
-  try {
-    return JSON.parse(stripFence(text)) as T;
-  } catch {
-    throw new GeminiError("upstream", "model did not return valid JSON");
+  const parse = (text: string): T | null => {
+    const cleaned = stripFence(text);
+    try {
+      return JSON.parse(cleaned) as T;
+    } catch {
+      /* fall through to carving */
+    }
+    const carved = carveObject(cleaned);
+    if (carved === null) return null;
+    try {
+      return JSON.parse(carved) as T;
+    } catch {
+      return null;
+    }
+  };
+
+  const first = parse(await generateText({ ...options, json: true }));
+  if (first !== null) return first;
+
+  const second = parse(await generateText({ ...options, json: true }));
+  if (second !== null) return second;
+
+  throw new GeminiError("upstream", "model did not return valid JSON");
+}
+
+/** The outermost {...} or [...] in a string, or null when there is none.
+ *  Counts brackets rather than matching a regex, because the objects this
+ *  reads are nested and a regex would stop at the first closing brace. */
+function carveObject(text: string): string | null {
+  const open = text.search(/[{[]/);
+  if (open === -1) return null;
+
+  const closerFor = text[open] === "{" ? "}" : "]";
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = open; i < text.length; i++) {
+    const char = text[i];
+
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (char === "\\") {
+      escaped = true;
+      continue;
+    }
+    if (char === '"') {
+      inString = !inString;
+      continue;
+    }
+    if (inString) continue;
+
+    if (char === "{" || char === "[") depth++;
+    else if (char === "}" || char === "]") {
+      depth--;
+      if (depth === 0) {
+        return char === closerFor ? text.slice(open, i + 1) : null;
+      }
+    }
   }
+  return null;
 }
 
 /** Models sometimes wrap JSON in a code fence despite being told not to. */
