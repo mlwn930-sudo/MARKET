@@ -29,7 +29,7 @@ export function IntelligenceReadout({
   opportunityCount,
 }: Props) {
   const quoteValues = Object.values(quotes).filter(
-    (quote) =>
+    (quote): quote is LiveQuote & { changePercent: number } =>
       typeof quote.changePercent === "number" &&
       Number.isFinite(quote.changePercent),
   );
