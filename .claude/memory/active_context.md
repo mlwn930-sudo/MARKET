@@ -452,3 +452,44 @@ Executive View, שלושת סופי הביטחון, גרף הראיות, שדר�
 מנגנון העסקי של TTWO (Bookings → GTA VI), Executive View בעמוד חברה,
 שלושת סופי הביטחון, גרף הראיות, Watchlist למעקב תזות, Macro Pulse,
 סקטורים ישראליים מורחבים, ו-Data Status גלובלי.
+
+## הגיבור התלת-ממדי (27.09.2026)
+
+סצנת Spline בשם **MARKET INTEL — FINANCIAL OBSERVATORY** נבנתה בעורך דרך
+Spline MCP ושולבה בעמוד הבית. **הסצנה עצמה חיה בקובץ של Spline, לא ברפו.**
+
+### איך זה מחובר
+
+`src/components/observatory/`:
+- `ObservatoryFallback.tsx` — SVG inline של אותו אובייקט. **זה החזותי
+  המובטח, לא placeholder.** כל הקואורדינטות נגזרות מלולאה דטרמיניסטית —
+  אסור רנדומליות, אחרת הידרציה מחליפה את כל העץ.
+- `Observatory.tsx` — טוען את ה-3D **רק** אם: יש `NEXT_PUBLIC_SPLINE_SCENE_URL`,
+  אין `prefers-reduced-motion`, הרוחב ≥ 1024, אין Save-Data/2G/3G, ויש WebGL.
+  `IntersectionObserver` → `import('@splinetool/runtime')`.
+
+**אומת בדפדפן:** בלי URL אין אף בקשה ל-splinetool, אין canvas ב-DOM,
+ו-shared JS נשאר 104kB.
+
+### מלכודות שעלו
+
+- **`Application.load()` לא נכשל על URL מת** — הוא פשוט לא נפתר. התוצאה
+  הייתה "LOADING" נצחי. יש עכשיו `Promise.race` מול 8 שניות.
+- **שינוי ב-`.env.local` דורש restart לשרת הפיתוח.** בלי זה הערך הישן
+  ממשיך להיות מוטמע בבאנדל ובדיקה נראית שגויה.
+- **הקומפוזיציה של הסצנה** (כדור בימין, שטח ריק בשמאל) תוכננה לרקע
+  full-bleed. באתר RTL הוא יושב כפאנל **משמאל** לטקסט, והטקסט מימין —
+  זה נכון לעברית, אבל שונה מהבריף שנכתב ב-LTR.
+
+### חמשת מצבי השוק
+
+`marketSignal` ב-`market-hours.ts`: OPEN · EXTENDED · CLOSED · DELAYED ·
+UNAVAILABLE. **הסיבה שהוא קיים היא DELAYED** — ציטוט בן עשרים דקות בזמן
+מסחר נראה על המסך בדיוק כמו ציטוט חי. הנתונים באתר נשארים מקור האמת;
+שום מספר לא שוכפל לתוך Spline.
+
+### מה שנשאר לעשות
+
+**הסצנה עדיין לא פורסמה.** כשתפורסם — להדביק את כתובת ה-`.splinecode`
+ב-`NEXT_PUBLIC_SPLINE_SCENE_URL` (מתועד ב-`.env.example`), והשכבה
+נדלקת מעצמה. עד אז העמוד שלם עם ה-SVG.
