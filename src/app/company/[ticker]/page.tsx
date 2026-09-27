@@ -42,11 +42,13 @@ import {
   Band,
   Disclaimer,
   Empty,
+  EventCard,
   Field,
   Page,
   Section,
   Stat,
 } from "@/components/ui";
+import { knownEventsFor } from "@/lib/analysis/known-events";
 import { fmtCompact, fmtDate, fmtMetric } from "@/lib/format";
 
 export const revalidate = 600;
@@ -106,6 +108,11 @@ export default async function CompanyPage({
 
   const { profile, marketCap, fundamentals, capital, title } = analysis;
   const name = profile?.name ?? title;
+
+  /* The hand-kept table, read for this company. Empty for almost every
+     ticker, which is correct — the table holds only what materially
+     changes a business and is not in a filing. */
+  const catalysts = knownEventsFor(ticker);
 
 
   /**
@@ -455,6 +462,97 @@ export default async function CompanyPage({
           description="עמדה מנומקת, לא דירוג: מה הנתונים מראים, מה צריך לקרות כדי שזה יעבוד, ומה היה הופך את התמונה. כולל מה שעדיין לא נמצא בדוחות."
         >
           <OutlookPanel outlook={outlook} ticker={ticker} />
+        </Section>
+      )}
+
+      {/* ---- What is coming that the filings cannot contain ----
+           Placed here, directly under the bottom line, and not with the
+           evidence below it. For a company whose next filing will be
+           dominated by a dated product release, that date is not
+           supporting material — it is the thing. Burying it under nine
+           sections of history would be the failure the brief calls out.
+
+           Same table the homepage and the launch page read. Written once,
+           because the date on this entry has already moved twice. ---- */}
+      {catalysts.length > 0 && (
+        <Section
+          eyebrow="זרזים"
+          title="אירועים שהדוחות עדיין לא מכילים"
+          description="מה שנמסר על ידי החברה עצמה, עם המקור לצידו. אין כאן תחזית ואין מספר — רק מה האירוע, איזה קו בדוח הוא מזיז, ומה יאשר או ישבור אותו."
+        >
+          <div className="grid gap-4">
+            {catalysts.map((event) => (
+              <EventCard
+                key={event.title}
+                when={event.window ?? "טרם הוכרז"}
+                title={event.title}
+                status={
+                  event.status === "confirmed"
+                    ? "תאריך מאושר"
+                    : event.status === "indicated"
+                      ? "חלון שהוכרז"
+                      : "לא הוכרז"
+                }
+                body={
+                  <>
+                    <p>{event.why}</p>
+
+                    {event.scope && event.scope.length > 0 && (
+                      <>
+                        <p className="eyebrow mt-4">מה ההכרזה מכסה</p>
+                        <ul className="mt-1.5 flex flex-wrap gap-2">
+                          {event.scope.map((item) => (
+                            <li key={item} className="pill">
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                    <p className="eyebrow mt-4">מה לעקוב אחריו</p>
+                    <p className="mt-1.5">{event.watch}</p>
+
+                    {/* The delays are part of the fact. A date given once
+                        and a date given three times are different claims,
+                        and only one of them is visible without this. */}
+                    {event.history && event.history.length > 0 && (
+                      <>
+                        <p className="eyebrow mt-4">תאריכים קודמים</p>
+                        <ul className="mt-1.5 space-y-1">
+                          {event.history.map((step) => (
+                            <li key={step.date} className="text-ink-faint">
+                              <span className="num">{step.date}</span> — {step.note}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                  </>
+                }
+                source={
+                  <>
+                    {event.sourceUrl ? (
+                      <Link
+                        href={event.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline underline-offset-2"
+                      >
+                        {event.source}
+                      </Link>
+                    ) : (
+                      event.source
+                    )}
+                    <span className="text-ink-ghost">
+                      {" · "}נבדק מול המקור ב-
+                      <span className="num">{fmtDate(event.verifiedAt)}</span>
+                    </span>
+                  </>
+                }
+              />
+            ))}
+          </div>
         </Section>
       )}
 
