@@ -43,6 +43,8 @@ export function Page({
 
   return (
     <main
+      id="main-content"
+      tabIndex={-1}
       style={style}
       className={`mx-auto px-5 pb-28 sm:px-8 ${
         width === "wide" ? "max-w-[1440px]" : "max-w-[880px]"
@@ -189,7 +191,7 @@ export function Hero({
   image,
   imageAlt,
   meta,
-  tone = "dark",
+  tone = "light",
   aside,
   asideSize = "narrow",
 }: {
@@ -245,7 +247,7 @@ export function Hero({
   );
 
   if (tone === "light") {
-    return <div className="relative pt-12 sm:pt-16">{body}</div>;
+    return <header className="product-heading">{body}</header>;
   }
 
   return (
@@ -322,7 +324,7 @@ export function Stat({
 
   return (
     <div>
-      <div className="text-[11px] text-ink-faint">{label}</div>
+      <div className="text-[12px] text-ink-faint">{label}</div>
       <div className={`mt-1 ${valueClass} ${toneClass}`}>{value}</div>
       {sub && <div className="context-line mt-1.5">{sub}</div>}
     </div>
@@ -384,7 +386,7 @@ export function Delta({
 
   return (
     <span
-      className={`delta ${size === "sm" ? "text-[11px]" : ""}`}
+      className={`delta ${size === "sm" ? "text-[12px]" : ""}`}
       data-dir={dir}
     >
       {text}
@@ -458,7 +460,7 @@ export function Field({
 
   return (
     <div className={className}>
-      <div className="text-[11px] text-ink-faint">{label}</div>
+      <div className="text-[12px] text-ink-faint">{label}</div>
       <div className={`num mt-1.5 text-[17px] ${toneClass}`}>{value}</div>
       {context && <div className="context-line mt-1.5">{context}</div>}
     </div>
@@ -516,7 +518,7 @@ export function Reading({
   return (
     <div className="mt-5 border-s-2 ps-5" style={{ borderColor: "var(--tint)" }}>
       {title && <h4 className="eyebrow mb-2">{title}</h4>}
-      <div className="max-w-3xl text-[13px] leading-relaxed text-ink-muted">
+      <div className="max-w-3xl text-[14px] leading-relaxed text-ink-muted">
         {children}
       </div>
     </div>
@@ -554,7 +556,7 @@ export function Meter({
     <div>
       <div className="flex items-baseline justify-between gap-3">
         <span className="text-[12px] text-ink-muted">{label}</span>
-        <span className="num text-[11px] text-ink-faint">
+        <span className="num text-[12px] text-ink-faint">
           {value === null ? "—" : `${filled}/${max}`}
         </span>
       </div>
@@ -578,7 +580,7 @@ export function Meter({
           <span key={i} className="meter-seg" data-on={i < filled} />
         ))}
       </div>
-      {hint && <p className="mt-1 text-[10px] text-ink-ghost">{hint}</p>}
+      {hint && <p className="mt-1 text-[12px] text-ink-ghost">{hint}</p>}
     </div>
   );
 }
@@ -626,7 +628,7 @@ export function Confidence({
     (level === "high" ? "ביטחון גבוה" : level === "medium" ? "ביטחון בינוני" : "ביטחון נמוך");
 
   return (
-    <span className="inline-flex items-center gap-2 text-[11px] text-ink-faint">
+    <span className="inline-flex items-center gap-2 text-[12px] text-ink-faint">
       <span className="conf" data-level={level} role="img" aria-label={text}>
         <i />
         <i />
@@ -980,7 +982,7 @@ export function MoreLink({
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
+      className="group inline-flex items-center gap-1.5 text-[14px] text-ink-muted transition-colors hover:text-ink"
     >
       {children}
       <span
@@ -1002,7 +1004,7 @@ export function LiveBadge({
   label: string;
 }) {
   return (
-    <span className="inline-flex items-center gap-2 text-[11px]">
+    <span className="inline-flex items-center gap-2 text-[12px]">
       <span
         className={`inline-block h-[5px] w-[5px] rounded-full ${
           state === "live"
@@ -1023,7 +1025,7 @@ export function LiveBadge({
 /** The line every analysis page carries. Required by the project rules. */
 export function Disclaimer({ extra }: { extra?: string }) {
   return (
-    <p className="mt-24 border-t border-line pt-6 text-[11px] leading-relaxed text-ink-ghost">
+    <p className="mt-24 border-t border-line pt-6 text-[12px] leading-relaxed text-ink-ghost">
       {extra && <>{extra} </>}
       הנתונים מוצגים לצורכי מחקר בלבד ואינם ייעוץ השקעות, שיווק השקעות או
       תחליף לייעוץ המתחשב בנתוניו של כל אדם. המסגרות האנליטיות מתארות את מה
@@ -1180,7 +1182,7 @@ export function InsightCard({
             </svg>
           </span>
         )}
-        <span className="text-[13px] font-semibold text-ink">{title}</span>
+        <span className="text-[14px] font-semibold text-ink">{title}</span>
         {meta}
         {action && <span className="ms-auto">{action}</span>}
       </div>
@@ -1333,7 +1335,7 @@ export function ChartContainer({
       {(title || controls) && (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line px-5 py-3">
           {title && (
-            <span className="text-[13px] font-semibold text-ink">{title}</span>
+            <span className="text-[14px] font-semibold text-ink">{title}</span>
           )}
           {meta}
           {controls && <span className="ms-auto">{controls}</span>}

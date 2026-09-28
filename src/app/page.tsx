@@ -1,28 +1,28 @@
 import Link from "next/link";
+import Image from "next/image";
+import { MarketEntrance } from "@/components/market/MarketEntrance";
+import { DiscoveryJourney } from "@/components/market/DiscoveryJourney";
+import { SignalCanvas } from "@/components/market/SignalCanvas";
+import { WorkflowLinks } from "@/components/market/WorkflowLinks";
 import { getQuotes } from "@/lib/sources/finnhub";
 import { getIntradayHistory, getPriceHistory } from "@/lib/sources/prices";
 import { getLiveFeed } from "@/lib/live-news";
 import { runScreen } from "@/lib/screener";
 import { MarketDeck, type IndexCard, type RowSeed } from "@/components/MarketDeck";
-import { ArticleCard } from "@/components/ArticleCard";
 import { WhatMattersToday } from "@/components/WhatMattersToday";
 import { MarketPulse } from "@/components/MarketPulse";
 import { getMacroBoard } from "@/lib/sources/macro";
 import {
   Disclaimer,
   EventCard,
-  Hero,
   MoreLink,
   Page,
   Section,
-  StatusPill,
 } from "@/components/ui";
 import { upcomingEvents } from "@/lib/analysis/known-events";
 import { WatchlistStrip } from "@/components/WatchlistStrip";
-import { Observatory } from "@/components/observatory/Observatory";
-import { marketSignal, marketStatus, type MarketSignalKind } from "@/lib/market-hours";
+import { marketSignal, marketStatus } from "@/lib/market-hours";
 import type { LiveQuote } from "@/lib/use-live-ticks";
-import { fmtRelative } from "@/lib/format";
 import { IntelligenceReadout } from "@/components/IntelligenceReadout";
 
 export const revalidate = 30;
@@ -97,17 +97,6 @@ async function watchRows(): Promise<RowSeed[]> {
  * Gold is this site's caveat colour, so a delayed feed wears it; an
  * unreachable one is not a caveat but an absence, and stays neutral.
  */
-const SIGNAL_TONE: Record<
-  MarketSignalKind,
-  "live" | "closed" | "brand" | "event" | "neutral"
-> = {
-  open: "live",
-  extended: "brand",
-  closed: "closed",
-  delayed: "event",
-  unavailable: "neutral",
-};
-
 export default async function MarketPage() {
   const [seed, cards, rows, feed, screen, macro] = await Promise.all([
     seedQuotes([
@@ -127,12 +116,7 @@ export default async function MarketPage() {
   const unique = [...new Map(articles.map((a) => [a.url, a])).values()].sort(
     (a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""),
   );
-  const headlines = [
-    ...unique.filter((a) => a.analysis?.significance === "high"),
-    ...unique.filter((a) => a.analysis?.significance !== "high"),
-  ].slice(0, 3);
-
-  const topPicks = screen.results.slice(0, 6);
+  const topPicks = screen.results.slice(0, 3);
 
   /* The hand-kept table, read across companies. Four is the ceiling rather
      than the target — the table is short on purpose, and a page that
@@ -153,77 +137,34 @@ export default async function MarketPage() {
 
   return (
     <Page>
-      {/* The opener carries the whole product in four lines, in the order
-          the brief for this design demanded and for the reason behind it:
-          a label to place you, one large statement, a small line of
-          context, and then the way in. Anything else here is a number the
-          reader could already be looking at. */}
-      <Hero
-        eyebrow="Market Intel"
-        title={
-          <>
-            מודיעין פיננסי,
-            <br />
-            <span className="text-ink-muted">לפני שהשוק מדבר.</span>
-          </>
-        }
-        lede="נתונים, הקשר ומחקר מבוסס־AI — במקום אחד."
-        meta={
-          <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <StatusPill tone={SIGNAL_TONE[signal.kind]}>{signal.label}</StatusPill>
-            {signal.detail && (
-              <span className="text-[11px] text-ink-faint">{signal.detail}</span>
-            )}
-          </span>
-        }
-        action={
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/opportunities" className="btn btn-primary">
-              לרדאר ההזדמנויות
-            </Link>
-            <Link href="/brief" className="btn btn-ghost">
-              התדריך של היום
-            </Link>
-          </div>
-        }
-        /* The observatory is decoration with a job: it says "instrument"
-           before a single figure has been read. It is also the one thing
-           on this page that may fail — so it ships as a drawing and only
-           becomes 3D when the device says yes. */
-        aside={
-          <Observatory
-            sceneUrl={process.env.NEXT_PUBLIC_SPLINE_SCENE_URL}
-            className="mx-auto max-w-[300px] sm:max-w-[380px] lg:max-w-[460px]"
-          />
-        }
-        asideSize="wide"
-      />
+      <MarketEntrance status={signal.label} detail={signal.detail} />
 
-      {/* The pulse first: equities, the price of money, and what that did
-          to hard assets — one band, because those three read together are
-          a story and read apart are trivia. */}
-      <div className="gap-section">
-        <MarketPulse instruments={macro.instruments} />
-      </div>
+      <section id="featured-story" className="featured-door" aria-labelledby="featured-research">
+        <div className="editorial-feature-media"><Image src="/hero/rockstar-jason-lucia.webp" alt="GTA VI: איור רשמי של ג׳ייסון ולוסיה, Rockstar Games" fill sizes="(max-width: 767px) 100vw, 45vw" className="object-cover object-left" /></div>
+        <div className="editorial-feature-copy">
+          <span className="micro-label">THE BIG PICTURE / TTWO</span>
+          <h2 id="featured-research">כולם מחכים למשחק.<br />אנחנו בוחנים את התזה.</h2>
+          <p>GTA VI דרך הדוחות של Take-Two: מועד ההשקה, הציפיות, ההכנסות שעוד לא הוכרו ומה יכול לשנות את הסיפור.</p>
+          <Link href="/launch/ttwo">לסיפור ההשקעה <span aria-hidden="true">←</span></Link>
+        </div>
+      </section>
 
-      <div className="gap-section-tight">
-        <MarketDeck indices={cards} rows={rows} initial={seed} />
-      </div>
+      <DiscoveryJourney />
 
-      <IntelligenceReadout
-        signal={{ label: signal.label, detail: signal.detail }}
-        quotes={seed}
-        articles={unique}
-        instruments={macro.instruments}
-        opportunityCount={screen.results.length}
-      />
+      <section id="market-data" className="market-overview">
+        <div className="market-overview-head"><div><span className="micro-label">THE MARKET / NOW</span><h2>בחזרה אל הנתונים.</h2><p>תמונת המסחר, המקור וההקשר — לפני המסקנה.</p></div><Link href="/brief" className="btn btn-ghost">לתדריך המלא ←</Link></div>
+        <div className="market-overview-grid"><SignalCanvas indices={cards} quotes={seed} detail={signal.detail} /><MarketPulse instruments={macro.instruments} /></div>
+        <details className="depth-disclosure"><summary>לפתוח את לוח החברות והמדדים</summary><div><MarketDeck indices={cards} rows={rows} initial={seed} /></div></details>
+        <details className="depth-disclosure"><summary>להעמיק בתמונת המודיעין</summary><div><IntelligenceReadout signal={{ label: signal.label, detail: signal.detail }} quotes={seed} articles={unique} instruments={macro.instruments} opportunityCount={screen.results.length} /></div></details>
+      </section>
 
       {/* ---- What matters, before what is new.
            The feed is sorted by time; this is sorted by consequence, and
            it is the first thing under the prices for that reason. ---- */}
       <Section
-        eyebrow="מה חשוב היום"
-        title="מה מזה באמת משנה משהו"
+        id="what-matters"
+        eyebrow="02 / הקשר"
+        title="האירועים שמאחורי התנועה"
         description="רק כתבות שהניתוח סיווג כאירוע שמשנה תזרים, תחרות או רגולציה. כל השאר נשאר בפיד."
         action={<MoreLink href="/news">כל החדשות</MoreLink>}
       >
@@ -292,31 +233,6 @@ export default async function MarketPage() {
         </Section>
       )}
 
-      {/* ---- News ---- */}
-      {headlines.length > 0 && (
-        <Section
-          eyebrow="מה מזיז את השוק"
-          title="חדשות, אחרי סינון"
-          description="כל כתבה נקראת דרך שלוש עדשות: האם זה זרז או רעש, מה המחיר כבר עשה, ומי עוד בשרשרת הערך."
-          action={
-            <div className="flex items-center gap-4">
-              {feed.refreshedAt && (
-                <span className="text-[11px] text-ink-ghost">
-                  עודכן {fmtRelative(new Date(feed.refreshedAt))}
-                </span>
-              )}
-              <MoreLink href="/news">כל החדשות</MoreLink>
-            </div>
-          }
-        >
-          <div className="stagger grid gap-4 md:grid-cols-3">
-            {headlines.map((article) => (
-              <ArticleCard key={article.url} article={article} />
-            ))}
-          </div>
-        </Section>
-      )}
-
       {/* ---- The reader's own list ----
            The only thing on this page that differs per visitor, and the
            MONITOR end of the product. It renders unconditionally because
@@ -372,6 +288,8 @@ export default async function MarketPage() {
           </div>
         </Section>
       )}
+
+      <WorkflowLinks />
 
       <Disclaimer />
     </Page>

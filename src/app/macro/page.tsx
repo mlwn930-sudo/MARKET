@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { WorkflowLinks } from "@/components/market/WorkflowLinks";
 import {
   getMacroBoard,
   instrumentsOfKind,
@@ -52,30 +54,11 @@ function Card({ instrument }: { instrument: Instrument }) {
       : fmtPercent(instrument.changePercent);
 
   return (
-    <article className="surface flex flex-col p-4">
-      <div className="flex items-baseline justify-between gap-3">
-        <h3 className="text-[13px] text-ink">{instrument.name}</h3>
-        <span className="num text-[10px] text-ink-ghost" dir="ltr">
-          {instrument.symbol}
-        </span>
-      </div>
-
-      {missing ? (
-        <p className="mt-3 text-[12px] text-ink-faint">הנתון לא התקבל כרגע.</p>
-      ) : (
-        <>
-          <div className="num mt-2 text-[22px] text-ink">{value(instrument)}</div>
-          <div
-            className={`num text-[12px] ${directionClass(instrument.changePercent)}`}
-          >
-            {move}
-          </div>
-        </>
-      )}
-
-      <p className="mt-3 border-t border-line pt-2 text-[11px] leading-relaxed text-ink-faint">
-        {instrument.note}
-      </p>
+    <article className="macro-row">
+      <div><h3>{instrument.name}</h3><span className="num text-xs text-ink-faint" dir="ltr">{instrument.symbol}</span></div>
+      <div className="num macro-value">{missing ? "—" : value(instrument)}</div>
+      <div className={"num text-sm " + directionClass(instrument.changePercent)}>{missing ? "לא זמין" : move}</div>
+      <p>{instrument.note}{instrument.at && <span className="mt-1 block text-xs text-ink-faint">ציטוט: {new Date(instrument.at).toLocaleString("he-IL", { timeZone: "Asia/Jerusalem", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</span>}</p>
     </article>
   );
 }
@@ -132,17 +115,25 @@ export default async function MacroPage() {
   const available = fred.filter((series) => series !== null);
 
   return (
-    <Page tint="#06b6d4" width="wide">
+    <Page width="wide">
       <Hero
-        eyebrow="מאקרו"
-        title="מה קורה מסביב למניות"
-        lede="ריבית, אינפלציה, תנודתיות, נפט ומטבע קובעים חלק גדול מתנועת המניות — ולא אחד מהם מופיע בדוח של חברה. כל מכשיר כאן מוצג עם מה שהוא בפועל אומר על תמחור מניות, ולא רק עם המספר."
+        eyebrow="MARKET / MACRO INTELLIGENCE"
+        title="העולם שמאחורי השוק."
+        lede="מחיר הכסף, עלויות הייצור ושערי המטבע. לקרוא את הסביבה, ואז לחבר אותה לחברות שמושפעות ממנה."
       />
 
       <p className="mt-6 text-[11px] text-ink-ghost">
         עודכן {fmtRelative(new Date(board.builtAt))} · מחירי שוק בהשהיה, לא
         בזמן אמת
       </p>
+
+      <Section eyebrow="01 / TRANSMISSION" title="מהנתון אל העסק" description="מנגנוני השפעה לבדיקה. אלה קשרים כלכליים אפשריים, לא תחזית לכיוון המניה.">
+        <div className="macro-transmission">
+          <article><span className="micro-label">RATES → VALUATION</span><h3>ריבית ותמחור</h3><p>תשואה גבוהה יותר משנה את שיעור ההיוון ואת עלות המימון. לבדוק רגישות תזרים, מינוף ותמחור מול הצמיחה.</p><Link href="/company/MSFT">MSFT ↗</Link><Link href="/company/AMZN">AMZN ↗</Link></article>
+          <article><span className="micro-label">ENERGY → MARGINS</span><h3>נפט ומרווחים</h3><p>אותה תנועה יכולה להגדיל הכנסות של מפיקה ולהעלות עלויות של צרכנית. החשיפה תלויה בגידור ובכוח התמחור.</p><Link href="/company/CVX">CVX ↗</Link><Link href="/sectors">למפת הסקטורים ←</Link></article>
+          <article><span className="micro-label">FX → RETURNS</span><h3>מטבע ותשואה</h3><p>שער הדולר משפיע על רווחי חברות בינלאומיות ועל התשואה בשקלים. זו חשיפה נוספת מעבר לשינוי במחיר המניה.</p><Link href="/portfolio">לבחינת החשיפה בתיק ←</Link><Link href="/israel">שוק תל אביב ↗</Link></article>
+        </div>
+      </Section>
 
       {groups.map((group) => (
         <Section
@@ -151,7 +142,7 @@ export default async function MacroPage() {
           title={group.title}
           description={group.description}
         >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="macro-rows">
             {group.items.map((instrument) => (
               <Card key={instrument.symbol} instrument={instrument} />
             ))}
@@ -168,7 +159,7 @@ export default async function MacroPage() {
         {available.length === 0 ? (
           <ErrorState
             title="הסדרות הרשמיות אינן זמינות בסביבה הזו"
-            detail="הן דורשות מפתח FRED_API_KEY, שאינו מוגדר. המפתח חינמי ומונפק מיידית ב-fredaccount.stlouisfed.org/apikeys. עד אז המספרים למעלה — שהם מחירי שוק — עובדים כרגיל, ואינם מוחלפים בהערכה של הסדרות החסרות."
+            detail="הפרסומים הרשמיים לא התקבלו. נתוני השוק למעלה מוצגים בנפרד ואינם תחליף לנתוני אינפלציה, תעסוקה או ריבית הפד."
             source="FRED"
           />
         ) : (
@@ -199,6 +190,7 @@ export default async function MacroPage() {
         )}
       </Section>
 
+      <WorkflowLinks title="מהתמונה הכללית לחברה המסוימת" />
       <Disclaimer extra="הקשרים המתוארים כאן בין מאקרו למניות הם מנגנונים מוכרים, לא חוקי טבע — ריבית שעולה לא מורידה כל מניה, והיא כן משנה את החשבון של כולן." />
     </Page>
   );

@@ -47,11 +47,11 @@ export function ExpectationEnginePanel({
       <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
         {engine.expects.map((expectation, index) => (
           <div key={`${index}-${expectation.label}`} className="bg-surface p-5">
-            <div className="text-[11px] text-ink-faint">{expectation.label}</div>
+            <div className="text-[12px] text-ink-faint">{expectation.label}</div>
             <div className="num mt-1.5 text-[17px] text-ink">
               {expectation.figure}
             </div>
-            <p className="mt-2 text-[11px] leading-relaxed text-ink-faint">
+            <p className="mt-2 text-[12px] leading-relaxed text-ink-faint">
               {expectation.body}
             </p>
           </div>
@@ -92,7 +92,7 @@ export function ExpectationEnginePanel({
                         }}
                       >
                         <div className="flex flex-wrap items-baseline gap-2">
-                          <span className="text-[13px] leading-snug text-ink">
+                          <span className="text-[15px] leading-snug text-ink">
                             {surprise.trigger}
                           </span>
                           <GradeChip grade={surprise.grade} />
@@ -100,14 +100,14 @@ export function ExpectationEnginePanel({
 
                         <dl className="mt-2 flex flex-wrap gap-x-6 gap-y-1">
                           <div className="flex items-baseline gap-1.5">
-                            <dt className="text-[10px] text-ink-ghost">היום</dt>
-                            <dd className="num text-[11px] text-ink-muted">
+                            <dt className="text-[12px] text-ink-ghost">היום</dt>
+                            <dd className="num text-[12px] text-ink-muted">
                               {surprise.measuredNow}
                             </dd>
                           </div>
                           <div className="flex items-baseline gap-1.5">
-                            <dt className="text-[10px] text-ink-ghost">הסף</dt>
-                            <dd className="num text-[11px] text-ink">
+                            <dt className="text-[12px] text-ink-ghost">הסף</dt>
+                            <dd className="num text-[12px] text-ink">
                               {surprise.threshold}
                             </dd>
                           </div>
@@ -131,13 +131,13 @@ export function ExpectationEnginePanel({
           {engine.assumptions.map((assumption, index) => (
             <li
               key={`${index}-${assumption.slice(0, 20)}`}
-              className="text-[11px] leading-relaxed text-ink-ghost"
+              className="text-[12px] leading-relaxed text-ink-ghost"
             >
               — {assumption}
             </li>
           ))}
         </ul>
-        <p className="mt-3 border-t border-line pt-3 text-[11px] leading-relaxed text-ink-ghost">
+        <p className="mt-3 border-t border-line pt-3 text-[12px] leading-relaxed text-ink-ghost">
           {engine.claim.limits}
         </p>
       </div>
@@ -166,7 +166,7 @@ export function EarningsReadPanel({ read }: { read: EarningsRead }) {
         </span>
         <GradeChip grade={read.claim.grade} />
         {read.record && (
-          <span className="num ms-auto text-[11px] text-ink-ghost">
+          <span className="num ms-auto text-[12px] text-ink-ghost">
             {read.record.beats}/{read.record.quarters} הכאות
           </span>
         )}
@@ -184,7 +184,7 @@ export function EarningsReadPanel({ read }: { read: EarningsRead }) {
             <div>
               <div className="flex items-baseline gap-2">
                 <span
-                  className={`num text-[11px] ${
+                  className={`num text-[12px] ${
                     yardstick.direction === "better"
                       ? "text-up"
                       : yardstick.direction === "worse"
@@ -199,7 +199,7 @@ export function EarningsReadPanel({ read }: { read: EarningsRead }) {
                   {yardstick.label}
                 </span>
               </div>
-              <div className="num mt-1 text-[13px] text-ink">
+              <div className="num mt-1 text-[15px] text-ink">
                 {yardstick.figure}
               </div>
             </div>
@@ -227,13 +227,13 @@ export function EarningsReadPanel({ read }: { read: EarningsRead }) {
           {read.missing.map((item, index) => (
             <li
               key={`${index}-${item.slice(0, 20)}`}
-              className="text-[11px] leading-relaxed text-ink-ghost"
+              className="text-[12px] leading-relaxed text-ink-ghost"
             >
               — {item}
             </li>
           ))}
         </ul>
-        <p className="mt-3 border-t border-line pt-3 text-[11px] leading-relaxed text-ink-ghost">
+        <p className="mt-3 border-t border-line pt-3 text-[12px] leading-relaxed text-ink-ghost">
           {read.claim.limits}
         </p>
       </div>

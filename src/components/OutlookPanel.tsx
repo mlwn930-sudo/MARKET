@@ -29,7 +29,7 @@ function ScenarioCard({ scenario }: { scenario: Scenario }) {
       <div className="flex items-baseline justify-between gap-3">
         <span className="text-[12px] text-ink-muted">{scenario.label}</span>
         <span
-          className={`num text-[13px] ${
+          className={`num text-[15px] ${
             scenario.impliedReturn === null
               ? "text-ink-faint"
               : positive
@@ -49,7 +49,7 @@ function ScenarioCard({ scenario }: { scenario: Scenario }) {
 
       <ul className="mt-3 space-y-1.5 border-t border-line pt-3">
         {scenario.assumptions.map((assumption, i) => (
-          <li key={i} className="text-[11px] leading-relaxed text-ink-faint">
+          <li key={i} className="text-[12px] leading-relaxed text-ink-faint">
             {assumption}
           </li>
         ))}
@@ -57,7 +57,7 @@ function ScenarioCard({ scenario }: { scenario: Scenario }) {
 
       <ul className="mt-2 space-y-1">
         {scenario.drivers.map((driver, i) => (
-          <li key={i} className="text-[11px] leading-relaxed text-ink-ghost">
+          <li key={i} className="text-[12px] leading-relaxed text-ink-ghost">
             {driver}
           </li>
         ))}
@@ -83,7 +83,7 @@ export function OutlookPanel({
           <span className="badge" style={{ color: "var(--color-accent)" }}>
             {stance.label}
           </span>
-          <span className="text-[11px] text-ink-faint">{stance.note}</span>
+          <span className="text-[12px] text-ink-faint">{stance.note}</span>
           <span className="ms-auto badge" title={outlook.confidenceReason}>
             {CONFIDENCE_LABELS[outlook.confidence]}
           </span>
@@ -95,13 +95,13 @@ export function OutlookPanel({
 
         <div className="mt-4 space-y-2.5 border-t border-line pt-4">
           {outlook.argument.map((line, i) => (
-            <p key={i} className="text-[13px] leading-relaxed text-ink-muted">
+            <p key={i} className="text-[15px] leading-relaxed text-ink-muted">
               {line}
             </p>
           ))}
         </div>
 
-        <p className="mt-4 text-[11px] leading-relaxed text-ink-ghost">
+        <p className="mt-4 text-[12px] leading-relaxed text-ink-ghost">
           רמת הוודאות: {outlook.confidenceReason}
         </p>
       </div>
@@ -120,7 +120,7 @@ export function OutlookPanel({
           ) : (
             <ul className="space-y-2">
               {outlook.worksIf.map((item, i) => (
-                <li key={i} className="text-[13px] leading-relaxed text-ink-muted">
+                <li key={i} className="text-[15px] leading-relaxed text-ink-muted">
                   {item}
                 </li>
               ))}
@@ -141,7 +141,7 @@ export function OutlookPanel({
           ) : (
             <ul className="space-y-2">
               {outlook.breaksIf.map((item, i) => (
-                <li key={i} className="text-[13px] leading-relaxed text-ink-muted">
+                <li key={i} className="text-[15px] leading-relaxed text-ink-muted">
                   {item}
                 </li>
               ))}
@@ -165,18 +165,18 @@ export function OutlookPanel({
             >
               <div className="flex flex-wrap items-baseline gap-3">
                 <h4 className="text-[14px] text-ink">{event.title}</h4>
-                <span className="num text-[11px] text-ink-faint">
+                <span className="num text-[12px] text-ink-faint">
                   {event.window ?? "החברה טרם מסרה מועד מאושר"}
                 </span>
               </div>
-              <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">
+              <p className="mt-2 text-[15px] leading-relaxed text-ink-muted">
                 {event.why}
               </p>
               <p className="mt-2 text-[12px] leading-relaxed text-ink-faint">
                 <span className="text-ink-muted">מה לבדוק: </span>
                 {event.watch}
               </p>
-              <p className="mt-2 text-[10px] text-ink-ghost">
+              <p className="mt-2 text-[12px] text-ink-ghost">
                 מקור: {event.source} · רשומה שהוזנה ידנית, לא נתון מחושב
               </p>
             </article>
@@ -187,9 +187,9 @@ export function OutlookPanel({
               {outlook.catalysts.map((catalyst) => (
                 <li key={catalyst.title}>
                   <div className="flex flex-wrap items-baseline gap-3">
-                    <span className="text-[13px] text-ink">{catalyst.title}</span>
+                    <span className="text-[15px] text-ink">{catalyst.title}</span>
                     {catalyst.when && (
-                      <span className="num text-[11px] text-ink-faint">
+                      <span className="num text-[12px] text-ink-faint">
                         {catalyst.when}
                       </span>
                     )}
@@ -212,7 +212,7 @@ export function OutlookPanel({
               <span className="section-mark" aria-hidden="true" />
               <span className="eyebrow">שלושה תרחישים לשנה קדימה</span>
             </div>
-            <span className="text-[11px] text-ink-ghost">
+            <span className="text-[12px] text-ink-ghost">
               חישוב מכני מהמספרים שבעמוד — לא תחזית
             </span>
           </div>
@@ -223,7 +223,7 @@ export function OutlookPanel({
             ))}
           </div>
 
-          <p className="mt-3 text-[11px] leading-relaxed text-ink-ghost">
+          <p className="mt-3 text-[12px] leading-relaxed text-ink-ghost">
             כל תרחיש הוא משפט אריתמטי אחד: מחיר × (1 + צמיחה) × (מכפיל יעד ÷
             מכפיל נוכחי). ההנחות מודפסות מתחת לכל מספר כדי שאפשר יהיה לחלוק
             עליהן. הן אינן תחזית של האתר ואינן מחיר יעד.
@@ -245,7 +245,7 @@ export function OutlookPanel({
               </li>
             ))}
           </ul>
-          <p className="mt-3 border-t border-line pt-3 text-[11px] text-ink-ghost">
+          <p className="mt-3 border-t border-line pt-3 text-[12px] text-ink-ghost">
             רוצה את הטיעון המלא, מפורק לשאלות משנה?{" "}
             <Link
               href={`/research?ticker=${ticker}`}

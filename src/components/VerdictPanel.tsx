@@ -46,7 +46,7 @@ function CheckRow({
             {mark}
           </span>
           <span
-            className={`text-[13px] leading-snug ${
+            className={`text-[15px] leading-snug ${
               passed === false ? "text-ink" : "text-ink-muted"
             }`}
           >
@@ -56,9 +56,9 @@ function CheckRow({
             )}
           </span>
         </span>
-        <span className="num shrink-0 text-[11px] text-ink-faint">{detail}</span>
+        <span className="num shrink-0 text-[12px] text-ink-faint">{detail}</span>
       </summary>
-      <p className="pb-3 ps-[22px] text-[11px] leading-relaxed text-ink-faint">
+      <p className="pb-3 ps-[22px] text-[12px] leading-relaxed text-ink-faint">
         {why}
       </p>
     </details>
@@ -98,7 +98,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
             <div className="badge inline-block rounded-full px-3 py-1 text-xs">
               {STANCE_LABEL[verdict.stance]}
             </div>
-            <p className="num mt-2 text-[11px] text-ink-faint">
+            <p className="num mt-2 text-[12px] text-ink-faint">
               בדיקות ליבה: {verdict.corePassed}/{verdict.coreEvaluated}
             </p>
           </div>
@@ -127,7 +127,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
         <div className="border-b border-line p-6 lg:border-b-0 lg:border-e">
           <h3 className="eyebrow">מה עובד כאן</h3>
           {verdict.reasonsFor.length === 0 ? (
-            <p className="mt-3 text-[13px] text-ink-faint">
+            <p className="mt-3 text-[15px] text-ink-faint">
               אף אחת מבדיקות הליבה לא עברה.
             </p>
           ) : (
@@ -135,7 +135,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
               {verdict.reasonsFor.map((reason, index) => (
                 <li
                   key={`${index}-${reason}`}
-                  className="flex gap-2.5 text-[13px] leading-relaxed text-ink-muted"
+                  className="flex gap-2.5 text-[15px] leading-relaxed text-ink-muted"
                 >
                   <span
                     className="num mt-px shrink-0 text-ink"
@@ -153,7 +153,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
         <div className="p-6">
           <h3 className="eyebrow">מה עוצר</h3>
           {verdict.blockers.length === 0 ? (
-            <p className="mt-3 text-[13px] text-ink-faint">
+            <p className="mt-3 text-[15px] text-ink-faint">
               אף בדיקה לא נכשלה.
             </p>
           ) : (
@@ -161,7 +161,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
               {verdict.blockers.map((blocker, index) => (
                 <li
                   key={`${index}-${blocker}`}
-                  className="flex gap-2.5 text-[13px] leading-relaxed text-ink"
+                  className="flex gap-2.5 text-[15px] leading-relaxed text-ink"
                 >
                   <span
                     className="num mt-px shrink-0 text-ink-faint"
@@ -180,7 +180,7 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
       {/* ---- The full checklist ---- */}
       <div className="border-t border-line p-6">
         <h3 className="eyebrow">כל הבדיקות</h3>
-        <p className="mt-1.5 text-[11px] text-ink-faint">
+        <p className="mt-1.5 text-[12px] text-ink-faint">
           לחיצה על שורה מסבירה למה השאלה הזו נמצאת ברשימה.
         </p>
         <div className="mt-3">
@@ -200,10 +200,10 @@ export function VerdictPanel({ verdict }: { verdict: Verdict }) {
       {/* ---- What would make this wrong ---- */}
       <div className="border-t border-line bg-element/70 p-6">
         <h3 className="eyebrow">מה היה הופך את הקריאה הזו לשגויה</h3>
-        <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-ink-muted">
+        <p className="mt-3 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
           {verdict.falsification}
         </p>
-        <p className="mt-4 border-t border-line pt-3.5 text-[11px] leading-relaxed text-ink-ghost">
+        <p className="mt-4 border-t border-line pt-3.5 text-[12px] leading-relaxed text-ink-ghost">
           {verdict.caveat}
         </p>
       </div>
