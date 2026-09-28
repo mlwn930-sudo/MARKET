@@ -16,7 +16,9 @@
     "summarize:news": "node --env-file-if-exists=.env.local scripts/summarize-news.mjs",
     "filter:news": "node --env-file-if-exists=.env.local scripts/filter-news.mjs",
     "doctor": "node --env-file-if-exists=.env.local scripts/doctor.mjs",
-    "build:thesis": "tsx scripts/build-thesis-history.ts"
+    "build:thesis": "tsx scripts/build-thesis-history.ts",
+    "test:scenario": "node --import tsx --test scripts/launch-scenario.test.ts",
+    "test:journey": "playwright test"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.6",
     "@types/react": "^19.0.7",

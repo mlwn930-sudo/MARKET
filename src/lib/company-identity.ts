@@ -7,8 +7,8 @@
  * colour derived from the ticker itself — deterministic, so the same company
  * always looks the same.
  *
- * Colour only. No logos, no wordmarks: those are trademarks, and a research
- * site has no business reproducing them.
+ * Brand colors identify companies. The editorial interface can pair these
+ * with attributed logos; identification does not imply affiliation.
  */
 
 import { SECTOR_LABELS, sectorOf, type SectorKey } from "./universe";

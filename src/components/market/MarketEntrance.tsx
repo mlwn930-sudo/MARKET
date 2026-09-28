@@ -18,7 +18,7 @@ export function MarketEntrance({ status, detail }: {status: string; detail: stri
     return () => media.revert();
   }, []);
   return <section ref={root} className="market-entrance">
-    <div className="entrance-image"><Image src="/hero/market-city.webp" fill priority sizes="100vw" alt="קו הרקיע של העיר בשעת ערב" className="object-cover" /></div>
+    <div className="entrance-image"><Image src="/hero/market-city.webp" fill priority sizes="(max-width: 600px) 1440px, 100vw" alt="קו הרקיע של העיר בשעת ערב" className="object-cover" /></div>
     <div className="entrance-scrim" aria-hidden="true" />
     <div className="entrance-topline"><span dir="ltr">MARKET / FINANCIAL INTELLIGENCE</span><span>{status}</span></div>
     <div className="entrance-copy"><span className="entrance-eyebrow">לכל תנועה יש סיפור.</span><h1 className="entrance-title"><span>השוק זז.</span><span>תבינו למה.</span></h1><p>מסע בין החברות, הרעיונות והכוחות<br className="desktop-break" /> שמעצבים את ההחלטה הבאה.</p><a href="#featured-story" className="entrance-cta">לגלות את הסיפור <span aria-hidden="true">↙</span></a></div>

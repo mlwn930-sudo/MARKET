@@ -30,7 +30,7 @@ export function SignalCanvas({ indices, quotes, detail }: { indices: IndexCard[]
       <defs><linearGradient id={id} x1="0" y1="0" x2="0" y2="1"><stop stopColor="currentColor" stopOpacity=".22"/><stop offset="1" stopColor="currentColor" stopOpacity="0"/></linearGradient></defs>
       {[35,85,138].map((y) => <line key={y} x1="0" x2="520" y1={y} y2={y} stroke="var(--color-line)" strokeDasharray="3 6"/>)}
       <path d={path + " L508,162 L12,162 Z"} fill={"url(#" + id + ")"}/>
-      <path key={selected} className="signal-line" d={path} fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinejoin="round"/>
+      <path key={selected} className="signal-line" pathLength={1} d={path} fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinejoin="round"/>
       <circle cx={points.at(-1)?.[0]} cy={points.at(-1)?.[1]} r="3.5" fill="currentColor"/>
       <text x="9" y="17" fill="var(--color-ink-faint)" fontSize="11">{max.toFixed(2)}</text>
       <text x="9" y="157" fill="var(--color-ink-faint)" fontSize="11">{min.toFixed(2)}</text>

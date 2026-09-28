@@ -37,9 +37,9 @@ const SOURCES = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-28 border-t border-line bg-[var(--color-surface-plain)]">
+    <footer className="financial-footer mt-14 border-t border-line bg-[var(--color-surface-plain)]">
       <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
           <div>
             <Wordmark />
             <p className="mt-3 max-w-xs text-[12px] leading-relaxed text-ink-faint">
