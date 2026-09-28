@@ -105,6 +105,7 @@ export default async function MarketPage() {
   const unique = [...new Map(articles.map((a) => [a.url, a])).values()].sort(
     (a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""),
   );
+  const priorityArticles = [...unique].sort((a,b)=>Number(b.analysis?.catalystKind === "catalyst")-Number(a.analysis?.catalystKind === "catalyst") || Number(b.analysis?.significance === "high")-Number(a.analysis?.significance === "high")).slice(0,3);
   const topPicks = screen.results.slice(0, 3);
 
   /* The hand-kept table, read across companies. Four is the ceiling rather
@@ -126,9 +127,9 @@ export default async function MarketPage() {
 
   return <Page>
     <header className="market-opening product-heading"><div><span className="micro-label">MARKET / FINANCIAL INTELLIGENCE</span><h1>להבין מה זז. <em>לדעת למה.</em></h1></div><div className="market-status"><span>{signal.label}</span><p>{signal.detail}</p></div></header>
-    <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail} articles={unique} picks={topPicks}/>
+    <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail} articles={priorityArticles} picks={topPicks}/>
     <nav className="sector-ribbon" aria-label="לחקור לפי סקטור"><span>מעבר למניה הבודדת</span>{[["semis","שבבים"],["software","תוכנה"],["financials","פיננסים"],["energy","אנרגיה"],["healthcare","בריאות"]].map(([key,label])=><Link key={key} href={`/sectors/${key}`}>{label} ↖</Link>)}<Link href="/sectors">כל הסקטורים ←</Link></nav>
-    <ContextJourney articles={[...unique].sort((a,b)=>Number(b.analysis?.catalystKind === "catalyst")-Number(a.analysis?.catalystKind === "catalyst") || Number(b.analysis?.significance === "high")-Number(a.analysis?.significance === "high")).slice(0,3)}/>
+    <ContextJourney articles={priorityArticles} rows={rows} quotes={seed}/>
     <ResearchDock macro={<MarketPulse instruments={macro.instruments}/>} monitor={<WatchlistStrip/>}/>
     <div className="home-next-worlds"><Link href="/learn"><span>להבין יותר</span><strong>חדש בשוק? מתחילים כאן.</strong><small>מושגים, מנגנונים ומדריכים ↖</small></Link><Link href="/intel"><span>לחבר את הנקודות</span><strong>מאירוע אחד לשרשרת השפעות.</strong><small>לחדר המודיעין ↖</small></Link></div>
     <details className="depth-disclosure"><summary>לפתוח את טבלת הנתונים המלאה</summary><MarketDeck indices={cards} rows={rows} initial={seed}/></details>

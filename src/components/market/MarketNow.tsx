@@ -10,7 +10,7 @@ import { COMMAND_EVENT } from "@/components/CommandCenter";
 import type { EnrichedArticle } from "@/lib/news-shape";
 import type { ScreenResult } from "@/lib/screener";
 import { fmtPercent } from "@/lib/format";
-const logos = new Set(["NVDA","AAPL","AMZN","GOOGL","META","TSLA","AVGO"]);
+const logos = new Set(["MSFT","NVDA","AAPL","AMZN","GOOGL","META","TSLA","AVGO"]);
 export function CompanyMark({symbol}:{symbol:string}) {
   return <span className="company-mark">{logos.has(symbol) ? <Image src={`/companies/${symbol}.svg`} alt="" width={25} height={25}/> : <span>{symbol.slice(0,2)}</span>}</span>;
 }

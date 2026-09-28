@@ -12,13 +12,14 @@ test("market-first entry, sources, discovery, and scroll continuity", async ({ p
   await expect(page.locator(".signal-quote")).toContainText("QQQ");
   await page.locator(".story-select button").nth(1).click();
   const headline = await page.locator(".story-select button").nth(1).locator("span").innerText();
-  await expect(page.locator(".evidence-sheet h3")).toHaveText(headline);
-  await page.locator("#context-step-2").scrollIntoViewIfNeeded();
+  await expect(page.locator(".scene-object-panel h3").first()).toHaveText(headline);
+  await page.locator(".scene-stops button").nth(2).click();
+  await expect(page.locator(".scroll-scene")).toHaveAttribute("data-stage", "2");
   await expect(page.locator(".evidence-sheet")).toBeVisible();
   await expect(page.locator(".evidence-sheet a[target='_blank']")).toHaveAttribute("rel", "noopener noreferrer");
   await page.getByRole("button", { name: "כל הכלים", exact: true }).click();
   for (const route of ["/macro", "/sectors", "/compare", "/institutional", "/chat", "/learn"]) {
-    await expect(page.locator(`dialog a[href='${route}']`)).toBeVisible();
+    await expect(page.locator(`dialog a[href='${route}']`).first()).toBeVisible();
   }
   expect(errors).toEqual([]);
 });
@@ -32,10 +33,10 @@ test("mobile preserves early data, touch navigation, and reduced motion", async 
     expect((await page.locator(".index-rail").boundingBox())!.y).toBeLessThan(330);
     expect((await page.locator(".company-tile").first().boundingBox())!.y).toBeLessThan(650);
     await expect(page.locator(".primary-destinations a")).toHaveCount(5);
-    await expect(page.locator(".evidence-space")).toHaveCSS("position", "relative");
+    await expect(page.locator(".scroll-scene")).not.toHaveAttribute("data-pinned", "true");
     await page.locator(".story-select button").nth(2).click();
     await expect(page.locator(".story-select button").nth(2)).toHaveAttribute("aria-pressed", "true");
-    await page.locator(".evidence-stages a").nth(2).click();
+    await page.locator(".scene-stops button").nth(2).click();
     await expect(page.locator("#context-step-2")).toBeVisible();
     await expect(page.locator("#context-step-0")).not.toBeVisible();
   }
