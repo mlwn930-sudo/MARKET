@@ -5,7 +5,7 @@ test("market-first entry, sources, discovery, and scroll continuity", async ({ p
   const errors: string[] = [];
   page.on("pageerror", e => errors.push(e.message));
   await page.goto("/");
-  await expect(page.locator(".primary-destinations a")).toHaveCount(6);
+  await expect(page.locator(".primary-destinations a")).toHaveCount(5);
   expect((await page.locator(".index-rail").boundingBox())!.y).toBeLessThan(350);
   await expect(page.locator(".company-tile")).toHaveCount(6);
   await page.getByRole("button", { name: "Nasdaq 100", exact: true }).click();
@@ -31,7 +31,7 @@ test("mobile preserves early data, touch navigation, and reduced motion", async 
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     expect((await page.locator(".index-rail").boundingBox())!.y).toBeLessThan(330);
     expect((await page.locator(".company-tile").first().boundingBox())!.y).toBeLessThan(650);
-    await expect(page.locator(".primary-destinations a")).toHaveCount(6);
+    await expect(page.locator(".primary-destinations a")).toHaveCount(5);
     await expect(page.locator(".evidence-space")).toHaveCSS("position", "relative");
     await page.locator(".story-select button").nth(2).click();
     await expect(page.locator(".story-select button").nth(2)).toHaveAttribute("aria-pressed", "true");
