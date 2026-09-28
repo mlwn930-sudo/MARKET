@@ -3,6 +3,7 @@ import { Assistant, Frank_Ruhl_Libre, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import "./market.css";
 import "./studio.css";
+import "./financial.css";
 import { RouteTransition } from "@/components/market/RouteTransition";
 import { AppHeader } from "@/components/AppHeader";
 import { SiteFooter } from "@/components/SiteFooter";

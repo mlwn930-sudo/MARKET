@@ -1,29 +1,17 @@
 import Link from "next/link";
-import Image from "next/image";
-import { MarketEntrance } from "@/components/market/MarketEntrance";
-import { DiscoveryJourney } from "@/components/market/DiscoveryJourney";
-import { SignalCanvas } from "@/components/market/SignalCanvas";
-import { WorkflowLinks } from "@/components/market/WorkflowLinks";
+import { MarketNow } from "@/components/market/MarketNow";
+import { ContextJourney } from "@/components/market/ContextJourney";
 import { getQuotes } from "@/lib/sources/finnhub";
 import { getIntradayHistory, getPriceHistory } from "@/lib/sources/prices";
 import { getLiveFeed } from "@/lib/live-news";
 import { runScreen } from "@/lib/screener";
 import { MarketDeck, type IndexCard, type RowSeed } from "@/components/MarketDeck";
-import { WhatMattersToday } from "@/components/WhatMattersToday";
 import { MarketPulse } from "@/components/MarketPulse";
 import { getMacroBoard } from "@/lib/sources/macro";
-import {
-  Disclaimer,
-  EventCard,
-  MoreLink,
-  Page,
-  Section,
-} from "@/components/ui";
-import { upcomingEvents } from "@/lib/analysis/known-events";
+import { Disclaimer, Page } from "@/components/ui";
 import { WatchlistStrip } from "@/components/WatchlistStrip";
 import { marketSignal, marketStatus } from "@/lib/market-hours";
 import type { LiveQuote } from "@/lib/use-live-ticks";
-import { IntelligenceReadout } from "@/components/IntelligenceReadout";
 
 export const revalidate = 30;
 
@@ -121,7 +109,7 @@ export default async function MarketPage() {
   /* The hand-kept table, read across companies. Four is the ceiling rather
      than the target — the table is short on purpose, and a page that
      padded it would be inventing catalysts to fill a grid. */
-  const catalysts = upcomingEvents().slice(0, 4);
+  
 
   /* What the numbers beside the headline ARE — live, last session, late, or
      missing. Derived from the freshest quote that actually arrived rather
@@ -135,163 +123,15 @@ export default async function MarketPage() {
     quotedAt: quoteTimes.length > 0 ? new Date(Math.max(...quoteTimes)) : null,
   });
 
-  return (
-    <Page>
-      <MarketEntrance status={signal.label} detail={signal.detail} />
-
-      <section id="featured-story" className="featured-door" aria-labelledby="featured-research">
-        <div className="editorial-feature-media"><Image src="/hero/rockstar-jason-lucia.webp" alt="GTA VI: איור רשמי של ג׳ייסון ולוסיה, Rockstar Games" fill sizes="(max-width: 767px) 100vw, 45vw" className="object-cover object-left" /></div>
-        <div className="editorial-feature-copy">
-          <span className="micro-label">THE BIG PICTURE / TTWO</span>
-          <h2 id="featured-research">כולם מחכים למשחק.<br />אנחנו בוחנים את התזה.</h2>
-          <p>GTA VI דרך הדוחות של Take-Two: מועד ההשקה, הציפיות, ההכנסות שעוד לא הוכרו ומה יכול לשנות את הסיפור.</p>
-          <Link href="/launch/ttwo">לסיפור ההשקעה <span aria-hidden="true">←</span></Link>
-        </div>
-      </section>
-
-      <DiscoveryJourney />
-
-      <section id="market-data" className="market-overview">
-        <div className="market-overview-head"><div><span className="micro-label">THE MARKET / NOW</span><h2>בחזרה אל הנתונים.</h2><p>תמונת המסחר, המקור וההקשר — לפני המסקנה.</p></div><Link href="/brief" className="btn btn-ghost">לתדריך המלא ←</Link></div>
-        <div className="market-overview-grid"><SignalCanvas indices={cards} quotes={seed} detail={signal.detail} /><MarketPulse instruments={macro.instruments} /></div>
-        <details className="depth-disclosure"><summary>לפתוח את לוח החברות והמדדים</summary><div><MarketDeck indices={cards} rows={rows} initial={seed} /></div></details>
-        <details className="depth-disclosure"><summary>להעמיק בתמונת המודיעין</summary><div><IntelligenceReadout signal={{ label: signal.label, detail: signal.detail }} quotes={seed} articles={unique} instruments={macro.instruments} opportunityCount={screen.results.length} /></div></details>
-      </section>
-
-      {/* ---- What matters, before what is new.
-           The feed is sorted by time; this is sorted by consequence, and
-           it is the first thing under the prices for that reason. ---- */}
-      <Section
-        id="what-matters"
-        eyebrow="02 / הקשר"
-        title="האירועים שמאחורי התנועה"
-        description="רק כתבות שהניתוח סיווג כאירוע שמשנה תזרים, תחרות או רגולציה. כל השאר נשאר בפיד."
-        action={<MoreLink href="/news">כל החדשות</MoreLink>}
-      >
-        <WhatMattersToday articles={unique} />
-      </Section>
-
-      {/* ---- Screener ---- */}
-      {topPicks.length > 0 && (
-        <Section
-          eyebrow="רדאר הזדמנויות"
-          title="הציונים הגבוהים בסורק"
-          description="48 חברות נבדקות מול קריטריונים של איכות, צמיחה, תמחור ואיתנות — רובם מול חציון הסקטור, כי מכפיל של 15 אומר דבר אחד בבנק ודבר אחר בחברת שבבים."
-          action={<MoreLink href="/opportunities">לרדאר המלא</MoreLink>}
-        >
-          <div className="surface overflow-hidden">
-            {topPicks.map((result) => (
-              <Link
-                key={result.company.ticker}
-                href={`/company/${result.company.ticker}`}
-                className="row grid-cols-[1fr_auto] sm:grid-cols-[1fr_1fr_auto]"
-              >
-                <span className="min-w-0">
-                  <span className="num block text-[13px] font-medium text-ink">
-                    {result.company.ticker}
-                  </span>
-                  <span className="block truncate text-[11px] text-ink-faint">
-                    {result.company.name}
-                  </span>
-                </span>
-
-                <span className="hidden text-[12px] text-ink-muted sm:block">
-                  {result.sectorLabel}
-                </span>
-
-                <span className="flex items-center gap-3">
-                  {/* The score as segments rather than a number alone —
-                      "7" means nothing until you know it is out of ten. */}
-                  <span className="hidden gap-[3px] sm:flex" aria-hidden="true">
-                    {Array.from({ length: result.maxScore }, (_, i) => (
-                      <span
-                        key={i}
-                        className="h-4 w-[3px] rounded-[1px]"
-                        style={{
-                          background:
-                            i < result.score
-                              ? "var(--color-accent)"
-                              : "rgba(11,18,32,0.08)",
-                        }}
-                      />
-                    ))}
-                  </span>
-                  <span className="num text-[13px]">
-                    <span className="text-ink">{result.score}</span>
-                    <span className="text-ink-ghost">/{result.maxScore}</span>
-                  </span>
-                  <span
-                    className="on-hover text-ink-ghost"
-                    aria-hidden="true"
-                  >
-                    ←
-                  </span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* ---- The reader's own list ----
-           The only thing on this page that differs per visitor, and the
-           MONITOR end of the product. It renders unconditionally because
-           the empty state is a one-line invitation rather than a panel —
-           gating it on a list the server cannot see is not possible
-           anyway, since the list is in the browser. */}
-      <Section
-        eyebrow="מה שאתה עוקב אחריו"
-        title="הרשימה שלך"
-        description="נשמרת בדפדפן שלך בלבד. אין כאן חשבונות, ואין שרת שיודע אחרי מי אתה עוקב."
-        action={<MoreLink href="/watchlist">ללוח המלא</MoreLink>}
-      >
-        <WatchlistStrip />
-      </Section>
-
-      {/* ---- What is still ahead ----
-           Read from the same table the launch page reads, rather than
-           restated here. The date on this one has already moved twice,
-           which is exactly why there is only ever one copy of it. */}
-      {catalysts.length > 0 && (
-        <Section
-          eyebrow="מה עוד לפנינו"
-          title="זרזים מתוזמנים"
-          description="אירועים שהדוחות אינם מכילים, מתוך טבלה שנכתבת ביד ונבדקת מול מקור. לא תחזיות — תאריכים שהחברה עצמה מסרה."
-          action={<MoreLink href="/launch/ttwo">לניתוח המלא</MoreLink>}
-        >
-          <div className="stagger grid gap-4 md:grid-cols-2">
-            {catalysts.map((event) => (
-              <EventCard
-                key={`${event.ticker}-${event.title}`}
-                when={event.window ?? "טרם הוכרז"}
-                title={`${event.ticker} · ${event.title}`}
-                status={
-                  event.status === "confirmed"
-                    ? "תאריך מאושר"
-                    : event.status === "indicated"
-                      ? "חלון שהוכרז"
-                      : "לא הוכרז"
-                }
-                body={event.why}
-                source={
-                  <>
-                    {event.source}
-                    {event.history && event.history.length > 0 && (
-                      <span className="text-ink-ghost">
-                        {" · "}נדחה {event.history.length === 1 ? "פעם" : `${event.history.length} פעמים`}
-                      </span>
-                    )}
-                  </>
-                }
-              />
-            ))}
-          </div>
-        </Section>
-      )}
-
-      <WorkflowLinks />
-
-      <Disclaimer />
-    </Page>
-  );
+  return <Page>
+    <header className="market-opening product-heading"><div><span className="micro-label">MARKET / FINANCIAL INTELLIGENCE</span><h1>להבין מה זז. <em>לדעת למה.</em></h1></div><div className="market-status"><span>{signal.label}</span><p>{signal.detail}</p></div></header>
+    <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail}/>
+    <nav className="sector-ribbon" aria-label="לחקור לפי סקטור"><span>מעבר למניה הבודדת</span>{[["semis","שבבים"],["software","תוכנה"],["financials","פיננסים"],["energy","אנרגיה"],["healthcare","בריאות"]].map(([key,label])=><Link key={key} href={`/sectors/${key}`}>{label} ↖</Link>)}<Link href="/sectors">כל הסקטורים ←</Link></nav>
+    <ContextJourney articles={[...unique].sort((a,b)=>Number(b.analysis?.catalystKind === "catalyst")-Number(a.analysis?.catalystKind === "catalyst") || Number(b.analysis?.significance === "high")-Number(a.analysis?.significance === "high")).slice(0,3)}/>
+    <section className="research-now" aria-labelledby="research-now-title"><div className="compact-heading"><div><span className="micro-label">03 / WHAT TO RESEARCH</span><h2 id="research-now-title">רעיונות לבדיקה, לא קיצורי דרך.</h2></div><Link href="/opportunities">לסורק ההזדמנויות ↖</Link></div><div className="research-grid"><div className="research-picks"><h3>על הרדאר</h3><p>סינון איכות, צמיחה ותמחור. הציון הוא נקודת פתיחה למחקר.</p>{topPicks.map(result=><Link className="research-pick" key={result.company.ticker} href={`/company/${result.company.ticker}`}><span><strong dir="ltr">{result.company.name}</strong><small>{result.company.ticker} · {result.sectorLabel}</small></span><span className="score-ring" dir="ltr">{result.score}<small>/{result.maxScore}</small></span></Link>)}{!topPicks.length&&<p>תוצאות הסורק אינן זמינות כרגע.</p>}<Link className="research-next" href="/compare">להשוות חברות באותו סקטור ←</Link></div><div className="macro-pocket"><h3>התמונה הרחבה</h3><p>ריבית, מטבעות וסחורות משפיעים גם על החברה הבודדת.</p><MarketPulse instruments={macro.instruments}/><Link href="/macro">מה משתנה במאקרו ←</Link></div></div></section>
+    <section className="monitor-now"><div className="compact-heading"><div><span className="micro-label">04 / WHAT TO MONITOR</span><h2>מחקר טוב ממשיך גם מחר.</h2></div><Link href="/watchlist">רשימת המעקב ↖</Link></div><WatchlistStrip/></section>
+    <div className="home-next-worlds"><Link href="/learn"><span>להבין יותר</span><strong>חדש בשוק? מתחילים כאן.</strong><small>מושגים, מנגנונים ומדריכים ↖</small></Link><Link href="/launch/ttwo"><span>MARKET STORIES / GTA VI</span><strong>מסיפור תרבותי לתזה פיננסית.</strong><small>החוויה המעמיקה של Take-Two ↖</small></Link><Link href="/intel"><span>לחבר את הנקודות</span><strong>מאירוע אחד לשרשרת השפעות.</strong><small>לחדר המודיעין ↖</small></Link></div>
+    <details className="depth-disclosure"><summary>לפתוח את טבלת הנתונים המלאה</summary><MarketDeck indices={cards} rows={rows} initial={seed}/></details>
+    <Disclaimer/>
+  </Page>;
 }
