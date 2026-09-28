@@ -44,7 +44,7 @@ export function TakeTwoStory({ release }: {release: string | null}) {
   }, []);
   return <div ref={root} className="take-two-story">
     <header className="gta-cover">
-      <div className="gta-cover-photo"><Image src="/hero/rockstar-jason-lucia.webp" alt="ג׳ייסון ולוסיה, איור רשמי של Rockstar Games ל־GTA VI" fill priority sizes="100vw" className="object-cover" /></div>
+      <div className="gta-cover-photo"><Image src="/hero/rockstar-jason-lucia.webp" alt="ג׳ייסון ולוסיה, איור רשמי של Rockstar Games ל־GTA VI" fill priority sizes="(max-width: 600px) 1440px, 100vw" className="object-cover" /></div>
       <div className="gta-cover-shade" aria-hidden="true" />
       <div className="gta-cover-top"><span dir="ltr">MARKET STORIES / 001</span><span>תרבות. עסקים. ציפיות.</span></div>
       <div className="gta-cover-copy"><span className="gta-cover-kicker">הסיפור שהשוק כבר מתמחר</span><h1 className="gta-cover-title" dir="ltr">GTA <em>VI</em></h1><p>כולם רוצים לשחק.<br /><span>מה המשקיע צריך לראות?</span></p><a className="gta-enter" href="#gta-world">להיכנס לסיפור <span aria-hidden="true">↓</span></a></div>
