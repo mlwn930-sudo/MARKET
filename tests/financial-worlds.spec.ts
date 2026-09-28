@@ -7,7 +7,7 @@ test("market-first entry, sources, discovery, and scroll continuity", async ({ p
   await page.goto("/");
   await expect(page.locator(".primary-destinations a")).toHaveCount(5);
   expect((await page.locator(".index-rail").boundingBox())!.y).toBeLessThan(350);
-  await expect(page.locator(".company-tile")).toHaveCount(6);
+  await expect(page.locator(".company-tile")).toHaveCount(7);
   await page.getByRole("button", { name: "Nasdaq 100", exact: true }).click();
   await expect(page.locator(".signal-quote")).toContainText("QQQ");
   await page.locator(".story-select button").nth(1).click();

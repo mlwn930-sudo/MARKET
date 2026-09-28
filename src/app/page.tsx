@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ResearchDock } from "@/components/market/ResearchDock";
 import { MarketNow } from "@/components/market/MarketNow";
 import { ContextJourney } from "@/components/market/ContextJourney";
 import { getQuotes } from "@/lib/sources/finnhub";
@@ -125,12 +126,11 @@ export default async function MarketPage() {
 
   return <Page>
     <header className="market-opening product-heading"><div><span className="micro-label">MARKET / FINANCIAL INTELLIGENCE</span><h1>להבין מה זז. <em>לדעת למה.</em></h1></div><div className="market-status"><span>{signal.label}</span><p>{signal.detail}</p></div></header>
-    <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail}/>
+    <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail} articles={unique} picks={topPicks}/>
     <nav className="sector-ribbon" aria-label="לחקור לפי סקטור"><span>מעבר למניה הבודדת</span>{[["semis","שבבים"],["software","תוכנה"],["financials","פיננסים"],["energy","אנרגיה"],["healthcare","בריאות"]].map(([key,label])=><Link key={key} href={`/sectors/${key}`}>{label} ↖</Link>)}<Link href="/sectors">כל הסקטורים ←</Link></nav>
     <ContextJourney articles={[...unique].sort((a,b)=>Number(b.analysis?.catalystKind === "catalyst")-Number(a.analysis?.catalystKind === "catalyst") || Number(b.analysis?.significance === "high")-Number(a.analysis?.significance === "high")).slice(0,3)}/>
-    <section className="research-now" aria-labelledby="research-now-title"><div className="compact-heading"><div><span className="micro-label">03 / WHAT TO RESEARCH</span><h2 id="research-now-title">רעיונות לבדיקה, לא קיצורי דרך.</h2></div><Link href="/opportunities">לסורק ההזדמנויות ↖</Link></div><div className="research-grid"><div className="research-picks"><h3>על הרדאר</h3><p>סינון איכות, צמיחה ותמחור. הציון הוא נקודת פתיחה למחקר.</p>{topPicks.map(result=><Link className="research-pick" key={result.company.ticker} href={`/company/${result.company.ticker}`}><span><strong dir="ltr">{result.company.name}</strong><small>{result.company.ticker} · {result.sectorLabel}</small></span><span className="score-ring" dir="ltr">{result.score}<small>/{result.maxScore}</small></span></Link>)}{!topPicks.length&&<p>תוצאות הסורק אינן זמינות כרגע.</p>}<Link className="research-next" href="/compare">להשוות חברות באותו סקטור ←</Link></div><div className="macro-pocket"><h3>התמונה הרחבה</h3><p>ריבית, מטבעות וסחורות משפיעים גם על החברה הבודדת.</p><MarketPulse instruments={macro.instruments}/><Link href="/macro">מה משתנה במאקרו ←</Link></div></div></section>
-    <section className="monitor-now"><div className="compact-heading"><div><span className="micro-label">04 / WHAT TO MONITOR</span><h2>מחקר טוב ממשיך גם מחר.</h2></div><Link href="/watchlist">רשימת המעקב ↖</Link></div><WatchlistStrip/></section>
-    <div className="home-next-worlds"><Link href="/learn"><span>להבין יותר</span><strong>חדש בשוק? מתחילים כאן.</strong><small>מושגים, מנגנונים ומדריכים ↖</small></Link><Link href="/launch/ttwo"><span>MARKET STORIES / GTA VI</span><strong>מסיפור תרבותי לתזה פיננסית.</strong><small>החוויה המעמיקה של Take-Two ↖</small></Link><Link href="/intel"><span>לחבר את הנקודות</span><strong>מאירוע אחד לשרשרת השפעות.</strong><small>לחדר המודיעין ↖</small></Link></div>
+    <ResearchDock macro={<MarketPulse instruments={macro.instruments}/>} monitor={<WatchlistStrip/>}/>
+    <div className="home-next-worlds"><Link href="/learn"><span>להבין יותר</span><strong>חדש בשוק? מתחילים כאן.</strong><small>מושגים, מנגנונים ומדריכים ↖</small></Link><Link href="/intel"><span>לחבר את הנקודות</span><strong>מאירוע אחד לשרשרת השפעות.</strong><small>לחדר המודיעין ↖</small></Link></div>
     <details className="depth-disclosure"><summary>לפתוח את טבלת הנתונים המלאה</summary><MarketDeck indices={cards} rows={rows} initial={seed}/></details>
     <Disclaimer/>
   </Page>;
