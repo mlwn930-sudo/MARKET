@@ -8,8 +8,10 @@ import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtPercent } from "@/lib/format";
 
 /** Prices are server seeds; paths are actual intraday closes, never decoration. */
-export function SignalCanvas({ indices, quotes, detail }: { indices: IndexCard[]; quotes: Record<string, LiveQuote>; detail: string | null }) {
-  const [selected, setSelected] = useState(indices[0]?.symbol ?? "SPY");
+export function SignalCanvas({ indices, quotes, detail, selectedSymbol, onSelect }: { indices: IndexCard[]; quotes: Record<string, LiveQuote>; detail: string | null; selectedSymbol?:string; onSelect?:(symbol:string)=>void }) {
+  const [internal, setInternal] = useState(indices[0]?.symbol ?? "SPY");
+  const selected = selectedSymbol ?? internal;
+  const setSelected = (symbol:string) => {setInternal(symbol);onSelect?.(symbol);};
   const id = useId().replace(/:/g, "");
   const entry = indices.find((item) => item.symbol === selected) ?? indices[0];
   const quote = quotes[selected];

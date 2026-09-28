@@ -9,6 +9,7 @@ export function ScrollScene({children,label}:{children:(scene:SceneState)=>React
   const root=useRef<HTMLElement>(null);
   const trigger=useRef<ScrollTrigger|null>(null);
   const [stage,setStage]=useState(0);
+  const stageRef=useRef(0);
   const [ready,setReady]=useState(false);
   useEffect(()=>{
     setReady(true);
@@ -19,7 +20,7 @@ export function ScrollScene({children,label}:{children:(scene:SceneState)=>React
       if(!node)return;
       node.dataset.pinned="true";
       const context=gsap.context(()=>{
-        const timeline=gsap.timeline({scrollTrigger:{trigger:node,pin:node.querySelector<HTMLElement>(".scene-viewport"),start:"top 125px",end:()=>"+="+Math.min(1050,innerHeight),scrub:.55,invalidateOnRefresh:true,onUpdate:self=>setStage(Math.min(2,Math.floor(self.progress*3)))}});
+        const timeline=gsap.timeline({scrollTrigger:{trigger:node,pin:node.querySelector<HTMLElement>(".scene-viewport"),start:"top 125px",end:()=>"+="+Math.min(1050,innerHeight),scrub:.55,invalidateOnRefresh:true,onUpdate:self=>{const next=Math.min(2,Math.floor(self.progress*3));if(next!==stageRef.current){stageRef.current=next;setStage(next);}}}});
         trigger.current=timeline.scrollTrigger??null;
         timeline.to(".scene-object",{rotateY:-12,rotateX:6,xPercent:-12,scale:.88,duration:.8,ease:"power2.inOut"},.55)
           .to(".scene-narrative-track",{yPercent:-100/3,duration:.35,ease:"power2.inOut"},1)
@@ -38,9 +39,9 @@ export function ScrollScene({children,label}:{children:(scene:SceneState)=>React
   const goTo=(next:number)=>{
     const current=trigger.current;
     if(current){const positions=[.02,.48,.83];window.scrollTo({top:current.start+(current.end-current.start)*positions[next],behavior:"smooth"});}
-    else setStage(next);
+    else {stageRef.current=next;setStage(next);}
   };
-  return <section ref={root} className="scroll-scene" data-ready={ready} data-stage={stage} aria-label={label}>{children({stage,goTo,ready})}</section>;
+  return <section ref={root} className="scroll-scene" data-ready={ready} data-stage={stage} aria-label={label}>{children({stage,goTo,ready})}<noscript><style>{`.scroll-scene .scene-object-window,.scroll-scene .scene-narrative-window{height:auto!important}.scroll-scene .scene-object-panel,.scroll-scene .scene-reading{display:block!important}.scene-stops,.scene-bottom{display:none!important}`}</style></noscript></section>;
 }
 
 export function ScrollProgress({stage,onChange,labels}:{stage:number;onChange:(stage:number)=>void;labels:string[]}) {
