@@ -17,3 +17,7 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .macro-pocket .surface.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.macro-pocket .surface.grid>div{padding:12px}.signal-tabs{flex-wrap:wrap}.signal-source{flex-wrap:wrap}
 
 .evidence-sheet h3{color:#fff}.market-status>span{color:#5b7184}.market-workspace .signal-canvas{min-height:0}.market-workspace .signal-quote{margin:14px 0}.market-workspace .signal-tabs{margin-top:16px}.market-workspace .signal-source{margin-top:12px}
+
+.signal-line{stroke-dasharray:1;stroke-dashoffset:0;animation:financial-trace .8s cubic-bezier(.2,.65,.3,1) both}@keyframes financial-trace{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@media(max-width:800px){.context-journey[data-ready=true] .context-step:not([data-active=true]){display:none}.evidence-stages a{padding:8px 0;border-bottom:2px solid transparent;min-height:48px}.evidence-stages a[aria-current]{border-color:#83e3e4}.financial-footer>div{padding-block:30px}.financial-footer .market-logo-name{font-size:20px}.financial-footer .market-logo-sub{display:none}.financial-footer>div>div:last-child{margin-top:25px}.home-next-worlds{margin-bottom:15px}}
+@media(prefers-reduced-motion:reduce){.signal-line{animation:none}}

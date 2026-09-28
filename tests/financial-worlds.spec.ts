@@ -35,5 +35,8 @@ test("mobile preserves early data, touch navigation, and reduced motion", async 
     await expect(page.locator(".evidence-space")).toHaveCSS("position", "relative");
     await page.locator(".story-select button").nth(2).click();
     await expect(page.locator(".story-select button").nth(2)).toHaveAttribute("aria-pressed", "true");
+    await page.locator(".evidence-stages a").nth(2).click();
+    await expect(page.locator("#context-step-2")).toBeVisible();
+    await expect(page.locator("#context-step-0")).not.toBeVisible();
   }
 });
