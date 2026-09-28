@@ -1,3 +1,4 @@
+import { ThesisNotebook } from "@/components/market/ThesisNotebook";
 import { WatchlistBoard } from "@/components/WatchlistBoard";
 import { PersonalIntel } from "@/components/PersonalIntel";
 import { getIntelBriefing } from "@/lib/intel/briefing";
@@ -35,6 +36,8 @@ export default async function WatchlistPage() {
         title="מה השתנה בחברות שאתה עוקב אחריהן"
         lede="רשימת מעקב שנשמרת בדפדפן שלך. בכל כניסה היא משווה את המצב הנוכחי לזה שנשמר בפעם הקודמת, ומראה מה זז — מחיר, דוח חדש שנקלט, או כתבות שהתווספו לפיד."
       />
+
+      <ThesisNotebook compact />
 
       {/* The findings first, the list after. A reader returning to this
           page has already seen the list; what they came back for is

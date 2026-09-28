@@ -19,6 +19,7 @@ export function ChapterNav({ chapters, label = "ניווט בעמוד" }: { chap
     return () => observer.disconnect();
   }, [chapters]);
   return <nav ref={nav} className="chapter-nav" aria-label={label}>
+    <div className="chapter-select"><label htmlFor="story-chapter">ממשיכים לפרק</label><select id="story-chapter" value={active} onChange={(event) => { const id = event.target.value; setActive(id); window.location.hash = id; }}>{chapters.map((chapter, index) => <option key={chapter.id} value={chapter.id}>{String(index + 1).padStart(2, "0")} / {chapter.label}</option>)}</select></div>
     {chapters.map((chapter, index) => <a key={chapter.id} href={"#" + chapter.id} aria-current={active === chapter.id ? "location" : undefined} onClick={() => setActive(chapter.id)}>
       <span className="num">{chapter.number ?? String(index + 1).padStart(2, "0")}</span>
       <span>{chapter.label}</span>

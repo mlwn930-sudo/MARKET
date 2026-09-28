@@ -72,18 +72,17 @@ const EVENTS: KnownEvent[] = [
       "גרסת PC לא הוכרזה — היעדר הכרזה, לא דחייה שהוכרזה",
     ],
     why:
-      "ההשקה מזיזה את ההכנסות של Take-Two בסדר גודל שהדוחות הקודמים אינם " +
-      "מתארים. שני מנגנונים פועלים בכיוונים הפוכים: הוצאות השיווק וההפחתה " +
-      "נרשמות לפני ובזמן ההשקה, בעוד שחלק מההכנסה נפרס על פני זמן ולא " +
-      "מוכר במלואו ברבעון ההשקה. לכן רבעון ההשקה נוטה להיראות גרוע יותר " +
-      "מהמציאות הכלכלית שלו.",
+      "ההשקה עשויה לשנות את היקף הפעילות ואת עיתוי ההכנסות של Take-Two. " +
+      "הכרה בהכנסה, עלויות פיתוח שהוונו, הפחתות ושיווק עשויים להופיע " +
+      "בתקופות שונות; יש להשוות Net Bookings, הכנסות GAAP ותזרים בלי " +
+      "להניח מראש מה תהיה תרומת הכותר לרווח.",
     watch:
       "הנחיית ההנהלה ל-Bookings (ולא להכנסות המוכרות), קצב ההוצאה השיווקית " +
       "ברבעונים שלפני, והאם התאריך מוחזק — הוא כבר נדחה פעמיים.",
-    source: "Rockstar Games Newswire",
+    source: "Take-Two · Q1 FY2027 results",
     sourceUrl:
-      "https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026",
-    verifiedAt: "2026-09-26",
+      "https://www.take2games.com/ir/news/take-two-interactive-software-inc-reports-results-fiscal-first-6",
+    verifiedAt: "2026-09-28",
     /* The delays are part of the fact, not trivia. A date that has moved
        twice carries different weight from one given once, and a reader
        deciding how much to lean on it needs both. */

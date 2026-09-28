@@ -140,7 +140,7 @@ export default async function MarketPage() {
       <MarketEntrance status={signal.label} detail={signal.detail} />
 
       <section id="featured-story" className="featured-door" aria-labelledby="featured-research">
-        <div className="editorial-feature-media"><Image src="/hero/ttwo-story.webp" alt="איור מערכתי: מיאמי בשקיעה" fill sizes="(max-width: 767px) 100vw, 45vw" className="object-cover object-left" /></div>
+        <div className="editorial-feature-media"><Image src="/hero/rockstar-jason-lucia.webp" alt="GTA VI: איור רשמי של ג׳ייסון ולוסיה, Rockstar Games" fill sizes="(max-width: 767px) 100vw, 45vw" className="object-cover object-left" /></div>
         <div className="editorial-feature-copy">
           <span className="micro-label">THE BIG PICTURE / TTWO</span>
           <h2 id="featured-research">כולם מחכים למשחק.<br />אנחנו בוחנים את התזה.</h2>
