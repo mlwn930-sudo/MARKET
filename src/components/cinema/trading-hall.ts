@@ -174,14 +174,14 @@ export function createTradingHall(): TradingHall {
     const z = 2 - i * 9 - i * i * 0.35;
     for (const side of [-1, 1]) {
       const col = column(19, 1.15, stone, gold);
-      col.position.set(side * 14.5, -4, z);
+      col.position.set(side * 21, -4, z);
       group.add(col);
     }
     /* Entablature spanning the colonnade. */
-    const beam = new T.Mesh(track(new T.BoxGeometry(31, 1.5, 2.2)), paleStone);
+    const beam = new T.Mesh(track(new T.BoxGeometry(44, 1.5, 2.2)), paleStone);
     beam.position.set(0, 15.6, z);
     group.add(beam);
-    const band = new T.Mesh(track(new T.BoxGeometry(31.4, 0.28, 2.4)), gold);
+    const band = new T.Mesh(track(new T.BoxGeometry(44.4, 0.28, 2.4)), gold);
     band.position.set(0, 14.7, z);
     group.add(band);
   }
@@ -251,16 +251,16 @@ export function createTradingHall(): TradingHall {
     const spread = 7 + d * 1.6;
     for (const side of [-1, 1]) {
       const desk = new T.Mesh(track(new T.BoxGeometry(5.2, 1.05, 2.3)), deskWood);
-      desk.position.set(side * spread, -3.3, z);
+      desk.position.set(side * (spread+5), -3.3, z);
       group.add(desk);
 
       const lip = new T.Mesh(track(new T.BoxGeometry(5.4, 0.12, 2.5)), gold);
-      lip.position.set(side * spread, -2.74, z);
+      lip.position.set(side * (spread+5), -2.74, z);
       group.add(lip);
 
       for (let m = -1; m <= 1; m++) {
         const monitor = new T.Mesh(monitorGeo, monitorMat);
-        monitor.position.set(side * spread + m * 1.5, -2.2, z - 0.4);
+        monitor.position.set(side * (spread+5) + m * 1.5, -2.2, z - 0.4);
         monitor.rotation.y = -side * 0.18;
         group.add(monitor);
       }

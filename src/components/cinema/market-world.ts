@@ -4,6 +4,7 @@ import type { LiveQuote } from "@/lib/use-live-ticks";
 import { buildProduct } from "./product-models";
 import { PRODUCTS } from "./product-catalog";
 import { createTradingHall } from "./trading-hall";
+import { hasAsset, loadProduct } from "./product-assets";
 
 const smooth=(v:number)=>{const t=T.MathUtils.clamp(v,0,1);return t*t*(3-2*t);};
 export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<string,LiveQuote>){
@@ -26,7 +27,24 @@ export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<s
   const tradingHall=createTradingHall();
   tradingHall.setQuotes(PRODUCTS.map(p=>({symbol:p.symbol,price:quotes[p.symbol]?.price??null,change:quotes[p.symbol]?.changePercent??null})));
   hall.add(tradingHall.group);
-  const models=PRODUCTS.map((_,i)=>{const p=buildProduct(i);hall.add(p.group);return p;});
+  /* The hand-built shapes go up first so the sequence is never waiting on
+     a download, then each one is replaced the moment a real model for it
+     finishes arriving. A stop with no CC0 model of the actual product
+     keeps the drawn one rather than borrowing a generic stand-in. */
+  const models:{group:T.Group;animate(explode:number):void;dispose?():void}[]=
+    PRODUCTS.map((_,i)=>{const p=buildProduct(i);hall.add(p.group);return p;});
+  PRODUCTS.forEach((_,i)=>{
+    if(!hasAsset(i))return;
+    void loadProduct(i).then(real=>{
+      if(!real)return;
+      const drawn=models[i];
+      real.group.visible=drawn.group.visible;
+      hall.remove(drawn.group);
+      drawn.dispose?.();
+      hall.add(real.group);
+      models[i]=real;
+    });
+  });
   /* No product photographs anywhere in the room. A picture of a phone
      standing next to a model of a phone tells the eye the model is the
      stand-in, which is the one thing it must never say. */
@@ -75,7 +93,7 @@ export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<s
     /* Once through the doorway the camera keeps moving. Standing still on
        the threshold for six scenes is what made the room read as a
        backdrop rather than somewhere the visitor had arrived. */
-    if(progress>=.19)camera.position.z=-2-(journey/7)*7.5;
+    if(progress>=.19)camera.position.z=-2-(journey/7)*2.6;
 
     const lift=smooth(local/.30),explode=smooth((local-.34)/.44),exit=smooth((local-.86)/.14);
     models.forEach((model,i)=>{
