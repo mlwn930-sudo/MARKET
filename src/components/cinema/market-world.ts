@@ -3,43 +3,115 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import type { LiveQuote } from "@/lib/use-live-ticks";
 import { buildProduct } from "./product-models";
 import { PRODUCTS } from "./product-catalog";
+import { createTradingHall } from "./trading-hall";
 
 const smooth=(v:number)=>{const t=T.MathUtils.clamp(v,0,1);return t*t*(3-2*t);};
 export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<string,LiveQuote>){
-  const renderer=new T.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=T.ACESFilmicToneMapping;
-  const scene=new T.Scene();const pmrem=new T.PMREMGenerator(renderer);const environment=new RoomEnvironment();const environmentMap=pmrem.fromScene(environment);scene.environment=environmentMap.texture;environment.dispose();pmrem.dispose();scene.background=new T.Color("#10252e");scene.fog=new T.Fog("#10252e",12,65);
+  const renderer=new T.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
+  const scene=new T.Scene();const pmrem=new T.PMREMGenerator(renderer);const environment=new RoomEnvironment();const environmentMap=pmrem.fromScene(environment);scene.environment=environmentMap.texture;scene.environmentIntensity=0.22;environment.dispose();pmrem.dispose();scene.background=new T.Color("#0a1420");scene.fog=new T.Fog("#12202e",34,105);
   const camera=new T.PerspectiveCamera(48,1,.05,180);
-  const loader=new T.TextureLoader();const [photo,collage]=await Promise.all([loader.loadAsync("/hero/exchange-closed.webp"),loader.loadAsync("/hero/company-products.webp")]);
-  photo.colorSpace=collage.colorSpace=T.SRGBColorSpace;const textures:T.Texture[]=[photo,collage];
+  /* Only the facade is photographed. The product sheet used to be loaded
+     here for the portrait planes; those are gone, and with them a 270 KB
+     download the sequence no longer has any use for. */
+  const loader=new T.TextureLoader();const photo=await loader.loadAsync("/hero/exchange-closed.webp");
+  photo.colorSpace=T.SRGBColorSpace;const textures:T.Texture[]=[photo];
   const photoMaterial=new T.ShaderMaterial({side:T.DoubleSide,uniforms:{map:{value:photo},open:{value:0}},vertexShader:`varying vec2 v;void main(){v=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,fragmentShader:`uniform sampler2D map;uniform float open;varying vec2 v;void main(){if(open>.001&&abs(v.x-.546)<.073&&abs(v.y-.52)<.23)discard;gl_FragColor=texture2D(map,v);\n#include <colorspace_fragment>\n}`});
   const facade=new T.Mesh(new T.PlaneGeometry(48,27),photoMaterial);scene.add(facade);
   const doors=[-1,1].map(side=>{const hinge=new T.Group();hinge.position.set(2.208+side*3.504,.54,.02);const geo=new T.PlaneGeometry(3.504,12.42);const uv=geo.getAttribute("uv");for(let i=0;i<uv.count;i++)uv.setXY(i,.473+(side<0?0:.073)+uv.getX(i)*.073,.29+uv.getY(i)*.46);const leaf=new T.Mesh(geo,new T.MeshBasicMaterial({map:photo,side:T.DoubleSide}));leaf.position.x=-side*1.752;hinge.add(leaf);scene.add(hinge);return hinge;});
   const hall=new T.Group();hall.position.set(2.208,.54,-10);scene.add(hall);
-  scene.add(new T.HemisphereLight("#ddedff","#63503c",2.8));const key=new T.DirectionalLight("#ffe0a1",5);key.position.set(-5,10,12);scene.add(key);const rim=new T.DirectionalLight("#65cfff",4);rim.position.set(10,4,-12);scene.add(rim);
-  const stone=new T.MeshStandardMaterial({color:"#b6a28b",roughness:.65,metalness:.15});const dark=new T.MeshStandardMaterial({color:"#15303b",metalness:.5,roughness:.28});const gold=new T.MeshStandardMaterial({color:"#b9894c",metalness:.7,roughness:.3});
-  const architecture=(w:number,h:number,d:number,x:number,y:number,z:number,mat:T.Material)=>{const m=new T.Mesh(new T.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);hall.add(m);return m;};
-  architecture(45,.25,110,0,-3.6,-30,dark);architecture(45,.3,110,0,13,-30,stone);
-  for(let i=0;i<10;i++){for(const side of [-1,1]){const col=new T.Mesh(new T.CylinderGeometry(.5,.7,16,16),stone);col.position.set(side*11,4.5,-i*8);hall.add(col);architecture(1.8,.3,1.8,side*11,-3.3,-i*8,gold);architecture(1.8,.3,1.8,side*11,12.3,-i*8,gold);architecture(4,.15,2.5,side*7,-1.5,-i*8,dark);architecture(.25,2,1,side*7,-2.5,-i*8,gold);}architecture(23,.2,.25,0,11,-i*8,gold);}
-  const screenMaterials:T.MeshBasicMaterial[]=[];
-  for(let i=0;i<14;i++){
-    const p=PRODUCTS[i%7],c=document.createElement("canvas");c.width=512;c.height=256;const ctx=c.getContext("2d")!;ctx.fillStyle="#102b3b";ctx.fillRect(0,0,512,256);ctx.fillStyle=p.color;ctx.font="bold 62px Arial";ctx.fillText(p.symbol,28,92);ctx.font="32px monospace";ctx.fillStyle="#ffffff";ctx.fillText(quotes[p.symbol]?.price!=null?"$"+quotes[p.symbol].price!.toFixed(2):p.name,28,151);ctx.font="18px Arial";ctx.fillStyle="#91b2c5";ctx.fillText("MARKET / COMPANY RESEARCH",28,208);const tex=new T.CanvasTexture(c);tex.colorSpace=T.SRGBColorSpace;textures.push(tex);const mat=new T.MeshBasicMaterial({map:tex});screenMaterials.push(mat);architecture(4,2,.08,(i%2?1:-1)*8,1,-Math.floor(i/2)*8,mat);
-  }
+  /* The room, built to match the doorway it sits behind. Everything that
+     used to stand in for it — ten cylinders, two slabs and fourteen flat
+     panels — is in trading-hall.ts now, with the stone, the dome, the
+     colonnade and the curved wall of boards it needed all along. */
+  const tradingHall=createTradingHall();
+  tradingHall.setQuotes(PRODUCTS.map(p=>({symbol:p.symbol,price:quotes[p.symbol]?.price??null,change:quotes[p.symbol]?.changePercent??null})));
+  hall.add(tradingHall.group);
   const models=PRODUCTS.map((_,i)=>{const p=buildProduct(i);hall.add(p.group);return p;});
-  const portraits=PRODUCTS.map((_,i)=>{const map=collage.clone();map.needsUpdate=true;textures.push(map);if(i<6){map.repeat.set(1/3,.327);map.offset.set((i%3)/3,i<3?.673:.38);}else{map.repeat.set(1,.38);map.offset.set(0,0);}const m=new T.Mesh(new T.PlaneGeometry(6,3.4),new T.MeshBasicMaterial({map,transparent:true,depthWrite:false}));hall.add(m);return m;});
-  const wall=new T.Group();hall.add(wall);const rubble:{mesh:T.Mesh;home:T.Vector3;velocity:T.Vector3}[]=[];
-  for(let y=0;y<6;y++)for(let x=0;x<12;x++){const mesh=new T.Mesh(new T.BoxGeometry(1.95,1.9,.6),stone);mesh.position.set((x-5.5)*2,y*2-2,-19);wall.add(mesh);rubble.push({mesh,home:mesh.position.clone(),velocity:new T.Vector3((x-5.5)*2,(y-2)*1.2+3,Math.sin(x*4+y)*12)});}
+  /* No product photographs anywhere in the room. A picture of a phone
+     standing next to a model of a phone tells the eye the model is the
+     stand-in, which is the one thing it must never say. */
+
+  /* The sign the Tesla drives into. Built as real blocks rather than a
+     plane, because the car has to go through it and a plane has no
+     other side. The brand is painted across the face so the break starts
+     inside the letters. */
+  const signCanvas=document.createElement("canvas");signCanvas.width=2048;signCanvas.height=1024;
+  {
+    const ctx=signCanvas.getContext("2d")!;
+    const back=ctx.createLinearGradient(0,0,0,1024);back.addColorStop(0,"#16233d");back.addColorStop(1,"#0a1526");
+    ctx.fillStyle=back;ctx.fillRect(0,0,2048,1024);
+    ctx.textAlign="center";
+    ctx.fillStyle="rgba(255,255,255,.82)";ctx.font="500 108px Arial";ctx.fillText("WELCOME",1024,430);
+    const brand=ctx.createLinearGradient(430,0,1618,0);brand.addColorStop(0,"#2855F5");brand.addColorStop(1,"#00B8E6");
+    ctx.fillStyle=brand;ctx.font="700 208px Arial";ctx.fillText("CAPITAL MARKET",1024,650);
+    ctx.fillStyle="rgba(255,255,255,.4)";ctx.font="400 44px Arial";ctx.fillText("MARKET INTEL",1024,760);
+  }
+  const signTexture=new T.CanvasTexture(signCanvas);signTexture.colorSpace=T.SRGBColorSpace;textures.push(signTexture);
+  const signBack=new T.MeshStandardMaterial({color:"#2a3345",roughness:.8,metalness:.1});
+  const wall=new T.Group();wall.position.set(0,3,-20);hall.add(wall);
+  const rubble:{mesh:T.Mesh;home:T.Vector3;velocity:T.Vector3;spin:T.Vector3}[]=[];
+  const COLS=14,ROWS=8,BW=2.4,BH=2.1;
+  for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
+    const geo=new T.BoxGeometry(BW*.98,BH*.98,.9);
+    /* Each block samples its own patch of the sign, so the painted brand
+       stays continuous across the wall and then travels with the pieces. */
+    const uv=geo.getAttribute("uv");
+    for(let i=0;i<uv.count;i++)uv.setXY(i,(x+uv.getX(i))/COLS,(y+uv.getY(i))/ROWS);
+    const face=new T.MeshStandardMaterial({map:signTexture,roughness:.62,metalness:.08});
+    const mesh=new T.Mesh(geo,[signBack,signBack,signBack,signBack,face,signBack]);
+    mesh.position.set((x-(COLS-1)/2)*BW,(y-(ROWS-1)/2)*BH,0);
+    wall.add(mesh);
+    const r=Math.sin(x*12.9+y*78.2)*43758.5453;const n=r-Math.floor(r);
+    rubble.push({mesh,home:mesh.position.clone(),
+      velocity:new T.Vector3((x-(COLS-1)/2)*.9,(y-(ROWS-1)/2)*.7+2.4,6+n*14),
+      spin:new T.Vector3(n*5-2,(n*7)%4-2,(n*11)%5-2)});
+  }
   let startZ=30,mobile=false;
   function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;mobile=w<800;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=mobile?55:48;camera.updateProjectionMatrix();startZ=Math.min(13.5,24/camera.aspect)/Math.tan(T.MathUtils.degToRad(camera.fov/2));}
   resize();
   return {resize,render(progress:number){
     const approach=smooth(progress/.19);camera.position.set(2.208*approach,.54*approach,startZ*(1-approach)-2*approach);camera.rotation.set(0,0,0);photoMaterial.uniforms.open.value=smooth((progress-.045)/.085);facade.visible=progress<.195;doors.forEach((door,i)=>{door.visible=facade.visible;door.rotation.y=(i===0?-1:1)*photoMaterial.uniforms.open.value*1.3;});
     const journey=T.MathUtils.clamp((progress-.19)/.79,0,.999)*7,index=Math.floor(journey),local=journey-index;
-    const lift=smooth(local/.32),explode=smooth((local-.3)/.45),exit=smooth((local-.85)/.15);
-    models.forEach((model,i)=>{model.group.visible=progress>=.19&&i===index;portraits[i].visible=model.group.visible&&i!==6&&local<.35;if(!model.group.visible)return;const g=model.group;g.position.set((mobile?0:-1.8)+exit*-10,-.65+(mobile?-.5:0)+lift*.6,-2);g.scale.setScalar((mobile?.67:1)*(i===5?1.2:1)*(.78+.22*lift));g.rotation.set(.16,-.7+local*.28,0);model.animate(i===6?0:explode*1.15);const portrait=portraits[i];portrait.position.set(mobile?0:-1.8,-lift*2.5,-2.4);(portrait.material as T.MeshBasicMaterial).opacity=1-lift;g.scale.multiplyScalar(.65+.35*lift);
-      if(i===6){g.rotation.y=Math.PI/2;g.position.set(mobile?0:-1.8,-1.8,-2-smooth((local-.18)/.82)*35);g.scale.setScalar(mobile?.8:1.2);}
+    /* Once through the doorway the camera keeps moving. Standing still on
+       the threshold for six scenes is what made the room read as a
+       backdrop rather than somewhere the visitor had arrived. */
+    if(progress>=.19)camera.position.z=-2-(journey/7)*7.5;
+
+    const lift=smooth(local/.30),explode=smooth((local-.34)/.44),exit=smooth((local-.86)/.14);
+    models.forEach((model,i)=>{
+      model.group.visible=progress>=.19&&i===index;
+      if(!model.group.visible)return;
+      const g=model.group,base=camera.position.z;
+      if(i===6){
+        /* The car is not presented — it is driving. It enters from behind
+           the camera and carries on into the sign. */
+        const drive=smooth(local/.6);
+        g.rotation.set(0,Math.PI/2,0);
+        g.position.set(mobile?0:-1,-2.2,base-4-drive*14);
+        g.scale.setScalar(mobile?.85:1.25);
+        model.animate(0);
+        return;
+      }
+      /* Presented: it rises into the light, turns, then comes apart. */
+      g.position.set((mobile?0:-1.6)+exit*-9,-.5+(mobile?-.4:0)+lift*.75,base-5.4);
+      g.scale.setScalar((mobile?.72:1.08)*(i===5?1.2:1)*(.82+.18*lift));
+      g.rotation.set(.14-lift*.05,-.75+local*.62,0);
+      model.animate(explode*1.15);
     });
-    wall.visible=progress>=.19&&index===6;const impact=index===6?smooth((local-.55)/.4):0;rubble.forEach(({mesh,home,velocity},i)=>{mesh.position.copy(home).addScaledVector(velocity,impact);mesh.rotation.set(impact*(i%3),impact*(i%5),impact*((i%7)-3));mesh.scale.setScalar(1-impact*.65);});
-    if(index===6)camera.position.z-=smooth((local-.6)/.4)*8;
+
+    /* The wall only exists for the last stop, and it gives way when the
+       car reaches it rather than on a timer of its own. */
+    wall.visible=progress>=.19&&index===6;
+    const impact=index===6?smooth((local-.58)/.3):0;
+    rubble.forEach(({mesh,home,velocity,spin})=>{
+      mesh.position.copy(home).addScaledVector(velocity,impact);
+      mesh.position.y-=impact*impact*6;
+      mesh.rotation.set(spin.x*impact,spin.y*impact,spin.z*impact);
+      mesh.scale.setScalar(1-impact*.35);
+    });
+    /* Through the hole, into the page beyond. */
+    if(index===6)camera.position.z-=smooth((local-.6)/.4)*22;
+
     renderer.render(scene,camera);
-  },dispose(){scene.traverse(o=>{if(o instanceof T.Mesh){o.geometry.dispose();(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());}});textures.forEach(t=>t.dispose());environmentMap.dispose();renderer.dispose();}};
+  },dispose(){tradingHall.dispose();scene.traverse(o=>{if(o instanceof T.Mesh){o.geometry.dispose();(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());}});textures.forEach(t=>t.dispose());environmentMap.dispose();renderer.dispose();}};
 }
