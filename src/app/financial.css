@@ -52,3 +52,12 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .more-companies{display:none}@media(max-width:800px){.more-companies{display:block;padding:10px 0;font-size:12px;color:#1657ce;cursor:pointer}.terminal-workspace .company-grid[data-expanded=true] .company-tile:nth-child(n+6){display:grid}}
 
 .company-name strong,.scene-company-anchor strong{text-align:right}.scene-company-anchor{--color-ink-ghost:#badbff;--color-text-subtle:#badbff}.scene-company-anchor .anchor-trail path{stroke:#a6d9f1}.scene-object-panel .source-meta{flex-wrap:wrap}@media(max-width:600px){.transmission-map{display:flex;gap:4px}.transmission-map span{font-size:10px;min-height:52px;display:grid;place-items:center;padding:7px 4px}.transmission-map i{transform:rotate(90deg);font-size:14px}.scene-object-panel h3,.scene-object-panel:nth-child(2) h3{font-size:18px;line-height:1.45}.scene-object-label{display:none}.scene-object-panel>small{font-size:9px}.scene-object-panel{padding:10px 0}.scene-reading p{line-height:1.75}.scene-company-anchor small{max-width:130px}.terminal-workspace .company-tile{padding:7px 0}.terminal-workspace .company-name small{font-size:9px}}
+
+/* The one story in a row of destinations. Muted and set slightly apart so
+   it is findable without competing with the four places people actually
+   work; the gold is the event token, the same one a dated catalyst
+   carries elsewhere. */
+.primary-destinations a.destination-story{color:#8a7448;font-size:13px;letter-spacing:.04em}
+.primary-destinations a.destination-story::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#d6a84a;margin-inline-end:7px;vertical-align:middle}
+.primary-destinations a.destination-story[aria-current],.primary-destinations a.destination-story:hover{color:#6f5a30;border-color:#d6a84a}
+@media(max-width:800px){.primary-destinations a.destination-story{font-size:12px}}

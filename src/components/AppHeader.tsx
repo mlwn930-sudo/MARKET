@@ -33,7 +33,11 @@ export function AppHeader() {
     <nav aria-label="ראשי" className="studio-nav">
       <Link href="/" aria-label="MARKET — בית"><Wordmark /></Link>
       <div className="primary-destinations">
-        {[['/', 'שווקים'], ['/intel', 'מודיעין'], ['/research', 'מחקר'], ['/opportunities', 'הזדמנויות'],  ['/watchlist', 'מעקב']].map(([href,label]) => <Link key={href} href={href} aria-current={(href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined}>{label}</Link>)}
+        {/* GTA VI sits last on purpose. It is a story, not a destination
+            like the four before it, and it was reachable only from the
+            row below and from inside the drawer — present but buried.
+            Last in the row is visible without competing. */}
+        {[['/', 'שווקים'], ['/intel', 'מודיעין'], ['/research', 'מחקר'], ['/opportunities', 'הזדמנויות'], ['/watchlist', 'מעקב'], ['/launch/ttwo', 'GTA VI']].map(([href,label]) => <Link key={href} href={href} className={href === '/launch/ttwo' ? 'destination-story' : undefined} aria-current={(href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined}>{label}</Link>)}
       </div>
       <div className="nav-utilities">
         <button type="button" className="search-trigger" onClick={() => window.dispatchEvent(new CustomEvent(COMMAND_EVENT))} aria-label="חיפוש חברה או כלי"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="m15 15 5 5" stroke="currentColor" strokeWidth="1.5"/></svg><span>חיפוש</span></button>
