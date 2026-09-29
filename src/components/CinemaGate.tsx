@@ -60,6 +60,42 @@ export function CinemaGate({
   const [shot, setShot] = useState(0);
   const [sound, setSound] = useState(true);
   const clips = useRef<(HTMLVideoElement | null)[]>([]);
+  const bleed = useRef<HTMLCanvasElement>(null);
+
+  /**
+   * The surround, on a phone.
+   *
+   * A 16:9 frame on a portrait screen has to give up something: fill it
+   * and three-fifths of the width is cropped away, fit it and there are
+   * black bars down the middle of the film. Neither is acceptable — one
+   * loses the edges of the shot, the other stops it feeling full-bleed.
+   *
+   * So the frame is shown whole and the space around it is filled with
+   * the film itself, blown up and blurred past recognition. The eye reads
+   * a lit surround rather than a letterbox, and nothing is cropped.
+   *
+   * It costs one drawImage per frame into a sixty-four pixel canvas. The
+   * blur that makes it work is applied in CSS to the scaled-up result, so
+   * the expensive part never happens at full size.
+   */
+  useEffect(() => {
+    if (phase !== "playing") return;
+    const canvas = bleed.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d", { alpha: false });
+    if (!context) return;
+
+    let frame = 0;
+    const paint = () => {
+      const source = clips.current[shot];
+      if (source && source.readyState >= 2) {
+        context.drawImage(source, 0, 0, canvas.width, canvas.height);
+      }
+      frame = requestAnimationFrame(paint);
+    };
+    frame = requestAnimationFrame(paint);
+    return () => cancelAnimationFrame(frame);
+  }, [phase, shot]);
 
   const toggleSound = useCallback(() => {
     setSound((on) => {
@@ -205,13 +241,40 @@ export function CinemaGate({
       </svg>
       <style>{`
         .gate-clip { filter: url(#gate-lift); }
-        @media (max-width: 640px) {
-          .gate-clip { filter: url(#gate-lift-small); }
+        /* Off on wide screens, where the frame already fits and the
+           surround would be a solution to nothing. */
+        .gate-bleed { display: none; }
+        @media (max-width: 820px) {
+          .gate-clip {
+            filter: url(#gate-lift-small);
+            /* Whole frame, nothing cropped. */
+            object-fit: contain;
+            object-position: center 36%;
+          }
+          .gate-bleed {
+            display: block;
+            /* Scaled past the edges so the blur has nothing to feather
+               against, and lifted so it reads as light rather than as a
+               smeared copy of the picture. */
+            transform: scale(1.35);
+            filter: blur(46px) saturate(1.4) brightness(0.62);
+          }
         }
         @supports not (filter: url(#gate-lift)) {
           .gate-clip { filter: brightness(1.14) contrast(1.02); }
         }
       `}</style>
+
+      {/* The blurred surround. Behind everything, and only on the screens
+          that need it. */}
+      <canvas
+        ref={bleed}
+        width={64}
+        height={36}
+        className="gate-bleed absolute inset-0 h-full w-full object-cover"
+        style={{ zIndex: 0 }}
+        aria-hidden="true"
+      />
 
       {shots.map((clip, i) => (
         <video
@@ -229,7 +292,7 @@ export function CinemaGate({
           }}
           src={clip.src}
           className="gate-clip absolute inset-0 h-full w-full object-cover"
-          style={{ opacity: i <= shot ? 1 : 0, zIndex: i }}
+          style={{ opacity: i <= shot ? 1 : 0, zIndex: i + 1 }}
           playsInline
           preload={i === 0 ? "auto" : "none"}
           onTimeUpdate={(event) => {
@@ -252,7 +315,7 @@ export function CinemaGate({
       <div
         className="absolute inset-x-0 bottom-0 h-[72%]"
         style={{
-          zIndex: shots.length,
+          zIndex: shots.length + 1,
           background:
             "linear-gradient(to top, rgba(4,10,20,.93) 0%, rgba(4,10,20,.86) 30%, rgba(4,10,20,.6) 55%, rgba(4,10,20,.2) 78%, transparent 100%)",
           opacity: phase === "playing" ? 0 : 1,
@@ -267,7 +330,7 @@ export function CinemaGate({
         type="button"
         onClick={toggleSound}
         className="absolute end-5 top-5 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-black/35 text-white/85 backdrop-blur transition-colors hover:bg-black/60"
-        style={{ zIndex: shots.length + 2 }}
+        style={{ zIndex: shots.length + 3 }}
         aria-label={sound ? "השתקת הקול" : "הפעלת הקול"}
       >
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -294,7 +357,7 @@ export function CinemaGate({
         className={`relative flex flex-col items-center px-6 text-center transition-opacity duration-500 ${
           phase === "playing" ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
-        style={{ zIndex: shots.length + 1, textShadow: "0 2px 22px rgba(4,10,20,.85)" }}
+        style={{ zIndex: shots.length + 2, textShadow: "0 2px 22px rgba(4,10,20,.85)" }}
       >
         <span className="text-[11px] tracking-[0.42em] text-white/75">{eyebrow}</span>
 
