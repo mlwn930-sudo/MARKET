@@ -4,6 +4,7 @@ import "./globals.css";
 import "./market.css";
 import "./studio.css";
 import "./financial.css";
+import "./cinema.css";
 import { RouteTransition } from "@/components/market/RouteTransition";
 import { AppHeader } from "@/components/AppHeader";
 import { SiteFooter } from "@/components/SiteFooter";

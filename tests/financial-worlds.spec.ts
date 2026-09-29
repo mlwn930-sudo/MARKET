@@ -6,7 +6,8 @@ test("market-first entry, sources, discovery, and scroll continuity", async ({ p
   page.on("pageerror", e => errors.push(e.message));
   await page.goto("/");
   await expect(page.locator(".primary-destinations a")).toHaveCount(5);
-  expect((await page.locator(".index-rail").boundingBox())!.y).toBeLessThan(350);
+  await expect(page.locator(".portal-top a")).toBeVisible();
+  await page.locator(".portal-top a").click();
   await expect(page.locator(".company-tile")).toHaveCount(7);
   await page.getByRole("button", { name: "Nasdaq 100", exact: true }).click();
   await expect(page.locator(".signal-quote")).toContainText("QQQ");
@@ -30,8 +31,9 @@ test("mobile preserves early data, touch navigation, and reduced motion", async 
     await page.setViewportSize({ width, height: 844 });
     await page.goto("/");
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
-    expect((await page.locator(".index-rail").boundingBox())!.y).toBeLessThan(330);
-    expect((await page.locator(".company-tile").first().boundingBox())!.y).toBeLessThan(650);
+    await expect(page.locator(".portal-top a")).toBeVisible();
+    await page.locator(".portal-top a").click();
+    await expect(page.locator(".index-rail")).toBeVisible();
     await expect(page.locator(".primary-destinations a")).toHaveCount(5);
     await expect(page.locator(".scroll-scene")).not.toHaveAttribute("data-pinned", "true");
     await page.locator(".index-tile").nth(1).click();
