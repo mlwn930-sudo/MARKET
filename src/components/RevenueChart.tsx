@@ -62,15 +62,15 @@ export function RevenueChart({
                 width={barWidth}
                 height={Math.max(barHeight, 1)}
                 rx="3"
-                fill="#1baf7a"
+                fill="var(--color-intelligence)"
                 opacity={i === series.length - 1 ? 1 : 0.55}
               />
               <text
                 x={x + barWidth / 2}
                 y={y - 6}
                 textAnchor="middle"
-                fill="#8a8f98"
-                fontSize="11"
+                fill="var(--color-ink-muted)"
+                fontSize="12"
                 fontFamily="var(--font-plex-mono), monospace"
                 direction="ltr"
               >
@@ -80,8 +80,8 @@ export function RevenueChart({
                 x={x + barWidth / 2}
                 y={height - 8}
                 textAnchor="middle"
-                fill="#5e636b"
-                fontSize="11"
+                fill="var(--color-ink-faint)"
+                fontSize="12"
                 fontFamily="var(--font-plex-mono), monospace"
                 direction="ltr"
               >

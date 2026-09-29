@@ -24,6 +24,7 @@ import { buildOutlook } from "@/lib/analysis/outlook";
 import { knownEventsFor } from "@/lib/analysis/known-events";
 import {
   Disclaimer,
+  ErrorState,
   Page,
   Section,
   StatBar,
@@ -137,14 +138,14 @@ async function seedQuotes(
 export default async function TtwoLaunchPage() {
   const [analysis, quote, history, technical, sector, articles, chainSeed, intelligence] =
     await Promise.all([
-      getCompanyAnalysis("TTWO"),
+      getCompanyAnalysis("TTWO").catch(() => null),
       getQuote("TTWO").catch(() => null),
       getPriceHistory("TTWO").catch(() => null),
       getTechnicalRead("TTWO").catch(() => null),
       getSectorContext("TTWO"),
       getArticlesForTicker("TTWO", 6),
       seedQuotes(CHAIN.map((link) => link.symbol)),
-      getCompanyIntelligence("TTWO"),
+      getCompanyIntelligence("TTWO").catch(() => null),
     ]);
 
   const metricOf = (key: string) =>
@@ -217,8 +218,8 @@ export default async function TtwoLaunchPage() {
         actions={<><a href="#legacy" className="btn btn-editorial">לגלות את הסיפור <span aria-hidden="true">↓</span></a><Link href="#investment">ישר לניתוח הפיננסי</Link></>}
         aside={<div className="story-ticket">
           <div><span className="micro-label">NASDAQ / TTWO</span><p className="mt-1 text-sm text-ink-muted">Take-Two Interactive</p></div>
-          <div><strong className="num">{fmtPrice(quote?.price)}</strong><span className={"num text-sm " + ((quote?.changePercent ?? 0) >= 0 ? "text-up" : "text-down")}>{fmtPercent(quote?.changePercent ?? null)}</span></div>
-          <p className="mt-2 text-xs text-ink-faint">{quote?.at ? "ציטוט: " + fmtDate(quote.at.toISOString()) : "ציטוט אינו זמין כרגע"}</p>
+          <div><strong className="num">{quote?.price != null ? "$" + fmtPrice(quote.price) : "—"}</strong><span className={"num text-sm " + (quote?.changePercent == null || quote.changePercent === 0 ? "text-ink-faint" : quote.changePercent > 0 ? "text-up" : "text-down")}>{fmtPercent(quote?.changePercent ?? null)}</span></div>
+          <p className="mt-2 text-xs text-ink-faint">{quote?.at ? "Finnhub · " + fmtDate(quote.at.toISOString().slice(0, 10)) : "ציטוט אינו זמין כרגע"}</p>
           <Link href="/company/TTWO">לעמוד החברה <span aria-hidden="true">↗</span></Link>
         </div>}
         footer={<div className="story-facts">
@@ -237,6 +238,8 @@ export default async function TtwoLaunchPage() {
         { id: "monitor", label: "מה לעקוב" },
         ...(intelligence ? [{ id: "thesis", label: "התזה" }] : []),
       ]} />
+
+      {!analysis && <div className="mt-7"><ErrorState compact title="הדוחות והניתוח הכמותי אינם זמינים כרגע" detail="סיפור ההשקה והמקורות שלצדו זמינים. מדדים שלא התקבלו אינם מוצגים, ואין כאן תזה כמותית חלופית." source="SEC EDGAR" links={[{ href: "/research?ticker=TTWO", label: "לסביבת המחקר" }]} /></div>}
 
       <section id="legacy" className="legacy-section">
         <div><div className="chapter-kicker"><span className="num">01</span>המורשת / THE LEGACY</div><h2 className="legacy-title"><bdi>GTA V.</bdi><small>ממשחק לעולם מתמשך.</small></h2></div>

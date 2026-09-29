@@ -43,7 +43,6 @@
      hairline and a shadow, and pushing the greys apart to make the
      separation obvious is what turns an interface into a stack of boxes. */
   --color-deep: var(--color-hero);
-  --color-base: var(--color-background);
   --color-surface: var(--color-surface-plain);
   --color-raised: var(--color-surface-plain);
   --color-overlay: var(--color-surface-plain);
@@ -720,7 +719,7 @@ h4 {
   color: var(--color-ink-faint);
 }
 .status[data-tone="event"] {
-  color: #a37a22;
+  color: var(--color-event);
   border-color: rgba(214, 168, 74, 0.4);
   background: rgba(214, 168, 74, 0.1);
 }
@@ -875,11 +874,11 @@ h4 {
 }
 .delta[data-dir="up"] {
   background: var(--color-up-dim);
-  color: #0e8c59;
+  color: var(--color-up);
 }
 .delta[data-dir="down"] {
   background: var(--color-down-dim);
-  color: #c93d43;
+  color: var(--color-down);
 }
 .delta[data-dir="flat"] {
   background: rgba(102, 112, 133, 0.1);
@@ -1027,7 +1026,7 @@ h4 {
   border-radius: 5px;
   background: rgba(0, 184, 230, 0.1);
   border: 1px solid rgba(0, 184, 230, 0.32);
-  color: #0091b8;
+  color: var(--color-intelligence);
   flex-shrink: 0;
 }
 
@@ -1061,12 +1060,12 @@ h4 {
   width: 3px;
   height: 9px;
   border-radius: 1px;
-  background: rgba(11, 18, 32, 0.12);
+  background: var(--color-line-strong);
 }
 .conf[data-level="high"] i,
 .conf[data-level="medium"] i:nth-child(-n + 2),
 .conf[data-level="low"] i:nth-child(1) {
-  background: #0091b8;
+  background: var(--color-intelligence);
 }
 .on-dark .conf i {
   background: rgba(255, 255, 255, 0.2);
@@ -1093,9 +1092,9 @@ h4 {
   border-radius: 5px;
   background: linear-gradient(
     90deg,
-    rgba(11, 18, 32, 0.05) 0%,
-    rgba(11, 18, 32, 0.09) 50%,
-    rgba(11, 18, 32, 0.05) 100%
+    rgba(180, 202, 230, 0.05) 0%,
+    rgba(180, 202, 230, 0.09) 50%,
+    rgba(180, 202, 230, 0.05) 100%
   );
   background-size: 200% 100%;
   animation: sheen 1.5s linear infinite;
@@ -1208,7 +1207,7 @@ h4 {
   border-color: var(--color-line-bright);
 }
 .grade[data-grade="likely"] {
-  color: #0091b8;
+  color: var(--color-intelligence);
   border-color: rgba(0, 184, 230, 0.4);
 }
 .grade[data-grade="possible"] {
@@ -1216,7 +1215,7 @@ h4 {
   border-color: var(--color-line-strong);
 }
 .grade[data-grade="speculative"] {
-  color: #a37a22;
+  color: var(--color-event);
   border-color: rgba(214, 168, 74, 0.45);
 }
 
@@ -1364,7 +1363,7 @@ h4 {
 
   .sk {
     animation: none;
-    background: rgba(11, 18, 32, 0.07);
+    background: rgba(180, 202, 230, 0.07);
   }
 
   .palette,

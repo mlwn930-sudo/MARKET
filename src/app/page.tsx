@@ -164,7 +164,7 @@ export default async function MarketPage() {
           <Link href="/brief" className="btn btn-editorial">לתדריך השוק <span aria-hidden="true">←</span></Link>
           <Link href="/research">לפתוח מחקר</Link>
         </>}
-        aside={<SignalCanvas indices={cards} quotes={seed} detail={signal.detail} />}
+        aside={<SignalCanvas indices={cards} quotes={seed} />}
         footer={<nav className="journey-rail" aria-label="מסלול המחקר">
           <a href="#market-data"><span className="num">01</span>נתונים</a>
           <a href="#what-matters"><span className="num">02</span>הקשר</a>

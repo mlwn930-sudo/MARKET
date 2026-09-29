@@ -45,8 +45,10 @@ import {
   Band,
   Disclaimer,
   Empty,
+  ErrorState,
   EventCard,
   Field,
+  Hero,
   Page,
   Section,
   Stat,
@@ -94,12 +96,15 @@ export default async function CompanyPage({
   // Filings and metrics come from the hourly cache; the quote is fetched
   // fresh, because a price cached for an hour is a wrong price. Each of the
   // rest can fail without taking the page down.
-  const [analysis, intelligence, quote, history, technical, sector, articles] =
+  const [analysisResult, intelligence, quote, history, technical, sector, articles] =
     await Promise.all([
-      getCompanyAnalysis(ticker),
+      getCompanyAnalysis(ticker).then(
+        (value) => ({ value, failed: false }),
+        () => ({ value: null, failed: true }),
+      ),
       // The full agent pipeline, cached as its finished report. See
       // lib/agents/index.ts for why not every agent runs on every request.
-      getCompanyIntelligence(ticker),
+      getCompanyIntelligence(ticker).catch(() => null),
       getQuote(ticker).catch(() => null),
       getPriceHistory(ticker).catch(() => null),
       getTechnicalRead(ticker).catch(() => null),
@@ -107,7 +112,15 @@ export default async function CompanyPage({
       getArticlesForTicker(ticker, 6),
     ]);
 
-  if (!analysis) notFound();
+  const analysis = analysisResult.value;
+  if (!analysis && !analysisResult.failed) notFound();
+  if (!analysis) return (
+    <Page>
+      <Hero eyebrow="מחקר חברה" title={ticker} lede="מקור הדוחות אינו זמין כרגע. העמוד אינו מציג נתונים חלופיים או מסקנה על החברה." />
+      <div className="mt-8"><ErrorState title="לא ניתן לטעון את הדוחות" source="SEC EDGAR" detail="אפשר לנסות שוב מאוחר יותר. החדשות, רשימת המעקב וסביבת המחקר עדיין זמינות." links={[{ href: `/research?ticker=${encodeURIComponent(ticker)}`, label: "לסביבת המחקר" }, { href: "/news", label: "לחדשות השוק" }]} /></div>
+      <WorkflowLinks ticker={ticker} />
+    </Page>
+  );
 
   const { profile, marketCap, fundamentals, capital, title } = analysis;
   const name = profile?.name ?? title;

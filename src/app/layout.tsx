@@ -59,7 +59,7 @@ export default function RootLayout({
       dir="rtl"
       className={`${assistant.variable} ${frank.variable} ${plexMono.variable}`}
     >
-      <body className="market-app min-h-screen bg-base text-ink">
+      <body className="market-app min-h-screen bg-background text-ink">
         <a href="#main-content" className="skip-link">דלג לתוכן</a>
         {/* One fixed layer behind everything. It reads --tint, which each
             page sets, so the light behind the content belongs to the page

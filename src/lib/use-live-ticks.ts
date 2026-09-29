@@ -53,6 +53,15 @@ const FLASH_MS = 700;
  */
 const SYNC_MS = 90_000;
 
+// ISR HTML can be older than the browser's clock. Start from the same
+// neutral label on both sides; the existing polling effect resolves the
+// actual session immediately after hydration (without another request).
+const INITIAL_MARKET_STATUS: MarketStatus = {
+  state: "closed",
+  label: "בודק את מצב המסחר",
+  opensInMinutes: null,
+};
+
 /**
  * Live prices, from two sources that each supply what the other cannot.
  *
@@ -76,7 +85,7 @@ export function useLiveTicks(
 ): TickState {
   const [quotes, setQuotes] = useState<Record<string, LiveQuote>>(initial);
   const [flash, setFlash] = useState<TickState["flash"]>({});
-  const [market, setMarket] = useState<MarketStatus>(() => marketStatus());
+  const [market, setMarket] = useState<MarketStatus>(INITIAL_MARKET_STATUS);
   const [feed, setFeed] = useState<FeedState>("connecting");
   const [lastTickAt, setLastTickAt] = useState<Date | null>(null);
   const [tickCount, setTickCount] = useState(0);

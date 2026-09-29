@@ -68,7 +68,7 @@ export function MobileTabs() {
           <button
             type="button"
             onClick={() => window.dispatchEvent(new CustomEvent(COMMAND_EVENT))}
-            className="flex w-full flex-col items-center gap-1 py-2.5 text-[10px] text-ink-faint transition-colors active:text-ink"
+            className="flex w-full flex-col items-center gap-1 py-2.5 text-[12px] text-ink-faint transition-colors active:text-ink"
           >
             <span
               className="grid h-7 w-7 place-items-center rounded-full text-white"
@@ -117,7 +117,7 @@ function Tab({
       <Link
         href={tab.href}
         aria-current={active ? "page" : undefined}
-        className={`flex flex-col items-center gap-1 py-2.5 text-[10px] transition-colors duration-150 ${
+        className={`flex flex-col items-center gap-1 py-2.5 text-[12px] transition-colors duration-150 ${
           active ? "text-[var(--color-brand)]" : "text-ink-faint"
         }`}
       >

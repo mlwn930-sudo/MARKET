@@ -7,11 +7,15 @@ import type { LiveQuote } from "@/lib/use-live-ticks";
 import { fmtPercent } from "@/lib/format";
 
 /** Prices are server seeds; paths are actual intraday closes, never decoration. */
-export function SignalCanvas({ indices, quotes, detail }: { indices: IndexCard[]; quotes: Record<string, LiveQuote>; detail: string | null }) {
+export function SignalCanvas({ indices, quotes }: { indices: IndexCard[]; quotes: Record<string, LiveQuote> }) {
   const [selected, setSelected] = useState(indices[0]?.symbol ?? "SPY");
   const id = useId().replace(/:/g, "");
   const entry = indices.find((item) => item.symbol === selected) ?? indices[0];
   const quote = quotes[selected];
+  const quoteTime = quote?.at ? new Date(quote.at) : null;
+  const timestamp = quoteTime && Number.isFinite(quoteTime.getTime())
+    ? new Intl.DateTimeFormat("he-IL", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jerusalem" }).format(quoteTime)
+    : null;
   const values = (entry?.intraday ?? []).filter(Number.isFinite);
   const min = Math.min(...values), max = Math.max(...values);
   const span = max - min || 1;
@@ -35,7 +39,8 @@ export function SignalCanvas({ indices, quotes, detail }: { indices: IndexCard[]
       <text x="9" y="17" fill="var(--color-ink-faint)" fontSize="11">{max.toFixed(2)}</text>
       <text x="9" y="157" fill="var(--color-ink-faint)" fontSize="11">{min.toFixed(2)}</text>
     </svg> : <div className="signal-empty">מהלך המסחר אינו זמין כרגע</div>}
-    <div className="signal-source"><span>נרות של 5 דקות · Yahoo Finance</span><span>{detail ?? "נתוני סשן אחרון"}</span></div>
+    <div className="signal-source"><span>גרף: Yahoo · נרות 5 דקות</span><span>ציטוט: Finnhub · {timestamp ?? "לא זמין"}</span></div>
+    <p className="signal-snapshot">תמונת מצב בטעינת העמוד · זמן ישראל</p>
     <Link href="/#market-data" className="signal-link">לכל המדדים והחברות <span aria-hidden="true">←</span></Link>
   </section>;
 }
