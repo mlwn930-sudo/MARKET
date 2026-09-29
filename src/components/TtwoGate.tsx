@@ -10,10 +10,10 @@ import { CinemaGate } from "./CinemaGate";
  * no business filling a desktop, and the reverse is worse — so each
  * screen gets the one shot for it, and only that one is downloaded.
  *
- * Both cuts run in two clips: the action, and then what follows it. The
- * handover is the one CinemaGate already does for the site entrance —
- * the finished clip stays on screen, paused on its last frame, and the
- * next is raised over it, so the join is a cut rather than a gap.
+ * The widescreen cut runs three clips and the portrait two, joined the
+ * same way: the handover CinemaGate already does for the site entrance,
+ * where the finished clip stays on screen paused on its last frame and
+ * the next is raised over it — so the join is a cut rather than a gap.
  *
  * Both keep the same session key. Whichever screen a visitor arrives on,
  * passing the door once is enough — and passing the site's own entrance
@@ -52,6 +52,7 @@ export function TtwoGate() {
         shots={[
           { src: "/cinema/ttwo-desktop-1.mp4" },
           { src: "/cinema/ttwo-desktop-2.mp4" },
+          { src: "/cinema/ttwo-desktop-3.mp4" },
         ]}
         eyebrow={EYEBROW}
         title={TITLE}
