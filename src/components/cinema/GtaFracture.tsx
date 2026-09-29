@@ -17,8 +17,8 @@ export function GtaFracture({release}:{release:string|null}) {
       context.add(()=>{
 
         gsap.to(state,{scroll:1,ease:"none",onUpdate:()=>{draw();gsap.set(".impact-marks",{autoAlpha:1-state.scroll});},scrollTrigger:{trigger:root.current,start:()=>innerWidth<800?"top 136px":"top 106px",refreshPriority:10,end:()=>"+="+(innerWidth<800?600:1100),pin:root.current?.querySelector(".fracture-stage"),scrub:.45,invalidateOnRefresh:true}});
-        gsap.to(".fracture-title",{autoAlpha:0,yPercent:-160,rotateX:45,scale:.85,ease:"none",scrollTrigger:{trigger:root.current,start:"top 80px",end:"+=450",scrub:.4}});
-        gsap.fromTo(".fracture-return",{y:70,autoAlpha:0},{y:0,autoAlpha:1,scrollTrigger:{trigger:root.current,start:"top -420px",end:"+=250",scrub:.4}});
+        gsap.to(".fracture-title",{autoAlpha:0,yPercent:-160,rotateX:45,scale:.85,ease:"none",scrollTrigger:{trigger:root.current,start:"top 80px",end:()=>innerWidth<800?"+=300":"+=450",scrub:.4}});
+        gsap.fromTo(".fracture-return",{y:70,autoAlpha:0},{y:0,autoAlpha:1,scrollTrigger:{trigger:root.current,start:()=>innerWidth<800?"top -130px":"top -420px",end:()=>innerWidth<800?"+=180":"+=250",scrub:.4}});
       });ScrollTrigger.refresh();
     import("./fracture-world").then(async({createFractureWorld})=>{
       if(!canvas.current||disposed)return;

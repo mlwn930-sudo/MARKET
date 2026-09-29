@@ -16,3 +16,7 @@ body:has(.wall-street-portal) .studio-header{background:#07162e;border-color:#19
 body:has(.gta-fracture) .studio-header,body:has(.gta-fracture) .financial-subnav{background:#29113d;border-color:#65416c}body:has(.gta-fracture) .studio-header a,body:has(.gta-fracture) .nav-utilities button{color:#ffe4f4}
 
 body:has(.gta-fracture) .market-logo-name{color:#fff0fa}
+
+.portal-arrival{top:10%;text-align:center}.portal-arrival h2{font-size:clamp(36px,4vw,58px)}
+@media(max-width:800px){.portal-arrival{top:10%}.portal-arrival h2{font-size:35px}.portal-arrival>a{margin-top:0}.portal-crossing h2{font-size:38px}}
+@media(prefers-reduced-motion:reduce){.portal-fallback,.fracture-fallback{visibility:visible!important}}
