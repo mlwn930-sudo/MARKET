@@ -44,6 +44,7 @@ export function CinemaGate({
   startLabel = "התחילו",
   enterLabel = "לכניסה",
   accent = "#7fd9ef",
+  only,
 }: {
   shots: Shot[];
   /** Per gate, so passing one does not silently open the other. */
@@ -55,47 +56,22 @@ export function CinemaGate({
   startLabel?: string;
   enterLabel?: string;
   accent?: string;
+  /**
+   * Restrict this door to one kind of screen.
+   *
+   * A reel cut for a phone has no business filling a desktop, and the
+   * reverse is worse. The hidden one is left in the tree rather than
+   * branched away so there is no first-frame flash on the screen that
+   * does want it. Its first clip drops to preload="metadata" rather
+   * than "auto": enough for an opening frame to stand behind the words,
+   * without the screen that will never show it pulling the whole file.
+   */
+  only?: "mobile" | "desktop";
 }) {
   const [phase, setPhase] = useState<Phase>("closed");
   const [shot, setShot] = useState(0);
   const [sound, setSound] = useState(true);
   const clips = useRef<(HTMLVideoElement | null)[]>([]);
-  const bleed = useRef<HTMLCanvasElement>(null);
-
-  /**
-   * The surround, on a phone.
-   *
-   * A 16:9 frame on a portrait screen has to give up something: fill it
-   * and three-fifths of the width is cropped away, fit it and there are
-   * black bars down the middle of the film. Neither is acceptable — one
-   * loses the edges of the shot, the other stops it feeling full-bleed.
-   *
-   * So the frame is shown whole and the space around it is filled with
-   * the film itself, blown up and blurred past recognition. The eye reads
-   * a lit surround rather than a letterbox, and nothing is cropped.
-   *
-   * It costs one drawImage per frame into a sixty-four pixel canvas. The
-   * blur that makes it work is applied in CSS to the scaled-up result, so
-   * the expensive part never happens at full size.
-   */
-  useEffect(() => {
-    if (phase !== "playing") return;
-    const canvas = bleed.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d", { alpha: false });
-    if (!context) return;
-
-    let frame = 0;
-    const paint = () => {
-      const source = clips.current[shot];
-      if (source && source.readyState >= 2) {
-        context.drawImage(source, 0, 0, canvas.width, canvas.height);
-      }
-      frame = requestAnimationFrame(paint);
-    };
-    frame = requestAnimationFrame(paint);
-    return () => cancelAnimationFrame(frame);
-  }, [phase, shot]);
 
   const toggleSound = useCallback(() => {
     setSound((on) => {
@@ -210,7 +186,9 @@ export function CinemaGate({
 
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-end justify-center overflow-hidden bg-black pb-[12vh] sm:pb-[14vh]"
+      className={`gate-shell fixed inset-0 z-[999] flex items-end justify-center overflow-hidden bg-black pb-[12vh] sm:pb-[14vh]${
+        only === "mobile" ? " gate-shell--mobile" : only === "desktop" ? " gate-shell--desktop" : ""
+      }`}
       role="dialog"
       aria-modal="true"
       aria-label={eyebrow}
@@ -241,40 +219,16 @@ export function CinemaGate({
       </svg>
       <style>{`
         .gate-clip { filter: url(#gate-lift); }
-        /* Off on wide screens, where the frame already fits and the
-           surround would be a solution to nothing. */
-        .gate-bleed { display: none; }
-        @media (max-width: 820px) {
-          .gate-clip {
-            filter: url(#gate-lift-small);
-            /* Whole frame, nothing cropped. */
-            object-fit: contain;
-            object-position: center 36%;
-          }
-          .gate-bleed {
-            display: block;
-            /* Scaled past the edges so the blur has nothing to feather
-               against, and lifted so it reads as light rather than as a
-               smeared copy of the picture. */
-            transform: scale(1.35);
-            filter: blur(46px) saturate(1.4) brightness(0.62);
-          }
+        @media (max-width: 640px) {
+          .gate-clip { filter: url(#gate-lift-small); }
         }
+        @media (min-width: 641px) { .gate-shell--mobile { display: none; } }
+        @media (max-width: 640px) { .gate-shell--desktop { display: none; } }
         @supports not (filter: url(#gate-lift)) {
           .gate-clip { filter: brightness(1.14) contrast(1.02); }
         }
       `}</style>
 
-      {/* The blurred surround. Behind everything, and only on the screens
-          that need it. */}
-      <canvas
-        ref={bleed}
-        width={64}
-        height={36}
-        className="gate-bleed absolute inset-0 h-full w-full object-cover"
-        style={{ zIndex: 0 }}
-        aria-hidden="true"
-      />
 
       {shots.map((clip, i) => (
         <video
@@ -294,12 +248,22 @@ export function CinemaGate({
           className="gate-clip absolute inset-0 h-full w-full object-cover"
           style={{ opacity: i <= shot ? 1 : 0, zIndex: i + 1 }}
           playsInline
-          preload={i === 0 ? "auto" : "none"}
+          preload={i === 0 ? (only ? "metadata" : "auto") : "none"}
           onTimeUpdate={(event) => {
             const stop = clip.until;
             if (stop !== undefined && event.currentTarget.currentTime >= stop) {
               event.currentTarget.pause();
               advance(i);
+            }
+          }}
+          onLoadedMetadata={(event) => {
+            /* A browser given preload="metadata" knows the duration but
+               paints nothing, so a gate that has not been pressed yet is
+               a black rectangle. Asking for a frame by seeking to one
+               forces the decode and gives the words something to stand
+               on, without pulling the rest of the file. */
+            if (i === 0 && event.currentTarget.currentTime === 0) {
+              event.currentTarget.currentTime = 0.05;
             }
           }}
           onEnded={() => advance(i)}

@@ -3,20 +3,20 @@
 import { CinemaGate } from "./CinemaGate";
 
 /**
- * The door in front of the GTA VI page.
+ * The door in front of the GTA VI page, on a phone.
  *
- * The clip runs in full — eight seconds, sound and all. An earlier
- * version was cut at 2.85s to stop before the dialogue; this one is meant
- * to be heard, so there is no `until` here and the reel plays to its own
- * end.
+ * The clip was cut for a portrait screen, so it only runs on one: a reel
+ * framed for a phone has no business filling a desktop. On a wide screen
+ * this renders nothing visible and downloads nothing, and the site's own
+ * entrance stands in its place.
  *
- * Passing the site's entrance does not open this one. They keep separate
- * keys, because someone who came in through the front door has not yet
- * been shown this.
+ * It keeps its own session key. Coming in through the front door does not
+ * open this one, because it has not been shown yet.
  */
 export function TtwoGate() {
   return (
     <CinemaGate
+      only="mobile"
       storageKey="market-intel:ttwo-gate:v1"
       shots={[{ src: "/cinema/ttwo-gate.mp4" }]}
       eyebrow="TAKE-TWO / GTA VI"

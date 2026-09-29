@@ -211,8 +211,8 @@ export default async function TtwoLaunchPage() {
 
   return (
     <Page>
-      {/* Its own door, in front of this page only. Passing the site's
-          entrance does not open this one, and vice versa. */}
+      {/* Phone only — the clip was cut for a portrait screen. On a wide
+          screen the site entrance stands in its place. */}
       <TtwoGate />
       <TakeTwoStory release={launchEvent?.window ?? null} />
       <ChapterNav label="פרקי הסיפור של Take-Two" chapters={[
