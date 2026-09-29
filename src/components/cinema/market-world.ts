@@ -6,9 +6,17 @@ import { PRODUCTS } from "./product-catalog";
 import { createTradingHall } from "./trading-hall";
 import { hasAsset, loadProduct } from "./product-assets";
 
+/* The finale, in the room's own coordinates.
+   CAR_START is the threshold, CAR_WALL the face of the sign at hall-local
+   z −20, and CAR_IMPACT the point in the last stop's scroll where the two
+   meet. Named because all three have to agree: the wall must break at the
+   frame the bonnet arrives, not a beat before or after. */
+const CAR_START=7, CAR_WALL=-19.4, CAR_IMPACT=.62;
+/* Which way the model faces down the hall. Flip by PI if it reverses. */
+const CAR_HEADING=Math.PI;
 const smooth=(v:number)=>{const t=T.MathUtils.clamp(v,0,1);return t*t*(3-2*t);};
 export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<string,LiveQuote>){
-  const renderer=new T.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
+  const renderer=new T.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;
   const scene=new T.Scene();
   /* Lighting from a photographed room rather than a synthesised one.
      RoomEnvironment is three's stand-in — a box of coloured planes — and
@@ -108,7 +116,15 @@ export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<s
     /* Once through the doorway the camera keeps moving. Standing still on
        the threshold for six scenes is what made the room read as a
        backdrop rather than somewhere the visitor had arrived. */
-    if(progress>=.19)camera.position.z=-2-(journey/7)*2.6;
+    /* The camera drifts down the colonnade for the six presented stops and
+       then STOPS. It used to keep pushing through the finale at 22 units
+       while the car covered 14, and two bodies travelling together read as
+       two bodies standing still — which is exactly what the car looked
+       like. Nothing moves relative to nothing. So the vantage parks, the
+       car alone crosses the room, and the camera only moves again once the
+       wall is already open. */
+    const PARKED=-2-(6/7)*2.6;
+    if(progress>=.19)camera.position.z=index<6?-2-(journey/7)*2.6:PARKED;
 
     const lift=smooth(local/.30),explode=smooth((local-.34)/.44),exit=smooth((local-.86)/.14);
     models.forEach((model,i)=>{
@@ -116,11 +132,14 @@ export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<s
       if(!model.group.visible)return;
       const g=model.group,base=camera.position.z;
       if(i===6){
-        /* The car is not presented — it is driving. It enters from behind
-           the camera and carries on into the sign. */
-        const drive=smooth(local/.6);
-        g.rotation.set(0,Math.PI/2,0);
-        g.position.set(mobile?0:-1,-2.2,base-4-drive*14);
+        /* Driving, in the room's own coordinates rather than the camera's.
+           From the threshold to the face of the sign at local z −20, on an
+           accelerating curve — a car that covers equal ground per pixel of
+           scroll reads as a tow, not a run. It keeps going after impact. */
+        const run=local/CAR_IMPACT;
+        const eased=run<1?run*run*(3-run)/2:1+(run-1)*1.6;
+        g.rotation.set(0,CAR_HEADING,0);
+        g.position.set(mobile?0:-1.4,-2.35,CAR_START-eased*(CAR_START-CAR_WALL));
         g.scale.setScalar(mobile?.85:1.25);
         model.animate(0);
         return;
@@ -132,18 +151,21 @@ export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<s
       model.animate(explode*1.15);
     });
 
-    /* The wall only exists for the last stop, and it gives way when the
-       car reaches it rather than on a timer of its own. */
+    /* The wall gives way when the car arrives, not on a clock of its own.
+       The break starts the instant the bonnet reaches the face and is over
+       fast — masonry does not ease out. */
     wall.visible=progress>=.19&&index===6;
-    const impact=index===6?smooth((local-.58)/.3):0;
+    const impact=index===6?smooth((local-CAR_IMPACT)/.16):0;
     rubble.forEach(({mesh,home,velocity,spin})=>{
       mesh.position.copy(home).addScaledVector(velocity,impact);
       mesh.position.y-=impact*impact*6;
       mesh.rotation.set(spin.x*impact,spin.y*impact,spin.z*impact);
       mesh.scale.setScalar(1-impact*.35);
     });
-    /* Through the hole, into the page beyond. */
-    if(index===6)camera.position.z-=smooth((local-.6)/.4)*22;
+
+    /* Only now does the vantage move — through the hole the car made, and
+       on into the page. Moving it any earlier is what flattened the run. */
+    if(index===6)camera.position.z=PARKED-smooth((local-CAR_IMPACT)/(1-CAR_IMPACT))*30;
 
     renderer.render(scene,camera);
   },dispose(){tradingHall.dispose();scene.traverse(o=>{if(o instanceof T.Mesh){o.geometry.dispose();(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());}});textures.forEach(t=>t.dispose());environmentMap.dispose();renderer.dispose();}};
