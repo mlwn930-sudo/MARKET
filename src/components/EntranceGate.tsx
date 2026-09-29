@@ -17,7 +17,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * Three ways out, because a door that can only be opened one way is a trap:
  *   the button, once the film has run;
  *   the skip, at any moment, for anyone who has seen it or cannot wait;
- *   and reduced motion, which is answered before the film is ever fetched.
+ *   and reduced motion, which is answered before a byte is fetched.
  *
  * It remembers for the session and not beyond. A visitor moving between
  * pages should not meet the door again; a visitor coming back tomorrow
@@ -26,11 +26,22 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const SEEN_KEY = "market-intel:entered:v1";
 
+/**
+ * The film, in order.
+ *
+ * Each clip was generated so its first frame is the previous clip's last
+ * — which is what makes the join invisible, and why the handover below
+ * can be a hard cut rather than a dissolve. Crossfading frame-matched
+ * footage double-exposes it; switching on the frame does not.
+ */
+const REEL = ["/cinema/01-entrance.mp4", "/cinema/02-hall.mp4"];
+
 type Phase = "closed" | "playing" | "ready" | "open";
 
 export function EntranceGate() {
   const [phase, setPhase] = useState<Phase>("closed");
-  const video = useRef<HTMLVideoElement>(null);
+  const [shot, setShot] = useState(0);
+  const clips = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
     let alreadyIn = false;
@@ -39,7 +50,6 @@ export function EntranceGate() {
     } catch {
       /* Private browsing refuses the read. The door simply opens. */
     }
-
     const stillness = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (alreadyIn || stillness) setPhase("open");
   }, []);
@@ -54,36 +64,63 @@ export function EntranceGate() {
   }, []);
 
   /* The film only starts on a press, so the browser never has to guess
-     whether autoplay was wanted, and the download never begins for someone
-     who is going to skip. */
+     whether autoplay was wanted, and thirty megabytes never begin
+     downloading for someone who is going to skip. */
   const start = useCallback(() => {
     setPhase("playing");
-    const element = video.current;
-    if (!element) {
+    const first = clips.current[0];
+    if (!first) {
       setPhase("ready");
       return;
     }
-    element.play().catch(() => {
-      /* A refused play is not a dead end — go straight to the way in. */
-      setPhase("ready");
-    });
+    first.play().catch(() => setPhase("ready"));
   }, []);
 
-  /* A film that stalls must not hold the door shut. Four seconds of
-     footage gets eight before the way in appears anyway, so a dropped
-     connection or a codec the browser will not touch costs the visitor a
-     pause rather than the site. */
+  /**
+   * The handover.
+   *
+   * The clip that just finished is left on screen, paused on its last
+   * frame, and the next one is raised over it. If the next needs a frame
+   * to start, what shows underneath is the frame it was going to start
+   * on — so a slow device sees a still, never a gap or a flash of black.
+   */
+  const advance = useCallback(
+    (finished: number) => {
+      const next = clips.current[finished + 1];
+      if (!next) {
+        setPhase("ready");
+        return;
+      }
+      setShot(finished + 1);
+      next.play().catch(() => setPhase("ready"));
+    },
+    [],
+  );
+
+  /* The clip after the one playing is fetched while it plays, so the join
+     is never waiting on the network. */
   useEffect(() => {
     if (phase !== "playing") return;
-    const element = video.current;
-    const budget = Number.isFinite(element?.duration) ? element!.duration * 2 + 2000 / 1000 : 12;
-    const timer = window.setTimeout(() => setPhase("ready"), budget * 1000);
+    const upcoming = clips.current[shot + 1];
+    if (upcoming && upcoming.preload !== "auto") {
+      upcoming.preload = "auto";
+      upcoming.load();
+    }
+  }, [phase, shot]);
+
+  /* A stalled film must not hold the door shut. Each clip gets a budget
+     of twice its own length; a clip that overruns it hands on, and the
+     last one opens the door. */
+  useEffect(() => {
+    if (phase !== "playing") return;
+    const element = clips.current[shot];
+    const length = Number.isFinite(element?.duration) ? element!.duration : 6;
+    const timer = window.setTimeout(() => advance(shot), (length * 2 + 3) * 1000);
     return () => window.clearTimeout(timer);
-  }, [phase]);
+  }, [phase, shot, advance]);
 
   useEffect(() => {
-    if (phase !== "open") document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
+    document.body.style.overflow = phase === "open" ? "" : "hidden";
     return () => {
       document.body.style.overflow = "";
     };
@@ -98,26 +135,38 @@ export function EntranceGate() {
       aria-modal="true"
       aria-label="הכניסה ל-Market Intel"
     >
-      <video
-        ref={video}
-        src="/cinema/entrance.mp4"
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          phase === "closed" ? "opacity-40" : "opacity-100"
-        }`}
-        muted
-        playsInline
-        preload="auto"
-        onEnded={() => setPhase("ready")}
-        onError={() => setPhase("ready")}
-        aria-hidden="true"
-      />
+      {REEL.map((src, i) => (
+        <video
+          key={src}
+          ref={(el) => {
+            clips.current[i] = el;
+          }}
+          src={src}
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{
+            /* Past and present are lit; the future is not, or its first
+               frame would cover the clip still running. */
+            opacity: i <= shot ? 1 : 0,
+            zIndex: i,
+          }}
+          muted
+          playsInline
+          preload={i === 0 ? "auto" : "none"}
+          onEnded={() => advance(i)}
+          onError={() => advance(i)}
+          aria-hidden="true"
+        />
+      ))}
 
       {/* Legible over any frame the film happens to be on. */}
       <div
         className="absolute inset-0"
         style={{
+          zIndex: REEL.length,
           background:
             "radial-gradient(ellipse at center, rgba(4,10,20,.25), rgba(4,10,20,.82) 78%)",
+          opacity: phase === "playing" ? 0 : 1,
+          transition: "opacity .6s",
         }}
         aria-hidden="true"
       />
@@ -126,6 +175,7 @@ export function EntranceGate() {
         className={`relative flex flex-col items-center px-6 text-center transition-opacity duration-500 ${
           phase === "playing" ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
+        style={{ zIndex: REEL.length + 1 }}
       >
         <span className="text-[11px] tracking-[0.42em] text-white/55">MARKET INTEL</span>
 
