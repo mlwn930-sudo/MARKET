@@ -10,6 +10,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
 import { MobileTabs } from "@/components/MobileTabs";
+import { EntranceGate } from "@/components/EntranceGate";
 
 /**
  * The interface face.
@@ -63,6 +64,11 @@ export default function RootLayout({
       className={`${assistant.variable} ${frank.variable} ${plexMono.variable}`}
     >
       <body className="market-app min-h-screen bg-base text-ink">
+        {/* The door, in front of everything. It removes itself for anyone
+            who has already come through this session, and for anyone who
+            asked not to be moved. */}
+        <EntranceGate />
+
         <a href="#main-content" className="skip-link">דלג לתוכן</a>
         {/* One fixed layer behind everything. It reads --tint, which each
             page sets, so the light behind the content belongs to the page

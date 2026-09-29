@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { WallStreetPortal } from "@/components/cinema/WallStreetPortal";
 import { ResearchDock } from "@/components/market/ResearchDock";
 import { MarketNow } from "@/components/market/MarketNow";
 import { ContextJourney } from "@/components/market/ContextJourney";
@@ -126,9 +125,7 @@ export default async function MarketPage() {
     quotedAt: quoteTimes.length > 0 ? new Date(Math.max(...quoteTimes)) : null,
   });
 
-  return <Page>
-    <WallStreetPortal quotes={seed} status={signal.label}/>
-    <header className="market-opening product-heading"><div><span className="micro-label">MARKET / FINANCIAL INTELLIGENCE</span><h2>השוק עכשיו. <em>הסיפור מאחורי התנועה.</em></h2></div><div className="market-status"><span>{signal.label}</span><p>{signal.detail}</p></div></header>
+  return <Page>    <header className="market-opening product-heading"><div><span className="micro-label">MARKET / FINANCIAL INTELLIGENCE</span><h2>השוק עכשיו. <em>הסיפור מאחורי התנועה.</em></h2></div><div className="market-status"><span>{signal.label}</span><p>{signal.detail}</p></div></header>
     <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail} articles={priorityArticles} picks={topPicks}/>
     <nav className="sector-ribbon" aria-label="לחקור לפי סקטור"><span>מעבר למניה הבודדת</span>{[["semis","שבבים"],["software","תוכנה"],["financials","פיננסים"],["energy","אנרגיה"],["healthcare","בריאות"]].map(([key,label])=><Link key={key} href={`/sectors/${key}`}>{label} ↖</Link>)}<Link href="/sectors">כל הסקטורים ←</Link></nav>
     <ContextJourney articles={priorityArticles} rows={rows} quotes={seed}/>
