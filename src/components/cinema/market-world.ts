@@ -1,5 +1,5 @@
 import * as T from "three";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import type { LiveQuote } from "@/lib/use-live-ticks";
 import { buildProduct } from "./product-models";
 import { PRODUCTS } from "./product-catalog";
@@ -9,7 +9,20 @@ import { hasAsset, loadProduct } from "./product-assets";
 const smooth=(v:number)=>{const t=T.MathUtils.clamp(v,0,1);return t*t*(3-2*t);};
 export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<string,LiveQuote>){
   const renderer=new T.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
-  const scene=new T.Scene();const pmrem=new T.PMREMGenerator(renderer);const environment=new RoomEnvironment();const environmentMap=pmrem.fromScene(environment);scene.environment=environmentMap.texture;scene.environmentIntensity=0.22;environment.dispose();pmrem.dispose();scene.background=new T.Color("#0a1420");scene.fog=new T.Fog("#12202e",34,105);
+  const scene=new T.Scene();
+  /* Lighting from a photographed room rather than a synthesised one.
+     RoomEnvironment is three's stand-in — a box of coloured planes — and
+     it is why every metal surface here reflected nothing recognisable.
+     This is a real studio, captured in high dynamic range, so a chrome
+     edge picks up a window and a rough surface picks up its warmth. It is
+     the single largest difference between "lit" and "photographed", and
+     it costs one 1.6 MB file. */
+  const pmrem=new T.PMREMGenerator(renderer);pmrem.compileEquirectangularShader();
+  const hdr=await new RGBELoader().loadAsync("/hdri/studio.hdr");
+  const environmentMap=pmrem.fromEquirectangular(hdr);
+  scene.environment=environmentMap.texture;scene.environmentIntensity=0.85;
+  hdr.dispose();pmrem.dispose();
+  scene.background=new T.Color("#0a1420");scene.fog=new T.Fog("#12202e",34,105);
   const camera=new T.PerspectiveCamera(48,1,.05,180);
   /* Only the facade is photographed. The product sheet used to be loaded
      here for the portrait planes; those are gone, and with them a 270 KB
@@ -35,7 +48,9 @@ export async function createMarketWorld(canvas:HTMLCanvasElement,quotes:Record<s
     PRODUCTS.map((_,i)=>{const p=buildProduct(i);hall.add(p.group);return p;});
   PRODUCTS.forEach((_,i)=>{
     if(!hasAsset(i))return;
-    void loadProduct(i).then(real=>{
+    /* A car is not a hand-held object: the common longest-edge scale that
+       makes six products read as one set would shrink it to a toy. */
+    void loadProduct(i,i===6?9.5:3.4).then(real=>{
       if(!real)return;
       const drawn=models[i];
       real.group.visible=drawn.group.visible;

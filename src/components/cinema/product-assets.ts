@@ -26,6 +26,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 const ASSETS: Record<number, { path: string; credit: string }> = {
   2: { path: "/models/cardboard_box_01/cardboard_box_01.gltf", credit: "Poly Haven · CC0" },
   3: { path: "/models/gamepad/gamepad.gltf", credit: "Poly Haven · CC0" },
+  6: { path: "/models/car-concept/CarConcept.gltf", credit: "Khronos · CC-BY-4.0" },
 };
 
 export function hasAsset(index: number): boolean {
