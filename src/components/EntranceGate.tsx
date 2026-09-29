@@ -45,7 +45,17 @@ type Phase = "closed" | "playing" | "ready" | "open";
 export function EntranceGate() {
   const [phase, setPhase] = useState<Phase>("closed");
   const [shot, setShot] = useState(0);
+  const [sound, setSound] = useState(true);
   const clips = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const toggleSound = useCallback(() => {
+    setSound((on) => {
+      clips.current.forEach((clip) => {
+        if (clip) clip.muted = on;
+      });
+      return !on;
+    });
+  }, []);
 
   useEffect(() => {
     let alreadyIn = false;
@@ -70,6 +80,18 @@ export function EntranceGate() {
   /* The film only starts on a press, so the browser never has to guess
      whether autoplay was wanted, and thirty megabytes never begin
      downloading for someone who is going to skip. */
+  /**
+   * The press is what buys the sound.
+   *
+   * A browser will not let a page make noise on its own, and it is right
+   * not to. It will let it make noise as a direct result of someone
+   * pressing a button, which is the only way this film ever starts — so
+   * the reel is unmuted here, inside the gesture, and nowhere else.
+   *
+   * If sound is refused anyway, the film plays silent rather than not at
+   * all. Losing the music is a disappointment; losing the entrance
+   * because of it would be a bug.
+   */
   const start = useCallback(() => {
     setPhase("playing");
     const first = clips.current[0];
@@ -77,7 +99,18 @@ export function EntranceGate() {
       setPhase("ready");
       return;
     }
-    first.play().catch(() => setPhase("ready"));
+
+    clips.current.forEach((clip) => {
+      if (clip) clip.muted = false;
+    });
+
+    first.play().catch(() => {
+      clips.current.forEach((clip) => {
+        if (clip) clip.muted = true;
+      });
+      setSound(false);
+      first.play().catch(() => setPhase("ready"));
+    });
   }, []);
 
   /**
@@ -163,6 +196,13 @@ export function EntranceGate() {
           key={src}
           ref={(el) => {
             clips.current[i] = el;
+            /* Muted at rest and set imperatively from here on. Leaving
+               `muted` as a prop would let React put it back on the next
+               render and silence the film mid-shot. */
+            if (el && !el.dataset.primed) {
+              el.dataset.primed = "1";
+              el.muted = true;
+            }
           }}
           src={src}
           className="gate-clip absolute inset-0 h-full w-full object-cover"
@@ -172,7 +212,6 @@ export function EntranceGate() {
             opacity: i <= shot ? 1 : 0,
             zIndex: i,
           }}
-          muted
           playsInline
           preload={i === 0 ? "auto" : "none"}
           onEnded={() => advance(i)}
@@ -205,6 +244,38 @@ export function EntranceGate() {
         }}
         aria-hidden="true"
       />
+
+      {/* The one control that stays while the film runs. Sound a visitor
+          cannot stop is sound they resent. */}
+      <button
+        type="button"
+        onClick={toggleSound}
+        className="absolute end-5 top-5 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-black/35 text-white/85 backdrop-blur transition-colors hover:bg-black/60"
+        style={{ zIndex: REEL.length + 2 }}
+        aria-label={sound ? "השתקת הקול" : "הפעלת הקול"}
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M4 9v6h4l5 4V5L8 9H4z"
+            fill="currentColor"
+          />
+          {sound ? (
+            <path
+              d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+          ) : (
+            <path
+              d="M17 9.5l4.5 5M21.5 9.5l-4.5 5"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+          )}
+        </svg>
+      </button>
 
       <div
         className={`relative flex flex-col items-center px-6 text-center transition-opacity duration-500 ${
