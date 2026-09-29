@@ -5,7 +5,11 @@ import { CinemaGate } from "./CinemaGate";
 /**
  * The door in front of the GTA VI page, on a phone.
  *
- * The clip was cut for a portrait screen, so it only runs on one: a reel
+ * Two clips, joined. The second picks up where the first leaves off, and
+ * the handover in CinemaGate keeps the finished one on screen while the
+ * next starts over it — so the join is a cut, not a gap.
+ *
+ * They were cut for a portrait screen, so they only run on one: a reel
  * framed for a phone has no business filling a desktop. On a wide screen
  * this renders nothing visible and downloads nothing, and the site's own
  * entrance stands in its place.
@@ -18,7 +22,10 @@ export function TtwoGate() {
     <CinemaGate
       only="mobile"
       storageKey="market-intel:ttwo-gate:v1"
-      shots={[{ src: "/cinema/ttwo-gate.mp4" }]}
+      shots={[
+        { src: "/cinema/ttwo-gate.mp4" },
+        { src: "/cinema/ttwo-gate-2.mp4" },
+      ]}
       eyebrow="TAKE-TWO / GTA VI"
       title={["השקה אחת,", "שרשרת ערך שלמה."]}
       readyTitle={["19 בנובמבר 2026.", "בואו נראה מה בפנים."]}
