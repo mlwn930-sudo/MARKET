@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { GtaFracture } from "@/components/cinema/GtaFracture";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,10 +17,6 @@ export function TakeTwoStory({ release }: {release: string | null}) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.from(".gta-cover-title",{y:35,opacity:0,duration:1,ease:"power3.out"});
-      gsap.to(".gta-cover-photo",{scale:1.08,yPercent:8,ease:"none",scrollTrigger:{trigger:".gta-cover",start:"top top",end:"bottom top",scrub:true}});
-    }, root);
     media.add("(min-width: 900px) and (min-height: 620px) and (prefers-reduced-motion: no-preference)", () => {
       const track = root.current?.querySelector<HTMLElement>(".story-track");
       const stage = root.current?.querySelector<HTMLElement>(".story-stage");
@@ -43,13 +40,7 @@ export function TakeTwoStory({ release }: {release: string | null}) {
     return () => media.revert();
   }, []);
   return <div ref={root} className="take-two-story">
-    <header className="gta-cover">
-      <div className="gta-cover-photo"><Image src="/hero/rockstar-jason-lucia.webp" alt="ג׳ייסון ולוסיה, איור רשמי של Rockstar Games ל־GTA VI" fill priority sizes="(max-width: 600px) 1440px, 100vw" className="object-cover" /></div>
-      <div className="gta-cover-shade" aria-hidden="true" />
-      <div className="gta-cover-top"><span dir="ltr">MARKET STORIES / 001</span><span>תרבות. עסקים. ציפיות.</span></div>
-      <div className="gta-cover-copy"><span className="gta-cover-kicker">הסיפור שהשוק כבר מתמחר</span><h1 className="gta-cover-title" dir="ltr">GTA <em>VI</em></h1><p>כולם רוצים לשחק.<br /><span>מה המשקיע צריך לראות?</span></p><a className="gta-enter" href="#gta-world">להיכנס לסיפור <span aria-hidden="true">↓</span></a></div>
-      <div className="gta-cover-bottom"><div><span>מועד שהחברה הכריזה</span><strong>{release ?? "טרם הוכרז"}</strong></div><a href="#investment">ישר לתזה הפיננסית ↙</a><span dir="ltr">NASDAQ / TTWO</span></div>
-    </header>
+    <GtaFracture release={release}/>
     <section id="gta-world" className="story-track" aria-label="מהעולם של GTA אל Take-Two">
       <div className="story-stage">
         <div className="story-art" aria-hidden="true">
