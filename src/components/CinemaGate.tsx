@@ -30,6 +30,18 @@ export type Shot = {
    * edit turns out to be a beat early or late.
    */
   until?: number;
+  /**
+   * Show the whole frame on a phone instead of filling it.
+   *
+   * Filling a portrait screen with a 16:9 shot throws away most of its
+   * width — which is fine for a shot composed down the middle, and wrong
+   * for one where the subject is spread along both edges. The hall of
+   * products is the second kind: cropped to fill, the products are the
+   * part that goes.
+   *
+   * The cost is a letterbox, which on a black gate is not much of a cost.
+   */
+  wideOnMobile?: boolean;
 };
 
 type Phase = "closed" | "playing" | "ready" | "open";
@@ -205,7 +217,21 @@ export function CinemaGate({
       </svg>
       <style>{`
         .gate-clip { filter: url(#gate-lift); }
-        @media (max-width: 640px) { .gate-clip { filter: url(#gate-lift-small); } }
+        @media (max-width: 640px) {
+          .gate-clip { filter: url(#gate-lift-small); }
+          /* Pull back rather than crop, for shots whose subject lives at
+             the edges of the frame. Letterboxed, the band is parked in
+             the upper third so the words have somewhere to sit that is
+             not on top of it. */
+          /* Opaque, because the clips underneath are deliberately left
+             visible to cover the handover — and a letterboxed frame would
+             otherwise show them through its own bars. */
+          .gate-clip--wide {
+            object-fit: contain;
+            object-position: center 32%;
+            background: #000;
+          }
+        }
         @supports not (filter: url(#gate-lift)) {
           .gate-clip { filter: brightness(1.14) contrast(1.02); }
         }
@@ -226,7 +252,9 @@ export function CinemaGate({
             }
           }}
           src={clip.src}
-          className="gate-clip absolute inset-0 h-full w-full object-cover"
+          className={`gate-clip absolute inset-0 h-full w-full object-cover${
+            clip.wideOnMobile ? " gate-clip--wide" : ""
+          }`}
           style={{ opacity: i <= shot ? 1 : 0, zIndex: i }}
           playsInline
           preload={i === 0 ? "auto" : "none"}

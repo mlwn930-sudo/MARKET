@@ -20,7 +20,9 @@ export function EntranceGate() {
       shots={[
         { src: "/cinema/01-entrance.mp4" },
         { src: "/cinema/02-hall.mp4" },
-        { src: "/cinema/03-companies.mp4" },
+        /* The hall of products: the subject runs along both edges, so a
+           portrait crop removes exactly the thing it is there to show. */
+        { src: "/cinema/03-companies.mp4", wideOnMobile: true },
       ]}
       eyebrow="MARKET INTEL"
       title={["מודיעין פיננסי,", "לפני שהשוק מדבר."]}
