@@ -183,12 +183,41 @@ export function EntranceGate() {
       {/* The film is lifted rather than the page darkened. A phone crops a
           16:9 frame to a strip and magnifies it, so whatever the centre of
           the shot happens to be is the whole picture — and these shots have
-          dark centres. The extra lift on small screens is for that, not for
-          taste. */}
+          dark centres.
+
+          The lift is a gamma curve, not a brightness multiplier. Multiplying
+          every pixel by 1.3 sends everything above about three-quarters to
+          pure white and throws the detail there away — which on footage of a
+          lit marble hall is most of the picture worth having. A gamma below
+          one raises the shadows and midtones and leaves white where it is,
+          so the room gets brighter and the highlights survive. */}
+      <svg width="0" height="0" aria-hidden="true" style={{ position: "absolute" }}>
+        <filter id="gate-lift" colorInterpolationFilters="sRGB">
+          <feComponentTransfer>
+            <feFuncR type="gamma" exponent="0.82" />
+            <feFuncG type="gamma" exponent="0.82" />
+            <feFuncB type="gamma" exponent="0.82" />
+          </feComponentTransfer>
+          <feColorMatrix type="saturate" values="1.06" />
+        </filter>
+        <filter id="gate-lift-small" colorInterpolationFilters="sRGB">
+          <feComponentTransfer>
+            <feFuncR type="gamma" exponent="0.68" />
+            <feFuncG type="gamma" exponent="0.68" />
+            <feFuncB type="gamma" exponent="0.68" />
+          </feComponentTransfer>
+          <feColorMatrix type="saturate" values="1.08" />
+        </filter>
+      </svg>
       <style>{`
-        .gate-clip { filter: brightness(1.16) contrast(1.02) saturate(1.06); }
+        .gate-clip { filter: url(#gate-lift); }
         @media (max-width: 640px) {
-          .gate-clip { filter: brightness(1.3) contrast(1.04) saturate(1.08); }
+          .gate-clip { filter: url(#gate-lift-small); }
+        }
+        /* A device that cannot composite an SVG filter cheaply gets the
+           blunt instrument rather than a dark screen. */
+        @supports not (filter: url(#gate-lift)) {
+          .gate-clip { filter: brightness(1.14) contrast(1.02); }
         }
       `}</style>
       {REEL.map((src, i) => (
