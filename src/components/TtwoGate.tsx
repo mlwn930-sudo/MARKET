@@ -5,16 +5,15 @@ import { CinemaGate } from "./CinemaGate";
 /**
  * The door in front of the GTA VI page.
  *
- * Two gates, not one, because there are two cuts of the film: a portrait
- * pair for a phone and a widescreen single for everything else. A reel
- * framed for a phone has no business filling a desktop, and the reverse
- * is worse — so each screen gets the one that was shot for it, and only
- * that one is ever downloaded.
+ * Two gates, not one, because the film was cut twice: portrait for a
+ * phone and widescreen for everything else. A reel framed for a phone has
+ * no business filling a desktop, and the reverse is worse — so each
+ * screen gets the one shot for it, and only that one is downloaded.
  *
- * The phone cut runs in two clips. The handover is the one CinemaGate
- * already does for the site entrance: the finished clip stays on screen,
- * paused on its last frame, and the next is raised over it, so the join
- * is a cut rather than a gap.
+ * Both cuts run in two clips: the action, and then what follows it. The
+ * handover is the one CinemaGate already does for the site entrance —
+ * the finished clip stays on screen, paused on its last frame, and the
+ * next is raised over it, so the join is a cut rather than a gap.
  *
  * Both keep the same session key. Whichever screen a visitor arrives on,
  * passing the door once is enough — and passing the site's own entrance
@@ -50,7 +49,10 @@ export function TtwoGate() {
       <CinemaGate
         only="desktop"
         storageKey={KEY}
-        shots={[{ src: "/cinema/ttwo-desktop.mp4" }]}
+        shots={[
+          { src: "/cinema/ttwo-desktop-1.mp4" },
+          { src: "/cinema/ttwo-desktop-2.mp4" },
+        ]}
         eyebrow={EYEBROW}
         title={TITLE}
         readyTitle={READY}
