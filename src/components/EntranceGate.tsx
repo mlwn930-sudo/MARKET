@@ -34,7 +34,11 @@ const SEEN_KEY = "market-intel:entered:v1";
  * can be a hard cut rather than a dissolve. Crossfading frame-matched
  * footage double-exposes it; switching on the frame does not.
  */
-const REEL = ["/cinema/01-entrance.mp4", "/cinema/02-hall.mp4"];
+const REEL = [
+  "/cinema/01-entrance.mp4",
+  "/cinema/02-hall.mp4",
+  "/cinema/03-companies.mp4",
+];
 
 type Phase = "closed" | "playing" | "ready" | "open";
 
@@ -97,16 +101,24 @@ export function EntranceGate() {
     [],
   );
 
-  /* The clip after the one playing is fetched while it plays, so the join
-     is never waiting on the network. */
+  /* Once the visitor commits, every remaining clip starts downloading —
+     not just the next one. Fetching one ahead is enough when the film is
+     two clips and the join is four seconds away; it is not enough when a
+     later clip is twenty megabytes and the connection is a phone. The
+     whole reel is in flight from the first press, so no join can arrive
+     before its footage does.
+
+     Nothing is fetched before that press, so a visitor who skips still
+     pays for none of it. */
   useEffect(() => {
     if (phase !== "playing") return;
-    const upcoming = clips.current[shot + 1];
-    if (upcoming && upcoming.preload !== "auto") {
-      upcoming.preload = "auto";
-      upcoming.load();
-    }
-  }, [phase, shot]);
+    clips.current.forEach((clip) => {
+      if (clip && clip.preload !== "auto") {
+        clip.preload = "auto";
+        clip.load();
+      }
+    });
+  }, [phase]);
 
   /* A stalled film must not hold the door shut. Each clip gets a budget
      of twice its own length; a clip that overruns it hands on, and the
@@ -130,11 +142,22 @@ export function EntranceGate() {
 
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-black"
+      className="fixed inset-0 z-[999] flex items-end justify-center overflow-hidden bg-black pb-[12vh] sm:pb-[14vh]"
       role="dialog"
       aria-modal="true"
       aria-label="הכניסה ל-Market Intel"
     >
+      {/* The film is lifted rather than the page darkened. A phone crops a
+          16:9 frame to a strip and magnifies it, so whatever the centre of
+          the shot happens to be is the whole picture — and these shots have
+          dark centres. The extra lift on small screens is for that, not for
+          taste. */}
+      <style>{`
+        .gate-clip { filter: brightness(1.16) contrast(1.02) saturate(1.06); }
+        @media (max-width: 640px) {
+          .gate-clip { filter: brightness(1.3) contrast(1.04) saturate(1.08); }
+        }
+      `}</style>
       {REEL.map((src, i) => (
         <video
           key={src}
@@ -142,7 +165,7 @@ export function EntranceGate() {
             clips.current[i] = el;
           }}
           src={src}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="gate-clip absolute inset-0 h-full w-full object-cover"
           style={{
             /* Past and present are lit; the future is not, or its first
                frame would cover the clip still running. */
@@ -158,13 +181,25 @@ export function EntranceGate() {
         />
       ))}
 
-      {/* Legible over any frame the film happens to be on. */}
+      {/* Shade only where the words are.
+
+          This used to be a vignette across the whole frame at eighty-two
+          per cent, which is the wrong trade: it darkened the film to
+          rescue the headline, and on a phone — where a 16:9 frame is
+          cropped to a narrow strip and magnified — it turned the whole
+          thing murky. The film now stays as shot, and the type earns its
+          contrast from a band under itself. */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-x-0 bottom-0 h-[72%]"
         style={{
           zIndex: REEL.length,
+          /* Weighted to the band the type actually occupies. These shots
+             are lit from the floor up, so a gentle fade leaves white
+             letters sitting on a bright surface; the shade has to be
+             carrying its weight by the time it reaches them, and gone
+             again before it touches the doorway. */
           background:
-            "radial-gradient(ellipse at center, rgba(4,10,20,.25), rgba(4,10,20,.82) 78%)",
+            "linear-gradient(to top, rgba(4,10,20,.93) 0%, rgba(4,10,20,.86) 30%, rgba(4,10,20,.6) 55%, rgba(4,10,20,.2) 78%, transparent 100%)",
           opacity: phase === "playing" ? 0 : 1,
           transition: "opacity .6s",
         }}
@@ -175,9 +210,12 @@ export function EntranceGate() {
         className={`relative flex flex-col items-center px-6 text-center transition-opacity duration-500 ${
           phase === "playing" ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
-        style={{ zIndex: REEL.length + 1 }}
+        /* A shadow under the type as well as shade behind it: the film
+           changes frame by frame and the band cannot know what is about to
+           be bright underneath a given letter. */
+        style={{ zIndex: REEL.length + 1, textShadow: "0 2px 22px rgba(4,10,20,.85)" }}
       >
-        <span className="text-[11px] tracking-[0.42em] text-white/55">MARKET INTEL</span>
+        <span className="text-[11px] tracking-[0.42em] text-white/75">MARKET INTEL</span>
 
         <h1 className="mt-6 max-w-[16ch] text-[clamp(38px,7vw,86px)] font-semibold leading-[0.98] tracking-tight text-white">
           {phase === "ready" ? "הדלת פתוחה." : "מודיעין פיננסי,"}
