@@ -73,6 +73,32 @@ export function CinemaGate({
   const [sound, setSound] = useState(true);
   const clips = useRef<(HTMLVideoElement | null)[]>([]);
 
+  /**
+   * A restricted door fetches its opening frame only on the screen that
+   * will show it.
+   *
+   * `preload="metadata"` gives a duration and paints nothing, which is
+   * how the phone-only gate ended up a black rectangle behind its own
+   * headline. The fix is not to preload everywhere — that would have a
+   * desktop pulling a film it is never going to display — but to ask the
+   * screen first, and only then let the first clip load in full.
+   */
+  useEffect(() => {
+    if (!only) return;
+    const wanted = window.matchMedia(
+      only === "mobile" ? "(max-width: 640px)" : "(min-width: 641px)",
+    );
+    const apply = () => {
+      const first = clips.current[0];
+      if (!first || !wanted.matches || first.preload === "auto") return;
+      first.preload = "auto";
+      first.load();
+    };
+    apply();
+    wanted.addEventListener("change", apply);
+    return () => wanted.removeEventListener("change", apply);
+  }, [only]);
+
   const toggleSound = useCallback(() => {
     setSound((on) => {
       clips.current.forEach((clip) => {
