@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TakeTwoStory } from "@/components/market/TakeTwoStory";
+import { TtwoGate } from "@/components/TtwoGate";
 import { LaunchScenario } from "@/components/market/LaunchScenario";
 import { ThesisNotebook } from "@/components/market/ThesisNotebook";
 import { ChapterNav } from "@/components/market/ChapterNav";
@@ -210,6 +211,9 @@ export default async function TtwoLaunchPage() {
 
   return (
     <Page>
+      {/* Its own door, in front of this page only. Passing the site's
+          entrance does not open this one, and vice versa. */}
+      <TtwoGate />
       <TakeTwoStory release={launchEvent?.window ?? null} />
       <ChapterNav label="פרקי הסיפור של Take-Two" chapters={[
         { id: "gta-world", label: "הסיפור" },
