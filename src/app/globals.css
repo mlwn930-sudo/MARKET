@@ -607,9 +607,34 @@ h4 {
 
 /* The mark that opens a section. A short rule in the page's tint,
    carrying the structure without a heading having to be coloured. */
+/* The mark that opens every section on every page — which makes it the one
+   place a house motif can appear everywhere without ever standing behind a
+   figure. It was a 26px cyan rule; it is now a dollar and the rule.
+
+   Solid brand blue, not the brand gradient. The gradient is spoken for:
+   the monogram, the primary action, and the line that marks a section a
+   model wrote. A section mark is none of those, and a gradient used in a
+   fourth place stops meaning the first three. */
 .section-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: auto;
+  height: auto;
+  background: none;
+}
+.section-mark::before {
+  content: "$";
+  font:
+    700 15px/1 var(--font-mono),
+    ui-monospace,
+    monospace;
+  color: var(--color-brand);
+}
+.section-mark::after {
+  content: "";
   display: block;
-  width: 26px;
+  width: 22px;
   height: 2px;
   border-radius: 2px;
   background: var(--color-intelligence);

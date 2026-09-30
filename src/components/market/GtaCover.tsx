@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { DollarMotif } from "@/components/DollarMotif";
 
 /**
  * The cover of the GTA VI story.
@@ -30,6 +31,13 @@ export function GtaCover({ release }: { release: string | null }) {
         />
       </div>
       <div className="gta-cover-shade" aria-hidden="true" />
+
+      {/* A genuinely dark opener, which is the one place this site allows
+          light and depth. The mark sits in the gutter beside the copy, not
+          under it, and there is no figure anywhere near it. */}
+      <div className="gta-cover-mark" aria-hidden="true">
+        <DollarMotif size={300} opacity={0.16} />
+      </div>
 
       <div className="gta-cover-top">
         <span>MARKET STORIES / TAKE-TWO</span>

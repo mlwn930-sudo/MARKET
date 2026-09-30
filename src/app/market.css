@@ -23,7 +23,11 @@
   .btn-editorial:hover { background: #bfeef6; transform: translateY(-2px); }
   .btn-editorial span { font-size: 21px; }
   .micro-label { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; letter-spacing: .13em; font-weight: 400; color: var(--color-ink-faint); }
-  .section-mark { width: 20px; height: 1px; }
+  /* The midnight layer runs a finer rule than the light pages do. It sizes
+     the ::after now rather than the element, because the element is the
+     dollar plus the rule and setting a width on the pair squeezed the rule
+     to nothing. */
+  .section-mark::after { width: 20px; height: 1px; }
   .eyebrow { letter-spacing: .07em; }
   .lede { font-size: 17px; line-height: 1.7; }
   .product-heading { position: relative; padding: clamp(32px, 5vw, 64px) 0 30px; border-bottom: 1px solid var(--color-line); }

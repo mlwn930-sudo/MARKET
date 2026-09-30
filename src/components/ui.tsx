@@ -1,3 +1,4 @@
+import { DollarMotif } from "./DollarMotif";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
@@ -282,6 +283,18 @@ export function Hero({
           <div className="absolute inset-0 bg-[linear-gradient(to_left,transparent_30%,rgba(15,23,42,0.75)_100%)]" />
         </div>
       )}
+
+      {/* The house mark, set into the trailing edge of the band. Hidden on
+          a phone, where the band is barely wider than the headline and the
+          mark would sit under the words rather than beside them. It is
+          behind the copy and in front of nothing: no figure is ever set
+          over it. */}
+      <div
+        className="pointer-events-none absolute bottom-0 end-[3%] hidden select-none lg:block"
+        aria-hidden="true"
+      >
+        <DollarMotif size={300} opacity={0.13} />
+      </div>
 
       <div className="relative mx-auto max-w-[1440px] px-5 pb-14 pt-14 sm:px-8 sm:pb-16 sm:pt-20">
         {body}

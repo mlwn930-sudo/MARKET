@@ -138,3 +138,8 @@ main [id] { scroll-margin-top:150px; }
 .discovery,.story-track,.scenario-lab{--color-ink:#253225;--color-text-primary:#253225;--color-ink-muted:#4f5b47;--color-ink-faint:#5a6a50;--color-ink-ghost:#627257;}
 .chapter-select{display:none;}
 @media(max-width:600px){.chapter-nav{display:block;padding:10px 0;}.chapter-nav>a{display:none;}.chapter-select{display:flex;align-items:center;justify-content:space-between;gap:20px;}.chapter-select label{font-size:12px;color:#aab49f;}.chapter-select select{background:#1b241b;color:#efefdf;border:1px solid #4b5b40;min-height:44px;max-width:220px;padding:8px 12px;font-size:15px;}}
+/* Beside the copy on a wide screen, gone on a narrow one — on a phone the
+   cover is barely wider than its own headline and the mark would sit under
+   the words instead of next to them. */
+.gta-cover-mark{position:absolute;inset-block-end:9%;inset-inline-end:6%;z-index:-1;pointer-events:none;}
+@media(max-width:899px){.gta-cover-mark{display:none;}}
