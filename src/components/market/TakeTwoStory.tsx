@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { GtaFracture } from "@/components/cinema/GtaFracture";
+import { GtaCover } from "@/components/market/GtaCover";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,7 +11,20 @@ const scenes = [
   { label:"03 / THE INVESTMENT", title:<>משחק גדול.<br />באיזה מחיר?</>, text:"התלהבות היא התחלה. תשואה דורשת יותר: מכירות, רווחיות ותזרים ביחס לציפיות שכבר במחיר. מכאן עוברים מהסיפור אל מה שאפשר לבדוק.", word:"EXPECTATIONS", note:"מסגרת ניתוח · לא תחזית תשואה" },
 ];
 
-/** Pinning is progressive enhancement; all chapters remain in normal flow on phones. */
+/**
+ * The three chapters, cross-faded rather than tilted.
+ *
+ * The art used to swing on two axes and the three business cards used to
+ * fan out on a third, over a 1200px perspective. In a right-to-left column
+ * the fan pushed the top card past the edge of its own frame and cut the
+ * word GTA in half, and the swing left the postcard sitting at an angle
+ * nothing else on the page shared. Both are gone. What moves now is
+ * opacity and a few pixels of rise — the chapters change, the furniture
+ * stays where it was put.
+ *
+ * Pinning is progressive enhancement; all chapters remain in normal flow
+ * on phones.
+ */
 export function TakeTwoStory({ release }: {release: string | null}) {
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -23,24 +36,25 @@ export function TakeTwoStory({ release }: {release: string | null}) {
       if (!track || !stage) return;
       track.dataset.enhanced = "true";
       const panels = gsap.utils.toArray<HTMLElement>(".story-scene", track);
-      gsap.set(panels.slice(1), {autoAlpha:0,y:50});
+      gsap.set(panels.slice(1), {autoAlpha:0,y:40});
       const sequence = gsap.timeline({scrollTrigger:{trigger:stage,start:"top 76px",end:"+=200%",pin:true,scrub:.65,invalidateOnRefresh:true}});
-      sequence.to(".story-art",{rotateY:-10,rotateZ:-3,scale:.92,duration:1},0)
-        .to(panels[0],{autoAlpha:0,y:-35,duration:.3},.7)
+      sequence.to(panels[0],{autoAlpha:0,y:-30,duration:.3},.7)
         .to(panels[1],{autoAlpha:1,y:0,duration:.3},1)
-        .to(".story-art-city",{opacity:0,duration:.5},.8)
-        .to(".story-financial",{opacity:1,duration:.5},1)
-        .to(".story-art",{rotateY:0,rotateZ:0,scale:1,duration:1},1)
-        .to(panels[1],{autoAlpha:0,y:-35,duration:.3},1.7)
+        .to(".story-art-city",{autoAlpha:0,duration:.45},.85)
+        .to(".story-financial",{autoAlpha:1,duration:.45},1)
+        /* The cards arrive one under the other, which is the order they are
+           read in — the parent company, then the ticker, then what reaches
+           the shareholder. */
+        .from(".business-layer",{autoAlpha:0,y:24,stagger:.14,duration:.4},1.05)
+        .to(panels[1],{autoAlpha:0,y:-30,duration:.3},1.7)
         .to(panels[2],{autoAlpha:1,y:0,duration:.3},2)
-        .to(".business-layer",{y:(i)=>i * -22,z:(i)=>i * 55,rotateX:16,duration:.9},2)
         .to(".story-progress-fill",{scaleX:1,duration:3,ease:"none"},0);
       return () => { delete track.dataset.enhanced; sequence.kill(); };
     }, root);
     return () => media.revert();
   }, []);
   return <div ref={root} className="take-two-story">
-    <GtaFracture release={release}/>
+    <GtaCover release={release}/>
     <section id="gta-world" className="story-track" aria-label="מהעולם של GTA אל Take-Two">
       <div className="story-stage">
         <div className="story-art" aria-hidden="true">
