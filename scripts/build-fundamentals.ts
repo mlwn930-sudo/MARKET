@@ -68,6 +68,30 @@ type CompanyRow = {
   metrics: Record<string, number | null>;
 };
 
+/**
+ * Finnhub answers sixty requests a minute for the whole account, and this
+ * build asks it for one profile per company. At 48 companies that never
+ * mattered. At 125 it does: the first run after the universe widened came
+ * back with market caps for exactly sixty of them, and a market cap is
+ * what turns earnings into a P/E — so five of nine sectors lost their
+ * median outright and the site had less context than before it had more
+ * companies. Exactly sixty is not a coincidence, it is a quota.
+ *
+ * So profile calls are paced one every 1.1 seconds. The SEC fetch beside
+ * it usually takes longer than that anyway, and the wait is measured from
+ * the previous call rather than added to it, so in the common case this
+ * costs nothing at all.
+ */
+const PROFILE_GAP = 1100;
+let lastProfileAt = 0;
+
+async function pacedProfile(ticker: string) {
+  const wait = PROFILE_GAP - (Date.now() - lastProfileAt);
+  if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
+  lastProfileAt = Date.now();
+  return getProfile(ticker).catch(() => null);
+}
+
 async function buildCompany(
   ticker: string,
   sector: string,
@@ -80,7 +104,7 @@ async function buildCompany(
 
   const [facts, profile] = await Promise.all([
     getCompanyFacts(listing.cik_str),
-    getProfile(ticker).catch(() => null),
+    pacedProfile(ticker),
   ]);
 
   const marketCap = profile?.marketCap ?? null;
