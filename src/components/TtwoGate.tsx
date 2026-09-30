@@ -36,7 +36,21 @@ export function TtwoGate() {
         storageKey={KEY}
         shots={[
           { src: "/cinema/ttwo-gate.mp4" },
-          { src: "/cinema/ttwo-gate-2.mp4" },
+          /* Stops before the generator's own dissolve.
+             The file runs 5.04s, but at about 2.38 it starts mixing the
+             cloud deck over the neon towers, and for the best part of a
+             second both are on screen at once — a lit coastline showing
+             through buildings it is supposed to be miles beyond. It reads
+             as a splice, which is the one thing the joins here are built
+             to avoid. Sampled frame by frame, 2.36 is the last one that is
+             purely the climb.
+
+             Cutting there costs nothing, because the clip after it opens
+             above the clouds already. It also lands moon on moon: the moon
+             sits top-left in the last frame of the climb and top-left in
+             the first frame above the clouds, so the cut has something to
+             hold onto. */
+          { src: "/cinema/ttwo-gate-2.mp4", until: 2.3 },
           { src: "/cinema/ttwo-gate-3.mp4" },
           { src: "/cinema/ttwo-gate-4.mp4" },
         ]}
