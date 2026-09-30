@@ -61,3 +61,32 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .primary-destinations a.destination-story::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#d6a84a;margin-inline-end:7px;vertical-align:middle}
 .primary-destinations a.destination-story[aria-current],.primary-destinations a.destination-story:hover{color:#6f5a30;border-color:#d6a84a}
 @media(max-width:800px){.primary-destinations a.destination-story{font-size:12px}}
+
+/* ── The whole site on the bar ──────────────────────────────────────────
+   The drawer is gone, so the second tier is no longer a handful of
+   context-dependent siblings — it is every remaining page, one button
+   each. They read as buttons rather than links because that is what the
+   row now is: a control surface, not a sentence of links.
+
+   Groups are marked by a rule before the first item of each, drawn in CSS
+   off data-group-start. A visible label per group would cost a third of
+   the row's width; the first item of each group carries the group name in
+   its aria-label instead, so the grouping survives for a screen reader
+   without being spelled out on screen. */
+.financial-subnav{gap:6px;padding:6px 32px;align-items:stretch;background:var(--color-surface-2,#EEF3FA);border-top:1px solid var(--color-border,#DDE4EF)}
+.financial-subnav a{display:inline-flex;align-items:center;font-size:13px;line-height:1;padding:9px 14px;border-radius:999px;color:#344054;border:1px solid transparent;transition:background-color .15s,color .15s,border-color .15s}
+.financial-subnav a:hover{background:#fff;border-color:var(--color-border,#DDE4EF);color:#0B1220}
+.financial-subnav a[aria-current]{background:#2855F5;border-color:#2855F5;color:#fff;font-weight:500}
+.financial-subnav a[data-group-start]{margin-inline-start:14px;position:relative}
+.financial-subnav a[data-group-start]::before{content:"";position:absolute;inset-inline-start:-8px;top:50%;translate:0 -50%;width:1px;height:18px;background:var(--color-border-strong,#C9D4E5)}
+.financial-subnav a:first-child[data-group-start]{margin-inline-start:0}
+.financial-subnav a:first-child[data-group-start]::before{display:none}
+
+/* The top tier keeps its weight — it is where a session starts. */
+.primary-destinations a[aria-current]{color:#2855F5;border-color:#2855F5}
+
+@media(max-width:800px){
+  .financial-subnav{display:flex;padding:6px 16px;gap:5px}
+  .financial-subnav a{font-size:12px;padding:8px 12px}
+  .financial-subnav a[data-group-start]{margin-inline-start:11px}
+}
