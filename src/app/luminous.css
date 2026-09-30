@@ -1,0 +1,615 @@
+/* ─────────────────────────────────────────────────────────────────────
+   LUMINOUS — the night material.
+
+   The site used to be paper: a white canvas, hairline borders, colour used
+   sparingly and only where it meant something. It was a defensible design
+   and it was not the one that was asked for. The reference is a lit scene
+   — deep ground, light travelling across it, data glowing from inside —
+   and no amount of changing which blue a border is was ever going to get
+   there from paper.
+
+   So this is the whole surface, rebuilt. It is a separate file rather than
+   an edit to financial.css so that the paper version is still there,
+   intact, one import away, if this turns out to be the wrong direction.
+
+   Everything is scoped to `body:not(:has(.gta-cover))`. The launch story
+   has its own art direction and was explicitly left alone; that selector
+   is the one thing in this file that must not be relaxed.
+
+   Three rules hold the whole thing together.
+
+   Light comes from behind, never from a number. The ground glows, panels
+   catch an edge of it, and a figure is set in plain white on top. A digit
+   with a glow is a digit you cannot read at a glance, and this is a site
+   people read numbers on.
+
+   Depth is one step. A panel sits on the ground; a panel you are pointing
+   at sits one step higher. There is no third level, because by the third
+   level nothing reads as raised any more.
+
+   Green and red still mean direction and nothing else. On this ground they
+   finally look like what they are.
+   ───────────────────────────────────────────────────────────────────── */
+
+body:not(:has(.gta-cover)) {
+  /* --- Ground and surfaces ------------------------------------------ */
+  --color-background: #060B15;
+  --color-surface-plain: #0D1626;
+  --color-surface-secondary: #0A1220;
+  --color-surface-elevated: #121D31;
+
+  /* --- Type --------------------------------------------------------- */
+  --color-text-primary: #EAF1FF;
+  --color-text-secondary: #AEBFDC;
+  --color-text-muted: #8194B3;
+  --color-text-subtle: #64758F;
+
+  /* --- Lines -------------------------------------------------------- */
+  --color-border-default: rgba(148, 178, 224, 0.14);
+  --color-border-strong: rgba(148, 178, 224, 0.24);
+  --color-border-bright: rgba(148, 178, 224, 0.4);
+
+  /* The palette at full strength, which is what this ground is for. The
+     ink variants exist for white paper and would disappear here, so every
+     text token goes back to the mark — same names, right values. */
+  --color-intelligence-ink: #00B8E6;
+  --color-event-ink: #D6A84A;
+  --color-positive-ink: #12A66A;
+  --color-negative-ink: #E4575D;
+  --color-news-ink: #F43FBF;
+  --color-data-text: #00B8E6;
+  --color-insight-text: #8A7DF0;
+  --color-news-text: #F43FBF;
+  --color-warning-text: #D6A84A;
+
+  --color-accent-dim: rgba(40, 85, 245, 0.16);
+  --color-accent-line: rgba(40, 85, 245, 0.42);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 10px 30px -12px rgba(0, 0, 0, 0.75);
+  --shadow-lg: 0 28px 70px -24px rgba(0, 0, 0, 0.85);
+
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
+/* The ground itself. Three lights placed off the corners and one very
+   slow horizon sweep — the same construction as the reference, which is a
+   dark field with colour travelling across it rather than a dark field
+   with coloured things on it. Fixed, so it does not scroll away and leave
+   the page on flat black. */
+body:not(:has(.gta-cover))::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(70rem 45rem at 78% -10%, rgba(40, 85, 245, 0.3), transparent 62%),
+    radial-gradient(56rem 38rem at 8% 6%, rgba(0, 184, 230, 0.2), transparent 60%),
+    radial-gradient(60rem 42rem at 92% 70%, rgba(103, 87, 232, 0.2), transparent 64%),
+    linear-gradient(180deg, #060B15 0%, #070E1B 45%, #05090F 100%);
+}
+
+/* A single luminous ribbon across the upper page, thin enough to read as
+   light rather than as a shape. */
+body:not(:has(.gta-cover))::after {
+  content: "";
+  position: fixed;
+  inset-inline: -10%;
+  top: 34vh;
+  height: 1px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.55;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 184, 230, 0.55) 18%,
+    rgba(40, 85, 245, 0.7) 42%,
+    rgba(103, 87, 232, 0.55) 62%,
+    rgba(244, 63, 191, 0.4) 82%,
+    transparent
+  );
+  filter: blur(0.4px);
+}
+
+/* ── Chrome ─────────────────────────────────────────────────────────── */
+
+body:not(:has(.gta-cover)) .studio-header {
+  background: rgba(6, 11, 21, 0.82);
+  backdrop-filter: blur(18px) saturate(1.3);
+  border-bottom: 1px solid var(--color-border-default);
+}
+body:not(:has(.gta-cover)) .primary-destinations a {
+  color: var(--color-text-secondary);
+}
+body:not(:has(.gta-cover)) .primary-destinations a:hover {
+  color: #fff;
+}
+body:not(:has(.gta-cover)) .primary-destinations a[aria-current] {
+  color: #fff;
+  border-color: #2855F5;
+}
+
+body:not(:has(.gta-cover)) .financial-subnav {
+  background: rgba(10, 18, 32, 0.72);
+  border-top: 1px solid var(--color-border-default);
+}
+body:not(:has(.gta-cover)) .financial-subnav a {
+  color: var(--color-text-muted);
+  border-color: transparent;
+}
+body:not(:has(.gta-cover)) .financial-subnav a:hover {
+  background: rgba(148, 178, 224, 0.08);
+  border-color: var(--color-border-default);
+  color: #fff;
+}
+body:not(:has(.gta-cover)) .financial-subnav a[aria-current] {
+  background: linear-gradient(92deg, #2855F5, #3f7bff);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px -8px rgba(40, 85, 245, 0.9);
+}
+body:not(:has(.gta-cover)) .financial-subnav a[data-group-start]::before {
+  background: var(--color-border-strong);
+}
+
+body:not(:has(.gta-cover)) .nav-utilities button,
+body:not(:has(.gta-cover)) .search-trigger {
+  color: var(--color-text-secondary);
+}
+body:not(:has(.gta-cover)) .market-logo-name {
+  color: #fff;
+}
+
+/* ── Panels ─────────────────────────────────────────────────────────── */
+
+/* One treatment, applied to every container the pages already use, so the
+   whole site changes material at once instead of page by page. The top
+   highlight is what sells it: a 1px lighter line along the upper edge is
+   how a real surface catches light from above. */
+body:not(:has(.gta-cover)) .index-rail,
+body:not(:has(.gta-cover)) .index-tile,
+body:not(:has(.gta-cover)) .company-tile,
+body:not(:has(.gta-cover)) .research-picks,
+body:not(:has(.gta-cover)) .macro-pocket,
+body:not(:has(.gta-cover)) .flow-cell,
+body:not(:has(.gta-cover)) .signal-canvas,
+body:not(:has(.gta-cover)) .surface,
+body:not(:has(.gta-cover)) .card,
+body:not(:has(.gta-cover)) .metric-card,
+body:not(:has(.gta-cover)) .chart-container,
+body:not(:has(.gta-cover)) .story-select button,
+body:not(:has(.gta-cover)) .context-empty {
+  background: linear-gradient(
+    180deg,
+    rgba(148, 178, 224, 0.07),
+    rgba(148, 178, 224, 0.02) 42%,
+    rgba(6, 11, 21, 0) 100%
+  ),
+  var(--color-surface-plain);
+  border: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-md);
+  color: var(--color-text-primary);
+  position: relative;
+}
+
+body:not(:has(.gta-cover)) .index-tile::before,
+body:not(:has(.gta-cover)) .company-tile::before,
+body:not(:has(.gta-cover)) .flow-cell::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(180, 208, 255, 0.34) 30%,
+    rgba(180, 208, 255, 0.34) 70%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* The one step up. Hover is the only thing that raises a panel, and it
+   raises it by light rather than by moving it — a tile that jumps under
+   the cursor makes a dense board feel unstable. */
+body:not(:has(.gta-cover)) .company-tile:hover,
+body:not(:has(.gta-cover)) .index-tile:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(148, 178, 224, 0.12),
+    rgba(148, 178, 224, 0.03) 50%,
+    rgba(6, 11, 21, 0) 100%
+  ),
+  var(--color-surface-elevated);
+  border-color: rgba(40, 85, 245, 0.55);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px rgba(40, 85, 245, 0.25),
+    0 0 34px -10px rgba(40, 85, 245, 0.55);
+  transform: none;
+}
+
+body:not(:has(.gta-cover)) .index-rail {
+  box-shadow: var(--shadow-lg);
+}
+body:not(:has(.gta-cover)) .index-tile {
+  border: 0;
+  border-inline-end: 1px solid var(--color-border-default);
+  box-shadow: none;
+  background: transparent;
+}
+body:not(:has(.gta-cover)) .index-tile:last-child {
+  border-inline-end: 0;
+}
+
+/* ── Section marks ──────────────────────────────────────────────────── */
+
+/* The reference names its five stages with a lit dot over a rule that
+   fades out. That is the shape this site's section mark takes now: the
+   dollar keeps its place, the dot is the light, and the rule carries it
+   away. */
+body:not(:has(.gta-cover)) .section-mark::before {
+  color: #7FA5FF;
+  text-shadow: 0 0 14px rgba(40, 85, 245, 0.8);
+}
+body:not(:has(.gta-cover)) .section-mark::after {
+  width: 34px;
+  height: 1px;
+  background: linear-gradient(90deg, #00B8E6, rgba(0, 184, 230, 0));
+  box-shadow: 0 0 10px rgba(0, 184, 230, 0.55);
+}
+
+body:not(:has(.gta-cover)) .micro-label,
+body:not(:has(.gta-cover)) .eyebrow {
+  color: var(--color-text-muted);
+  letter-spacing: 0.16em;
+}
+
+body:not(:has(.gta-cover)) .compact-heading > a,
+body:not(:has(.gta-cover)) .sector-ribbon a,
+body:not(:has(.gta-cover)) .home-next-worlds small,
+body:not(:has(.gta-cover)) .research-next,
+body:not(:has(.gta-cover)) .desk-deeper {
+  color: #7FA5FF;
+}
+
+/* ── Figures ────────────────────────────────────────────────────────── */
+
+/* Plain white, and deliberately not lit. Everything else on this surface
+   glows; the numbers are the one thing that must stay legible at a
+   glance, and a glowing digit is a blurred digit. */
+body:not(:has(.gta-cover)) .num,
+body:not(:has(.gta-cover)) .index-tile > strong,
+body:not(:has(.gta-cover)) .company-price strong,
+body:not(:has(.gta-cover)) .flow-cell > strong,
+body:not(:has(.gta-cover)) .levels-row b {
+  color: #F4F8FF;
+  text-shadow: none;
+}
+body:not(:has(.gta-cover)) .levels-row b {
+  color: #A99BFF;
+}
+body:not(:has(.gta-cover)) .text-up {
+  color: #2FD48F;
+}
+body:not(:has(.gta-cover)) .text-down {
+  color: #FF7078;
+}
+
+/* ── Controls ───────────────────────────────────────────────────────── */
+
+body:not(:has(.gta-cover)) .market-filters button,
+body:not(:has(.gta-cover)) .workspace-switch button,
+body:not(:has(.gta-cover)) .signal-tabs button {
+  background: rgba(148, 178, 224, 0.06);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
+}
+body:not(:has(.gta-cover)) .market-filters button[aria-pressed="true"],
+body:not(:has(.gta-cover)) .workspace-switch button[aria-pressed="true"],
+body:not(:has(.gta-cover)) .signal-tabs button[aria-pressed="true"] {
+  background: linear-gradient(92deg, #2855F5, #3f7bff);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 8px 22px -10px rgba(40, 85, 245, 0.95);
+}
+
+body:not(:has(.gta-cover)) .workspace-search,
+body:not(:has(.gta-cover)) .more-companies {
+  background: rgba(148, 178, 224, 0.06);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
+}
+
+body:not(:has(.gta-cover)) .btn-primary {
+  background: linear-gradient(92deg, #2855F5, #00B8E6);
+  color: #fff;
+  border: 0;
+  box-shadow: 0 10px 30px -12px rgba(40, 85, 245, 0.9);
+}
+
+/* ── Rows and rules ─────────────────────────────────────────────────── */
+
+body:not(:has(.gta-cover)) .levels-row,
+body:not(:has(.gta-cover)) .now-headline,
+body:not(:has(.gta-cover)) .now-pick,
+body:not(:has(.gta-cover)) .research-pick,
+body:not(:has(.gta-cover)) .context-step,
+body:not(:has(.gta-cover)) .macro-row,
+body:not(:has(.gta-cover)) .sector-ribbon,
+body:not(:has(.gta-cover)) .home-next-worlds,
+body:not(:has(.gta-cover)) .monitor-now,
+body:not(:has(.gta-cover)) .research-now {
+  border-color: var(--color-border-default);
+}
+
+body:not(:has(.gta-cover)) .now-headline:hover,
+body:not(:has(.gta-cover)) .now-pick:hover,
+body:not(:has(.gta-cover)) .research-pick:hover {
+  background: rgba(148, 178, 224, 0.05);
+}
+
+body:not(:has(.gta-cover)) .company-mark {
+  background: rgba(148, 178, 224, 0.1);
+  color: var(--color-text-secondary);
+}
+
+/* A section on this ground opens with a line of light rather than a grey
+   rule. Two pixels of gradient is the difference between a page that is
+   divided and a page that is lit. */
+body:not(:has(.gta-cover)) .context-journey {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, #2855F5, #00B8E6 40%, transparent) 1;
+}
+
+body:not(:has(.gta-cover)) .evidence-sheet {
+  background: linear-gradient(140deg, #16265C, #0B1220 70%);
+  border: 1px solid rgba(40, 85, 245, 0.4);
+  box-shadow: var(--shadow-lg), 0 0 46px -18px rgba(40, 85, 245, 0.75);
+  color: #EAF1FF;
+}
+
+body:not(:has(.gta-cover)) .market-status > span {
+  color: #2FD48F;
+}
+
+body:not(:has(.gta-cover)) .depth-disclosure summary,
+body:not(:has(.gta-cover)) .data-caption,
+body:not(:has(.gta-cover)) .data-empty {
+  color: var(--color-text-muted);
+}
+
+body:not(:has(.gta-cover)) .financial-footer {
+  background: rgba(10, 18, 32, 0.72) !important;
+  border-top: 1px solid var(--color-border-default);
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────── */
+
+/* The ground is static in the first place — there is no animation here to
+   turn off. It is listed so the next person does not add one. */
+
+/* ─────────────────────────────────────────────────────────────────────
+   What the audit found.
+
+   Switching the ground is the easy half. The half that actually breaks a
+   page is everything that was written as a literal against white paper,
+   because a token change does not reach it. Rather than guess at those,
+   the page was measured: every run of text scored against the background
+   actually behind it, and every element still painting itself light.
+
+   Two failures came back, and they are opposites, which is why both had
+   to be looked for.
+
+   Dark ink on the new ground — headings set in #0B1220, at 1.05:1. Text
+   that is there and cannot be seen.
+
+   Light text on a panel that stayed white — the scene viewport, the
+   session chart, the depth sheet, at 1.03:1. The type had followed the
+   theme and the surface underneath had not.
+   ───────────────────────────────────────────────────────────────────── */
+
+/* The root still carried the paper canvas, which showed through wherever
+   a section did not paint its own background. */
+html:has(body:not(:has(.gta-cover))) {
+  background-color: #060B15;
+}
+
+body:not(:has(.gta-cover)) h1,
+body:not(:has(.gta-cover)) h2,
+body:not(:has(.gta-cover)) h3,
+body:not(:has(.gta-cover)) h4,
+body:not(:has(.gta-cover)) .title,
+body:not(:has(.gta-cover)) .subtitle,
+body:not(:has(.gta-cover)) .display,
+body:not(:has(.gta-cover)) .display-xl {
+  color: var(--color-text-primary);
+}
+
+/* The accent inside a headline. #2855F5 is 3.2:1 on this ground — fine on
+   paper, not fine here — so the emphasis lifts to the lighter tint of the
+   same blue rather than dropping the colour. */
+body:not(:has(.gta-cover)) .market-opening h1 em,
+body:not(:has(.gta-cover)) .market-opening h2 em,
+body:not(:has(.gta-cover)) h1 em,
+body:not(:has(.gta-cover)) h2 em {
+  color: #7FA5FF;
+}
+
+/* The panels the audit caught still painting themselves light. */
+body:not(:has(.gta-cover)) #session-chart,
+body:not(:has(.gta-cover)) .scene-viewport,
+body:not(:has(.gta-cover)) .studio-mobile-tabs {
+  background: linear-gradient(
+      180deg,
+      rgba(148, 178, 224, 0.07),
+      rgba(148, 178, 224, 0.02) 42%,
+      rgba(6, 11, 21, 0) 100%
+    ),
+    var(--color-surface-plain);
+  border-color: var(--color-border-default);
+  color: var(--color-text-primary);
+}
+body:not(:has(.gta-cover)) .scene-depth-sheet {
+  background: rgba(148, 178, 224, 0.08);
+}
+body:not(:has(.gta-cover)) .skip-link {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+}
+body:not(:has(.gta-cover)) .studio-mobile-tabs a {
+  color: var(--color-text-muted);
+}
+body:not(:has(.gta-cover)) .studio-mobile-tabs a[aria-current] {
+  color: #fff;
+  border-color: #2855F5;
+}
+
+/* Small print sat at 3.6:1 — legal on paper at that size only because the
+   paper was white. On this ground it moves up one step. */
+body:not(:has(.gta-cover)) .caption,
+body:not(:has(.gta-cover)) .data-caption,
+body:not(:has(.gta-cover)) .index-title small,
+body:not(:has(.gta-cover)) .company-name small,
+body:not(:has(.gta-cover)) .market-filters > span,
+body:not(:has(.gta-cover)) .home-next-worlds small,
+body:not(:has(.gta-cover)) .flow-cell > small,
+body:not(:has(.gta-cover)) .levels-row small {
+  color: #9FB2CF;
+}
+
+/* Inside the scene the type had been written for a pale panel. */
+body:not(:has(.gta-cover)) .scene-viewport .micro-label,
+body:not(:has(.gta-cover)) .scene-large-number,
+body:not(:has(.gta-cover)) .scene-object-label,
+body:not(:has(.gta-cover)) .scene-reading p,
+body:not(:has(.gta-cover)) .scene-company-anchor small {
+  color: var(--color-text-secondary);
+}
+body:not(:has(.gta-cover)) .scene-viewport h3,
+body:not(:has(.gta-cover)) .scene-object-panel h3 {
+  color: var(--color-text-primary);
+}
+
+/* A screener score is a figure, and figures are white here. */
+body:not(:has(.gta-cover)) .now-pick b,
+body:not(:has(.gta-cover)) .score-ring {
+  color: #F4F8FF;
+}
+body:not(:has(.gta-cover)) .now-pick b small,
+body:not(:has(.gta-cover)) .score-ring small {
+  color: var(--color-text-muted);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   The alias layer, redeclared.
+
+   globals.css names every colour twice: a canonical token and a shorter
+   alias onto it — --color-ink-muted is var(--color-text-secondary), and
+   so on for two dozen more. Redefining the canonical tokens on <body>
+   looked like it would carry the aliases with it. It does not, and the
+   reason is worth writing down because it will come up again.
+
+   A custom property declared on :root that contains var() is resolved
+   against :root. What a descendant inherits is the computed result, not
+   the reference — so --color-ink-muted was still handing out #344054,
+   the paper value, on an element whose --color-text-secondary had
+   already become #AEBFDC. Measured, not guessed: that is exactly what
+   the audit read off the page.
+
+   So every alias is redeclared here, at the same place the canonical
+   tokens are. Anything reading either name now gets the night value.
+   ───────────────────────────────────────────────────────────────────── */
+
+body:not(:has(.gta-cover)) {
+  --color-deep: #060B15;
+  --color-base: #060B15;
+  --color-surface: #0D1626;
+  --color-raised: #121D31;
+  --color-overlay: #0D1626;
+  --color-hover: #121D31;
+  --color-element: #0A1220;
+
+  --color-line: rgba(148, 178, 224, 0.14);
+  --color-line-strong: rgba(148, 178, 224, 0.24);
+  --color-line-bright: rgba(148, 178, 224, 0.4);
+
+  --color-ink: #EAF1FF;
+  --color-ink-muted: #AEBFDC;
+  --color-ink-faint: #9FB2CF;
+  --color-ink-ghost: #7C8DAC;
+
+  /* Direction, at the weight this ground needs. The paper values are
+     3.1:1 and 3.6:1 against white; against #060B15 they are darker than
+     the type around them, so both lift. */
+  --color-up: #2FD48F;
+  --color-down: #FF7078;
+  --color-up-mark: #12A66A;
+  --color-down-mark: #E4575D;
+  --color-up-dim: rgba(47, 212, 143, 0.12);
+  --color-down-dim: rgba(255, 112, 120, 0.12);
+
+  /* The brand blue is 3.2:1 here, which is enough for a border and not
+     enough for a word. The accent a reader reads is the lighter tint;
+     the brand blue itself stays on fills and rules, where it is seen
+     rather than read. */
+  --color-accent: #7FA5FF;
+  --color-accent-soft: #5B7FFF;
+
+  --color-data: #00B8E6;
+  --color-insight: #8A7DF0;
+  --color-news: #F43FBF;
+  --color-warning: #D6A84A;
+  --color-measure: rgba(180, 208, 255, 0.55);
+}
+
+/* The wordmark was set in the ink colour as a literal and went to 1.05:1
+   — the one piece of type on the page that has to be legible before
+   anything else is read. */
+body:not(:has(.gta-cover)) .market-logo,
+body:not(:has(.gta-cover)) .market-logo-name {
+  color: #F4F8FF;
+}
+body:not(:has(.gta-cover)) .market-logo-sub {
+  color: var(--color-ink-faint);
+}
+
+/* The last pass the audit asked for. globals.css already carries correct
+   values for a dark ground under `.on-dark` — the deltas, in particular,
+   were solved there long ago. This ground is not marked `.on-dark`, so it
+   takes the same values by the selector that does apply to it, rather than
+   by inventing second ones that would then have to be kept in step. */
+body:not(:has(.gta-cover)) .delta[data-dir="up"] {
+  background: rgba(18, 166, 106, 0.18);
+  color: #46D99A;
+}
+body:not(:has(.gta-cover)) .delta[data-dir="down"] {
+  background: rgba(228, 87, 93, 0.18);
+  color: #FF8F93;
+}
+body:not(:has(.gta-cover)) .delta[data-dir="flat"] {
+  background: rgba(148, 178, 224, 0.12);
+  color: var(--color-ink-faint);
+}
+
+/* Anything still setting the brand blue or the cyan ink as type. Both are
+   fills on this ground, not words: 3.2:1 and 4.4:1. */
+body:not(:has(.gta-cover)) .now-headline span,
+body:not(:has(.gta-cover)) .context-actions,
+body:not(:has(.gta-cover)) .context-actions a,
+body:not(:has(.gta-cover)) .step-number,
+body:not(:has(.gta-cover)) .scene-bridge b,
+body:not(:has(.gta-cover)) .workflow-number,
+body:not(:has(.gta-cover)) .research-context a,
+body:not(:has(.gta-cover)) .explore-groups a span {
+  color: #7FA5FF;
+}
+body:not(:has(.gta-cover)) .sector-ribbon > span,
+body:not(:has(.gta-cover)) .source-meta,
+body:not(:has(.gta-cover)) .signal-source {
+  color: var(--color-ink-faint);
+}
