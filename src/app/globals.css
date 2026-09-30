@@ -1380,3 +1380,40 @@ h4 {
 }
 
 }
+
+/* ── Sections arrive as you reach them ─────────────────────────────────
+   Everything here is behind .reveal-armed, which ScrollReveal puts on
+   <html> once its observer is running. Without JavaScript the class never
+   appears and nothing is ever hidden — the rule that hides a section and
+   the code that reveals it arrive together or not at all.
+
+   Held to 14 pixels and 550ms. Further or slower and the page reads as
+   something being assembled in front of the reader rather than something
+   that was already there. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-armed main section {
+    transition:
+      opacity 0.55s var(--ease),
+      transform 0.55s var(--ease);
+  }
+  .reveal-armed main section:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .reveal-armed main section[data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* The cascade inside a section that was scrolled to. The panel lands,
+     then its contents. Skipped for a section that was on screen at load,
+     which has no arrival to stage. */
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > * {
+    animation: rise 0.45s var(--ease) both;
+  }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(1) { animation-delay: 60ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(2) { animation-delay: 120ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(3) { animation-delay: 180ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(4) { animation-delay: 240ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(n + 5) { animation-delay: 290ms; }
+}

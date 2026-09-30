@@ -11,6 +11,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
 import { MobileTabs } from "@/components/MobileTabs";
 import { EntranceGate } from "@/components/EntranceGate";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 /**
  * The interface face.
@@ -83,6 +84,7 @@ export default function RootLayout({
             deep in a scroll. Renders nothing until it is opened. */}
         <CommandCenter />
 
+        <ScrollReveal />
         <AppHeader />
         <RouteTransition>{children}</RouteTransition>
         <SiteFooter />
