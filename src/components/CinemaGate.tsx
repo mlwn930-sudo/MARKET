@@ -202,25 +202,24 @@ export function CinemaGate({
    * it never fired once: its effect listed `shots` as a dependency, and
    * `shots` is an array literal written at the call site, so it was a new
    * reference on every render. The effect tore down and rebuilt on each
-   * one, the timer restarted from zero each time, and the only thing
-   * meant to rescue a film that stopped advancing was dead. When a clip's
+   * one, the timer restarted from zero each time, and the only thing meant
+   * to rescue a film that stopped advancing was dead. When a clip's
    * `ended` never arrived — which is exactly what a phone does when it
-   * decides to suspend a decoder — the door simply stayed shut, and
-   * tapping the screen was the visitor waking the page enough to let it
-   * finish.
+   * parks a decoder — the door simply stayed shut, and tapping the screen
+   * was the visitor waking the page enough to let it finish.
    *
-   * So this watches the thing that actually matters. Every 300ms it asks
-   * whether the current clip moved; five checks without movement and it
-   * hands on regardless. It also enforces the trim point and catches an
-   * `ended` that fired while nothing was listening, which makes it the
-   * single place a stuck reel recovers from — no matter which of the
-   * three ways it got stuck.
+   * So this watches the thing that actually matters, four times a second,
+   * and it reads the clip before it judges it. Finished, stalled and still
+   * loading look identical from the outside and want opposite answers, so
+   * they are asked apart in that order. It is the single place a stuck
+   * reel recovers from, no matter which of the three ways it got stuck.
    */
   useEffect(() => {
     if (phase !== "playing") return;
 
-    let previous = -1;
+    let previous = clips.current[shot]?.currentTime ?? 0;
     let motionless = 0;
+    let nudged = false;
 
     const tick = window.setInterval(() => {
       const element = clips.current[shot];
@@ -228,21 +227,51 @@ export function CinemaGate({
 
       const stop = shotsRef.current[shot]?.until;
       if (stop !== undefined && element.currentTime >= stop) {
-        advance(shot);
-        return;
-      }
-      if (element.ended) {
+        element.pause();
         advance(shot);
         return;
       }
 
-      if (element.currentTime === previous) {
-        motionless += 1;
-        if (motionless >= 4) advance(shot);
-      } else {
-        motionless = 0;
-        previous = element.currentTime;
+      /* Finished, whether or not the browser said so. `ended` is the event
+         that goes missing when a decoder is parked on the last frame, and
+         waiting out the motion count to discover it costs a second of
+         frozen picture — so the tail of the file is read directly. */
+      if (element.ended) {
+        advance(shot);
+        return;
       }
+      if (element.duration && element.currentTime >= element.duration - 0.08) {
+        advance(shot);
+        return;
+      }
+
+      if (element.currentTime !== previous) {
+        motionless = 0;
+        nudged = false;
+        previous = element.currentTime;
+        return;
+      }
+
+      /* Still arriving is not stuck. Counting a clip out while it is
+         buffering would drop it from the film on exactly the connection
+         that needed the patience — the phone cut's last clip is six
+         megabytes — so the count only runs once there are frames to
+         play. */
+      if (element.readyState < 3) return;
+
+      motionless += 1;
+
+      /* One attempt to restart it before giving up on it. A decoder that
+         was merely parked comes back from a play(); one that is gone does
+         not, and then the count runs out and the reel moves on without
+         it. */
+      if (element.paused && !nudged) {
+        nudged = true;
+        void element.play().catch(() => {});
+        return;
+      }
+
+      if (motionless >= 4) advance(shot);
     }, 250);
 
     return () => window.clearInterval(tick);
