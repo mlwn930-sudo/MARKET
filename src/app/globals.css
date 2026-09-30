@@ -67,8 +67,14 @@
      Green and red mean price direction. Nothing else on this site may
      use them: a green panel tells the reader something before they have
      read anything. */
-  --color-up: var(--color-positive);
-  --color-down: var(--color-negative);
+  /* A delta is almost always small text, so these resolve to the readable
+     ink of each hue where one is defined. The vivid token is still there
+     under its own name for the things that are seen rather than read — a
+     dim fill, a bar, a series. */
+  --color-up: var(--color-positive-ink, var(--color-positive));
+  --color-down: var(--color-negative-ink, var(--color-negative));
+  --color-up-mark: var(--color-positive);
+  --color-down-mark: var(--color-negative);
   --color-up-dim: rgba(18, 166, 106, 0.1);
   --color-down-dim: rgba(228, 87, 93, 0.1);
 
@@ -122,6 +128,26 @@
   --radius-sm: 6px;
   --radius-md: 6px;
   --radius-lg: 8px;
+}
+
+/* Kept out of @theme on purpose.
+
+   Tailwind emits only the theme variables something in the build actually
+   references, so a token defined there and read solely by hand-written CSS
+   is dropped and resolves to nothing. These four are read by stylesheets
+   and by nobody's utility class, so they are declared as plain custom
+   properties where that pruning does not reach.
+
+   They are the four meaning colours in the weight that can carry words.
+   Measured against white: cyan is 2.33:1 and gold 2.20:1 at full strength
+   — legible as a line on a chart, illegible as the caption under it. Each
+   falls back to its own mark, so on a surface that defines no ink (the
+   midnight material) the palette comes through undimmed. */
+:root {
+  --color-data-text: var(--color-intelligence-ink, var(--color-intelligence));
+  --color-insight-text: var(--color-intelligence-deep);
+  --color-news-text: var(--color-news-ink, var(--color-news));
+  --color-warning-text: var(--color-event-ink, var(--color-event));
 }
 
 /* ====================================================================
@@ -470,6 +496,21 @@ h4 {
   --color-raised: rgba(255, 255, 255, 0.09);
   --color-element: rgba(255, 255, 255, 0.05);
   --color-measure: rgba(255, 255, 255, 0.55);
+
+  /* The ink variants exist because cyan and gold at full strength cannot
+     carry text on white. On this material the problem inverts: the same
+     darkened values are now the ones that disappear, and the palette at
+     full strength is what reads. Cyan is 2.33:1 on white and about 8:1 on
+     this ground. So inside the dark material the -text tokens go back to
+     the marks — a component written for the light page keeps using the
+     same token name and comes out right on either. */
+  --color-data-text: var(--color-intelligence);
+  --color-insight-text: var(--color-intelligence-deep);
+  --color-news-text: var(--color-news);
+  --color-warning-text: var(--color-event);
+  --color-up: var(--color-positive);
+  --color-down: var(--color-negative);
+
   color: var(--color-ink);
 }
 
