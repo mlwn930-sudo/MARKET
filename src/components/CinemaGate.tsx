@@ -73,6 +73,13 @@ export function CinemaGate({
   const [sound, setSound] = useState(true);
   const clips = useRef<(HTMLVideoElement | null)[]>([]);
 
+  /* The reel is written as an array literal at the call site, so it is a
+     new reference on every render. Held in a ref, the watchdog below can
+     read the trim points without listing it as a dependency and tearing
+     itself down each time. */
+  const shotsRef = useRef(shots);
+  shotsRef.current = shots;
+
   /**
    * A restricted door fetches its opening frame only on the screen that
    * will show it.
@@ -188,16 +195,58 @@ export function CinemaGate({
     });
   }, [phase]);
 
-  /* A stalled clip must not hold the door shut: one that overruns twice
-     its own length hands on, and the last one opens the door. */
+  /**
+   * A watchdog on progress, not a timer on duration.
+   *
+   * There used to be a timeout here sized from the clip's own length, and
+   * it never fired once: its effect listed `shots` as a dependency, and
+   * `shots` is an array literal written at the call site, so it was a new
+   * reference on every render. The effect tore down and rebuilt on each
+   * one, the timer restarted from zero each time, and the only thing
+   * meant to rescue a film that stopped advancing was dead. When a clip's
+   * `ended` never arrived — which is exactly what a phone does when it
+   * decides to suspend a decoder — the door simply stayed shut, and
+   * tapping the screen was the visitor waking the page enough to let it
+   * finish.
+   *
+   * So this watches the thing that actually matters. Every 300ms it asks
+   * whether the current clip moved; five checks without movement and it
+   * hands on regardless. It also enforces the trim point and catches an
+   * `ended` that fired while nothing was listening, which makes it the
+   * single place a stuck reel recovers from — no matter which of the
+   * three ways it got stuck.
+   */
   useEffect(() => {
     if (phase !== "playing") return;
-    const element = clips.current[shot];
-    const stop = shots[shot]?.until;
-    const length = stop ?? (Number.isFinite(element?.duration) ? element!.duration : 6);
-    const timer = window.setTimeout(() => advance(shot), (length * 2 + 3) * 1000);
-    return () => window.clearTimeout(timer);
-  }, [phase, shot, advance, shots]);
+
+    let previous = -1;
+    let motionless = 0;
+
+    const tick = window.setInterval(() => {
+      const element = clips.current[shot];
+      if (!element) return;
+
+      const stop = shotsRef.current[shot]?.until;
+      if (stop !== undefined && element.currentTime >= stop) {
+        advance(shot);
+        return;
+      }
+      if (element.ended) {
+        advance(shot);
+        return;
+      }
+
+      if (element.currentTime === previous) {
+        motionless += 1;
+        if (motionless >= 4) advance(shot);
+      } else {
+        motionless = 0;
+        previous = element.currentTime;
+      }
+    }, 250);
+
+    return () => window.clearInterval(tick);
+  }, [phase, shot, advance]);
 
   useEffect(() => {
     document.body.style.overflow = phase === "open" ? "" : "hidden";
