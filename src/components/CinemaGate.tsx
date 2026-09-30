@@ -62,9 +62,14 @@ export function CinemaGate({
    * A reel cut for a phone has no business filling a desktop, and the
    * reverse is worse. The hidden one is left in the tree rather than
    * branched away so there is no first-frame flash on the screen that
-   * does want it. Its first clip drops to preload="metadata" rather
-   * than "auto": enough for an opening frame to stand behind the words,
-   * without the screen that will never show it pulling the whole file.
+   * does want it — but left in the tree it must cost nothing, so a
+   * restricted door starts with every clip at preload="none" and the
+   * effect below lifts the first one only once the screen has matched.
+   *
+   * "metadata" was the obvious middle setting and the wrong one. Chrome
+   * reads it generously: measured on a phone, the hidden widescreen
+   * opening had buffered a second of itself and reported ready to play,
+   * about half a megabyte of a film that screen is never going to show.
    */
   only?: "mobile" | "desktop";
 }) {
@@ -352,7 +357,7 @@ export function CinemaGate({
           className="gate-clip absolute inset-0 h-full w-full object-cover"
           style={{ opacity: i <= shot ? 1 : 0, zIndex: i + 1 }}
           playsInline
-          preload={i === 0 ? (only ? "metadata" : "auto") : "none"}
+          preload={i === 0 && !only ? "auto" : "none"}
           onTimeUpdate={(event) => {
             const stop = clip.until;
             if (stop !== undefined && event.currentTarget.currentTime >= stop) {
@@ -365,8 +370,21 @@ export function CinemaGate({
                paints nothing, so a gate that has not been pressed yet is
                a black rectangle. Asking for a frame by seeking to one
                forces the decode and gives the words something to stand
-               on, without pulling the rest of the file. */
-            if (i === 0 && event.currentTarget.currentTime === 0) {
+               on, without pulling the rest of the file.
+
+               Only on the screen the door is for, though. Decoding that
+               frame costs about half a megabyte, and it buys nothing
+               behind a gate the screen is hiding — a phone was paying it
+               for the widescreen opening and a desktop for the portrait
+               one. The media query has already answered by the time this
+               fires, and its answer is readable right here: it is the
+               effect above that lifts preload to "auto", and it only does
+               so on a match. */
+            if (
+              i === 0 &&
+              event.currentTarget.preload === "auto" &&
+              event.currentTarget.currentTime === 0
+            ) {
               event.currentTarget.currentTime = 0.05;
             }
           }}
