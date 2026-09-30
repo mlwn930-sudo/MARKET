@@ -67,14 +67,23 @@ export function ScrollReveal() {
        this is shown regardless. */
     const rescue = window.setTimeout(() => {
       for (const element of document.querySelectorAll<HTMLElement>("main section")) {
+        if (element.dataset.revealSkip) continue;
         if (!element.dataset.revealed) element.dataset.revealed = "true";
       }
     }, 4000);
 
     const arm = () => {
       for (const element of document.querySelectorAll<HTMLElement>("main section")) {
-        if (known.has(element) || element.closest(SKIP)) continue;
+        if (known.has(element)) continue;
         known.add(element);
+        if (element.closest(SKIP)) {
+          /* Marked, not just skipped. The CSS below hides an unrevealed
+             section, and skipping one here used to leave it hidden until
+             the rescue timer found it — and, worse, let the cascade run an
+             entrance animation over whatever was inside it. */
+          element.dataset.revealSkip = "true";
+          continue;
+        }
         if (element.getBoundingClientRect().top < window.innerHeight) {
           element.dataset.revealed = "true";
           element.dataset.revealedOnLoad = "true";

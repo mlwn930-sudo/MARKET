@@ -121,10 +121,10 @@ main [id] { scroll-margin-top:150px; }
 .gta-enter{display:flex;justify-content:space-between;max-width:240px;padding:16px 0;border-bottom:1px solid #edc7a5;margin-top:36px;font-size:18px;}.gta-enter span{font-size:24px;}
 .gta-cover-bottom{position:absolute;inset-inline:4%;bottom:0;display:flex;justify-content:space-between;align-items:end;gap:24px;padding:28px 0;border-top:1px solid #f0d0b94d;}.gta-cover-bottom>div{display:flex;flex-direction:column;gap:8px;}.gta-cover-bottom>div>span{font-size:12px;color:#d7c4b2;}.gta-cover-bottom strong{font-size:23px;font-weight:500;}.gta-cover-bottom>a{font-size:15px;padding:12px 0;}.gta-cover-bottom>span{font:10px var(--font-mono);letter-spacing:.15em;}
 .story-track{background:#e6e4d8;color:#253225;}.story-stage{position:relative;max-width:1440px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:70px;padding:80px 6%;align-items:center;}
-.story-art{grid-column:2;grid-row:1;position:relative;aspect-ratio:16 / 11;}.story-art-city{position:absolute;inset:0;overflow:hidden;}.story-art-city img{object-position:50% center;}.story-financial{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;justify-content:center;gap:16px;}.story-financial>.micro-label{margin-bottom:25px;color:#53634c;}
+.story-art{grid-column:2;grid-row:1;position:relative;aspect-ratio:1186 / 626;}.story-art-city{position:absolute;inset:0;overflow:hidden;border:1px solid #00000018;box-shadow:0 24px 60px -28px #2e223a80;}.story-art-city img{object-position:50% center;}.story-financial{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;justify-content:center;gap:16px;}.story-financial>.micro-label{margin-bottom:25px;color:#53634c;}
 .business-layer{display:grid;grid-template-columns:1fr auto;gap:5px 16px;background:#f9f5e8;border:1px solid #9eab94;padding:22px;box-shadow:8px 10px 0 #68795d20;}.business-layer>span{font:10px var(--font-mono);letter-spacing:.06em;}.business-layer strong{grid-row:1 / span 2;grid-column:2;font-size:36px;line-height:1;}.business-layer small{font-size:13px;color:#6f7d65;}.business-layer:nth-last-child(1){background:#223524;color:#edf2df;}.business-layer:nth-last-child(1) small{color:#b4c3a9;}
 .story-scenes{grid-column:1;grid-row:1;}.story-scene{position:relative;margin-block:70px;}.story-scene .micro-label{color:#616d55;font-size:10px;}.story-scene h2{font-size:clamp(36px,4.6vw,64px);line-height:1.07;letter-spacing:-.045em;margin:26px 0;font-weight:600;}.story-scene p{max-width:470px;font-size:20px;line-height:1.7;color:#4f5b47;}.story-scene-note{border-top:1px solid #a8b19e;padding-top:20px;margin-top:30px;font-size:12px;color:#627057;}.scene-word{display:block;margin-top:24px;font:12px var(--font-mono);letter-spacing:.2em;color:#6f7e60;}.story-progress{display:none;}
-.story-track[data-enhanced] .story-stage{height:calc(100vh - 76px);min-height:544px;}.story-track[data-enhanced] .story-scenes{position:relative;min-height:430px;display:grid;align-items:center;}.story-track[data-enhanced] .story-scene{grid-area:1 / 1;margin:0;}.story-track[data-enhanced] .story-progress{position:absolute;display:block;inset-inline:6%;bottom:30px;height:2px;background:#b5bda9;}.story-progress-fill{display:block;width:100%;height:100%;background:#526847;transform:scaleX(0);transform-origin:right;}
+.story-track[data-enhanced] .story-stage{height:calc(100svh - 76px);min-height:560px;}.story-track[data-enhanced] .story-scenes{position:relative;min-height:340px;align-self:center;display:grid;align-items:center;}.story-track[data-enhanced] .story-scene{grid-area:1 / 1;margin:0;}.story-track[data-enhanced] .story-progress{position:absolute;display:block;inset-inline:6%;bottom:30px;height:2px;background:#b5bda9;}.story-progress-fill{display:block;width:100%;height:100%;background:#526847;transform:scaleX(0);transform-origin:right;}
 .story-source{display:flex;justify-content:space-between;gap:20px;padding:20px 5%;font-size:11px;color:#a7b0a0;border-bottom:1px solid #303b2d;}.story-source a{white-space:nowrap;}
 .company-evidence{margin-block:80px;display:grid;grid-template-columns:1fr 1.25fr;gap:65px;border-top:1px solid var(--color-line);padding-top:40px;}.company-evidence h2{font-size:46px;line-height:1.1;margin:22px 0;letter-spacing:-.03em;}.company-evidence p{font-size:17px;line-height:1.7;color:#b8c0b0;}.evidence-figures{display:grid;grid-template-columns:1fr 1fr;gap:30px;}.evidence-figures>div{border-top:1px solid #56634b;padding:20px 0;}.evidence-figures strong{display:block;font:36px var(--font-mono);margin:14px 0;direction:ltr;text-align:right;}.evidence-figures span{font-size:12px;color:#d6b387;}.evidence-figures p{font-size:14px;}.evidence-source{grid-column:1 / -1;font-size:12px;color:#a8b59c;border-top:1px solid #303b2d;padding-top:16px;}
 .scenario-lab{margin-top:45px;background:#e7e5da;color:#213022;padding:42px;}.scenario-lab .micro-label{color:#5c6c50;font-size:10px;}.scenario-intro h3{font-size:36px;letter-spacing:-.025em;margin:18px 0;}.scenario-intro p{max-width:700px;font-size:17px;line-height:1.7;color:#52604a;}.scenario-presets{display:flex;gap:8px;margin:26px 0 40px;flex-wrap:wrap;}.scenario-presets button{padding:11px 18px;border:1px solid #9dab92;color:#40513a;font-size:14px;cursor:pointer;min-height:44px;}.scenario-presets button[aria-pressed=true]{background:#263d29;color:#f3f0df;border-color:#263d29;}
@@ -143,3 +143,37 @@ main [id] { scroll-margin-top:150px; }
    the words instead of next to them. */
 .gta-cover-mark{position:absolute;inset-block-end:9%;inset-inline-end:6%;z-index:-1;pointer-events:none;}
 @media(max-width:899px){.gta-cover-mark{display:none;}}
+
+.story-track[data-enhanced] .story-art{aspect-ratio:1186 / 626;height:auto;max-height:58vh;align-self:center;}
+.story-track[data-enhanced] .story-art-city img{object-position:50% 46%;}
+@media(max-width:899px){.story-track[data-enhanced] .story-art{height:auto;aspect-ratio:1186 / 626;}}
+
+/* ── The story, in flow ────────────────────────────────────────────────
+   Replaces the pinned stage. Three chapters, alternating sides, each one
+   always on the page. Nothing here depends on a measurement taken at the
+   right moment, which is the whole point of the change. */
+.story-flow{background:#e6e4d8;color:#253225;padding:8px 0 24px;}
+.story-chapter{max-width:1440px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:78px 6%;border-bottom:1px solid #a8b19e4d;}
+.story-chapter:last-child{border-bottom:0;}
+.story-chapter:nth-child(even) .story-chapter-copy{order:2;}
+.story-chapter-copy .micro-label{color:#616d55;font-size:10px;}
+.story-chapter-copy h2{font-size:clamp(36px,4.6vw,64px);line-height:1.07;letter-spacing:-.045em;margin:26px 0;font-weight:600;}
+.story-chapter-copy p{max-width:470px;font-size:20px;line-height:1.7;color:#4f5b47;}
+.story-chapter-art{position:relative;}
+.story-chapter-art .story-art-city{position:relative;aspect-ratio:1186 / 626;overflow:hidden;border:1px solid #00000018;box-shadow:0 24px 60px -28px #2e223a80;}
+.story-financial{display:flex;flex-direction:column;gap:16px;opacity:1;position:static;}
+.story-close{border-top:2px solid #526847;padding-top:26px;}
+.story-close p{font-size:19px;line-height:1.75;color:#4f5b47;margin:14px 0 18px;max-width:420px;}
+.story-close a{font-size:16px;border-bottom:1px solid #526847;padding-bottom:4px;}
+@media(max-width:899px){
+  .story-chapter{grid-template-columns:1fr;gap:30px;padding:52px 6%;}
+  .story-chapter:nth-child(even) .story-chapter-copy{order:0;}
+  .story-chapter-copy h2{font-size:42px;}
+  .story-chapter-copy p{font-size:18px;}
+}
+/* The full-bleed trick measures against 100vw, which counts the scrollbar,
+   while the page it is escaping measures against 100%, which does not. The
+   difference is the scrollbar's width — about ten pixels of horizontal
+   scroll on a page that has nothing to scroll sideways to. Clipped rather
+   than hidden, so nothing inside loses the ability to stick. */
+.take-two-story{overflow-x:clip;}

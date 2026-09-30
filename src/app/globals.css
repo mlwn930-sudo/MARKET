@@ -1462,7 +1462,7 @@ h4 {
       opacity 0.55s var(--ease),
       transform 0.55s var(--ease);
   }
-  .reveal-armed main section:not([data-revealed]) {
+  .reveal-armed main section:not([data-revealed]):not([data-reveal-skip]) {
     opacity: 0;
     transform: translateY(14px);
   }
@@ -1474,12 +1474,12 @@ h4 {
   /* The cascade inside a section that was scrolled to. The panel lands,
      then its contents. Skipped for a section that was on screen at load,
      which has no arrival to stage. */
-  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > * {
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]):not([data-reveal-skip]) > *:not(.pin-spacer) {
     animation: rise 0.45s var(--ease) both;
   }
-  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(1) { animation-delay: 60ms; }
-  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(2) { animation-delay: 120ms; }
-  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(3) { animation-delay: 180ms; }
-  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(4) { animation-delay: 240ms; }
-  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]) > *:nth-child(n + 5) { animation-delay: 290ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]):not([data-reveal-skip]) > *:not(.pin-spacer):nth-child(1) { animation-delay: 60ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]):not([data-reveal-skip]) > *:not(.pin-spacer):nth-child(2) { animation-delay: 120ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]):not([data-reveal-skip]) > *:not(.pin-spacer):nth-child(3) { animation-delay: 180ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]):not([data-reveal-skip]) > *:not(.pin-spacer):nth-child(4) { animation-delay: 240ms; }
+  .reveal-armed main section[data-revealed]:not([data-revealed-on-load]):not([data-reveal-skip]) > *:not(.pin-spacer):nth-child(n + 5) { animation-delay: 290ms; }
 }
