@@ -64,6 +64,7 @@ export function TtwoGate() {
 
       <CinemaGate
         only="desktop"
+        framing="top"
         storageKey={KEY}
         shots={[
           { src: "/cinema/ttwo-desktop-1.mp4" },

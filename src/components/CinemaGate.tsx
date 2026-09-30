@@ -45,6 +45,7 @@ export function CinemaGate({
   enterLabel = "לכניסה",
   accent = "#7fd9ef",
   only,
+  framing = "center",
 }: {
   shots: Shot[];
   /** Per gate, so passing one does not silently open the other. */
@@ -72,6 +73,21 @@ export function CinemaGate({
    * about half a megabyte of a film that screen is never going to show.
    */
   only?: "mobile" | "desktop";
+  /**
+   * Which edge of the film to protect when the screen crops it.
+   *
+   * `object-fit: cover` fills the window and throws away what does not
+   * fit, taking it equally from both edges. On a window wider than the
+   * frame — any laptop against a 16:9 clip — equally means the top, and
+   * the top of these shots is where the faces are: the reel was opening
+   * on Lucia with the crown of her head cut off. "top" pins the frame to
+   * the top edge so the crop comes entirely off the bottom, which on
+   * this reel is wet asphalt under a gradient nobody reads through.
+   *
+   * The portrait cut needs nothing: a phone is narrower than the frame,
+   * so it crops the sides and the faces are never at risk.
+   */
+  framing?: "center" | "top";
 }) {
   const [phase, setPhase] = useState<Phase>("closed");
   const [shot, setShot] = useState(0);
@@ -393,7 +409,11 @@ export function CinemaGate({
           }}
           src={clip.src}
           className="gate-clip absolute inset-0 h-full w-full object-cover"
-          style={{ opacity: i <= shot ? 1 : 0, zIndex: i + 1 }}
+          style={{
+            opacity: i <= shot ? 1 : 0,
+            zIndex: i + 1,
+            objectPosition: framing === "top" ? "center top" : undefined,
+          }}
           playsInline
           preload={i === 0 && !only ? "auto" : "none"}
           onTimeUpdate={(event) => {
