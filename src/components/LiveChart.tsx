@@ -47,7 +47,12 @@ import { RANGES, type Candle, type RangeKey } from "@/lib/sources/prices";
 export type ChartLevel = {
   price: number;
   label: string;
-  kind: "pivot" | "stop" | "target";
+  /** "support" and "resistance" are prices the stock has actually reversed
+   *  at more than once, detected from the candles. They are drawn in the
+   *  interpretation colour rather than in green and red, because green and
+   *  red are reserved for price direction here and a level below the price
+   *  is not a good thing — it is a level below the price. */
+  kind: "pivot" | "stop" | "target" | "support" | "resistance";
 };
 
 export type ChartMarker = {
@@ -99,6 +104,8 @@ const LEVEL_COLOR: Record<ChartLevel["kind"], string> = {
   pivot: "#bdcadd",
   stop: "#f28b99",
   target: "#6bd5ac",
+  support: "#8a7df0",
+  resistance: "#8a7df0",
 };
 
 /** Handles both bar shapes: a daily bar is "YYYY-MM-DD", an intraday bar is

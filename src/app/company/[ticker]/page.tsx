@@ -15,6 +15,8 @@ import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
 import { VerdictPanel } from "@/components/VerdictPanel";
 import { IntelligencePanel } from "@/components/IntelligencePanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
+import { LevelsPanel } from "@/components/LevelsPanel";
+import { readLevels, readFlow } from "@/lib/metrics/levels";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
 import { ArticleCard } from "@/components/ArticleCard";
@@ -145,6 +147,26 @@ export default async function CompanyPage({
         kind: "target",
       });
     }
+  }
+
+  /**
+   * Prices the stock has actually reversed at, and what the volume was
+   * doing when it did. Drawn on the same chart and tabulated underneath,
+   * from one computation — the line and the row cannot disagree because
+   * there is only one of them.
+   *
+   * The nearest four go on the chart. All six go in the table: a chart
+   * with six horizontal lines across it stops being a chart.
+   */
+  const priceLevels = readLevels(history?.candles ?? []);
+  const flow = readFlow(history?.candles ?? []);
+
+  for (const level of priceLevels.slice(0, 4)) {
+    chartLevels.push({
+      price: level.price,
+      label: `${level.kind === "support" ? "תמיכה" : "התנגדות"} · ${level.touches} נגיעות`,
+      kind: level.kind,
+    });
   }
 
   const chartMarkers: ChartMarker[] =
@@ -644,6 +666,8 @@ export default async function CompanyPage({
           {chartReading && <ChartExplainer reading={chartReading} />}
         </Section>
       )}
+
+      <LevelsPanel levels={priceLevels} flow={flow} />
 
       {technical && (
         <Section eyebrow="ניתוח טכני">
