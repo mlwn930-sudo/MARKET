@@ -282,6 +282,44 @@ export function CinemaGate({
     return () => window.clearInterval(tick);
   }, [phase, shot, advance]);
 
+  /**
+   * The trim, landed on the frame it was written for.
+   *
+   * `timeupdate` fires about four times a second and the watchdog polls at
+   * the same rate, so a cut asked for at 2.30 was measured arriving
+   * anywhere between 2.34 and 2.69. A third of a second is nothing to a
+   * clock and everything to an edit: it is eight frames of precisely the
+   * footage a trim exists to hide, which on the phone's launch reel is the
+   * generator dissolving a cloud deck through a street of neon towers.
+   *
+   * So a trimmed shot — only a trimmed shot, only while it is the one on
+   * screen — gets a timer finer than a frame. 25ms against 41.7ms at 24fps
+   * puts the cut within a frame of where it was written.
+   *
+   * requestVideoFrameCallback would be the exact instrument here, and it
+   * was tried first. It only fires while frames are actually being
+   * presented, so it reports nothing in a hidden tab — which makes it a
+   * mechanism that cannot be checked in the place the checking happens.
+   * A timer is coarser and honest, and the difference between them is a
+   * single frame.
+   */
+  useEffect(() => {
+    if (phase !== "playing") return;
+    const stop = shotsRef.current[shot]?.until;
+    if (stop === undefined) return;
+
+    const tick = window.setInterval(() => {
+      const element = clips.current[shot];
+      if (!element) return;
+      if (element.currentTime >= stop) {
+        element.pause();
+        advance(shot);
+      }
+    }, 25);
+
+    return () => window.clearInterval(tick);
+  }, [phase, shot, advance]);
+
   useEffect(() => {
     document.body.style.overflow = phase === "open" ? "" : "hidden";
     return () => {
