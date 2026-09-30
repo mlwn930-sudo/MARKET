@@ -10,8 +10,8 @@ import { CinemaGate } from "./CinemaGate";
  * no business filling a desktop, and the reverse is worse — so each
  * screen gets the one shot for it, and only that one is downloaded.
  *
- * The phone cut runs four clips and the widescreen three, joined the same
- * way: the handover CinemaGate already does for the site entrance, where
+ * Four shots each now, joined the same way: the handover CinemaGate
+ * already does for the site entrance, where
  * the finished clip stays on screen paused on its last frame and the next
  * is raised over it — so the join is a cut rather than a gap.
  *
@@ -55,6 +55,7 @@ export function TtwoGate() {
           { src: "/cinema/ttwo-desktop-1.mp4" },
           { src: "/cinema/ttwo-desktop-2.mp4" },
           { src: "/cinema/ttwo-desktop-3.mp4" },
+          { src: "/cinema/ttwo-desktop-4.mp4" },
         ]}
         eyebrow={EYEBROW}
         title={TITLE}
