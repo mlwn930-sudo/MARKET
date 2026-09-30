@@ -26,6 +26,18 @@ const INDEX_PROXIES = [
   { symbol: "DIA", label: "Dow Jones", note: "DIA" },
 ];
 
+/**
+ * The companies the front page reads across.
+ *
+ * Eight was a screenful of megacap technology and not much else, which
+ * made the opening board look like a sector page wearing the site's name.
+ * Sixteen, spread across the sectors the universe actually covers, gives
+ * the board something to say: on a day when semis are red and energy is
+ * green, that is visible here rather than three pages in.
+ *
+ * Every symbol is in the research universe, so a tile always leads
+ * somewhere with fundamentals behind it.
+ */
 const WATCHLIST: { symbol: string; name: string }[] = [
   { symbol: "NVDA", name: "NVIDIA" },
   { symbol: "AAPL", name: "Apple" },
@@ -35,6 +47,14 @@ const WATCHLIST: { symbol: string; name: string }[] = [
   { symbol: "META", name: "Meta Platforms" },
   { symbol: "TSLA", name: "Tesla" },
   { symbol: "TTWO", name: "Take-Two" },
+  { symbol: "AVGO", name: "Broadcom" },
+  { symbol: "NFLX", name: "Netflix" },
+  { symbol: "LLY", name: "Eli Lilly" },
+  { symbol: "UNH", name: "UnitedHealth" },
+  { symbol: "JPM", name: "JPMorgan" },
+  { symbol: "XOM", name: "Exxon Mobil" },
+  { symbol: "COST", name: "Costco" },
+  { symbol: "CAT", name: "Caterpillar" },
 ];
 
 /** Server-rendered seed so the page opens on real prices rather than on
@@ -105,8 +125,11 @@ export default async function MarketPage() {
   const unique = [...new Map(articles.map((a) => [a.url, a])).values()].sort(
     (a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""),
   );
-  const priorityArticles = [...unique].sort((a,b)=>Number(b.analysis?.catalystKind === "catalyst")-Number(a.analysis?.catalystKind === "catalyst") || Number(b.analysis?.significance === "high")-Number(a.analysis?.significance === "high")).slice(0,3);
-  const topPicks = screen.results.slice(0, 3);
+  const priorityArticles = [...unique].sort((a,b)=>Number(b.analysis?.catalystKind === "catalyst")-Number(a.analysis?.catalystKind === "catalyst") || Number(b.analysis?.significance === "high")-Number(a.analysis?.significance === "high")).slice(0,6);
+  /* Six rather than three. The screener ranks the whole universe and the
+     front page was showing the podium; the rest of the shortlist is the
+     part worth arguing with. */
+  const topPicks = screen.results.slice(0, 6);
 
   /* The hand-kept table, read across companies. Four is the ceiling rather
      than the target — the table is short on purpose, and a page that
