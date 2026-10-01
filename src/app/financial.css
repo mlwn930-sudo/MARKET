@@ -206,3 +206,10 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .reader-limits{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
 .reader-limits strong{display:block;font-size:16px;margin-bottom:8px}
 .reader-limits p{font-size:14px;line-height:1.75;color:var(--color-text-secondary)}
+
+/* Page links under the screener register. Links rather than buttons, so a
+   reader can send someone page four. */
+.screen-pages{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;justify-content:center}
+.screen-pages a{min-width:38px;min-height:38px;display:grid;place-items:center;border:1px solid var(--color-border-default);border-radius:6px;font-size:13px;color:var(--color-text-secondary)}
+.screen-pages a:hover{border-color:var(--color-brand);color:var(--color-text-primary)}
+.screen-pages a[aria-current]{background:var(--color-brand);border-color:var(--color-brand);color:#fff;font-weight:600}

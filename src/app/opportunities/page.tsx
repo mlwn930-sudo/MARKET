@@ -91,7 +91,26 @@ function profile(result: ScreenResult) {
   }).filter((axis) => axis.total > 0);
 }
 
-export default async function OpportunitiesPage() {
+/**
+ * How many companies a page of the register carries.
+ *
+ * The whole universe used to render at once. At 47 companies that was a
+ * long page; at 123 it was 2.2MB of HTML and thirteen thousand elements,
+ * because every row carries its full criteria breakdown whether or not it
+ * is open. Measured, not estimated — and it got that way when the universe
+ * widened, which is the kind of cost that arrives quietly.
+ *
+ * Nothing is hidden by this. The ranking is over all of them, the counts
+ * above are over all of them, and every company is one link away.
+ */
+const PER_PAGE = 25;
+
+export default async function OpportunitiesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const page = Math.max(1, Number((await searchParams).page) || 1);
   const { builtAt, results } = await runScreen().catch(() => ({
     builtAt: "",
     results: [] as ScreenResult[],
@@ -128,6 +147,11 @@ export default async function OpportunitiesPage() {
     (r) => r.evaluatedCount > 0 && r.score >= r.evaluatedCount * 0.7,
   ).length;
   const median = results[Math.floor(results.length / 2)]?.score ?? 0;
+
+  const pages = Math.max(1, Math.ceil(results.length / PER_PAGE));
+  const current = Math.min(page, pages);
+  const shown = results.slice((current - 1) * PER_PAGE, current * PER_PAGE);
+  const firstRank = (current - 1) * PER_PAGE + 1;
 
   return (
     <Page tint="#2855f5">
@@ -174,14 +198,18 @@ export default async function OpportunitiesPage() {
         )}
       </p>
 
-      <Section eyebrow="הפרופילים" title="כל החברות ביקום ההשוואה">
-        {/* One surface, forty-eight rows, hairlines between them — not
-            forty-eight floating panels. A card per company made the list
-            read as a shelf of products; a divided list reads as a register,
-            which is what it is, and it lets the four profile meters line up
-            into columns the eye can run down. */}
+      <Section
+        eyebrow="הפרופילים"
+        title="כל החברות ביקום ההשוואה"
+        description={`מדורגות לפי ציון. מוצגות ${firstRank}–${firstRank + shown.length - 1} מתוך ${results.length}.`}
+      >
+        {/* One surface, a page of rows, hairlines between them — not a
+            panel per company. A card each made the list read as a shelf of
+            products; a divided list reads as a register, which is what it
+            is, and it lets the four profile meters line up into columns
+            the eye can run down. */}
         <div className="surface divide-y divide-line overflow-hidden">
-          {results.map((result) => {
+          {shown.map((result) => {
             const axes = profile(result);
             const identity = identityFor(result.company.ticker);
             const failed = result.criteria.filter((c) => c.status === "fail");
@@ -325,6 +353,23 @@ export default async function OpportunitiesPage() {
             );
           })}
         </div>
+
+        {pages > 1 && (
+          /* Plain links, not a control. The register is server-rendered and
+             a reader who wants page four should be able to link someone to
+             page four. */
+          <nav className="screen-pages" aria-label="עמודי הרשימה">
+            {Array.from({ length: pages }, (_, index) => index + 1).map((number) => (
+              <a
+                key={number}
+                href={number === 1 ? "/opportunities" : `/opportunities?page=${number}`}
+                aria-current={number === current ? "page" : undefined}
+              >
+                {number}
+              </a>
+            ))}
+          </nav>
+        )}
       </Section>
 
       {/* ---- The glossary ----
