@@ -138,3 +138,21 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
   .levels-head span:nth-child(4),.levels-head span:nth-child(5){display:none}
 }
 @media(max-width:560px){.flow-grid{grid-template-columns:1fr}}
+
+/* ── Pre-market and after-hours ────────────────────────────────────────
+   One row of cells under the quote. They sit above the chart rather than
+   beside it because the thing they qualify is the price, and a reader
+   checking a stock before the bell is checking exactly this. */
+.extended-hours{display:flex;flex-wrap:wrap;align-items:stretch;gap:1px;background:var(--color-border-default);border:1px solid var(--color-border-default);margin-top:12px}
+.extended-cell{flex:1 1 220px;background:var(--color-surface-plain);padding:14px 16px;display:grid;gap:5px;align-content:start}
+.extended-label{font:11px var(--font-mono),ui-monospace,monospace;letter-spacing:.1em;color:var(--color-text-muted);display:flex;align-items:center;gap:7px}
+/* The dot marks the session that is actually running. Out of hours both
+   cells are history, and nothing should claim to be live. */
+.extended-label i{width:6px;height:6px;border-radius:50%;background:var(--color-positive);box-shadow:0 0 0 3px rgba(18,166,106,.22)}
+.extended-cell[data-live] .extended-label{color:var(--color-text-primary)}
+.extended-cell>strong{font-size:23px;font-weight:600;line-height:1}
+.extended-cell>span{font-size:14px;font-weight:500}
+.extended-cell>span small{font-size:12px;opacity:.72}
+.extended-note{font-size:11px;line-height:1.55;color:var(--color-text-muted)}
+.extended-phase{display:flex;align-items:center;padding:14px 16px;background:var(--color-surface-secondary);font-size:11px;letter-spacing:.06em;color:var(--color-text-muted);white-space:nowrap}
+@media(max-width:600px){.extended-cell{flex:1 1 100%}.extended-phase{flex:1 1 100%;justify-content:center}}

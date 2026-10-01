@@ -16,7 +16,9 @@ import { VerdictPanel } from "@/components/VerdictPanel";
 import { IntelligencePanel } from "@/components/IntelligencePanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { LevelsPanel } from "@/components/LevelsPanel";
+import { ExtendedHoursStrip } from "@/components/ExtendedHoursStrip";
 import { readLevels, readFlow } from "@/lib/metrics/levels";
+import { getExtendedHours } from "@/lib/sources/extended-hours";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
 import { ArticleCard } from "@/components/ArticleCard";
@@ -96,18 +98,27 @@ export default async function CompanyPage({
   // Filings and metrics come from the hourly cache; the quote is fetched
   // fresh, because a price cached for an hour is a wrong price. Each of the
   // rest can fail without taking the page down.
-  const [analysis, intelligence, quote, history, technical, sector, articles] =
-    await Promise.all([
-      getCompanyAnalysis(ticker),
-      // The full agent pipeline, cached as its finished report. See
-      // lib/agents/index.ts for why not every agent runs on every request.
-      getCompanyIntelligence(ticker),
-      getQuote(ticker).catch(() => null),
-      getPriceHistory(ticker).catch(() => null),
-      getTechnicalRead(ticker).catch(() => null),
-      getSectorContext(ticker),
-      getArticlesForTicker(ticker, 6),
-    ]);
+  const [
+    analysis,
+    intelligence,
+    quote,
+    history,
+    technical,
+    sector,
+    articles,
+    extended,
+  ] = await Promise.all([
+    getCompanyAnalysis(ticker),
+    // The full agent pipeline, cached as its finished report. See
+    // lib/agents/index.ts for why not every agent runs on every request.
+    getCompanyIntelligence(ticker),
+    getQuote(ticker).catch(() => null),
+    getPriceHistory(ticker).catch(() => null),
+    getTechnicalRead(ticker).catch(() => null),
+    getSectorContext(ticker),
+    getArticlesForTicker(ticker, 6),
+    getExtendedHours(ticker).catch(() => null),
+  ]);
 
   if (!analysis) notFound();
 
@@ -643,6 +654,23 @@ export default async function CompanyPage({
       )}
 
       {/* ---- Price ---- */}
+      {/* The session strip is its own section rather than part of the chart
+          block. It was inside it first, which tied "what did this do before
+          the bell" to whether a year of daily candles happened to load —
+          two different fetches from two different endpoints, and the one
+          that fails more often was gating the one that matters most at
+          seven in the morning. */}
+      {extended && (
+        <Section
+          id="company-session"
+          eyebrow="מחוץ לשעות המסחר"
+          title="לפני הפתיחה ואחרי הסגירה"
+          className="max-lg:order-first"
+        >
+          <ExtendedHoursStrip data={extended} />
+        </Section>
+      )}
+
       {history && (
         <Section
           id="company-price"
