@@ -168,11 +168,25 @@ export function geminiBudget(): { minute: number; day: number } {
 
 export type Turn = { role: "user" | "model"; text: string };
 
+/**
+ * An image for the model to look at.
+ *
+ * Base64 without the data-URL prefix, which is what the API wants and not
+ * what a browser's FileReader hands you — the caller strips it.
+ */
+export type Attachment = { mimeType: string; data: string };
+
 export type GenerateOptions = {
   system: string;
   /** A single prompt, or a conversation. */
   prompt?: string;
   turns?: Turn[];
+  /**
+   * Images to read alongside the prompt. Only meaningful with `prompt`: a
+   * conversation that needs one would put it on a turn, which nothing in
+   * this project does yet and so is not supported.
+   */
+  images?: Attachment[];
   /** Forces a JSON object back. Set for you by generateJson. */
   json?: boolean;
   temperature?: number;
@@ -181,12 +195,22 @@ export type GenerateOptions = {
 };
 
 function bodyFor(options: GenerateOptions) {
+  /* The image goes before the text. The order is not cosmetic: the model
+     reads the prompt as an instruction about something it has already been
+     shown, which is what reading a chart is. */
+  const promptParts = [
+    ...(options.images ?? []).map((image) => ({
+      inline_data: { mime_type: image.mimeType, data: image.data },
+    })),
+    { text: options.prompt ?? "" },
+  ];
+
   const contents = options.turns
     ? options.turns.map((turn) => ({
         role: turn.role,
         parts: [{ text: turn.text }],
       }))
-    : [{ role: "user", parts: [{ text: options.prompt ?? "" }] }];
+    : [{ role: "user", parts: promptParts }];
 
   return {
     systemInstruction: { parts: [{ text: options.system }] },
