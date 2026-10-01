@@ -1,6 +1,6 @@
 "use client";
+import { CompanyMark as Mark } from "@/components/CompanyMark";
 import Link from "next/link";
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useLiveTicks, type LiveQuote } from "@/lib/use-live-ticks";
 import type { IndexCard, RowSeed } from "@/components/MarketDeck";
@@ -10,9 +10,10 @@ import { COMMAND_EVENT } from "@/components/CommandCenter";
 import type { EnrichedArticle } from "@/lib/news-shape";
 import type { ScreenResult } from "@/lib/screener";
 import { fmtPercent } from "@/lib/format";
-const logos = new Set(["MSFT","NVDA","AAPL","AMZN","GOOGL","META","TSLA","AVGO"]);
+/** Re-exported so the homepage keeps one import. The mark itself now
+ *  lives in src/components/CompanyMark.tsx and is used site-wide. */
 export function CompanyMark({symbol}:{symbol:string}) {
-  return <span className="company-mark">{logos.has(symbol) ? <Image src={`/companies/${symbol}.svg`} alt="" width={25} height={25}/> : <span>{symbol.slice(0,2)}</span>}</span>;
+  return <Mark ticker={symbol} size="md"/>;
 }
 export function MarketNow({indices,rows,initial,detail,articles,picks}:{indices:IndexCard[];rows:RowSeed[];initial:Record<string,LiveQuote>;detail:string|null;articles:EnrichedArticle[];picks:ScreenResult[]}) {
   const symbols=useMemo(()=>[...indices.map(x=>x.symbol),...rows.map(x=>x.symbol)],[indices,rows]);

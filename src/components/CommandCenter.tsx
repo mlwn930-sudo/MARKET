@@ -1,5 +1,6 @@
 "use client";
 
+import { CompanyMark } from "@/components/CompanyMark";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { UNIVERSE, SECTOR_LABELS, type SectorKey } from "@/lib/universe";
@@ -412,22 +413,32 @@ export function CommandCenter() {
                       selected ? "bg-hover" : ""
                     }`}
                   >
-                    <svg
-                      width="13"
-                      height="13"
-                      viewBox="0 0 16 16"
-                      aria-hidden="true"
-                      className={`shrink-0 ${selected ? "text-accent" : "text-ink-ghost"}`}
-                    >
-                      <path
-                        d={GROUP_ICON[item.group]}
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                    {item.group === "חברות" || item.group === "תל אביב" ? (
+                      /* The company's own mark. Search is where a reader
+                         first meets a company, and it was the one surface
+                         carrying no identity at all. */
+                      <CompanyMark
+                        ticker={item.group === "חברות" ? item.label : item.id.replace(/^t-/, "")}
+                        size="sm"
                       />
-                    </svg>
+                    ) : (
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 16 16"
+                        aria-hidden="true"
+                        className={`shrink-0 ${selected ? "text-accent" : "text-ink-ghost"}`}
+                      >
+                        <path
+                          d={GROUP_ICON[item.group]}
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    )}
 
                     <span
                       className={`shrink-0 text-[13px] ${

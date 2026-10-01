@@ -11,7 +11,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
 import { MobileTabs } from "@/components/MobileTabs";
-import { EntranceGate } from "@/components/EntranceGate";
+import { WelcomeGate } from "@/components/welcome/WelcomeGate";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 /**
@@ -69,7 +69,7 @@ export default function RootLayout({
         {/* The door, in front of everything. It removes itself for anyone
             who has already come through this session, and for anyone who
             asked not to be moved. */}
-        <EntranceGate />
+        <WelcomeGate />
 
         <a href="#main-content" className="skip-link">דלג לתוכן</a>
         {/* One fixed layer behind everything. It reads --tint, which each
