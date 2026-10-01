@@ -87,15 +87,19 @@ async function indexCards(): Promise<IndexCard[]> {
   );
 }
 
-/** Thirty sessions behind each row. Enough to show the shape of a move
- *  without the line becoming a second chart. */
+/** Six months behind each row. Thirty sessions was the shape of a month,
+ *  which on a board meant every line looked like noise and none of them
+ *  looked like a trend — the complaint that these charts "only go back a
+ *  month or two" was about exactly this. 120 sessions still fits the same
+ *  22 pixels and costs nothing extra: the fetch already returns years, and
+ *  this was throwing them away. */
 async function watchRows(): Promise<RowSeed[]> {
   return Promise.all(
     WATCHLIST.map(async (entry) => {
       const history = await getPriceHistory(entry.symbol).catch(() => null);
       return {
         ...entry,
-        trail: (history?.candles ?? []).slice(-30).map((c) => c.close),
+        trail: (history?.candles ?? []).slice(-120).map((c) => c.close),
       };
     }),
   );
