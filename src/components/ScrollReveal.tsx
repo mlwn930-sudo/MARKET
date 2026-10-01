@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 /**
@@ -26,6 +27,14 @@ import { useEffect } from "react";
  *
  * And it does not animate what is already on screen. A page that fades
  * itself in after it has painted reads as a page that loaded twice.
+ *
+ * It also cleans up after itself on every navigation, which is not
+ * housekeeping — it is correctness. These marks are attributes on elements
+ * React owns, and React compares the DOM it is given against what it just
+ * rendered. On a client-side navigation it reuses the nodes from the page
+ * before, finds a data-revealed it never produced, and reports a hydration
+ * mismatch it will not repair. Clearing the marks before re-arming means
+ * React is always handed the markup it expects.
  */
 
 /** Anything pinned, or inside something pinned. A transform on an ancestor
@@ -34,12 +43,23 @@ import { useEffect } from "react";
  *  it. */
 const SKIP = ".story-track, .gta-cover, .take-two-story, [data-no-reveal]";
 
+const MARKS = ["revealed", "revealedOnLoad", "revealSkip"] as const;
+
 export function ScrollReveal() {
+  const pathname = usePathname();
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const root = document.documentElement;
     root.classList.add("reveal-armed");
+
+    /* Whatever the previous page left behind. Also the reason this effect
+       re-runs per route: a soft navigation swaps the sections without
+       remounting this, so without it the new page is never armed at all. */
+    for (const element of document.querySelectorAll<HTMLElement>("main section")) {
+      for (const mark of MARKS) delete element.dataset[mark];
+    }
 
     const known = new WeakSet<Element>();
     const observer = new IntersectionObserver(
@@ -113,8 +133,11 @@ export function ScrollReveal() {
       mutations.disconnect();
       observer.disconnect();
       root.classList.remove("reveal-armed");
+      for (const element of document.querySelectorAll<HTMLElement>("main section")) {
+        for (const mark of MARKS) delete element.dataset[mark];
+      }
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
