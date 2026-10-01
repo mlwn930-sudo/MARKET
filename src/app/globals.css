@@ -77,6 +77,10 @@
   --color-down-mark: var(--color-negative);
   --color-up-dim: rgba(18, 166, 106, 0.1);
   --color-down-dim: rgba(228, 87, 93, 0.1);
+  /* Stronger than the dim fill, because this one is on screen for under a
+     second and has to be caught out of the corner of an eye. */
+  --color-up-flash: rgba(18, 166, 106, 0.2);
+  --color-down-flash: rgba(228, 87, 93, 0.2);
 
   /* --- Accent ---------------------------------------------------------
      One brand colour for the whole system. It carries the wordmark,
@@ -411,23 +415,51 @@ h4 {
   letter-spacing: -0.028em;
 }
 
-/* A figure that changed. The tint fades rather than the value jumping,
-   so a fast tape stays readable. */
+/* A figure that changed.
+
+   The tint fades rather than the value jumping, so a fast tape stays
+   readable — a price that moves four times a minute cannot announce each
+   one with something that has to be waited out.
+
+   It used to tint only the glyphs, which on a board of a dozen prices is
+   almost invisible: the eye catches a block of colour appearing, not a
+   four-character string changing hue. So the flash is a highlight behind
+   the number as well, the way a trading screen does it.
+
+   The pill is drawn with a background plus a box-shadow spread rather
+   than padding, because padding on a figure that flashes would reflow the
+   row every time the price moved. box-shadow is painted, not laid out.
+
+   The digit itself stays crisp. The rule on this site is that light never
+   comes from a number, and a highlight behind one is not the same thing
+   as a glow on one — the first is a marker, the second is a blur. */
 @keyframes settle-up {
   from {
     color: var(--color-up);
+    background-color: var(--color-up-flash);
+    box-shadow: 0 0 0 4px var(--color-up-flash);
   }
   to {
     color: inherit;
+    background-color: transparent;
+    box-shadow: 0 0 0 4px transparent;
   }
 }
 @keyframes settle-down {
   from {
     color: var(--color-down);
+    background-color: var(--color-down-flash);
+    box-shadow: 0 0 0 4px var(--color-down-flash);
   }
   to {
     color: inherit;
+    background-color: transparent;
+    box-shadow: 0 0 0 4px transparent;
   }
+}
+.settle-up,
+.settle-down {
+  border-radius: 3px;
 }
 .settle-up {
   animation: settle-up 0.9s ease-out;

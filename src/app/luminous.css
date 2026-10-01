@@ -552,6 +552,11 @@ body:not(:has(.gta-cover)) {
   --color-down-mark: #E4575D;
   --color-up-dim: rgba(47, 212, 143, 0.12);
   --color-down-dim: rgba(255, 112, 120, 0.12);
+  /* The flash carries further on this ground than it does on paper, so it
+     is pitched a little higher — a tint that reads at 20% on white is
+     nearly nothing against #060B15. */
+  --color-up-flash: rgba(47, 212, 143, 0.28);
+  --color-down-flash: rgba(255, 112, 120, 0.28);
 
   /* The brand blue is 3.2:1 here, which is enough for a border and not
      enough for a word. The accent a reader reads is the lighter tint;
