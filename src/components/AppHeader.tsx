@@ -48,6 +48,7 @@ const SECONDARY: { href: string; label: string; group: string }[] = [
   { href: "/portfolio", label: "בניית תיק", group: "act" },
   { href: "/chat", label: "שיחה", group: "act" },
   { href: "/learn", label: "מילון", group: "act" },
+  { href: "/sources", label: "מקורות", group: "act" },
 ];
 
 const GROUP_LABEL: Record<string, string> = {

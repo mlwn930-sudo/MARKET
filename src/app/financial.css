@@ -29,7 +29,7 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 @media(max-width:1100px){.studio-nav{gap:16px;padding-inline:24px;}.primary-destinations{gap:16px;}.primary-destinations a{font-size:14px;}.nav-utilities span{display:none;}.financial-subnav{padding-inline:24px;}}
 @media(max-width:800px){.studio-nav{height:auto;min-height:102px;display:grid;grid-template-columns:1fr auto;padding:10px 20px 0;row-gap:5px;}.primary-destinations{grid-row:2;grid-column:1/-1;overflow:auto;gap:24px;margin:0;scrollbar-width:none;}.nav-utilities{grid-row:1;grid-column:2;}.primary-destinations a,.primary-destinations a:not(.gta-destination){display:flex;font-size:14px;min-height:43px;}.financial-subnav{display:none;}.market-logo-mark{display:inline-flex;}.market-logo-name{font-size:21px;}.studio-mobile-tabs a{min-height:50px;}.chapter-nav{top:103px;}.studio-nav .market-logo-sub{display:none;}}
 @media(prefers-reduced-motion:reduce){.route-surface:not([data-route^="/launch/"])>main>.product-heading{animation:none;}}
-.market-opening{display:flex;justify-content:space-between;align-items:center;padding:27px 0 24px;gap:25px}.market-opening h1{font-size:clamp(28px,3.1vw,44px);font-weight:600;letter-spacing:-1.3px;line-height:1.2;margin-top:8px}.market-opening h1 em{font-style:normal;color:#2855F5}.market-status{max-width:290px;font-size:12px;color:#667085}.market-status>span{color:#0F8756;font-weight:600}.market-status p{margin-top:5px}.index-rail{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #DDE4EF;background:white}.index-tile{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:16px 22px;border-inline-end:1px solid #DDE4EF;position:relative}.index-tile:last-child{border:0}.index-title{font-size:14px;font-weight:600}.index-title small{display:block;color:#667085;font-size:10px;letter-spacing:.5px;margin-top:3px}.index-tile>strong{font-size:20px;align-self:center}.index-tile>span:nth-child(3){font-size:13px}.index-spark{height:23px;width:90px;justify-self:end}.market-workspace{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;margin-top:24px}.compact-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}.compact-heading h2{font-size:27px;line-height:1.25;letter-spacing:-.5px;font-weight:600;margin-top:5px}.compact-heading>a{color:#2855F5;font-size:13px;white-space:nowrap}.market-filters{display:flex;gap:5px;align-items:center;margin:15px 0}.market-filters button{font-size:13px;padding:6px 15px;border:1px solid #DDE4EF;border-radius:3px;cursor:pointer}.market-filters button[aria-pressed=true]{background:#2855F5;color:#fff;border-color:#2855F5}.market-filters>span{font-size:11px;color:#667085;margin-inline-start:auto}.company-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.company-tile{display:grid;grid-template-columns:35px 1fr auto;gap:9px;align-items:center;background:white;border:1px solid #DDE4EF;padding:13px 12px;transition:transform .2s,border-color .2s;min-width:0}.company-tile:hover{transform:translateY(-3px);border-color:#2855F5}.company-mark{width:34px;height:34px;display:grid;place-items:center;background:#EEF3FA;border-radius:50%;font:600 12px monospace}.company-name{min-width:0}.company-name strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.company-name small{font:10px monospace;color:#667085}.company-price{text-align:left;white-space:nowrap}.company-price strong{font-size:13px;display:block}.company-price small{display:block;font-size:11px;margin-top:3px}.company-spark{grid-column:2/-1;width:100%;height:22px}.data-caption{font-size:11px;color:#667085;line-height:1.6;margin-top:13px}.data-empty{padding:22px;color:#667085}.market-workspace .signal-canvas{padding:19px 22px;height:100%;border-radius:0}.market-workspace .signal-chart{max-height:150px}.market-workspace .signal-link{display:none}.market-workspace .signal-quote{margin-top:16px}.market-workspace .signal-empty{min-height:130px}.sector-ribbon{display:flex;align-items:center;gap:24px;padding:19px 0;margin:0 0 32px;border-bottom:1px solid #DDE4EF;overflow:auto;white-space:nowrap;scrollbar-width:thin}.sector-ribbon>span{font-size:12px;color:#667085}.sector-ribbon a{font-size:14px;color:#2855F5}.context-journey{padding:30px 0 35px;border-top:2px solid #2855F5}.story-select{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}.story-select button{text-align:right;border-top:2px solid #DDE4EF;padding:12px 14px;background:#EEF3FA;cursor:pointer}.story-select button[aria-pressed=true]{border-color:#2855F5;background:#EDF2FE}.story-select small{font:10px monospace;color:#667085;display:block;margin-bottom:7px}.story-select span{font-size:14px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.context-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:55px;align-items:start}.evidence-space{position:sticky;top:130px;perspective:1200px;padding:8px}.evidence-sheet{background:#2855F5;color:#fff;padding:28px 30px;box-shadow:9px 9px 0 #D6E0F8;transform-style:preserve-3d}.evidence-top{display:flex;justify-content:space-between;direction:ltr;font:10px monospace;letter-spacing:1px;border-bottom:1px solid #ffffff40;padding-bottom:15px}.source-label{font-size:12px;color:#b8ddff;margin-top:25px}.evidence-sheet h3{font-size:clamp(22px,2.1vw,30px);line-height:1.45;margin:10px 0 20px;font-weight:500}.source-meta{display:flex;gap:20px;font-size:11px;color:#c5deff}.evidence-sheet>a{display:inline-block;margin-top:18px;font-size:13px;border-bottom:1px solid #90c0ff}.context-progress{height:2px;background:#83e3e4;margin-top:24px;transform:scaleX(0);transform-origin:right}.evidence-stages{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.evidence-stages a{font-size:11px;color:#c5deff;display:grid;gap:7px}.evidence-stages b{font:18px monospace}.evidence-stages a[aria-current]{color:#fff}.evidence-sheet .data-caption{color:#c5deff}.context-step{display:flex;gap:24px;padding:26px 0;border-top:1px solid #C9D4E5;scroll-margin-top:140px}.context-step:first-child{border-top:0}.step-number{font:30px monospace;color:#0081A1}.context-step h3{font-size:23px;font-weight:600;margin-bottom:10px}.context-step p{font-size:16px;line-height:1.9;color:#344054}.context-step small{display:block;font-size:11px;color:#667085;margin-top:12px}.context-actions{display:flex;gap:15px;flex-wrap:wrap;margin-top:15px;color:#2855F5;font-size:13px}.research-now{border-top:1px solid #C9D4E5;padding:34px 0}.research-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.research-picks,.macro-pocket{background:#fff;border:1px solid #DDE4EF;padding:24px}.research-grid h3{font-size:22px;font-weight:600}.research-grid p{font-size:13px;color:#667085;margin:8px 0 18px}.research-pick{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-top:1px solid #E7EDF6}.research-pick strong{font-size:16px}.research-pick small{display:block;font-size:11px;color:#667085;margin-top:4px}.score-ring{font:22px monospace;color:#2855F5}.score-ring small{display:inline;font-size:12px}.research-next,.macro-pocket>a{display:inline-block;margin-top:18px;color:#2855F5;font-size:13px}.macro-pocket>section{border:0!important;padding:0!important;background:none!important}.monitor-now{padding:30px 0;border-top:1px solid #DDE4EF}.home-next-worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;border-top:1px solid #DDE4EF;padding:28px 0}.home-next-worlds a{display:grid;gap:12px}.home-next-worlds span{font-size:11px;color:#0081A1}.home-next-worlds strong{font-size:21px;font-weight:500}.home-next-worlds small{font-size:12px;color:#2855F5}#session-chart{scroll-margin-top:130px}.context-empty{padding:35px;background:#EDF2FE}
+.market-opening{display:flex;justify-content:space-between;align-items:center;padding:27px 0 24px;gap:25px}.market-opening h1{font-size:clamp(28px,3.1vw,44px);font-weight:600;letter-spacing:-1.3px;line-height:1.2;margin-top:8px}.market-opening h1 em{font-style:normal;color:#2855F5}.market-status{max-width:290px;font-size:12px;color:#667085}.market-status>span{color:#0F8756;font-weight:600}.market-status p{margin-top:5px}.index-rail{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #DDE4EF;background:white}.index-tile{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:16px 22px;border-inline-end:1px solid #DDE4EF;position:relative}.index-tile:last-child{border:0}.index-title{font-size:14px;font-weight:600}.index-title small{display:block;color:#667085;font-size:10px;letter-spacing:.5px;margin-top:3px}.index-tile>strong{font-size:20px;align-self:center}.index-tile>span:nth-child(3){font-size:13px}.index-spark{height:23px;width:90px;justify-self:end}.market-workspace{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;margin-top:24px}.compact-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}.compact-heading h2{font-size:27px;line-height:1.25;letter-spacing:-.5px;font-weight:600;margin-top:5px}.compact-heading>a{color:#2855F5;font-size:13px;white-space:nowrap}.market-filters{display:flex;gap:5px;align-items:center;margin:15px 0}.market-filters button{font-size:13px;padding:6px 15px;border:1px solid #DDE4EF;border-radius:3px;cursor:pointer}.market-filters button[aria-pressed=true]{background:#2855F5;color:#fff;border-color:#2855F5}.market-filters>span{font-size:11px;color:#667085;margin-inline-start:auto}.company-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.company-tile{display:grid;grid-template-columns:35px 1fr auto;gap:9px;align-items:center;background:white;border:1px solid #DDE4EF;padding:13px 12px;transition:transform .2s,border-color .2s;min-width:0}.company-tile:hover{transform:translateY(-3px);border-color:#2855F5}.company-mark{display:grid;place-items:center;border-radius:50%;font:600 12px var(--font-mono),ui-monospace,monospace;letter-spacing:.02em;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}.company-mark--sm{font-size:10px}.company-mark--lg{font-size:18px;letter-spacing:.04em}.company-name{min-width:0}.company-name strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.company-name small{font:10px monospace;color:#667085}.company-price{text-align:left;white-space:nowrap}.company-price strong{font-size:13px;display:block}.company-price small{display:block;font-size:11px;margin-top:3px}.company-spark{grid-column:2/-1;width:100%;height:22px}.data-caption{font-size:11px;color:#667085;line-height:1.6;margin-top:13px}.data-empty{padding:22px;color:#667085}.market-workspace .signal-canvas{padding:19px 22px;height:100%;border-radius:0}.market-workspace .signal-chart{max-height:150px}.market-workspace .signal-link{display:none}.market-workspace .signal-quote{margin-top:16px}.market-workspace .signal-empty{min-height:130px}.sector-ribbon{display:flex;align-items:center;gap:24px;padding:19px 0;margin:0 0 32px;border-bottom:1px solid #DDE4EF;overflow:auto;white-space:nowrap;scrollbar-width:thin}.sector-ribbon>span{font-size:12px;color:#667085}.sector-ribbon a{font-size:14px;color:#2855F5}.context-journey{padding:30px 0 35px;border-top:2px solid #2855F5}.story-select{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}.story-select button{text-align:right;border-top:2px solid #DDE4EF;padding:12px 14px;background:#EEF3FA;cursor:pointer}.story-select button[aria-pressed=true]{border-color:#2855F5;background:#EDF2FE}.story-select small{font:10px monospace;color:#667085;display:block;margin-bottom:7px}.story-select span{font-size:14px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.context-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:55px;align-items:start}.evidence-space{position:sticky;top:130px;perspective:1200px;padding:8px}.evidence-sheet{background:#2855F5;color:#fff;padding:28px 30px;box-shadow:9px 9px 0 #D6E0F8;transform-style:preserve-3d}.evidence-top{display:flex;justify-content:space-between;direction:ltr;font:10px monospace;letter-spacing:1px;border-bottom:1px solid #ffffff40;padding-bottom:15px}.source-label{font-size:12px;color:#b8ddff;margin-top:25px}.evidence-sheet h3{font-size:clamp(22px,2.1vw,30px);line-height:1.45;margin:10px 0 20px;font-weight:500}.source-meta{display:flex;gap:20px;font-size:11px;color:#c5deff}.evidence-sheet>a{display:inline-block;margin-top:18px;font-size:13px;border-bottom:1px solid #90c0ff}.context-progress{height:2px;background:#83e3e4;margin-top:24px;transform:scaleX(0);transform-origin:right}.evidence-stages{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.evidence-stages a{font-size:11px;color:#c5deff;display:grid;gap:7px}.evidence-stages b{font:18px monospace}.evidence-stages a[aria-current]{color:#fff}.evidence-sheet .data-caption{color:#c5deff}.context-step{display:flex;gap:24px;padding:26px 0;border-top:1px solid #C9D4E5;scroll-margin-top:140px}.context-step:first-child{border-top:0}.step-number{font:30px monospace;color:#0081A1}.context-step h3{font-size:23px;font-weight:600;margin-bottom:10px}.context-step p{font-size:16px;line-height:1.9;color:#344054}.context-step small{display:block;font-size:11px;color:#667085;margin-top:12px}.context-actions{display:flex;gap:15px;flex-wrap:wrap;margin-top:15px;color:#2855F5;font-size:13px}.research-now{border-top:1px solid #C9D4E5;padding:34px 0}.research-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.research-picks,.macro-pocket{background:#fff;border:1px solid #DDE4EF;padding:24px}.research-grid h3{font-size:22px;font-weight:600}.research-grid p{font-size:13px;color:#667085;margin:8px 0 18px}.research-pick{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-top:1px solid #E7EDF6}.research-pick strong{font-size:16px}.research-pick small{display:block;font-size:11px;color:#667085;margin-top:4px}.score-ring{font:22px monospace;color:#2855F5}.score-ring small{display:inline;font-size:12px}.research-next,.macro-pocket>a{display:inline-block;margin-top:18px;color:#2855F5;font-size:13px}.macro-pocket>section{border:0!important;padding:0!important;background:none!important}.monitor-now{padding:30px 0;border-top:1px solid #DDE4EF}.home-next-worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;border-top:1px solid #DDE4EF;padding:28px 0}.home-next-worlds a{display:grid;gap:12px}.home-next-worlds span{font-size:11px;color:#0081A1}.home-next-worlds strong{font-size:21px;font-weight:500}.home-next-worlds small{font-size:12px;color:#2855F5}#session-chart{scroll-margin-top:130px}.context-empty{padding:35px;background:#EDF2FE}
 @media(max-width:1100px){.company-grid{grid-template-columns:1fr}.company-tile{grid-template-columns:35px 1fr 65px auto;padding:9px 12px}.company-spark{grid-column:3;grid-row:1;height:25px}.company-price{grid-column:4;grid-row:1}.market-workspace{grid-template-columns:1.1fr 1fr}.context-grid{gap:30px}.index-tile{padding:14px}.index-tile>strong{font-size:17px}.sector-ribbon{gap:20px}}
 @media(max-width:800px){.market-opening{display:block;padding:22px 0 18px}.market-opening h1{font-size:30px;letter-spacing:-.7px}.market-opening .micro-label{font-size:9px}.market-status{max-width:none;display:flex;gap:10px;margin-top:10px;font-size:10px}.market-status p{margin:0}.index-rail{grid-template-columns:1fr 1fr}.index-tile{padding:12px;gap:6px}.index-tile:nth-child(2){border-inline-end:0}.index-tile:nth-child(-n+2){border-bottom:1px solid #DDE4EF}.index-title{font-size:12px}.index-title small{font-size:9px}.index-tile>strong{font-size:16px}.index-spark{height:17px;width:60px}.market-workspace{grid-template-columns:1fr;gap:18px;margin-top:22px}.compact-heading h2{font-size:24px}.compact-heading>a{font-size:11px}.compact-heading{gap:12px;margin-bottom:12px}.company-grid{gap:6px}.company-tile{grid-template-columns:32px 1fr 60px auto;padding:9px 11px}.company-mark{width:30px;height:30px}.company-spark{width:55px;height:22px}.company-name strong{font-size:13px}.company-name small{font-size:9px}.company-price strong{font-size:12px}.market-workspace .signal-canvas{padding:16px}.market-workspace .signal-chart{max-height:105px}.market-workspace .signal-empty{min-height:80px}.market-workspace .signal-quote strong{font-size:26px}.sector-ribbon{margin-bottom:10px;padding:15px 0;gap:20px}.sector-ribbon>span{display:none}.context-journey{padding-top:25px}.story-select{display:flex;overflow:auto;scroll-snap-type:x mandatory;gap:10px}.story-select button{flex:0 0 80%;scroll-snap-align:start}.context-grid{display:block}.evidence-space{position:relative;top:auto;padding:0 0 8px 8px;perspective:none}.evidence-sheet{padding:22px;box-shadow:6px 6px 0 #D6E0F8}.evidence-sheet h3{font-size:23px;margin-bottom:15px}.source-label{margin-top:16px}.evidence-stages{margin-top:14px}.context-progress{transform:scaleX(1);margin-top:20px}.context-step{padding:22px 0;gap:17px;scroll-margin-top:120px}.context-step h3{font-size:21px}.context-step p{font-size:15px;line-height:1.8}.step-number{font-size:23px}.research-grid{grid-template-columns:1fr;gap:15px}.research-picks,.macro-pocket{padding:19px}.research-now{padding:24px 0}.home-next-worlds{grid-template-columns:1fr;gap:0;padding:0}.home-next-worlds a{padding:20px 0;border-bottom:1px solid #DDE4EF;gap:8px}.home-next-worlds strong{font-size:20px}.monitor-now{padding:24px 0}#session-chart{scroll-margin-top:115px}}
 @media(prefers-reduced-motion:reduce){.company-tile{transition:none}.context-progress{transform:none}.evidence-sheet{transform:none!important}}
@@ -203,6 +203,77 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .read-level b{font-size:19px;color:var(--color-insight-text)}
 .read-level span{font-size:12px;color:var(--color-text-secondary)}
 .read-level small{font-size:12px;line-height:1.6;color:var(--color-text-muted)}
+
+/* The pattern, named. The English term sits in mono beside the Hebrew name
+   because that is the word a reader would type into a search box, and it
+   has to stay LTR inside an RTL line. */
+.read-pattern-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:14px}
+.read-pattern-head strong{font-size:21px;font-weight:600}
+.read-term{font:12px var(--font-mono),ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--color-insight-text);border:1px solid var(--color-border-default);border-radius:4px;padding:4px 8px}
+.read-pattern-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--color-border-default);border:1px solid var(--color-border-default)}
+.read-pattern-grid>div{background:var(--color-surface-plain);padding:13px 15px}
+.read-pattern-grid dt{font-size:11px;letter-spacing:.04em;color:var(--color-text-muted);margin-bottom:5px}
+.read-pattern-grid dd{font-size:14px;line-height:1.7}
+/* The one statement in the read that comes from outside the picture, so it
+   carries its own provenance line instead of sitting among the observations
+   as if it were one of them. Gold: the palette's colour for a caveat. */
+.read-tendency{margin-top:14px;border-inline-start:2px solid var(--color-warning-text);padding-inline-start:14px}
+.read-tendency p{font-size:15px;line-height:1.8;margin-top:6px}
+.read-tendency small{display:block;font-size:11px;line-height:1.6;color:var(--color-text-muted);margin-top:7px}
+
+/* The horizon. A chart states it through the bar interval and the width of
+   the formation, and a reader who skips it assumes it means tomorrow. */
+.read-horizon{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;border-block:1px solid var(--color-border-default);padding:12px 0}
+.read-horizon b{font-size:16px;font-weight:600}
+.read-horizon small{font-size:12px;line-height:1.6;color:var(--color-text-muted);flex:1 1 240px}
+
+/* Control of the tape, drawn as a three-stop scale rather than coloured.
+   Buyers and sellers are not up and down: green and red belong to price
+   direction and to nothing else, so the live stop is marked by weight and
+   by the accent, which makes no claim about where price goes next. */
+.read-control-scale{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--color-border-default);border:1px solid var(--color-border-default);margin-bottom:14px}
+.read-control-scale span{background:var(--color-surface-plain);padding:10px 12px;text-align:center;font-size:12px;color:var(--color-text-muted)}
+.read-control-scale[data-side=buyers] span[data-stop=buyers],
+.read-control-scale[data-side=sellers] span[data-stop=sellers],
+.read-control-scale[data-side=balance] span[data-stop=balance]{background:var(--color-accent-dim);color:var(--color-text-primary);font-weight:600;box-shadow:inset 0 -2px 0 var(--color-accent)}
+.read-control-reading{font-size:15px;line-height:1.8}
+.read-control-reading b{font-weight:600;color:var(--color-text-primary)}
+.read-sub{font-size:11px;letter-spacing:.04em;color:var(--color-text-muted);margin:14px 0 8px}
+
+/* What would settle the question. The label carries the row: it says which
+   way the event cuts without asking anyone to act on it. Cyan confirms,
+   gold breaks -- the palette's data colour and its caveat colour, never
+   the price-direction pair. */
+.read-watch-note{font-size:12px;line-height:1.7;color:var(--color-text-muted);margin-bottom:12px}
+.read-watch{display:grid;gap:1px;background:var(--color-border-default);border:1px solid var(--color-border-default);list-style:none;margin:0;padding:0}
+.read-watch li{background:var(--color-surface-plain);padding:14px 16px;display:grid;gap:6px}
+.read-watch strong{font-size:15px;font-weight:500;line-height:1.7}
+.read-watch p{font-size:13px;line-height:1.7;color:var(--color-text-secondary)}
+.read-watch-dir{font-size:11px;letter-spacing:.04em;color:var(--color-text-muted)}
+.read-watch li[data-direction=confirms] .read-watch-dir{color:var(--color-data-text)}
+.read-watch li[data-direction=breaks] .read-watch-dir{color:var(--color-warning-text)}
+
+/* The three fields that keep the read from being advice, in one frame so
+   they read as the method and not as footnotes. They are rendered even
+   when the model left one empty -- .read-silence is what the silence
+   costs, printed where the list would have been. */
+.read-discipline{border:1px solid var(--color-border-strong);border-radius:10px;padding:20px}
+.read-discipline-title{font-size:13px;letter-spacing:.06em;color:var(--color-text-primary)}
+.read-discipline-note{font-size:12px;line-height:1.7;color:var(--color-text-muted);margin:7px 0 18px;max-width:62ch}
+.read-discipline-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+.read-discipline-cell h3{margin-bottom:9px}
+.read-silence{font-size:13px;line-height:1.7;color:var(--color-text-muted);border-inline-start:2px solid var(--color-border-strong);padding-inline-start:11px}
+
+/* Rule 8 is enforced in code as well as in the prompt, and the enforcement
+   leaves a trace. The trace is shown: a sentence that disappears without a
+   word reads as a model that ran out of things to say. */
+.read-redacted{font-size:12px;line-height:1.7;color:var(--color-warning-text);border-inline-start:2px solid var(--color-warning-text);padding-inline-start:12px}
+
+@media(max-width:700px){
+  .read-control-scale span{font-size:11px;padding:9px 6px}
+  .read-discipline{padding:16px;border-radius:8px}
+}
+
 .reader-limits{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
 .reader-limits strong{display:block;font-size:16px;margin-bottom:8px}
 .reader-limits p{font-size:14px;line-height:1.75;color:var(--color-text-secondary)}
@@ -213,3 +284,79 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .screen-pages a{min-width:38px;min-height:38px;display:grid;place-items:center;border:1px solid var(--color-border-default);border-radius:6px;font-size:13px;color:var(--color-text-secondary)}
 .screen-pages a:hover{border-color:var(--color-brand);color:var(--color-text-primary)}
 .screen-pages a[aria-current]{background:var(--color-brand);border-color:var(--color-brand);color:#fff;font-weight:600}
+
+/* ── The door ──────────────────────────────────────────────────────────
+   One screen, in the bird's own palette: warm dark ground, mustard, a
+   burnt orange that only the cap and the beak wear, and brass. It is the
+   only place on the site allowed to be this warm — everything behind it
+   is the cool night material, and the change of temperature is what makes
+   crossing the threshold feel like crossing one. */
+.welcome-gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#17120C;color:#F6EDDD;overflow:hidden;padding:24px}
+.welcome-field{position:absolute;inset:0;pointer-events:none}
+.welcome-light{position:absolute;border-radius:50%;filter:blur(90px)}
+.welcome-light--one{width:min(62vw,720px);aspect-ratio:1;background:#F3C53F;opacity:.20;top:-14%;inset-inline-end:-10%}
+.welcome-light--two{width:min(52vw,600px);aspect-ratio:1;background:#D4622A;opacity:.17;bottom:-18%;inset-inline-start:-8%}
+/* A trace of grain, because a perfectly smooth warm field is the single
+   most synthetic-looking thing a screen can show. */
+.welcome-grain{position:absolute;inset:0;opacity:.055;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:3px 3px}
+
+.welcome-inner{position:relative;display:grid;justify-items:center;text-align:center;gap:0;max-width:720px}
+.welcome-eyebrow{font:11px var(--font-mono),ui-monospace,monospace;letter-spacing:.44em;color:#C9A14A;margin-bottom:18px}
+.welcome-bird{filter:drop-shadow(0 26px 40px rgba(0,0,0,.55))}
+
+.welcome-title{font-size:clamp(32px,6vw,62px);font-weight:600;line-height:1.14;letter-spacing:-.02em;margin:22px 0 0}
+.welcome-title em{font-style:normal;color:#F3C53F}
+.welcome-title span{color:#E0702F}
+.welcome-lede{margin-top:20px;max-width:40ch;font-size:clamp(15px,1.7vw,17px);line-height:1.75;color:#D9C9AF}
+
+.welcome-enter{margin-top:34px;display:inline-flex;align-items:center;gap:14px;background:#F3C53F;color:#17120C;border-radius:999px;padding:16px 34px;font-size:17px;font-weight:600;cursor:pointer;transition:transform .18s,box-shadow .18s,background-color .18s;box-shadow:0 14px 34px -14px rgba(243,197,63,.85)}
+.welcome-enter:hover{background:#F8D463;transform:translateY(-2px);box-shadow:0 20px 44px -16px rgba(243,197,63,.95)}
+.welcome-enter i{font-style:normal;font-size:20px;transition:transform .18s}
+.welcome-enter:hover i{transform:translateX(-4px)}
+.welcome-note{margin-top:26px;font-size:11px;color:#9C8A70}
+
+@media(max-width:600px){
+  .welcome-bird svg{width:200px;height:200px}
+  .welcome-title{font-size:30px}
+  .welcome-enter{padding:15px 30px;font-size:16px}
+}
+/* The information, without the entrance. The lights stop moving because
+   they never moved; what changes is that nothing fades in. */
+@media(prefers-reduced-motion:reduce){
+  .welcome-enter{transition:none}
+  .welcome-enter:hover{transform:none}
+}
+/* The night theme recolours every h1 em to its accent tint, which is
+   correct everywhere behind the door and wrong on the door itself — this
+   screen is the one warm surface on the site. Scoped higher so it wins
+   without touching the rule that is right for the other 18 pages. */
+.welcome-gate .welcome-title em{color:#F3C53F}
+.welcome-gate .welcome-title span{color:#E0702F}
+.welcome-gate h1,.welcome-gate p,.welcome-gate .welcome-eyebrow{color:inherit}
+.welcome-gate .welcome-title{color:#F6EDDD}
+.welcome-gate .welcome-lede{color:#D9C9AF}
+.welcome-gate .welcome-eyebrow{color:#C9A14A}
+.welcome-gate .welcome-note{color:#9C8A70}
+/* The pile sits behind and below the bird, wider than it and faded at the
+   edges so it reads as a heap the bird is on rather than a picture beside
+   it. */
+.welcome-bird{position:relative;display:grid;place-items:center}
+.welcome-money{position:absolute;bottom:-6%;left:50%;translate:-50% 0;width:168%;max-width:none;pointer-events:none;z-index:-1;filter:drop-shadow(0 18px 26px rgba(0,0,0,.5))}
+.welcome-bird svg:last-child{position:relative;z-index:1}
+@media(max-width:600px){.welcome-money{width:150%;bottom:-4%}}
+
+/* ── Sources and rights ────────────────────────────────────────────────
+   A reading page, not a dashboard: one column, generous line height, and
+   the terms set at the same weight as the name so the conditions are not
+   small print under a logo. */
+.sources-list{display:grid;gap:1px;background:var(--color-border-default);border:1px solid var(--color-border-default)}
+.sources-list article{background:var(--color-surface-plain);padding:20px 22px;display:grid;gap:7px}
+.sources-list h3{font:600 17px var(--font-mono),ui-monospace,monospace;letter-spacing:.02em}
+.sources-what{font-size:13px;color:var(--color-text-muted)}
+.sources-terms{font-size:15px;line-height:1.8;color:var(--color-text-secondary)}
+.sources-limits{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px}
+.sources-limits strong{display:block;font-size:16px;margin-bottom:8px}
+.sources-limits p{font-size:14px;line-height:1.8;color:var(--color-text-secondary)}
+.sources-prose{font-size:15px;line-height:1.9;color:var(--color-text-secondary);max-width:62ch}
+.sources-prose + .sources-prose{margin-top:16px}
+.sources-prose a{color:var(--color-accent);border-bottom:1px solid currentColor}

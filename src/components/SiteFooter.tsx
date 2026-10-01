@@ -86,6 +86,14 @@ export function SiteFooter() {
                 </li>
               ))}
             </ul>
+            {/* A five-line list cannot carry the terms each source comes
+                with, and the terms are the part that matters. */}
+            <Link
+              href="/sources"
+              className="mt-4 inline-block text-[12px] text-accent"
+            >
+              המקורות המלאים והתנאים שלהם ←
+            </Link>
           </div>
         </div>
 
