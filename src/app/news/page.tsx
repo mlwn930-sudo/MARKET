@@ -61,6 +61,14 @@ export default async function NewsPage() {
   const lead = ranked[0] ?? null;
   const column = ranked.slice(1, 5);
 
+  /* Each sector shows its freshest dozen rather than everything it holds.
+     The feed carried ninety-six articles into one page — about a megabyte
+     of HTML, most of it below a fold nobody reaches, and every card
+     carrying its own summary and analysis. The count beside each heading
+     still reports the true total, so the page says what it is holding
+     back rather than quietly dropping it. */
+  const PER_SECTOR = 12;
+
   const catalysts = all.filter(
     (a) => a.analysis?.catalystKind === "catalyst" || a.triage?.kind === "catalyst",
   ).length;
@@ -210,7 +218,7 @@ export default async function NewsPage() {
                   </div>
 
                   <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {sector.articles.map((article) => {
+                    {sector.articles.slice(0, PER_SECTOR).map((article) => {
                       const queued = autoQueue.indexOf(article.url);
                       return (
                         <ArticleCard
@@ -222,6 +230,11 @@ export default async function NewsPage() {
                       );
                     })}
                   </div>
+                  {sector.articles.length > PER_SECTOR && (
+                    <p className="mt-4 text-[12px] text-ink-faint">
+                      {sector.articles.length - PER_SECTOR} כתבות נוספות בסקטור הזה נאספו ואינן מוצגות כאן.
+                    </p>
+                  )}
                 </section>
               ))}
             </div>
