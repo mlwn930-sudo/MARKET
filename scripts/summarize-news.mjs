@@ -151,7 +151,7 @@ async function fetchArticle(url) {
     headers: {
       // Many publishers reject requests with no user agent outright.
       "User-Agent":
-        "Mozilla/5.0 (compatible; MarketIntelBot/1.0; research use)",
+        "MarketIntelBot/1.0 (+mailto:mlwn930@gmail.com; reads one article to summarise it)",
       Accept: "text/html",
     },
   });

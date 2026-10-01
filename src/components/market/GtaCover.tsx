@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { DollarMotif } from "@/components/DollarMotif";
 
 /**
@@ -20,15 +19,19 @@ import { DollarMotif } from "@/components/DollarMotif";
 export function GtaCover({ release }: { release: string | null }) {
   return (
     <header className="gta-cover" aria-label="GTA VI: מהסיפור להשקעה">
-      <div className="gta-cover-photo">
-        <Image
-          src="/hero/rockstar-jason-lucia.webp"
-          alt="GTA VI — האיור הרשמי של ג׳ייסון ולוסיה"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+      {/* Built, not borrowed.
+
+          This was Rockstar's official GTA VI key art, reproduced whole and
+          served from this project's own host — on a site whose owner asked
+          that nobody be able to bring a claim against it. Attribution was
+          recorded in docs/, which is not permission and which no visitor
+          ever sees. So the photograph is gone and the cover is made of the
+          things this project owns: its own light, its own type, its own
+          mark. A cover does not need someone else's picture to be one. */}
+      <div className="gta-cover-field" aria-hidden="true">
+        <i className="gta-field-one" />
+        <i className="gta-field-two" />
+        <i className="gta-field-grid" />
       </div>
       <div className="gta-cover-shade" aria-hidden="true" />
 
@@ -44,15 +47,27 @@ export function GtaCover({ release }: { release: string | null }) {
         <a href="#investment">למחקר הפיננסי ↙</a>
       </div>
 
+      {/* The masthead is the company, not the game.
+
+          It was "GTA VI" set at 190px — a trademark used as this page's own
+          title, in the game's own pink-on-violet, which together read as a
+          GTA page rather than as a page about the company that owns GTA.
+          Naming a title you are analysing is ordinary journalism; wearing
+          its mark as your own banner is not.
+
+          So the ticker is the headline and the game is in the sentence
+          under it, which is also the more honest description of the page:
+          it is a Take-Two analysis that happens to be occasioned by a
+          release. */}
       <div className="gta-cover-copy">
-        <span className="gta-cover-kicker">וייס סיטי. וול סטריט.</span>
+        <span className="gta-cover-kicker">סיפורי MARKET · ניתוח עצמאי</span>
         <h1 className="gta-cover-title" dir="ltr">
-          GTA <em>VI</em>
+          TAKE<em>TWO</em>
         </h1>
         <p>
-          העולם כבר נמכר.
+          השקה אחת של GTA VI.
           <br />
-          <span>המספרים עוד לא.</span>
+          <span>שרשרת ערך שלמה.</span>
         </p>
         <a className="gta-enter" href="#gta-world">
           אל הסיפור של Take-Two<span aria-hidden="true">↓</span>

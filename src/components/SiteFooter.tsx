@@ -29,10 +29,18 @@ const COLUMNS = [
   },
 ];
 
+/* Everything the site actually reads, including the two it leaned on
+   hardest without saying so. Yahoo carries the price history, the macro
+   board, the whole-universe quote fetch, extended hours and Tel Aviv;
+   GDELT carries the geopolitical events. A credits list that names the
+   three easy ones and omits the two doing most of the work is not a
+   credits list. */
 const SOURCES = [
   { name: "SEC EDGAR", note: "דוחות כספיים ו-13F" },
   { name: "Finnhub", note: "ציטוטים חיים וחדשות" },
+  { name: "Yahoo Finance", note: "היסטוריית מחירים, מאקרו ומסחר מחוץ לשעות" },
   { name: "FRED", note: "ריבית חסרת סיכון" },
+  { name: "GDELT", note: "אירועים גאופוליטיים" },
 ];
 
 export function SiteFooter() {

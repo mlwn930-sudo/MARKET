@@ -26,7 +26,7 @@ const READY: [string, string] = ["19 בנובמבר 2026.", "בואו נראה �
 const LEDE =
   "מה שהדוחות לא מכילים — תאריך שנמסר, נדחה פעמיים, ומנגנון שמזיז את ההכנסות.";
 const KEY = "market-intel:ttwo-gate:v1";
-const ACCENT = "#ff91cd";
+const ACCENT = "#F43FBF";
 
 export function TtwoGate() {
   return (

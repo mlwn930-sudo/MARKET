@@ -32,15 +32,16 @@ export function FeaturedStory({ article }: { article: EnrichedArticle }) {
 
   return (
     <article className="surface interactive flex flex-col overflow-hidden">
-      {article.image && (
-        <div
-          className="relative h-48 w-full bg-track bg-cover bg-center sm:h-60"
-          style={{ backgroundImage: `url(${article.image})` }}
-          aria-hidden="true"
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-surface)_2%,transparent_70%)]" />
-        </div>
-      )}
+      {/* The publisher's photograph used to fill this band, hotlinked
+          straight from their server — including Getty-licensed images, with
+          no licence and no credit, and displayed as though it belonged to
+          the page. A headline and a link to the source is ordinary
+          reporting; republishing the photograph that came with it is not.
+
+          The lead story is already marked as the lead by its type, which is
+          a size larger than the column beside it. It did not need the
+          picture to read as the lead; it needed it to look like a
+          magazine. */}
 
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-3 flex flex-wrap items-center gap-2">

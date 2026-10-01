@@ -22,11 +22,24 @@
 
 import { unstable_cache } from "next/cache";
 
-/** Yahoo rejects requests without a browser user agent. */
+/**
+ * Who is asking.
+ *
+ * This said "Mozilla/5.0 ... Chrome/131.0" — a browser this code is not,
+ * sent to endpoints Yahoo does not document, which is the shape of trying
+ * not to be noticed. The project already identifies itself honestly to the
+ * SEC because the SEC demands it; there was no reason to behave worse
+ * where nobody was checking.
+ *
+ * Measured before changing it: an honest, contactable agent gets exactly
+ * the same answers — 200 and an identical bar count on the chart, spark,
+ * max-range and pre/post endpoints alike. The disguise was buying nothing.
+ * If that ever stops being true, the refusal is the answer about whether
+ * this access was welcome, and it should be heard rather than worked
+ * around.
+ */
 const HEADERS = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
-    "(KHTML, like Gecko) Chrome/131.0 Safari/537.36",
+  "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)",
 };
 
 const CHART = "https://query1.finance.yahoo.com/v8/finance/chart";

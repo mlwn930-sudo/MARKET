@@ -88,7 +88,7 @@ async function fetchOne(
     const res = await fetch(
       `${CHART}/${encodeURIComponent(symbol)}?range=5d&interval=1d`,
       {
-        headers: { "User-Agent": "Mozilla/5.0 (compatible; MarketIntel/1.0)" },
+        headers: { "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)" },
         next: { revalidate: 120 },
       },
     );
@@ -188,12 +188,17 @@ export type TaseBoard = {
 /** The whole board, cached for two minutes and shared by every viewer. */
 export const getTaseBoard = unstable_cache(
   async (): Promise<TaseBoard> => {
+    /* Each half is caught on its own. They were awaited together with no
+       catch at all, so one rejection took both down and the page lost the
+       index strip as well as the stock list — two separate failures
+       reported as one. Separately, a bad response for the shares still
+       leaves the indices on screen. */
     const [indices, leaders] = await Promise.all([
-      fetchAll(
-        TASE_INDICES.map((index) => ({ ...index, isIndex: true })),
+      fetchAll(TASE_INDICES.map((index) => ({ ...index, isIndex: true }))).catch(
+        () => TASE_INDICES.map(() => null),
       ),
-      fetchAll(
-        TASE_LEADERS.map((leader) => ({ ...leader, isIndex: false })),
+      fetchAll(TASE_LEADERS.map((leader) => ({ ...leader, isIndex: false }))).catch(
+        () => TASE_LEADERS.map(() => null),
       ),
     ]);
 

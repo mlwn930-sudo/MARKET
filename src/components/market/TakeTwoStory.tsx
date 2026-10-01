@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { GtaCover } from "@/components/market/GtaCover";
 
 /**
@@ -101,20 +100,9 @@ export function TakeTwoStory({ release }: { release: string | null }) {
 
             <div className="story-chapter-art" aria-hidden={i !== 0}>
               {i === 0 && (
-                /* The levelled crop, not the original. The tilt on this
-                   picture was never CSS — the source file is a photograph
-                   of a postcard lying at an angle on a purple field, white
-                   border and all, so removing the transform from the
-                   element did nothing. It was straightened by 3.04° and
-                   cropped to the photograph inside its own frame. */
-                <div className="story-art-city">
-                  <Image
-                    src="/hero/rockstar-vice-city-level.webp"
-                    alt=""
-                    fill
-                    sizes="(max-width:899px) 90vw, 46vw"
-                    className="object-cover"
-                  />
+                <div className="story-art-built">
+                  <span className="story-art-word" dir="ltr">LEONIDA</span>
+                  <span className="story-art-sub">וייס סיטי · 19.11.2026</span>
                 </div>
               )}
 
