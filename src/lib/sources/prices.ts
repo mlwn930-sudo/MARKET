@@ -206,7 +206,21 @@ export const RANGES = {
   "1W": { label: "שבוע", range: "5d", interval: "30m", daily: false },
   "1M": { label: "חודש", range: "1mo", interval: "1d", daily: true },
   "1Y": { label: "שנה", range: "1y", interval: "1d", daily: true },
+  /* The range the company page seeds the chart with, and the one the
+     analysis frameworks are defined against. It was missing from this
+     list while the page handed the chart two years of candles and the
+     switcher sat on "1Y" — the label said one thing and the chart drew
+     another. */
+  "2Y": { label: "שנתיים", range: "2y", interval: "1d", daily: true },
   "5Y": { label: "5 שנים", range: "5y", interval: "1wk", daily: true },
+  /* Everything, back to the first bar the exchange has. Monthly, and not
+     as a compromise: 27 years of NVDA in daily bars is about 6,800
+     candles, which is a payload nobody should download and a chart nobody
+     can read. Measured against Yahoo, `max` returns its own granularity
+     regardless of the interval asked for — NVDA comes back as 333 bars
+     from February 1999, AAPL from December 1984 — so this is a request
+     for the whole life of the listing rather than for monthly bars. */
+  MAX: { label: "הכל", range: "max", interval: "1mo", daily: true },
 } as const;
 
 export type RangeKey = keyof typeof RANGES;

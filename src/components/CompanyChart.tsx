@@ -127,9 +127,15 @@ export function CompanyChart({
         )}
       </div>
 
+      {/* The company page seeds this with two years of daily candles,
+          which is what the analysis frameworks are defined against. The
+          switcher has to say so: it used to open on "1Y" over a two-year
+          series, so the chart was drawing 501 bars under a label that
+          claimed 252. */}
       <LiveChart
         symbol={symbol}
         candles={candles}
+        defaultRange="2Y"
         livePrice={quote?.price ?? null}
         levels={levels}
         markers={markers}
