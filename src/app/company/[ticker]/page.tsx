@@ -431,6 +431,7 @@ export default async function CompanyPage({
             <CompanyPriceTag
               symbol={ticker}
               initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
+              extended={extended}
             />
             {marketCap !== null && (
               <Stat label="שווי שוק" value={`${fmtCompact(marketCap)}`} />

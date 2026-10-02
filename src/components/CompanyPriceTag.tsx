@@ -5,6 +5,7 @@ import { LiveBadge } from "./ui";
 import { useLiveTicks, type LiveQuote } from "@/lib/use-live-ticks";
 import { describeStatus } from "@/lib/market-hours";
 import { directionClass, fmtChange, fmtPrice } from "@/lib/format";
+import type { ExtendedHours } from "@/lib/sources/extended-hours";
 
 /**
  * The price, where someone arriving at a company page actually looks.
@@ -22,12 +23,26 @@ import { directionClass, fmtChange, fmtPrice } from "@/lib/format";
  * The change is the only coloured thing here. Green and red on this site
  * mean price direction and nothing else, which is exactly what this is.
  */
+/** What a session is called beside a figure. "Regular" gets no label:
+ *  a price during the session is just the price, and labelling it would
+ *  make the two extended labels look like decoration rather than warning. */
+const SESSION_LABEL: Record<"pre" | "post", string> = {
+  pre: "PRE MARKET",
+  post: "AFTER HOURS",
+};
+
 export function CompanyPriceTag({
   symbol,
   initial,
+  extended,
 }: {
   symbol: string;
   initial: LiveQuote | null;
+  /** The pre/post tape. Finnhub's quote covers the regular session only, so
+   *  without this the masthead shows yesterday's close and yesterday's move
+   *  for the whole of a pre-market morning — a number that has not been
+   *  true since the previous afternoon, with nothing saying so. */
+  extended: ExtendedHours | null;
 }) {
   // Stable identities, or the hook resubscribes on every parent render.
   const watch = useMemo(() => [symbol], [symbol]);
@@ -78,7 +93,27 @@ export function CompanyPriceTag({
      fix and the rule — one source of truth for what a rising price looks
      like, which is also why the tint below is derived from currentColor
      rather than from a second copy of the palette. */
-  const dir = directionClass(quote.changePercent);
+  /* Which tape the headline figure comes from.
+
+     Outside the session the extended print is the live price and the
+     regular close is history; inside it, the reverse. So the headline
+     follows the clock rather than the source, and whichever one is not
+     the headline is printed underneath as its own fact — a reader in
+     pre-market needs both "it closed at 330.32" and "it is 332.75 now",
+     and either alone is misleading. */
+  const session =
+    extended && extended.phase === "pre" && extended.pre
+      ? { tape: extended.pre, label: SESSION_LABEL.pre }
+      : extended && extended.phase === "post" && extended.post
+        ? { tape: extended.post, label: SESSION_LABEL.post }
+        : null;
+
+  const shownPrice = session ? session.tape.price : quote.price;
+  const shownPercent = session ? session.tape.changePercent : quote.changePercent;
+  const shownChange = session ? session.tape.change : quote.change ?? null;
+  const dir = directionClass(shownPercent);
+
+  const regularClose = extended?.regularPrice ?? null;
 
   return (
     <div className="price-tag">
@@ -89,18 +124,43 @@ export function CompanyPriceTag({
           }`}
           dir="ltr"
         >
-          {fmtPrice(quote.price)}
+          {fmtPrice(shownPrice)}
         </span>
-        {quote.changePercent != null && (
+        {shownPercent != null && (
           <span className={`price-tag-change num ${dir}`} dir="ltr">
-            {quote.changePercent > 0 ? "+" : ""}
-            {quote.changePercent.toFixed(2)}%
-            {quote.change != null && (
-              <i>{fmtChange(quote.change)}</i>
-            )}
+            {shownPercent > 0 ? "+" : ""}
+            {shownPercent.toFixed(2)}%
+            {shownChange != null && <i>{fmtChange(shownChange)}</i>}
           </span>
         )}
+        {session && <span className="session-tag">{session.label}</span>}
       </div>
+
+      {/* The other tape, named. Without it an extended figure reads as the
+          session price and a reader has no way to see the gap. */}
+      {session && regularClose != null && (
+        <div className="price-tag-close">
+          סגירה אחרונה{" "}
+          <span className="num" dir="ltr">
+            {fmtPrice(regularClose)}
+          </span>
+          {extended?.previousClose != null &&
+            extended.previousClose > 0 &&
+            regularClose > 0 && (
+              <>
+                {" · "}
+                <span className="num" dir="ltr">
+                  {(((regularClose - extended.previousClose) /
+                    extended.previousClose) *
+                    100).toFixed(2)}
+                  %
+                </span>{" "}
+                במסחר הרגיל
+              </>
+            )}
+        </div>
+      )}
+
       <div className="price-tag-foot">
         <LiveBadge state={state} label={status} />
       </div>

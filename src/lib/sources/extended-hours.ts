@@ -143,10 +143,25 @@ function build(
     phase,
     previousClose,
     regularPrice,
+    /* Against the last REGULAR CLOSE, not against `previousClose`.
+
+       This was the wrong baseline and it inverted the sign on live data.
+       Measured on AAPL during pre-market on 2026-10-02: the last two
+       regular closes were 333.02 (Sep 30) and 330.32 (Oct 1). Yahoo
+       reports `regularMarketPrice` 330.32 — the most recent close — while
+       `chartPreviousClose` for the one-day window reports 333.02, the one
+       before it. Pre-market printed 332.44, which is +0.64% against the
+       close it actually follows and −0.17% against the close before that.
+       The site showed Apple falling while it was rising.
+
+       Every broker measures a pre-market move against the session that
+       just closed, because that is the price a holder went to bed with.
+       `regularPrice` is that close during pre and during post alike, which
+       is why both sessions below now share one reference. */
     pre: session(
       preWindow ? lastIn(preWindow.start, regular.start) : null,
-      previousClose,
-      "previousClose",
+      regularPrice,
+      "regularClose",
     ),
     post: session(
       lastIn(regular.end, regular.end + 6 * 3600),
