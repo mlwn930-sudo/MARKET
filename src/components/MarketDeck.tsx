@@ -348,6 +348,7 @@ export function MarketDeck({
   }, [quotes, indices]);
 
   const open = market.state === "open";
+  const sessionFrame = open ? "היום" : "הסשן האחרון";
   const streaming = feed === "live";
   const state = open && streaming ? "live" : open ? "waiting" : "idle";
   const label = !open
@@ -383,7 +384,7 @@ export function MarketDeck({
       <IndexStrip cards={indices} quotes={quotes} tails={tails} />
 
       <p className="mt-2 text-[11px] text-ink-ghost">
-        המדדים מוצגים דרך קרנות הסל שעוקבות אחריהם. הגרף הוא מהלך היום
+        המדדים מוצגים דרך קרנות הסל שעוקבות אחריהם. הגרף הוא מהלך ${sessionFrame}
         בפועל, בחלוקה לחמש דקות.
       </p>
 
@@ -394,7 +395,7 @@ export function MarketDeck({
           <span className="eyebrow">רשימת מעקב</span>
         </div>
         <Stat
-          label="עולות מתוך הרשימה"
+          label={open ? "עולות מתוך הרשימה" : "עלו בסשן האחרון"}
           value={
             <>
               {advancing}
