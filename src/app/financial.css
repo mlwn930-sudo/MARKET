@@ -767,3 +767,37 @@ a.watch-row:hover{background:color-mix(in srgb,var(--color-text-primary) 4%,tran
 .watch-text small{font-size:12px;line-height:1.6;color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
 .watch-empty{font-size:13px;line-height:1.8;color:var(--color-text-subtle);max-width:60ch}
 @media(max-width:600px){.watch-row{gap:9px;padding:11px 0}.watch-text strong{font-size:12.5px}.watch-text small{font-size:11.5px}}
+
+/* The board's session label sits beside the heading, not on every row:
+   the session belongs to the clock rather than to a company, and twelve
+   copies of it would read as decoration instead of as a warning. */
+.board-session{margin-inline-start:12px;vertical-align:middle}
+
+/* ── What the price already assumes ────────────────────────────────────
+   A register, like the screener's: a header row of column names and
+   hairline-separated rows under it. Not cards — these five figures only
+   mean anything read across, and a card per company would break the one
+   comparison the table exists to make. */
+.implied-table{display:grid;border-top:1px solid var(--color-border-default)}
+.implied-head,.implied-row{
+  display:grid;
+  grid-template-columns:1.6fr .8fr 1.1fr 1fr .7fr;
+  gap:12px;
+  align-items:center;
+  padding:11px 2px;
+  border-bottom:1px solid var(--color-border-default);
+}
+.implied-head{font:600 9.5px/1 var(--font-mono),ui-monospace,monospace;letter-spacing:.09em;color:var(--color-text-subtle)}
+.implied-head>span:not(:first-child),.implied-row>span:not(:first-child){text-align:start}
+.implied-row{font-size:13px;color:var(--color-text-secondary);transition:background-color .16s}
+.implied-row:hover{background:color-mix(in srgb,var(--color-text-primary) 4%,transparent)}
+.implied-company{display:flex;align-items:center;gap:9px;min-width:0}
+.implied-company strong{display:block;font-size:12.5px;font-weight:500;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.implied-company small{display:block;font-size:10px;color:var(--color-text-subtle)}
+/* The one figure the table exists for. */
+.implied-need{font-size:15px;font-weight:600;color:var(--color-text-primary)}
+@media(max-width:700px){
+  .implied-head{display:none}
+  .implied-row{grid-template-columns:1fr auto auto;gap:8px;row-gap:2px}
+  .implied-row>span:nth-child(4),.implied-row>span:nth-child(5){display:none}
+}

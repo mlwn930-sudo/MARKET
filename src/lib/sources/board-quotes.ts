@@ -235,7 +235,7 @@ export function getBoardQuotes(
 
   return unstable_cache(
     () => build(list),
-    ["board-quotes", "v1", list.join(",")],
+    ["board-quotes", "v2-session", list.join(",")],
     { revalidate: 120, tags: ["quotes"] },
   )();
 }

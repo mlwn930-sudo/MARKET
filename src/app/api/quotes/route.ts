@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { unstable_cache } from "next/cache";
 import { getQuotes } from "@/lib/sources/finnhub";
+import { getBoardQuotes } from "@/lib/sources/board-quotes";
 import { marketStatus, pollIntervalFor } from "@/lib/market-hours";
 
 /**
@@ -59,7 +60,56 @@ export async function GET(request: Request) {
     Math.round(pollIntervalFor(marketStatus().state, symbols.length) / 1000),
   );
 
+  /**
+   * Which tape is the live one right now.
+   *
+   * Finnhub's quote covers the regular session only. Inside the session
+   * that is exactly what is wanted — it is the fastest feed here and the
+   * reason a company page feels live. Outside it, Finnhub keeps returning
+   * the last regular close, so a pre-market morning showed a price that
+   * had not been true since the previous afternoon, with the overnight
+   * tape nowhere on the page.
+   *
+   * So the source follows the clock. Yahoo's board quotes already carry
+   * pre and post prints with the session attached, and out of hours they
+   * are both fresher and the only ones that are true.
+   */
+  const phase = marketStatus().state;
+  const regularSession = phase === "open";
+
   try {
+    if (!regularSession) {
+      const board = await getBoardQuotes(symbols);
+      const payload = symbols.map((symbol) => {
+        const q = board[symbol];
+        if (!q || q.price === null) return { symbol, price: null };
+        return {
+          symbol,
+          price: q.price,
+          change:
+            q.regularClose !== null && q.extended
+              ? q.price - q.regularClose
+              : q.previousClose !== null
+                ? q.price - q.previousClose
+                : null,
+          changePercent: q.changePercent,
+          high: q.dayHigh ?? undefined,
+          low: q.dayLow ?? undefined,
+          /* The reference the change was measured against, so the client
+             can recompute it between polls without re-deriving which
+             session it is in. */
+          previousClose: q.extended ? q.regularClose : q.previousClose,
+          phase: q.phase,
+          extended: q.extended,
+          at: q.at ?? new Date().toISOString(),
+        };
+      });
+      return NextResponse.json(
+        { quotes: payload, fetchedAt: new Date().toISOString() },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+
     const quotes = await fetchQuotes(symbols, cacheSeconds);
 
     // A symbol whose fetch failed comes back as null and stays null. The
@@ -80,6 +130,8 @@ export async function GET(request: Request) {
             // a trade print carries a price and nothing else, so this is what
             // lets the change percentage stay correct between polls.
             previousClose: quote.previousClose,
+            phase: "regular" as const,
+            extended: false,
             at: quote.at.toISOString(),
           }
         : { symbol, price: null };

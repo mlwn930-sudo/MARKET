@@ -15,7 +15,18 @@ export type LiveQuote = {
   changePercent?: number | null;
   high?: number;
   low?: number;
+  /** What the change was measured against. Outside the regular session this
+   *  is the last REGULAR CLOSE rather than the one before it — that is the
+   *  baseline an extended move is quoted against everywhere. */
   previousClose?: number;
+  /** Which session the price belongs to. A figure with no session attached
+   *  cannot be read: the same number means "today's move" at noon and
+   *  "overnight" at seven in the morning. */
+  phase?: "pre" | "regular" | "post" | "closed";
+  /** True when the price is a pre- or post-market print. The interface has
+   *  to say so beside the figure rather than let it pass as a session
+   *  price. */
+  extended?: boolean;
   at?: string;
 };
 
@@ -170,6 +181,12 @@ export function useLiveTicks(
               (quote.change != null ? quote.price - quote.change : undefined),
             high: quote.high,
             low: quote.low,
+            /* Carried through, or the session a price belongs to is known
+               to the route and lost on the way to the figure — and a page
+               that cannot say "PRE MARKET" beside an overnight print is
+               showing a number nobody can date. */
+            phase: quote.phase,
+            extended: quote.extended,
             at: quote.at,
           });
         }

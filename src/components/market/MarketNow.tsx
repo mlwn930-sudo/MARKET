@@ -22,12 +22,27 @@ export function MarketNow({indices,rows,initial,detail,articles,picks}:{indices:
   const [selectedIndex,setSelectedIndex]=useState(indices[0]?.symbol??"SPY");
   const [expanded,setExpanded]=useState(false);
   const [view,setView]=useState<"leaders"|"up"|"down">("leaders");
+
+  /* Which session every figure on this board belongs to.
+   *
+   * Once, on the board, rather than a chip on each of twelve rows: the
+   * session is a property of the clock, not of a company, and twelve
+   * identical labels would read as decoration rather than as a warning.
+   * Taken from the quotes themselves so it cannot disagree with the
+   * numbers beside it — if the tape says these are pre-market prints, the
+   * label says pre-market. */
+  const session=useMemo(()=>{
+    for(const q of Object.values(quotes)){
+      if(q?.extended&&(q.phase==="pre"||q.phase==="post")) return q.phase;
+    }
+    return null;
+  },[quotes]);
   const displayed=useMemo(()=>view==="leaders"?rows:[...rows].filter(r=>{const change=quotes[r.symbol]?.changePercent;return change!=null&&(view==="up"?change>0:change<0);}).sort((a,b)=>(view==="up"?-1:1)*((quotes[a.symbol]?.changePercent??0)-(quotes[b.symbol]?.changePercent??0))),[view,rows,quotes]);
   return <section className="market-now" id="market-data" aria-label="השוק עכשיו">
     <div className="index-rail">{indices.map(index=>{const q=quotes[index.symbol];return <a key={index.symbol} href="#session-chart" onClick={()=>{setWorkspace("chart");setSelectedIndex(index.symbol);}} className="index-tile"><span className="index-title" dir="ltr">{index.label}<small>{index.symbol} · ETF</small></span><strong className={"num"+(flash[index.symbol]==="up"?" settle-up":flash[index.symbol]==="down"?" settle-down":"")}>{q?.price!=null?"$"+q.price.toLocaleString("en-US",{maximumFractionDigits:2,minimumFractionDigits:2}):"—"}</strong><span dir="ltr" className={(q?.changePercent??0)>=0?"text-up":"text-down"}>{fmtPercent(q?.changePercent??null)}</span><Sparkline points={index.intraday} direction={(q?.changePercent??0)>=0?"up":"down"} className="index-spark"/></a>;})}</div>
     <div className="workspace-switch" aria-label="תצוגת שולחן השוק">{[["companies","חברות"],["news","חדשות"],["signals","רעיונות"],["chart","מדדים"]].map(([key,label])=><button key={key} aria-pressed={workspace===key} onClick={()=>setWorkspace(key)}>{label}</button>)}<button className="workspace-search" onClick={()=>window.dispatchEvent(new CustomEvent(COMMAND_EVENT))}>חיפוש חברה ⌕</button></div>
     <div className="market-workspace terminal-workspace" data-workspace={workspace}>
-      <div className="companies-panel"><div className="compact-heading"><div><span className="micro-label">01 / WHAT IS MOVING</span><h2>החברות שבמרכז</h2></div><Link href="/heatmap">מפת השוק ↖</Link></div>
+      <div className="companies-panel"><div className="compact-heading"><div><span className="micro-label">01 / WHAT IS MOVING</span><h2>החברות שבמרכז</h2>{session&&<span className="session-tag board-session">{session==="pre"?"PRE MARKET":"AFTER HOURS"}</span>}</div><Link href="/heatmap">מפת השוק ↖</Link></div>
       <div className="market-filters" aria-label="מיון חברות">{([["leaders","במוקד"],["up","עולות"],["down","יורדות"]] as const).map(([key,label])=><button key={key} aria-pressed={view===key} onClick={()=>setView(key)}>{label}</button>)}<span>מתוך {rows.length} חברות נבחרות</span></div>
       {/* Twelve, not seven. The board reads across sixteen companies now,
           and a list that stops at seven turns a market-wide view back into

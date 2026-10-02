@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getQuotes } from "@/lib/sources/finnhub";
 import { getLiveFeed } from "@/lib/live-news";
 import { getFundamentalsFile } from "@/lib/fundamentals-store";
+import { ImpliedGrowthPanel } from "@/components/market/ImpliedGrowthPanel";
 import { identityFor } from "@/lib/company-identity";
 import { ArticleCard } from "@/components/ArticleCard";
 import { Disclaimer, Hero, MoreLink, Page, Section } from "@/components/ui";
@@ -154,6 +155,24 @@ export default async function AiPage() {
           </div>
         </Section>
       ))}
+
+      {/* The five-year question, before the news. A reader who has just
+          read three layers of value chain is holding "so what happens
+          next", and the only version of that this site can answer is what
+          the price already assumes. */}
+      <ImpliedGrowthPanel
+        rows={allTickers.map((ticker) => {
+          const metrics = metricsFor(ticker);
+          return {
+            ticker,
+            name:
+              fundamentals.companies.find((c) => c.ticker === ticker)?.name ??
+              ticker,
+            pe: metrics?.pe ?? null,
+            delivered: metrics?.rev_cagr_3 ?? null,
+          };
+        })}
+      />
 
       <Section
         eyebrow="חדשות"

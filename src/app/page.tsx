@@ -2,10 +2,10 @@ import Link from "next/link";
 import { ResearchDock } from "@/components/market/ResearchDock";
 import { MarketNow } from "@/components/market/MarketNow";
 import { ContextJourney } from "@/components/market/ContextJourney";
-import { getQuotes } from "@/lib/sources/finnhub";
 import { getIntradayHistory, getPriceHistory } from "@/lib/sources/prices";
 import { getLiveFeed } from "@/lib/live-news";
 import { getWatch } from "@/lib/watch-store";
+import { getBoardQuotes } from "@/lib/sources/board-quotes";
 import { WatchPanel } from "@/components/market/WatchPanel";
 import { runScreen } from "@/lib/screener";
 import { MarketDeck, type IndexCard, type RowSeed } from "@/components/MarketDeck";
@@ -61,16 +61,40 @@ const WATCHLIST: { symbol: string; name: string }[] = [
 
 /** Server-rendered seed so the page opens on real prices rather than on
  *  dashes that fill in a moment later. */
+/**
+ * The first paint of every price on this page.
+ *
+ * It read Finnhub, which covers the regular session only — so for the
+ * whole of a pre-market morning the rail opened on the previous
+ * afternoon.s close with the previous afternoon.s move, and the overnight
+ * tape appeared nowhere. The board quotes carry pre and post prints with
+ * the session attached, in one request for the lot, which is also what
+ * /api/quotes now serves out of hours: the seed and the poll agree
+ * because they read the same tape.
+ */
 async function seedQuotes(
   symbols: string[],
 ): Promise<Record<string, LiveQuote>> {
   try {
-    const quotes = await getQuotes(symbols);
+    const board = await getBoardQuotes(symbols);
     const seed: Record<string, LiveQuote> = {};
-    symbols.forEach((symbol, i) => {
-      const quote = quotes[i];
-      if (quote) seed[symbol] = { ...quote, at: quote.at.toISOString() };
-    });
+    for (const symbol of symbols) {
+      const q = board[symbol];
+      if (!q || q.price === null) continue;
+      const base = q.extended ? q.regularClose : q.previousClose;
+      seed[symbol] = {
+        symbol,
+        price: q.price,
+        change: base != null && base > 0 ? q.price - base : null,
+        changePercent: q.changePercent,
+        high: q.dayHigh ?? undefined,
+        low: q.dayLow ?? undefined,
+        previousClose: base ?? undefined,
+        phase: q.phase,
+        extended: q.extended,
+        at: q.at ?? undefined,
+      };
+    }
     return seed;
   } catch {
     return {};
