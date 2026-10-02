@@ -50,6 +50,7 @@ export function WelcomeGate() {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
   const [note, setNote] = useState<string | null>(null);
+  const [suggestion, setSuggestion] = useState<string | null>(null);
 
   const pass = useCallback(() => {
     try {
@@ -84,20 +85,47 @@ export function WelcomeGate() {
         setNote("צריך כתובת מייל כדי להיכנס.");
         return;
       }
-      /* The same shape the server checks, so the common mistake is caught
-         before a request rather than after one. */
-      if (!/^[^s@]+@[^s@]+.[^s@]{2,}$/.test(address)) {
-        setNote("הכתובת לא נראית תקינה. בדקו שוב.");
-        return;
-      }
+      /* No shape check here on purpose.
+       *
+       * There was one, and it was wrong in a way worth remembering: an
+       * escaping slip turned `[^\s@]` into `[^s@]`, which excludes the
+       * LETTER s, so every address with an s before the @ was refused at
+       * the door — "someone@…" among them. It passed review because the
+       * pattern still looks like an email regex at a glance.
+       *
+       * The server already verifies properly: shape, a domain that exists
+       * and takes mail, throwaway providers, and a misspelling of a common
+       * one with the correction attached. A second, weaker copy here could
+       * only ever disagree with it, and when it did the visitor would get
+       * the worse answer. Empty is the one case worth catching locally,
+       * because it needs no knowledge at all. */
 
       setSending(true);
       try {
-        await fetch("/api/alerts", {
+        const res = await fetch("/api/alerts", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: address }),
         });
+        const data = await res.json().catch(() => ({}));
+
+        /* 400 is the only answer that holds the door.
+         *
+         * It means the address itself is the problem — a domain that does
+         * not exist, one that takes no mail, a throwaway, or a misspelling
+         * of a common provider. That is the check the owner asked for, and
+         * it is the one case where letting someone through would record an
+         * address that can never receive anything.
+         *
+         * Every other failure is this site's, not theirs: no database, no
+         * mail key, a bad minute, no network. Those must not keep a reader
+         * out of a research site that has nothing to do with any of them. */
+        if (res.status === 400) {
+          setNote(data.error ?? "הכתובת לא נראית תקינה.");
+          setSuggestion(typeof data.suggestion === "string" ? data.suggestion : null);
+          setSending(false);
+          return;
+        }
       } catch {
         /* Offline, blocked, or the route is down. The door still opens. */
       }
@@ -105,6 +133,16 @@ export function WelcomeGate() {
     },
     [email, sending, pass],
   );
+
+  /** One tap to take the correction the server offered. Retyping an
+   *  address you have just been told is wrong is the kind of small friction
+   *  that makes people give up at a door. */
+  const acceptSuggestion = useCallback(() => {
+    if (!suggestion) return;
+    setEmail(suggestion);
+    setSuggestion(null);
+    setNote(null);
+  }, [suggestion]);
 
   /* The scroll lock belongs to the gate and has to come off with it,
      including when the gate never mounts because the page has its own. */
@@ -197,6 +235,7 @@ export function WelcomeGate() {
             onChange={(e) => {
               setEmail(e.target.value);
               if (note) setNote(null);
+              if (suggestion) setSuggestion(null);
             }}
             className="welcome-input num"
           />
@@ -209,6 +248,16 @@ export function WelcomeGate() {
         {note && (
           <p className="welcome-alert" role="alert">
             {note}
+            {suggestion && (
+              <button
+                type="button"
+                className="welcome-fix"
+                onClick={acceptSuggestion}
+                dir="ltr"
+              >
+                {suggestion}
+              </button>
+            )}
           </p>
         )}
 

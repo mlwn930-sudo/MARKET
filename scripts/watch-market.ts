@@ -31,6 +31,7 @@ import { fileURLToPath } from "node:url";
 import { config } from "dotenv";
 import { UNIVERSE } from "../src/lib/universe";
 import { upcomingEvents } from "../src/lib/analysis/known-events";
+import { runScreen } from "../src/lib/screener";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 config({ path: resolve(ROOT, ".env.local"), quiet: true });
@@ -49,7 +50,7 @@ const HEADERS = {
 const CHUNK = 16;
 
 export type Finding = {
-  kind: "move" | "range" | "event" | "story";
+  kind: "move" | "range" | "event" | "story" | "opportunity";
   ticker: string | null;
   headline: string;
   /** The figure that produced the finding, already formatted. Nothing here
@@ -200,6 +201,54 @@ async function main() {
     }
   }
 
+  /* ---- Where quality met a dislocation ----
+   *
+   * "Opportunity" is the word that most invites a site like this to start
+   * recommending, so it is defined narrowly and mechanically: a company
+   * that passes most of the screener's tests AND has just moved unusually
+   * against itself or sits at the bottom of its own quarter. Neither half
+   * is interesting alone — a good business at an ordinary price is not
+   * news, and a falling price with nothing behind it is just a falling
+   * price. The conjunction is rare, which is the point: it fires a handful
+   * of times a month rather than every day.
+   *
+   * It still asserts nothing about what to do. The finding names the score,
+   * the move and where to check them, and stops there (rule 8). */
+  try {
+    const { results } = await runScreen();
+    const byTicker = new Map(results.map((r) => [r.company.ticker, r]));
+
+    for (const [ticker, row] of Object.entries(data)) {
+      const screened = byTicker.get(ticker);
+      if (!screened || screened.evaluatedCount < 6) continue;
+      /* Most of what could be computed, not most of ten: a company whose
+         filings only support six tests is judged on its six. */
+      if (screened.score / screened.evaluatedCount < 0.75) continue;
+
+      const move = unusualMove(row.bars);
+      const edge = atRangeEdge(row.bars);
+      const fell = move && move.sigmas >= 2 && move.pct < 0;
+      const low = edge?.where === "low";
+      if (!fell && !low) continue;
+
+      findings.push({
+        kind: "opportunity",
+        ticker,
+        headline: `${ticker} עוברת ${screened.score} מתוך ${screened.evaluatedCount} המבחנים, ו${fell ? "ירדה חזק" : "בשפל של רבעון"}`,
+        detail: fell
+          ? `${move!.pct.toFixed(2)}% ביום — פי ${move!.sigmas.toFixed(1)} מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב`
+          : `הסגירה ${row.last.toFixed(2)} היא הנמוכה ביותר ברבעון, על חברה שעוברת ${screened.score} מתוך ${screened.evaluatedCount} המבחנים`,
+        weight: 2.6 + (fell ? move!.sigmas / 10 : 0),
+        href: `/company/${ticker}`,
+        at: stamp,
+      });
+    }
+  } catch (err) {
+    /* The screener reads a committed file; if it is missing this run simply
+       has no opportunity findings, which is different from having none. */
+    console.log(`  screener unavailable: ${(err as Error).message}`);
+  }
+
   /* ---- What is already on the calendar ---- */
   const soon = upcomingEvents().filter((e) => {
     if (!e.date) return false;
@@ -267,6 +316,7 @@ async function main() {
     priced: Object.keys(data).length,
     counts: {
       move: findings.filter((f) => f.kind === "move").length,
+      opportunity: findings.filter((f) => f.kind === "opportunity").length,
       range: findings.filter((f) => f.kind === "range").length,
       event: findings.filter((f) => f.kind === "event").length,
       story: findings.filter((f) => f.kind === "story").length,

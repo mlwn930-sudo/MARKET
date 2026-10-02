@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import {
   alertsConfigured,
-  normalizeEmail,
   requestAlerts,
 } from "@/lib/alerts/subscribers";
+import { verifyAddress } from "@/lib/alerts/verify-address";
 import { approvalRequest, mailConfigured, ownerEmail, sendMail } from "@/lib/alerts/mailer";
 
 /**
@@ -41,13 +41,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "bad body" }, { status: 400 });
   }
 
-  const email = normalizeEmail(String(body.email ?? ""));
-  if (!email) {
+  /* Checked before anything is stored or sent: the domain has to exist
+     and take mail, it must not be a throwaway, and an obvious misspelling
+     of a common provider is reported with the correction rather than
+     accepted. No key and no round trip through anyone’s inbox — it works
+     whether or not the mail service is configured, which is the state this
+     site is in. */
+  const verdict = await verifyAddress(String(body.email ?? ""));
+  if (!verdict.ok) {
     return NextResponse.json(
-      { ok: false, error: "כתובת המייל אינה תקינה." },
+      {
+        ok: false,
+        error: verdict.message,
+        reason: verdict.reason,
+        ...(verdict.suggestion ? { suggestion: verdict.suggestion } : {}),
+      },
       { status: 400 },
     );
   }
+  const email = verdict.email;
 
   /* No store means the address cannot be kept, and taking it anyway would
      be collecting something and dropping it. The reader is told, and the

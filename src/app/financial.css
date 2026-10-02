@@ -829,3 +829,20 @@ a.watch-row:hover{background:color-mix(in srgb,var(--color-text-primary) 4%,tran
   .welcome-input{flex:1 1 100%;padding:13px 17px;font-size:14px}
   .welcome-form .welcome-enter{flex:1 1 100%;justify-content:center}
 }
+
+/* The offered correction, as a button rather than a sentence. Retyping an
+   address you have just been told is wrong is the small friction that
+   makes people give up at a door. */
+.welcome-fix{
+  display:inline-block;
+  margin-inline-start:8px;
+  padding:4px 11px;
+  border-radius:999px;
+  border:1px solid rgba(243,197,63,.45);
+  background:rgba(243,197,63,.12);
+  color:#F3C53F;
+  font:500 12px/1.4 var(--font-mono),ui-monospace,monospace;
+  cursor:pointer;
+  transition:background-color .16s,border-color .16s;
+}
+.welcome-fix:hover{background:rgba(243,197,63,.22);border-color:#F3C53F}

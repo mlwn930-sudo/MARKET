@@ -25,6 +25,7 @@ const KIND_LABEL: Record<Finding["kind"], string> = {
   range: "קצה טווח",
   event: "מועד מתקרב",
   story: "כתבה מהותית",
+  opportunity: "איכות מול תנועה",
 };
 
 function ageText(minutes: number | null): string {

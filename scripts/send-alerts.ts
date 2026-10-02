@@ -36,7 +36,7 @@ const WATCH = resolve(ROOT, "content/watch/latest.json");
 const LEDGER = resolve(ROOT, "content/watch/sent.json");
 
 type Finding = {
-  kind: "move" | "range" | "event" | "story";
+  kind: "move" | "range" | "event" | "story" | "opportunity";
   ticker: string | null;
   headline: string;
   detail: string;
@@ -48,7 +48,7 @@ type Finding = {
 /* Only the sharper half of the scan is worth a message. A quarter-range
    edge is interesting on the page and is not worth interrupting someone's
    day; an unusual move and a dated event are. */
-const WORTH_SENDING = new Set(["move", "event", "story"]);
+const WORTH_SENDING = new Set(["opportunity", "move", "event", "story"]);
 const MIN_WEIGHT = 2.2;
 
 /** Kind, ticker and calendar day. The same company moving unusually on two

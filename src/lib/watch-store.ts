@@ -12,7 +12,7 @@ import { z } from "zod";
  */
 
 const findingSchema = z.object({
-  kind: z.enum(["move", "range", "event", "story"]),
+  kind: z.enum(["move", "range", "event", "story", "opportunity"]),
   ticker: z.string().nullable(),
   headline: z.string(),
   detail: z.string(),
@@ -30,6 +30,9 @@ const fileSchema = z.object({
     range: z.number(),
     event: z.number(),
     story: z.number(),
+    /* Added after the file shape was already in use, so optional: an older
+       file still parses rather than emptying the whole panel. */
+    opportunity: z.number().optional(),
   }),
   findings: z.array(findingSchema),
 });
@@ -41,7 +44,7 @@ const EMPTY: WatchFile = {
   builtAt: "",
   universe: 0,
   priced: 0,
-  counts: { move: 0, range: 0, event: 0, story: 0 },
+  counts: { move: 0, range: 0, event: 0, story: 0, opportunity: 0 },
   findings: [],
 };
 
