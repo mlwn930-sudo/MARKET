@@ -5,6 +5,8 @@ import { ContextJourney } from "@/components/market/ContextJourney";
 import { getQuotes } from "@/lib/sources/finnhub";
 import { getIntradayHistory, getPriceHistory } from "@/lib/sources/prices";
 import { getLiveFeed } from "@/lib/live-news";
+import { getWatch } from "@/lib/watch-store";
+import { WatchPanel } from "@/components/market/WatchPanel";
 import { runScreen } from "@/lib/screener";
 import { MarketDeck, type IndexCard, type RowSeed } from "@/components/MarketDeck";
 import { MarketPulse } from "@/components/MarketPulse";
@@ -111,7 +113,7 @@ async function watchRows(): Promise<RowSeed[]> {
  * unreachable one is not a caveat but an absence, and stays neutral.
  */
 export default async function MarketPage() {
-  const [seed, cards, rows, feed, screen, macro] = await Promise.all([
+  const [seed, cards, rows, feed, screen, macro, watch] = await Promise.all([
     seedQuotes([
       ...INDEX_PROXIES.map((i) => i.symbol),
       ...WATCHLIST.map((w) => w.symbol),
@@ -121,6 +123,7 @@ export default async function MarketPage() {
     getLiveFeed(),
     runScreen().catch(() => ({ builtAt: "", results: [] })),
     getMacroBoard().catch(() => ({ instruments: [], builtAt: "" })),
+    getWatch(),
   ]);
 
   // The stories carrying an analysis marked high, newest first. Falls back
@@ -155,6 +158,10 @@ export default async function MarketPage() {
   return <Page>    <header className="market-opening product-heading"><div><span className="micro-label">MARKET / FINANCIAL INTELLIGENCE</span><h2>השוק עכשיו. <em>הסיפור מאחורי התנועה.</em></h2></div><div className="market-status"><span>{signal.label}</span><p>{signal.detail}</p></div></header>
     <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail} articles={priorityArticles} picks={topPicks}/>
     <nav className="sector-ribbon" aria-label="לחקור לפי סקטור"><span>מעבר למניה הבודדת</span>{[["semis","שבבים"],["software","תוכנה"],["financials","פיננסים"],["energy","אנרגיה"],["healthcare","בריאות"]].map(([key,label])=><Link key={key} href={`/sectors/${key}`}>{label} ↖</Link>)}<Link href="/sectors">כל הסקטורים ←</Link></nav>
+    {/* What changed while nobody was looking. It goes above the research
+        dock because it is the only section on the page a returning reader
+        has not already seen. */}
+    <WatchPanel data={watch}/>
     <ContextJourney articles={priorityArticles} rows={rows} quotes={seed}/>
     <ResearchDock macro={<MarketPulse instruments={macro.instruments}/>} monitor={<WatchlistStrip/>}/>
     <div className="home-next-worlds"><Link href="/learn"><span>להבין יותר</span><strong>חדש בשוק? מתחילים כאן.</strong><small>מושגים, מנגנונים ומדריכים ↖</small></Link><Link href="/intel"><span>לחבר את הנקודות</span><strong>מאירוע אחד לשרשרת השפעות.</strong><small>לחדר המודיעין ↖</small></Link></div>

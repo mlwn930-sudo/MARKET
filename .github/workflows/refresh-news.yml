@@ -117,17 +117,26 @@ jobs:
       # while the workflow reported a failure that had nothing to do with
       # fetching. Whatever was retrieved gets saved; problems are reported
       # afterwards.
+      # The scanner. It needs no API key — it reads Yahoo for prices and the
+      # two news files this job has just written — so it runs whether or not
+      # the news preflight passed, and never fails the job. A scan that
+      # cannot reach Yahoo is a scan with no new findings, which the page
+      # already knows how to say.
+      - name: Scan for what changed
+        continue-on-error: true
+        run: npm run watch
+
       - name: Commit if anything changed
         if: steps.preflight.outputs.ready == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content/news
+          git add content/news content/watch
           # Nothing to commit is the normal case on a quiet cycle, not a failure.
           if git diff --staged --quiet; then
-            echo "feed unchanged"
+            echo "feed and scan unchanged"
           else
-            git commit -m "chore: refresh news feed and analysis"
+            git commit -m "chore: refresh news, analysis and the scan"
             # A run can finish while another has already pushed. Rebase and
             # retry rather than losing the analysis this run just paid for.
             git pull --rebase --autostash origin main

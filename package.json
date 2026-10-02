@@ -20,7 +20,8 @@
     "test:scenario": "node --import tsx --test scripts/launch-scenario.test.ts",
     "test:journey": "playwright test",
     "encode:cinema": "node scripts/encode-cinema.mjs",
-    "build:logos": "tsx scripts/build-logos.ts"
+    "build:logos": "tsx scripts/build-logos.ts",
+    "watch": "tsx scripts/watch-market.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
