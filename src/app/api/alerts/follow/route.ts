@@ -53,10 +53,22 @@ export async function POST(request: Request) {
    * ticker at a time would be a request per company on every first load;
    * this is one.
    *
-   * It is additive. Companies are added, never removed, because a browser
-   * with an empty list is far more likely to be a second device than a
-   * decision to stop following everything — and silently emptying someone's
-   * alerts from another machine is the worse mistake. */
+   * It REPLACES. Add and remove both have to reach the agent without
+   * anybody thinking about it, which is the whole point of a watchlist —
+   * so the server list becomes exactly the browser list.
+   *
+   * The additive version guarded against a second device wiping the list,
+   * and that guard is given up deliberately: on a private site with one
+   * reader it was protecting against a case that does not happen, at the
+   * cost of the case that does — unfollowing a company and still being
+   * mailed about it.
+   *
+   * One thing it will not do is empty the list from an empty request. A
+   * browser that has not finished restoring localStorage, or a page that
+   * loaded before the list was read, would otherwise unfollow everything;
+   * an empty list arrives often and means "I do not know yet" far more
+   * often than it means "I follow nothing". Clearing the last company is
+   * done by unfollowing it, which is an explicit act. */
   if (action === "replace") {
     if (!email) {
       return NextResponse.json({ ok: false, error: "bad input" }, { status: 400 });
@@ -70,17 +82,40 @@ export async function POST(request: Request) {
       ),
     ].slice(0, 200);
 
+    if (list.length === 0) {
+      return NextResponse.json({
+        ok: true,
+        added: 0,
+        removed: 0,
+        skipped: "empty",
+        following: await watchedBy(email),
+      });
+    }
+
     const existing = new Set(await watchedBy(email));
+    const wanted = new Set(list);
+
     let added = 0;
     for (const ticker of list) {
       if (existing.has(ticker)) continue;
       if (await follow(email, ticker)) added++;
     }
+
+    let removed = 0;
+    for (const ticker of existing) {
+      if (wanted.has(ticker)) continue;
+      if (await unfollow(email, ticker)) removed++;
+    }
     /* No mail here. This is a reconciliation of what the reader already
        chose, possibly months ago — a burst of "you are now following"
        messages for companies they have followed all along would be the
        single most annoying thing this feature could do on first run. */
-    return NextResponse.json({ ok: true, added, following: await watchedBy(email) });
+    return NextResponse.json({
+      ok: true,
+      added,
+      removed,
+      following: await watchedBy(email),
+    });
   }
 
   const ticker = String(body.ticker ?? "")

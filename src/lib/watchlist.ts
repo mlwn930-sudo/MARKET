@@ -233,6 +233,13 @@ export function knownEmail(): string | null {
 export function syncFollow(ticker: string, following: boolean): void {
   const email = knownEmail();
   if (!email) return;
+  /* The signature is invalidated BEFORE the request, not after it. If this
+     call never lands — offline, a closed tab, a bad minute — the next page
+     load sees a mismatch and pushes the whole list. Clearing it afterwards
+     would mean a lost call is never noticed. */
+  try {
+    window.localStorage.removeItem("market-intel:watchlist-synced:v2");
+  } catch {}
   void fetch("/api/alerts/follow", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -259,28 +266,58 @@ export function syncFollow(ticker: string, following: boolean): void {
  * often enough to catch a list that moved on another device, and rare
  * enough that it costs one request.
  */
-const RECONCILED_KEY = "market-intel:watchlist-synced:v1";
+/**
+ * Keeps the server's copy identical to this browser's, on every load.
+ *
+ * The first version ran once per session and only added. Both were wrong
+ * for the thing a watchlist is: adding a company and removing one have to
+ * reach the agent by themselves, every time, or the list on screen and the
+ * list being mailed about quietly drift apart.
+ *
+ * So it compares a signature of the local list against the last one it
+ * successfully sent. Identical means nothing to do and no request. Any
+ * difference — an add, a removal, or a sync that failed earlier and was
+ * never retried — sends the whole list and records the signature only
+ * after the server confirms. A failed call therefore retries on the next
+ * page load instead of waiting for a new session.
+ */
+const SYNCED_KEY = "market-intel:watchlist-synced:v2";
+
+function signature(list: string[]): string {
+  return [...list].sort().join(",");
+}
 
 export function reconcileWatchlist(): void {
   if (typeof window === "undefined") return;
   const email = knownEmail();
   if (!email) return;
-  try {
-    if (window.sessionStorage.getItem(RECONCILED_KEY) === "1") return;
-    window.sessionStorage.setItem(RECONCILED_KEY, "1");
-  } catch {
-    /* No session storage: reconcile anyway rather than not at all. One
-       extra request beats a watchlist that never reaches the alerts. */
-  }
 
   const tickers = getWatchlist();
+  const sig = signature(tickers);
+
+  /* An empty list is not pushed. It means "nothing to say" far more often
+     than "I follow nothing" — a page can run this before localStorage has
+     been read — and the server refuses an empty replace for the same
+     reason. Removing the last company is done by unfollowing it. */
   if (tickers.length === 0) return;
+
+  try {
+    if (window.localStorage.getItem(SYNCED_KEY) === sig) return;
+  } catch {
+    /* No storage: send every load rather than never. */
+  }
 
   void fetch("/api/alerts/follow", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, action: "replace", tickers }),
-  }).catch(() => {
-    /* Offline or unconfigured. It runs again next session. */
-  });
+  })
+    .then((res) => {
+      /* Recorded only on success, so a failure is retried next load. */
+      if (!res.ok) return;
+      try {
+        window.localStorage.setItem(SYNCED_KEY, sig);
+      } catch {}
+    })
+    .catch(() => {});
 }
