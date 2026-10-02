@@ -1,9 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { Canary } from "./Canary";
-import { MoneyField } from "./MoneyField";
 
 /**
  * The door.
@@ -89,12 +88,28 @@ export function WelcomeGate() {
       <div className="welcome-inner">
         <span className="welcome-eyebrow">MARKET INTEL</span>
 
-        {/* The bird sits on the pile rather than beside it: the money is
-            behind and below, the bird in front, and the group scales as one
-            so the relationship holds at every width. */}
+        {/* The owner's own picture, supplied for this door and confirmed as
+            theirs. It replaces the drawn bird and the generated pile of
+            notes: this one frame already is the bird, the money and the
+            vault, and keeping the drawn dollars behind it would have been a
+            second pile of money under a photograph of a pile of money.
+
+            Sized against the VIEWPORT height, not just its width. The file
+            is a 1122×1402 portrait, and a picture scaled by width alone
+            pushes the entry button off a laptop screen — which is exactly
+            how the door became impossible to open. `priority` because this
+            is the first and only thing on the screen; there is nothing it
+            could be competing with. */}
         <div className="welcome-bird">
-          <MoneyField className="welcome-money" />
-          <Canary size={300} />
+          <Image
+            src="/welcome/duck.webp"
+            alt=""
+            width={1122}
+            height={1402}
+            priority
+            sizes="(max-width: 600px) 72vw, 380px"
+            className="welcome-photo"
+          />
         </div>
 
         <h1 className="welcome-title">

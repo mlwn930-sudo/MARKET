@@ -365,13 +365,30 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
    only place on the site allowed to be this warm — everything behind it
    is the cool night material, and the change of temperature is what makes
    crossing the threshold feel like crossing one. */
-.welcome-gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#17120C;color:#F6EDDD;overflow:hidden;padding:24px}
+/* `overflow:hidden` here, with a centred grid, is what put the entry button
+   out of reach: the door is taller than a laptop viewport once the picture
+   is in it, the overflow was clipped, and the page behind was scroll-locked
+   — so there was no way into the site at all.
+
+   Two separate things had to change. The box scrolls now. And the centring
+   is done with `margin:auto` on the child rather than `place-items:center`,
+   because a centred grid or flex item whose content overflows is clipped at
+   the TOP, past the start edge, where no scrollbar can reach it — the
+   button would have come back and the picture above it would have gone. An
+   auto margin centres while there is room and yields to the scroll when
+   there is not. */
+.welcome-gate{position:fixed;inset:0;z-index:1000;display:flex;background:#17120C;color:#F6EDDD;overflow-y:auto;overflow-x:hidden;padding:24px;overscroll-behavior:contain}
 /* Set by the blocking script in layout.tsx for a reader who already came
    through this session. The gate still renders and still unmounts itself in
    its effect — this only stops the one painted frame in between, which was
    a full screen of mustard flashing on every navigation. */
 .entered .welcome-gate{display:none}
-.welcome-field{position:absolute;inset:0;pointer-events:none}
+/* Clipped here rather than relying on the gate: the two lights are blurred
+   circles deliberately hung off the corners, and once the gate became a
+   scrolling box their overhang showed up in its scrollWidth. Nothing could
+   actually be scrolled to, but a container that reports more width than it
+   has is a false reading for the next person who measures it. */
+.welcome-field{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .welcome-light{position:absolute;border-radius:50%;filter:blur(90px)}
 .welcome-light--one{width:min(62vw,720px);aspect-ratio:1;background:#F3C53F;opacity:.20;top:-14%;inset-inline-end:-10%}
 .welcome-light--two{width:min(52vw,600px);aspect-ratio:1;background:#D4622A;opacity:.17;bottom:-18%;inset-inline-start:-8%}
@@ -379,7 +396,7 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
    most synthetic-looking thing a screen can show. */
 .welcome-grain{position:absolute;inset:0;opacity:.055;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:3px 3px}
 
-.welcome-inner{position:relative;display:grid;justify-items:center;text-align:center;gap:0;max-width:720px}
+.welcome-inner{position:relative;margin:auto;display:grid;justify-items:center;text-align:center;gap:0;max-width:720px;padding-block:8px}
 .welcome-eyebrow{font:11px var(--font-mono),ui-monospace,monospace;letter-spacing:.44em;color:#C9A14A;margin-bottom:18px}
 .welcome-bird{filter:drop-shadow(0 26px 40px rgba(0,0,0,.55))}
 
@@ -395,9 +412,22 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .welcome-note{margin-top:26px;font-size:11px;color:#9C8A70}
 
 @media(max-width:600px){
-  .welcome-bird svg{width:200px;height:200px}
   .welcome-title{font-size:30px}
   .welcome-enter{padding:15px 30px;font-size:16px}
+}
+/* A short window tightens the spacing instead of growing a scrollbar. The
+   door is one screen; scrolling it is the fallback, not the design. */
+@media(max-height:760px){
+  .welcome-eyebrow{margin-bottom:12px}
+  .welcome-title{font-size:clamp(24px,3.3vw,34px);margin-top:14px}
+  .welcome-lede{margin-top:12px;font-size:14px}
+  .welcome-enter{margin-top:20px;padding:13px 28px;font-size:16px}
+  .welcome-note{margin-top:10px}
+}
+@media(max-height:620px){
+  .welcome-title{font-size:clamp(22px,3.4vw,30px);margin-top:12px}
+  .welcome-lede{display:none}
+  .welcome-enter{margin-top:16px}
 }
 /* The information, without the entrance. The lights stop moving because
    they never moved; what changes is that nothing fades in. */
@@ -416,13 +446,22 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .welcome-gate .welcome-lede{color:#D9C9AF}
 .welcome-gate .welcome-eyebrow{color:#C9A14A}
 .welcome-gate .welcome-note{color:#9C8A70}
-/* The pile sits behind and below the bird, wider than it and faded at the
-   edges so it reads as a heap the bird is on rather than a picture beside
-   it. */
-.welcome-bird{position:relative;display:grid;place-items:center}
-.welcome-money{position:absolute;bottom:-6%;left:50%;translate:-50% 0;width:168%;max-width:none;pointer-events:none;z-index:-1;filter:drop-shadow(0 18px 26px rgba(0,0,0,.5))}
-.welcome-bird svg:last-child{position:relative;z-index:1}
-@media(max-width:600px){.welcome-money{width:150%;bottom:-4%}}
+/* The picture. Its own frame is already a vault full of notes, so nothing
+   is layered behind it — what used to sit there was a drawn pile of
+   dollars, and two piles of money is one pile of money too many.
+
+   The height cap is the load-bearing rule here, not the width: the file is
+   a tall portrait, and sizing it by width alone is what pushed the entry
+   button below the fold on a laptop. `min()` of a width and a height means
+   whichever dimension runs out first is the one that decides, so the whole
+   door fits a short window without the button ever leaving it. */
+.welcome-bird{position:relative;display:grid;place-items:center;margin-top:4px}
+.welcome-photo{width:min(78vw,380px);height:auto;max-height:min(46vh,480px);width:auto;max-width:min(78vw,380px);object-fit:contain;border-radius:18px;box-shadow:0 30px 60px -28px rgba(0,0,0,.85),0 0 0 1px rgba(243,197,63,.14)}
+@media(max-width:600px){.welcome-photo{max-height:38vh}}
+/* A short, wide window — a laptop in landscape is the case that broke —
+   gets a smaller picture rather than a scrollbar. */
+@media(max-height:900px){.welcome-photo{max-height:30vh}}
+@media(max-height:620px){.welcome-photo{max-height:27vh}}
 
 /* ── Sources and rights ────────────────────────────────────────────────
    A reading page, not a dashboard: one column, generous line height, and

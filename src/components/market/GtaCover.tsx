@@ -1,4 +1,5 @@
 import { DollarMotif } from "@/components/DollarMotif";
+import { ReplayFilm } from "@/components/market/ReplayFilm";
 
 /**
  * The cover of the GTA VI story.
@@ -44,6 +45,10 @@ export function GtaCover({ release }: { release: string | null }) {
 
       <div className="gta-cover-top">
         <span>MARKET STORIES / TAKE-TWO</span>
+        {/* Only shown to someone who has already passed the door this
+            session — see the component for why the page looked, to the
+            owner, as though the film had been deleted. */}
+        <ReplayFilm />
         <a href="#investment">למחקר הפיננסי ↙</a>
       </div>
 

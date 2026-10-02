@@ -114,7 +114,15 @@ main [id] { scroll-margin-top:150px; }
 .gta-cover{position:relative;isolation:isolate;min-height:calc(100svh - 76px);overflow:clip;background:#342638;color:#fff1db;}
 .gta-cover-photo{position:absolute;inset:0;z-index:-3;}.gta-cover-photo img{object-position:50% 26%;}
 .gta-cover-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(270deg,#261f27d9 0%,#261f2720 55%,transparent),linear-gradient(0deg,#141812 0%,transparent 50%);}
-.gta-cover-top{padding:32px 4%;display:flex;justify-content:space-between;gap:16px;font-size:12px;}.gta-cover-top>span:first-child{font:10px var(--font-mono);letter-spacing:.18em;}
+.gta-cover-top{padding:32px 4%;display:flex;justify-content:space-between;gap:16px;font-size:12px;}
+/* "Watch the film again" — sits between the kicker and the research link,
+   quiet enough that it is an offer rather than the point of the cover.
+   Its own colour is the pink this story already uses for a breaking event;
+   it is the one control here that starts something. */
+.gta-replay{margin-inline:auto 0;display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border:1px solid rgba(244,63,191,.42);border-radius:999px;background:rgba(244,63,191,.1);color:#F9A8DC;font-size:11px;letter-spacing:.02em;cursor:pointer;transition:background-color .18s,border-color .18s,color .18s;}
+.gta-replay:hover{background:rgba(244,63,191,.2);border-color:rgba(244,63,191,.7);color:#FDE7F5;}
+.gta-replay span{font-size:9px;line-height:1;}
+@media(max-width:600px){.gta-replay{padding:6px 11px;font-size:10px;}}.gta-cover-top>span:first-child{font:10px var(--font-mono);letter-spacing:.18em;}
 .gta-cover-copy{position:relative;margin:8vh 6% 190px;max-width:570px;}.gta-cover-kicker{font-size:17px;letter-spacing:.02em;}
 .gta-cover-title{font-size:clamp(110px,13vw,190px);font-weight:800;line-height:.93;letter-spacing:-.06em;margin:24px 0;text-align:right;white-space:nowrap;}.gta-cover-title em{font-style:normal;color:#efbe97;}
 .gta-cover-copy>p{font-size:clamp(26px,3vw,42px);line-height:1.18;letter-spacing:-.025em;}.gta-cover-copy>p>span{color:#e8c6ba;}
