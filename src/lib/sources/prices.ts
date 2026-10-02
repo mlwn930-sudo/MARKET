@@ -17,6 +17,7 @@
  */
 
 import { unstable_cache } from "next/cache";
+import { MARKET } from "@/lib/freshness";
 
 export type Candle = {
   date: string;
@@ -196,7 +197,10 @@ export function getPriceHistory(
   return unstable_cache(
     () => fetchHistory(ticker, range),
     ["price-history-ohlc", ticker, range],
-    { revalidate: 3600, tags: ["prices", `prices:${ticker}`] },
+    /* An hour here meant the chart on a company page could be six times
+       staler than the page drawing it. Candles are market data; they get
+       the market window. */
+    { revalidate: MARKET, tags: ["prices", `prices:${ticker}`] },
   )();
 }
 

@@ -10,6 +10,7 @@ import { CompanyNewsCorner, loadCompanyNews } from "@/components/CompanyNewsCorn
 import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
 import { identityFor } from "@/lib/company-identity";
 import { CompanyMark } from "@/components/CompanyMark";
+import { CompanyPriceTag } from "@/components/CompanyPriceTag";
 import { getCompanyIntelligence } from "@/lib/agents";
 import { CompanyChart } from "@/components/CompanyChart";
 import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
@@ -419,9 +420,20 @@ export default async function CompanyPage({
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-10 gap-y-5">
+          {/* The price first, then what it is being judged against.
+
+               Everything in this row used to be a valuation figure and the
+               quote itself was in chapter two, below the fold — so the page
+               answered "is it expensive" before it answered "what does it
+               cost". The order is the argument: the price is the fact, the
+               multiples are the reading of it. */}
+          <div className="flex flex-wrap items-end gap-x-10 gap-y-5">
+            <CompanyPriceTag
+              symbol={ticker}
+              initial={quote ? { ...quote, at: quote.at.toISOString() } : null}
+            />
             {marketCap !== null && (
-              <Stat label="שווי שוק" value={`$${fmtCompact(marketCap)}`} />
+              <Stat label="שווי שוק" value={`${fmtCompact(marketCap)}`} />
             )}
             {pe && (
               <Stat

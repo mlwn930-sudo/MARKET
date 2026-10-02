@@ -13,7 +13,7 @@ import {
 } from "@/components/ui";
 import { fmtCompact, fmtDate } from "@/lib/format";
 
-export const revalidate = 3600;
+export const revalidate = 600;
 
 export const metadata = {
   title: "מעקב מוסדי",

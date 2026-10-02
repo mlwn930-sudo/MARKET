@@ -622,3 +622,38 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
   .news-row{padding:14px}
   .news-corner-foot{padding:11px 14px}
 }
+
+/* ── The price, in the masthead ────────────────────────────────────────
+   The largest figure on a company page and the first one read. It sat in
+   chapter two while the header answered "is it expensive" above a fold
+   that never showed what it costs.
+
+   Set in the mono face at display weight, with the change beside it rather
+   than under it: a figure and its direction are one reading, and stacking
+   them makes the eye do two. Direction is the only colour here — on this
+   site green and red mean price movement and nothing else. */
+.price-tag{display:grid;gap:7px}
+.price-tag-row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.price-tag-figure{font-size:clamp(34px,4.4vw,52px);font-weight:600;line-height:1;letter-spacing:-.02em;color:var(--color-text-primary);font-variant-numeric:tabular-nums}
+.price-tag-change{display:inline-flex;align-items:baseline;gap:7px;font-size:15px;font-weight:600;padding:4px 10px;border-radius:7px;line-height:1.2}
+/* The tint is derived from whatever colour the direction class already
+   set, so the chip and the figure can never disagree and the palette is
+   not written down a second time. */
+.price-tag-change{background:color-mix(in srgb,currentColor 13%,transparent)}
+.price-tag-change i{font-style:normal;font-size:12px;opacity:.72;font-weight:500}
+.price-tag-foot{font-size:11px;color:var(--color-text-subtle)}
+.price-tag-note{font-size:12px;line-height:1.6;color:var(--color-text-subtle);max-width:34ch}
+@media(max-width:600px){
+  .price-tag-figure{font-size:38px}
+  .price-tag-change{font-size:14px;padding:3px 8px}
+}
+
+/* ── The logo, over the monogram ───────────────────────────────────────
+   The mark is a circle with two letters in it; the logo lies on top and
+   fills it. The monogram is never removed — it is what shows when the
+   provider has no image for a symbol, when the request fails, or on a
+   network that blocks the CDN, which is why nothing here needs an empty
+   state. `cover` rather than `contain`: these files are square brand marks
+   and letterboxing one inside a circle reads as a mistake. */
+.company-mark{position:relative;overflow:hidden}
+.company-mark-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
