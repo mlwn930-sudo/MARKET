@@ -47,7 +47,11 @@ export function WelcomeGate() {
     setReady(true);
   }, []);
 
-  const enter = useCallback(() => {
+  const [email, setEmail] = useState("");
+  const [sending, setSending] = useState(false);
+  const [note, setNote] = useState<string | null>(null);
+
+  const pass = useCallback(() => {
     try {
       window.sessionStorage.setItem(KEY, "1");
     } catch {
@@ -55,6 +59,52 @@ export function WelcomeGate() {
     }
     setOpen(true);
   }, []);
+
+  /**
+   * The address is required to get through, and never required to arrive.
+   *
+   * Those are two different things and the difference is the whole design.
+   * The form asks, records, and asks the owner to approve — and then opens
+   * the door regardless of what the server said. A reader who typed a real
+   * address and hit a database that is not configured, a mail service with
+   * no key, or simply a bad minute, must not be left standing outside a
+   * site that has nothing to do with any of it. What fails is the alert,
+   * which is what the message then says.
+   *
+   * It also means the door cannot lock anybody out while the owner is
+   * still setting the two keys up — including the owner.
+   */
+  const submit = useCallback(
+    async (event: React.FormEvent) => {
+      event.preventDefault();
+      if (sending) return;
+
+      const address = email.trim();
+      if (!address) {
+        setNote("צריך כתובת מייל כדי להיכנס.");
+        return;
+      }
+      /* The same shape the server checks, so the common mistake is caught
+         before a request rather than after one. */
+      if (!/^[^s@]+@[^s@]+.[^s@]{2,}$/.test(address)) {
+        setNote("הכתובת לא נראית תקינה. בדקו שוב.");
+        return;
+      }
+
+      setSending(true);
+      try {
+        await fetch("/api/alerts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: address }),
+        });
+      } catch {
+        /* Offline, blocked, or the route is down. The door still opens. */
+      }
+      pass();
+    },
+    [email, sending, pass],
+  );
 
   /* The scroll lock belongs to the gate and has to come off with it,
      including when the gate never mounts because the page has its own. */
@@ -124,12 +174,47 @@ export function WelcomeGate() {
           נתונים רשמיים, מחקר מבוסס מקורות, וזירה אחת שמחברת ביניהם.
         </p>
 
-        <button type="button" className="welcome-enter" onClick={enter}>
-          <span>לכניסה</span>
-          <i aria-hidden="true">←</i>
-        </button>
+        {/* noValidate so this form answers in its own language. The
+            browser blocks a submit on type="email" + required before the
+            handler runs, and then explains it in the browser UI language —
+            on an RTL Hebrew door that is a tooltip in English pointing at
+            the wrong edge of the field. The checks below are the same ones,
+            and the server repeats them regardless. */}
+        <form className="welcome-form" onSubmit={submit} noValidate>
+          <label className="sr-only" htmlFor="welcome-email">
+            כתובת מייל
+          </label>
+          <input
+            id="welcome-email"
+            type="email"
+            name="email"
+            inputMode="email"
+            autoComplete="email"
+            required
+            dir="ltr"
+            placeholder="name@example.com"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (note) setNote(null);
+            }}
+            className="welcome-input num"
+          />
+          <button type="submit" className="welcome-enter" disabled={sending}>
+            <span>{sending ? "רגע…" : "לכניסה"}</span>
+            <i aria-hidden="true">←</i>
+          </button>
+        </form>
+
+        {note && (
+          <p className="welcome-alert" role="alert">
+            {note}
+          </p>
+        )}
 
         <p className="welcome-note">
+          הכתובת משמשת להתראות בלבד — תנועה חריגה, מועד מתקרב, כתבה מהותית —
+          ונשלחת רק אחרי אישור בעל האתר. אפשר להסיר בכל רגע מכל הודעה.
           האתר אינו ייעוץ השקעות ואינו מחובר לברוקר.
         </p>
       </div>

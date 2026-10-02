@@ -801,3 +801,31 @@ a.watch-row:hover{background:color-mix(in srgb,var(--color-text-primary) 4%,tran
   .implied-row{grid-template-columns:1fr auto auto;gap:8px;row-gap:2px}
   .implied-row>span:nth-child(4),.implied-row>span:nth-child(5){display:none}
 }
+
+/* The door's one field. It sits on the same line as the button at any
+   width that allows it, because an address and the way in are one action
+   — stacking them makes the form look like a step before entering rather
+   than the entering itself. */
+.welcome-form{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px;width:100%;max-width:440px}
+.welcome-input{
+  flex:1 1 220px;
+  min-width:0;
+  background:rgba(246,237,221,.07);
+  border:1px solid rgba(243,197,63,.3);
+  border-radius:999px;
+  padding:15px 20px;
+  font-size:15px;
+  color:#F6EDDD;
+  text-align:left;
+  transition:border-color .18s,background-color .18s;
+}
+.welcome-input::placeholder{color:#9C8A70}
+.welcome-input:focus{outline:none;border-color:#F3C53F;background:rgba(246,237,221,.11)}
+.welcome-form .welcome-enter{margin-top:0;flex:0 0 auto}
+.welcome-enter:disabled{opacity:.6;cursor:progress}
+.welcome-alert{margin-top:12px;font-size:12.5px;color:#F3C53F}
+@media(max-width:600px){
+  .welcome-form{gap:8px;margin-top:20px}
+  .welcome-input{flex:1 1 100%;padding:13px 17px;font-size:14px}
+  .welcome-form .welcome-enter{flex:1 1 100%;justify-content:center}
+}

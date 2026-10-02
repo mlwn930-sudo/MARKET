@@ -126,6 +126,20 @@ jobs:
         continue-on-error: true
         run: npm run watch
 
+      # Mail goes out only when both keys exist and the scan found
+      # something not already sent. Never fails the job: a research site
+      # that stops refreshing because an email bounced has its priorities
+      # backwards.
+      - name: Send alerts
+        continue-on-error: true
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_OWNER_EMAIL: ${{ secrets.ALERT_OWNER_EMAIL }}
+          ALERT_FROM: ${{ secrets.ALERT_FROM }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+        run: npm run alerts
+
       - name: Commit if anything changed
         if: steps.preflight.outputs.ready == 'true'
         run: |
