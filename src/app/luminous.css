@@ -640,3 +640,178 @@ body:not(:has(.gta-cover)) .source-meta,
 body:not(:has(.gta-cover)) .signal-source {
   color: var(--color-ink-faint);
 }
+
+/* ====================================================================
+   LATE OVERRIDES
+
+   These were written in financial.css and did nothing. layout.tsx imports
+   luminous.css AFTER it, so at equal specificity every night rule above
+   won — and both of these are night rules that happen to disagree with an
+   earlier night rule. The scope was right, the file was not.
+
+   Anything that redefines the night material belongs here, after the
+   definition it is replacing.
+   ==================================================================== */
+
+/* ── The index band, as a tape ─────────────────────────────────────────
+   It was four cards in a bordered row, ninety pixels tall, carrying four
+   numbers that move by fractions of a percent. That is the shape of a
+   template rather than of a market page: a trading desk gives the same
+   information a thin strip and spends the height on what changed.
+
+   So the figures go inline at mono weight, the labels shrink to what a
+   ticker tape carries, the sparkline becomes a trace rather than a chart,
+   and the enclosing border is replaced by a rule above and below — the
+   difference between a strip of information and four boxes of it.
+
+   Declared after the dark layer and scoped the same way so it wins
+   without having to be marked important. */
+body:not(:has(.gta-cover)) .index-rail{
+  display:flex;
+  align-items:stretch;
+  gap:0;
+  border:0;
+  border-block:1px solid var(--color-border-default);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+body:not(:has(.gta-cover)) .index-rail::-webkit-scrollbar{display:none}
+
+body:not(:has(.gta-cover)) .index-tile{
+  flex:1 1 0;
+  min-width:168px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 16px;
+  border:0;
+  border-inline-end:1px solid var(--color-border-default);
+  background:transparent;
+  box-shadow:none;
+}
+body:not(:has(.gta-cover)) .index-tile:last-child{border-inline-end:0}
+body:not(:has(.gta-cover)) .index-tile:hover{
+  background:color-mix(in srgb,var(--color-text-primary) 4%,transparent);
+  transform:none;
+  box-shadow:none;
+}
+
+/* The name shrinks to a tape label; the exchange line goes entirely —
+   "QQQ · ETF" under every tile was four repetitions of a fact nobody
+   reads twice. */
+body:not(:has(.gta-cover)) .index-title{
+  font-size:11px;
+  font-weight:500;
+  color:var(--color-text-subtle);
+  white-space:nowrap;
+  letter-spacing:.01em;
+}
+body:not(:has(.gta-cover)) .index-title small{display:none}
+
+body:not(:has(.gta-cover)) .index-tile>strong{
+  font-size:15px;
+  font-weight:600;
+  margin-inline-start:auto;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.01em;
+}
+body:not(:has(.gta-cover)) .index-tile>span:nth-child(3){
+  font-size:12px;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+/* A trace, not a chart. At this height it says direction and nothing
+   else, which is all a tape should claim. */
+body:not(:has(.gta-cover)) .index-spark{
+  width:46px;
+  height:16px;
+  opacity:.72;
+  flex-shrink:0;
+}
+@media(max-width:800px){
+  body:not(:has(.gta-cover)) .index-tile{min-width:148px;padding:10px 12px;gap:7px}
+  body:not(:has(.gta-cover)) .index-spark{display:none}
+}
+
+/* ── From boxes to rules ───────────────────────────────────────────────
+   The homepage carried twenty-four fully bordered regions. That is the
+   single most recognisable signature of a generated layout: every area
+   sealed in its own container, each one the same weight, so a long page
+   reads as a tray of tiles rather than as a page.
+
+   The distinction that matters is what the border is FOR.
+
+   In a list of peers it is the separation — twelve companies need to be
+   told apart. But a box per row says "twelve objects" when the truth is
+   "one register with twelve lines", and a register is what a market list
+   actually is. So the enclosure goes and a single hairline between rows
+   stays: the same information, one twelfth of the furniture.
+
+   Declared after the night layer and scoped identically, so it wins on
+   order rather than on !important. */
+body:not(:has(.gta-cover)) .company-tile{
+  border:0;
+  border-top:1px solid var(--color-border-default);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  padding:9px 10px;
+}
+body:not(:has(.gta-cover)) .company-tile::before{display:none}
+body:not(:has(.gta-cover)) .company-grid > .company-tile:first-child,
+body:not(:has(.gta-cover)) .company-grid > .company-tile:nth-child(2){
+  border-top:0;
+}
+body:not(:has(.gta-cover)) .company-tile:hover{
+  background:color-mix(in srgb,var(--color-text-primary) 5%,transparent);
+  transform:none;
+  box-shadow:none;
+  border-color:var(--color-border-default);
+}
+/* The grid gap existed to keep boxes apart. With rules the gap becomes a
+   break in the rule, which is worse than no rule — so it closes. */
+body:not(:has(.gta-cover)) .company-grid{gap:0 24px}
+
+
+/* A panel that holds a list is a register, not a card.
+
+   The distinction is doing real work here, so it is worth stating. Six of
+   the bordered regions on the homepage are choices a reader clicks — a
+   border around each is what separates one choice from the next, and it
+   stays. Three were lists: one of them a thousand pixels tall with
+   thirty-three rows inside it. A box around thirty-three rows does not
+   separate anything from anything; it just draws a rectangle around the
+   page.
+
+   `:has()` is what lets the stylesheet tell them apart without a new class
+   on every call site, and this project already depends on it for the whole
+   night scope. Counting links was the first attempt and it matched nothing:
+   `:nth-of-type` counts siblings of one parent, and these rows each sit in
+   a wrapper of their own. What actually identifies a register is the table
+   or the scroller inside it, which is also the more honest test — it asks
+   what the panel IS rather than how much it happens to contain.
+
+   The top rule stays because the register still has to begin somewhere —
+   what goes is the enclosure, the shadow and the inner gradient that made
+   it read as an object sitting on the page. */
+body:not(:has(.gta-cover)) .surface:has(table),
+body:not(:has(.gta-cover)) .surface:has(> .overflow-x-auto) {
+  border: 0;
+  border-top: 1px solid var(--color-border-default);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* The session chart. A panel whose whole content is one chart does not
+   need a frame drawn around the frame the chart already has. */
+body:not(:has(.gta-cover)) .signal-canvas {
+  border: 0;
+  border-top: 1px solid var(--color-border-default);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
