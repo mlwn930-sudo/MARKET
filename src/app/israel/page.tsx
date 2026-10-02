@@ -3,39 +3,47 @@ import {
   TASE_LEADERS,
   getTaseBoard,
   sessionFromData,
-  type TaseQuote,
 } from "@/lib/sources/tase";
 import { DUAL_LISTED } from "@/lib/tase-universe";
 import { getBoardQuotes, type BoardQuote } from "@/lib/sources/board-quotes";
 import { getMacroBoard } from "@/lib/sources/macro";
 import { getIsraelNews } from "@/lib/israel-news";
 import { buildCrossListing } from "@/lib/analysis/cross-listing";
+import {
+  rangePosition,
+  readSectors,
+  readSession,
+  readShekel,
+  type LocalName,
+} from "@/lib/analysis/tel-aviv";
 import { GradeChip, DerivedMark } from "@/components/SignalCard";
+import { Sparkline } from "@/components/Sparkline";
+import { TaseSession } from "@/components/market/TaseSession";
+import { TaseBoard } from "@/components/market/TaseBoard";
+import { ShekelPanel } from "@/components/market/ShekelPanel";
 import {
   Band,
+  Delta,
   Disclaimer,
   Empty,
   Field,
   Hero,
+  MarketStatus,
   MoreLink,
   Page,
   Section,
+  Stat,
   StatBar,
   StatCell,
 } from "@/components/ui";
-import {
-  directionClass,
-  fmtCompact,
-  fmtPercent,
-  fmtRelative,
-} from "@/lib/format";
+import { directionClass, fmtPercent, fmtRelative } from "@/lib/format";
 
 export const revalidate = 120;
 
 export const metadata = {
   title: "הבורסה בתל אביב",
   description:
-    "ת״א 35, ת״א 125 והמניות המובילות — מחירים בשקלים, הצמד הכפול מול וול סטריט, חדשות על החברות הישראליות ושער הדולר כחלק מהתשואה.",
+    "ת״א 35 ות״א 125, רוחב המסחר המקומי מול המדד המשוקלל, הסקטורים עם מספר לכל אחד, שער הדולר כחלק מהתשואה על נכס אמריקאי, והצמד הכפול מול וול סטריט.",
 };
 
 /** Shekels, always with the sign and two decimals. Israeli quotes arrive
@@ -56,80 +64,44 @@ function dollar(value: number | null): string {
   })}`;
 }
 
-function Row({ quote, sector }: { quote: TaseQuote; sector: string }) {
-  const range =
-    quote.yearHigh !== null &&
-    quote.yearLow !== null &&
-    quote.price !== null &&
-    quote.yearHigh > quote.yearLow
-      ? (quote.price - quote.yearLow) / (quote.yearHigh - quote.yearLow)
-      : null;
-
-  const dual = DUAL_LISTED.find((entry) => entry.symbol === quote.symbol);
-
-  return (
-    <div className="row grid-cols-[1fr_auto] gap-4 sm:grid-cols-[1.3fr_auto_auto_auto]">
-      <span className="min-w-0">
-        <span className="flex flex-wrap items-center gap-2">
-          <span className="text-[13px] font-medium text-ink">{quote.name}</span>
-          {/* The badge that matters most on this page: it is the
-              difference between a price and a full analysis. */}
-          {dual && (
-            <Link
-              href={`/company/${dual.usTicker}`}
-              className="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
-              title={`${quote.name} נסחרת גם בניו יורק ומגישה ל-SEC — יש לה ניתוח מלא באתר`}
-            >
-              {dual.usTicker}
-            </Link>
-          )}
-        </span>
-        <span className="num block text-[11px] text-ink-faint" dir="ltr">
-          {quote.symbol.replace(".TA", "")} · {sector}
-        </span>
-      </span>
-
-      <span className="text-end">
-        <span className="num block text-[14px] text-ink">
-          {shekel(quote.price)}
-        </span>
-        <span
-          className={`num block text-[11px] ${directionClass(quote.changePercent)}`}
-        >
-          {fmtPercent(quote.changePercent)}
-        </span>
-      </span>
-
-      {/* Where it sits in its own year. The single most useful piece of
-          context a price can carry, and the cheapest to compute. */}
-      <span className="hidden w-32 self-center sm:block">
-        {range === null ? (
-          <span className="text-[11px] text-ink-ghost">—</span>
-        ) : (
-          <>
-            <span className="relative block h-[3px] w-full rounded-full bg-track">
-              <span
-                className="absolute top-1/2 h-2.5 w-[2px] -translate-y-1/2 rounded-full bg-ink"
-                style={{ insetInlineStart: `${Math.max(0, Math.min(range, 1)) * 100}%` }}
-              />
-            </span>
-            <span className="num mt-1 block text-[10px] text-ink-ghost">
-              {shekel(quote.yearLow)} – {shekel(quote.yearHigh)}
-            </span>
-          </>
-        )}
-      </span>
-
-      <span className="hidden text-end sm:block">
-        <span className="block text-[10px] text-ink-ghost">מחזור</span>
-        <span className="num block text-[12px] text-ink-muted">
-          {quote.volume === null ? "—" : fmtCompact(quote.volume)}
-        </span>
-      </span>
-    </div>
-  );
+/** An index level, which is points rather than money. */
+function points(value: number | null): string {
+  if (value === null || !Number.isFinite(value)) return "—";
+  return value.toLocaleString("en-US", { maximumFractionDigits: 2 });
 }
 
+/**
+ * The local market.
+ *
+ * The page was four things stacked up — an index strip, fourteen prices, a
+ * shekel rate and a news block — and every figure on it was a print that
+ * had nothing to be measured against. That is the one failure this project
+ * names as a rule rather than a preference: a figure alone is a datum, a
+ * figure beside its comparison is knowledge, and a page that never crossed
+ * that line had no reason to be visited twice.
+ *
+ * So the order is now an argument rather than an inventory.
+ *
+ * What the session did, first, because breadth and an equal-weight average
+ * are the two things the index itself cannot tell you — and the gap between
+ * the index and that average is the concentration this market is famous
+ * for, measured here instead of asserted.
+ *
+ * The shekel second, and not as a widget. For a reader who spends shekels,
+ * the dollar rate is half the return on every American asset they hold, and
+ * the arithmetic that turns an index's dollar move into their actual return
+ * appears nowhere else on this site.
+ *
+ * Then the sectors with a figure each, then the names with a month of shape
+ * beside each price, then the dual-listed pair table — which is the bridge
+ * from this page to the rest of the apparatus, because a company that files
+ * with SEC is a company this site can genuinely analyse.
+ *
+ * What stays absent stays absent, and is spelled out at the bottom. Six of
+ * the fourteen file nothing this site can read: they get a price, a trend
+ * and a turnover ratio, and no Core Test, thesis or sector median, because
+ * there is nothing to compute those from. Rule 9.
+ */
 export default async function IsraelPage() {
   const usTickers = DUAL_LISTED.map((entry) => entry.usTicker);
 
@@ -137,9 +109,7 @@ export default async function IsraelPage() {
     getTaseBoard(),
     /* One spark request for all eight, through the shared board cache —
        the same path the market map uses, for the same reason. */
-    getBoardQuotes(usTickers).catch(
-      () => ({}) as Record<string, BoardQuote>,
-    ),
+    getBoardQuotes(usTickers).catch(() => ({}) as Record<string, BoardQuote>),
     getMacroBoard().catch(() => ({ instruments: [], builtAt: "" })),
     getIsraelNews().catch(() => null),
   ]);
@@ -155,28 +125,92 @@ export default async function IsraelPage() {
 
   const session = sessionFromData(latestTrade);
 
-  const leaders = board.leaders
-    .map((quote, i) => ({ quote, meta: TASE_LEADERS[i] }))
-    .filter(
-      (row): row is { quote: TaseQuote; meta: (typeof TASE_LEADERS)[number] } =>
-        row.quote !== null,
-    );
+  const flagship = board.indices[0] ?? null;
+  const broad = board.indices[1] ?? null;
 
-  const sectors = [...new Set(leaders.map((row) => row.meta.sector))];
-
-  const advancing = leaders.filter(
-    (row) => (row.quote.changePercent ?? 0) > 0,
-  ).length;
+  /* The quote joined to the curated row, once, here. Everything downstream
+     — the session read, the sector read, the board — takes this shape and
+     never has to know that the price and the sector label arrive from two
+     different places, or that half the quotes can be null. */
+  const names: LocalName[] = board.leaders.flatMap((quote, index) => {
+    const meta = TASE_LEADERS[index];
+    if (!quote || !meta) return [];
+    return [
+      {
+        symbol: quote.symbol,
+        name: quote.name,
+        sector: meta.sector,
+        usTicker: meta.usTicker,
+        price: quote.price,
+        changePercent: quote.changePercent,
+        windowChangePercent: quote.windowChangePercent,
+        windowSessions: quote.windowSessions,
+        yearHigh: quote.yearHigh,
+        yearLow: quote.yearLow,
+        volume: quote.volume,
+        averageVolume: quote.averageVolume,
+        closes: quote.closes,
+      },
+    ];
+  });
 
   const missing = board.leaders.filter((quote) => quote === null).length;
+
+  const sessionRead = readSession({
+    names,
+    missing,
+    flagship:
+      flagship === null
+        ? null
+        : { name: flagship.name, changePercent: flagship.changePercent },
+  });
+
+  /* The denominator is the quoted list, not the curated fourteen, so the
+     share printed in the structure section matches the rows on screen.
+     How many failed to quote is reported separately and on its own. */
+  const sectors = readSectors(names, names.length);
+
+  /* The heaviest sector by headcount rather than by move — the structural
+     fact about this market, which is a different question from where today
+     went and therefore a different sort. */
+  const heaviest = [...sectors].sort(
+    (a, b) => b.names.length - a.names.length,
+  )[0];
 
   /* ---- The shekel ----
      Not decoration on this page. For a reader in Israel holding American
      stocks, the dollar rate is part of the return in exactly the way the
      share price is. */
-  const ils =
-    macro.instruments.find((instrument) => instrument.symbol === "ILS=X") ??
-    null;
+  const instrument = (symbol: string) =>
+    macro.instruments.find((entry) => entry.symbol === symbol) ?? null;
+
+  const ils = instrument("ILS=X");
+
+  const shekelRead = readShekel({
+    rate: ils?.value ?? null,
+    changePercent: ils?.changePercent ?? null,
+    yearLow: ils?.yearLow ?? null,
+    yearHigh: ils?.yearHigh ?? null,
+    /* Two American indices rather than one. They are the assets an Israeli
+       reader is most likely to actually hold in dollars, and the second one
+       is here because the pair disagreeing is itself informative. */
+    references: ["^GSPC", "^IXIC"].flatMap((symbol) => {
+      const found = instrument(symbol);
+      return found === null
+        ? []
+        : [
+            {
+              symbol: found.symbol,
+              name: found.name,
+              changePercent: found.changePercent,
+            },
+          ];
+    }),
+    local:
+      flagship === null
+        ? null
+        : { name: flagship.name, percent: flagship.changePercent },
+  });
 
   /* ---- The two prices ---- */
   const crossListing = buildCrossListing({
@@ -184,9 +218,7 @@ export default async function IsraelPage() {
     rateAsOf: ils?.at ?? null,
     taseOpen: session.state === "open",
     rows: DUAL_LISTED.map((entry) => {
-      const tase = board.leaders.find(
-        (quote) => quote?.symbol === entry.symbol,
-      );
+      const tase = board.leaders.find((quote) => quote?.symbol === entry.symbol);
       const us = usQuotes[entry.usTicker];
       return {
         taseSymbol: entry.symbol,
@@ -201,59 +233,128 @@ export default async function IsraelPage() {
     }),
   });
 
-  /* ---- Concentration ----
-     The flagship index is famously narrow. Measured from the curated list
-     rather than asserted, so the sentence carries a figure. */
-  const bySector = sectors.map((sector) => ({
-    sector,
-    count: leaders.filter((row) => row.meta.sector === sector).length,
-  }));
-  const biggest = [...bySector].sort((a, b) => b.count - a.count)[0];
+  const flagshipPosition =
+    flagship === null
+      ? null
+      : rangePosition(flagship.price, flagship.yearLow, flagship.yearHigh);
 
   return (
     <Page tint="#3b82f6" width="wide">
       <Hero
         eyebrow="תל אביב"
         title="השוק המקומי, באותם כלים"
-        lede="ת״א 35 ות״א 125 והמניות המובילות. המחירים בשקלים — הבורסה מדווחת באגורות וההמרה נעשית פעם אחת במקור — ולצידם הדבר שמבדיל את העמוד הזה: שמונה מהחברות נסחרות גם בניו יורק, ולכן יש להן כאן ניתוח מלא ואפשר להעמיד שני מחירים זה מול זה."
+        lede="ת״א 35 ות״א 125 וארבע-עשרה החברות המובילות, במחירים בשקלים — הבורסה מדווחת באגורות וההמרה נעשית פעם אחת במקור. מה שהעמוד מוסיף למחיר הוא ההקשר: רוחב המסחר מול המדד המשוקלל, מקום כל נייר בטווח השנה שלו, שער הדולר כחלק מהתשואה על כל נכס אמריקאי, ושמונה חברות שנסחרות גם בניו יורק ולכן יש להן כאן ניתוח מלא."
         image="/hero/tase.webp"
         imageAlt="הבורסה לניירות ערך בתל אביב"
+        meta={
+          <MarketStatus open={session.state === "open"} label={session.label} />
+        }
+        aside={
+          flagship === null ? undefined : (
+            /* The flagship index, with the shape of its month under it. A
+               level on its own says nothing about whether it arrived there
+               from above or from below, and that is the first thing a reader
+               opening a market page wants to know. */
+            <div className="surface p-5">
+              <div className="flex items-start justify-between gap-4">
+                <Stat
+                  label={flagship.name}
+                  value={points(flagship.price)}
+                  size="lg"
+                />
+                <Delta value={flagship.changePercent} />
+              </div>
+
+              {flagship.closes.length > 1 && (
+                <Sparkline
+                  points={flagship.closes}
+                  direction={
+                    flagship.windowChangePercent === null ||
+                    Math.abs(flagship.windowChangePercent) < 0.05
+                      ? "flat"
+                      : flagship.windowChangePercent > 0
+                        ? "up"
+                        : "down"
+                  }
+                  area
+                  className="mt-4 h-14 w-full"
+                />
+              )}
+
+              <p className="context-line mt-3">
+                {flagship.windowSessions} מסחרים אחרונים{" "}
+                <span className={`num ${directionClass(flagship.windowChangePercent)}`}>
+                  {fmtPercent(flagship.windowChangePercent)}
+                </span>
+                {flagshipPosition !== null && (
+                  <>
+                    {" · "}
+                    <span className="num">
+                      {Math.round(flagshipPosition * 100)}%
+                    </span>{" "}
+                    מטווח 52 השבועות שלו
+                  </>
+                )}
+              </p>
+            </div>
+          )
+        }
         stats={
           <StatBar>
-            {board.indices.map((index, i) =>
-              index ? (
-                <StatCell
-                  key={index.symbol}
-                  label={index.name}
-                  value={
-                    index.price === null
-                      ? "—"
-                      : index.price.toLocaleString("en-US", {
-                          maximumFractionDigits: 2,
-                        })
-                  }
-                  sub={
-                    <span className={`num ${directionClass(index.changePercent)}`}>
-                      {fmtPercent(index.changePercent)}
-                    </span>
-                  }
-                />
-              ) : (
-                <StatCell
-                  key={`missing-${i}`}
-                  label="מדד"
-                  value="—"
-                  sub="הנתון לא התקבל"
-                />
-              ),
+            {broad ? (
+              <StatCell
+                label={broad.name}
+                value={points(broad.price)}
+                sub={
+                  <span className={`num ${directionClass(broad.changePercent)}`}>
+                    {fmtPercent(broad.changePercent)}
+                  </span>
+                }
+              />
+            ) : (
+              <StatCell label="מדד רחב" value="—" sub="הנתון לא התקבל" />
             )}
+
+            {/* The cell the fallback below was written to stop.
+                When every quote fails the breadth read is 0 of 0, and the
+                masthead printed "0/0" under a sub-line explaining what the
+                denominator meant — a figure that looks measured, says
+                nothing, and is the exact print the section lower down
+                replaces itself to avoid. A count off nothing is not zero,
+                it is absent, so the cell falls back the way the broad index
+                beside it does. */}
+            {sessionRead.quoted > 0 ? (
+              <StatCell
+                label="רוחב המסחר"
+                value={`${sessionRead.advancing}/${sessionRead.quoted}`}
+                sub="ניירות בעלייה מתוך אלה שהחזירו ציטוט"
+              />
+            ) : (
+              <StatCell
+                label="רוחב המסחר"
+                value="—"
+                sub="אף נייר לא החזיר ציטוט, ולכן אין רוחב למדוד"
+              />
+            )}
+
             <StatCell
-              label="מניות בירוק"
-              value={`${advancing}/${leaders.length}`}
+              label="דולר / שקל"
+              value={
+                shekelRead.rate === null ? "—" : `₪${shekelRead.rate.toFixed(3)}`
+              }
+              sub={
+                <span
+                  className={`num ${directionClass(shekelRead.changePercent)}`}
+                >
+                  {fmtPercent(shekelRead.changePercent)}
+                </span>
+              }
             />
+
             <StatCell
-              label="מצב המסחר"
-              value={<span className="text-base">{session.label}</span>}
+              label="רישום כפול"
+              value={`${DUAL_LISTED.length}/${TASE_LEADERS.length}`}
+              sub="רק אלה מגישות ל-SEC, ולכן רק להן יש ניתוח מלא"
             />
           </StatBar>
         }
@@ -265,10 +366,83 @@ export default async function IsraelPage() {
         {missing > 0 && ` · ${missing} ניירות לא החזירו נתון ומוצגים כחסרים`}
       </p>
 
+      {/* ---- What the session did ---- */}
+      {/* When the feed fails, this page used to delete itself.
+
+          getTaseBoard has no top-level catch and a single non-ok response
+          turns every one of the fourteen leader quotes into null — so the
+          joined list empties, the sector list empties, and the page rendered
+          nothing at all while the header went on announcing "0/0 מניות
+          בירוק". A page that quietly loses its only content is worse than a
+          page that says it lost it, so the two sections that are actually
+          built from those quotes — this one and the board below — are
+          replaced by one that explains the absence.
+
+          Two sections, and the count is load-bearing. The shekel panel used
+          to be inside this branch and is not any more: it is built from the
+          macro feed and from board.indices, both fetched separately from
+          board.leaders, so it kept vanishing in the one scenario this
+          fallback exists for while every figure it needed had arrived. */}
+      {names.length === 0 ? (
+        <Section eyebrow="המסחר המקומי" title="הציטוטים לא נענו">
+          <Empty
+            title="אין כרגע ציטוטים מתל אביב"
+            reason="הציטוטים נמשכים דרך Yahoo, ובקשה אחת שנדחתה מרוקנת את כל הלוח. הנתונים חוזרים מעצמם בריענון הבא; שאר העמוד — המטבע, הצמד הכפול והחדשות — אינו תלוי בהם."
+            links={[
+              { href: "/heatmap", label: "מפת השוק" },
+              { href: "/macro", label: "מאקרו" },
+              { href: "/news", label: "חדשות" },
+            ]}
+          />
+        </Section>
+      ) : (
+        <Section
+          eyebrow="המסחר המקומי"
+          title="מה המדד לא מספר"
+          description="מדד משוקלל לפי שווי שוק הוא בעיקר שלושה בנקים. ממוצע שווה-משקל נותן לכל חברה קול אחד, והפער בין השניים הוא בדיוק הריכוזיות שהשוק הזה מוכר בה — נמדדת כאן ולא נטענת."
+        >
+          <TaseSession read={sessionRead} />
+        </Section>
+      )}
+
+      {/* ---- The shekel ----
+          Outside the branch above, on purpose. Every figure in this section
+          comes from the macro board (ILS=X) and from the flagship index, and
+          neither of those is board.leaders — so the fourteen leader quotes
+          failing says nothing about whether this panel has its data.
+          ShekelPanel reports its own absences: the three readings fall back
+          to dashes with a reason, and the conversion table is replaced by an
+          Empty when there is nothing to convert. */}
+      <Section
+        eyebrow="שער הדולר"
+        title="חצי מהתשואה על מניה אמריקאית"
+        description="למי שמודד בשקלים, תשואה דולרית נמדדת אחרי השינוי בשער, והשניים מוכפלים זה בזה ולא מחוברים. מניה שעלתה 8% בזמן שהדולר נחלש 5% הניבה 2.6%, לא 3%."
+        action={<MoreLink href="/macro">לוח המאקרו</MoreLink>}
+      >
+        <ShekelPanel read={shekelRead} />
+      </Section>
+
+      {/* ---- Sectors and names ---- */}
+      {names.length > 0 && (
+        <Section
+          eyebrow="סקטורים וחברות"
+          title="איפה היה היום, ומי זז בחודש"
+          description="כל סקטור נושא מספר במקום כותרת: כמה חברות בו, כמה מהן עלו, והממוצע שווה-המשקל שלו היום ובחודש. בכל שורה — המחיר, צורת החודש שהגיע אליו, המחזור מול הממוצע של אותו נייר, והמקום בטווח 52 השבועות שלו."
+        >
+          <TaseBoard sectors={sectors} />
+
+          <p className="caption mt-3">
+            המחזור מושווה לממוצע המסחרים שנסגרו בחלון של אותו נייר, ולא לממוצע
+            הענף — חברה שנסחרת בעשירית מהמחזור של בנק לאומי אינה חריגה, היא
+            פשוט קטנה ממנו. המסחר הנוכחי אינו נספר בממוצע כל עוד הוא פתוח.
+          </p>
+        </Section>
+      )}
+
       {/* ---- The cross listing ---- */}
       <Section
         eyebrow="הצמד הכפול"
-        title="אותה חברה, שני מחירים, שתי מטבעות"
+        title="אותה חברה, שני מחירים, שני מטבעות"
         description="שמונה מהחברות ברשימה נסחרות גם בוול סטריט ומגישות דוחות ל-SEC. זה מה שמאפשר להן ניתוח מלא באתר — ומאפשר להמיר את המחיר המקומי ולראות איזה צד כבר זז."
       >
         <div className="surface overflow-hidden">
@@ -399,63 +573,6 @@ export default async function IsraelPage() {
         </div>
       </Section>
 
-      {/* ---- The shekel ---- */}
-      {ils && (
-        <Section
-          eyebrow="שער הדולר"
-          title="חצי מהתשואה על מניה אמריקאית"
-          description="למשקיע שחי בשקלים, תשואה דולרית נמדדת אחרי השינוי בשער. מניה שעלתה 8% בזמן שהדולר נחלש 5% הניבה שלושה."
-          tight
-        >
-          <Band columns={3}>
-            <Field
-              label="דולר / שקל"
-              value={ils.value === null ? "—" : `₪${ils.value.toFixed(3)}`}
-              context={
-                ils.changePercent !== null
-                  ? `${fmtPercent(ils.changePercent)} היום`
-                  : undefined
-              }
-              tone="neutral"
-            />
-            <Field
-              label="טווח השנה"
-              value={
-                ils.yearLow !== null && ils.yearHigh !== null
-                  ? `${ils.yearLow.toFixed(2)} – ${ils.yearHigh.toFixed(2)}`
-                  : "—"
-              }
-              context="שער נמוך מיטיב עם מי שקונה דולרים, ופוגע במי שכבר מחזיק נכסים דולריים"
-            />
-            <Field
-              label="מה זה עושה לתיק"
-              value={
-                <span className="text-[13px] leading-snug text-ink-muted">
-                  {ils.note}
-                </span>
-              }
-            />
-          </Band>
-        </Section>
-      )}
-
-      {/* ---- The leaders ---- */}
-      {sectors.map((sector) => (
-        <Section key={sector} eyebrow="מניות" title={sector} tight>
-          <div className="surface overflow-hidden">
-            {leaders
-              .filter((row) => row.meta.sector === sector)
-              .map((row) => (
-                <Row
-                  key={row.quote.symbol}
-                  quote={row.quote}
-                  sector={row.meta.sector}
-                />
-              ))}
-          </div>
-        </Section>
-      ))}
-
       {/* ---- News ---- */}
       <Section
         eyebrow="חדשות"
@@ -550,11 +667,11 @@ export default async function IsraelPage() {
         <Band columns={3}>
           <Field
             label="הסקטור הכבד ברשימה"
-            value={biggest ? biggest.sector : "—"}
+            value={heaviest ? heaviest.sector : "—"}
             context={
-              biggest
-                ? `${biggest.count} מתוך ${leaders.length} החברות שהעמוד עוקב אחריהן. מדד צר נע לפי מעט מאוד סיפורים.`
-                : undefined
+              heaviest
+                ? `${heaviest.names.length} מתוך ${names.length} החברות שהעמוד עוקב אחריהן — ${Math.round(heaviest.share * 100)}% מהרשימה. מדד צר נע לפי מעט מאוד סיפורים.`
+                : "לא התקבלו ציטוטים, ולכן אין רשימה למדוד עליה ריכוזיות"
             }
           />
           <Field
@@ -563,9 +680,17 @@ export default async function IsraelPage() {
             context="רק לאלה יש כאן מבחן ליבה, תזה והשוואה לחציון — כי רק הן מגישות ל-SEC."
           />
           <Field
-            label="רוחב היום"
-            value={`${advancing}/${leaders.length}`}
-            context="כמה מהמניות ברשימה נסחרות בירוק. רוחב חיובי בשוק צר אומר פחות מאשר באותו רוחב בשוק רחב."
+            label="המדד מול שווה-המשקל"
+            value={
+              sessionRead.concentration === null
+                ? "—"
+                : `${sessionRead.concentration.difference > 0 ? "+" : sessionRead.concentration.difference < 0 ? "−" : ""}${Math.abs(sessionRead.concentration.difference).toFixed(2)}`
+            }
+            context={
+              sessionRead.concentration === null
+                ? "אין מדד ואין ממוצע להשוות ביניהם כרגע"
+                : "נקודות אחוז, מדד הדגל פחות הממוצע השווה. חיובי פירושו שהיום קרה בגדולות; שלילי, שהוא קרה בקטנות."
+            }
           />
         </Band>
 
@@ -573,15 +698,23 @@ export default async function IsraelPage() {
           <p>
             <span className="text-ink">מה שאין כאן, ולמה. </span>
             אין מבחן ליבה, אין תזה ואין חציוני סקטור לחברות שנסחרות רק בתל
-            אביב. כל אלה מחושבים מדוחות XBRL שמוגשים ל-SEC, והחברות המקומיות
-            אינן מגישות לשם. להוסיף מדדים בלי דוחות מובנים פירושו לנחש, והכלל
-            באתר הוא שמספר שאי אפשר לחשב נשאר חסר.
+            אביב — ובטבלה למעלה הן מסומנות ״מחיר בלבד״ ולא נשארות ריקות. כל
+            אלה מחושבים מדוחות XBRL שמוגשים ל-SEC, והחברות המקומיות אינן
+            מגישות לשם. להוסיף מדדים בלי דוחות מובנים פירושו לנחש, והכלל באתר
+            הוא שמספר שאי אפשר לחשב נשאר חסר.
           </p>
           <p>
             <span className="text-ink">מה שכן. </span>
             שמונה החברות עם הרישום הכפול — אלביט, נייס, נובה, קמטק, טאואר,
             טבע, כיל ואורמת — מקבלות את מלוא הטיפול תחת הסימבול האמריקאי שלהן.
-            הטבלה למעלה היא הגשר: לחיצה על שם מגיעה לניתוח המלא.
+            טבלת הצמד הכפול היא הגשר: לחיצה על שם מגיעה לניתוח המלא.
+          </p>
+          <p>
+            <span className="text-ink">מה שנמדד ולא נאמד. </span>
+            הרוחב, הממוצע השווה, המחזור מול הממוצע והמקום בטווח השנה חושבו
+            מציטוטים שהתקבלו, ולא מהערכה. אין בעמוד הזה ציון, דירוג או ניקוד
+            מורכב — לא מפני שאי אפשר לחשב אחד, אלא מפני שציון מסתיר את
+            החישוב שהוביל אליו, והחישוב הוא כל מה שיש כאן.
           </p>
           <p className="text-ink-faint">
             החדשות בעמוד הזה נשאלות לפי אותם שמונה סימבולים. בנק שנסחר רק בתל
@@ -590,7 +723,7 @@ export default async function IsraelPage() {
         </div>
       </Section>
 
-      <Disclaimer extra="הנתונים מהבורסה בתל אביב מתקבלים ממקור ציבורי בהשהיה ואינם מסחר בזמן אמת. הפער בין שני הרישומים אינו הזדמנות ארביטראז׳ — הוא מודד בעיקר את הפרש שעות הסגירה. אין באמור המלצה לקנות או למכור נייר ערך כלשהו." />
+      <Disclaimer extra="הנתונים מהבורסה בתל אביב מתקבלים ממקור ציבורי בהשהיה ואינם מסחר בזמן אמת. המרת תשואה דולרית לשקלים היא אריתמטיקה על מחירים ולא המלצה לגדר מטבע. הפער בין שני הרישומים אינו הזדמנות ארביטראז׳ — הוא מודד בעיקר את הפרש שעות הסגירה. אין באמור המלצה לקנות או למכור נייר ערך כלשהו." />
     </Page>
   );
 }

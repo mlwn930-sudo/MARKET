@@ -156,24 +156,72 @@ async function main() {
     }
   }
 
-  // Medians per sector. median() returns null below three usable peers,
-  // so a thin sector simply has no benchmark rather than a fake one.
+  /**
+   * Medians per sector, over the peers whose filings are recent enough to
+   * describe the company as it is now.
+   *
+   * The `stale` flag on a company is a 120-day reporting-lag warning, which
+   * is the right thing to show a reader and far too blunt to filter a
+   * benchmark: a company that last filed in Q1 is six months old and still
+   * perfectly comparable. What is not comparable is an extraction that
+   * stopped years ago. Four banks arrive that way — JPM's newest usable
+   * figures end 2014-12-31, Morgan Stanley's 2018-03-31, Wells Fargo's
+   * 2020-09-30 — because their XBRL tagging differs from the tags these
+   * formulas read.
+   *
+   * The damage is not that the row is old. It is that a ratio mixes a
+   * current market cap with ancient earnings: JPM's P/E here is today's
+   * $890B over 2014 profits, and that number was in the financials median,
+   * which pulled it from 12.7 to 14.4 — so every bank on the site was
+   * measured against a benchmark partly built from a twelve-year-old
+   * filing.
+   *
+   * STALE_DAYS is the line between a lag and a failure. A company filing
+   * annually is always inside fifteen months; past eighteen, something is
+   * broken rather than late. Excluded peers keep their own row and their
+   * own figures, and the company page already says the filing is old — they
+   * simply stop defining the bar for everyone else.
+   */
+  const STALE_DAYS = 540;
+  const current = (c: (typeof companies)[number]) =>
+    c.asOf !== null &&
+    (Date.now() - new Date(c.asOf).getTime()) / 86_400_000 <= STALE_DAYS;
+
   const sectors: Record<
     string,
-    { label: string; count: number; medians: Record<string, number | null> }
+    {
+      label: string;
+      count: number;
+      medians: Record<string, number | null>;
+      /** Peers the medians were actually computed over, so the number of
+       *  companies in a sector and the number behind its benchmark can be
+       *  told apart on the page. */
+      medianBase: number;
+    }
   > = {};
 
   for (const key of Object.keys(SECTOR_LABELS)) {
     const members = companies.filter((c) => c.sector === key);
+    // median() returns null below three usable peers, so a sector thinned
+    // past the point of having a benchmark gets none rather than a fake one.
+    const base = members.filter(current);
     const medians: Record<string, number | null> = {};
     for (const metric of COMPARABLE) {
-      medians[metric] = median(members.map((m) => m.metrics[metric] ?? null));
+      medians[metric] = median(base.map((m) => m.metrics[metric] ?? null));
     }
     sectors[key] = {
       label: SECTOR_LABELS[key as keyof typeof SECTOR_LABELS],
       count: members.length,
       medians,
+      medianBase: base.length,
     };
+    const dropped = members.length - base.length;
+    if (dropped > 0) {
+      console.log(
+        `  ${key}: median over ${base.length}/${members.length} peers` +
+          ` (${members.filter((c) => !current(c)).map((c) => c.ticker).join(", ")} filed too long ago)`,
+      );
+    }
   }
 
   // A run that lost most of the universe would poison every median, so the

@@ -37,6 +37,8 @@ export default async function BriefPage() {
   return (
     <Page tint="#06b6d4" width="wide">
       <Hero
+        image="/hero/wall-street.webp"
+        imageAlt="וול סטריט"
         eyebrow="תדריך"
         /* The headline of this page is the one place on the site where a
            model writes the largest type on the screen. It gets the mark

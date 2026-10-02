@@ -34,6 +34,8 @@ export default async function SectorsPage() {
   return (
     <Page tint="#2855f5" width="wide">
       <Hero
+        image="/hero/markets.webp"
+        imageAlt="מפת הסקטורים"
         eyebrow="סקטורים"
         title="איפה הכסף זז היום, ולמה"
         lede="תשעה סקטורים, ממוינים לפי התנועה של היום. התנועה מחושבת כממוצע שווה בין החברות ולא לפי שווי שוק — ביום שבו ענקית אחת עולה ותשע חברות יורדות, הממוצע המשוקלל היה אומר שהסקטור עלה, וזה נכון וחסר תועלת."

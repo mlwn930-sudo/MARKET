@@ -90,7 +90,10 @@ export function whyMoving({
   sectorLabel: string | null;
   peersAdvancing: number;
   peersQuoted: number;
-  /** Stories naming this company, newest first. */
+  /** Stories naming this company, newest first — all of them, not a page's
+   *  worth. The driver below prints how many were filed in the last
+   *  thirty-six hours, and handed a display slice of eight it would print at
+   *  most eight however many were written. */
   articles: EnrichedArticle[];
   /** Today's turnover against its own recent average. */
   volume?: { today: number; average: number } | null;

@@ -41,6 +41,31 @@ export type TaseQuote = {
   yearHigh: number | null;
   yearLow: number | null;
   volume: number | null;
+  /**
+   * The window's typical daily turnover, for comparing today's against.
+   *
+   * A volume of 1.2M on its own is the thing rule 5 of this project
+   * forbids: a figure with nothing to measure it against. Against its own
+   * month it becomes a sentence — a third of normal, or twice it.
+   *
+   * Computed from the completed sessions only. The current bar is partial
+   * for most of the day, and averaging it in drags the baseline down by
+   * however much of the session is still ahead.
+   */
+  averageVolume: number | null;
+  /**
+   * The daily closes in the window, oldest first, in shekels.
+   *
+   * Here so the page can draw the shape of the month beside the price.
+   * A row that says "+1.2%" and a row that says "+1.2% after falling for
+   * three weeks" are different facts, and the second one is the one a
+   * medium-term reader came for.
+   */
+  closes: number[];
+  /** First close in the window to the last, as a percentage. */
+  windowChangePercent: number | null;
+  /** How many sessions that change covers. Printed, never assumed. */
+  windowSessions: number;
   /** True for an index: no agora conversion, and no volume worth showing. */
   isIndex: boolean;
   /** ISO string, not a Date.
@@ -86,7 +111,14 @@ async function fetchOne(
 ): Promise<TaseQuote | null> {
   try {
     const res = await fetch(
-      `${CHART}/${encodeURIComponent(symbol)}?range=5d&interval=1d`,
+      /* A month rather than a week.
+         The window used to be five days, which is enough to recover the
+         day's move when the session is shut and nothing more. A month of
+         daily bars costs the same single request and pays for three things
+         the page could not show before: the shape of the trend beside the
+         price, a change over a stated number of sessions, and a turnover
+         baseline to measure today's volume against. */
+      `${CHART}/${encodeURIComponent(symbol)}?range=1mo&interval=1d`,
       {
         headers: { "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)" },
         next: { revalidate: 120 },
@@ -108,17 +140,15 @@ async function fetchOne(
      * closed. The last two daily closes give the move of the session that
      * actually happened, which is what a reader on a weekend wants.
      */
-    const closes: number[] = (result?.indicators?.quote?.[0]?.close ?? []).filter(
+    const raw: number[] = (result?.indicators?.quote?.[0]?.close ?? []).filter(
       (value: unknown): value is number =>
         typeof value === "number" && Number.isFinite(value),
     );
 
     const fromMeta = meta.regularMarketChangePercent;
     const derived =
-      closes.length >= 2
-        ? ((closes[closes.length - 1] - closes[closes.length - 2]) /
-            closes[closes.length - 2]) *
-          100
+      raw.length >= 2
+        ? ((raw[raw.length - 1] - raw[raw.length - 2]) / raw[raw.length - 2]) * 100
         : null;
 
     const changePercent =
@@ -131,17 +161,55 @@ async function fetchOne(
     const shekels = (value: number | undefined) =>
       value === undefined || !Number.isFinite(value) ? null : value / divisor;
 
+    /* The closes a page may draw, in the same unit as the price beside
+       them. A sparkline of agorot under a shekel figure is a chart of a
+       different instrument. */
+    const closes = raw.map((value) => value / divisor);
+
+    const windowChangePercent =
+      closes.length >= 2 && closes[0] !== 0
+        ? ((closes[closes.length - 1] - closes[0]) / closes[0]) * 100
+        : null;
+
+    /* Turnover, averaged over the sessions that finished.
+       The volume array runs parallel to the close array, so the last entry
+       belongs to the bar in progress; it is dropped rather than averaged
+       in, because a half-finished session would pull the baseline below
+       every full one and make an ordinary day look busy. */
+    const volumes: number[] = (result?.indicators?.quote?.[0]?.volume ?? []).filter(
+      (value: unknown): value is number =>
+        typeof value === "number" && Number.isFinite(value) && value > 0,
+    );
+    const completed = volumes.slice(0, -1);
+    const averageVolume =
+      isIndex || completed.length === 0
+        ? null
+        : completed.reduce((total, value) => total + value, 0) / completed.length;
+
     return {
       symbol,
       name: label,
       price: shekels(meta.regularMarketPrice),
       changePercent,
-      previousClose: shekels(meta.chartPreviousClose),
+      /* The previous close, taken from the window rather than from
+         `chartPreviousClose`. That field means "the close before the range
+         started", which with a month-long range is the close before the
+         month — a month-old price under the label "previous close" is a
+         wrong number, and the mistake is invisible because it is still a
+         plausible one. */
+      previousClose:
+        closes.length >= 2
+          ? closes[closes.length - 2]
+          : shekels(meta.chartPreviousClose),
       dayHigh: shekels(meta.regularMarketDayHigh),
       dayLow: shekels(meta.regularMarketDayLow),
       yearHigh: shekels(meta.fiftyTwoWeekHigh),
       yearLow: shekels(meta.fiftyTwoWeekLow),
       volume: isIndex ? null : (meta.regularMarketVolume ?? null),
+      averageVolume,
+      closes,
+      windowChangePercent,
+      windowSessions: Math.max(closes.length - 1, 0),
       isIndex,
       at: meta.regularMarketTime
         ? new Date(meta.regularMarketTime * 1000).toISOString()
@@ -204,7 +272,11 @@ export const getTaseBoard = unstable_cache(
 
     return { indices, leaders, fetchedAt: new Date().toISOString() };
   },
-  ["tase-board", "v1"],
+  /* v2 — the quote carries a month of closes, a turnover baseline and a
+     window change now. A cached v1 entry has none of those fields, and a
+     page that reads `closes.length` off it would throw rather than show a
+     dash, so the key moves instead of the shape being made optional. */
+  ["tase-board", "v2"],
   { revalidate: 120, tags: ["quotes", "tase"] },
 );
 

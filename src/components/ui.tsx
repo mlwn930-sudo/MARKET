@@ -247,7 +247,24 @@ export function Hero({
     </>
   );
 
-  if (tone === "light") {
+  /**
+   * A page that supplies a photograph gets the band that can show one.
+   *
+   * `image` was accepted, documented, and passed by four pages — and
+   * rendered by none of them. The `<Image>` lived only in the dark branch,
+   * `tone` defaulted to "light", and no page on the site ever asked for
+   * dark. So nine photographs sat in public/hero/ at about two megabytes,
+   * committed, shipped and invisible, while every page opened on a flat
+   * text block. That disconnect is most of why the site reads as generic:
+   * the art direction was written and then never reached the screen.
+   *
+   * Supplying a photograph is now the request. A page that passes one gets
+   * the band; a page that does not keeps the quiet heading, which is right
+   * for the pages that are mostly figures.
+   */
+  const band = tone === "dark" || Boolean(image);
+
+  if (!band) {
     return <header className="product-heading">{body}</header>;
   }
 
@@ -624,6 +641,40 @@ export function AiMark({ title = "נכתב על ידי מודל" }: { title?: st
       </svg>
       <span className="sr-only">{title}</span>
     </span>
+  );
+}
+
+/**
+ * Model-written text in a slot too narrow for `AiBlock`.
+ *
+ * `AiBlock` is a card: a header rule, a body and a sources footer. In a
+ * column four items tall it costs more height than the text it frames, and
+ * the news page's side column answered that by dropping the marking and
+ * printing a bare clamped line — which is the one thing that is not
+ * allowed, since every passage a model wrote has to be marked as such.
+ *
+ * So this is the same claim at one tenth the weight: the mark, a label, and
+ * the cyan edge that means "a model wrote this" everywhere else on the site.
+ * Use it inside a row or a column; use `AiBlock` when the passage is the
+ * point of the section rather than a note within it.
+ */
+export function AiNote({
+  label = "קריאת מודל",
+  children,
+  className = "",
+}: {
+  label?: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`ai-note ${className}`}>
+      <span className="ai-note-head">
+        <AiMark />
+        <span>{label}</span>
+      </span>
+      <div className="ai-note-body">{children}</div>
+    </div>
   );
 }
 

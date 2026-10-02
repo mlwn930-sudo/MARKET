@@ -25,7 +25,7 @@ export default async function ResearchPage({ searchParams }: { searchParams: Pro
   const company = file.companies.find((item) => item.ticker === initial);
   const sector = company ? file.sectors[company.sector] : null;
   return <Page>
-    <Hero eyebrow="MARKET / RESEARCH DESK" title="שאלה טובה. ראיות חזקות. תזה שניתנת לבדיקה." lede="בוחרים חברה, מנסחים את מה שעדיין לא ברור ובודקים איפה הנתונים תומכים בסיפור — ואיפה הם מתנגשים בו." action={<EvidenceKey />} />
+    <Hero eyebrow="MARKET / RESEARCH DESK" title="שאלה טובה. ראיות חזקות. תזה שניתנת לבדיקה." lede="בוחרים חברה, מנסחים את מה שעדיין לא ברור ובודקים איפה הנתונים תומכים בסיפור — ואיפה הם מתנגשים בו." action={<EvidenceKey />} image="/hero/research.webp" imageAlt="שולחן המחקר" />
     <div className="research-desk">
       <section aria-labelledby="research-workspace"><div className="mb-5 flex items-center justify-between"><h2 id="research-workspace" className="title">על שולחן המחקר</h2><span className="micro-label">01 / INVESTIGATE</span></div>
         {!enabled && <div className="mb-6 border-s-2 border-event bg-element p-4"><p className="text-base">יצירת מחקר AI אינה זמינה כרגע.</p><p className="mt-2 text-sm text-ink-muted">אפשר להמשיך לנתונים, להשוואה ולתזה המחושבת בכל עמוד חברה.</p></div>}

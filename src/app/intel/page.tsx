@@ -50,6 +50,8 @@ export default async function IntelPage() {
   return (
     <Page tint="#8b5cf6">
       <Hero
+        image="/hero/ai-lab.webp"
+        imageAlt="חדר המודיעין"
         eyebrow="Market Intelligence"
         title={
           <>

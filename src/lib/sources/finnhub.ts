@@ -40,9 +40,35 @@ export type Quote = {
   at: Date;
 };
 
-async function finnhubFetch(path: string, revalidate: number) {
+/**
+ * What a caller may say about caching, when the default written at the call
+ * site below is wrong for it.
+ *
+ * `tags` is the half that is easy to get wrong. A wrapper such as
+ * `unstable_cache` carries tags of its own, and those tags are *not* passed
+ * down to the fetch inside it — Next collects fetch tags onto a parent cache
+ * or prerender store, and an `unstable-cache` store is explicitly skipped.
+ * So an untagged fetch inside a tagged wrapper survives `revalidateTag`: the
+ * wrapper is dropped, the callback re-runs, and the same payload comes back
+ * out of the data cache. A fetch that wants to be droppable has to carry the
+ * tags itself, which is what this passes through.
+ */
+export type CacheControl = {
+  /** Seconds. Replaces the default the call site chose. */
+  revalidate?: number;
+  /** Next data-cache tags on the request itself. */
+  tags?: string[];
+};
+
+async function finnhubFetch(
+  path: string,
+  revalidate: number,
+  tags?: string[],
+) {
   const url = `${BASE}${path}${path.includes("?") ? "&" : "?"}token=${apiKey()}`;
-  const res = await fetch(url, { next: { revalidate } });
+  const res = await fetch(url, {
+    next: tags && tags.length > 0 ? { revalidate, tags } : { revalidate },
+  });
   if (!res.ok) {
     throw new Error(`Finnhub ${res.status} ${res.statusText} for ${path}`);
   }
@@ -171,14 +197,25 @@ export async function getGeneralNews(): Promise<NewsItem[]> {
   }));
 }
 
+/**
+ * One company's wire, over a date window.
+ *
+ * Fifteen minutes by default, which is what the scheduled callers want: they
+ * sweep a dozen symbols in one pass and run on a timer of their own, so a
+ * quarter of an hour of reuse is free coverage. A caller that renders this
+ * inside a page is a different case — the page is what a reader is looking
+ * at — and passes its own window and its own tags through `cache`.
+ */
 export async function getCompanyNews(
   symbol: string,
   from: string,
   to: string,
+  cache: CacheControl = {},
 ): Promise<NewsItem[]> {
   const raw = await finnhubFetch(
     `/company-news?symbol=${encodeURIComponent(symbol)}&from=${from}&to=${to}`,
-    900,
+    cache.revalidate ?? 900,
+    cache.tags,
   );
   const items = z.array(newsItemSchema).parse(raw);
   return items.map((i) => ({ ...i, publishedAt: new Date(i.datetime * 1000) }));

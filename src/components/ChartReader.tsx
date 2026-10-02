@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
-import type { ChartRead } from "@/lib/analysis/chart-reader";
+import type {
+  ChartControl,
+  ChartRead,
+  ChartWatch,
+} from "@/lib/analysis/chart-reader";
 
 /**
  * Upload a chart, get it read back.
@@ -15,6 +19,14 @@ import type { ChartRead } from "@/lib/analysis/chart-reader";
  * The image is held as a data URL for the preview and sent as bare base64,
  * which is what the API wants. It is never uploaded anywhere else and never
  * stored.
+ *
+ * The read below is laid out in the order a desk delivers one: what it is,
+ * the one paragraph, the horizon, the pattern and its name, who is working
+ * the tape, then the structure and the levels that evidence it, then the
+ * observable events that would settle it — and last the three fields that
+ * keep it from being advice. Those three are rendered whether or not the
+ * model filled them, because a discipline field that disappears when it is
+ * empty is a discipline field that can be skipped by saying nothing.
  */
 
 const ACCEPT = "image/png,image/jpeg,image/webp";
@@ -37,6 +49,28 @@ const CONFIDENCE_LABEL: Record<ChartRead["confidence"], string> = {
   high: "ביטחון גבוה",
   medium: "ביטחון בינוני",
   low: "ביטחון נמוך",
+};
+
+/* Who is working the tape. Deliberately behavioural rather than
+   directional: "buyers absorbing supply" is something a chart can show,
+   "going up" is something only the future can. */
+const CONTROL_LABEL: Record<ChartControl["side"], string> = {
+  buyers: "קונים סופגים היצע",
+  sellers: "מוכרים מחלקים סחורה",
+  balance: "איזון בין הצדדים",
+  unclear: "לא חד־משמעי",
+};
+
+const WATCH_LABEL: Record<ChartWatch["direction"], string> = {
+  confirms: "יאשר את המבנה",
+  breaks: "ישבור את המבנה",
+  neutral: "לא יכריע",
+};
+
+const LEVEL_LABEL: Record<ChartRead["levels"][number]["kind"], string> = {
+  support: "תמיכה",
+  resistance: "התנגדות",
+  pivot: "ציר",
 };
 
 export function ChartReader() {
@@ -192,15 +226,52 @@ function List({ title, items, tone }: { title: string; items: string[]; tone?: s
     <section className="read-block" data-tone={tone}>
       <h3>{title}</h3>
       <ul>
-        {items.map((item) => (
-          <li key={item}>{item}</li>
+        {items.map((item, i) => (
+          <li key={`${i}-${item.slice(0, 24)}`}>{item}</li>
         ))}
       </ul>
     </section>
   );
 }
 
+/**
+ * One of the three fields that keep the read from being advice.
+ *
+ * It renders even when the model left it empty, and then it says what the
+ * silence costs. That is the point: a conflicts list that vanishes when
+ * nothing was found looks like a chart with no counter-evidence, which is
+ * almost never what it is.
+ */
+function Discipline({
+  title,
+  tone,
+  items,
+  silence,
+}: {
+  title: string;
+  tone: "conflict" | "invalidation" | "missing";
+  items: string[];
+  silence: string;
+}) {
+  return (
+    <section className="read-discipline-cell read-block" data-tone={tone}>
+      <h3>{title}</h3>
+      {items.length > 0 ? (
+        <ul>
+          {items.map((item, i) => (
+            <li key={`${i}-${item.slice(0, 24)}`}>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <p className="read-silence">{silence}</p>
+      )}
+    </section>
+  );
+}
+
 function ChartReadView({ read }: { read: ChartRead }) {
+  const { pattern, control, horizon } = read;
+
   return (
     <div className="chart-read">
       <header className="read-head">
@@ -222,27 +293,125 @@ function ChartReadView({ read }: { read: ChartRead }) {
 
       <p className="read-summary">{read.summary}</p>
 
-      <section className="read-block">
-        <h3>המבנה</h3>
-        <p>{read.structure}</p>
-        {read.phase && <p className="read-phase">{read.phase}</p>}
-      </section>
+      {horizon && (
+        <div className="read-horizon">
+          <span className="micro-label" dir="ltr">
+            HORIZON
+          </span>
+          <b>{horizon.label}</b>
+          {horizon.why && <small>{horizon.why}</small>}
+        </div>
+      )}
+
+      {pattern && (
+        <section className="read-block read-pattern">
+          <h3>הדפוס</h3>
+          <div className="read-pattern-head">
+            <strong>{pattern.name}</strong>
+            {pattern.term && (
+              <code className="read-term" dir="ltr">
+                {pattern.term}
+              </code>
+            )}
+          </div>
+
+          <dl className="read-pattern-grid">
+            {pattern.maturity && (
+              <div>
+                <dt>כמה ממנו מצויר</dt>
+                <dd>{pattern.maturity}</dd>
+              </div>
+            )}
+            {pattern.evidence && (
+              <div>
+                <dt>הסימן בגרף</dt>
+                <dd>{pattern.evidence}</dd>
+              </div>
+            )}
+            {pattern.lookalike && (
+              <div>
+                <dt>ממה להבדיל אותו</dt>
+                <dd>{pattern.lookalike}</dd>
+              </div>
+            )}
+          </dl>
+
+          {pattern.tendency && (
+            <div className="read-tendency">
+              <span className="micro-label" dir="ltr">
+                BASE BEHAVIOUR
+              </span>
+              <p>{pattern.tendency}</p>
+              <small>
+                נטיית הדפוס הזה כמחלקה, כפי שהיא מתוארת בספרות הטכנית. לא
+                מדידה על הגרף שלפניכם, לא סטטיסטיקה שחושבה כאן, ולא תחזית.
+              </small>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* The scale alone is worth drawing once a side is named, so this does
+          not wait for the sentence. What it does wait for is anything at
+          all: an all-empty control block would render three grey stops that
+          claim nothing. */}
+      {(control.side !== "unclear" || control.reading || control.evidence.length > 0) && (
+        <section className="read-block read-control">
+          <h3>מי שולט בסחר</h3>
+
+          <div
+            className="read-control-scale"
+            data-side={control.side}
+            role="img"
+            aria-label={`שליטה בסחר: ${CONTROL_LABEL[control.side]}`}
+          >
+            <span data-stop="buyers">קונים</span>
+            <span data-stop="balance">איזון</span>
+            <span data-stop="sellers">מוכרים</span>
+          </div>
+
+          <p className="read-control-reading">
+            <b>{CONTROL_LABEL[control.side]}.</b>
+            {control.reading ? ` ${control.reading}` : ""}
+          </p>
+
+          {control.evidence.length > 0 && (
+            <>
+              <h4 className="read-sub">הסימנים שמאחורי הקריאה</h4>
+              <ul>
+                {control.evidence.map((item, i) => (
+                  <li key={`${i}-${item.slice(0, 24)}`}>{item}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </section>
+      )}
+
+      {/* The structure sentence goes through the scrub like everything else,
+          and an advisory-only one comes back empty. A heading with nothing
+          under it is an unfinished thought, so the section waits for one of
+          its two lines, and the phase line carries it alone when the
+          structure sentence did not survive. */}
+      {(read.structure || read.phase) && (
+        <section className="read-block">
+          <h3>המבנה</h3>
+          {read.structure && <p>{read.structure}</p>}
+          {read.phase && <p className="read-phase">{read.phase}</p>}
+        </section>
+      )}
 
       {read.levels.length > 0 && (
         <section className="read-block">
           <h3>רמות שנקראות בגרף</h3>
           <div className="read-levels">
-            {read.levels.map((level) => (
-              <div className="read-level" key={`${level.kind}-${level.price}`}>
+            {read.levels.map((level, i) => (
+              <div className="read-level" key={`${i}-${level.kind}-${level.price}`}>
                 <b className="num" dir="ltr">
                   {level.price}
                 </b>
                 <span>
-                  {level.kind === "support"
-                    ? "תמיכה"
-                    : level.kind === "resistance"
-                      ? "התנגדות"
-                      : "ציר"}
+                  {LEVEL_LABEL[level.kind] ?? level.kind}
                   {level.touches ? ` · ${level.touches} נגיעות` : ""}
                 </span>
                 <small>{level.note}</small>
@@ -260,9 +429,85 @@ function ChartReadView({ read }: { read: ChartRead }) {
       )}
 
       <List title="אינדיקטורים בתמונה" items={read.indicators} />
-      <List title="איפה הראיות סותרות" items={read.conflicts} tone="conflict" />
-      <List title="מה יפריך את הקריאה" items={read.invalidation} tone="invalidation" />
-      <List title="מה התמונה לא יכולה להכריע" items={read.notVisible} tone="missing" />
+
+      {read.watch.length > 0 && (
+        <section className="read-block">
+          <h3>מה יסגור את השאלה</h3>
+          <p className="read-watch-note">
+            אירועים שאפשר להבחין בהם, לא פעולות. כל שורה כתובה כך שבעוד שבוע
+            אפשר לומר עליה &quot;זה קרה&quot; או &quot;זה לא קרה&quot;.
+          </p>
+          <ol className="read-watch">
+            {read.watch.map((item, i) => (
+              <li key={`${i}-${item.event.slice(0, 24)}`} data-direction={item.direction}>
+                <span className="read-watch-dir">{WATCH_LABEL[item.direction]}</span>
+                <strong>{item.event}</strong>
+                {item.means && <p>{item.means}</p>}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <section className="read-discipline">
+        <h3 className="read-discipline-title">משמעת הקריאה</h3>
+        <p className="read-discipline-note">
+          שלושת השדות האלה הם מה שמפריד קריאה מהבטחה. הם נכתבים גם כשהם לא
+          נוחים, ומוצגים כאן גם כשהקריאה השאירה אותם ריקים.
+        </p>
+        <div className="read-discipline-grid">
+          <Discipline
+            title="איפה הראיות סותרות"
+            tone="conflict"
+            items={read.conflicts}
+            silence="הקריאה לא מצאה סתירה בגרף. גרף שאין בו שום דבר שמושך לכיוון השני הוא בדרך כלל גרף שלא נקרא עד הסוף."
+          />
+          <Discipline
+            title="מה יפריך את הקריאה"
+            tone="invalidation"
+            items={read.invalidation}
+            /* The second half is a claim about what the code did, so it is
+               printed only when the code actually did it. A read that came
+               back "medium" with an empty invalidation list was never
+               capped, and the page used to tell the reader it was. */
+            silence={
+              read.confidenceCapped
+                ? "הקריאה לא נקבה במה שהיה מפריך אותה. קריאה שאי אפשר להפריך אינה קריאה — ורמת הביטחון למעלה הוגבלה בגלל זה."
+                : "הקריאה לא נקבה במה שהיה מפריך אותה. קריאה שאי אפשר להפריך אינה קריאה, וכדאי לקרוא את כל מה שלמעלה בהסתייגות הזאת."
+            }
+          />
+          <Discipline
+            title="מה התמונה לא יכולה להכריע"
+            tone="missing"
+            items={read.notVisible}
+            silence="הקריאה לא ציינה מה חסר בתמונה. חסרים בה בכל מקרה דוחות, חדשות, הקשר מאקרו וכל מה שקרה אחרי הצילום."
+          />
+        </div>
+      </section>
+
+      {read.redacted > 0 && (
+        <p className="read-redacted">
+          <span className="num" dir="ltr">
+            {read.redacted}
+          </span>{" "}
+          {read.redacted === 1 ? "משפט הוסר" : "משפטים הוסרו"} מהקריאה הזאת
+          אוטומטית, מפני שהשתמשו באוצר המילים של פעולה — נקודת כניסה, יעד, סטופ
+          או תזמון. הסינון מעדיף למחוק משפט תמים מלפרסם המלצה, והאתר לא מוסר
+          המלצות גם כשהמודל מציע אותן.
+        </p>
+      )}
+
+      {read.fabricated > 0 && (
+        <p className="read-redacted">
+          <span className="num" dir="ltr">
+            {read.fabricated}
+          </span>{" "}
+          {read.fabricated === 1 ? "משפט הוסר" : "משפטים הוסרו"} מנטיית הדפוס,
+          בגלל אחוז, שכיחות או מדגם שלא נמדדו כאן. נטיית דפוס היא התנהגות
+          המחלקה כפי שהיא מתוארת בספרות הטכנית — לא מדידה על הגרף שלפניכם ולא
+          סטטיסטיקה שחושבה כאן, ומספר שאין לו מקור לא מוצג באתר הזה.
+        </p>
+      )}
 
       <p className="data-caption">
         הקריאה נוצרה על ידי מודל שפה מתוך התמונה בלבד. היא מתארת את מה שנראה

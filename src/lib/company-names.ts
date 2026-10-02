@@ -120,6 +120,111 @@ export function detectTickers(text: string, limit = 4): string[] {
   return found.slice(0, limit);
 }
 
+/* ------------------------------------------------------------------ */
+/* Is a text about one particular company                              */
+/* ------------------------------------------------------------------ */
+
+/**
+ * First words of a registered name that are no test at all.
+ *
+ * "Advanced Micro Devices" would otherwise let through every article
+ * containing the word "advanced". The list is deliberately short: the full
+ * name and the ticker carry the work, and this only decides whether the
+ * single-word shortcut is safe to use.
+ */
+const WEAK_FIRST_WORD = new Set([
+  "advanced",
+  "allied",
+  "american",
+  "applied",
+  "capital",
+  "consolidated",
+  "digital",
+  "dynamic",
+  "eastern",
+  "first",
+  "general",
+  "global",
+  "integrated",
+  "international",
+  "national",
+  "northern",
+  "pacific",
+  "premier",
+  "southern",
+  "standard",
+  "summit",
+  "superior",
+  "united",
+  "universal",
+  "western",
+]);
+
+/** Everything in a registered name that is not the company. */
+const LEGAL_FORM =
+  /\b(incorporated|inc|corporation|corp|company|co|holdings|holding|group|plc|llc|ltd|limited|lp|sa|nv|ag|se|ab|oyj|class [a-c]|cl [a-c]|the)\b/g;
+
+/**
+ * What a registered name contributes to the test.
+ *
+ * The table above is aliases only and covers the companies a reader types by
+ * name. A page is opened for any ticker, and for the rest the name on the
+ * filing is the only name there is — so it is cleaned of its legal form and
+ * used as a key, plus its first word when that word is distinctive enough to
+ * stand alone.
+ */
+function nameKeys(name: string | null | undefined): string[] {
+  const cleaned = (name ?? "")
+    .toLowerCase()
+    .replace(/[.,&'"]/g, " ")
+    .replace(LEGAL_FORM, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const keys: string[] = [];
+  if (cleaned.length >= 4) keys.push(cleaned);
+
+  const first = cleaned.split(" ")[0] ?? "";
+  if (first.length >= 5 && !WEAK_FIRST_WORD.has(first)) keys.push(first);
+
+  return [...new Set(keys)];
+}
+
+/**
+ * Whether a text actually names one company.
+ *
+ * This is the question behind every "is this article about this stock" on the
+ * site, and it has exactly one answer here. `detectTickers` asks it of a
+ * whole sentence and returns everyone it finds; this asks it of one symbol,
+ * which is what a company page needs and what a feed filter needs. Both read
+ * the same alias table, so a Hebrew alias added above starts working in both
+ * places at once.
+ *
+ * Three ways to pass: the ticker appears as a word, one of the curated
+ * aliases appears, or the registered name does. The caller supplies the name
+ * when it has one — without it only the first two apply, which is the right
+ * degradation and not a failure.
+ */
+export function mentionsCompany(
+  text: string,
+  symbol: string,
+  name?: string | null,
+): boolean {
+  const lower = text.toLowerCase();
+  const ticker = symbol.toUpperCase();
+
+  /* Escaped, because a ticker may carry a dot or a dash and an unescaped one
+     would match far more than itself. */
+  const word = ticker.toLowerCase().replace(/[.*+?^${}()|[\]\\-]/g, "\\$&");
+  if (new RegExp(`\\b${word}\\b`).test(lower)) return true;
+
+  for (const alias of ALIASES[ticker] ?? []) {
+    if (lower.includes(alias)) return true;
+  }
+
+  return nameKeys(name).some((key) => lower.includes(key));
+}
+
 /** An explicit ticker in a field the reader typed into. Deliberately does
  *  not guess: a research request for "NVDA" should not silently become
  *  something else. */

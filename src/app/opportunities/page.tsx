@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { runScreen, type ScreenResult } from "@/lib/screener";
+import { readScreen, type ReadingSegment } from "@/lib/analysis/screen-reading";
 import { identityFor } from "@/lib/company-identity";
 import {
   Band,
@@ -41,54 +42,40 @@ export const metadata = {
  * of them matters is the reader's call and depends on what they already own.
  */
 
-/** The screener's criteria, grouped into the four questions they answer.
- *  Keys come from lib/screener.ts — the grouping is presentation only and
- *  changes nothing about how a criterion is evaluated. */
-const AXES: { key: string; label: string; matches: string[]; hint: string }[] = [
-  {
-    key: "quality",
-    label: "איכות",
-    matches: ["roic", "margin", "fcf", "gross"],
-    hint: "תשואה על ההון ורווחיות",
-  },
-  {
-    key: "growth",
-    label: "צמיחה",
-    matches: ["growth", "cagr", "rev"],
-    hint: "הכנסות ורווח לאורך זמן",
-  },
-  {
-    key: "value",
-    label: "תמחור",
-    matches: ["pe", "ps", "ev", "yield"],
-    hint: "מכפילים מול חציון הסקטור",
-  },
-  {
-    key: "strength",
-    label: "איתנות",
-    matches: ["debt", "current", "altman", "interest", "share"],
-    hint: "מאזן, חוב ודילול",
-  },
-];
+/**
+ * The grouping moved out.
+ *
+ * The four axes used to be declared here and matched against criterion keys
+ * by substring, which quietly mis-filed three of the ten tests: `rev_growth`
+ * contains "ev" and `ev_fcf` contains "fcf", so growth was counted inside
+ * the valuation meter and cash flow inside both quality and valuation. The
+ * valuation column showed four tests out of a group that holds two.
+ *
+ * Both the meters and the written reading now come from readScreen(), which
+ * names the keys exactly. One grouping, so the shape above a row and the
+ * sentence inside it cannot say different things.
+ */
 
-/** Splits a company's criteria across the four axes. A criterion that
- *  matches nothing lands in quality, which is the default bucket rather
- *  than a judgement. */
-function profile(result: ScreenResult) {
-  return AXES.map((axis) => {
-    const inAxis = result.criteria.filter((criterion) =>
-      axis.matches.some((needle) => criterion.key.includes(needle)),
-    );
-    /* Only what could actually be tested. A criterion the filings do not
-       support is not a miss on the meter — it is absent from it, which is
-       why the denominator is the evaluated count and not the whole pool. */
-    const evaluated = inAxis.filter((c) => c.status !== "insufficient-data");
-    return {
-      ...axis,
-      passed: evaluated.filter((c) => c.status === "pass").length,
-      total: evaluated.length,
-    };
-  }).filter((axis) => axis.total > 0);
+/** A reading's text, with every figure set in the tabular face.
+ *
+ *  Not decoration: a number dropped raw into an RTL paragraph lets bidi
+ *  move a leading minus to the far end of the digits, which turns −3.1%
+ *  into something else entirely. This is why the module hands back segments
+ *  instead of a finished string. */
+function Segments({ parts }: { parts: ReadingSegment[] }) {
+  return (
+    <>
+      {parts.map((part, index) =>
+        part.num ? (
+          <span key={index} className="num">
+            {part.text}
+          </span>
+        ) : (
+          <span key={index}>{part.text}</span>
+        ),
+      )}
+    </>
+  );
 }
 
 /**
@@ -210,82 +197,170 @@ export default async function OpportunitiesPage({
             the eye can run down. */}
         <div className="surface divide-y divide-line overflow-hidden">
           {shown.map((result) => {
-            const axes = profile(result);
+            const reading = readScreen(result);
             const identity = identityFor(result.company.ticker);
-            const failed = result.criteria.filter((c) => c.status === "fail");
-            const missing = result.criteria.filter((c) => c.status === "insufficient-data");
 
             return (
               <details
                 key={result.company.ticker}
                 className="group transition-colors open:bg-element hover:bg-element/60"
               >
-                <summary className="grid cursor-pointer grid-cols-1 items-center gap-4 p-4 lg:grid-cols-[minmax(200px,1.1fr)_2.4fr_auto]">
-                  {/* Identity */}
-                  <div className="flex items-center gap-3">
-                    <span
-                      className="h-9 w-[3px] shrink-0 rounded-full"
-                      style={{ background: identity.accent }}
-                      aria-hidden="true"
-                    />
-                    <div className="min-w-0">
-                      <div className="num text-[14px] font-medium text-ink">
-                        {result.company.ticker}
+                {/* `block`, not the default `list-item`: a summary that keeps
+                    list-item display draws the browser's own disclosure
+                    triangle, and this row already has one of its own. */}
+                <summary className="block cursor-pointer p-4">
+                  <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(200px,1.1fr)_2.4fr_auto]">
+                    {/* Identity */}
+                    <div className="flex items-center gap-3">
+                      <span
+                        className="h-9 w-[3px] shrink-0 rounded-full"
+                        style={{ background: identity.accent }}
+                        aria-hidden="true"
+                      />
+                      <div className="min-w-0">
+                        <div className="num text-[14px] font-medium text-ink">
+                          {result.company.ticker}
+                        </div>
+                        <div className="truncate text-[11px] text-ink-faint">
+                          {result.company.name}
+                        </div>
+                        <div className="mt-0.5 text-[10px] text-ink-ghost">
+                          {result.sectorLabel}
+                          {result.company.marketCap !== null && (
+                            <>
+                              {" · "}
+                              <span className="num">
+                                ${fmtCompact(result.company.marketCap)}
+                              </span>
+                            </>
+                          )}
+                        </div>
                       </div>
-                      <div className="truncate text-[11px] text-ink-faint">
-                        {result.company.name}
-                      </div>
-                      <div className="mt-0.5 text-[10px] text-ink-ghost">
-                        {result.sectorLabel}
-                        {result.company.marketCap !== null && (
-                          <>
-                            {" · "}
-                            <span className="num">
-                              ${fmtCompact(result.company.marketCap)}
-                            </span>
-                          </>
+                    </div>
+  
+                    {/* The profile — the part worth comparing */}
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4">
+                      {reading.axes.map((axis) => (
+                        <Meter
+                          key={axis.key}
+                          label={axis.label}
+                          value={axis.passed}
+                          max={axis.total}
+                        />
+                      ))}
+                    </div>
+  
+                    {/* Score, small: an index into the list, not a verdict */}
+                    <div className="flex items-center justify-between gap-3 lg:justify-end">
+                      <span className="text-end">
+                        <span className="num text-[15px]">
+                          <span className="text-ink">{result.score}</span>
+                          <span className="text-ink-ghost">/{result.evaluatedCount}</span>
+                        </span>
+                        {result.insufficientCount > 0 && (
+                          <span className="mt-0.5 block text-[9px] text-ink-ghost">
+                            {result.insufficientCount} ללא נתון
+                          </span>
                         )}
-                      </div>
+                      </span>
+                      <span
+                        className="text-[11px] text-ink-ghost transition-transform group-open:rotate-180"
+                        aria-hidden="true"
+                      >
+                        ▾
+                      </span>
                     </div>
                   </div>
 
-                  {/* The profile — the part worth comparing */}
-                  <div className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4">
-                    {axes.map((axis) => (
-                      <Meter
-                        key={axis.key}
-                        label={axis.label}
-                        value={axis.passed}
-                        max={axis.total}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Score, small: an index into the list, not a verdict */}
-                  <div className="flex items-center justify-between gap-3 lg:justify-end">
-                    <span className="text-end">
-                      <span className="num text-[15px]">
-                        <span className="text-ink">{result.score}</span>
-                        <span className="text-ink-ghost">/{result.evaluatedCount}</span>
-                      </span>
-                      {result.insufficientCount > 0 && (
-                        <span className="mt-0.5 block text-[9px] text-ink-ghost">
-                          {result.insufficientCount} ללא נתון
-                        </span>
-                      )}
-                    </span>
-                    <span
-                      className="text-[11px] text-ink-ghost transition-transform group-open:rotate-180"
-                      aria-hidden="true"
-                    >
-                      ▾
-                    </span>
-                  </div>
+                  {/* The reason, in the row itself.
+                      The meters say where the company is strong; this says
+                      what that adds up to and, when there is one, which
+                      single test holds the other side. It sits in the
+                      summary rather than behind the disclosure because a
+                      reader scanning the register is exactly the reader who
+                      needs it — the breakdown below is for the one who has
+                      already decided to look. */}
+                  <p className="screen-lead">
+                    <Segments parts={reading.lead} />
+                  </p>
                 </summary>
 
                 {/* The working, on demand */}
                 <div className="border-t border-line bg-element/70 p-4">
-                  <div className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
+                  {/* ---- The argument ----
+                       Four groups of tests, each with what it found and what
+                       the group means read together, ordered so the
+                       supporting evidence comes first and the part that
+                       argues the other way is not buried at the bottom.
+
+                       Every sentence here is selected by a branch over the
+                       criteria in lib/analysis/screen-reading.ts. No model
+                       is called, which is what makes it free, identical
+                       between builds, and impossible to drift from the
+                       numbers beside it. */}
+                  <div className="screen-read">
+                    {/* A company whose filings support nothing has no groups
+                        to show. The heading goes with them — a title over an
+                        empty grid reads as a loading failure. What stays is
+                        the absent-data line below, which is the whole of what
+                        is known about it. */}
+                    {reading.clauses.length > 0 && (
+                      <h4 className="eyebrow">מה המבחנים אומרים יחד</h4>
+                    )}
+
+                    <div className="screen-claims">
+                      {reading.clauses.map((clause) => (
+                        <div
+                          key={clause.key}
+                          className="screen-claim"
+                          data-tone={clause.tone}
+                        >
+                          <div className="screen-claim-head">
+                            <span>{clause.label}</span>
+                            <span className="num">
+                              {clause.passed}/{clause.total}
+                            </span>
+                          </div>
+                          {clause.counters.length > 0 && (
+                            /* Only what did not pass. What did is in the
+                               count above and in the ledger below, and a
+                               third copy of the same ten rows is weight
+                               rather than information. */
+                            <p className="screen-claim-counters">
+                              {clause.counters.map((counter) => (
+                                <span key={counter.label}>
+                                  {counter.label}
+                                  <b className="num">{counter.detail}</b>
+                                  {counter.benchmark && (
+                                    <i className="screen-bar num">{counter.benchmark}</i>
+                                  )}
+                                </span>
+                              ))}
+                            </p>
+                          )}
+                          <p className="screen-claim-meaning">{clause.meaning}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {reading.tension && (
+                      /* The half a score always loses. Gold, because on this
+                         site gold marks a caveat — and a caveat in the
+                         evidence is what this is. */
+                      <p className="screen-tension">
+                        <b>איפה הראיות לא מסכימות</b>
+                        {reading.tension}
+                      </p>
+                    )}
+
+                    {reading.missing && (
+                      <p className="screen-read-absent">
+                        <Segments parts={reading.missing} />
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="screen-ledger grid gap-x-8 gap-y-2 sm:grid-cols-2">
                     {result.criteria.map((criterion) => (
                       <div
                         key={criterion.key}
@@ -323,23 +398,26 @@ export default async function OpportunitiesPage({
                             )}
                           </span>
                         </span>
-                        <span className="num shrink-0 text-[11px] text-ink-faint">
-                          {criterion.detail}
+                        {/* The figure and the bar it was judged against.
+                            Rule 5: 42.1 is a datum, "42.1 against a sector
+                            median of 31.4" is the thing a reader can use. */}
+                        <span className="shrink-0 text-[11px] text-ink-faint">
+                          <span className="num">{criterion.detail}</span>
+                          {criterion.benchmark && criterion.status !== "insufficient-data" && (
+                            <span className="screen-bar num">{criterion.benchmark}</span>
+                          )}
                         </span>
                       </div>
                     ))}
                   </div>
 
                   <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    {/* The recap of failures and missing figures that used to
+                        sit here is gone: the reading above names both, with
+                        what each one means, and printing the same two lists a
+                        second time only made the panel longer. */}
                     <p className="text-[11px] text-ink-ghost">
-                      {failed.length === 0 && missing.length === 0
-                        ? "כל הקריטריונים עברו."
-                        : [
-                            failed.length > 0 ? `לא עברו: ${failed.map((c) => c.label).join(" · ")}` : "",
-                            missing.length > 0 ? `אין נתון: ${missing.map((c) => c.label).join(" · ")}` : "",
-                          ]
-                            .filter(Boolean)
-                            .join(" · ")}
+                      הבדיקות נגזרות מהדוח המוגש האחרון ומחציון {result.sectorLabel}.
                     </p>
                     <Link
                       href={`/company/${result.company.ticker}`}

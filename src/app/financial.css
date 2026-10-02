@@ -236,7 +236,7 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .read-control-scale[data-side=buyers] span[data-stop=buyers],
 .read-control-scale[data-side=sellers] span[data-stop=sellers],
 .read-control-scale[data-side=balance] span[data-stop=balance]{background:var(--color-accent-dim);color:var(--color-text-primary);font-weight:600;box-shadow:inset 0 -2px 0 var(--color-accent)}
-.read-control-reading{font-size:15px;line-height:1.8}
+.read-block p.read-control-reading{font-size:15px;line-height:1.8}
 .read-control-reading b{font-weight:600;color:var(--color-text-primary)}
 .read-sub{font-size:11px;letter-spacing:.04em;color:var(--color-text-muted);margin:14px 0 8px}
 
@@ -244,7 +244,7 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
    way the event cuts without asking anyone to act on it. Cyan confirms,
    gold breaks -- the palette's data colour and its caveat colour, never
    the price-direction pair. */
-.read-watch-note{font-size:12px;line-height:1.7;color:var(--color-text-muted);margin-bottom:12px}
+.read-block p.read-watch-note{font-size:12px;line-height:1.7;color:var(--color-text-muted);margin-bottom:12px}
 .read-watch{display:grid;gap:1px;background:var(--color-border-default);border:1px solid var(--color-border-default);list-style:none;margin:0;padding:0}
 .read-watch li{background:var(--color-surface-plain);padding:14px 16px;display:grid;gap:6px}
 .read-watch strong{font-size:15px;font-weight:500;line-height:1.7}
@@ -262,7 +262,7 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .read-discipline-note{font-size:12px;line-height:1.7;color:var(--color-text-muted);margin:7px 0 18px;max-width:62ch}
 .read-discipline-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
 .read-discipline-cell h3{margin-bottom:9px}
-.read-silence{font-size:13px;line-height:1.7;color:var(--color-text-muted);border-inline-start:2px solid var(--color-border-strong);padding-inline-start:11px}
+.read-block p.read-silence{font-size:13px;line-height:1.7;color:var(--color-text-muted);border-inline-start:2px solid var(--color-border-strong);padding-inline-start:11px}
 
 /* Rule 8 is enforced in code as well as in the prompt, and the enforcement
    leaves a trace. The trace is shown: a sentence that disappears without a
@@ -278,12 +278,86 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .reader-limits strong{display:block;font-size:16px;margin-bottom:8px}
 .reader-limits p{font-size:14px;line-height:1.75;color:var(--color-text-secondary)}
 
+/* How it reads, as four numbered steps rather than four boxes. The numeral
+   is the only ornament and it is load-bearing: the order is the claim -- a
+   name, then who is acting, then what would settle it, then what the read
+   owes the reader. */
+.reader-method{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--color-border-default);border:1px solid var(--color-border-default);list-style:none;margin:0;padding:0;counter-reset:method}
+.reader-method li{background:var(--color-surface-plain);padding:20px 22px;counter-increment:method}
+.reader-method li::before{content:counter(method,decimal-leading-zero);display:block;font:12px var(--font-mono),ui-monospace,monospace;letter-spacing:.1em;color:var(--color-data-text);margin-bottom:12px}
+.reader-method strong{display:block;font-size:17px;font-weight:600;margin-bottom:8px}
+.reader-method p{font-size:14px;line-height:1.8;color:var(--color-text-secondary)}
+
 /* Page links under the screener register. Links rather than buttons, so a
    reader can send someone page four. */
 .screen-pages{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;justify-content:center}
 .screen-pages a{min-width:38px;min-height:38px;display:grid;place-items:center;border:1px solid var(--color-border-default);border-radius:6px;font-size:13px;color:var(--color-text-secondary)}
 .screen-pages a:hover{border-color:var(--color-brand);color:var(--color-text-primary)}
 .screen-pages a[aria-current]{background:var(--color-brand);border-color:var(--color-brand);color:#fff;font-weight:600}
+
+/* ── Why a company is on the radar ───────────────────────────────────────
+   A screener row carries a score and ten ticks. That is a result, and the
+   reader still has to be told what it means; these are the rules for the
+   sentence that tells them.
+
+   Set in the plain ink of the page. The reading is an interpretation the
+   code derived rather than a figure it measured, and the only place that
+   gets marked in colour is the rule beside it — indigo, which is what
+   indigo means here. The figures inside the prose stay white and stay in
+   the tabular face, because a sentence that explains a number must not
+   compete with it.
+
+   Tone is carried by one edge and never by a tinted panel. A coloured
+   background announces the verdict before the sentence has been read,
+   which is precisely what this block exists to avoid. */
+
+/* The one line that rides in the row itself, under the meters: the
+   standing, and which single test holds the other side of it. */
+.screen-lead{margin-top:13px;padding-inline-start:11px;border-inline-start:2px solid var(--color-insight-text);font-size:13px;line-height:1.75;color:var(--color-text-secondary);max-width:96ch}
+.screen-lead .num{color:var(--color-text-primary)}
+
+/* The four groups, behind the disclosure. Laid side by side rather than
+   stacked, because they are read against each other and not in sequence. */
+.screen-read{display:grid;gap:12px;margin-bottom:18px}
+.screen-claims{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+.screen-claim{display:grid;gap:5px;align-content:start;padding:11px 13px;border:1px solid var(--color-border-default);border-inline-start-width:2px;border-radius:6px}
+/* Gold marks a caveat on this site, so it marks the side of the evidence
+   that argues the other way; a group whose tests disagree among themselves
+   gets the same gold at half strength, since split and against are degrees
+   of one thing. A group where everything passed gets a neutral hairline and
+   no colour at all — green would mean price direction, and nothing else may
+   borrow it. */
+.screen-claim[data-tone=support]{border-inline-start-color:var(--color-border-bright)}
+.screen-claim[data-tone=mixed]{border-inline-start-color:color-mix(in srgb,var(--color-warning-text) 55%,transparent)}
+.screen-claim[data-tone=counter]{border-inline-start-color:var(--color-warning-text)}
+.screen-claim-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:12px;font-weight:600;color:var(--color-text-primary)}
+.screen-claim-head .num{font-weight:400;color:var(--color-text-muted)}
+/* Only the tests that did not pass, each with what the company reported.
+   The ones that did are in the count above and in the ledger below. */
+.screen-claim-counters{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:11px}
+.screen-claim-counters span{display:inline-flex;align-items:baseline;gap:5px;padding:2px 7px;border:1px solid var(--color-border-default);border-radius:999px;color:var(--color-text-muted)}
+.screen-claim-counters b{font-weight:500;color:var(--color-text-primary)}
+.screen-claim-meaning{font-size:12.5px;line-height:1.7;color:var(--color-text-secondary)}
+
+/* The bar a figure was judged against — the sector median, or the fixed
+   threshold for a test that has one. It sits one step quieter than the
+   company's own figure beside it: two figures at equal weight read as two
+   findings, and only one of them is about this company. Rule 5 is the
+   reason it is on screen at all; the muted weight is what keeps it from
+   competing with the number it explains. */
+.screen-bar{display:inline-block;margin-inline-start:6px;font-style:normal;font-size:.92em;color:var(--color-text-subtle);white-space:nowrap}
+.screen-claim-counters i.screen-bar{margin-inline-start:0}
+
+/* Where the two sides contradict each other — the part worth reading
+   twice, and the reason the block is not just a list of passes. */
+.screen-tension{padding:11px 13px;border:1px solid var(--color-border-default);border-inline-start:2px solid var(--color-warning-text);border-radius:6px;font-size:13px;line-height:1.75;color:var(--color-text-secondary)}
+.screen-tension b{display:block;margin-bottom:4px;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--color-warning-text)}
+
+/* A test the filings cannot support. Named, never estimated. */
+.screen-read-absent{font-size:11px;line-height:1.7;color:var(--color-text-subtle)}
+
+/* The flat ledger of every test, under the reading that interprets it. */
+.screen-ledger{border-top:1px solid var(--color-border-default);padding-top:12px}
 
 /* ── The door ──────────────────────────────────────────────────────────
    One screen, in the bird's own palette: warm dark ground, mustard, a
@@ -292,6 +366,11 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
    is the cool night material, and the change of temperature is what makes
    crossing the threshold feel like crossing one. */
 .welcome-gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#17120C;color:#F6EDDD;overflow:hidden;padding:24px}
+/* Set by the blocking script in layout.tsx for a reader who already came
+   through this session. The gate still renders and still unmounts itself in
+   its effect — this only stops the one painted frame in between, which was
+   a full screen of mustard flashing on every navigation. */
+.entered .welcome-gate{display:none}
 .welcome-field{position:absolute;inset:0;pointer-events:none}
 .welcome-light{position:absolute;border-radius:50%;filter:blur(90px)}
 .welcome-light--one{width:min(62vw,720px);aspect-ratio:1;background:#F3C53F;opacity:.20;top:-14%;inset-inline-end:-10%}
@@ -360,3 +439,147 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
 .sources-prose{font-size:15px;line-height:1.9;color:var(--color-text-secondary);max-width:62ch}
 .sources-prose + .sources-prose{margin-top:16px}
 .sources-prose a{color:var(--color-accent);border-bottom:1px solid currentColor}
+
+/* ── Tel Aviv ──────────────────────────────────────────────────────────
+   Four shapes, and every one of them exists because a figure on that page
+   was being shown without anything to measure it against.
+
+   A band of readings inside a panel that already has a border. `Band` in
+   ui.tsx is the primitive for a row of figures and it brings its own frame
+   with it, which is right on open page and wrong one pixel inside another
+   border. This is the same grid without the frame.
+
+   A diverging bar for a sector's move, with zero in the middle. It is the
+   one place on this page that uses physical left and right rather than
+   logical start and end, and deliberately: a quantitative bar reads
+   positive-to-the-right in every chart a reader has ever seen, and the
+   figures beside it sit in `.num`, which isolates them LTR. Flipping the
+   bar with the page would put the plus sign and the growth on opposite
+   sides.
+
+   A distribution of the list across its own 52-week ranges, in three
+   neutral steps. Not green and red: "near its high" is not good news and
+   "near its low" is not bad news, and the palette rule here reserves those
+   two colours for the direction of a price.
+
+   A rail for one name's position in its year. This was inline, positioned
+   with inset-inline-start — which on an RTL page starts at the right, while
+   the low–high label under it is `.num`, isolated LTR, and reads low on the
+   left. A share at its yearly low drew its marker against the figure for
+   its yearly high. It is physical now, because it has to agree with the
+   axis printed beneath it. */
+
+.tase-readings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.tase-readings>*{padding:16px 20px;border-top:1px solid var(--color-line);border-inline-start:1px solid var(--color-line)}
+.tase-readings>*:nth-child(-n+2){border-top:0}
+.tase-readings>*:nth-child(2n+1){border-inline-start:0}
+@media(min-width:640px){
+  .tase-readings[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tase-readings[data-cols="3"]>*{border-top:0;border-inline-start:1px solid var(--color-line)}
+  .tase-readings[data-cols="3"]>*:first-child{border-inline-start:0}
+}
+@media(min-width:1024px){
+  .tase-readings:not([data-cols="3"]){grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tase-readings:not([data-cols="3"])>*{border-top:0;border-inline-start:1px solid var(--color-line)}
+  .tase-readings:not([data-cols="3"])>*:first-child{border-inline-start:0}
+}
+
+/* The sector heading, which is now a reading. Set on the well rather than
+   on the panel so the group reads as a header over its rows and not as
+   another row among them. */
+.tase-group{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:11px 16px;background:var(--color-element);border-block:1px solid var(--color-line)}
+/* Every group opens with a rule except the first, which would otherwise draw
+   a second line a pixel inside the panel's own top border. Scoped off the
+   board rather than off :first-child, because each group is wrapped in its
+   own element and is therefore always the first child of something. */
+.tase-board>*:first-child .tase-group{border-top:0}
+
+.tase-bar{position:relative;display:block;height:6px;border-radius:3px;background:var(--color-track);overflow:hidden}
+.tase-bar::before{content:"";position:absolute;inset-block:0;left:50%;width:1px;background:var(--color-line-bright)}
+.tase-bar i{position:absolute;inset-block:1px;border-radius:2px}
+.tase-bar i[data-dir=up]{left:50%;background:var(--color-up-mark)}
+.tase-bar i[data-dir=down]{right:50%;background:var(--color-down-mark)}
+
+.tase-spread{display:flex;height:7px;border-radius:999px;overflow:hidden;background:var(--color-track)}
+.tase-spread i{display:block;min-width:0}
+.tase-spread i[data-band=high]{background:var(--color-measure)}
+.tase-spread i[data-band=mid]{background:var(--color-line-bright)}
+.tase-spread i[data-band=low]{background:var(--color-line-strong)}
+
+.tase-range{position:relative;display:block;height:3px;border-radius:999px;background:var(--color-track)}
+.tase-range i{position:absolute;top:50%;translate:-50% -50%;width:2px;height:10px;border-radius:999px;background:var(--color-ink)}
+
+/* ── The company's news corner ─────────────────────────────────────────
+   One panel with hairlines inside it, not a card per story. A company page
+   already carries enough boxes, and a grid of six more is most of why the
+   news used to read as an appendix stapled to the end rather than as part
+   of the page.
+
+   The panel is `.surface`, so it wears whatever material the site is
+   wearing — the night gradient under luminous.css, paper under this file —
+   and nothing below it sets a background or a border of its own. The
+   dividers are the only structure, drawn in the border token so they
+   follow the ground they sit on.
+
+   Two columns from 1000px up: a 15px headline run across a 1376px page is
+   a line the eye cannot track back from. `nth-child` clears the top rule
+   on the first row of whichever column count is in force, which is the
+   same trick the index rail uses at its own breakpoint. */
+.news-corner{display:grid;overflow:hidden}
+.news-corner-head{display:flex;flex-wrap:wrap;align-items:center;gap:7px 18px;padding:12px 18px;border-bottom:1px solid var(--color-border-default);font-size:12px;color:var(--color-text-muted)}
+/* Magenta is the site's breaking-news hue and the only colour allowed on
+   the live marker. Green would read as a price going up. */
+.news-corner-live{display:inline-flex;align-items:center;gap:7px;color:var(--color-text-secondary)}
+.news-corner-live i{width:6px;height:6px;border-radius:50%;background:var(--color-news-text);box-shadow:0 0 0 3px rgba(244,63,191,.18)}
+.news-corner-when{display:inline-flex;align-items:center;gap:10px;margin-inline-start:auto}
+
+.news-rows{display:grid}
+.news-row{display:grid;gap:10px;align-content:start;padding:16px 18px;border-top:1px solid var(--color-border-default)}
+.news-row:first-child{border-top:0}
+.news-row-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:11px;color:var(--color-text-subtle)}
+/* Which of the two sources filed the story. A monospace tag rather than a
+   badge, because it is provenance and not a verdict, and the two must not
+   look alike. */
+.news-row-origin{font:10px var(--font-mono),ui-monospace,monospace;letter-spacing:.04em;border:1px solid var(--color-border-default);border-radius:3px;padding:2px 6px}
+.news-row-source{margin-inline-start:auto;white-space:nowrap}
+/* The headline is the one thing here that must not change colour on hover.
+   The brand blue is a border colour on the night ground, and a second
+   accent inside the panel would start competing with the section mark — an
+   underline says "link" without bringing a colour in. */
+.news-row-title{font-size:15px;font-weight:600;line-height:1.55;color:var(--color-text-primary);text-decoration:none}
+.news-row-title:hover{text-decoration:underline;text-underline-offset:3px}
+.news-row-excerpt{font-size:12.5px;line-height:1.7;color:var(--color-text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.news-row-floor{font-size:11.5px;line-height:1.65;color:var(--color-text-subtle)}
+.news-row-floor span{color:var(--color-text-muted)}
+.news-row-tickers{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:11px;color:var(--color-text-subtle)}
+.news-row-tickers a{border:1px solid var(--color-border-default);border-radius:3px;padding:1px 6px;font-size:10px;color:var(--color-text-muted)}
+.news-row-tickers a:hover{border-color:var(--color-border-bright);color:var(--color-text-primary)}
+
+/* The model's reading. Tighter than the same block on the news page, and
+   the three lenses are folded away: four of them open at once is a corner
+   nobody finishes reading. */
+.news-read{font-size:13px;line-height:1.75;color:var(--color-text-secondary)}
+.news-read-impact{margin-top:8px;font-size:12px;line-height:1.7;color:var(--color-text-muted)}
+.news-read-impact span{color:var(--color-text-secondary)}
+.news-lenses{margin-top:12px;border-top:1px solid var(--color-border-default);padding-top:10px}
+.news-lenses>summary{cursor:pointer;font-size:11px;color:var(--color-text-subtle)}
+.news-lenses>summary:hover{color:var(--color-text-secondary)}
+.news-read-meaning{margin-top:10px;font-size:12px;line-height:1.7;color:var(--color-text-secondary)}
+.news-lenses dl{display:grid;gap:9px;margin-top:10px}
+.news-lenses dt{font-size:10px;letter-spacing:.04em;color:var(--color-text-subtle)}
+.news-lenses dd{font-size:12px;line-height:1.7;color:var(--color-text-muted)}
+
+.news-corner-foot{padding:12px 18px;border-top:1px solid var(--color-border-default);background:var(--color-surface-secondary);font-size:11px;line-height:1.7;color:var(--color-text-muted)}
+.news-corner-foot a{color:var(--color-text-secondary)}
+
+@media(min-width:1000px){
+  .news-rows{grid-template-columns:1fr 1fr}
+  .news-row:nth-child(2){border-top:0}
+  .news-row:nth-child(even){border-inline-start:1px solid var(--color-border-default)}
+}
+@media(max-width:600px){
+  .news-corner-head{padding:11px 14px;gap:6px 12px}
+  .news-corner-when{margin-inline-start:0}
+  .news-row{padding:14px}
+  .news-corner-foot{padding:11px 14px}
+}

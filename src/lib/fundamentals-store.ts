@@ -32,6 +32,13 @@ const fileSchema = z.object({
       label: z.string(),
       count: z.number(),
       medians: z.record(z.string(), numberOrNull),
+      /* How many of those peers the medians were actually computed over.
+         A company whose filings stopped years ago keeps its row and its
+         own figures but stops defining the bar for everyone else — see the
+         note in scripts/build-fundamentals.ts. Defaulted so a file written
+         before this field existed still parses rather than emptying the
+         whole universe. */
+      medianBase: z.number().optional(),
     }),
   ),
 });
@@ -62,6 +69,10 @@ export type SectorContext = {
   key: string;
   label: string;
   peerCount: number;
+  /** Peers behind the medians. Lower than peerCount when a company's
+   *  filings are too old to describe it, which a reader comparing against
+   *  this benchmark is entitled to know. */
+  medianBase: number;
   medians: Record<string, number | null>;
 };
 
@@ -83,6 +94,7 @@ export async function getSectorContext(
     key: company.sector,
     label: sector.label,
     peerCount: sector.count,
+    medianBase: sector.medianBase ?? sector.count,
     medians: sector.medians,
   };
 }

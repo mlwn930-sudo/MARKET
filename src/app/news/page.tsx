@@ -1,7 +1,7 @@
 import { isFeedStale } from "@/lib/news-store";
 import { feedSignature, getLiveFeed } from "@/lib/live-news";
 import { ArticleCard } from "@/components/ArticleCard";
-import { FeaturedStory } from "@/components/FeaturedStory";
+import { ColumnStory, FeaturedStory } from "@/components/FeaturedStory";
 import { NewsAutoRefresh } from "@/components/NewsAutoRefresh";
 import {
   Disclaimer,
@@ -48,15 +48,22 @@ export default async function NewsPage() {
     ).values(),
   ].sort((a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""));
 
-  const ranked = [
-    ...all.filter((a) => a.analysis?.significance === "high"),
-    ...all.filter(
-      (a) => !a.analysis && a.triage?.kind === "catalyst",
-    ),
-    ...all.filter(
-      (a) => a.analysis?.significance !== "high" && a.triage?.kind !== "catalyst",
-    ),
-  ];
+  /* The lead and the column are the two places on this page that display a
+     reading, so an article without one cannot be promoted into them ahead
+     of an article that has one. The old order put unanalysed catalysts
+     second — above every analysed story that was not "high" — which meant
+     that whenever the summariser fell behind the feed, the most prominent
+     slots on a page about analysed news filled with unanalysed headlines.
+     Analysed first, by significance; unanalysed catalysts after, because
+     an unexplained catalyst still beats an analysed routine note. */
+  const SIGNIFICANCE_RANK = { high: 0, medium: 1, low: 2 } as const;
+  const rank = (a: (typeof all)[number]) => {
+    if (a.analysis) return SIGNIFICANCE_RANK[a.analysis.significance];
+    return a.triage?.kind === "catalyst" ? 3 : 4;
+  };
+  /* Stable within a rank: `all` is already newest-first and Array.sort is
+     stable, so equal ranks keep that order. */
+  const ranked = [...all].sort((a, b) => rank(a) - rank(b));
 
   const lead = ranked[0] ?? null;
   const column = ranked.slice(1, 5);
@@ -151,32 +158,7 @@ export default async function NewsPage() {
 
                 <div className="surface divide-y divide-line">
                   {column.map((article) => (
-                    <div key={article.url} className="p-4">
-                      <div className="mb-1.5 flex items-center gap-2">
-                        <span className="text-[10px] text-ink-ghost" dir="auto">
-                          {article.domain}
-                        </span>
-                        {article.seenAt && (
-                          <span className="text-[10px] text-ink-ghost">
-                            · {fmtRelative(new Date(article.seenAt))}
-                          </span>
-                        )}
-                      </div>
-                      <a
-                        href={article.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[13px] font-medium leading-snug text-ink transition-colors hover:text-accent"
-                        dir="auto"
-                      >
-                        {article.title}
-                      </a>
-                      {article.analysis && (
-                        <p className="mt-1.5 line-clamp-2 text-[12px] leading-relaxed text-ink-faint">
-                          {article.analysis.summary}
-                        </p>
-                      )}
-                    </div>
+                    <ColumnStory key={article.url} article={article} />
                   ))}
                 </div>
               </div>

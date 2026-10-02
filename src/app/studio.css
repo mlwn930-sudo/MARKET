@@ -177,3 +177,17 @@ main [id] { scroll-margin-top:150px; }
    scroll on a page that has nothing to scroll sideways to. Clipped rather
    than hidden, so nothing inside loses the ability to stick. */
 .take-two-story{overflow-x:clip;}
+
+/* The cover, built rather than borrowed. Two lights and a measuring grid
+   over the warm dark ground — the same construction the rest of the site
+   uses for a dark opener, which is also why it belongs to us. */
+.gta-cover-field{position:absolute;inset:0;z-index:-3;overflow:hidden;background:linear-gradient(160deg,#2A1130 0%,#1A0C22 52%,#120816 100%)}
+.gta-cover-field i{position:absolute;display:block}
+.gta-field-one{width:min(70vw,900px);aspect-ratio:1;border-radius:50%;background:#C2317A;opacity:.34;filter:blur(110px);top:-18%;inset-inline-end:-12%}
+.gta-field-two{width:min(58vw,760px);aspect-ratio:1;border-radius:50%;background:#2855F5;opacity:.26;filter:blur(120px);bottom:-22%;inset-inline-start:-10%}
+.gta-field-grid{inset:0;opacity:.09;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(0deg,transparent,#000 42%,#000 72%,transparent)}
+
+/* The chapter's visual, in type. A title card rather than a screenshot. */
+.story-art-built{position:relative;aspect-ratio:1186 / 626;display:grid;place-content:center;gap:12px;text-align:center;border:1px solid #00000018;background:linear-gradient(145deg,#2A1130,#160A1C);box-shadow:0 24px 60px -28px #2e223a80}
+.story-art-word{font:700 clamp(34px,5vw,62px)/1 var(--font-mono),ui-monospace,monospace;letter-spacing:.22em;background:linear-gradient(92deg,#F43FBF,#7FA5FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.story-art-sub{font-size:13px;letter-spacing:.14em;color:#C9B6D4}

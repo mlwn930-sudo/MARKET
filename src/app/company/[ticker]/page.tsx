@@ -6,9 +6,10 @@ import { notFound } from "next/navigation";
 import { getQuote } from "@/lib/sources/finnhub";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
-import { getArticlesForTicker } from "@/lib/news-store";
+import { CompanyNewsCorner, loadCompanyNews } from "@/components/CompanyNewsCorner";
 import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
 import { identityFor } from "@/lib/company-identity";
+import { CompanyMark } from "@/components/CompanyMark";
 import { getCompanyIntelligence } from "@/lib/agents";
 import { CompanyChart } from "@/components/CompanyChart";
 import type { ChartLevel, ChartMarker } from "@/components/LiveChart";
@@ -21,7 +22,6 @@ import { readLevels, readFlow } from "@/lib/metrics/levels";
 import { getExtendedHours } from "@/lib/sources/extended-hours";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
-import { ArticleCard } from "@/components/ArticleCard";
 import { WatchButton } from "@/components/WatchButton";
 import { OutlookPanel } from "@/components/OutlookPanel";
 import { ChartExplainer } from "@/components/ChartExplainer";
@@ -48,7 +48,6 @@ import { ConnectionIndex } from "@/components/ConnectionIndex";
 import {
   Band,
   Disclaimer,
-  Empty,
   EventCard,
   Field,
   Page,
@@ -105,7 +104,6 @@ export default async function CompanyPage({
     history,
     technical,
     sector,
-    articles,
     extended,
   ] = await Promise.all([
     getCompanyAnalysis(ticker),
@@ -116,7 +114,6 @@ export default async function CompanyPage({
     getPriceHistory(ticker).catch(() => null),
     getTechnicalRead(ticker).catch(() => null),
     getSectorContext(ticker),
-    getArticlesForTicker(ticker, 6),
     getExtendedHours(ticker).catch(() => null),
   ]);
 
@@ -216,7 +213,7 @@ export default async function CompanyPage({
   /* Why it moved today. Deterministic: the index, the sector and the
      coverage are all figures the site already holds, and the panel says
      so rather than picking a headline and calling it a cause. */
-  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote] =
+  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote, news] =
     await Promise.all([
       getFallbackQuote("^GSPC").catch(() => null),
       getSectorViews().catch(() => []),
@@ -231,7 +228,27 @@ export default async function CompanyPage({
          a change percent and had none. Yahoo carries the same figure and
          is already a dependency here. */
       getFallbackQuote(ticker).catch(() => null),
+      /* Both live sources for this company's news, merged, deduplicated and
+         screened for whether they are about the company at all. It waits for
+         this wave rather than the first because the screen needs the
+         registered name, and the name arrives with the filings.
+         See components/CompanyNewsCorner.tsx — what this replaced was the
+         committed feed file, which changed when a deployment landed rather
+         than when a story broke. */
+      loadCompanyNews(ticker, name),
     ]);
+
+  /* One list, three readers: the corner renders it, "why is it moving" asks
+     whether anything was written today, and the connection index counts what
+     the company is attached to. One fetch, so they cannot disagree about
+     whether coverage exists.
+
+     `all` and not `items`: `items` is the corner's display slice, eight rows
+     of it, and the two readers below *count* what they are given. Handed the
+     slice, the connection index printed "8 כתבות מזכירות את NVDA" directly
+     under a corner header reading "8 מתוך 55" — the same page answering one
+     question twice, with the display limit in the place of the total. */
+  const articles = news.all;
 
   /* Finnhub first: it is the real-time feed and it carries the day's high
      and low that the header's range bar needs. Yahoo is the backstop for
@@ -366,12 +383,12 @@ export default async function CompanyPage({
 
         <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-7">
           <div className="min-w-0">
+            {/* The mark, not a 3px bar. This page is where someone arrives
+                from search and has to know in one glance which company they
+                landed on; the board already identifies every row this way
+                and the page it leads to was the one place that did not. */}
             <div className="flex items-center gap-3.5">
-              <span
-                className="h-9 w-[3px] shrink-0 rounded-full"
-                style={{ background: identity.accent }}
-                aria-hidden="true"
-              />
+              <CompanyMark ticker={ticker} size="lg" />
               <h1 className="display min-w-0">{name}</h1>
             </div>
 
@@ -451,11 +468,11 @@ export default async function CompanyPage({
       <ChapterNav label="ניווט בניתוח החברה" chapters={[
         { id: "company-overview", label: "מבט חברה" },
         ...(history ? [{ id: "company-price", label: "מחיר ומגמה" }] : []),
+        { id: "company-news", label: "חדשות" },
         { id: "company-capital", label: "איכות הרווח" },
         ...(intelligence ? [{ id: "company-thesis", label: "התזה" }] : []),
         ...(fundamentals.groups.length ? [{ id: "company-financials", label: "נתונים כספיים" }] : []),
         { id: "company-connections", label: "קשרים" },
-        { id: "company-news", label: "חדשות" },
       ]} />
       <div className="mt-6"><EvidenceKey /></div>
       {fundamentals.stale && (
@@ -695,6 +712,29 @@ export default async function CompanyPage({
         </Section>
       )}
 
+      {/* ---- The news corner ----
+           Directly under the price, and the placement is the argument. It
+           used to be the last section on the page, below twenty-three
+           metric cells, which is where a reader stops looking — and what
+           was asked for is the opposite: open a company and see what is
+           being said about it. The panel directly above has just said
+           whether the move belongs to the index, to the sector or to the
+           company; this is where the reader finds out what happened.
+
+           `order-first` on a phone, for the same reason the price carries
+           it. The three sections that share it keep their relative order,
+           so a phone reads session, price, news — and the whole valuation
+           argument follows underneath. ---- */}
+      <Section
+        id="company-news"
+        eyebrow="חדשות"
+        title={`מה נכתב על ${name}`}
+        description={`שני מקורות חיים — החוט של Finnhub לסימול ${ticker} והפיד הסקטוריאלי של האתר — מהחדשה לישנה. ליד כל כתבה נכתב אם היא זרז או רעש: זו קביעה על המנגנון, לא המלצה לפעולה.`}
+        className="max-lg:order-first"
+      >
+        <CompanyNewsCorner ticker={ticker} name={name} news={news} />
+      </Section>
+
       <LevelsPanel levels={priceLevels} flow={flow} />
 
       {technical && (
@@ -799,30 +839,6 @@ export default async function CompanyPage({
         description={`${graph.count} קשרים, כל אחד עם הסיבה שהוא קיים ועם דרגת הראיות שמאחוריה. קישור מאקרו מסומן כהשערה ויושב ליד קישור סקטור שמסומן כמאושש — וההשוואה הזאת היא מה שדיאגרמה הייתה משטחת.`}
       >
         <ConnectionIndex graph={graph} />
-      </Section>
-
-      {/* ---- News ---- */}
-      <Section id="company-news" eyebrow="חדשות" title={`מה נכתב על ${name}`}>
-        {articles.length === 0 ? (
-          <Empty
-            title="אין כרגע כתבה בפיד שמזכירה את החברה"
-            reason="הפיד נבנה מכמה עשרות מקורות ומתרענן כל עשרים דקות. חברה שלא הייתה בכותרות ביממה האחרונה פשוט לא מופיעה בו — זה לא סימן לכלום."
-            links={[
-              { href: "/news", label: "כל החדשות" },
-              {
-                href: `/research?ticker=${ticker}`,
-                label: `מחקר עומק על ${ticker}`,
-              },
-              { href: "/brief", label: "התדריך של היום" },
-            ]}
-          />
-        ) : (
-          <div className="stagger grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((article) => (
-              <ArticleCard key={article.url} article={article} />
-            ))}
-          </div>
-        )}
       </Section>
       </div>
 

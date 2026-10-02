@@ -11,6 +11,7 @@
  * later cycle keeps the analysis it already has.
  */
 
+import { detectTickers } from "./company-names";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { z } from "zod";
@@ -105,12 +106,38 @@ export async function getTickerCoverage(
   const symbol = ticker.toUpperCase();
   const byUrl = new Map<string, EnrichedArticle>();
 
+  /**
+   * Tagged is not the same as about.
+   *
+   * `article.tickers` comes from the provider's own `related` field, and
+   * that field is generous: a piece headlined "What a $3,000 Investment in
+   * Walmart Stock Could Be Worth in 1 Year" arrived tagged NVDA and
+   * appeared, verbatim, in NVIDIA's news corner. A company page that shows
+   * someone else's story is worse than one that shows nothing, because the
+   * reader has no way to tell which items are real.
+   *
+   * So a tag has to be corroborated by the words. Either the ticker or one
+   * of the company's known names has to appear in the headline or the
+   * summary — detectTickers already does exactly that matching for the
+   * research box, including the Hebrew aliases, and it is the same question
+   * here.
+   *
+   * The model's own `analysis.tickers` is trusted without the check: it was
+   * produced by reading the article, which is the corroboration.
+   */
   for (const sector of sectors) {
     for (const article of sector.articles) {
-      const mentioned =
-        article.tickers.includes(symbol) ||
-        article.analysis?.tickers.includes(symbol);
-      if (mentioned && !byUrl.has(article.url)) byUrl.set(article.url, article);
+      if (byUrl.has(article.url)) continue;
+
+      const readByModel = article.analysis?.tickers.includes(symbol) ?? false;
+      const tagged = article.tickers.includes(symbol);
+      const inWords =
+        tagged &&
+        detectTickers(`${article.title} ${article.excerpt}`, 8).includes(
+          symbol,
+        );
+
+      if (readByModel || inWords) byUrl.set(article.url, article);
     }
   }
 

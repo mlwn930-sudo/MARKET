@@ -98,6 +98,9 @@ export function buildCompanyGraph({
   sectorKey: SectorKey | null;
   intelligence: CompanyIntelligence | null;
   sector: SectorView | null;
+  /** Every story that named the company, newest first — the whole screened
+   *  list and not what some view of it shows. The news group counts what it
+   *  is given. */
   articles: EnrichedArticle[];
   fundamentals: Fundamentals;
   /** Recorded thesis snapshots, oldest first. */
@@ -264,11 +267,22 @@ export function buildCompanyGraph({
         article.triage?.kind === "catalyst",
     );
 
+    /* The group lists a few and counts them all. `articles` is the whole
+       screened list — every story that named the company — and the summary
+       counts that, not this slice. Counting the slice is how this line came to
+       read "8 כתבות" on a page whose news corner, three sections above, said
+       8 of 55. */
+    const shown = articles.slice(0, 5);
+
     groups.push({
       kind: "news",
       label: CONNECTION_LABELS.news,
-      summary: `${articles.length} כתבות בפיד מזכירות את ${symbol}, ${catalystArticles.length} מהן סווגו כאירוע שנוגע לתזרים, לתחרות או לרגולציה.`,
-      connections: articles.slice(0, 5).map((article, i) => ({
+      summary:
+        `${articles.length} כתבות מזכירות את ${symbol}, ${catalystArticles.length} מהן סווגו כאירוע שנוגע לתזרים, לתחרות או לרגולציה.` +
+        (articles.length > shown.length
+          ? ` כאן ${shown.length} החדשות שבהן; השאר בפינת החדשות של העמוד.`
+          : ""),
+      connections: shown.map((article, i) => ({
         id: `news:${i}`,
         label: article.title,
         relation:

@@ -89,6 +89,8 @@ export default async function HeatmapPage() {
   return (
     <Page tint="#06b6d4" width="wide">
       <Hero
+        image="/hero/market-city.webp"
+        imageAlt="מפת השוק"
         eyebrow="מפת השוק"
         title="מי זז, וכמה ממנו יש"
         lede="ארבעים ושמונה החברות שהאתר מחשב עליהן מדדים, מסודרות לפי סקטור. הגודל הוא שווי השוק והצבע הוא תנועת היום — שני הדברים היחידים שמפה כזאת יכולה למסור ביושר. כל מה שמעבר לזה נמצא בעמוד החברה."

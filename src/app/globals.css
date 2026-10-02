@@ -1146,6 +1146,33 @@ h4 {
   background: var(--gradient-brand);
 }
 
+/* The same claim as .ai-block at a fraction of the height: an inline edge
+   rather than a card, for model text inside a row or a narrow column. The
+   edge is the cyan that means "a model wrote this" across the site, and it
+   is on the inline-start so it reads as a margin note in an RTL column
+   rather than as a heading. */
+.ai-note {
+  border-inline-start: 2px solid rgba(0, 184, 230, 0.42);
+  padding-inline-start: 10px;
+}
+.ai-note-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-text-subtle);
+}
+.ai-note-head .ai-mark {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+}
+.ai-note-body {
+  margin-top: 5px;
+}
+
 /* Confidence, as three segments. A percentage would imply a calibration
    nobody has measured; three states is the resolution these actually
    have. */

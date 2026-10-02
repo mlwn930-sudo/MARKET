@@ -65,6 +65,32 @@ export default function RootLayout({
       dir="rtl"
       className={`${assistant.variable} ${frank.variable} ${plexMono.variable}`}
     >
+      <head>
+        {/*
+          Whether the door has already been opened, decided before the first
+          paint.
+
+          The gate renders by default and hides itself in an effect, which is
+          right for a first visit — a door that waits for JavaScript shows
+          the page it is meant to be covering. But it means a reader who
+          already came through this session gets a full screen of warm
+          mustard for the frame between paint and hydration, on every
+          navigation. Measured: the door was fully painted in a screenshot
+          taken after a reload whose sessionStorage flag was already set.
+
+          A blocking script in <head> runs before the body is painted, so
+          the class is on <html> in time for CSS to settle it either way.
+          Wrapped in try/catch because private browsing throws on the read,
+          and the correct answer when storage is unavailable is to show the
+          door rather than to fail open.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{if(sessionStorage.getItem("market-intel:welcome:v1")==="1")document.documentElement.classList.add("entered")}catch(e){}',
+          }}
+        />
+      </head>
       <body className="market-app min-h-screen bg-base text-ink">
         {/* The door, in front of everything. It removes itself for anyone
             who has already come through this session, and for anyone who
