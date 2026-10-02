@@ -327,6 +327,20 @@ export async function getMarketBrief(): Promise<Brief> {
   try {
     return await buildBrief();
   } catch (error) {
+    /* The reason, written down.
+     *
+     * The gemini layer builds a specific message — which model, which
+     * status, and the first hundred characters of what came back — and
+     * this block discarded all of it and kept the one-word category. So
+     * "the model did not return a valid answer" was the only thing anyone
+     * could see, on a page whose entire argument is that a claim without
+     * its evidence is worthless. Diagnosing it meant reproducing it by
+     * hand, which is exactly the cost this line removes. */
+    console.error(
+      "[brief] narrative failed:",
+      error instanceof Error ? error.message : String(error),
+    );
+
     // The figures do not depend on the model, so a model failure costs the
     // narrative and nothing else.
     const snapshot = await buildSnapshot();
