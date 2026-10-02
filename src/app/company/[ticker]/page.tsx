@@ -4,7 +4,7 @@ import { WorkflowLinks } from "@/components/market/WorkflowLinks";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getQuote } from "@/lib/sources/finnhub";
-import { getPriceHistory } from "@/lib/sources/prices";
+import { getPriceHistory, getRangeHistory } from "@/lib/sources/prices";
 import { getCompanyAnalysis, getTechnicalRead } from "@/lib/company-analysis";
 import { CompanyNewsCorner, loadCompanyNews } from "@/components/CompanyNewsCorner";
 import { compareToSector, getSectorContext } from "@/lib/fundamentals-store";
@@ -103,6 +103,7 @@ export default async function CompanyPage({
     intelligence,
     quote,
     history,
+    chartHistory,
     technical,
     sector,
     extended,
@@ -113,6 +114,16 @@ export default async function CompanyPage({
     getCompanyIntelligence(ticker),
     getQuote(ticker).catch(() => null),
     getPriceHistory(ticker).catch(() => null),
+    /* A second, longer series, for the chart only.
+     *
+     * The two-year daily history above is what the frameworks are defined
+     * against — a 200-day average and a stage read need daily bars, and
+     * computing either on the weekly bars a five-year range returns would
+     * produce a confident wrong number. So the analysis keeps its series
+     * and the chart gets its own: five years of weekly candles, which is
+     * what someone asking "what has this done" actually wants to see.
+     * Both are cached, and the page already fans out wider than this. */
+    getRangeHistory(ticker, "5Y").catch(() => null),
     getTechnicalRead(ticker).catch(() => null),
     getSectorContext(ticker),
     getExtendedHours(ticker).catch(() => null),
@@ -711,7 +722,13 @@ export default async function CompanyPage({
           <CompanyChart
             symbol={ticker}
             name={name}
-            candles={history.candles}
+            /* Five years when the longer fetch came back, the analysis
+               series when it did not. The switcher below is told which one
+               it is holding, so the label and the bars cannot disagree —
+               that exact mismatch shipped once, with the chart drawing 501
+               bars under a tab that claimed 252. */
+            candles={(chartHistory ?? history).candles}
+            seededRange={chartHistory ? "5Y" : "2Y"}
             levels={chartLevels}
             markers={chartMarkers}
             initial={quote ? { ...quote, at: quote.at.toISOString() } : null}

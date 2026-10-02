@@ -22,7 +22,8 @@
     "encode:cinema": "node scripts/encode-cinema.mjs",
     "build:logos": "tsx scripts/build-logos.ts",
     "watch": "tsx scripts/watch-market.ts",
-    "alerts": "tsx scripts/send-alerts.ts"
+    "alerts": "tsx scripts/send-alerts.ts",
+    "watch:companies": "tsx scripts/watch-companies.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

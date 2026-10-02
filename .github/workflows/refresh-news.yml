@@ -130,6 +130,17 @@ jobs:
       # something not already sent. Never fails the job: a research site
       # that stops refreshing because an email bounced has its priorities
       # backwards.
+      # The per-company agent. It reads the thesis record the nightly job
+      # writes and reports what changed on companies somebody actually
+      # follows — so it needs DATABASE_URL to know who follows what, and
+      # nothing else. Never fails the job: no watchlist means no findings,
+      # which is a correct answer rather than an error.
+      - name: Check followed companies
+        continue-on-error: true
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm run watch:companies
+
       - name: Send alerts
         continue-on-error: true
         env:

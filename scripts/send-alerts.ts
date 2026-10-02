@@ -33,10 +33,19 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 config({ path: resolve(ROOT, ".env.local"), quiet: true });
 
 const WATCH = resolve(ROOT, "content/watch/latest.json");
+const COMPANIES = resolve(ROOT, "content/watch/companies.json");
 const LEDGER = resolve(ROOT, "content/watch/sent.json");
 
 type Finding = {
-  kind: "move" | "range" | "event" | "story" | "opportunity";
+  kind:
+    | "move"
+    | "range"
+    | "event"
+    | "story"
+    | "opportunity"
+    /* From the per-company agent: a thesis that moved, and a date coming. */
+    | "thesis"
+    | "catalyst";
   ticker: string | null;
   headline: string;
   detail: string;
@@ -48,7 +57,26 @@ type Finding = {
 /* Only the sharper half of the scan is worth a message. A quarter-range
    edge is interesting on the page and is not worth interrupting someone's
    day; an unusual move and a dated event are. */
-const WORTH_SENDING = new Set(["opportunity", "move", "event", "story"]);
+/** The grades the thesis diff uses, in words a reader can weigh. */
+const GRADE_WORDS: Record<string, string> = {
+  confirmed: "מאושרת",
+  likely: "סבירה",
+  possible: "אפשרית",
+  speculative: "ספקולטיבית",
+};
+
+const WORTH_SENDING = new Set([
+  /* The per-company agent's findings lead, because they are about a
+     company somebody chose rather than one that happened to move. A thesis
+     that stopped holding is the most consequential thing this site can
+     tell anybody, and it is also the rarest. */
+  "thesis",
+  "catalyst",
+  "opportunity",
+  "move",
+  "event",
+  "story",
+]);
 const MIN_WEIGHT = 2.2;
 
 /** Kind, ticker and calendar day. The same company moving unusually on two
@@ -114,6 +142,35 @@ async function main() {
   }
 
   const scan = JSON.parse(await readFile(WATCH, "utf8")) as { findings: Finding[] };
+
+  /* The company agent's output, merged in. Missing is not a failure: it has
+     simply not run yet, and the market scan is still worth sending. */
+  const perCompany: Finding[] = await readFile(COMPANIES, "utf8")
+    .then((raw) => {
+      const parsed = JSON.parse(raw) as {
+        findings?: { kind: string; ticker: string; headline: string; detail: string; weight: number; grade?: string | null; at: string; href: string }[];
+      };
+      return (parsed.findings ?? []).map((f) => ({
+        kind: f.kind as Finding["kind"],
+        ticker: f.ticker,
+        headline: f.headline,
+        /* The grade travels with the sentence. A change the diff graded
+           "possible" must not arrive in an inbox reading like a fact. */
+        detail: f.grade && f.grade !== "confirmed"
+          ? `${f.detail} · דרגת הטענה: ${GRADE_WORDS[f.grade] ?? f.grade}`
+          : f.detail,
+        /* Scaled onto the same axis as the market scan, whose weights are
+           standard deviations and sit between 2 and 5. Materiality is a
+           0-100 score, and merging the two without this would sort every
+           thesis change above everything else by arithmetic accident. */
+        weight: 2.5 + Math.min(f.weight, 100) / 100,
+        href: f.href,
+        at: f.at,
+      }));
+    })
+    .catch(() => []);
+
+  scan.findings = [...perCompany, ...scan.findings];
   const sent: string[] = await readFile(LEDGER, "utf8")
     .then((raw) => JSON.parse(raw).sent ?? [])
     .catch(() => []);

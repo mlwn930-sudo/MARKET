@@ -31,6 +31,7 @@ export function CompanyChart({
   levels,
   markers,
   name,
+  seededRange = "2Y",
 }: {
   symbol: string;
   candles: Candle[];
@@ -38,6 +39,9 @@ export function CompanyChart({
   levels?: ChartLevel[];
   markers?: ChartMarker[];
   name: string;
+  /** Which range the candles above actually are. The switcher opens on it
+   *  and treats it as the one range it does not have to fetch. */
+  seededRange?: "2Y" | "5Y";
 }) {
   // Stable identities, or the hook resubscribes on every parent render.
   const watch = useMemo(() => [symbol], [symbol]);
@@ -135,7 +139,7 @@ export function CompanyChart({
       <LiveChart
         symbol={symbol}
         candles={candles}
-        defaultRange="2Y"
+        defaultRange={seededRange}
         livePrice={quote?.price ?? null}
         levels={levels}
         markers={markers}

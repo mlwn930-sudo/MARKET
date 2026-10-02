@@ -255,7 +255,7 @@ export function getRangeHistory(
 
   // Intraday bars are cached briefly because they are still forming;
   // daily and weekly bars do not change until the session closes.
-  const revalidate = spec.daily ? 3600 : 120;
+  const revalidate = spec.daily ? MARKET : 120;
 
   return unstable_cache(
     () => fetchHistory(ticker, spec.range, spec.interval),
