@@ -182,3 +182,119 @@ export async function forget(email: string): Promise<boolean> {
 export function alertsConfigured(): boolean {
   return db() !== null;
 }
+
+/* ------------------------------------------------------------------ */
+/* What each subscriber follows                                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The watchlist, server side.
+ *
+ * It already exists in localStorage, and that was the right call while
+ * there was no database: a watchlist is the smallest piece of personal
+ * state and the reader's own machine is the cheapest place for it.
+ *
+ * Alerts break that. The scheduled job runs on a GitHub runner with no
+ * browser and no access to anybody's localStorage, so "only tell me about
+ * the companies I follow" cannot be answered there unless the following is
+ * recorded somewhere the job can read.
+ *
+ * So this is a copy, not a move. The browser list stays exactly as it is
+ * and keeps working for someone who never gives an address; this table is
+ * what the mail is addressed from. They are kept in step by the follow
+ * route, and when they disagree the browser wins — it is the one the
+ * reader is actually looking at.
+ */
+
+async function ensureWatchTable(sql: NonNullable<ReturnType<typeof db>>) {
+  await sql`
+    CREATE TABLE IF NOT EXISTS alert_watchlist (
+      email    TEXT NOT NULL,
+      ticker   TEXT NOT NULL,
+      added_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      PRIMARY KEY (email, ticker)
+    )
+  `;
+}
+
+export async function follow(email: string, ticker: string): Promise<boolean> {
+  const sql = db();
+  if (!sql) return false;
+  try {
+    await ensureWatchTable(sql);
+    await sql`
+      INSERT INTO alert_watchlist (email, ticker)
+      VALUES (${email}, ${ticker.toUpperCase()})
+      ON CONFLICT (email, ticker) DO NOTHING
+    `;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function unfollow(email: string, ticker: string): Promise<boolean> {
+  const sql = db();
+  if (!sql) return false;
+  try {
+    await ensureWatchTable(sql);
+    await sql`
+      DELETE FROM alert_watchlist
+       WHERE email = ${email} AND ticker = ${ticker.toUpperCase()}
+    `;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function watchedBy(email: string): Promise<string[]> {
+  const sql = db();
+  if (!sql) return [];
+  try {
+    await ensureWatchTable(sql);
+    const rows = (await sql`
+      SELECT ticker FROM alert_watchlist WHERE email = ${email} ORDER BY ticker
+    `) as { ticker: string }[];
+    return rows.map((r) => r.ticker);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Every approved subscriber with what they follow, in one read.
+ *
+ * The sender needs this for all of them at once, and a query per person
+ * would be a round trip per person on a connection that sleeps between
+ * runs. An approved subscriber who follows nothing comes back with an
+ * empty array rather than being dropped — the sender decides what that
+ * means, and the answer it gives is "nothing to send you yet", not
+ * "everything".
+ */
+export async function approvedWithWatchlists(): Promise<
+  { email: string; tickers: string[] }[]
+> {
+  const sql = db();
+  if (!sql) return [];
+  try {
+    await ensureTable(sql);
+    await ensureWatchTable(sql);
+    const rows = (await sql`
+      SELECT s.email, COALESCE(w.ticker, NULL) AS ticker
+        FROM alert_subscribers s
+        LEFT JOIN alert_watchlist w ON w.email = s.email
+       WHERE s.state = 'approved'
+    `) as { email: string; ticker: string | null }[];
+
+    const byEmail = new Map<string, string[]>();
+    for (const row of rows) {
+      const list = byEmail.get(row.email) ?? [];
+      if (row.ticker) list.push(row.ticker);
+      byEmail.set(row.email, list);
+    }
+    return [...byEmail].map(([email, tickers]) => ({ email, tickers }));
+  } catch {
+    return [];
+  }
+}

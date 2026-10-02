@@ -26,7 +26,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { config } from "dotenv";
-import { approvedSubscribers, alertsConfigured } from "../src/lib/alerts/subscribers";
+import { approvedWithWatchlists, alertsConfigured } from "../src/lib/alerts/subscribers";
 import { mailConfigured, sendMail } from "../src/lib/alerts/mailer";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -130,27 +130,63 @@ async function main() {
     return;
   }
 
-  const readers = await approvedSubscribers();
+  const readers = await approvedWithWatchlists();
   if (readers.length === 0) {
     console.log(`${fresh.length} new findings, but no approved subscribers`);
     return;
   }
 
   let delivered = 0;
+  const sentFingerprints = new Set<string>();
+
   for (const reader of readers) {
+    /* Each person gets their own companies and nobody else's.
+     *
+     * A findings list across a hundred and twenty-three companies is a
+     * market report, and a market report that arrives four times a day
+     * stops being read. The watchlist is the reader's own statement of
+     * what they care about, so it is the filter.
+     *
+     * Following nothing means hearing nothing. That is the honest reading
+     * of an empty list — "I have not told you what I follow" is not the
+     * same as "send me everything", and guessing the second from the first
+     * is how an alert list becomes spam. The line below says so in the
+     * log, because silence with no explanation looks like a broken job. */
+    if (reader.tickers.length === 0) {
+      console.log(`  ${reader.email}: follows nothing yet — nothing to send`);
+      continue;
+    }
+
+    const watched = new Set(reader.tickers);
+    const theirs = fresh.filter((f) => f.ticker !== null && watched.has(f.ticker));
+    if (theirs.length === 0) {
+      console.log(
+        `  ${reader.email}: ${fresh.length} findings, none on their ${reader.tickers.length} companies`,
+      );
+      continue;
+    }
+
     const message = digest(
-      fresh,
-      `${site()}/api/alerts/unsubscribe?email=${encodeURIComponent(reader)}`,
+      theirs,
+      `${site()}/api/alerts/unsubscribe?email=${encodeURIComponent(reader.email)}`,
     );
-    const result = await sendMail({ to: reader, ...message });
-    if (result.ok) delivered++;
-    else console.log(`  ${reader}: ${result.reason} ${result.detail ?? ""}`);
+    const result = await sendMail({ to: reader.email, ...message });
+    if (result.ok) {
+      delivered++;
+      /* Only what actually went to somebody is marked as sent. A finding
+         nobody follows must stay unsent, or the day one of them does
+         follow that company they would never hear about it. */
+      theirs.forEach((f) => sentFingerprints.add(fingerprint(f)));
+      console.log(`  ${reader.email}: ${theirs.length} of ${fresh.length}`);
+    } else {
+      console.log(`  ${reader.email}: ${result.reason} ${result.detail ?? ""}`);
+    }
   }
 
   /* The ledger records what was sent only if something actually went out.
      Marking findings as sent after a total failure would bury them. */
   if (delivered > 0) {
-    const updated = [...sent, ...fresh.map(fingerprint)].slice(-400);
+    const updated = [...sent, ...sentFingerprints].slice(-400);
     await mkdir(dirname(LEDGER), { recursive: true });
     await writeFile(
       LEDGER,
@@ -160,7 +196,7 @@ async function main() {
   }
 
   console.log(
-    `${fresh.length} findings sent to ${delivered}/${readers.length} subscribers`,
+    `${fresh.length} fresh findings · mailed ${delivered}/${readers.length} subscribers · ${sentFingerprints.size} marked sent`,
   );
 }
 

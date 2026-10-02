@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { reconcileWatchlist, rememberEmail } from "@/lib/watchlist";
 
 /**
  * The door.
@@ -45,6 +46,13 @@ export function WelcomeGate() {
     }
     setOpen(passed);
     setReady(true);
+
+    /* The watchlist this browser already holds, pushed to the server once
+       per session. The gate is in the root layout so this runs wherever
+       the reader lands, and it is the only place that knows the address
+       without asking for it again. A list built before alerts existed
+       would otherwise never reach them. */
+    reconcileWatchlist();
   }, []);
 
   const [email, setEmail] = useState("");
@@ -99,6 +107,12 @@ export function WelcomeGate() {
        * only ever disagree with it, and when it did the visitor would get
        * the worse answer. Empty is the one case worth catching locally,
        * because it needs no knowledge at all. */
+
+      /* Remembered before the request, not after it. The address is how
+         the star on a company page later says whose watchlist it changed,
+         and that should not depend on whether the alert store happened to
+         be reachable at this moment. */
+      rememberEmail(address);
 
       setSending(true);
       try {

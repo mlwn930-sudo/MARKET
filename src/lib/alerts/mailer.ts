@@ -135,3 +135,68 @@ export function welcomeMessage(email: string, unsubscribeUrl: string) {
     ),
   };
 }
+
+/**
+ * "You are now following X" — sent the moment a company is added.
+ *
+ * It carries the latest story about that company and the reading of it,
+ * because a confirmation that only confirms is a message nobody needs. If
+ * the feed has nothing on the company yet it says so plainly rather than
+ * padding: an empty section under a heading is the thing this project
+ * spends most of its time removing.
+ */
+export function followedMessage(options: {
+  ticker: string;
+  name: string;
+  story: {
+    title: string;
+    url: string;
+    domain: string;
+    summary: string | null;
+    impact: string | null;
+  } | null;
+  companyUrl: string;
+  unsubscribeUrl: string;
+}) {
+  const { ticker, name, story, companyUrl, unsubscribeUrl } = options;
+  const safe = (s: string) => s.replace(/</g, "&lt;");
+
+  const storyHtml = story
+    ? `<div style="margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14)">
+<div style="font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;color:#7C8DAC;margin-bottom:8px">הכתבה האחרונה</div>
+<a href="${story.url}" style="font-size:15px;line-height:1.5;color:#EAF1FF;text-decoration:none;font-weight:500">${safe(story.title)}</a>
+<div style="margin-top:4px;font-size:11px;color:#7C8DAC" dir="ltr">${safe(story.domain)}</div>
+${
+  story.summary
+    ? `<div style="margin-top:14px;padding-inline-start:10px;border-inline-start:2px solid rgba(0,184,230,.42)">
+<div style="font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;color:#7C8DAC;margin-bottom:6px">קריאת מודל</div>
+<div style="font-size:13px;line-height:1.7;color:#AEBFDC">${safe(story.summary)}</div>
+${story.impact ? `<div style="margin-top:8px;font-size:12.5px;line-height:1.7;color:#9FB2CF"><span style="color:#AEBFDC">השפעה: </span>${safe(story.impact)}</div>` : ""}
+</div>`
+    : `<div style="margin-top:12px;font-size:12px;line-height:1.7;color:#7C8DAC">הכתבה עדיין לא נקראה על ידי המודל. הניתוח נכתב בהרצה המתוזמנת ויופיע באתר כשיגיע.</div>`
+}
+</div>`
+    : `<div style="margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;line-height:1.7;color:#AEBFDC">אין כרגע כתבה על החברה הזו בפיד. ברגע שתהיה — תקבל אותה כאן.</div>`;
+
+  const storyText = story
+    ? `\n\nהכתבה האחרונה: ${story.title}\n${story.url}` +
+      (story.summary ? `\n\nקריאת מודל: ${story.summary}` : "") +
+      (story.impact ? `\nהשפעה: ${story.impact}` : "")
+    : "\n\nאין כרגע כתבה על החברה הזו בפיד.";
+
+  return {
+    subject: `עוקב אחרי ${ticker} — ${name}`,
+    text:
+      `הוספת את ${name} (${ticker}) למעקב. מעכשיו ההתראות יכללו אותה.` +
+      storyText +
+      `\n\nלעמוד החברה: ${companyUrl}\nלהסרה: ${unsubscribeUrl}`,
+    html: shell(
+      `<p style="margin:0 0 6px;font-size:15px;line-height:1.6;color:#EAF1FF">נוספה למעקב: <strong dir="ltr">${safe(name)}</strong></p>
+<p style="margin:0;font:600 13px/1.4 ui-monospace,monospace;color:#7FA5FF" dir="ltr">${safe(ticker)}</p>
+<p style="margin:14px 0 0;font-size:13px;line-height:1.7;color:#AEBFDC">מעכשיו ההתראות שתקבל יהיו על החברות שבמעקב שלך בלבד.</p>
+${storyHtml}
+<p style="margin:22px 0 0"><a href="${companyUrl}" style="display:inline-block;background:#2855F5;color:#fff;text-decoration:none;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600">לעמוד החברה והניתוח המלא</a></p>
+<p style="margin:20px 0 0;font-size:11px;line-height:1.7;color:#7C8DAC">האתר אינו ייעוץ השקעות.<br><a href="${unsubscribeUrl}" style="color:#7FA5FF">להסרה מהרשימה</a></p>`,
+    ),
+  };
+}

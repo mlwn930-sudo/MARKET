@@ -63,7 +63,21 @@ export function getWatchlist(): string[] {
 }
 
 export function setWatchlist(tickers: string[]): void {
-  write(LIST_KEY, [...new Set(tickers.map((t) => t.toUpperCase()))]);
+  /* The server copy is kept in step HERE rather than in toggleWatch,
+     because this is the one function every path goes through.
+     toggleWatch is only the star on a company page; the watchlist board
+     adds and removes by calling this directly, and so does the thesis
+     notebook. Syncing in the caller meant a company added from the
+     watchlist page — the main way anyone adds one — never reached the
+     alerts at all. */
+  const before = new Set(getWatchlist());
+  const next = [...new Set(tickers.map((t) => t.toUpperCase()))];
+  write(LIST_KEY, next);
+
+  const after = new Set(next);
+  for (const ticker of after) if (!before.has(ticker)) syncFollow(ticker, true);
+  for (const ticker of before) if (!after.has(ticker)) syncFollow(ticker, false);
+
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent(WATCHLIST_EVENT));
   }
@@ -174,4 +188,99 @@ export function diffAgainst(
   }
 
   return changes;
+}
+
+/* ------------------------------------------------------------------ */
+/* Telling the server, for the alerts                                  */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Who this browser is, as given at the door.
+ *
+ * Stored so the star on a company page can say which watchlist it just
+ * changed. Nothing else uses it, and it is never sent anywhere except to
+ * this site's own follow route.
+ *
+ * localStorage rather than sessionStorage on purpose: the session flag at
+ * the gate should expire so the door is seen again, and the identity
+ * should not — being asked to retype an address on every visit to keep
+ * alerts working is the kind of friction that ends with alerts switched
+ * off.
+ */
+const EMAIL_KEY = "market-intel:email:v1";
+
+export function rememberEmail(email: string): void {
+  write(EMAIL_KEY, email);
+}
+
+export function knownEmail(): string | null {
+  const value = read<string | null>(EMAIL_KEY, null);
+  return typeof value === "string" && value.includes("@") ? value : null;
+}
+
+/**
+ * Mirrors one change to the server.
+ *
+ * Deliberately not awaited by the caller and deliberately silent on
+ * failure. The browser list is the one the reader is looking at, and it
+ * has already been updated by the time this runs; a star that un-stars
+ * itself because a network call failed would be a worse bug than a
+ * watchlist that is briefly out of step with the mail.
+ *
+ * Someone who never gave an address simply skips this, and their
+ * watchlist stays exactly as local as it always was.
+ */
+export function syncFollow(ticker: string, following: boolean): void {
+  const email = knownEmail();
+  if (!email) return;
+  void fetch("/api/alerts/follow", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      ticker,
+      action: following ? "follow" : "unfollow",
+    }),
+    keepalive: true,
+  }).catch(() => {
+    /* Offline, or the route is not configured. The local list stands. */
+  });
+}
+
+/**
+ * Pushes the whole local list to the server, once per browser session.
+ *
+ * Needed because the sync above only fires on a change, and a watchlist
+ * that was built before any of this existed never changes until the
+ * reader touches it. Without this, someone who followed twelve companies
+ * last week would get alerts about none of them.
+ *
+ * Guarded by a session flag rather than a timestamp: once per session is
+ * often enough to catch a list that moved on another device, and rare
+ * enough that it costs one request.
+ */
+const RECONCILED_KEY = "market-intel:watchlist-synced:v1";
+
+export function reconcileWatchlist(): void {
+  if (typeof window === "undefined") return;
+  const email = knownEmail();
+  if (!email) return;
+  try {
+    if (window.sessionStorage.getItem(RECONCILED_KEY) === "1") return;
+    window.sessionStorage.setItem(RECONCILED_KEY, "1");
+  } catch {
+    /* No session storage: reconcile anyway rather than not at all. One
+       extra request beats a watchlist that never reaches the alerts. */
+  }
+
+  const tickers = getWatchlist();
+  if (tickers.length === 0) return;
+
+  void fetch("/api/alerts/follow", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, action: "replace", tickers }),
+  }).catch(() => {
+    /* Offline or unconfigured. It runs again next session. */
+  });
 }
