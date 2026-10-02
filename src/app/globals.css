@@ -268,7 +268,7 @@ body {
      .num          any figure
      .caption      a source, an as-of, a caveat
 
-   Headings are sans, heavy and tight. The serif is reserved: it carries
+   Headings are the serif; the sans carries the interface. See the note on
    the wordmark and editorial passages, where a change of voice is the
    point.
    ==================================================================== */
@@ -283,25 +283,49 @@ h4 {
   color: var(--color-ink);
 }
 
+/* Three voices, and the headline is not the interface one.
+
+   The site loaded a serif, a sans and a mono and set every heading in the
+   sans — which is what every dashboard does, and is most of why this one
+   read as generic. A heading in the same face as the buttons beside it has
+   no voice of its own; it is only larger.
+
+   So the headings take Frank Ruhl Libre. It is a Hebrew serif, drawn for
+   Hebrew rather than adapted to it, and the claim of this product is that
+   it is a research publication and not a terminal. The sans keeps the
+   interface — labels, buttons, navigation, body — and the mono keeps every
+   figure. Three jobs, three faces, no overlap.
+
+   Weight drops from 700 to 600 and the negative tracking relaxes: a serif
+   at display size does not need squeezing to look deliberate, and this
+   one closes up its Hebrew counters when it is squeezed. */
 .display-xl {
-  font-size: clamp(2.5rem, 5.6vw, 4rem);
-  font-weight: 700;
-  letter-spacing: -0.038em;
-  line-height: 1.02;
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 5.8vw, 4.1rem);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.05;
 }
 
 .display {
-  font-size: clamp(1.9rem, 3.8vw, 2.9rem);
-  font-weight: 700;
-  letter-spacing: -0.032em;
-  line-height: 1.06;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.9vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.1;
 }
 
 .title {
-  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
-  font-weight: 700;
-  letter-spacing: -0.024em;
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.22;
 }
+
+
+
+
 
 .subtitle {
   font-size: 16px;
@@ -647,29 +671,37 @@ h4 {
    the monogram, the primary action, and the line that marks a section a
    model wrote. A section mark is none of those, and a gradient used in a
    fourth place stops meaning the first three. */
+/* A measured rule, not a motif.
+
+   The dollar-and-dash opened every section on every page, which made it a
+   tic rather than a signal: by the fourth section a reader has stopped
+   seeing it, and the page is a stack of identical headers. What replaces
+   it is the thing this product actually does — measurement. A short tick,
+   then a hairline that fades as it runs, like the end of a chart axis.
+   It gives the header a direction to travel in, which a centred chip
+   never did, and it costs no colour at all. */
 .section-mark {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
   width: auto;
   height: auto;
   background: none;
 }
 .section-mark::before {
-  content: "$";
-  font:
-    700 15px/1 var(--font-mono),
-    ui-monospace,
-    monospace;
-  color: var(--color-brand);
+  content: "";
+  display: block;
+  width: 2px;
+  height: 11px;
+  flex-shrink: 0;
+  background: var(--color-brand);
 }
 .section-mark::after {
   content: "";
   display: block;
-  width: 22px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--color-intelligence);
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(to left, var(--color-line-strong), transparent);
 }
 
 /* A hairline that divides content rather than bounding it. */

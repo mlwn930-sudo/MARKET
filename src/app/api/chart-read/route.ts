@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { readChartImage } from "@/lib/analysis/chart-reader";
+import { corroborate } from "@/lib/analysis/chart-corroborate";
 
 /**
  * Reads an uploaded chart image.
@@ -62,5 +63,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status: 502 });
   }
 
-  return NextResponse.json({ read: result.read });
+  /* The read, and then the test of it against real candles.
+
+     Never fatal: a screenshot of an index, a crypto pair or a company
+     outside this universe simply has nothing to check against, and a read
+     of a picture is still a read. The check is an addition to the answer,
+     not a gate on it — so a failure here returns null and the page says
+     the read could not be corroborated rather than losing the read. */
+  const checked = await corroborate(result.read).catch(() => null);
+
+  return NextResponse.json({ read: result.read, corroboration: checked });
 }

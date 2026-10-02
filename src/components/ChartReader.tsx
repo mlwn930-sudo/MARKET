@@ -7,6 +7,7 @@ import type {
   ChartRead,
   ChartWatch,
 } from "@/lib/analysis/chart-reader";
+import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 
 /**
  * Upload a chart, get it read back.
@@ -35,7 +36,7 @@ const MAX_BYTES = 4.5 * 1024 * 1024;
 type State =
   | { phase: "idle" }
   | { phase: "reading" }
-  | { phase: "done"; read: ChartRead }
+  | { phase: "done"; read: ChartRead; checked: Corroboration | null }
   | { phase: "error"; message: string };
 
 const TREND_LABEL: Record<ChartRead["trend"], string> = {
@@ -117,7 +118,11 @@ export function ChartReader() {
         setState({ phase: "error", message: payload.error ?? "הקריאה נכשלה." });
         return;
       }
-      setState({ phase: "done", read: payload.read });
+      setState({
+        phase: "done",
+        read: payload.read,
+        checked: payload.corroboration ?? null,
+      });
     } catch {
       setState({ phase: "error", message: "אין חיבור לשרת." });
     }
@@ -215,7 +220,9 @@ export function ChartReader() {
 
       {state.phase === "error" && <p className="reader-error">{state.message}</p>}
 
-      {state.phase === "done" && <ChartReadView read={state.read} />}
+      {state.phase === "done" && (
+        <ChartReadView read={state.read} checked={state.checked} />
+      )}
     </div>
   );
 }
@@ -269,7 +276,13 @@ function Discipline({
   );
 }
 
-function ChartReadView({ read }: { read: ChartRead }) {
+function ChartReadView({
+  read,
+  checked,
+}: {
+  read: ChartRead;
+  checked: Corroboration | null;
+}) {
   const { pattern, control, horizon } = read;
 
   return (
@@ -421,6 +434,8 @@ function ChartReadView({ read }: { read: ChartRead }) {
         </section>
       )}
 
+      {checked && <Corroborated checked={checked} />}
+
       {read.volume && (
         <section className="read-block">
           <h3>ווליום</h3>
@@ -515,5 +530,93 @@ function ChartReadView({ read }: { read: ChartRead }) {
         דוחות, הקשר מאקרו או אירועים שעוד לא קרו.
       </p>
     </div>
+  );
+}
+
+/**
+ * The read, tested against real candles.
+ *
+ * Everything above this comes from pixels: the model read a number off an
+ * axis and reported a level. Whether that level exists is a different
+ * question, and it is the one question this site is equipped to answer —
+ * it holds the actual closes, and metrics/levels.ts finds the bands price
+ * genuinely turned at from swing pivots rather than from a drawing.
+ *
+ * It does not grade the read. A level the candles do not show is reported
+ * as unconfirmed, not wrong: a screenshot can be an index, a pair, an
+ * intraday window or a timeframe outside what this site carries, and in
+ * every one of those cases the absence is about the data here and not
+ * about the picture. Rule 8 — the reader gets the disagreement, not a
+ * verdict on it.
+ */
+function Corroborated({ checked }: { checked: Corroboration }) {
+  const pct = (n: number) => `${n.toFixed(2)}%`;
+
+  return (
+    <section className="read-block read-check">
+      <h3>
+        מול הנתונים של האתר
+        <span className="read-check-sym num" dir="ltr">
+          {checked.ticker}
+        </span>
+      </h3>
+      <p className="read-check-note">
+        הרמות שלמעלה נקראו מהתמונה. כאן הן נבדקות מול{" "}
+        <span className="num">{checked.candleCount}</span> נרות אמיתיים של{" "}
+        <span className="num" dir="ltr">{checked.ticker}</span>, שסגירתם
+        האחרונה <span className="num" dir="ltr">{checked.lastClose.toFixed(2)}</span>.
+        רמה שהנרות לא מאשרים אינה שגויה — היא לא אושרה, וזה הבדל שחשוב
+        לשמור עליו: צילום יכול להיות של מדד, של צמד מט״ח או של טווח שהאתר
+        לא מחזיק.
+      </p>
+
+      <div className="read-check-rows">
+        {checked.levels.map((level, i) => (
+          <div
+            key={`${i}-${level.read}`}
+            className={`read-check-row ${level.matched !== null ? "is-ok" : "is-open"}`}
+          >
+            <b className="num" dir="ltr">
+              {Number.isFinite(level.read) ? level.read.toFixed(2) : "—"}
+            </b>
+            {level.matched !== null ? (
+              <span>
+                מאושרת — הנרות מראים רמה ב־
+                <span className="num" dir="ltr">{level.matched.toFixed(2)}</span>
+                {level.touches ? (
+                  <>
+                    {" "}עם <span className="num">{level.touches}</span> נגיעות
+                  </>
+                ) : null}
+                {level.driftPercent !== null && (
+                  <>
+                    , פער <span className="num" dir="ltr">{pct(level.driftPercent)}</span>
+                  </>
+                )}
+              </span>
+            ) : (
+              <span>לא אושרה בנרות שהאתר מחזיק</span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {checked.missedByRead.length > 0 && (
+        <div className="read-check-extra">
+          <strong>רמות שהנרות מראים והקריאה לא הזכירה</strong>
+          <p>
+            {checked.missedByRead
+              .map(
+                (b) =>
+                  `${b.price.toFixed(2)} (${b.touches} נגיעות)`,
+              )
+              .join(" · ")}
+          </p>
+          <small>
+            לא בהכרח החמצה: צילום שלא חוזר מספיק אחורה פשוט לא מראה אותן.
+          </small>
+        </div>
+      )}
+    </section>
   );
 }

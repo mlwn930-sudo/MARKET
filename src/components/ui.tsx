@@ -79,7 +79,13 @@ export function SectionHeader({
   size?: "sm" | "md";
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+    /* The rule under a section header is the structure the page was
+       missing. Every section used to open with the same chip and then
+       float free, so a long page read as a stack of unrelated cards —
+       which is most of what makes a dashboard look like every other
+       dashboard. A hairline that starts at the heading and fades as it
+       runs gives the page a spine and a direction, and costs no colour. */
+    <div className="section-head flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
       <div className="max-w-2xl">
         {eyebrow && (
           <div className="mb-3 flex items-center gap-2.5">

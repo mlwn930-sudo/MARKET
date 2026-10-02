@@ -252,9 +252,31 @@ body:not(:has(.gta-cover)) .index-tile:last-child {
    fades out. That is the shape this site's section mark takes now: the
    dollar keeps its place, the dot is the light, and the rule carries it
    away. */
+/* The mark is a tick and a rule now, not a glyph and a rule — so the
+   colour goes on the block rather than on text that is no longer there.
+   Cobalt is 3.2:1 on this ground, which is enough for a 2px mark and not
+   for a word; the lighter tint is what carries it. */
+/* The model mark kept its paper ink on the night ground.
+
+   #0091B8 is the cyan dropped toward black so it clears 4.5:1 on WHITE —
+   the mark at full strength is 2.33:1 there, which is a line on a chart
+   and not a readable label. On this ground the problem inverts exactly:
+   the ink measures about 2.5:1 against #060B15, so the one element whose
+   job is to say "a model wrote this" was the least readable thing in the
+   block. The mark goes back to full strength, which is what the two-weight
+   system is for. */
+body:not(:has(.gta-cover)) .ai-mark {
+  color: #4FD2F7;
+  background: rgba(0, 184, 230, 0.14);
+  border-color: rgba(0, 184, 230, 0.4);
+}
+body:not(:has(.gta-cover)) .ai-note-head {
+  color: #9FB2CF;
+}
+
 body:not(:has(.gta-cover)) .section-mark::before {
-  color: #7FA5FF;
-  text-shadow: 0 0 14px rgba(40, 85, 245, 0.8);
+  background: #7FA5FF;
+  box-shadow: 0 0 12px rgba(127, 165, 255, 0.75);
 }
 body:not(:has(.gta-cover)) .section-mark::after {
   width: 34px;

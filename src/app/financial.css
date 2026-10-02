@@ -657,3 +657,57 @@ body{background:var(--color-background);color:var(--color-text-primary);}.btn-pr
    and letterboxing one inside a circle reads as a mistake. */
 .company-mark{position:relative;overflow:hidden}
 .company-mark-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
+
+/* ── The spine ─────────────────────────────────────────────────────────
+   A hairline under every section header, starting under the heading and
+   fading as it runs. It is the difference between a page and a pile: the
+   sections used to float free, each opening with the same chip, so a long
+   page read as a stack of unrelated cards — which is the single most
+   generic thing a product like this can look like.
+
+   It fades rather than stopping, because a rule that ends in a hard edge
+   draws a box, and a box is the thing being avoided. Direction follows
+   the document, so it runs away from the heading in RTL and in LTR
+   without either being special-cased. */
+.section-head{position:relative;padding-bottom:16px}
+.section-head::after{
+  content:"";
+  position:absolute;
+  inset-block-end:0;
+  inset-inline:0 0;
+  height:1px;
+  background:linear-gradient(to left,var(--color-border-default) 0%,var(--color-border-default) 42%,transparent 100%);
+}
+/* A header with an action beside it already has a second focus; the rule
+   would make a third. */
+.section-head:has(> .shrink-0)::after{opacity:.55}
+
+/* ── The read, tested ──────────────────────────────────────────────────
+   The one block on this page that is not the model's opinion. Everything
+   above it came from pixels; this came from closes. So it is drawn as a
+   ledger — rows, a rule between them, a figure in the margin — rather than
+   as another panel of prose, and the two states are told apart by a single
+   edge rather than by a colour fill that would read as a verdict. */
+.read-check{border:1px solid var(--color-border-default);border-radius:10px;padding:18px 20px}
+.read-check h3{display:flex;align-items:center;gap:10px}
+.read-check-sym{font-size:11px;padding:3px 8px;border:1px solid var(--color-border-default);border-radius:5px;color:var(--color-text-muted)}
+.read-check-note{font-size:12.5px;line-height:1.8;color:var(--color-text-subtle);margin-top:8px}
+.read-check-rows{margin-top:14px;display:grid}
+.read-check-row{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid var(--color-border-default);font-size:12.5px;line-height:1.6;color:var(--color-text-secondary)}
+.read-check-row:first-child{border-top:0}
+.read-check-row b{font-size:15px;font-weight:600;min-width:74px;color:var(--color-text-primary)}
+/* The edge is the whole signal: confirmed sits against the data colour,
+   unconfirmed against the one this site uses for a reservation. Neither
+   is green or red — those mean price direction here and nothing else, and
+   a level failing a check is not a price going down. */
+.read-check-row.is-ok{border-inline-start:2px solid var(--color-intelligence);padding-inline-start:12px}
+.read-check-row.is-open{border-inline-start:2px solid var(--color-warning-text);padding-inline-start:12px}
+.read-check-extra{margin-top:16px;padding-top:14px;border-top:1px solid var(--color-border-default)}
+.read-check-extra strong{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--color-text-muted)}
+.read-check-extra p{margin-top:6px;font-size:13px;color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.read-check-extra small{display:block;margin-top:6px;font-size:11px;line-height:1.7;color:var(--color-text-subtle)}
+@media(max-width:600px){
+  .read-check{padding:15px 14px}
+  .read-check-row{flex-wrap:wrap;gap:4px 10px}
+  .read-check-row b{min-width:0}
+}

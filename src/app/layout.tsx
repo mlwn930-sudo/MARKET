@@ -64,6 +64,14 @@ export default function RootLayout({
       lang="he"
       dir="rtl"
       className={`${assistant.variable} ${frank.variable} ${plexMono.variable}`}
+      /* The script below adds `entered` to this element before React
+         hydrates, which is the whole point of it running there — so the
+         server HTML and the client DOM genuinely differ on this one
+         attribute, by design. Without this React reports a hydration
+         mismatch on every page load and refuses to patch it, which is
+         noise that hides real mismatches. It suppresses the warning for
+         this element's own attributes only, not for its subtree. */
+      suppressHydrationWarning
     >
       <head>
         {/*
