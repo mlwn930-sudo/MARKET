@@ -815,3 +815,324 @@ body:not(:has(.gta-cover)) .signal-canvas {
   background: transparent;
   box-shadow: none;
 }
+
+/* ── The door ──────────────────────────────────────────────────────────
+   Thirty seconds of film whose playhead is the reader's own scroll.
+
+   Everything here is sized in svh rather than vh. A phone's address bar
+   collapsing changes vh mid-scroll, which on a pinned full-screen element
+   means the frame grows under the reader's finger.
+
+   Nothing in this block animates a width, a height or a position. The
+   scrub writes `currentTime` on a video and nothing else, so the browser
+   never relayouts while the film is moving. */
+.film {
+  position: relative;
+  /* Breaks out of <Page>'s 1440px column and its gutters. The film is the
+     only full-bleed element on the page and it predates the column: it
+     renders before <main> rather than inside it. */
+  width: 100%;
+  background: #060b15;
+  /* Set from JS on mount to the measured header height, so the film is the
+     whole screen and not the screen minus a navigation bar. It defaults to
+     0 and the layout is correct without it — a reader whose JavaScript has
+     not run yet gets the film below the header rather than a gap. */
+  margin-top: calc(-1 * var(--film-offset, 0px));
+}
+
+.film-stage {
+  position: relative;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  background: #060b15;
+  display: grid;
+  place-items: center;
+}
+
+/* Full bleed rather than letterboxed. A 2.33:1 frame centred on a 16:9
+   screen leaves two grey bands, and two grey bands are a video player.
+   Covering crops about an eighth from each side, which every composition
+   in this sequence survives — they are all built on a centred vanishing
+   point, and the wordmark at the end sits well inside the middle half. */
+.film-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* The decoder is handed its own layer so a seek never repaints the
+     page behind it. */
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* The frame has no edge. Light falls off into exactly the colour the page
+   is built on, so there is no border, no letterbox and no moment where
+   the film stops and the site starts — the last frame simply continues
+   into the ground beneath it. */
+.film-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(130% 100% at 50% 50%, transparent 38%, rgba(6, 11, 21, 0.55) 100%),
+    linear-gradient(to bottom, rgba(6, 11, 21, 0.9) 0%, transparent 18%, transparent 78%, #060b15 100%);
+}
+
+/* One line at a time, low in the frame, over the darkest part of every
+   composition. It is set in the interface face rather than the mono one:
+   this is the only prose in the sequence and it is not a figure. */
+.film-caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 17svh;
+  margin: 0;
+  text-align: center;
+  font-size: clamp(19px, 2.3vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+  color: #eaf1ff;
+  text-shadow: 0 2px 30px rgba(6, 11, 21, 0.9);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 700ms ease, transform 700ms ease;
+  pointer-events: none;
+}
+.film-caption[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.film-hint {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 42px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  color: #7c8dac;
+  opacity: 0;
+  transition: opacity 900ms ease;
+  pointer-events: none;
+}
+.film-hint[data-shown="true"] {
+  opacity: 1;
+  animation: film-breathe 3.2s ease-in-out infinite;
+}
+@keyframes film-breathe {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+/* The one thing on this screen that is different every time. It replaces
+   the heading the film was put in front of, and it is deliberately the
+   quietest element in the frame: the film is the argument, this is the
+   timestamp on it. */
+.film-status {
+  position: absolute;
+  inset-block-end: 36px;
+  /* Reading start — the right-hand side on an RTL page. The status is the
+     live fact on this screen and the sound button is an option, so the
+     fact gets the corner the eye lands on first. */
+  inset-inline-start: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-align: start;
+  pointer-events: none;
+}
+.film-status span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: #7c8dac;
+}
+.film-status strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: #eaf1ff;
+}
+.film-status small {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #9fb2cf;
+  max-width: 34ch;
+}
+
+.film-sound {
+  position: absolute;
+  inset-block-end: 36px;
+  inset-inline-end: 32px;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #aebfdc;
+  background: rgba(13, 22, 38, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+.film-sound:hover {
+  color: #eaf1ff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* The soundtrack is a separate viewing, not a toggle. A score attached to
+   a playhead somebody is dragging is noise. */
+.film-theatre {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  background: rgba(6, 11, 21, 0.96);
+  backdrop-filter: blur(10px);
+}
+.film-theatre video {
+  width: min(94vw, 1400px);
+  max-height: 84svh;
+  border-radius: 10px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
+}
+.film-theatre button {
+  position: absolute;
+  inset-block-start: 26px;
+  inset-inline-start: 26px;
+  padding: 9px 18px;
+  font-size: 12px;
+  color: #aebfdc;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* A phone is not a short desktop. There is no pin, no scrub and no 20MB
+   download: the film becomes its own opening frame, which is a dark
+   continent before anything on it has woken up — and the page carries on
+   underneath exactly as it does on a wide screen. */
+@media (max-width: 999px) {
+  /* No pull-up here. The phone header is two stacked rows and nearly a
+     third of the screen; hiding the film behind it would leave a band
+     rather than an opening. */
+  .film { margin-top: 0; }
+  .film-stage { height: 58svh; }
+  .film-frame { display: none; }
+  .film-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #060b15 url("/scene/entrance-first.webp") center / cover no-repeat;
+  }
+  .film-caption,
+  .film-hint,
+  .film-sound { display: none; }
+}
+
+/* Reduced motion gets the END of the sequence, not a frozen first frame.
+   The wordmark is where the film was going; an entrance that is cancelled
+   rather than resolved leaves the reader on a held breath. */
+@media (prefers-reduced-motion: reduce) {
+  .film-stage { height: 62svh; }
+  .film-frame { display: none; }
+  .film-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #060b15 url("/scene/entrance-poster.webp") center / cover no-repeat;
+  }
+  .film-caption,
+  .film-hint { display: none; }
+}
+
+/* ── The door, relit ───────────────────────────────────────────────────
+   The gate was the one warm surface on the site: mustard ground, gold
+   lights, a photograph of a duck in a vault. It is now the film.
+
+   These rules override financial.css rather than editing it, because this
+   file is imported last and the originals are still the correct answer
+   for a still-image door — if the film is ever pulled, deleting this
+   block restores the warm one intact.
+
+   Specificity is matched, not escalated: every selector here is the same
+   weight as the one it replaces, and wins on order alone. */
+.welcome-gate {
+  background: #060b15;
+  color: #eaf1ff;
+}
+
+.welcome-film {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.welcome-film video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The film is the room, not the subject. It is held well back so the
+   address field is the brightest thing on the screen — a door whose
+   decoration outshines its handle is a door people stand in front of. */
+.welcome-veil {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background:
+    radial-gradient(120% 90% at 50% 46%, rgba(6, 11, 21, 0.42) 0%, rgba(6, 11, 21, 0.86) 72%, #060b15 100%),
+    linear-gradient(to bottom, rgba(6, 11, 21, 0.72) 0%, rgba(6, 11, 21, 0.3) 34%, rgba(6, 11, 21, 0.92) 100%);
+}
+
+.welcome-gate .welcome-eyebrow { color: #7fa5ff; }
+.welcome-gate .welcome-title { color: #eaf1ff; }
+/* Cobalt is 3.2:1 on this ground — enough for a border, not for a word.
+   What gets read is the lighter tint; the brand blue itself stays on the
+   button, where it is a fill rather than a letterform. */
+.welcome-gate .welcome-title em { color: #7fa5ff; }
+.welcome-gate .welcome-title span { color: #00b8e6; }
+.welcome-gate .welcome-lede { color: #aebfdc; }
+.welcome-gate .welcome-note { color: #7c8dac; }
+
+.welcome-gate .welcome-input {
+  background: rgba(13, 22, 38, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #eaf1ff;
+  backdrop-filter: blur(10px);
+}
+.welcome-gate .welcome-input::placeholder { color: #7c8dac; }
+.welcome-gate .welcome-input:focus {
+  outline: none;
+  border-color: #2855f5;
+  box-shadow: 0 0 0 3px rgba(40, 85, 245, 0.3);
+}
+
+/* The brand gradient, which this site reserves for the monogram, the
+   primary action and a model-written rule. A door's one button is the
+   primary action by definition. */
+.welcome-enter {
+  background: linear-gradient(120deg, #2855f5, #00b8e6);
+  color: #ffffff;
+  box-shadow: 0 16px 38px -16px rgba(40, 85, 245, 0.9);
+}
+.welcome-enter:hover {
+  background: linear-gradient(120deg, #3a64ff, #19c8f2);
+  box-shadow: 0 22px 48px -18px rgba(40, 85, 245, 1);
+}
+
+/* A door is not a page: nothing here scrolls, so the film is simply the
+   background at every size and the layout never has to make room for it. */
+@media (prefers-reduced-motion: reduce) {
+  .welcome-film video { display: none; }
+  .welcome-film {
+    background: #060b15 url("/scene/entrance-poster.webp") center / cover no-repeat;
+  }
+}
+

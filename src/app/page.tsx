@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EntranceFilm } from "@/components/market/EntranceFilm";
 import { ResearchDock } from "@/components/market/ResearchDock";
 import { MarketNow } from "@/components/market/MarketNow";
 import { ContextJourney } from "@/components/market/ContextJourney";
@@ -179,7 +180,12 @@ export default async function MarketPage() {
     quotedAt: quoteTimes.length > 0 ? new Date(Math.max(...quoteTimes)) : null,
   });
 
-  return <Page>    <header className="market-opening product-heading"><div><span className="micro-label">MARKET / FINANCIAL INTELLIGENCE</span><h2>השוק עכשיו. <em>הסיפור מאחורי התנועה.</em></h2></div><div className="market-status"><span>{signal.label}</span><p>{signal.detail}</p></div></header>
+  return <><EntranceFilm status={signal.label} detail={signal.detail}/><Page>    {/* The editorial heading that used to open this page is gone: the film
+        above is the opening now, and a greeting underneath a thirty-second
+        sequence is the site introducing itself twice. Its only part that
+        was not decoration — the live session status — moved into the
+        corner of the film, where it is still the one sentence on the
+        screen that is different every time. */}
     <MarketNow indices={cards} rows={rows} initial={seed} detail={signal.detail} articles={priorityArticles} picks={topPicks}/>
     <nav className="sector-ribbon" aria-label="לחקור לפי סקטור"><span>מעבר למניה הבודדת</span>{[["semis","שבבים"],["software","תוכנה"],["financials","פיננסים"],["energy","אנרגיה"],["healthcare","בריאות"]].map(([key,label])=><Link key={key} href={`/sectors/${key}`}>{label} ↖</Link>)}<Link href="/sectors">כל הסקטורים ←</Link></nav>
     {/* What changed while nobody was looking. It goes above the research
@@ -191,5 +197,5 @@ export default async function MarketPage() {
     <div className="home-next-worlds"><Link href="/learn"><span>להבין יותר</span><strong>חדש בשוק? מתחילים כאן.</strong><small>מושגים, מנגנונים ומדריכים ↖</small></Link><Link href="/intel"><span>לחבר את הנקודות</span><strong>מאירוע אחד לשרשרת השפעות.</strong><small>לחדר המודיעין ↖</small></Link></div>
     <details className="depth-disclosure"><summary>לפתוח את טבלת הנתונים המלאה</summary><MarketDeck indices={cards} rows={rows} initial={seed}/></details>
     <Disclaimer/>
-  </Page>;
+  </Page></>;
 }

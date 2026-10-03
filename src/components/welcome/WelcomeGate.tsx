@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { reconcileWatchlist, rememberEmail } from "@/lib/watchlist";
@@ -181,38 +180,46 @@ export function WelcomeGate() {
 
   return (
     <div className="welcome-gate" role="dialog" aria-modal="true" aria-label="ברוכים הבאים">
-      <div className="welcome-field" aria-hidden="true">
-        <i className="welcome-light welcome-light--one" />
-        <i className="welcome-light welcome-light--two" />
-        <i className="welcome-grain" />
+      {/* The door is now the film.
+       *
+       * It plays itself here rather than waiting for a scroll, because
+       * this screen has no scroll — the reader is typing an address, not
+       * travelling. Muted and `playsInline` are not preferences: no
+       * browser will start a video with sound without a click, and an
+       * iOS video without `playsInline` takes over the whole screen.
+       *
+       * Its own eight seconds, not the whole film. The door would
+       * otherwise show the same thirty seconds the page behind it is
+       * about to hand over, and seeing a sequence twice in one visit is
+       * how it stops being a sequence. This cut is the opening beat only
+       * — a dark continent waking — and it runs forward and then backward
+       * so the loop has no seam: the world lights up, goes dark, and
+       * lights up again for as long as somebody stands here.
+       *
+       * 1.7MB rather than twenty. It is the first thing requested on a
+       * cold visit and nobody should wait for a feature film to type
+       * their email. */}
+      <div className="welcome-film" aria-hidden="true">
+        <video
+          src="/scene/entrance-gate.mp4"
+          poster="/scene/entrance-first.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        <i className="welcome-veil" />
       </div>
 
       <div className="welcome-inner">
         <span className="welcome-eyebrow">MARKET INTEL</span>
 
-        {/* The owner's own picture, supplied for this door and confirmed as
-            theirs. It replaces the drawn bird and the generated pile of
-            notes: this one frame already is the bird, the money and the
-            vault, and keeping the drawn dollars behind it would have been a
-            second pile of money under a photograph of a pile of money.
-
-            Sized against the VIEWPORT height, not just its width. The file
-            is a 1122×1402 portrait, and a picture scaled by width alone
-            pushes the entry button off a laptop screen — which is exactly
-            how the door became impossible to open. `priority` because this
-            is the first and only thing on the screen; there is nothing it
-            could be competing with. */}
-        <div className="welcome-bird">
-          <Image
-            src="/welcome/duck.webp"
-            alt=""
-            width={1122}
-            height={1402}
-            priority
-            sizes="(max-width: 600px) 72vw, 380px"
-            className="welcome-photo"
-          />
-        </div>
+        {/* The picture that used to stand here is gone. It was a still, and
+            a still on a door is a poster; what is behind this one is
+            thirty seconds that end on the wordmark, so the door shows that
+            instead and the reader is already inside the film before they
+            have typed anything. */}
 
         <h1 className="welcome-title">
           ברוכים הבאים
