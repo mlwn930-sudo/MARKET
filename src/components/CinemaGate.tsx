@@ -20,17 +20,23 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * reduced motion, which is answered before a byte is fetched.
  */
 
-/** How long one shot takes to rise over the one before it, in seconds.
+/** Half of a dip to black, in seconds. The outgoing shot takes this long
+ *  to go down, the incoming one waits exactly that long before coming up,
+ *  so the join passes through black instead of through both pictures at
+ *  once.
  *
- *  One number, used twice and deliberately not two: the CSS that fades the
- *  incoming clip in and the timer that starts it early are the same length
- *  by construction. Split them and the film either cuts before the fade
- *  finishes or stalls after it does.
+ *  IT IS NOT A CROSS-DISSOLVE, AND THAT WAS TRIED FIRST. Two of these
+ *  shots carry the same car in different places in the frame, and fading
+ *  one into the other put it on screen twice — a double exposure that
+ *  reads as a fault rather than as an edit. Rendered both joins out and
+ *  looked at them frame by frame: the ghost is unmistakable on the
+ *  causeway join, and it is gone the moment the join goes through black.
+ *  An editor does not dissolve two shots that share a moving subject, and
+ *  neither does this.
  *
- *  Half a second is a film dissolve rather than a UI fade — long enough to
- *  carry two shots that do not match across each other, short enough that
- *  nobody waits through it. */
-const DISSOLVE = 0.5;
+ *  Just under three tenths each way. Long enough to read as a breath,
+ *  short enough that the film never feels like it stopped. */
+const FADE = 0.28;
 
 export type Shot = {
   src: string;
@@ -227,8 +233,15 @@ export function CinemaGate({
       setPhase("ready");
       return;
     }
+    /* Raising the shot starts the fade immediately: the outgoing clip goes
+       down over FADE and the incoming one is held at zero for exactly that
+       long by its own transition delay. Playing it now would spend its
+       first three tenths behind black, so the press of play waits for the
+       picture to be there to receive it. */
     setShot(finished + 1);
-    next.play().catch(() => setPhase("ready"));
+    window.setTimeout(() => {
+      next.play().catch(() => setPhase("ready"));
+    }, FADE * 1000);
   }, []);
 
   /* Everything remaining downloads from the first press — not one ahead.
@@ -283,12 +296,12 @@ export function CinemaGate({
        * one, so the eye read the stall rather than the join. Half a second
        * of stopped motion is far more visible than any cut.
        *
-       * So the next clip is raised and started a dissolve-length early and
-       * the outgoing one keeps playing underneath while it rises. Both
-       * shots are moving for the whole handover, which is what a dissolve
-       * is. Only the last clip is exempt — there is nothing to hand over
-       * to, and cutting it short would end the film early. */
-      const lead = clips.current[shot + 1] ? DISSOLVE : 0;
+       * So the handover is called a fade early, and the outgoing clip keeps
+       * playing while it goes down — the picture is still moving as it
+       * darkens, which is what stops the join reading as a stall. Only the
+       * last clip is exempt: there is nothing to hand over to, and taking a
+       * fade off its tail would end the film early. */
+      const lead = clips.current[shot + 1] ? FADE : 0;
 
       const stop = shotsRef.current[shot]?.until;
       if (stop !== undefined && element.currentTime >= Math.max(0, stop - lead)) {
@@ -432,18 +445,13 @@ export function CinemaGate({
         </filter>
       </svg>
       <style>{`
-        /* The join. Every clip is stacked in the same box and switched by
-         * opacity, so a dissolve is the incoming one rising rather than
-         * appearing. The watchdog starts it a dissolve early and leaves the
-         * outgoing clip running underneath, so both shots are moving for
-         * the whole handover.
+        /* The join. Both directions take the same time; which of them runs
+         * first is set by the delay on the style prop, and that ordering is
+         * what makes this a dip through black rather than a dissolve.
          *
-         * LINEAR, not eased. An eased cross-fade hangs at both ends, which
-         * on two shots that do not match reads as a hesitation in the middle
-         * of the film. A dissolve is linear in opacity; that is what makes
-         * it read as one image becoming another rather than as two images
-         * being swapped. */
-        .gate-clip { filter: url(#gate-lift); transition: opacity ${DISSOLVE}s linear; }
+         * LINEAR, not eased. An eased fade hangs at both ends, which on a
+         * join this short reads as a hesitation in the middle of the film. */
+        .gate-clip { filter: url(#gate-lift); transition: opacity ${FADE}s linear; }
         @media (max-width: 640px) {
           .gate-clip { filter: url(#gate-lift-small); }
         }
@@ -472,7 +480,15 @@ export function CinemaGate({
           src={clip.src}
           className="gate-clip absolute inset-0 h-full w-full object-cover"
           style={{
-            opacity: i <= shot ? 1 : 0,
+            /* Only the current shot is lit. Every other clip sits at zero,
+               so at a join the outgoing one is on its way down while the
+               incoming one has not started up — and what shows between
+               them is the black behind both. */
+            opacity: i === shot ? 1 : 0,
+            /* The incoming shot waits out the fade-out before it begins its
+               own fade-in. This one line is the difference between a dip
+               through black and a cross-dissolve. */
+            transitionDelay: i === shot ? `${FADE}s` : "0s",
             zIndex: i + 1,
             objectPosition: framing === "top" ? "center top" : undefined,
           }}
@@ -487,7 +503,7 @@ export function CinemaGate({
                raise the next one a dissolve early, stop this one on its
                mark underneath it. */
             const element = event.currentTarget;
-            const lead = clips.current[i + 1] ? DISSOLVE : 0;
+            const lead = clips.current[i + 1] ? FADE : 0;
             if (element.currentTime >= Math.max(0, stop - lead)) {
               if (lead) window.setTimeout(() => element.pause(), lead * 1000);
               else element.pause();
