@@ -20,6 +20,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * reduced motion, which is answered before a byte is fetched.
  */
 
+/** How long one shot takes to rise over the one before it, in seconds.
+ *
+ *  One number, used twice and deliberately not two: the CSS that fades the
+ *  incoming clip in and the timer that starts it early are the same length
+ *  by construction. Split them and the film either cuts before the fade
+ *  finishes or stalls after it does.
+ *
+ *  Half a second is a film dissolve rather than a UI fade — long enough to
+ *  carry two shots that do not match across each other, short enough that
+ *  nobody waits through it. */
+const DISSOLVE = 0.5;
+
 export type Shot = {
   src: string;
   /**
@@ -263,9 +275,28 @@ export function CinemaGate({
       const element = clips.current[shot];
       if (!element) return;
 
+      /* THE HANDOVER STARTS BEFORE THE OUTGOING CLIP RUNS OUT.
+       *
+       * It used to wait for the end, pause on the last frame and only then
+       * raise the next clip. Adding a cross-fade to that did not help and
+       * could not have: what dissolved was a FROZEN picture into a moving
+       * one, so the eye read the stall rather than the join. Half a second
+       * of stopped motion is far more visible than any cut.
+       *
+       * So the next clip is raised and started a dissolve-length early and
+       * the outgoing one keeps playing underneath while it rises. Both
+       * shots are moving for the whole handover, which is what a dissolve
+       * is. Only the last clip is exempt — there is nothing to hand over
+       * to, and cutting it short would end the film early. */
+      const lead = clips.current[shot + 1] ? DISSOLVE : 0;
+
       const stop = shotsRef.current[shot]?.until;
-      if (stop !== undefined && element.currentTime >= stop) {
-        element.pause();
+      if (stop !== undefined && element.currentTime >= Math.max(0, stop - lead)) {
+        /* A clip with `until` is cut short for a reason — usually the
+           generator's own dissolve starting inside it — so it still has to
+           stop at that mark, just underneath the clip now covering it. */
+        if (lead) window.setTimeout(() => element.pause(), lead * 1000);
+        else element.pause();
         advance(shot);
         return;
       }
@@ -278,7 +309,10 @@ export function CinemaGate({
         advance(shot);
         return;
       }
-      if (element.duration && element.currentTime >= element.duration - 0.08) {
+      if (
+        element.duration &&
+        element.currentTime >= element.duration - Math.max(0.08, lead)
+      ) {
         advance(shot);
         return;
       }
@@ -398,21 +432,18 @@ export function CinemaGate({
         </filter>
       </svg>
       <style>{`
-        /* The join.
+        /* The join. Every clip is stacked in the same box and switched by
+         * opacity, so a dissolve is the incoming one rising rather than
+         * appearing. The watchdog starts it a dissolve early and leaves the
+         * outgoing clip running underneath, so both shots are moving for
+         * the whole handover.
          *
-         * Every clip is stacked in the same box and switched by opacity, and
-         * the outgoing one stays underneath at full opacity paused on its
-         * last frame — so all a dissolve needs is for the incoming one to
-         * rise rather than appear. Without this line it snapped from 0 to 1
-         * in a single frame, and because these shots were generated
-         * separately their last and first frames do not match, which made
-         * every join read as a splice.
-         *
-         * Half a second, which is a film dissolve rather than a UI fade. It
-         * is long enough to carry two mismatched frames across each other
-         * and short enough that nobody waits through it. Only the rise is
-         * timed: a clip going back to 0 is a reset, not an edit. */
-        .gate-clip { filter: url(#gate-lift); transition: opacity 500ms ease-in-out; }
+         * LINEAR, not eased. An eased cross-fade hangs at both ends, which
+         * on two shots that do not match reads as a hesitation in the middle
+         * of the film. A dissolve is linear in opacity; that is what makes
+         * it read as one image becoming another rather than as two images
+         * being swapped. */
+        .gate-clip { filter: url(#gate-lift); transition: opacity ${DISSOLVE}s linear; }
         @media (max-width: 640px) {
           .gate-clip { filter: url(#gate-lift-small); }
         }
@@ -449,8 +480,17 @@ export function CinemaGate({
           preload={i === 0 && !only ? "auto" : "none"}
           onTimeUpdate={(event) => {
             const stop = clip.until;
-            if (stop !== undefined && event.currentTarget.currentTime >= stop) {
-              event.currentTarget.pause();
+            if (stop === undefined) return;
+            /* The same early handover the watchdog does, at the finer
+               resolution the browser's own event gives — and with the same
+               rule, so the two can never disagree about when a shot ends:
+               raise the next one a dissolve early, stop this one on its
+               mark underneath it. */
+            const element = event.currentTarget;
+            const lead = clips.current[i + 1] ? DISSOLVE : 0;
+            if (element.currentTime >= Math.max(0, stop - lead)) {
+              if (lead) window.setTimeout(() => element.pause(), lead * 1000);
+              else element.pause();
               advance(i);
             }
           }}
