@@ -156,6 +156,23 @@ export function CinemaGate({
     setPhase("open");
   }, [storageKey]);
 
+  /* Escape, at any moment, including mid-film.
+   *
+   * The skip link below lives in the title block, and that block is faded
+   * out and made click-through the instant the reel starts — so for the
+   * whole twenty-five seconds the only control on screen was the sound
+   * toggle. A film somebody cannot leave is not a film, it is a wait. The
+   * site's own entrance has had this from the start; this is the same
+   * handle on the same door. */
+  useEffect(() => {
+    if (phase !== "playing" && phase !== "ready") return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") enter();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [phase, enter]);
+
   /**
    * The press is what buys the sound.
    *
@@ -496,6 +513,22 @@ export function CinemaGate({
           )}
         </svg>
       </button>
+
+      {/* The way out, while the reel runs.
+          The skip in the title block below disappears with that block the
+          moment the film starts, which left the sound toggle as the only
+          control on screen for the length of the film. This is the same
+          handle the site's own entrance carries, in the same corner. */}
+      {phase === "playing" && (
+        <button
+          type="button"
+          onClick={enter}
+          className="absolute bottom-6 end-6 rounded-full border border-white/20 bg-black/40 px-5 py-2.5 text-[12px] font-medium text-white/70 backdrop-blur transition-colors hover:border-white/45 hover:text-white"
+          style={{ zIndex: shots.length + 3 }}
+        >
+          דילוג
+        </button>
+      )}
 
       <div
         className={`relative flex flex-col items-center px-6 text-center transition-opacity duration-500 ${
