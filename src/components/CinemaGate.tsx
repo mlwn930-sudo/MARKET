@@ -398,7 +398,21 @@ export function CinemaGate({
         </filter>
       </svg>
       <style>{`
-        .gate-clip { filter: url(#gate-lift); }
+        /* The join.
+         *
+         * Every clip is stacked in the same box and switched by opacity, and
+         * the outgoing one stays underneath at full opacity paused on its
+         * last frame — so all a dissolve needs is for the incoming one to
+         * rise rather than appear. Without this line it snapped from 0 to 1
+         * in a single frame, and because these shots were generated
+         * separately their last and first frames do not match, which made
+         * every join read as a splice.
+         *
+         * Half a second, which is a film dissolve rather than a UI fade. It
+         * is long enough to carry two mismatched frames across each other
+         * and short enough that nobody waits through it. Only the rise is
+         * timed: a clip going back to 0 is a reset, not an edit. */
+        .gate-clip { filter: url(#gate-lift); transition: opacity 500ms ease-in-out; }
         @media (max-width: 640px) {
           .gate-clip { filter: url(#gate-lift-small); }
         }
