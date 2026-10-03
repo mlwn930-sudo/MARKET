@@ -12,6 +12,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { CommandCenter } from "@/components/CommandCenter";
 import { MobileTabs } from "@/components/MobileTabs";
 import { WelcomeGate } from "@/components/welcome/WelcomeGate";
+import { OpeningFilm } from "@/components/market/OpeningFilm";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 /**
@@ -100,6 +101,13 @@ export default function RootLayout({
         />
       </head>
       <body className="market-app min-h-screen bg-base text-ink">
+        {/* In front of the door, which is in front of everything else.
+            Thirty seconds that play themselves once a session and then
+            get out of the way. It is here rather than on the home page
+            because a film between a returning reader and the figures they
+            came back for stops being an entrance and becomes a toll. */}
+        <OpeningFilm />
+
         {/* The door, in front of everything. It removes itself for anyone
             who has already come through this session, and for anyone who
             asked not to be moved. */}

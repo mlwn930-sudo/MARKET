@@ -816,362 +816,157 @@ body:not(:has(.gta-cover)) .signal-canvas {
   box-shadow: none;
 }
 
-/* ── The door ──────────────────────────────────────────────────────────
-   Thirty seconds of film whose playhead is the reader's own scroll.
+/* ── The opening ───────────────────────────────────────────────────────
+   Thirty seconds of film in front of everything, once a session.
 
-   Everything here is sized in svh rather than vh. A phone's address bar
-   collapsing changes vh mid-scroll, which on a pinned full-screen element
-   means the frame grows under the reader's finger.
+   This replaced a scroll-driven version pinned to the top of the home
+   page. Two things were wrong with that one and both are worth keeping
+   written down: a reader dragging a playhead is working rather than
+   watching, and a film at the top of the home page is a toll gate that
+   stands between a returning reader and the figures they came back for.
+   An entrance belongs in front of the door, not inside the building.
 
-   Nothing in this block animates a width, a height or a position. The
-   scrub writes `currentTime` on a video and nothing else, so the browser
-   never relayouts while the film is moving. */
-.film {
-  position: relative;
-  /* Breaks out of <Page>'s 1440px column and its gutters. The film is the
-     only full-bleed element on the page and it predates the column: it
-     renders before <main> rather than inside it. */
-  width: 100%;
-  background: #060b15;
-}
-
-/* Exactly the screen below the header, never behind it. `--film-offset` is
-   written from JS on mount; it defaults to 0, so a reader whose JavaScript
-   has not run yet gets a full-height stage rather than a collapsed one. */
-.film-stage {
-  position: relative;
-  height: calc(100svh - var(--film-offset, 0px));
-  width: 100%;
-  overflow: hidden;
-  background: #060b15;
+   Sized in svh rather than vh throughout. A phone's address bar
+   collapsing changes vh mid-playback, which on a fixed full-screen
+   element resizes the frame under the reader. */
+.opening-film {
+  position: fixed;
+  inset: 0;
+  /* Above the door, which is itself above everything. */
+  z-index: 1100;
   display: grid;
   place-items: center;
+  background: #060b15;
+  opacity: 1;
+  transition: opacity 650ms ease;
+
+  /* A way out that needs no JavaScript at all. If the script loaded but
+     never ran, this lifts the overlay after a minute rather than leaving
+     somebody staring at a frozen frame with no way past it. An entrance
+     that can lock a reader out of a site is not an entrance, it is a
+     fault. The component's own `<noscript>` rule covers the case where
+     scripting is off entirely. */
+  animation: opening-failsafe 1ms linear 60s forwards;
+}
+@keyframes opening-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+.opening-film[data-leaving="true"] {
+  opacity: 0;
+  pointer-events: none;
 }
 
-.film-aperture {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-}
-
-/* THE WHOLE FRAME, ALWAYS. This was `cover`, which filled the screen by
-   throwing away about a quarter of the width — and a sequence whose
-   subject is what is at the edge of the frame cannot afford that. It is
-   `contain`: a 2.33:1 band centred on the ground, nothing cropped.
-   The bands above and below it are the same near-black the film fades to
-   at its own edges, so they do not read as letterboxing. */
-.film-frame {
+/* THE WHOLE FRAME, ALWAYS. An earlier version used `cover`, which filled
+   the screen by throwing away about a quarter of the width — and a
+   sequence whose subject is what sits at the edge of the frame cannot
+   afford that: the row of eight products lost its outer two. The bands
+   above and below a 2.33:1 frame are the same near-black the film fades
+   to at its own edges, so they do not read as letterboxing. */
+.opening-film-frame {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
-  /* The decoder is handed its own layer so a seek never repaints the
-     page behind it. */
-  will-change: transform;
-  transform: translateZ(0);
 }
 
-/* The frame has no edge. Light falls off into exactly the colour the page
-   is built on, so there is no border, no letterbox and no moment where
-   the film stops and the site starts — the last frame simply continues
-   into the ground beneath it. */
-/* Lighter than it was. When the frame was cropped to fill the screen this
-   had to hide a hard edge at every side; a contained frame fades to its
-   own near-black, so all that is left to do is seat it on the ground and
-   darken the floor a little where the captions sit. */
-.film-veil {
+.opening-film-veil {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(135% 105% at 50% 48%, transparent 52%, rgba(6, 11, 21, 0.45) 100%),
-    linear-gradient(to bottom, transparent 0%, transparent 62%, rgba(6, 11, 21, 0.55) 100%);
+  background: radial-gradient(
+    135% 105% at 50% 48%,
+    transparent 56%,
+    rgba(6, 11, 21, 0.4) 100%
+  );
 }
-
-/* ── The altimeter ─────────────────────────────────────────────────────
-   A hairline down the edge that fills as the camera descends, with a tick
-   where each movement turns over. The reader is holding a thirty-second
-   object by its middle; this is the only thing on screen that tells them
-   where in it they are.
-
-   The ticks are placed by SCROLL WEIGHT, not by footage length, so a mark
-   sits where the hand will actually be when the act changes. */
-.film-rail {
-  position: absolute;
-  inset-inline-end: 30px;
-  top: 22%;
-  bottom: 22%;
-  width: 1px;
-  background: rgba(255, 255, 255, 0.14);
-  pointer-events: none;
-}
-.film-rail-fill {
-  position: absolute;
-  inset: 0;
-  display: block;
-  transform-origin: top;
-  background: linear-gradient(to bottom, #2855f5, #00b8e6);
-  box-shadow: 0 0 10px rgba(0, 184, 230, 0.5);
-}
-.film-rail-tick {
-  position: absolute;
-  inset-inline-end: -3px;
-  width: 7px;
-  height: 1px;
-  display: block;
-  background: rgba(255, 255, 255, 0.4);
-}
-
-/* Which movement is on screen, beside the rail. Set in the mono face and
-   tracked wide — it is a label on an instrument, not a title card. */
-/* Horizontal, immediately above the rail. A rotated label was tried and
-   removed: `writing-mode` and a `rotate()` on the same element fight over
-   the same origin, and on an RTL page the result landed in the middle of
-   the picture. A short line above the gauge says the same thing and can
-   be read without tilting. */
-.film-act {
-  position: absolute;
-  inset-inline-end: 24px;
-  top: calc(22% - 26px);
-  font: 500 10px/1 var(--font-mono), ui-monospace, monospace;
-  letter-spacing: 0.26em;
-  color: #9fb2cf;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 600ms ease;
-  pointer-events: none;
-}
-.film-act[data-shown="true"] { opacity: 1; }
 
 /* One line at a time, low in the frame, over the darkest part of every
-   composition. It is set in the interface face rather than the mono one:
-   this is the only prose in the sequence and it is not a figure. */
-.film-caption {
+   composition. Set in the interface face rather than the mono one: this
+   is the only prose in the sequence and it is not a figure. */
+.opening-film-line {
   position: absolute;
   inset-inline: 0;
-  bottom: 17svh;
+  bottom: 16svh;
   margin: 0;
   text-align: center;
-  font-size: clamp(19px, 2.3vw, 30px);
+  font-size: clamp(20px, 2.4vw, 32px);
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.45;
   color: #eaf1ff;
-  text-shadow: 0 2px 30px rgba(6, 11, 21, 0.9);
+  text-shadow: 0 2px 34px rgba(6, 11, 21, 0.95);
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 700ms ease, transform 700ms ease;
+  transition: opacity 800ms ease;
   pointer-events: none;
 }
-.film-caption[data-shown="true"] {
-  opacity: 1;
-  transform: none;
-}
+.opening-film-line[data-shown="true"] { opacity: 1; }
 /* The line arrives rather than fades, through the project's own mask
    primitive. `.kinetic-window` clips and `.kinetic-line` rises out of it;
-   the keyframes are the ones the scroll scenes already use, so a reader
-   who has seen a reading stop on a company page recognises the movement. */
-.film-caption .kinetic-window { line-height: 1.45; }
-.film-caption[data-shown="true"] .kinetic-line {
-  animation: kinetic-arrival 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+   the keyframes are the ones the reading stops already use, so the
+   movement is one a reader will meet again inside the site. */
+.opening-film-line .kinetic-window { line-height: 1.45; }
+.opening-film-line[data-shown="true"] .kinetic-line {
+  animation: kinetic-arrival 0.8s cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
-/* ── The handover ──────────────────────────────────────────────────────
-   The film ends on the wordmark and this rises out of the same frame: the
-   first real figure on the site, arriving exactly where the sequence has
-   been pointing for thirty seconds.
-
-   It sits BELOW the centre, because the wordmark is burned into the last
-   frame at the middle of it. The figure is pure white with no glow — the
-   one rule this site does not bend. */
-.film-arrival {
+/* Quiet, and present from the first second. A skip that appears late is a
+   skip for people who already waited. */
+.opening-film-controls {
   position: absolute;
-  inset-inline: 0;
-  top: 60%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 900ms ease, transform 900ms cubic-bezier(0.2, 0.8, 0.3, 1);
-  pointer-events: none;
-}
-.film-arrival[data-shown="true"] {
-  opacity: 1;
-  transform: none;
-}
-.film-arrival span {
-  font: 600 10px/1 var(--font-mono), ui-monospace, monospace;
-  letter-spacing: 0.34em;
-  color: #7c8dac;
-}
-/* The tracked instrument, beside the index it tracks. Quieter than the
-   name but never absent: this figure is an ETF's price, not the
-   benchmark's level. */
-.film-arrival span i {
-  font-style: normal;
-  color: #5d6c87;
-}
-.film-arrival strong {
-  font-size: clamp(30px, 3.6vw, 48px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-}
-.film-arrival em {
-  font-style: normal;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.film-hint {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 42px;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.34em;
-  color: #7c8dac;
-  opacity: 0;
-  transition: opacity 900ms ease;
-  pointer-events: none;
-}
-.film-hint[data-shown="true"] {
-  opacity: 1;
-  animation: film-breathe 3.2s ease-in-out infinite;
-}
-@keyframes film-breathe {
-  0%, 100% { opacity: 0.45; }
-  50% { opacity: 1; }
-}
-
-/* The one thing on this screen that is different every time. It replaces
-   the heading the film was put in front of, and it is deliberately the
-   quietest element in the frame: the film is the argument, this is the
-   timestamp on it. */
-.film-status {
-  position: absolute;
-  inset-block-end: 36px;
-  /* Reading start — the right-hand side on an RTL page. The status is the
-     live fact on this screen and the sound button is an option, so the
-     fact gets the corner the eye lands on first. */
-  inset-inline-start: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  text-align: start;
-  pointer-events: none;
-}
-.film-status span {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  color: #7c8dac;
-}
-.film-status strong {
-  font-size: 13px;
-  font-weight: 600;
-  color: #eaf1ff;
-}
-.film-status small {
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: #9fb2cf;
-  max-width: 34ch;
-}
-
-.film-sound {
-  position: absolute;
-  inset-block-end: 36px;
+  inset-block-end: 34px;
   inset-inline-end: 32px;
-  padding: 9px 16px;
+  display: flex;
+  gap: 10px;
+}
+.opening-film-controls button {
+  padding: 9px 18px;
   font-size: 12px;
   font-weight: 500;
-  color: #aebfdc;
-  background: rgba(13, 22, 38, 0.6);
+  color: #9fb2cf;
+  background: rgba(13, 22, 38, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
   backdrop-filter: blur(8px);
   cursor: pointer;
   transition: color 200ms ease, border-color 200ms ease;
 }
-.film-sound:hover {
+.opening-film-controls button:hover {
   color: #eaf1ff;
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* The soundtrack is a separate viewing, not a toggle. A score attached to
-   a playhead somebody is dragging is noise. */
-.film-theatre {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  display: grid;
-  place-items: center;
-  background: rgba(6, 11, 21, 0.96);
-  backdrop-filter: blur(10px);
-}
-.film-theatre video {
-  width: min(94vw, 1400px);
-  max-height: 84svh;
-  border-radius: 10px;
-  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
-}
-.film-theatre button {
-  position: absolute;
-  inset-block-start: 26px;
-  inset-inline-start: 26px;
-  padding: 9px 18px;
-  font-size: 12px;
-  color: #aebfdc;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-/* A phone is not a short desktop. There is no pin, no scrub and no 20MB
-   download: the film becomes its own opening frame, which is a dark
-   continent before anything on it has woken up — and the page carries on
-   underneath exactly as it does on a wide screen. */
+/* A portrait phone and a 2.33:1 frame will never fill each other, and
+   cropping to make them is not available here: the row of eight products
+   spans the full width, so covering would cut six of them off. The frame
+   stays whole and the layout is composed around it instead — the line
+   sits directly under the band rather than at the foot of the screen, so
+   it reads as a subtitle to a cinema strip rather than as text stranded
+   in a void. */
 @media (max-width: 999px) {
-  .film-stage { height: 58svh; }
-  .film-frame { display: none; }
-  .film-rail,
-  .film-act,
-  .film-arrival { display: none; }
-  .film-stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #060b15 url("/scene/entrance-first.webp") center / cover no-repeat;
+  .opening-film-line {
+    top: 63%;
+    bottom: auto;
+    font-size: clamp(17px, 4.6vw, 22px);
+    padding-inline: 22px;
   }
-  .film-caption,
-  .film-hint,
-  .film-sound { display: none; }
-}
-
-/* Reduced motion gets the END of the sequence, not a frozen first frame.
-   The wordmark is where the film was going; an entrance that is cancelled
-   rather than resolved leaves the reader on a held breath. */
-@media (prefers-reduced-motion: reduce) {
-  .film-stage { height: 62svh; }
-  .film-frame { display: none; }
-  .film-stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #060b15 url("/scene/entrance-poster.webp") center / cover no-repeat;
+  .opening-film-controls {
+    inset-block-end: 26px;
+    inset-inline: 0;
+    justify-content: center;
   }
-  .film-caption,
-  .film-hint,
-  .film-rail,
-  .film-act,
-  .film-arrival { display: none; }
+  /* A little more fall-off, so the black around the band is lit rather
+     than empty. */
+  .opening-film-veil {
+    background: radial-gradient(
+      90% 42% at 50% 50%,
+      rgba(0, 184, 230, 0.07) 0%,
+      transparent 70%
+    );
+  }
 }
 
 /* ── The door, relit ───────────────────────────────────────────────────
