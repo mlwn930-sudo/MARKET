@@ -180,7 +180,7 @@ export default async function MarketPage() {
     quotedAt: quoteTimes.length > 0 ? new Date(Math.max(...quoteTimes)) : null,
   });
 
-  return <><EntranceFilm status={signal.label} detail={signal.detail}/><Page>    {/* The editorial heading that used to open this page is gone: the film
+  return <><EntranceFilm status={signal.label} detail={signal.detail} index={{symbol:INDEX_PROXIES[0].symbol,label:INDEX_PROXIES[0].label,note:INDEX_PROXIES[0].note}} seed={seed}/><Page>    {/* The editorial heading that used to open this page is gone: the film
         above is the opening now, and a greeting underneath a thirty-second
         sequence is the site introducing itself twice. Its only part that
         was not decoration — the live session status — moved into the

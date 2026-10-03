@@ -833,16 +833,14 @@ body:not(:has(.gta-cover)) .signal-canvas {
      renders before <main> rather than inside it. */
   width: 100%;
   background: #060b15;
-  /* Set from JS on mount to the measured header height, so the film is the
-     whole screen and not the screen minus a navigation bar. It defaults to
-     0 and the layout is correct without it — a reader whose JavaScript has
-     not run yet gets the film below the header rather than a gap. */
-  margin-top: calc(-1 * var(--film-offset, 0px));
 }
 
+/* Exactly the screen below the header, never behind it. `--film-offset` is
+   written from JS on mount; it defaults to 0, so a reader whose JavaScript
+   has not run yet gets a full-height stage rather than a collapsed one. */
 .film-stage {
   position: relative;
-  height: 100svh;
+  height: calc(100svh - var(--film-offset, 0px));
   width: 100%;
   overflow: hidden;
   background: #060b15;
@@ -850,15 +848,23 @@ body:not(:has(.gta-cover)) .signal-canvas {
   place-items: center;
 }
 
-/* Full bleed rather than letterboxed. A 2.33:1 frame centred on a 16:9
-   screen leaves two grey bands, and two grey bands are a video player.
-   Covering crops about an eighth from each side, which every composition
-   in this sequence survives — they are all built on a centred vanishing
-   point, and the wordmark at the end sits well inside the middle half. */
+.film-aperture {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+/* THE WHOLE FRAME, ALWAYS. This was `cover`, which filled the screen by
+   throwing away about a quarter of the width — and a sequence whose
+   subject is what is at the edge of the frame cannot afford that. It is
+   `contain`: a 2.33:1 band centred on the ground, nothing cropped.
+   The bands above and below it are the same near-black the film fades to
+   at its own edges, so they do not read as letterboxing. */
 .film-frame {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   /* The decoder is handed its own layer so a seek never repaints the
      page behind it. */
@@ -870,14 +876,73 @@ body:not(:has(.gta-cover)) .signal-canvas {
    is built on, so there is no border, no letterbox and no moment where
    the film stops and the site starts — the last frame simply continues
    into the ground beneath it. */
+/* Lighter than it was. When the frame was cropped to fill the screen this
+   had to hide a hard edge at every side; a contained frame fades to its
+   own near-black, so all that is left to do is seat it on the ground and
+   darken the floor a little where the captions sit. */
 .film-veil {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(130% 100% at 50% 50%, transparent 38%, rgba(6, 11, 21, 0.55) 100%),
-    linear-gradient(to bottom, rgba(6, 11, 21, 0.9) 0%, transparent 18%, transparent 78%, #060b15 100%);
+    radial-gradient(135% 105% at 50% 48%, transparent 52%, rgba(6, 11, 21, 0.45) 100%),
+    linear-gradient(to bottom, transparent 0%, transparent 62%, rgba(6, 11, 21, 0.55) 100%);
 }
+
+/* ── The altimeter ─────────────────────────────────────────────────────
+   A hairline down the edge that fills as the camera descends, with a tick
+   where each movement turns over. The reader is holding a thirty-second
+   object by its middle; this is the only thing on screen that tells them
+   where in it they are.
+
+   The ticks are placed by SCROLL WEIGHT, not by footage length, so a mark
+   sits where the hand will actually be when the act changes. */
+.film-rail {
+  position: absolute;
+  inset-inline-end: 30px;
+  top: 22%;
+  bottom: 22%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+.film-rail-fill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-origin: top;
+  background: linear-gradient(to bottom, #2855f5, #00b8e6);
+  box-shadow: 0 0 10px rgba(0, 184, 230, 0.5);
+}
+.film-rail-tick {
+  position: absolute;
+  inset-inline-end: -3px;
+  width: 7px;
+  height: 1px;
+  display: block;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Which movement is on screen, beside the rail. Set in the mono face and
+   tracked wide — it is a label on an instrument, not a title card. */
+/* Horizontal, immediately above the rail. A rotated label was tried and
+   removed: `writing-mode` and a `rotate()` on the same element fight over
+   the same origin, and on an RTL page the result landed in the middle of
+   the picture. A short line above the gauge says the same thing and can
+   be read without tilting. */
+.film-act {
+  position: absolute;
+  inset-inline-end: 24px;
+  top: calc(22% - 26px);
+  font: 500 10px/1 var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.26em;
+  color: #9fb2cf;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 600ms ease;
+  pointer-events: none;
+}
+.film-act[data-shown="true"] { opacity: 1; }
 
 /* One line at a time, low in the frame, over the darkest part of every
    composition. It is set in the interface face rather than the mono one:
@@ -902,6 +967,63 @@ body:not(:has(.gta-cover)) .signal-canvas {
 .film-caption[data-shown="true"] {
   opacity: 1;
   transform: none;
+}
+/* The line arrives rather than fades, through the project's own mask
+   primitive. `.kinetic-window` clips and `.kinetic-line` rises out of it;
+   the keyframes are the ones the scroll scenes already use, so a reader
+   who has seen a reading stop on a company page recognises the movement. */
+.film-caption .kinetic-window { line-height: 1.45; }
+.film-caption[data-shown="true"] .kinetic-line {
+  animation: kinetic-arrival 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+/* ── The handover ──────────────────────────────────────────────────────
+   The film ends on the wordmark and this rises out of the same frame: the
+   first real figure on the site, arriving exactly where the sequence has
+   been pointing for thirty seconds.
+
+   It sits BELOW the centre, because the wordmark is burned into the last
+   frame at the middle of it. The figure is pure white with no glow — the
+   one rule this site does not bend. */
+.film-arrival {
+  position: absolute;
+  inset-inline: 0;
+  top: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 900ms ease, transform 900ms cubic-bezier(0.2, 0.8, 0.3, 1);
+  pointer-events: none;
+}
+.film-arrival[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+.film-arrival span {
+  font: 600 10px/1 var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.34em;
+  color: #7c8dac;
+}
+/* The tracked instrument, beside the index it tracks. Quieter than the
+   name but never absent: this figure is an ETF's price, not the
+   benchmark's level. */
+.film-arrival span i {
+  font-style: normal;
+  color: #5d6c87;
+}
+.film-arrival strong {
+  font-size: clamp(30px, 3.6vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+.film-arrival em {
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .film-hint {
@@ -1017,12 +1139,11 @@ body:not(:has(.gta-cover)) .signal-canvas {
    continent before anything on it has woken up — and the page carries on
    underneath exactly as it does on a wide screen. */
 @media (max-width: 999px) {
-  /* No pull-up here. The phone header is two stacked rows and nearly a
-     third of the screen; hiding the film behind it would leave a band
-     rather than an opening. */
-  .film { margin-top: 0; }
   .film-stage { height: 58svh; }
   .film-frame { display: none; }
+  .film-rail,
+  .film-act,
+  .film-arrival { display: none; }
   .film-stage::before {
     content: "";
     position: absolute;
@@ -1047,7 +1168,10 @@ body:not(:has(.gta-cover)) .signal-canvas {
     background: #060b15 url("/scene/entrance-poster.webp") center / cover no-repeat;
   }
   .film-caption,
-  .film-hint { display: none; }
+  .film-hint,
+  .film-rail,
+  .film-act,
+  .film-arrival { display: none; }
 }
 
 /* ── The door, relit ───────────────────────────────────────────────────
