@@ -27,16 +27,29 @@ const API_KEY = process.env.FINNHUB_API_KEY;
 const PER_SECTOR = 10;
 
 /** Extra pulls so thin sectors are not left empty. Company news is tagged to
- *  one ticker, which reliably lands it in that company's sector. */
+ *  one ticker, which reliably lands it in that company's sector.
+ *
+ *  ONE ANCHOR PER THEME, and the list is wrong the moment a theme has
+ *  none. `media` was added after a watched Take-Two produced an empty
+ *  feed for a week: the general market pull is American large-cap wire
+ *  copy, and a games publisher simply never appears in it. A theme whose
+ *  companies only ever arrive by luck is a theme that is empty on a quiet
+ *  day, so each one gets a named pull it can count on.
+ *
+ *  Finnhub's free tier allows sixty calls a minute and this loop makes
+ *  one per entry at 1.2s apart, so the ceiling here is comfort, not
+ *  quota. */
 const COMPANY_PULLS = [
-  "NVDA",
-  "XOM",
-  "NEE",
-  "LMT",
-  "LLY",
-  "WMT",
-  "JPM",
-  "TSM",
+  "NVDA", // ai, semis
+  "XOM", // oil
+  "NEE", // power
+  "LMT", // defense
+  "LLY", // health
+  "WMT", // trade, consumer
+  "JPM", // finance
+  "TSM", // semis
+  "TTWO", // media
+  "NFLX", // media
 ];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -111,6 +124,48 @@ function dedupe(articles) {
     if (!key || seen.has(key)) continue;
     seen.add(key);
     out.push(article);
+  }
+  return out;
+}
+
+/**
+ * The newest `limit` articles, but one per company before any company
+ * gets a second.
+ *
+ * Plain recency gave the media theme nine Netflix headlines and one
+ * everything-else, because Netflix was pulled fourteen times and Take-Two
+ * three. On the page that is a theme that reads as one company; in the
+ * watchlist it is worse, because the watchlist reads THIS file — so a
+ * display cap was quietly deciding whether a reader following Take-Two
+ * was told anything at all. On a noisier Netflix day it would have been
+ * nothing, which is exactly the symptom that was reported.
+ *
+ * Order within a company stays newest-first, and the rounds are walked in
+ * the order the companies first appear, so the newest story overall is
+ * still the first one out. Untagged articles are each their own subject
+ * rather than one bucket: there is nothing to say they are about the same
+ * thing, and pooling them would let one busy wire crowd the round.
+ */
+function spread(articles, limit) {
+  const rounds = new Map();
+  articles.forEach((article, index) => {
+    const key = article.tickers?.[0] ?? `untagged:${index}`;
+    const bucket = rounds.get(key);
+    if (bucket) bucket.push(article);
+    else rounds.set(key, [article]);
+  });
+
+  const out = [];
+  const queues = [...rounds.values()];
+  for (let depth = 0; out.length < limit; depth++) {
+    let placed = false;
+    for (const queue of queues) {
+      if (depth >= queue.length) continue;
+      out.push(queue[depth]);
+      placed = true;
+      if (out.length === limit) break;
+    }
+    if (!placed) break;
   }
   return out;
 }
@@ -199,9 +254,12 @@ async function main() {
   }
 
   const sectors = SECTORS.map((definition) => {
-    const found = dedupe(buckets.get(definition.sector) ?? [])
-      .sort((a, b) => (b.seenAt ?? "").localeCompare(a.seenAt ?? ""))
-      .slice(0, PER_SECTOR);
+    const found = spread(
+      dedupe(buckets.get(definition.sector) ?? []).sort((a, b) =>
+        (b.seenAt ?? "").localeCompare(a.seenAt ?? ""),
+      ),
+      PER_SECTOR,
+    );
 
     const prior = (previous.sectors ?? []).find(
       (s) => s.sector === definition.sector,

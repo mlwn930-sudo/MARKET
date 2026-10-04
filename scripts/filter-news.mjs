@@ -24,7 +24,13 @@ let dropped = 0;
 
 feed.sectors = feed.sectors.map((sector) => {
   const filtered = sector.articles
-    .map((article) => ({ ...article, tickers: tickersIn(article.title) }))
+    /* The article, not its headline. `tickersIn(article.title)` passed a
+       string where an object was expected, so every property it read came
+       back undefined and the call returned an empty list — this pass was
+       deleting the ticker tags the refresh had just worked them out, on
+       every run, silently. It is the reason a watched company could show
+       news on the feed and nothing on the watchlist. */
+    .map((article) => ({ ...article, tickers: tickersIn(article) }))
     .filter((article) => {
       const ok = isRelevant(article);
       if (ok) kept++;

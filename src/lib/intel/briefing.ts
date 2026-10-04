@@ -185,7 +185,22 @@ function newsSignals(articles: EnrichedArticle[]): Signal[] {
         article.analysis?.catalystKind === "catalyst" &&
         (article.analysis.tickers.length > 0 || article.tickers.length > 0),
     )
-    .slice(0, 8)
+    /* No cap here any more.
+     *
+     * It was `.slice(0, 8)`, which looks like a sensible page-sized bound
+     * and is one — for the page. `/intel` already takes its own first
+     * eight and files the remainder under "the rest", so this cap was
+     * never what sized that page. What it did size was `PersonalIntel`,
+     * which filters the SAME array by the reader's watchlist: a company
+     * could only ever surface here if it had already placed in the global
+     * top eight catalysts of the day. A reader following Take-Two was
+     * therefore told "nothing material today" on days when Take-Two had a
+     * catalyst and Nvidia had three.
+     *
+     * A global cap must not decide what a personal view is allowed to
+     * know. `material()` sorts by materiality and every consumer slices,
+     * so the ordering the page relies on is unchanged — there is simply
+     * more of it behind the eighth row. */
     .map((article, index) => {
       const tickers = [
         ...new Set([...(article.analysis?.tickers ?? []), ...article.tickers]),

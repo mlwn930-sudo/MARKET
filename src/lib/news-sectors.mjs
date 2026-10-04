@@ -204,6 +204,61 @@ export const SECTORS = [
     ],
     tickers: ["LLY", "JNJ", "MRK", "PFE", "ABBV", "UNH", "AMGN", "NVO"],
   },
+  /**
+   * The theme the universe already had and the feed did not.
+   *
+   * `universe.ts` files thirteen companies under `internet` — "אינטרנט
+   * ומדיה" — and nine themes here covered none of them that the AI and
+   * consumer lists had not already claimed. The effect was not that these
+   * companies got thin coverage: they got NONE. `classify` scored every
+   * story about them at zero, `buckets.get(sector)?.push()` dropped it
+   * without a word, and `tickersIn` keeps only tickers some theme lists,
+   * so even a story that survived carried no ticker. A reader watching
+   * Take-Two saw an empty feed while the wire was running GTA VI stories
+   * all week, which is how this was found.
+   *
+   * The keywords are the vocabulary these businesses are actually
+   * reported in — a subscriber number, a booking, a box office, a launch
+   * date — rather than the word "internet", which appears in everything
+   * and in nothing.
+   */
+  {
+    sector: "media",
+    label: "אינטרנט ומדיה",
+    blurb: "סטרימינג, גיימינג, פלטפורמות הזמנות ומסחר מקוון",
+    accent: "#d2789f",
+    keywords: [
+      "video game",
+      "videogame",
+      "gaming",
+      "console",
+      "grand theft auto",
+      "rockstar games",
+      "take-two",
+      "streaming service",
+      "subscriber growth",
+      "box office",
+      "ad-supported tier",
+      "netflix",
+      "spotify",
+      "ride-hailing",
+      "food delivery",
+      "bookings growth",
+      "e-commerce platform",
+    ],
+    tickers: [
+      "NFLX",
+      "TTWO",
+      "SPOT",
+      "BKNG",
+      "UBER",
+      "ABNB",
+      "DASH",
+      "SHOP",
+      "EBAY",
+      "TTD",
+    ],
+  },
 ];
 
 /** Headlines that are never market news, whatever else they matched. */
@@ -289,6 +344,18 @@ const ALIASES = {
   CRM: ["salesforce"],
   ADBE: ["adobe"],
   TTWO: ["take-two", "rockstar"],
+  /* The rest of the media theme. Without a name here a ticker can only
+     ever be an `indirect` tag, which the cross-talk guard discards — so a
+     story that genuinely is about Booking or Uber would be thrown out on
+     the same rule that exists to throw out a Bitcoin story tagged NVDA. */
+  SPOT: ["spotify"],
+  BKNG: ["booking holdings", "booking.com", "priceline"],
+  UBER: ["uber"],
+  ABNB: ["airbnb"],
+  DASH: ["doordash"],
+  SHOP: ["shopify"],
+  EBAY: ["ebay"],
+  TTD: ["trade desk"],
   XOM: ["exxon"],
   CVX: ["chevron"],
   LLY: ["eli lilly"],
@@ -409,15 +476,56 @@ export function classify(article) {
   return top.map((s) => s.sector);
 }
 
-/** Tickers the article is about, limited to ones we can show a page for. */
+/**
+ * Tickers the article is about, limited to ones we can show a page for.
+ *
+ * It read the provider's `related` field and nothing else, which made the
+ * watchlist depend entirely on whether Finnhub happened to tag a story.
+ * "GTA 6 delay sends Take-Two shares lower" names the company in the
+ * headline and arrives untagged, so it carried no ticker, and a reader
+ * following TTWO was told nothing had happened.
+ *
+ * So a name in the text counts too — but only through `entityRelationship`,
+ * the same test `classify` uses, so a company merely mentioned in passing
+ * does not become what the article is about. The provider's own tags are
+ * kept ahead of it: when Finnhub asserts a ticker that is still the
+ * stronger claim, and the text match is what fills the gap it leaves.
+ */
 export function tickersIn(article) {
   const known = new Set(SECTORS.flatMap((s) => s.tickers));
-  return [
-    ...new Set(
-      String(article.related ?? "")
-        .split(",")
-        .map((t) => t.trim().toUpperCase())
-        .filter((t) => known.has(t)),
-    ),
-  ].slice(0, 5);
+
+  /* Both shapes, the way `isRelevant` already reads them. This function is
+     called on raw Finnhub items during the refresh (`headline`/`summary`)
+     and again on normalised articles during the filter pass
+     (`title`/`excerpt`), and reading only the first silently produced an
+     empty string for the second — which, now that the text is what
+     qualifies a ticker, would wipe every tag in the feed. */
+  const text = `${article.headline ?? article.title ?? ""} ${
+    article.summary ?? article.excerpt ?? ""
+  }`.toLowerCase();
+
+  const tagged = String(article.related ?? "")
+    .split(",")
+    .map((t) => t.trim().toUpperCase())
+    .filter((t) => known.has(t));
+
+  /* Both directions are checked the same way, and the provider's tag gets
+     no exemption. It read `related` and trusted it, which is how "NIKE Q1
+     Earnings Call Highlights" arrived carrying TTWO: company news is
+     fetched per symbol and the refresh pins the symbol it asked for, so a
+     loose item in Finnhub's Take-Two feed became a Take-Two story. On a
+     watchlist a wrong tag is worse than a missing one — it is the site
+     telling a reader their company did something it did not.
+
+     Measured over a full refresh: 103 tags become 62. Every one of the 41
+     dropped was a story that never names the company — a Netflix tag on a
+     Ben Affleck interview, an Exxon tag on an OPEC quota decision. Sector
+     assignment is untouched, because `classify` reads `related` itself and
+     still counts an unsupported tag as indirect evidence. */
+  const supported = (ticker) =>
+    entityRelationship(ticker, text).relationship === "direct";
+
+  const named = [...known].filter((t) => !tagged.includes(t) && supported(t));
+
+  return [...new Set([...tagged.filter(supported), ...named])].slice(0, 5);
 }
