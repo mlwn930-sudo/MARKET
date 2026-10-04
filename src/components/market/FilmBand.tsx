@@ -73,6 +73,18 @@ export function FilmBand({
   const root = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const [still, setStill] = useState(false);
+  /**
+   * Whether the file has been asked for yet.
+   *
+   * `preload="metadata"` on a `src` that is present from the first render
+   * sounds modest and is not: it is a request per band on every page load,
+   * before anybody has scrolled, for a file most readers on most visits
+   * never reach. The poster is twenty-eight kilobytes and carries the
+   * band on its own, so the video is attached only once the observer says
+   * the band is approaching — which on a page where the reader stops at
+   * the first screen means two megabytes that are never fetched at all.
+   */
+  const [armed, setArmed] = useState(false);
 
   /* Decided on the client, because the server has no media queries. Until
      it resolves the markup carries the poster and no <video>, which is
@@ -101,6 +113,10 @@ export function FilmBand({
       ([entry]) => {
         visible = entry.isIntersecting;
         if (visible) {
+          /* The first approach is what buys the file. Once armed it stays
+             armed: re-fetching a clip the reader has already scrolled past
+             once would be worse than keeping it. */
+          setArmed(true);
           /* Autoplay can still be refused — a muted inline video is
              normally allowed, but a refusal here just means the poster
              stays, which is a correct picture rather than a broken one. */
@@ -129,6 +145,16 @@ export function FilmBand({
       frame = requestAnimationFrame(tick);
       const film = video.current;
       if (!film) return;
+
+      /* The loop is also what starts the film, and it has to be.
+         Arming attaches the src on the NEXT render, so the `play()` the
+         observer fires happens while the element still has no source and
+         is rejected. Starting it from here instead means the attempt is
+         repeated against whatever state the element is actually in, which
+         also quietly covers a decode that failed and a tab that was
+         backgrounded mid-clip. `play()` on an already-playing element is
+         a no-op, so this costs a branch. */
+      if (film.paused && film.currentSrc) film.play().catch(() => {});
 
       const dt = Math.max(now - lastT, 1) / 1000;
       const dy = Math.abs(window.scrollY - lastY);
@@ -171,13 +197,20 @@ export function FilmBand({
           <video
             ref={video}
             className="film-band-media"
-            src={src}
+            /* Absent until the band is approaching. A `<video>` with no
+               src paints its poster and costs nothing. */
+            src={armed ? src : undefined}
             poster={poster}
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             tabIndex={-1}
+            disablePictureInPicture
+            /* Nothing here is castable and nothing here is a video the
+               reader chose to watch; the controls those attributes invite
+               would be offering to full-screen the wallpaper. */
+            disableRemotePlayback
           />
         )}
       </div>

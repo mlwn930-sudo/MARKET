@@ -1,4 +1,5 @@
 import { DollarMotif } from "./DollarMotif";
+import { HeroParallax } from "./HeroParallax";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
@@ -290,14 +291,20 @@ export function Hero({
     >
       {image && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <Image
-            src={image}
-            alt={imageAlt ?? ""}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center opacity-[0.28]"
-          />
+          {/* The photograph drifts against the page; the washes below it
+              do not. They are what hold the headline at contrast, and a
+              gradient that slides under type stops doing that halfway
+              down the band. */}
+          <HeroParallax>
+            <Image
+              src={image}
+              alt={imageAlt ?? ""}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center opacity-[0.28]"
+            />
+          </HeroParallax>
           {/* Two washes rather than one. The first sinks the image far
               enough for text to sit on it at contrast; the second pulls
               the leading edge down, which is what keeps a busy photograph
