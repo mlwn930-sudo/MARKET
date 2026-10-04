@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FilmBand } from "@/components/market/FilmBand";
 import { runScreen, type ScreenResult } from "@/lib/screener";
 import { readScreen, type ReadingSegment } from "@/lib/analysis/screen-reading";
 import { identityFor } from "@/lib/company-identity";
@@ -449,6 +450,18 @@ export default async function OpportunitiesPage({
           </nav>
         )}
       </Section>
+
+      {/* The horizon before the glossary. Above it the scanner has already
+          named the companies; below it is the test that named them. The
+          band carries the one caveat the whole page rests on, and no
+          figure sits on the footage. */}
+      <FilmBand
+        src="/band/cloudfloor.mp4"
+        poster="/band/cloudfloor.webp"
+        eyebrow="MARKET / SCREEN"
+        line="סורק מוצא מועמדים. הוא לא מוצא תשובות."
+        height="48vh"
+      />
 
       {/* ---- The glossary ----
            Every criterion, explained once. Taken from the first result
