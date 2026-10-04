@@ -4,6 +4,7 @@ import { SignalCard } from "@/components/SignalCard";
 import { TransmissionPanel } from "@/components/TransmissionPanel";
 import { ThesisChangePanel } from "@/components/ThesisChangePanel";
 import { PersonalIntel } from "@/components/PersonalIntel";
+import { FilmBand } from "@/components/market/FilmBand";
 import {
   Disclaimer,
   Empty,
@@ -192,6 +193,18 @@ export default async function IntelPage() {
           </div>
         </Section>
       )}
+
+      {/* The horizon between the machinery and the names. Above it the
+          page has been tracing causes; below it, companies. The line says
+          what the whole section is for, and no figure sits on the
+          footage. */}
+      <FilmBand
+        src="/band/serverhall.mp4"
+        poster="/band/serverhall.webp"
+        eyebrow="MARKET / INTELLIGENCE"
+        line="כל שרשרת נקראת בחוליה החלשה שלה."
+        height="48vh"
+      />
 
       {/* ---- Companies ---- */}
       {briefing.companies.length > 0 && (
