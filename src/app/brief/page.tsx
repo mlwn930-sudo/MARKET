@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FilmBand } from "@/components/market/FilmBand";
 import { getMarketBrief } from "@/lib/analysis/brief";
 import { GEMINI_FAILURE_TEXT } from "@/lib/sources/gemini";
 import {
@@ -199,6 +200,17 @@ export default async function BriefPage() {
           ))}
         </div>
       </Section>
+
+      {/* The horizon between the figures and the reasons for them. Same
+          job it does on the home page: above it is what moved, below it is
+          why, and nothing a reader has to read sits on the footage. */}
+      <FilmBand
+        src="/band/skyline.mp4"
+        poster="/band/skyline.webp"
+        eyebrow="MARKET / BRIEF"
+        line="התנועה היא הנתון. הסיבה לה היא העבודה."
+        height="48vh"
+      />
 
       {/* The stories behind it */}
       <Section
