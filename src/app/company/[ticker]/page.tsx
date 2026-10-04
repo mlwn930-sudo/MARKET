@@ -33,6 +33,7 @@ import { ExpectationGapPanel } from "@/components/ExpectationGapPanel";
 import { getAnalystViews, getEarningsSurprises } from "@/lib/sources/finnhub";
 import { WhyMovingPanel } from "@/components/WhyMovingPanel";
 import { getSectorViews } from "@/lib/sectors";
+import { SectorBackdrop } from "@/components/market/SectorBackdrop";
 import { getFallbackQuote } from "@/lib/sources/prices";
 import { readChart } from "@/lib/analysis/chart-read";
 import { changesFor, historyFor } from "@/lib/intel/history-store";
@@ -378,6 +379,10 @@ export default async function CompanyPage({
         className="company-masthead hero-dark on-dark enter relative start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2"
         style={{ marginInlineStart: "calc(var(--rail-w) / -2)" }}
       >
+      {/* The sector's photograph, drifting behind the type. One frame
+          serves every company filed under that sector, which is why it is
+          a place and never a business. */}
+      <SectorBackdrop sector={sectorOf(ticker)} />
       <div className="relative mx-auto max-w-[1440px] px-5 pb-10 pt-10 sm:px-8 sm:pb-12 sm:pt-14">
         <nav className="mb-7 text-[12px] text-ink-faint">
           <Link href="/" className="transition-colors hover:text-ink">

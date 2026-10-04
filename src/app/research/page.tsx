@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ResearchConsole } from "@/components/ResearchConsole";
 import { Disclaimer, Hero, Page, Section } from "@/components/ui";
 import { EvidenceKey } from "@/components/market/EvidenceKey";
+import { FilmBand } from "@/components/market/FilmBand";
 import { WorkflowLinks } from "@/components/market/WorkflowLinks";
 import { hasGeminiKey } from "@/lib/sources/gemini";
 import { normaliseTicker } from "@/lib/company-names";
@@ -38,6 +39,11 @@ export default async function ResearchPage({ searchParams }: { searchParams: Pro
         <div className="mt-7 border-t border-line pt-5"><span className="micro-label">RESEARCH STANDARD</span><p>המודל מפרש את המידע הזמין. כשיש פער, סתירה או הנחה, הם צריכים להישאר חלק מהתשובה.</p></div>
       </aside>
     </div>
+    {/* The horizon between the desk and the questions. Above it a reader
+        works; below it the page offers three places to start. The line is
+        this page's standard, which belongs where nothing else competes
+        with it. */}
+    <FilmBand src="/band/readingroom.mp4" poster="/band/readingroom.webp" eyebrow="MARKET / RESEARCH" line="ראיה לפני דעה. גם כשהדעה נוחה יותר." height="48vh" />
     <Section eyebrow="02 / START WITH A QUESTION" title="שלוש נקודות כניסה למחקר" description="שאלות מחקר, לא המלצות השקעה. כל אחת מתחילה בעסק וממשיכה אל הנתונים שלו.">
       <div className="research-library">{DOSSIERS.map((dossier) => <Link key={dossier.ticker} href={"/research?ticker=" + dossier.ticker + "&q=" + encodeURIComponent(dossier.question)}><span className="micro-label">{dossier.topic} / {dossier.ticker}</span><h3>{dossier.title}</h3><p>{dossier.question}</p><span className="text-sm text-ink-faint">לפתוח את השאלה ←</span></Link>)}</div>
     </Section>
