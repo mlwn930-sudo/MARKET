@@ -76,8 +76,8 @@ export default async function AiPage() {
         eyebrow="שרשרת ערך"
         title="שלוש חוליות, שלוש חשיפות שונות"
         lede="&quot;מניות AI&quot; זו לא קטגוריה אחת. החברות כאן חשופות לאותו נושא דרך מנגנונים שונים לגמרי — יצרן שבבים מוכר חומרה לכל מי שמשקיע, וחברת מודלים צריכה שהמוצר שלה עצמו ינצח."
-        image="/hero/research.webp"
-        imageAlt=""
+        image="/hero/intelligence.webp"
+        imageAlt="מסדרון חדר נקי של ייצור שבבים"
       />
 
       {feed.refreshedAt && (

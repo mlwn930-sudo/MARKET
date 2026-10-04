@@ -266,3 +266,102 @@
     html { scroll-behavior: auto; }
   }
 }
+
+/* ====================================================================
+   The film band
+   ====================================================================
+   Full-bleed scenery between two sections, carrying one line. The rules
+   it obeys are the project's, not its own: light arrives on the ground
+   and at the edges, and no figure is ever laid over it.
+
+   The negative start margin undoes the content column's inset the same
+   way `.hero-dark` does, and reads --rail-w for the same reason: the rail
+   is gone and the arithmetic is a no-op, but this is the one expression
+   that knows how to re-centre a full-bleed element if the column ever
+   gains an inset again.
+   ==================================================================== */
+@layer components {
+  .film-band {
+    position: relative;
+    inset-inline-start: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    margin-inline-start: calc(var(--rail-w) / -2);
+    margin-block: 72px;
+    height: var(--film-band-h, 56vh);
+    min-height: 320px;
+    overflow: hidden;
+    background: var(--gradient-hero);
+    display: grid;
+  }
+  :root:dir(rtl) .film-band { transform: translateX(50%); }
+
+  .film-band-stage,
+  .film-band-copy { grid-area: 1 / 1; }
+
+  .film-band-stage { position: relative; overflow: hidden; }
+
+  /* The footage is ground, so it sits at the same weight the hero
+     photographs do and lets the band's own gradient carry the colour. */
+  .film-band-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .4;
+    pointer-events: none;
+  }
+
+  /* Two jobs, one pseudo-element: hold the top and bottom edges down so
+     the band dissolves into the page instead of butting against it, and
+     keep the middle clear enough that the line below reads without a
+     panel behind it. */
+  .film-band-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to bottom,
+        #060b15 0%,
+        rgba(6, 11, 21, .32) 22%,
+        rgba(6, 11, 21, .32) 78%,
+        #060b15 100%),
+      radial-gradient(60% 70% at 50% 100%,
+        color-mix(in oklab, var(--tint, #2855f5) 26%, transparent) 0%,
+        transparent 70%);
+  }
+
+  .film-band-copy {
+    position: relative;
+    z-index: 1;
+    align-self: end;
+    width: min(var(--market-content), 100% - 48px);
+    margin-inline: auto;
+    padding-block-end: clamp(28px, 6vh, 64px);
+  }
+  .film-band-copy p {
+    margin-block-start: 10px;
+    font-family: var(--font-frank), serif;
+    font-size: clamp(26px, 3.6vw, 52px);
+    line-height: 1.12;
+    max-width: 18ch;
+    color: #eaf1ff;
+    /* The one shadow on the site that is not a separation: the line sits
+       on footage whose brightness is not ours to predict, and a serif at
+       this size needs its edges held. */
+    text-shadow: 0 2px 28px rgba(6, 11, 21, .8);
+  }
+
+  @media (max-width: 760px) {
+    .film-band { margin-block: 48px; min-height: 260px; }
+  }
+
+  /* The information without the motion. The component has already swapped
+     the video for the poster by this point; this only stops the band from
+     being taller than it needs to be when nothing in it moves. */
+  @media (prefers-reduced-motion: reduce) {
+    .film-band { height: auto; min-height: 0; aspect-ratio: 21 / 8; }
+  }
+}

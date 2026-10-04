@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ResearchDock } from "@/components/market/ResearchDock";
 import { MarketNow } from "@/components/market/MarketNow";
 import { ContextJourney } from "@/components/market/ContextJourney";
+import { FilmBand } from "@/components/market/FilmBand";
 import { getIntradayHistory, getPriceHistory } from "@/lib/sources/prices";
 import { getLiveFeed } from "@/lib/live-news";
 import { getWatch } from "@/lib/watch-store";
@@ -192,6 +193,16 @@ export default async function MarketPage() {
         dock because it is the only section on the page a returning reader
         has not already seen. */}
     <WatchPanel data={watch}/>
+    {/* The horizon between the two halves of the page. Above it is what the
+        market did; below it is why. The band carries the site's own premise
+        and no figure at all — the footage moves, so nothing a reader has to
+        read sits on top of it. */}
+    <FilmBand
+      src="/band/interchange.mp4"
+      poster="/band/interchange.webp"
+      eyebrow="MARKET / CONTEXT"
+      line="מספר לבדו הוא נתון. בהקשר הוא ידע."
+    />
     <ContextJourney articles={priorityArticles} rows={rows} quotes={seed}/>
     <ResearchDock macro={<MarketPulse instruments={macro.instruments}/>} monitor={<WatchlistStrip/>}/>
     <div className="home-next-worlds"><Link href="/learn"><span>להבין יותר</span><strong>חדש בשוק? מתחילים כאן.</strong><small>מושגים, מנגנונים ומדריכים ↖</small></Link><Link href="/intel"><span>לחבר את הנקודות</span><strong>מאירוע אחד לשרשרת השפעות.</strong><small>לחדר המודיעין ↖</small></Link></div>

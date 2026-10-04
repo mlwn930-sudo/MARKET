@@ -21,3 +21,7 @@ npm-debug.log*
 
 playwright-report/
 test-results/
+
+# Higgsfield working directory: generated variants, contact sheets and
+# source renders. The chosen frames live in public/; the rest is scratch.
+.hf-out/
