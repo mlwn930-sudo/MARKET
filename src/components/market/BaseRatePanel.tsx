@@ -1,6 +1,5 @@
 import type { BaseRateRead, ConditionRead } from "@/lib/metrics/base-rates";
-import { HORIZONS, MIN_SAMPLE } from "@/lib/metrics/base-rates";
-import { readOutcome } from "@/lib/metrics/base-rate-store";
+import { HORIZONS, MIN_SAMPLE, readOutcome } from "@/lib/metrics/base-rates";
 import { Empty, Section } from "@/components/ui";
 
 /**

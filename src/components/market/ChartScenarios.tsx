@@ -1,6 +1,5 @@
 import type { BaseRateRead, ConditionRead } from "@/lib/metrics/base-rates";
-import { MIN_SAMPLE } from "@/lib/metrics/base-rates";
-import { readOutcome } from "@/lib/metrics/base-rate-store";
+import { MIN_SAMPLE, readOutcome } from "@/lib/metrics/base-rates";
 
 /**
  * The two questions a reader brings to a chart, answered with counted
