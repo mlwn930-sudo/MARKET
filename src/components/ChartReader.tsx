@@ -8,6 +8,7 @@ import type {
   ChartWatch,
 } from "@/lib/analysis/chart-reader";
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
+import { ChartScenarios } from "@/components/market/ChartScenarios";
 
 /**
  * Upload a chart, get it read back.
@@ -435,6 +436,15 @@ function ChartReadView({
       )}
 
       {checked && <Corroborated checked={checked} />}
+
+      {/* Straight after the levels check, and for the same reason it sits
+          beside it: both are the site answering a question the picture
+          cannot. The levels block asks whether the lines are really there;
+          this asks what this instrument has done after the state it is in,
+          counted rather than remembered. */}
+      {checked && (
+        <ChartScenarios read={checked.baseRates} ticker={checked.ticker} />
+      )}
 
       {read.volume && (
         <section className="read-block">

@@ -2,6 +2,8 @@ import { detectTickers } from "@/lib/company-names";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { readLevels } from "@/lib/metrics/levels";
 import type { ChartRead } from "./chart-reader";
+import type { BaseRateRead } from "@/lib/metrics/base-rates";
+import { baseRatesFor } from "@/lib/metrics/base-rate-store";
 
 /**
  * Checks a read of a picture against the data the site already holds.
@@ -50,6 +52,24 @@ export type Corroboration = {
   missedByRead: { price: number; kind: string; touches: number }[];
   confirmed: number;
   unconfirmed: number;
+  /**
+   * What this instrument's own history did after the conditions that are
+   * true on it today, and after the ones that are not yet.
+   *
+   * This is the half of the read the model is structurally unable to
+   * supply. It is looking at pixels: it can say "price is testing the
+   * fifty-day" and it cannot say what that has been followed by, because
+   * nothing it has access to counted. The site counted — ten years of
+   * closes per name, every occurrence, against the baseline of a random
+   * day in the same window.
+   *
+   * It is also the only honest way to answer the question a reader
+   * actually brings to a chart, which is "what are the odds". A model
+   * asked that produces a number from nowhere, which is why
+   * `scrubStatistic` deletes percentages out of the read. A number with a
+   * sample behind it is a different object, and it is allowed to be shown.
+   */
+  baseRates: BaseRateRead | null;
 };
 
 /* Two readings of the same level will never be identical: one is measured
@@ -89,6 +109,13 @@ export async function corroborate(
   if (real.length === 0) return null;
 
   const lastClose = history.candles[history.candles.length - 1].close;
+
+  /* The precomputed ten-year measurement, not one taken from the two years
+     of candles above: four golden crosses is not a rate, and the file the
+     nightly job writes already has the long window. A ticker outside the
+     research universe simply has none, and the renderer says so rather
+     than measuring whatever happens to be here. */
+  const baseRates = await baseRatesFor(ticker).catch(() => null);
 
   const levels: LevelCheck[] = [];
   const usedReal = new Set<number>();
@@ -156,5 +183,6 @@ export async function corroborate(
     missedByRead,
     confirmed: levels.filter((l) => l.matched !== null).length,
     unconfirmed: levels.filter((l) => l.matched === null).length,
+    baseRates,
   };
 }
