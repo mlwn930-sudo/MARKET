@@ -457,3 +457,19 @@
     .term-hint-body { width: calc(100vw - 32px); }
   }
 }
+
+@layer components {
+  /* The scanner's own smoke alarm. Gold, because this is the site's
+     caveat colour and the finding is not wrong — it is old. Red would
+     say the numbers are false; they are true and stale, which is a
+     different warning and a different colour. */
+  .watch-stale {
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    border-inline-start: 2px solid var(--color-event, #d6a84a);
+    background: var(--color-element, rgba(255, 255, 255, 0.03));
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-ink);
+  }
+}

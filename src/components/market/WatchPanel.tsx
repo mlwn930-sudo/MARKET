@@ -28,12 +28,36 @@ const KIND_LABEL: Record<Finding["kind"], string> = {
   opportunity: "איכות מול תנועה",
 };
 
+/**
+ * Past this, the scan is not late — it has stopped.
+ *
+ * The scanner runs every half hour while the exchange is open and twice a
+ * day otherwise, so a gap longer than a day cannot be a quiet schedule.
+ * It is the job having failed, and the one thing the reader must not be
+ * told is that nothing changed.
+ */
+const STALE_MINUTES = 26 * 60;
+
 function ageText(minutes: number | null): string {
   if (minutes === null) return "הסורק טרם רץ";
   if (minutes < 2) return "נסרק הרגע";
   if (minutes < 90) return `נסרק לפני ${minutes} דקות`;
+
   const hours = Math.round(minutes / 60);
-  return `נסרק לפני ${hours} שעות`;
+  if (minutes < STALE_MINUTES) return `נסרק לפני ${hours} שעות`;
+
+  /* "לפני 72 שעות" is arithmetically right and practically a lie: it reads
+     as a long gap in a working schedule, and this gap is a broken job. A
+     scan that has not run in three days was reported in hours because the
+     function had no upper branch, so a silent CI failure looked on the
+     page exactly like a quiet market. */
+  const days = Math.round(hours / 24);
+  return `הסריקה האחרונה לפני ${days} ימים — הסורק לא רץ מאז`;
+}
+
+/** Whether what is on screen is a scan or the remains of one. */
+function isStale(minutes: number | null): boolean {
+  return minutes !== null && minutes >= STALE_MINUTES;
 }
 
 export function WatchPanel({ data, limit = 8 }: { data: WatchFile; limit?: number }) {
@@ -110,6 +134,21 @@ export function WatchPanel({ data, limit = 8 }: { data: WatchFile; limit?: numbe
           );
         })}
       </div>
+
+      {/* A dead scanner, said once and plainly, above the findings rather
+          than in the caption under them.
+          The findings below are real measurements and they are also three
+          days old, and those two facts have to arrive together or the
+          first one is misleading. This is the site's own smoke alarm: the
+          scheduled job is allowed to fail without failing the workflow, by
+          design, which means the only place a reader — or the operator —
+          will ever learn about it is here. */}
+      {isStale(age) && (
+        <p className="watch-stale">
+          הממצאים למטה נמדדו בסריקה האחרונה ולא עודכנו מאז. המחירים בהם אינם
+          של היום, והם עשויים כבר לא להתקיים.
+        </p>
+      )}
 
       {/* What the scan covered and when. A watcher that does not say how
           stale it is invites a reader to treat a half-hour-old finding as

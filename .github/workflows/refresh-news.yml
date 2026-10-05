@@ -123,8 +123,34 @@ jobs:
       # cannot reach Yahoo is a scan with no new findings, which the page
       # already knows how to say.
       - name: Scan for what changed
+        id: scan
         continue-on-error: true
         run: npm run watch
+
+      # The alarm this workflow did not have.
+      #
+      # The step above is allowed to fail without failing the job, and that
+      # is right: a scan that cannot reach Yahoo is not a reason to throw
+      # away news that was fetched successfully. What was missing is anyone
+      # ever finding out. The scanner shipped and then never wrote from CI
+      # again — the step went green every half hour, and the site served a
+      # three-day-old scan under a caption reading "scanned 72 hours ago".
+      #
+      # An annotation costs nothing and turns a silent outage into a red
+      # line on the run. It still does not fail the job.
+      - name: Say so if the scan produced nothing
+        if: always()
+        run: |
+          if [ "${{ steps.scan.outcome }}" != "success" ]; then
+            echo "::error::The market scan failed. The site keeps the last scan and now says on the page that it is stale."
+            exit 0
+          fi
+          AGE=$(node -e 'const f=require("./content/watch/latest.json");console.log(Math.round((Date.now()-new Date(f.builtAt).getTime())/60000))' 2>/dev/null || echo 99999)
+          if [ "$AGE" -gt 60 ]; then
+            echo "::error::The scan step went green but content/watch/latest.json is $AGE minutes old, so it did not write."
+          else
+            echo "scan wrote a file $AGE minutes old"
+          fi
 
       # Mail goes out only when both keys exist and the scan found
       # something not already sent. Never fails the job: a research site
@@ -151,8 +177,17 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
         run: npm run alerts
 
+      # No longer gated on the news preflight.
+      #
+      # The gate made sense when this job only produced news: no key, no
+      # feed, nothing to commit. Then the scanner was added to the same
+      # job, and it needs no key at all — it reads Yahoo and the files
+      # already in the repository. So on every run where the news key was
+      # unavailable, a scan that had completed successfully was computed,
+      # written to disk and then thrown away with the runner. The step that
+      # discarded it reported nothing, because it never ran.
       - name: Commit if anything changed
-        if: steps.preflight.outputs.ready == 'true'
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

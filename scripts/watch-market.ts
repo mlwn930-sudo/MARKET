@@ -65,13 +65,54 @@ export type Finding = {
 
 type Bar = { t: number; c: number };
 
+/**
+ * One chunk of symbols, retried.
+ *
+ * This ran once and threw, and the workflow step that calls it is marked
+ * `continue-on-error` so that a scan which cannot reach Yahoo does not
+ * fail the whole news job. Both decisions are defensible and together
+ * they hid a real outage: the scanner has never once written from CI
+ * since the day it shipped, the step went green every half hour, and the
+ * site served a three-day-old scan under a line reading "scanned 72 hours
+ * ago".
+ *
+ * Yahoo throttles datacentre addresses far harder than home ones, which
+ * is exactly the difference between a laptop where this always works and
+ * a GitHub runner where it does not. A 429 is also the most recoverable
+ * error there is, so the thing to do with it is wait rather than give up
+ * on the whole scan.
+ */
 async function sparkChunk(symbols: string[]) {
-  const res = await fetch(
+  const url =
     `${SPARK}?symbols=${symbols.map(encodeURIComponent).join(",")}` +
-      `&range=3mo&interval=1d&includePrePost=false`,
-    { headers: HEADERS, signal: AbortSignal.timeout(25_000) },
-  );
-  if (!res.ok) throw new Error(`spark ${res.status}`);
+    `&range=3mo&interval=1d&includePrePost=false`;
+
+  let res: Response | null = null;
+  let lastError = "";
+
+  for (let attempt = 0; attempt < 4; attempt++) {
+    if (attempt > 0) {
+      /* 1s, 4s, 9s. A throttle lifts on its own; hammering it does not
+         help and a fixed short retry is the same request three times. */
+      await new Promise((r) => setTimeout(r, attempt * attempt * 1000));
+    }
+    try {
+      res = await fetch(url, {
+        headers: HEADERS,
+        signal: AbortSignal.timeout(25_000),
+      });
+      if (res.ok) break;
+      lastError = `spark ${res.status}`;
+      /* Anything that is not a throttle or a gateway hiccup will return
+         the same answer however long we wait. */
+      if (res.status !== 429 && res.status < 500) throw new Error(lastError);
+    } catch (err) {
+      lastError = err instanceof Error ? err.message : String(err);
+      if (attempt === 3) throw new Error(lastError);
+    }
+  }
+
+  if (!res || !res.ok) throw new Error(lastError || "spark failed");
   const rows = (await res.json())?.spark?.result ?? [];
   const out: Record<string, { bars: Bar[]; last: number; prev: number | null }> =
     {};
