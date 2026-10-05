@@ -1,5 +1,6 @@
 import { DollarMotif } from "./DollarMotif";
 import { HeroParallax } from "./HeroParallax";
+import { TermHint } from "./TermHint";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
@@ -503,7 +504,17 @@ export function Field({
 
   return (
     <div className={className}>
-      <div className="text-[12px] text-ink-faint">{label}</div>
+      <div className="text-[12px] text-ink-faint">
+        {label}
+        {/* Every figure on the site explains itself, without the reader
+            having to leave the page to find out. `TermHint` renders
+            nothing when the knowledge centre has no entry for this label,
+            so adding it here is free on the fields it does not cover and
+            automatic on the ones it does — which is the only way a hint
+            reaches a hundred and twenty company pages without being
+            threaded through each of them by hand. */}
+        <TermHint term={label} />
+      </div>
       <div className={`num mt-1.5 text-[17px] ${toneClass}`}>{value}</div>
       {context && <div className="context-line mt-1.5">{context}</div>}
     </div>

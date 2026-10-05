@@ -365,3 +365,95 @@
     .film-band { height: auto; min-height: 0; aspect-ratio: 21 / 8; }
   }
 }
+
+/* ====================================================================
+   The term hint
+   ====================================================================
+   The knowledge centre, opened under the label it explains. A `<details>`
+   rather than a tooltip: a hover does not exist on a phone, cannot be
+   reached from a keyboard and disappears while it is being read.
+   ==================================================================== */
+@layer components {
+  .term-hint { display: inline-block; vertical-align: baseline; }
+
+  .term-hint > summary {
+    display: inline-grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+    margin-inline-start: 5px;
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1;
+    color: var(--color-ink-ghost);
+    cursor: help;
+    list-style: none;
+    transition: color var(--motion-micro) var(--market-ease),
+                border-color var(--motion-micro) var(--market-ease);
+  }
+  .term-hint > summary::-webkit-details-marker { display: none; }
+  .term-hint > summary:hover,
+  .term-hint[open] > summary {
+    color: var(--color-ink);
+    border-color: var(--color-line-bright, var(--color-line));
+  }
+
+  /* Out of flow, so opening one never reflows the table of figures it
+     sits in — a row that jumps as you try to read it is worse than no
+     explanation. */
+  /* Anchored to the END of the line and growing back into the content
+     column, which is the only direction that always has room. Anchored to
+     the start it grew outward from a label that sits near the edge of its
+     column and widened the document by 139px, which on this site means a
+     horizontal scrollbar on a page of figures. */
+  .term-hint-body {
+    position: absolute;
+    z-index: 30;
+    inset-inline-end: 0;
+    margin-top: 6px;
+    width: min(360px, calc(100vw - 32px));
+    padding: 14px 16px;
+    background: var(--color-raised, var(--color-surface));
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    box-shadow: var(--shadow-lg);
+    text-align: start;
+    white-space: normal;
+  }
+  .term-hint[open] { position: relative; }
+
+  .term-hint-body b { display: block; font-size: 13px; color: var(--color-ink); }
+  .term-hint-he { font-weight: 400; color: var(--color-ink-faint); }
+  .term-hint-body p {
+    margin-top: 7px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  .term-hint-trap {
+    margin-top: 10px !important;
+    padding-top: 9px;
+    border-top: 1px solid var(--color-line);
+  }
+  .term-hint-trap .micro-label {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--color-event, #d6a84a);
+  }
+
+  .term-hint-more {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--color-ink-faint);
+  }
+  .term-hint-more:hover { color: var(--color-ink); }
+
+  @media (max-width: 600px) {
+    /* On a phone the column is the whole screen, so the panel takes it. */
+    .term-hint-body { width: calc(100vw - 32px); }
+  }
+}
