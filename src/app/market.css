@@ -473,3 +473,37 @@
     color: var(--color-ink);
   }
 }
+
+@layer components {
+  /* The signal table. Figures first, and the one column that matters —
+     the lift — carries the only colour on the row. */
+  .signal-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .signal-table th {
+    padding: 11px 14px;
+    text-align: start;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    font-weight: 400;
+    color: var(--color-ink-ghost);
+    border-bottom: 1px solid var(--color-line);
+    white-space: nowrap;
+  }
+  .signal-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink-muted);
+    white-space: nowrap;
+  }
+  .signal-table tr:last-child td { border-bottom: 0; }
+  .signal-name { color: var(--color-ink) !important; white-space: normal !important; min-width: 15rem; }
+  .signal-lift { font-size: 15px; }
+  .signal-lift small { font-size: 10px; color: var(--color-ink-ghost); }
+  /* Grey, not green, when the answer is "nothing" — the whole point of
+     the page is that most rows are this one, and colouring a +0.1 green
+     would undo the finding it reports. */
+  .signal-lift.is-nil { color: var(--color-ink-ghost); }
+  .signal-lift.is-up { color: var(--color-up); }
+  .signal-lift.is-down { color: var(--color-down); }
+  .signal-spread { color: var(--color-ink-ghost) !important; font-size: 12px; }
+}

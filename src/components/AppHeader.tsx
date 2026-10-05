@@ -43,6 +43,9 @@ const SECONDARY: { href: string; label: string; group: string }[] = [
   { href: "/israel", label: "תל אביב", group: "market" },
   { href: "/compare", label: "השוואה", group: "study" },
   { href: "/chart-reader", label: "קריאת גרף", group: "study" },
+  /* Beside the chart reader on purpose: it is the page that says what the
+     thing you are about to read is worth. */
+  { href: "/signals", label: "ערך האותות", group: "study" },
   { href: "/institutional", label: "מוסדיים", group: "study" },
   { href: "/ai", label: "שרשרת AI", group: "study" },
   { href: "/portfolio", label: "בניית תיק", group: "act" },
