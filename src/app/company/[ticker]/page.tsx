@@ -34,6 +34,8 @@ import { getAnalystViews, getEarningsSurprises } from "@/lib/sources/finnhub";
 import { WhyMovingPanel } from "@/components/WhyMovingPanel";
 import { getSectorViews } from "@/lib/sectors";
 import { SectorBackdrop } from "@/components/market/SectorBackdrop";
+import { BaseRatePanel } from "@/components/market/BaseRatePanel";
+import { baseRatesFor } from "@/lib/metrics/base-rate-store";
 import { getFallbackQuote } from "@/lib/sources/prices";
 import { readChart } from "@/lib/analysis/chart-read";
 import { changesFor, historyFor } from "@/lib/intel/history-store";
@@ -226,7 +228,7 @@ export default async function CompanyPage({
   /* Why it moved today. Deterministic: the index, the sector and the
      coverage are all figures the site already holds, and the panel says
      so rather than picking a headline and calling it a cause. */
-  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote, news] =
+  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote, news, baseRates] =
     await Promise.all([
       getFallbackQuote("^GSPC").catch(() => null),
       getSectorViews().catch(() => []),
@@ -249,6 +251,9 @@ export default async function CompanyPage({
          committed feed file, which changed when a deployment landed rather
          than when a story broke. */
       loadCompanyNews(ticker, name),
+      /* A file read, not a measurement. Ten years of candles for the whole
+         universe is a nightly job; see scripts/build-base-rates.ts. */
+      baseRatesFor(ticker).catch(() => null),
     ]);
 
   /* One list, three readers: the corner renders it, "why is it moving" asks
@@ -777,6 +782,13 @@ export default async function CompanyPage({
           <TechnicalPanel technical={technical} />
         </Section>
       )}
+
+      {/* Straight after the technical read, because it is the question
+          that read always raises and never answered: the page would name
+          the setup and stop. This says what the same setup was followed
+          by on this instrument, and — the part that matters — what a
+          random day in the same window was followed by. */}
+      <BaseRatePanel read={baseRates} />
 
       <Section id="company-capital" eyebrow="איכות הרווח">
         <CapitalPanel capital={capital} />

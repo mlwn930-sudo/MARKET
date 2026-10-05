@@ -20,6 +20,16 @@ export type MarketStatus = {
   label: string;
   /** Minutes until the regular session opens, when it is not open. */
   opensInMinutes: number | null;
+  /**
+   * Minutes until the session that is running right now ends — the bell for
+   * `open`, the regular open for `pre`, the end of late trading for
+   * `after`. Null when nothing is trading.
+   *
+   * It exists because `opensInMinutes` alone cannot describe a session that
+   * is already under way, which is how the page came to tell a reader that
+   * pre-market "opens in 3 hours" while they were watching it trade.
+   */
+  sessionEndsInMinutes: number | null;
 };
 
 const LABELS: Record<MarketState, string> = {
@@ -37,18 +47,51 @@ const LABELS: Record<MarketState, string> = {
  * exactly what it was taken for. Saying when trading resumes turns the
  * same stillness into information, and it costs one line.
  */
-export function describeStatus(status: MarketStatus): string {
-  if (status.state === "open") return status.label;
-  if (status.opensInMinutes === null) return status.label;
-
-  const minutes = status.opensInMinutes;
-  if (minutes < 60) return `${status.label} · נפתחת בעוד ${minutes} דקות`;
-
+function inWords(minutes: number): string {
+  if (minutes < 60) return `${minutes} דקות`;
   const hours = Math.round(minutes / 60);
-  if (hours < 24) return `${status.label} · נפתחת בעוד ${hours} שעות`;
+  if (hours < 24) return `${hours} שעות`;
+  return `${Math.round(hours / 24)} ימים`;
+}
 
-  const days = Math.round(hours / 24);
-  return `${status.label} · נפתחת בעוד ${days} ימים`;
+/**
+ * THE SENTENCE HAS TO MATCH THE SESSION IT IS DESCRIBING.
+ *
+ * It appended "נפתחת בעוד X" to every state that was not `open`, and
+ * `pre` is not `open` — so a reader watching pre-market trade was told
+ * "מסחר מוקדם · נפתחת בעוד 3 שעות". Both halves were true of different
+ * things: early trading was running, and the REGULAR session was three
+ * hours away. Put in one sentence they read as a contradiction, and the
+ * reader is right to believe the clock over the page.
+ *
+ * So each state now says what is actually next for it. Pre-market and
+ * late trading are sessions in progress and are described as ending;
+ * only a closed exchange is described as opening.
+ */
+export function describeStatus(status: MarketStatus): string {
+  const { state, label, opensInMinutes, sessionEndsInMinutes } = status;
+
+  if (state === "open") {
+    return sessionEndsInMinutes === null
+      ? label
+      : `${label} · ננעלת בעוד ${inWords(sessionEndsInMinutes)}`;
+  }
+
+  if (state === "pre") {
+    return opensInMinutes === null
+      ? label
+      : `${label} · הפתיחה הרגילה בעוד ${inWords(opensInMinutes)}`;
+  }
+
+  if (state === "after") {
+    return sessionEndsInMinutes === null
+      ? label
+      : `${label} · מסתיים בעוד ${inWords(sessionEndsInMinutes)}`;
+  }
+
+  return opensInMinutes === null
+    ? label
+    : `${label} · נפתחת בעוד ${inWords(opensInMinutes)}`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -229,8 +272,8 @@ function minutesUntilOpen(day: number, minutes: number): number {
   return daysAhead * 24 * 60 - minutes + OPEN_MINUTE;
 }
 
-export function marketStatus(): MarketStatus {
-  const { day, minutes } = nowInNewYork();
+export function marketStatus(now: { day: number; minutes: number } = nowInNewYork()): MarketStatus {
+  const { day, minutes } = now;
 
   const weekend = day === 0 || day === 6;
 
@@ -241,9 +284,22 @@ export function marketStatus(): MarketStatus {
     else if (minutes >= CLOSE_MINUTE && minutes < AFTER_END) state = "after";
   }
 
+  /* When the session now running finishes. `pre` ends at the opening bell
+     rather than at a close of its own, which is also the moment its thin
+     book becomes the real one. */
+  const sessionEndsInMinutes =
+    state === "open"
+      ? CLOSE_MINUTE - minutes
+      : state === "pre"
+        ? OPEN_MINUTE - minutes
+        : state === "after"
+          ? AFTER_END - minutes
+          : null;
+
   return {
     state,
     label: LABELS[state],
     opensInMinutes: state === "open" ? null : minutesUntilOpen(day, minutes),
+    sessionEndsInMinutes,
   };
 }
