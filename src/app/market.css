@@ -695,3 +695,19 @@
     color: var(--color-ink-muted);
   }
 }
+
+/* ── The market column on the opportunities register ─────────────────
+   The strength rank beside the screen's score, never inside it. Set in
+   the neutral ink like every other figure: a rank is a measurement and
+   the moment it is tinted it starts arguing for something. */
+@layer components {
+  .screen-rank {
+    display: grid;
+    gap: 2px;
+    text-align: end;
+    padding-inline-end: 14px;
+    border-inline-end: 1px solid var(--color-line);
+  }
+  .screen-rank-label { font-size: 9px; color: var(--color-ink-ghost); }
+  .screen-rank-value { font-size: 15px; color: var(--color-ink); }
+}

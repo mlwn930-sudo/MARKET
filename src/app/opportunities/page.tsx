@@ -253,6 +253,23 @@ export default async function OpportunitiesPage({
   
                     {/* Score, small: an index into the list, not a verdict */}
                     <div className="flex items-center justify-between gap-3 lg:justify-end">
+                      {/* What the market is doing with it — a separate
+                          figure, deliberately not folded into the score
+                          beside it. A company passing eight tests at rank 5
+                          and one passing eight at rank 85 are opposite
+                          situations: the first is cheap and being sold, the
+                          second is cheap and being bought. A sum cannot say
+                          which, and that distinction is the most useful
+                          thing this page can draw. */}
+                      {result.market?.strengthRank != null && (
+                        <span className="screen-rank" title={`דירוג כוח יחסי מול ${result.market.universe} החברות ביקום המחקר, נכון ל-${result.market.asOf}`}>
+                          <span className="screen-rank-label">כוח יחסי</span>
+                          <span className="num screen-rank-value">
+                            {result.market.strengthRank}
+                            <span className="text-ink-ghost">/99</span>
+                          </span>
+                        </span>
+                      )}
                       <span className="text-end">
                         <span className="num text-[15px]">
                           <span className="text-ink">{result.score}</span>

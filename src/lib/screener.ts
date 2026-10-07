@@ -15,6 +15,8 @@ import {
   getFundamentalsFile,
   type UniverseCompany,
 } from "./fundamentals-store";
+import { getRanks } from "./metrics/rank-store";
+import type { BarCharacter } from "./metrics/tape";
 
 export type Criterion = {
   key: string;
@@ -49,6 +51,30 @@ export type ScreenResult = {
   evaluatedCount: number;
   insufficientCount: number;
   criteria: Criterion[];
+  /**
+   * What the market is doing with the company — BESIDE the score, never
+   * inside it.
+   *
+   * The obvious move was to make the strength rank an eleventh criterion.
+   * It would have been wrong twice over. It turns a screen of reported
+   * fundamentals into a mixed instrument where a reader cannot tell which
+   * half of a score came from the business and which from the price. And
+   * it erases the most useful distinction this page can draw: a company
+   * passing eight tests while ranked 5 and a company passing eight tests
+   * while ranked 85 are opposite situations — one is cheap and being sold,
+   * the other is cheap and being bought — and a sum cannot say which.
+   *
+   * So the screen goes on reporting what the filings say, and this reports
+   * what the tape says, in its own column. Null when the nightly ranking
+   * has not run.
+   */
+  market: {
+    strengthRank: number | null;
+    volumeRank: number | null;
+    universe: number;
+    character: BarCharacter | null;
+    asOf: string;
+  } | null;
 };
 
 const fmt = (v: number | null, suffix: string) =>
@@ -202,6 +228,11 @@ function screenCompany(
     evaluatedCount: criteria.filter((c) => c.status !== "insufficient-data").length,
     insufficientCount: criteria.filter((c) => c.status === "insufficient-data").length,
     criteria,
+    /* Filled by the caller, which is the only place holding the ranking.
+       This function takes a company and its sector medians and nothing
+       else; giving it a file read would make a pure scoring function
+       depend on the filesystem. */
+    market: null,
   };
 }
 
@@ -209,16 +240,32 @@ export async function runScreen(): Promise<{
   builtAt: string;
   results: ScreenResult[];
 }> {
-  const file = await getFundamentalsFile();
+  const [file, ranks] = await Promise.all([
+    getFundamentalsFile(),
+    /* Never fatal. A clone that has not run the nightly ranking still gets
+       the screen it has always had, with the market column simply absent. */
+    getRanks().catch(() => null),
+  ]);
 
   const results = file.companies
     .map((company) => {
       const sector = file.sectors[company.sector];
-      return screenCompany(
+      const result = screenCompany(
         company,
         sector?.medians ?? {},
         sector?.label ?? company.sector,
       );
+      const rank = ranks?.reads[company.ticker];
+      result.market = ranks
+        ? {
+            strengthRank: rank?.strengthRank ?? null,
+            volumeRank: rank?.volumeRank ?? null,
+            universe: ranks.universe,
+            character: rank?.character ?? null,
+            asOf: ranks.asOf,
+          }
+        : null;
+      return result;
     })
     // Ties broken by market cap so the order is stable between builds
     // rather than shuffling on every rebuild.

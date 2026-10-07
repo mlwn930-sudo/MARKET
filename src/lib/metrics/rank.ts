@@ -42,7 +42,7 @@
  */
 
 import type { Candle } from "@/lib/sources/prices";
-import { completeSessions } from "./tape";
+import { completeSessions, readBar, type BarCharacter } from "./tape";
 
 /* ------------------------------------------------------------------ */
 /* Shape                                                               */
@@ -65,6 +65,19 @@ export type RankRead = {
   volumeRatio: number | null;
   /** That ratio's position in the universe, 1–99. */
   volumeRank: number | null;
+  /**
+   * What the last complete session looked like, from `tape.ts`.
+   *
+   * Carried here because this build already holds two years of candles for
+   * every name and reading the bar costs nothing more. Without it, a page
+   * that wants to ask "which companies had an absorption bar yesterday"
+   * would have to pull 123 price histories inside a request, which is the
+   * reason the question has never been asked.
+   */
+  character: BarCharacter | null;
+  /** The date that character was read on — the same session for every name
+   *  in the file, and worth printing so a stale build is visible. */
+  characterAt: string | null;
 };
 
 export type RankFile = {
@@ -223,6 +236,10 @@ export function rankUniverse(
     if (score !== null) strengthScores.set(symbol, score);
     if (ratio !== null) volumeRatios.set(symbol, ratio);
 
+    /* The last complete bar, read once while the candles are in hand. */
+    const complete = completeSessions(candles).rows;
+    const bar = readBar(complete, complete.length - 1);
+
     rows.set(symbol, {
       symbol,
       strengthScore: score,
@@ -230,6 +247,8 @@ export function rankUniverse(
       return6m: returnOver(candles, 126),
       return12m: returnOver(candles, 252),
       volumeRatio: ratio,
+      character: bar?.character ?? null,
+      characterAt: bar?.date ?? null,
     });
   }
 
