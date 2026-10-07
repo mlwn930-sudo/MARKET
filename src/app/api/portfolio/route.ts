@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getQuotes } from "@/lib/sources/finnhub";
 import { getFundamentalsFile } from "@/lib/fundamentals-store";
 import { SECTOR_LABELS, type SectorKey } from "@/lib/universe";
+import { getCorrelations } from "@/lib/metrics/correlation-store";
+import { effectiveBets } from "@/lib/metrics/correlation";
 
 /**
  * What a portfolio is made of, measured.
@@ -101,6 +103,23 @@ export async function POST(request: Request) {
   const hhi = shares.reduce((sum, s) => sum + (s / 100) ** 2, 0);
   const effectivePositions = hhi > 0 ? 1 / hhi : 0;
 
+  /* ---- Correlation: how many of those positions are really bets ----
+
+     1/HHI above answers "how many equally weighted holdings would feel
+     like this" and gets there by assuming the holdings are independent.
+     They are not — the comment at the top of this file has said so since
+     it was written, and measured sector overlap as a proxy. This is the
+     same expression with the real correlation matrix in place of the
+     identity, so the two numbers are comparable by construction and the
+     distance between them is the finding. */
+  const correlations = await getCorrelations().catch(() => null);
+  const bets = correlations
+    ? effectiveBets(
+        rows.map((row) => ({ ticker: row.ticker, weight: row.share })),
+        correlations,
+      )
+    : null;
+
   /* ---- Sector exposure ---- */
   const bySector = new Map<string, number>();
   for (const row of rows) {
@@ -133,6 +152,7 @@ export async function POST(request: Request) {
         holdings: rows.length,
         largestShare: largest,
         effectivePositions,
+        bets,
         sectors,
         topSectorShare: sectors[0]?.share ?? 0,
         topSector: sectors[0]?.sector ?? null,

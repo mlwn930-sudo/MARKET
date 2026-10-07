@@ -18,11 +18,16 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { rankUniverse } from "../src/lib/metrics/rank";
+import { buildCorrelations } from "../src/lib/metrics/correlation";
 import { UNIVERSE } from "../src/lib/universe";
 import type { Candle } from "../src/lib/sources/prices";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = resolve(ROOT, "content/ranks/latest.json");
+/* A separate file from the ranks. The matrix is 123x123 and the ranks are
+   read on every company page; keeping them together would make every one
+   of those reads parse forty kilobytes it has no use for. */
+const CORRELATION_OUT = resolve(ROOT, "content/correlation/latest.json");
 
 /* Yahoo refuses a default user agent. The same header the price source
    uses, for the same reason. */
@@ -140,6 +145,22 @@ async function main() {
     "utf8",
   );
   console.log(`wrote ${OUT}`);
+
+  /* The correlation matrix, from the same candles. Two years of weekly
+     returns for every pair, which is the only expensive thing this script
+     does that is not a network request — and it is free here because
+     nothing else in the project holds all 123 series at once. */
+  const correlations = buildCorrelations(series);
+  await mkdir(dirname(CORRELATION_OUT), { recursive: true });
+  await writeFile(
+    CORRELATION_OUT,
+    JSON.stringify({ builtAt: new Date().toISOString(), ...correlations }, null, 0),
+    "utf8",
+  );
+  console.log(
+    `wrote ${CORRELATION_OUT} (${correlations.symbols.length} names, ` +
+      `thinnest pair ${correlations.weeks} shared weeks)`,
+  );
 
   /* What was actually learned, printed, because a build that reports only
      counts hides the thing worth seeing. */

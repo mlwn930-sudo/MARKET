@@ -107,7 +107,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content/fundamentals content/institutional content/ranks
+          git add content/fundamentals content/institutional content/ranks content/correlation
           if git diff --staged --quiet; then
             echo "no changes"
           else

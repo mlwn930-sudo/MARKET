@@ -27,6 +27,7 @@
     "test:hours": "node --import tsx --test scripts/market-hours.test.ts",
     "test:tape": "node --import tsx --test scripts/tape.test.ts",
     "test:template": "node --import tsx --test scripts/template-facts.test.ts",
+    "test:correlation": "node --import tsx --test scripts/correlation.test.ts",
     "build:baserates": "tsx scripts/build-base-rates.ts",
     "build:ranks": "tsx scripts/build-ranks.ts"
   },

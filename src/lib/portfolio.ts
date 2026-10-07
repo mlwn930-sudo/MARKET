@@ -18,6 +18,8 @@ const KEY = "market-intel:portfolio:v1";
 
 export const PORTFOLIO_EVENT = "market-intel:portfolio";
 
+import type { BetsRead } from "./metrics/correlation";
+
 export type Holding = { ticker: string; weight: number };
 
 function read(): Holding[] {
@@ -58,6 +60,9 @@ export type Summary = {
   holdings: number;
   largestShare: number;
   effectivePositions: number;
+  /** How many of those positions are independent, from the measured
+   *  correlation matrix. Null when the nightly build has not run. */
+  bets: BetsRead | null;
   sectors: { sector: string; share: number }[];
   topSector: string | null;
   topSectorShare: number;
@@ -122,6 +127,42 @@ export function readPortfolio(summary: Summary): Reading[] {
           : "wide",
     body: `בתיק יש ${summary.holdings} ניירות, אבל לפי פיזור המשקלים הוא מתנהג כמו ${summary.effectivePositions.toFixed(1)} פוזיציות שוות. המספר הזה (1 חלקי מדד הרפינדל) הוא הדרך המקובלת לומר שתיק ארוך יכול להיות שני הימורים בתחפושת.`,
   });
+
+  /* ---- Independent bets ----
+
+     Deliberately the reading straight after "how many positions is this
+     really", because it is the same question asked without the assumption
+     that made the first answer comfortable. The first number divides one
+     by the Herfindahl index and treats every holding as moving on its
+     own; this one puts the measured correlations in and almost always
+     comes out lower. A reader who sees 9.2 and then 3.4 has learned
+     something no list of tickers shows. */
+  if (summary.bets) {
+    const bets = summary.bets;
+    const shrink = bets.effectivePositions - bets.effectiveBets;
+    readings.push({
+      key: "bets",
+      title: "כמה הימורים בלתי-תלויים",
+      figure: bets.effectiveBets.toFixed(1),
+      level:
+        bets.effectiveBets < 3 ? "tight" : bets.effectiveBets < 6 ? "moderate" : "wide",
+      body:
+        `לפי פיזור המשקלים התיק מתנהג כמו ${bets.effectivePositions.toFixed(1)} ` +
+        `פוזיציות שוות — אבל זה מניח שכל נייר זז בנפרד. לפי המתאם שנמדד בפועל ` +
+        `בשנתיים האחרונות (${bets.weeks} שבועות), הוא נושא סיכון של ` +
+        `${bets.effectiveBets.toFixed(1)} הימורים בלתי-תלויים` +
+        (shrink >= 0.5
+          ? ` — כלומר ${shrink.toFixed(1)} מהפוזיציות הן למעשה חזרה על הימור שכבר קיים.`
+          : " — כלומר הניירות באמת זזים בנפרד.") +
+        (bets.closestPair && bets.closestPair.correlation >= 0.5
+          ? ` הצמד הקרוב ביותר בתיק הוא ${bets.closestPair.a} ו-${bets.closestPair.b}, במתאם ${bets.closestPair.correlation.toFixed(2)}.`
+          : "") +
+        (bets.unmeasured.length
+          ? ` ${bets.unmeasured.length} ניירות אינם ביקום המחקר ולא נכללו בחישוב: ${bets.unmeasured.join(", ")}.`
+          : "") +
+        " מתאם עולה בירידות, ולכן המספר הזה הוא ככל הנראה הערכה אופטימית בדיוק ברגע שבו הוא חשוב.",
+    });
+  }
 
   /* ---- Sector ---- */
   if (summary.topSector) {
