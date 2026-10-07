@@ -100,7 +100,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="market-app min-h-screen bg-base text-ink">
+      <body className="market-app min-h-screen bg-ground text-ink">
         {/* In front of the door, which is in front of everything else.
             Thirty seconds that play themselves once a session and then
             get out of the way. It is here rather than on the home page

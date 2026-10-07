@@ -232,7 +232,7 @@ export function ResearchConsole({
               placeholder="NVDA"
               autoComplete="off"
               spellCheck={false}
-              className="num mt-1 w-32 rounded-md border border-line bg-base px-3 py-2 text-[14px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
+              className="num mt-1 w-32 rounded-md border border-line bg-ground px-3 py-2 text-[14px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
             />
           </div>
           <div className="min-w-0 basis-64 flex-1">
@@ -244,7 +244,7 @@ export function ResearchConsole({
               value={question}
               onChange={(event) => setQuestion(event.target.value)}
               placeholder="למשל: האם המרווח שנשמר השנה בר-קיימא?"
-              className="mt-1 w-full rounded-md border border-line bg-base px-3 py-2 text-[14px] text-ink placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
+              className="mt-1 w-full rounded-md border border-line bg-ground px-3 py-2 text-[14px] text-ink placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
             />
           </div>
           {busy ? (

@@ -549,7 +549,7 @@ body:not(:has(.gta-cover)) .score-ring small {
 
 body:not(:has(.gta-cover)) {
   --color-deep: #060B15;
-  --color-base: #060B15;
+  --color-ground: #060B15;
   --color-surface: #0D1626;
   --color-raised: #121D31;
   --color-overlay: #0D1626;
@@ -621,6 +621,24 @@ body:not(:has(.gta-cover)) .delta[data-dir="down"] {
 body:not(:has(.gta-cover)) .delta[data-dir="flat"] {
   background: rgba(148, 178, 224, 0.12);
   color: var(--color-ink-faint);
+}
+
+/* The research desk's context column.
+
+   `financial.css` is the paper version of the site and is still imported
+   beneath this one, so every rule it holds that this file does not name
+   survives onto the dark ground. `.research-context` was one of them: a
+   panel painted #eaf1f6 carrying text this file had already turned light,
+   which left the column's heading at 1.01:1 — present in the DOM and
+   absent to the eye.
+
+   Measured rather than guessed. A sweep of every page for a light panel
+   on the dark ground found exactly two: this one, and the white tile a
+   company logo is supposed to sit on. So the paper sheet underneath is
+   not leaking everywhere; it was leaking here. */
+body:not(:has(.gta-cover)) .research-context {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
 }
 
 /* Anything still setting the brand blue or the cyan ink as type. Both are

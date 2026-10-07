@@ -43,7 +43,7 @@
      hairline and a shadow, and pushing the greys apart to make the
      separation obvious is what turns an interface into a stack of boxes. */
   --color-deep: var(--color-hero);
-  --color-base: var(--color-background);
+  --color-ground: var(--color-background);
   --color-surface: var(--color-surface-plain);
   --color-raised: var(--color-surface-plain);
   --color-overlay: var(--color-surface-plain);

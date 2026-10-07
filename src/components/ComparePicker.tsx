@@ -88,7 +88,7 @@ export function ComparePicker({
           autoComplete="off"
           spellCheck={false}
           disabled={selected.length >= max}
-          className="num w-44 rounded-md border border-line bg-base px-3 py-1.5 text-[13px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none disabled:opacity-40"
+          className="num w-44 rounded-md border border-line bg-ground px-3 py-1.5 text-[13px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none disabled:opacity-40"
         />
         <button
           type="submit"

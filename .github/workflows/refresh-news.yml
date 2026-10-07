@@ -49,6 +49,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+
+      # The install this job never had, and the reason the alarm below has
+      # been red since the day it was written.
+      #
+      # Two of the steps here are plain `node script.mjs` and need nothing
+      # installed, which is why the job ran green for weeks and nobody
+      # looked further. Three of them — the scan, the company agent and the
+      # mailer — are `tsx`, a devDependency, and `npm run` cannot find a
+      # binary that was never installed. They failed on every single run,
+      # each one `continue-on-error`, and the file they exist to write has
+      # not changed since the commit that shipped it.
+      #
+      # The previous fix added retries to the scan, an annotation when it
+      # produces nothing, and a commit step that no longer discards it. All
+      # three were right and none of them could help: the step was dying
+      # before it reached the network.
+      - run: npm ci
 
       # Decides whether there is anything to do, and does NOT fail if there
       # is not.

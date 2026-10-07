@@ -123,7 +123,7 @@ export function PortfolioBuilder() {
             onChange={(e) => setDraft({ ...draft, ticker: e.target.value })}
             placeholder="NVDA או אנבידיה"
             autoComplete="off"
-            className="num mt-1 w-44 rounded-md border border-line bg-base px-3 py-2 text-[13px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
+            className="num mt-1 w-44 rounded-md border border-line bg-ground px-3 py-2 text-[13px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
           />
         </div>
         <div>
@@ -136,7 +136,7 @@ export function PortfolioBuilder() {
             onChange={(e) => setDraft({ ...draft, weight: e.target.value })}
             placeholder="25"
             inputMode="decimal"
-            className="num mt-1 w-24 rounded-md border border-line bg-base px-3 py-2 text-[13px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
+            className="num mt-1 w-24 rounded-md border border-line bg-ground px-3 py-2 text-[13px] text-ink placeholder:font-sans placeholder:text-ink-faint focus:border-line-strong focus:outline-none"
           />
         </div>
         <button type="submit" className="btn btn-primary px-4 py-2 text-[13px]">
