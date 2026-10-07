@@ -42,7 +42,24 @@ body:not(:has(.gta-cover)) {
   --color-text-primary: #EAF1FF;
   --color-text-secondary: #AEBFDC;
   --color-text-muted: #8194B3;
-  --color-text-subtle: #64758F;
+  /* The ghost tone, and the one token in this block that was left at a
+     paper value.
+     Found by measuring, not by reading: a sweep of every text run against
+     the colour actually behind it kept returning 4.2:1 on the same kind of
+     label — index titles, a news row's source and timestamp, the small
+     print under a metric. All of them resolve through this token, and
+     #64758F is 4.2:1 on #060B15 and 3.9:1 on the surface above it. Both
+     are under AA for the 10–12px type it is used at, and both were being
+     reported as "nearly passing", which is how a whole class of labels
+     stays slightly unreadable for months.
+     The alias beside it was already correct — `--color-ink-ghost` has been
+     #7C8DAC since the ground changed, which is the value CLAUDE.md lists
+     for ghost. So a rule written as `var(--color-ink-ghost)` passed and
+     the same intent written as `var(--color-text-subtle)` did not. One
+     palette, two answers, depending on which name a stylesheet happened to
+     reach for. They are the same colour now: 5.9:1 on the ground, 5.4:1 on
+     the surface. */
+  --color-text-subtle: #7C8DAC;
 
   /* --- Lines -------------------------------------------------------- */
   --color-border-default: rgba(148, 178, 224, 0.14);

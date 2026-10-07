@@ -34,6 +34,7 @@
 
 import type { Candle } from "@/lib/sources/prices";
 import { rsi, sma } from "./technical";
+import { readBar, type BarRead } from "./tape";
 
 /* ------------------------------------------------------------------ */
 /* Shape                                                               */
@@ -141,6 +142,20 @@ type Series = {
   sma50: (number | null)[];
   sma200: (number | null)[];
   rsi14: (number | null)[];
+  /**
+   * Every bar read by `tape.ts`, computed once for the whole series.
+   *
+   * The volume conditions below are defined by the character the tape
+   * assigns, not by a second copy of the thresholds — rule 4. That matters
+   * more here than usual: if this file decided for itself what "extreme
+   * volume" meant, a panel could report absorption on today's bar and the
+   * base rate beside it could have been measured on a different event
+   * wearing the same word. The reading and its track record have to come
+   * from one definition or the pairing is a lie.
+   *
+   * Null where the history behind the bar is too short to rank it.
+   */
+  bars: (BarRead | null)[];
 };
 
 type Condition = {
@@ -238,6 +253,73 @@ const CONDITIONS: Condition[] = [
       return average > 0 && c.volume >= average * 2;
     },
   },
+
+  /* ---- The tape ---------------------------------------------------- */
+  /*
+     Six readings of the volume, each defined by `tape.ts` and measured
+     here the same way the fifty-day is. This is the half of the subject
+     that is normally asserted rather than counted: every book on volume
+     says a climax bar marks the end of a move, and none of them says how
+     often it did so on the instrument in front of you.
+
+     The answers are frequently unflattering, which is the point. A
+     condition that fires forty times in ten years and moves the rate two
+     points against its own baseline has told the reader nothing, and the
+     panel is built to say so in words.
+  */
+  {
+    key: "climax-bar",
+    label: "נר שיא: מחזור בחמישון העליון, טווח רחב, וסגירה שהחזירה את הקצה",
+    at: (s, i) => s.bars[i]?.character === "climax",
+  },
+  {
+    key: "absorption-bar",
+    label: "ספיגה: מחזור קיצוני בטווח צר",
+    at: (s, i) => s.bars[i]?.character === "absorption",
+  },
+  {
+    key: "thrust-bar",
+    label: "דחיפה: מחזור כבד, טווח רחב, סגירה בקצה",
+    at: (s, i) => s.bars[i]?.character === "thrust",
+  },
+  {
+    key: "no-demand-bar",
+    label: "חוסר ביקוש: סגירה חיובית על מחזור ברבעון התחתון",
+    at: (s, i) => s.bars[i]?.character === "no-demand",
+  },
+  {
+    key: "effort-without-result",
+    /* The measurement the adjectives stand for, taken on its own rather
+       than through a label: volume two deviations above normal while the
+       move stayed below it. A bar can show this without being extreme
+       enough to be called a climax, and the gap is what is being counted. */
+    label: "מאמץ בלי תוצאה: מחזור 2 סטיות מעל הרגיל והתנועה מתחת לרגיל",
+    at: (s, i) => {
+      const bar = s.bars[i];
+      return bar != null && bar.effortZ >= 2 && bar.resultZ <= 0;
+    },
+  },
+  {
+    key: "breakout-on-volume",
+    /* The one condition here that pairs volume with a price event, because
+       it is the one claim about volume that every trading book makes: a
+       breakout "needs" volume. A twenty-day closing high is the breakout,
+       the top fifth of the year's volume is the confirmation, and the
+       measurement says whether the pair did better than the breakout
+       alone — which is a comparison the reader can make, since
+       `high-52w` and this sit in the same table. */
+    label: "פריצה לשיא 20 יום על מחזור בחמישון העליון",
+    at: (s, i) => {
+      if (i < 20) return false;
+      const bar = s.bars[i];
+      if (!bar || bar.volumePercentile == null || bar.volumePercentile < 0.8) {
+        return false;
+      }
+      const close = s.candles[i].close;
+      for (let k = i - 20; k < i; k++) if (s.candles[k].close >= close) return false;
+      return true;
+    },
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -332,6 +414,12 @@ export function readBaseRates(
     sma50: sma(candles, 50),
     sma200: sma(candles, 200),
     rsi14: rsi(candles, 14),
+    /* Once for the series, not once per condition. Six of the conditions
+       below read this array, and `readBar` ranks each bar against the year
+       behind it — doing that six times over ten years of candles for every
+       name in the universe is the difference between a nightly job that
+       finishes and one that does not. */
+    bars: candles.map((_, i) => readBar(candles, i)),
   };
 
   const last = candles.length - 1;

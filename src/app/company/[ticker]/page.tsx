@@ -20,6 +20,8 @@ import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { LevelsPanel } from "@/components/LevelsPanel";
 import { ExtendedHoursStrip } from "@/components/ExtendedHoursStrip";
 import { readLevels, readFlow } from "@/lib/metrics/levels";
+import { readTape } from "@/lib/metrics/tape";
+import { TapePanel } from "@/components/market/TapePanel";
 import { getExtendedHours } from "@/lib/sources/extended-hours";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
@@ -183,6 +185,7 @@ export default async function CompanyPage({
    */
   const priceLevels = readLevels(history?.candles ?? []);
   const flow = readFlow(history?.candles ?? []);
+  const tape = readTape(history?.candles ?? []);
 
   for (const level of priceLevels.slice(0, 4)) {
     chartLevels.push({
@@ -776,6 +779,22 @@ export default async function CompanyPage({
       </Section>
 
       <LevelsPanel levels={priceLevels} flow={flow} />
+
+      {/* The volume, ranked. `LevelsPanel` above already reports the flow —
+          what share of the window's shares traded on up days, how many
+          heavy days there were — which answers the question in aggregate.
+          This answers it bar by bar: what the last session was, where it
+          ranks in the instrument's own year, and what that kind of session
+          has been followed by here. The two are different questions and
+          the aggregate one cannot stand in for the specific one. */}
+      <Section eyebrow="קריאת מחזור">
+        <TapePanel
+          tape={tape}
+          rates={baseRates}
+          ticker={ticker}
+          lastClose={history?.candles.at(-1)?.close ?? 0}
+        />
+      </Section>
 
       {technical && (
         <Section eyebrow="ניתוח טכני">

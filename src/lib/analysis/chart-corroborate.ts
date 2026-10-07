@@ -1,6 +1,7 @@
 import { detectTickers } from "@/lib/company-names";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { readLevels } from "@/lib/metrics/levels";
+import { readTape, type TapeRead } from "@/lib/metrics/tape";
 import type { ChartRead } from "./chart-reader";
 import type { BaseRateRead } from "@/lib/metrics/base-rates";
 import { baseRatesFor } from "@/lib/metrics/base-rate-store";
@@ -70,6 +71,23 @@ export type Corroboration = {
    * sample behind it is a different object, and it is allowed to be shown.
    */
   baseRates: BaseRateRead | null;
+  /**
+   * The volume underneath the picture, read bar by bar.
+   *
+   * The half of a chart a screenshot carries worst and a model reads
+   * worst. Volume sits in a strip an eighth the height of the price panel,
+   * often cropped out of the image entirely, and even when it is there a
+   * model can see that one bar is taller than its neighbours and cannot
+   * say whether that is the ninety-eighth percentile of the year or a
+   * Tuesday. Both of those require the series, and the site has it.
+   *
+   * So this is not a second opinion on what the model saw. It is the
+   * measurement the model structurally cannot make, in the same way the
+   * base rates are — and like them, every threshold is a rank within the
+   * instrument's own trailing year, and every reading is a shape rather
+   * than a claim about who was trading.
+   */
+  tape: TapeRead | null;
 };
 
 /* Two readings of the same level will never be identical: one is measured
@@ -184,5 +202,11 @@ export async function corroborate(
     confirmed: levels.filter((l) => l.matched !== null).length,
     unconfirmed: levels.filter((l) => l.matched === null).length,
     baseRates,
+    /* Measured from the candles pulled above rather than from the stored
+       file: the tape describes the last few sessions, and a reading that
+       is a day old is the wrong reading. The base rates are the opposite —
+       ten years, rebuilt nightly — which is why the two come from
+       different places. */
+    tape: readTape(history.candles),
   };
 }

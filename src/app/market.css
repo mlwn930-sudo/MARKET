@@ -507,3 +507,179 @@
   .signal-lift.is-down { color: var(--color-down); }
   .signal-spread { color: var(--color-ink-ghost) !important; font-size: 12px; }
 }
+
+/* ── The tape panel ──────────────────────────────────────────────────
+   Volume read bar by bar, and where the year's volume actually traded.
+
+   The figures stay neutral. Nothing in this panel is tinted by the page's
+   accent and nothing glows: a percentile is a measurement, and the moment
+   it is lit it starts to read as a recommendation. The only colour is on
+   the lift against the baseline, which is the one number here that has a
+   direction — the same choice ChartScenarios already makes, so the two
+   panels do not disagree about what a green number means. */
+@layer components {
+  .tape-heading {
+    margin-top: 26px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .tape-heading:first-of-type { margin-top: 20px; }
+
+  .tape-list { margin-top: 10px; }
+  .tape-empty { margin-top: 8px; font-size: 13px; color: var(--color-ink-faint); }
+
+  .tape-bar {
+    border-top: 1px solid var(--color-line);
+    padding: 12px 0;
+  }
+  .tape-bar:first-child { border-top: 0; }
+
+  /* The one bar a reader came for gets the single step of depth the design
+     allows, and not a second one. */
+  .tape-bar--lead {
+    border: 1px solid var(--color-line-strong);
+    border-radius: 10px;
+    background: var(--color-surface-raised);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tape-bar-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 14px;
+  }
+  .tape-char { font-size: 14px; color: var(--color-ink); }
+  .tape-date { flex-shrink: 0; font-size: 12px; color: var(--color-ink-ghost); }
+
+  .tape-figures {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px 18px;
+    margin-top: 10px;
+  }
+  .tape-figures--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tape-figures dt { font-size: 11px; color: var(--color-ink-faint); }
+  .tape-figures dd { margin-top: 3px; font-size: 14px; color: var(--color-ink); }
+  .tape-rank { font-size: 11px; color: var(--color-ink-ghost); }
+
+  .tape-record {
+    margin-top: 11px;
+    border-top: 1px solid var(--color-line);
+    padding-top: 10px;
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--color-ink-muted);
+  }
+  .tape-record--thin { color: var(--color-ink-ghost); }
+  .tape-record-verdict { color: var(--color-ink-ghost); }
+  .tape-up { color: var(--color-up); }
+  .tape-down { color: var(--color-down); }
+
+  /* ── Volume profile ── */
+  .tape-profile { margin-top: 12px; }
+
+  /* Chart and axis side by side. The profile is read against a price
+     scale, so it is taller than it is wide and the numbers sit beside it —
+     a full-width strip 220px high reads as a bar chart of nothing. */
+  .tape-profile-frame {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 118px;
+    gap: 10px;
+    max-inline-size: 560px;
+  }
+  .tape-profile-chart {
+    position: relative;
+    block-size: 320px;
+    border-inline-start: 1px solid var(--color-line);
+    background: var(--color-track);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tape-axis { position: relative; block-size: 320px; }
+  .tape-axis-mark {
+    position: absolute;
+    inset-inline-start: 0;
+    transform: translateY(50%);
+    font-size: 11px;
+    white-space: nowrap;
+    color: var(--color-ink-ghost);
+  }
+  .tape-axis-poc { color: var(--color-data); }
+  .tape-axis-close { color: var(--color-ink); }
+  /* The band holding seventy per cent of the volume. A fill, not an edge:
+     it is the context the bars are read against. */
+  .tape-value-area {
+    position: absolute;
+    inset-inline: 0;
+    background: color-mix(in srgb, var(--color-data) 9%, transparent);
+  }
+  .tape-profile-row {
+    position: absolute;
+    inset-inline-start: 0;
+    background: var(--color-data);
+    opacity: 0.55;
+    border-radius: 0 2px 2px 0;
+  }
+  /* The heaviest bin and the current price. Two lines, distinguishable
+     without colour alone: one solid, one dashed. */
+  .tape-poc {
+    position: absolute;
+    inset-inline: 0;
+    block-size: 0;
+    border-top: 1px solid var(--color-data);
+  }
+  .tape-close {
+    position: absolute;
+    inset-inline: 0;
+    block-size: 0;
+    border-top: 1px dashed var(--color-ink);
+  }
+
+  .tape-profile-legend {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 18px;
+    margin-top: 12px;
+  }
+  .tape-profile-legend dt { font-size: 11px; color: var(--color-ink-faint); }
+  .tape-profile-legend dd { margin-top: 3px; font-size: 13px; color: var(--color-ink); }
+
+  .tape-thin,
+  .tape-caveat {
+    margin-top: 10px;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--color-ink-ghost);
+  }
+
+  .tape-caveats {
+    margin-top: 18px;
+    display: grid;
+    gap: 4px;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--color-ink-ghost);
+  }
+
+  @media (max-width: 767px) {
+    .tape-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tape-figures--wide { grid-template-columns: 1fr; }
+    .tape-profile-legend { grid-template-columns: 1fr; }
+    .tape-profile-frame { grid-template-columns: minmax(0, 1fr) 104px; }
+  }
+}
+
+@layer components {
+  .tape-partial {
+    margin-top: 8px;
+    border-inline-start: 2px solid var(--color-event);
+    padding-inline-start: 12px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--color-ink-muted);
+  }
+}

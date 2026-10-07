@@ -228,6 +228,26 @@ export function pollIntervalFor(
 /* Session                                                             */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Today's date on the exchange, as `YYYY-MM-DD`.
+ *
+ * The calendar day in New York, which is not the calendar day of whoever
+ * is reading — the site's reader is seven hours ahead, so for a good part
+ * of their evening the date here is still yesterday's. Anything comparing
+ * a candle's date against "today" has to use this one or it will be a day
+ * out for every Israeli visitor after 7pm.
+ */
+export function newYorkDate(): string {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  return `${get("year")}-${get("month")}-${get("day")}`;
+}
+
 function nowInNewYork(): { day: number; minutes: number } {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",

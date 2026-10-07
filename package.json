@@ -25,6 +25,7 @@
     "alerts": "tsx scripts/send-alerts.ts",
     "watch:companies": "tsx scripts/watch-companies.ts",
     "test:hours": "node --import tsx --test scripts/market-hours.test.ts",
+    "test:tape": "node --import tsx --test scripts/tape.test.ts",
     "build:baserates": "tsx scripts/build-base-rates.ts"
   },
   "dependencies": {

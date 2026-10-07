@@ -9,6 +9,7 @@ import type {
 } from "@/lib/analysis/chart-reader";
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 import { ChartScenarios } from "@/components/market/ChartScenarios";
+import { TapePanel } from "@/components/market/TapePanel";
 
 /**
  * Upload a chart, get it read back.
@@ -446,9 +447,29 @@ function ChartReadView({
         <ChartScenarios read={checked.baseRates} ticker={checked.ticker} />
       )}
 
+      {/* The measured volume, before the model's impression of it and not
+          after. A model looking at a screenshot can see that one bar in the
+          strip is taller than its neighbours; it cannot say whether that is
+          the ninety-eighth percentile of the year or an ordinary Tuesday,
+          because that needs the series. Putting the counted reading second
+          would invite a reader to treat the prose as the finding and the
+          numbers as a footnote on it. */}
+      {checked && (
+        <TapePanel
+          tape={checked.tape}
+          rates={checked.baseRates}
+          ticker={checked.ticker}
+          lastClose={checked.lastClose}
+        />
+      )}
+
       {read.volume && (
         <section className="read-block">
-          <h3>ווליום</h3>
+          <h3>מה שנראה בתמונה</h3>
+          <p className="read-check-note">
+            התרשמות המודל מרצועת המחזור בצילום. אין מאחוריה דירוג ואין מדגם —
+            הפאנל שמעליה הוא המדידה.
+          </p>
           <p>{read.volume}</p>
         </section>
       )}
