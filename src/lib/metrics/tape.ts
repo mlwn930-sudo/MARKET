@@ -694,7 +694,7 @@ export function readObv(candles: Candle[], window = 60): ObvRead | null {
  * is still ahead or under way, and `through` says which session was
  * actually read. After the close it is a complete bar and is kept.
  */
-function completeSessions(candles: Candle[]): {
+export function completeSessions(candles: Candle[]): {
   rows: Candle[];
   droppedPartial: boolean;
 } {

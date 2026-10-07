@@ -26,7 +26,8 @@
     "watch:companies": "tsx scripts/watch-companies.ts",
     "test:hours": "node --import tsx --test scripts/market-hours.test.ts",
     "test:tape": "node --import tsx --test scripts/tape.test.ts",
-    "build:baserates": "tsx scripts/build-base-rates.ts"
+    "build:baserates": "tsx scripts/build-base-rates.ts",
+    "build:ranks": "tsx scripts/build-ranks.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

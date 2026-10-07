@@ -21,6 +21,7 @@
  */
 
 import type { Candle } from "@/lib/sources/prices";
+import { STRONG_RANK } from "./rank";
 
 /* ------------------------------------------------------------------ */
 /* Indicators                                                          */
@@ -414,6 +415,14 @@ const MAX_BELOW_HIGH_PERCENT = 25;
 export function trendTemplate(
   candles: Candle[],
   relativeStrength6m: number | null,
+  /** The real thing, when the nightly ranking has produced one: this
+   *  name's position against every other name in the universe, 1-99.
+   *  Null falls back to the substitute below. */
+  strengthRank: number | null = null,
+  /** How many companies that rank was taken over. Printed, because a
+   *  rank is a statement about a population and this one is not the
+   *  whole market. */
+  rankUniverse: number | null = null,
 ): TrendTemplate {
   const unknown = (key: string, label: string): TemplateCheck => ({
     key,
@@ -505,14 +514,32 @@ export function trendTemplate(
     });
   } else checks.push(unknown("near_high", "קרוב לשיא 52 שבועות"));
 
-  if (relativeStrength6m !== null) {
+  /* The eighth criterion, at last measured the way it is defined.
+
+     Minervini asks for a relative strength RATING — a percentile against
+     every other stock — and for as long as this project had no ranked
+     universe it substituted six-month performance against the S&P 500,
+     labelled as a substitute and never called an RS Rating. The nightly
+     ranking now produces the real figure, so when it is available the
+     criterion is the criterion. When it is not, the substitute is still
+     here and still says what it is. */
+  if (strengthRank !== null) {
     checks.push({
       key: "relative_strength",
-      label: "מניב יותר מ-S&P 500 בחצי שנה",
+      label: `דירוג כוח יחסי ${STRONG_RANK}+`,
+      pass: strengthRank >= STRONG_RANK,
+      detail:
+        `${strengthRank} מתוך 99` +
+        (rankUniverse ? ` · מול ${rankUniverse} חברות ביקום המחקר` : ""),
+    });
+  } else if (relativeStrength6m !== null) {
+    checks.push({
+      key: "relative_strength",
+      label: "מניב יותר מ-S&P 500 בחצי שנה (תחליף לדירוג)",
       pass: relativeStrength6m > 0,
       detail: `${relativeStrength6m >= 0 ? "+" : ""}${relativeStrength6m.toFixed(1)} נקודות אחוז מול המדד`,
     });
-  } else checks.push(unknown("relative_strength", "מניב יותר מ-S&P 500 בחצי שנה"));
+  } else checks.push(unknown("relative_strength", "דירוג כוח יחסי"));
 
   return {
     checks,
@@ -1028,12 +1055,22 @@ export const AVERAGE_PERIODS = [20, 50, 150, 200] as const;
 export function readTechnicals(
   candles: Candle[],
   benchmark: Candle[] | null,
+  /** This name's position in the nightly universe ranking, when there is
+   *  one. Passed in rather than read here: the ranking lives in a file,
+   *  and a metrics module that reads files is how node:fs reached the
+   *  browser bundle once already. */
+  rank?: { strengthRank: number | null; universe: number } | null,
 ): TechnicalRead {
   const last = candles.length - 1;
 
   const relative = benchmark ? relativeStrength(candles, benchmark) : null;
   const stage = readStage(candles);
-  const template = trendTemplate(candles, relative?.sixMonth ?? null);
+  const template = trendTemplate(
+    candles,
+    relative?.sixMonth ?? null,
+    rank?.strengthRank ?? null,
+    rank?.universe ?? null,
+  );
   const vcp = readVcp(candles);
   const volume = readVolume(candles);
 

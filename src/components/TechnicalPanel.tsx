@@ -142,11 +142,34 @@ export function TechnicalPanel({
               />
             ))}
           </ul>
-          <p className="mt-3 text-[11px] leading-relaxed text-ink-faint">
-            הקריטריון האחרון הוא תשואה עודפת מול המדד, ולא דירוג כוח יחסי —
-            דירוג אמיתי דורש השוואה לכל מניות השוק, ויקום ההשוואה של האתר
-            כולל 48 חברות בלבד.
-          </p>
+          {/* The caveat follows what the criterion actually measured.
+
+              It used to say, flatly, that the last criterion was excess
+              return against the index and not a strength rating — which
+              was true, and stopped being true the night the universe
+              ranking started running. It also said the comparison set held
+              48 companies, which had been wrong since the universe grew to
+              123. A footnote that outlives the thing it describes is worse
+              than no footnote: a reader who checks it is told the figure
+              above is something other than what it is.
+
+              So it is derived from the check rather than written beside
+              it, and the population is the real one either way. */}
+          {template.checks.find((c) => c.key === "relative_strength")?.label.includes(
+            "תחליף",
+          ) ? (
+            <p className="mt-3 text-[11px] leading-relaxed text-ink-faint">
+              הקריטריון האחרון הוא תשואה עודפת מול המדד ולא דירוג כוח יחסי —
+              הדירוג נבנה בעבודה לילית, ועל הנייר הזה הוא עדיין לא קיים.
+            </p>
+          ) : (
+            <p className="mt-3 text-[11px] leading-relaxed text-ink-faint">
+              הקריטריון האחרון הוא דירוג כוח יחסי אמיתי — אחוזון מול שאר
+              החברות, לא תשואה עודפת מול המדד. הדירוג נמדד מול יקום המחקר של
+              האתר ולא מול כל מניות השוק, ולכן 90 כאן הוא ״בעשירון העליון של
+              הרשימה הזו״.
+            </p>
+          )}
         </div>
       </div>
 

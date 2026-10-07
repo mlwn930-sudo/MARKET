@@ -14,6 +14,7 @@
  * hour is a wrong price.
  */
 
+import { getRanks } from "@/lib/metrics/rank-store";
 import { unstable_cache } from "next/cache";
 import { getCompanyFacts, lookupTicker } from "@/lib/sources/sec";
 import { getProfile, type Profile } from "@/lib/sources/finnhub";
@@ -90,7 +91,11 @@ async function build(ticker: string): Promise<CompanyAnalysis | null> {
  * field ships a page that crashes on every company until the cache happens
  * to expire — which is exactly what happened when `capital` was added.
  */
-const SHAPE_VERSION = "v2";
+/* v3: the technical read now carries the universe rank in the eighth
+   trend-template criterion. A cached v2 read holds the old substitute
+   wording, and a page rendering one beside the other would show two
+   different criteria both claiming to be the eighth. */
+const SHAPE_VERSION = "v3";
 
 /**
  * The same work, without the cache wrapper.
@@ -135,11 +140,27 @@ export async function getTechnicalRead(
 ): Promise<TechnicalRead | null> {
   const symbol = ticker.toUpperCase();
 
-  const [history, benchmark] = await Promise.all([
+  const [history, benchmark, ranks] = await Promise.all([
     getPriceHistory(symbol).catch(() => null),
     getBenchmarkHistory().catch(() => null),
+    /* The nightly ranking, read here because this is a server module and
+       `metrics/technical.ts` must stay clear of the filesystem — the
+       boundary that `node:fs` crossed once already and took sixteen routes
+       with it. A clone that has never run the ranking job gets null, and
+       the trend template falls back to the substitute it has always
+       carried. */
+    getRanks().catch(() => null),
   ]);
   if (!history) return null;
 
-  return readTechnicals(history.candles, benchmark?.candles ?? null);
+  return readTechnicals(
+    history.candles,
+    benchmark?.candles ?? null,
+    ranks
+      ? {
+          strengthRank: ranks.reads[symbol]?.strengthRank ?? null,
+          universe: ranks.universe,
+        }
+      : null,
+  );
 }

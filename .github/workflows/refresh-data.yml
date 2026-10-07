@@ -71,15 +71,46 @@ jobs:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: npm run build:institutional
 
+      # The universe ranking. Needs no key at all — it reads Yahoo — so it
+      # is NOT gated on the preflight above, and it never fails the job.
+      #
+      # That ungating is deliberate and it is the lesson from the scanner,
+      # which sat inside a job gated on a news key it did not need and
+      # therefore had its output thrown away on every run where that key
+      # was missing. A step that needs nothing should not be able to be
+      # stopped by something it does not use.
+      - name: Rebuild the universe ranking
+        id: ranks
+        if: always()
+        continue-on-error: true
+        run: npm run build:ranks
+
+      # And the alarm, for the same reason the news job has one: a step
+      # allowed to fail quietly will, and nobody finds out until a page has
+      # been serving a stale rank for a week.
+      - name: Say so if the ranking did not write
+        if: always()
+        run: |
+          if [ "${{ steps.ranks.outcome }}" != "success" ]; then
+            echo "::error::The universe ranking failed. The trend template falls back to its stated substitute."
+            exit 0
+          fi
+          AGE=$(node -e 'const f=require("./content/ranks/latest.json");console.log(Math.round((Date.now()-new Date(f.builtAt).getTime())/60000))' 2>/dev/null || echo 99999)
+          if [ "$AGE" -gt 60 ]; then
+            echo "::error::The ranking step went green but content/ranks/latest.json is $AGE minutes old, so it did not write."
+          else
+            echo "ranking wrote a file $AGE minutes old"
+          fi
+
       - name: Commit if anything changed
-        if: steps.preflight.outputs.ready == 'true'
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content/fundamentals content/institutional
+          git add content/fundamentals content/institutional content/ranks
           if git diff --staged --quiet; then
             echo "no changes"
           else
-            git commit -m "chore: refresh fundamentals and institutional data"
+            git commit -m "chore: refresh fundamentals, institutional data and the ranking"
             git push
           fi
