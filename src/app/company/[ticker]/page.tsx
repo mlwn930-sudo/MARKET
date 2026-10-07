@@ -32,7 +32,11 @@ import { buildOutlook } from "@/lib/analysis/outlook";
 import { whyMoving } from "@/lib/analysis/why-moving";
 import { buildExpectationGap } from "@/lib/analysis/expectation-gap";
 import { ExpectationGapPanel } from "@/components/ExpectationGapPanel";
-import { getAnalystViews, getEarningsSurprises } from "@/lib/sources/finnhub";
+import {
+  getAnalystViews,
+  getNextEarnings,
+  getEarningsSurprises,
+} from "@/lib/sources/finnhub";
 import { WhyMovingPanel } from "@/components/WhyMovingPanel";
 import { getSectorViews } from "@/lib/sectors";
 import { SectorBackdrop } from "@/components/market/SectorBackdrop";
@@ -247,7 +251,7 @@ export default async function CompanyPage({
   /* Why it moved today. Deterministic: the index, the sector and the
      coverage are all figures the site already holds, and the panel says
      so rather than picking a headline and calling it a cause. */
-  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote, news, baseRates] =
+  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote, news, baseRates, calendar] =
     await Promise.all([
       getFallbackQuote("^GSPC").catch(() => null),
       getSectorViews().catch(() => []),
@@ -273,7 +277,36 @@ export default async function CompanyPage({
       /* A file read, not a measurement. Ten years of candles for the whole
          universe is a nightly job; see scripts/build-base-rates.ts. */
       baseRatesFor(ticker).catch(() => null),
+      /* The next scheduled report. One request for the whole market,
+         cached six hours upstream, so asking here costs effectively
+         nothing — and the tape panel needs it: a quiet bar eight sessions
+         before a report is a different quiet bar. */
+      getNextEarnings(ticker).catch(() => null),
     ]);
+
+  /* Trading days, not calendar days, because that is the unit everything
+     else on this panel is counted in — and "in 14 days" over a holiday
+     week means something different from "in 14 sessions". Weekends are
+     removed; market holidays are not, so this can run a day or two long
+     across Thanksgiving. Close enough to be useful and stated as sessions
+     rather than as a date arithmetic nobody checked. */
+  const nextReport = calendar?.date ?? null;
+  const sessionsToReport = (() => {
+    if (!nextReport) return null;
+    const from = new Date();
+    const to = new Date(nextReport + "T00:00:00Z");
+    if (Number.isNaN(to.getTime())) return null;
+    let sessions = 0;
+    const cursor = new Date(
+      Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate()),
+    );
+    while (cursor < to && sessions < 400) {
+      cursor.setUTCDate(cursor.getUTCDate() + 1);
+      const day = cursor.getUTCDay();
+      if (day !== 0 && day !== 6) sessions++;
+    }
+    return sessions;
+  })();
 
   /* One list, three readers: the corner renders it, "why is it moving" asks
      whether anything was written today, and the connection index counts what
@@ -809,6 +842,9 @@ export default async function CompanyPage({
           rates={baseRates}
           ticker={ticker}
           lastClose={history?.candles.at(-1)?.close ?? 0}
+          earnings={
+            nextReport ? { date: nextReport, sessionsAway: sessionsToReport } : null
+          }
         />
       </Section>
 

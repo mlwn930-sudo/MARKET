@@ -248,6 +248,18 @@ export function newYorkDate(): string {
   return `${get("year")}-${get("month")}-${get("day")}`;
 }
 
+/**
+ * A date `days` from now, as `YYYY-MM-DD`.
+ *
+ * Here rather than in each caller because two of them now want it — the
+ * agent pipeline and the company page, both to ask the earnings calendar
+ * for a window — and a second copy of date arithmetic is how two windows
+ * that are meant to match quietly stop matching.
+ */
+export function isoDaysFromNow(days: number): string {
+  return new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
+}
+
 function nowInNewYork(): { day: number; minutes: number } {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",

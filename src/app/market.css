@@ -711,3 +711,27 @@
   .screen-rank-label { font-size: 9px; color: var(--color-ink-ghost); }
   .screen-rank-value { font-size: 15px; color: var(--color-ink); }
 }
+
+@layer components {
+  .tape-earnings {
+    margin-top: 20px;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    padding: 13px 15px;
+    max-inline-size: 680px;
+  }
+  .tape-earnings-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+    font-size: 13px;
+    color: var(--color-ink);
+  }
+  .tape-earnings-note {
+    margin-top: 7px;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--color-ink-ghost);
+  }
+}

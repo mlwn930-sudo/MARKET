@@ -2,7 +2,7 @@ import { unstable_cache } from "next/cache";
 import {
   getAnalystViews,
   getBasicFinancials,
-  getEarningsCalendar,
+  getNextEarnings,
   getEarningsSurprises,
   getPeers,
 } from "@/lib/sources/finnhub";
@@ -66,10 +66,6 @@ export type CompanyIntelligence = {
  *  adding one ships a page that crashes until the hour expires. */
 const SHAPE_VERSION = "v2";
 
-function isoDaysFromNow(days: number): string {
-  return new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
-}
-
 async function build(
   symbol: string,
   /** Already-loaded analysis, for a caller with no Next request context.
@@ -99,9 +95,11 @@ async function build(
     getEarningsSurprises(symbol).catch(() => []),
     getPeers(symbol).catch(() => []),
     getAnalystViews(symbol).catch(() => []),
-    getEarningsCalendar(isoDaysFromNow(-7), isoDaysFromNow(120)).catch(
-      () => new Map(),
-    ),
+    /* The 120-day window this used to ask for was over the endpoint's
+       undisclosed 1500-row cap, so it came back truncated and this
+       pipeline has been reporting whichever date survived the cut rather
+       than the next one. See getNextEarnings. */
+    getNextEarnings(symbol).catch(() => null),
     // Both of these read a file a scheduled job wrote: no request quota,
     // and they work under plain Node as well as inside a request.
     getInstitutional().catch(() => ({ builtAt: "", institutions: [] })),
@@ -130,7 +128,7 @@ async function build(
   const risk = riskAnalyst(fundamentals, capital, technical);
   const { report: catalystReport, catalysts } = catalystAgent(
     symbol,
-    calendar.get(symbol.toUpperCase()) ?? null,
+    calendar,
     analysts,
     technical,
   );

@@ -440,3 +440,56 @@ export async function getEarningsCalendar(
     return new Map();
   }
 }
+
+/**
+ * The free calendar truncates, and it does not say so.
+ *
+ * Measured, after a company page reported NVDA's next results as
+ * 2027-02-23 when the answer was 2026-11-17:
+ *
+ *   2026-10-05 .. 2027-02-24   1500 rows   NVDA 2027-02-23
+ *   2026-10-05 .. 2026-12-06   1500 rows   NVDA 2026-11-17
+ *   2026-11-01 .. 2026-11-30   1500 rows   NVDA 2026-11-17
+ *
+ * Exactly 1500 every time. The endpoint caps its response and returns a
+ * slice, so a window wide enough to be useful silently loses the near
+ * dates — and what comes back still looks like a complete answer. A wrong
+ * date here is worse than no date: a reader plans around it.
+ *
+ * So the window is never widened. This walks forward in short steps and
+ * stops at the first one containing the symbol. Each step is a separate
+ * cached request shared by every company on the site, so the second
+ * company to ask pays nothing, and a symbol that reports next week is
+ * found on the first call.
+ *
+ * It also reports truncation rather than hiding it: a step that comes back
+ * at exactly the cap cannot be trusted to be complete, and the search
+ * simply moves on to a narrower one.
+ */
+const CALENDAR_CAP = 1500;
+const STEP_DAYS = 40;
+const MAX_STEPS = 4;
+
+export async function getNextEarnings(
+  symbol: string,
+  from = new Date(),
+): Promise<EarningsDate | null> {
+  const upper = symbol.toUpperCase();
+  const day = (offset: number) =>
+    new Date(from.getTime() + offset * 86_400_000).toISOString().slice(0, 10);
+
+  for (let step = 0; step < MAX_STEPS; step++) {
+    const start = step * STEP_DAYS - (step === 0 ? 2 : 0);
+    const found = await getEarningsCalendar(day(start), day((step + 1) * STEP_DAYS));
+    const hit = found.get(upper);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+/** True when a calendar response came back at the cap, and therefore
+ *  cannot be trusted to hold everything in its window. Exported so a
+ *  caller that must widen a window can at least know it was cut. */
+export function calendarWasTruncated(rows: number): boolean {
+  return rows >= CALENDAR_CAP;
+}

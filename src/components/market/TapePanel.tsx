@@ -263,16 +263,68 @@ function Profile({ profile, lastClose }: { profile: NonNullable<TapeRead["profil
   );
 }
 
+/**
+ * The report date, and the far more important sentence about what cannot
+ * be said about it.
+ *
+ * A volume climax the day before a quarterly report and one in a quiet
+ * week are not the same event, and every reading in this panel is blind to
+ * the difference. The honest fix would be to classify each historical bar
+ * by its distance from that quarter's report — which needs a history of
+ * report dates, and Finnhub's free calendar does not have one. Measured
+ * directly rather than assumed: a request for the coming quarter returns
+ * 1,500 rows, and the identical request for any window in the past returns
+ * zero.
+ *
+ * So the base rates above are NOT conditioned on earnings and this says
+ * so, rather than letting a reader assume a measurement that was never
+ * made. What the calendar does carry is the NEXT date, which is the piece
+ * a reader looking at today's tape actually needs: a quiet bar eight
+ * sessions before a report is a different quiet bar.
+ *
+ * Rule 9, in both directions at once — print what the data supports, and
+ * name what it does not.
+ */
+function Earnings({ date, sessionsAway }: { date: string; sessionsAway: number | null }) {
+  return (
+    <div className="tape-earnings">
+      <div className="tape-earnings-head">
+        <span>הדוח הבא</span>
+        <span className="num" dir="ltr">
+          {date}
+        </span>
+        {sessionsAway !== null && (
+          <span className="tape-rank">
+            {sessionsAway <= 0
+              ? "היום או חלף"
+              : `בעוד ${sessionsAway} ימי מסחר`}
+          </span>
+        )}
+      </div>
+      <p className="tape-earnings-note">
+        {sessionsAway !== null && sessionsAway > 0 && sessionsAway <= 10
+          ? "הדוח קרוב. מחזור חריג בימים שלפני דוח נפוץ, ולא בהכרח אומר את מה שאותה צורה אומרת בשבוע רגיל."
+          : "שיעורי הבסיס שלמעלה אינם מותנים בקרבה לדוח."}{" "}
+        לוח הדוחות החינמי מוסר תאריכים עתידיים בלבד ולא היסטוריה, ולכן אי
+        אפשר לסווג נרות מהעבר לפי המרחק שלהם מדוח — וזה לא נמדד כאן.
+      </p>
+    </div>
+  );
+}
+
 export function TapePanel({
   tape,
   rates,
   ticker,
   lastClose,
+  earnings,
 }: {
   tape: TapeRead | null;
   rates: BaseRateRead | null;
   ticker: string;
   lastClose: number;
+  /** The next scheduled report, when the calendar carries one. */
+  earnings?: { date: string; sessionsAway: number | null } | null;
 }) {
   if (!tape || !tape.latest) {
     return (
@@ -339,6 +391,10 @@ export function TapePanel({
             <Bar key={bar.date} bar={bar} rates={rates} />
           ))}
         </ul>
+      )}
+
+      {earnings && (
+        <Earnings date={earnings.date} sessionsAway={earnings.sessionsAway} />
       )}
 
       <h4 className="tape-heading">כיוון ההשתתפות</h4>
