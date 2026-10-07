@@ -670,6 +670,70 @@ body:not(:has(.gta-cover)) .research-context a,
 body:not(:has(.gta-cover)) .explore-groups a span {
   color: #7FA5FF;
 }
+/* The cyan and the blue, where they are still set as words.
+
+   CLAUDE.md fixes both: cyan #0081A1 is a data colour, the brand blue
+   #2855F5 is "enough for a border, not for a word" at 3.2:1, and what gets
+   read is the lighter tint. These are the selectors that had not been
+   told — an active tab, a highlighted term, a link in a scene. Fills and
+   borders using the same hexes are untouched, because on a fill the
+   measurement does not apply. */
+body:not(:has(.gta-cover)) .home-next-worlds span,
+body:not(:has(.gta-cover)) .research-paths span,
+body:not(:has(.gta-cover)) .scene-reading .micro-label,
+body:not(:has(.gta-cover)) .world-guide span {
+  color: var(--color-ink-muted);
+}
+body:not(:has(.gta-cover)) .dock-tabs button[aria-pressed=true],
+body:not(:has(.gta-cover)) .explore-stories a,
+body:not(:has(.gta-cover)) .market-filters button[aria-pressed=true],
+body:not(:has(.gta-cover)) .now-pick b,
+body:not(:has(.gta-cover)) .scene-bottom a,
+body:not(:has(.gta-cover)) .scene-stops button[aria-current],
+body:not(:has(.gta-cover)) .story-select button[aria-pressed=true] {
+  color: #7FA5FF;
+}
+
+/* The last of the paper greys.
+
+   #667085 is the muted ink of the light version, and `financial.css`
+   hard-codes it in twenty-two rules rather than reaching for a token — so
+   the alias layer this file redeclares could not reach any of them. On the
+   dark ground it measures 3.96:1 against the ground and 3.64:1 against a
+   surface, both under AA for the 9-12px type every one of these selectors
+   is used at, and both close enough to passing that nobody reading the
+   page would call it broken. It took measuring 480 text runs on the home
+   page to see that thirty-one of them were the same colour.
+
+   Mapped to the ghost token rather than to a new value: these are captions,
+   sources, counts and the small print under a figure — exactly what
+   `--color-ink-ghost` is for, and it is already 5.9:1 here. */
+body:not(:has(.gta-cover)) .company-name small,
+body:not(:has(.gta-cover)) .context-step small,
+body:not(:has(.gta-cover)) .data-caption,
+body:not(:has(.gta-cover)) .data-empty,
+body:not(:has(.gta-cover)) .explore-stories>span,
+body:not(:has(.gta-cover)) .index-title small,
+body:not(:has(.gta-cover)) .market-filters>span,
+body:not(:has(.gta-cover)) .market-status,
+body:not(:has(.gta-cover)) .market-status>span,
+body:not(:has(.gta-cover)) .now-headline small,
+body:not(:has(.gta-cover)) .now-pick small,
+body:not(:has(.gta-cover)) .research-grid p,
+body:not(:has(.gta-cover)) .research-paths p,
+body:not(:has(.gta-cover)) .research-pick small,
+body:not(:has(.gta-cover)) .scene-reading small,
+body:not(:has(.gta-cover)) .scene-stops button,
+body:not(:has(.gta-cover)) .sector-ribbon>span,
+body:not(:has(.gta-cover)) .signal-empty,
+body:not(:has(.gta-cover)) .signal-heading .micro-label,
+body:not(:has(.gta-cover)) .signal-source,
+body:not(:has(.gta-cover)) .signal-tabs button,
+body:not(:has(.gta-cover)) .story-select small,
+body:not(:has(.gta-cover)) .workspace-switch button {
+  color: var(--color-ink-ghost);
+}
+
 /* The rest of them, found by sweeping every page for text still computing
    to rgb(40, 85, 245). Each of these sets the brand blue as a word
    somewhere — an active tab, a disclosure's summary, a link inside the
