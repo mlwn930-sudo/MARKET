@@ -1,17 +1,61 @@
 {
-  "builtAt": "2026-10-02T15:05:59.495Z",
+  "builtAt": "2026-10-07T19:58:05.316Z",
   "followed": 2,
   "findings": [
     {
-      "kind": "catalyst",
+      "kind": "tape",
       "ticker": "NVDA",
-      "company": "NVIDIA Corp",
-      "headline": "NVDA: דוח רבעוני",
-      "detail": "בעוד 46 ימים — הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "weight": 1.5,
+      "company": "NVDA",
+      "headline": "NVDA: סגירה חיובית על מחזור ברבעון התחתון — עלייה בלי השתתפות",
+      "detail": "2026-10-06 · מחזור ×0.8 (אחוזון 8 בשנה האחרונה), טווח 1.9%, סגירה ב-7% מהטווח. בעשר שנים זה קרה 104 פעמים, ואחרי חודש המחיר היה גבוה יותר ב-74% מהן מול בסיס של 66% — כלומר התנאי לא הוסיף מידע.",
+      "weight": 2.3,
       "grade": null,
-      "at": "2026-10-02T15:05:59.495Z",
+      "at": "2026-10-07T19:58:05.316Z",
       "href": "/company/NVDA"
+    },
+    {
+      "kind": "level",
+      "ticker": "TTWO",
+      "company": "TTWO",
+      "headline": "TTWO קרובה להתנגדות שהחזיקה 14 מתוך 15 פעמים",
+      "detail": "המחיר 204.01 מול הרמה 206.45 (+1.2%). 3 תפניות נפרדות בתוך הרצועה, האחרונה ב-2026-09-09. זו ספירה של מה שקרה, לא תחזית שהרמה תחזיק שוב.",
+      "weight": 2.3,
+      "grade": null,
+      "at": "2026-10-07T19:58:05.316Z",
+      "href": "/company/TTWO"
+    },
+    {
+      "kind": "news",
+      "ticker": "NVDA",
+      "company": "NVDA",
+      "headline": "NVDA: In 4 Months, SpaceX Has Now Sought to Raise Over $150 Billion. Should Investors Be Worried or Is This a Flashing Buy Signal?",
+      "detail": "חברת SpaceX מבקשת לגייס עוד 40 מיליארד דולר חוב (10 מיליארד בהלוואות בנקאיות ו-30 מיליארד בחוב בדירוג השקעה) במטרה לרכוש שבבים מ-Nvidia עבור מרכזי הנתונים שלה. גיוס זה מצטרף לגיוסים קודמים ומביא את סך ההון שגיוסה החברה ל · Yahoo",
+      "weight": 2.25,
+      "grade": null,
+      "at": "2026-10-07T19:58:05.316Z",
+      "href": "/company/NVDA"
+    },
+    {
+      "kind": "news",
+      "ticker": "NVDA",
+      "company": "NVDA",
+      "headline": "NVDA: Nvidia Stock: Capitalize On The AI Chipmaker's Moves With This Spread Strategy",
+      "detail": "Nvidia stock is on the radar and this options strategy offers a robust profit zone on the downside. · Yahoo",
+      "weight": 2.25,
+      "grade": null,
+      "at": "2026-10-07T19:58:05.316Z",
+      "href": "/company/NVDA"
+    },
+    {
+      "kind": "news",
+      "ticker": "TTWO",
+      "company": "TTWO",
+      "headline": "TTWO: How GTA VI Fuels Multiyear Growth for Take-Two Interactive Software (TTWO)?",
+      "detail": "ClearBridge Investments, a global equity manager, recently published third-quarter 2026 commentary for its “Large Cap Growth Strategy”. The letter can be downloaded here. In the third quarter, leadership among large grow · Yahoo",
+      "weight": 2.25,
+      "grade": null,
+      "at": "2026-10-07T19:58:05.316Z",
+      "href": "/company/TTWO"
     }
   ]
 }

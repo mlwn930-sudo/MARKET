@@ -33,6 +33,12 @@ import {
   historyIsEmpty,
 } from "../src/lib/intel/history-store";
 import { approvedWithWatchlists } from "../src/lib/alerts/subscribers";
+import { readLevels } from "../src/lib/metrics/levels";
+import { readTape, CHARACTER_LABELS } from "../src/lib/metrics/tape";
+import { getTickerCoverage } from "../src/lib/news-store";
+import { baseRatesFor } from "../src/lib/metrics/base-rate-store";
+import { MIN_SAMPLE } from "../src/lib/metrics/base-rates";
+import type { Candle } from "../src/lib/sources/prices";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 config({ path: resolve(ROOT, ".env.local"), quiet: true });
@@ -40,7 +46,7 @@ config({ path: resolve(ROOT, ".env.local"), quiet: true });
 const OUT = resolve(ROOT, "content/watch/companies.json");
 
 export type CompanyFinding = {
-  kind: "thesis" | "catalyst";
+  kind: "thesis" | "catalyst" | "level" | "tape" | "news";
   ticker: string;
   company: string;
   headline: string;
@@ -67,6 +73,60 @@ const WINDOW_DAYS = 14;
  *  November date for NVDA and said nothing, which is the opposite of what
  *  a watchlist is for. */
 const CATALYST_DAYS = 60;
+
+/* ------------------------------------------------------------------ */
+/* The chart, the levels and the wire — for followed companies only    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Two years of daily candles, for one company.
+ *
+ * Only companies somebody actually follows get pulled, which is the whole
+ * economy of this script: a watchlist is a handful of names, not the
+ * universe, so this costs a handful of requests rather than a hundred and
+ * twenty-three. The nightly ranking already walks the universe and has no
+ * need of this.
+ */
+const HEADERS = {
+  "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36",
+};
+
+async function candlesFor(symbol: string): Promise<Candle[] | null> {
+  try {
+    const res = await fetch(
+      `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=2y&interval=1d`,
+      { headers: HEADERS, signal: AbortSignal.timeout(30_000) },
+    );
+    if (!res.ok) return null;
+    const json = await res.json();
+    const result = json?.chart?.result?.[0];
+    const stamps: number[] = result?.timestamp ?? [];
+    const quote = result?.indicators?.quote?.[0];
+    if (!quote || stamps.length === 0) return null;
+    const rows: Candle[] = [];
+    for (let i = 0; i < stamps.length; i++) {
+      const [o, h, l, c] = [quote.open?.[i], quote.high?.[i], quote.low?.[i], quote.close?.[i]];
+      if (![o, h, l, c].every((v) => Number.isFinite(v))) continue;
+      rows.push({
+        date: new Date(stamps[i] * 1000).toISOString().slice(0, 10),
+        open: o, high: h, low: l, close: c,
+        volume: Number.isFinite(quote.volume?.[i]) ? quote.volume[i] : 0,
+      });
+    }
+    return rows;
+  } catch {
+    return null;
+  }
+}
+
+/** How close price has to sit to a level before it is worth saying so. A
+ *  level three per cent away is not being tested; it is just nearby. */
+const NEAR_LEVEL = 1.8;
+
+/** A band price has turned at twice is a coincidence worth noting on a
+ *  chart and not worth an email. Three is the floor for a message. */
+const MIN_TOUCHES = 3;
 
 async function main() {
   const stamp = new Date().toISOString();
@@ -138,15 +198,130 @@ async function main() {
     });
   }
 
+  /* ---- The chart, per followed company ----
+
+     The three things a person watching a handful of names actually checks
+     every day, and which this agent did not report: where the price sits
+     against the levels it has turned at before, what the last session's
+     volume looked like, and whether anything was written about them.
+
+     Only the followed names are pulled. That is the whole economy here —
+     a watchlist is a handful of symbols, so this is a handful of requests,
+     and the nightly ranking already walks the universe for everything
+     else. */
+  for (const ticker of [...followed].sort()) {
+    const candles = await candlesFor(ticker);
+    if (!candles || candles.length < 120) {
+      console.log(`  ${ticker}: no usable history`);
+      continue;
+    }
+    const close = candles[candles.length - 1].close;
+
+    /* ---- Support and resistance ---- */
+    for (const level of readLevels(candles, 8)) {
+      if (level.touches < MIN_TOUCHES) continue;
+      const distance = Math.abs(level.distancePercent);
+      if (distance > NEAR_LEVEL) continue;
+
+      const side = level.kind === "support" ? "תמיכה" : "התנגדות";
+      findings.push({
+        kind: "level",
+        ticker,
+        company: ticker,
+        headline: `${ticker} ${distance < 0.5 ? "על" : "קרובה ל"}${side} שהחזיקה ${level.held} מתוך ${level.held + level.broke} פעמים`,
+        detail:
+          `המחיר ${close.toFixed(2)} מול הרמה ${level.price.toFixed(2)} ` +
+          `(${level.distancePercent >= 0 ? "+" : ""}${level.distancePercent.toFixed(1)}%). ` +
+          `${level.touches} תפניות נפרדות בתוך הרצועה, האחרונה ב-${level.lastTouch}. ` +
+          `זו ספירה של מה שקרה, לא תחזית שהרמה תחזיק שוב.`,
+        /* Above a catalyst, below a thesis change. A level being tested is
+           happening now; a thesis that stopped holding already happened. */
+        weight: 2.0 + Math.min(level.touches, 6) / 10,
+        grade: null,
+        at: stamp,
+        href: `/company/${ticker}`,
+      });
+    }
+
+    /* ---- The tape ---- */
+    const tape = readTape(candles);
+    const bar = tape.latest;
+    if (bar && bar.character !== "quiet") {
+      /* What that kind of session has been followed by on this instrument.
+         A shape with no track record is still worth reporting; a shape
+         whose track record says it meant nothing must say that too. */
+      const rates = await baseRatesFor(ticker).catch(() => null);
+      const condition = rates?.conditions.find((c) =>
+        c.key === `${bar.character}-bar`,
+      );
+      const outcome = condition?.outcomes.find((o) => o.days === 21);
+      const record =
+        outcome && outcome.n >= MIN_SAMPLE
+          ? ` בעשר שנים זה קרה ${condition!.occurrences} פעמים, ואחרי חודש המחיר היה גבוה יותר ב-${Math.round(outcome.up * 100)}% מהן מול בסיס של ${Math.round(outcome.baselineUp * 100)}%${Math.abs(outcome.liftPp) < 10 ? " — כלומר התנאי לא הוסיף מידע." : "."}`
+          : " אין מדגם מספיק כדי לומר מה זה היה שווה כאן.";
+
+      findings.push({
+        kind: "tape",
+        ticker,
+        company: ticker,
+        headline: `${ticker}: ${CHARACTER_LABELS[bar.character]}`,
+        detail:
+          `${bar.date} · מחזור ×${bar.volumeRatio.toFixed(1)}` +
+          (bar.volumePercentile !== null
+            ? ` (אחוזון ${Math.round(bar.volumePercentile * 100)} בשנה האחרונה)`
+            : "") +
+          `, טווח ${bar.rangePercent.toFixed(1)}%, סגירה ב-${Math.round(bar.closePosition * 100)}% מהטווח.` +
+          record,
+        weight: 2.3,
+        grade: null,
+        at: stamp,
+        href: `/company/${ticker}`,
+      });
+    }
+
+    /* ---- The wire ----
+
+       Only stories the feed screened as being ABOUT the company, which is
+       what `getTickerCoverage` is for: a provider's "related" field is
+       generous, and an alert that fires because a round-up mentioned the
+       ticker in passing is the fastest way to teach somebody to filter
+       these messages into a folder. */
+    const coverage = await getTickerCoverage(ticker, 4).catch(() => null);
+    const recent = (coverage?.articles ?? []).filter((a) => {
+      const published = Date.parse(a.seenAt ?? "");
+      return Number.isFinite(published) && Date.now() - published < 36 * 3600 * 1000;
+    });
+    for (const article of recent.slice(0, 2)) {
+      findings.push({
+        kind: "news",
+        ticker,
+        company: ticker,
+        headline: `${ticker}: ${article.title}`,
+        detail:
+          /* The model's reading where the queue has already produced one,
+             the publisher's own words otherwise. Never a summary this
+             script invented out of the headline. */
+          (article.analysis?.summary?.slice(0, 220) ||
+            article.excerpt?.slice(0, 220) ||
+            "") + ` · ${article.domain}`,
+        weight: 2.25,
+        grade: null,
+        at: stamp,
+        href: `/company/${ticker}`,
+      });
+    }
+  }
+
   findings.sort((a, b) => b.weight - a.weight);
 
   await write({ builtAt: stamp, followed: followed.size, findings });
 
   console.log(`followed companies : ${followed.size}`);
+  const byKind = (k: string) => findings.filter((f) => f.kind === k).length;
   console.log(
     `findings           : ${findings.length} ` +
-      `(${findings.filter((f) => f.kind === "thesis").length} thesis, ` +
-      `${findings.filter((f) => f.kind === "catalyst").length} catalyst)`,
+      `(thesis ${byKind("thesis")}, catalyst ${byKind("catalyst")}, ` +
+      `level ${byKind("level")}, tape ${byKind("tape")}, news ${byKind("news")})`,
   );
   for (const f of findings.slice(0, 6)) {
     console.log(`  [${f.kind}] ${f.headline.slice(0, 70)}`);

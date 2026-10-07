@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { config } from "dotenv";
 import { approvedWithWatchlists, alertsConfigured } from "../src/lib/alerts/subscribers";
-import { mailConfigured, ownerEmail, sendMail } from "../src/lib/alerts/mailer";
+import { mailConfigured, sendMail } from "../src/lib/alerts/mailer";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 config({ path: resolve(ROOT, ".env.local"), quiet: true });
@@ -72,6 +72,19 @@ const WORTH_SENDING = new Set([
      tell anybody, and it is also the rarest. */
   "thesis",
   "catalyst",
+  /* The three a person watching a handful of names checks every day, and
+     which this digest could not carry because nothing produced them:
+     where the price sits against a level it has turned at before, what
+     the last session looked like on volume, and what was written about
+     the company.
+
+     All three are per-company by construction — watch-companies.ts
+     computes them only for symbols somebody follows — so they reach an
+     inbox already narrowed to a watchlist rather than being filtered down
+     to it afterwards. */
+  "level",
+  "tape",
+  "news",
   "opportunity",
   "move",
   "event",
@@ -237,31 +250,13 @@ async function main() {
      * same as "send me everything", and guessing the second from the first
      * is how an alert list becomes spam. The line below says so in the
      * log, because silence with no explanation looks like a broken job. */
-    /* The owner is the exception, and only the owner.
-     *
-     * The filter above is right for a subscriber: a list across a hundred
-     * and twenty-three companies is a market report, and a market report
-     * arriving four times a day stops being read. It is wrong for the
-     * person who built the scanner to watch those hundred and twenty-three.
-     * Narrowing it to whatever they happen to have on a watchlist defeats
-     * the thing entirely — measured on the first real run: six findings
-     * computed, none of them surviving a two-company list, nothing sent.
-     *
-     * Being the owner is what opens it, not having an empty list. The
-     * reasoning below against reading an empty watchlist as "send me
-     * everything" is still correct and still applies to everybody else:
-     * "I have not told you what I follow" is not consent to a firehose. */
-    const isOwner = reader.email.toLowerCase() === ownerEmail().toLowerCase();
-
-    if (!isOwner && reader.tickers.length === 0) {
+    if (reader.tickers.length === 0) {
       console.log(`  ${reader.email}: follows nothing yet — nothing to send`);
       continue;
     }
 
     const watched = new Set(reader.tickers);
-    const theirs = isOwner
-      ? fresh
-      : fresh.filter((f) => f.ticker !== null && watched.has(f.ticker));
+    const theirs = fresh.filter((f) => f.ticker !== null && watched.has(f.ticker));
     if (theirs.length === 0) {
       console.log(
         `  ${reader.email}: ${fresh.length} findings, none on their ${reader.tickers.length} companies`,
