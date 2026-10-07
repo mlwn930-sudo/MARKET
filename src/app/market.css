@@ -555,11 +555,17 @@
   .tape-char { font-size: 14px; color: var(--color-ink); }
   .tape-date { flex-shrink: 0; font-size: 12px; color: var(--color-ink-ghost); }
 
+  /* Capped rather than stretched. The company page runs a panel the full
+     width of the content column, and four figures spread across 1,370
+     pixels put 340 pixels between a label and the one beside it — the eye
+     stops reading them as a row and starts reading them as four unrelated
+     statements. A measure, like the prose. */
   .tape-figures {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px 18px;
     margin-top: 10px;
+    max-inline-size: 680px;
   }
   .tape-figures--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tape-figures dt { font-size: 11px; color: var(--color-ink-faint); }
@@ -568,6 +574,7 @@
 
   .tape-record {
     margin-top: 11px;
+    max-inline-size: 680px;
     border-top: 1px solid var(--color-line);
     padding-top: 10px;
     font-size: 12px;
@@ -644,6 +651,9 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px 18px;
     margin-top: 12px;
+    /* The same width as the chart it describes, so the two read as one
+       object instead of a picture and a caption that drifted apart. */
+    max-inline-size: 560px;
   }
   .tape-profile-legend dt { font-size: 11px; color: var(--color-ink-faint); }
   .tape-profile-legend dd { margin-top: 3px; font-size: 13px; color: var(--color-ink); }
@@ -651,6 +661,7 @@
   .tape-thin,
   .tape-caveat {
     margin-top: 10px;
+    max-inline-size: 720px;
     font-size: 11px;
     line-height: 1.7;
     color: var(--color-ink-ghost);
@@ -658,6 +669,7 @@
 
   .tape-caveats {
     margin-top: 18px;
+    max-inline-size: 760px;
     display: grid;
     gap: 4px;
     font-size: 11px;
