@@ -11,15 +11,28 @@ name: Analyse news
 # language model reading each story through the three lenses. That is worth
 # doing often, and it is not worth doing every twenty minutes.
 #
-# The frequency is also a budget. A run every twenty minutes is 72 a day,
-# which on a private repository consumes roughly 3,300 of the 2,000 free
-# Actions minutes a month — and when that allowance runs out GitHub stops
-# running the workflow without announcing it. That is what happened here:
-# the last run was hours before anyone noticed, and an empty analysis looks
-# exactly like a quiet news day.
+# The frequency is a budget, and the budget written here was the wrong
+# one.
 #
-# So: every half hour while the US market is open, twice a day otherwise.
-# About 450 runs a month, comfortably inside the allowance.
+# This used to say that a run every twenty minutes consumes 3,300 of the
+# 2,000 free Actions minutes a month, and that the allowance running out
+# is what had silently stopped the workflow. That is true of a PRIVATE
+# repository. This one is public, and on a public repository GitHub's
+# Actions minutes are unlimited and free — so the ceiling this comment
+# described, and the throttling it justified, did not exist.
+#
+# The real constraint is the model: 600 calls a day, shared with the daily
+# brief, the chat and the research desk. This job alone can spend 45 in a
+# single run reading articles, which is why ITS cadence stays where it is.
+#
+# What does not cost a model call is the chart work — the market scan and
+# the levels, volume, trend and rank of the followed companies are
+# arithmetic over prices. That half was separated into
+# watch-charts.yml and runs every fifteen minutes instead, which is the
+# "tight monitoring" this schedule could never have given.
+#
+# So: every half hour here for the wire and the readings, twice a day
+# out of hours, and the charts watched four times as often next door.
 
 on:
   schedule:

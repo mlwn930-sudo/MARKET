@@ -155,6 +155,22 @@ function trim(text: string, limit: number): string {
    them. Two copies of one idea is how a panel and an email start
    describing different charts. */
 
+/**
+ * Charts only, for the frequent job.
+ *
+ * The expensive half of this script is reading articles: up to two model
+ * calls per followed company, and the model budget is 600 a day shared
+ * with everything else on the site. The chart half costs almost nothing —
+ * the scan and the setup read are pure arithmetic over prices, and only a
+ * company that actually converges spends a single call on the paragraph
+ * that explains it.
+ *
+ * So the two halves can run at different speeds, which is the whole point:
+ * the charts can be watched every quarter of an hour for free while the
+ * wire keeps its slower cadence. See .github/workflows/watch-charts.yml.
+ */
+const CHARTS_ONLY = process.argv.includes("--charts-only");
+
 async function main() {
   const stamp = new Date().toISOString();
 
@@ -367,6 +383,8 @@ async function main() {
       );
     }
 
+
+    if (CHARTS_ONLY) continue;
 
     /* ---- The wire ----
 

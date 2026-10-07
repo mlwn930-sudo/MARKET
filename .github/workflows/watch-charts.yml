@@ -1,0 +1,124 @@
+name: Watch the charts
+
+# Tight monitoring, at no cost, because the expensive half was separated
+# out.
+#
+# THE BUDGET THAT CONSTRAINS THIS SITE IS NOT ACTIONS MINUTES. The news
+# workflow still carries a comment explaining that a run every twenty
+# minutes would consume 3,300 of the 2,000 free Actions minutes a month,
+# and that was true when this repository was private. It is public, and on
+# a public repository GitHub's Actions minutes are unlimited and free. The
+# frequency ceiling it describes does not exist.
+#
+# What does constrain the site is the model: 600 calls a day, shared by
+# the news analysis, the daily brief, the chat and the research desk. The
+# news job can spend 45 of them in a single run.
+#
+# The chart work spends almost none. `npm run watch` scans 123 companies
+# out of Yahoo prices and calls no model at all. The company agent in
+# charts-only mode reads levels, volume, the trend and the universe rank —
+# all arithmetic — and spends one call only on a company that actually
+# converged, which is rare by construction.
+#
+# So the two halves run at different speeds. This one watches the charts
+# every quarter of an hour while the market is open; refresh-news.yml
+# keeps its slower cadence for the wire and the readings.
+#
+# Alerts are safe to run this often: the ledger fingerprints a finding by
+# kind, ticker and calendar day, so the same situation re-detected
+# thirty-six times in a session is mailed once.
+
+on:
+  schedule:
+    # Weekdays, every fifteen minutes through the US session plus the hour
+    # either side.
+    - cron: "*/15 13-21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: watch-charts
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # The install the news job spent three days without, which is why its
+      # scanner never wrote a file. Every step below is tsx.
+      - run: npm ci
+
+      # 123 companies out of Yahoo prices. No key, no model.
+      - name: Scan the market
+        id: scan
+        continue-on-error: true
+        run: npm run watch
+
+      # Levels, volume, trend and rank for the followed companies. The
+      # model is touched only where something converged.
+      - name: Read the followed charts
+        id: charts
+        continue-on-error: true
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npm run watch:companies -- --charts-only
+
+      - name: Mail what is new
+        continue-on-error: true
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_OWNER_EMAIL: ${{ secrets.ALERT_OWNER_EMAIL }}
+          ALERT_FROM: ${{ secrets.ALERT_FROM }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+        run: npm run alerts
+
+      # The alarm, because a step allowed to fail quietly will.
+      - name: Say so if nothing was written
+        if: always()
+        run: |
+          if [ "${{ steps.scan.outcome }}" != "success" ]; then
+            echo "::error::The market scan failed. The site keeps the last scan and says on the page that it is stale."
+          fi
+          if [ "${{ steps.charts.outcome }}" != "success" ]; then
+            echo "::error::The chart read failed for the followed companies."
+          fi
+
+      # Same shape as the news job, and for the same reason: two writers
+      # touching content/watch at the same moment is a race, not an
+      # incident, and mailing the owner about it teaches them to ignore
+      # failure mail.
+      - name: Commit if anything changed
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/watch
+          if git diff --staged --quiet; then
+            echo "scan unchanged"
+            exit 0
+          fi
+          git commit -m "chore: refresh the market scan and the followed charts"
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash origin main && git push; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "::warning::push attempt $attempt did not land, retrying"
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 5))
+          done
+          echo "::error::Could not push this cycle after three attempts. The next run recomputes it."
+          exit 0
