@@ -42,10 +42,11 @@ type Size = "sm" | "md" | "lg";
 
 const DIMENSION: Record<Size, number> = { sm: 26, md: 34, lg: 52 };
 
-/** Readable on either, chosen by the colour's own luminance rather than by
- *  a list — the brand table has 60-odd colours in it and a list would rot
- *  the first time one was added. */
-function inkFor(hex: string): string {
+const DARK_INK = "#0B1220";
+const LIGHT_INK = "#FFFFFF";
+
+/** Relative luminance, per WCAG. */
+function luminanceOf(hex: string): number {
   const clean = hex.replace("#", "");
   const full =
     clean.length === 3
@@ -56,8 +57,36 @@ function inkFor(hex: string): string {
       : clean;
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16) / 255);
   const channel = (v: number) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
-  const luminance = 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
-  return luminance > 0.42 ? "#0B1220" : "#FFFFFF";
+  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+}
+
+/**
+ * Whichever of the two is actually readable on this colour.
+ *
+ * It used to be a luminance threshold of 0.42, picked by eye, and the eye
+ * was wrong by a wide margin. White and black give the same contrast at a
+ * luminance of 0.179 — solve (1.05)/(L+0.05) = (L+0.05)/0.05 and that is
+ * where it lands — so every brand colour between 0.179 and 0.42 was being
+ * given white letters when black was the better choice, which is most of
+ * the vivid middle of the spectrum. Measured on the live board:
+ *
+ *   NVIDIA    #76B900   white 2.41:1   black 8.71:1
+ *   Apple     #A2AAAD   white 2.36:1   black 8.89:1
+ *   Microsoft #00A4EF   white 2.78:1   black 7.56:1
+ *   Alphabet  #4285F4   white 3.56:1   black 5.89:1
+ *
+ * So it computes both and takes the winner rather than testing against a
+ * constant. There is no threshold left to get wrong, it is right for a
+ * colour nobody has added yet, and the arithmetic is the definition of the
+ * thing being decided rather than a proxy for it.
+ */
+function inkFor(hex: string): string {
+  const background = luminanceOf(hex);
+  const against = (ink: number) =>
+    (Math.max(background, ink) + 0.05) / (Math.min(background, ink) + 0.05);
+  return against(luminanceOf(DARK_INK)) >= against(luminanceOf(LIGHT_INK))
+    ? DARK_INK
+    : LIGHT_INK;
 }
 
 export function CompanyMark({

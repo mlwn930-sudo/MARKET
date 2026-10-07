@@ -608,13 +608,19 @@ export function CinemaGate({
       >
         <span className="text-[11px] tracking-[0.42em] text-white/75">{eyebrow}</span>
 
-        <h1 className="mt-6 max-w-[16ch] text-[clamp(38px,7vw,86px)] font-semibold leading-[0.98] tracking-tight text-white">
+        {/* An h2, not an h1. Two of these gates render on the launch page
+            and the story behind them carries its own title, so three h1
+            elements were competing to be the document heading — which, for
+            anyone navigating by headings, means the page has no single
+            answer to "what is this". The gate is a door over the page, not
+            the page. Its size is set here and owes nothing to the tag. */}
+        <h2 className="mt-6 max-w-[16ch] text-[clamp(38px,7vw,86px)] font-semibold leading-[0.98] tracking-tight text-white">
           {heading[0]}
           <br />
           <em className="not-italic" style={{ color: accent }}>
             {heading[1]}
           </em>
-        </h1>
+        </h2>
 
         {phase === "closed" && lede && (
           <p className="mt-6 max-w-[34ch] text-[15px] leading-relaxed text-white/70">{lede}</p>

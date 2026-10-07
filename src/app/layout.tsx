@@ -1,3 +1,4 @@
+import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import { Assistant, Frank_Ruhl_Libre, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
@@ -48,13 +49,55 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const TITLE = "Market Intel — מודיעין שוק ההון";
+const DESCRIPTION =
+  "פלטפורמת מחקר לשוק ההון האמריקאי: ניתוח פונדמנטלי מול חציון הסקטור, קריאה טכנית, מעקב מוסדי וחדשות מנותחות.";
+
+/**
+ * What a link to this site looks like somewhere else.
+ *
+ * The site had a title and a description and nothing beyond them, which
+ * meant a link pasted into WhatsApp, Telegram or Slack arrived as a bare
+ * URL: no name, no sentence, no picture. For a research site that is not a
+ * cosmetic loss. The entire use of the thing is to find something worth
+ * showing another person and send it to them, and the moment it is sent it
+ * stopped looking like a finding and started looking like a stray address.
+ *
+ * `metadataBase` is what makes the rest work: Open Graph consumers drop a
+ * relative image outright, and without a base every card here would have
+ * had one. It is resolved from the environment rather than hard-coded —
+ * see lib/site.ts for the order and why the production host beats the
+ * per-deployment one.
+ *
+ * The card image itself is generated, not drawn. `opengraph-image.tsx`
+ * beside this file renders it at build time, and the company route has its
+ * own carrying that company's name and colour. No design tool, no asset to
+ * keep in sync with the palette, and nothing to pay for.
+ *
+ * `robots` says yes deliberately. This is not a commercial product — the
+ * Finnhub licence sees to that — but it is also not private, and a
+ * research page that cannot be found is a research page nobody reads.
+ */
 export const metadata: Metadata = {
-  title: {
-    default: "Market Intel — מודיעין שוק ההון",
-    template: "%s · Market Intel",
+  metadataBase: new URL(siteUrl()),
+  title: { default: TITLE, template: "%s · Market Intel" },
+  description: DESCRIPTION,
+  applicationName: "Market Intel",
+  openGraph: {
+    type: "website",
+    siteName: "Market Intel",
+    locale: "he_IL",
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/",
   },
-  description:
-    "פלטפורמת מחקר לשוק ההון האמריקאי: ניתוח פונדמנטלי מול חציון הסקטור, קריאה טכנית, מעקב מוסדי וחדשות מנותחות.",
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({

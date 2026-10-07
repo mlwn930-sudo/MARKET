@@ -72,9 +72,25 @@ export async function generateMetadata({
 }) {
   const { ticker } = await params;
   const symbol = decodeURIComponent(ticker).toUpperCase();
+  const title = `${symbol} — ניתוח מלא`;
+  const description = `ניתוח פונדמנטלי, טכני ואיכות הון של ${symbol}, מול חציון הסקטור ועם מחיר חי.`;
+  /* The Open Graph block has to be stated here and not inherited. Next
+     merges metadata by key, so a page that sets only `title` keeps the
+     layout's `openGraph.title` — which meant every company link shared
+     anywhere arrived carrying the site's name instead of the company's,
+     with the right picture underneath it. The one thing a reader needs
+     from a pasted URL is which company it is about. */
   return {
-    title: `${symbol} — ניתוח מלא`,
-    description: `ניתוח פונדמנטלי, טכני ואיכות הון של ${symbol}, מול חציון הסקטור ועם מחיר חי.`,
+    title,
+    description,
+    openGraph: {
+      type: "article",
+      title,
+      description,
+      url: `/company/${symbol}`,
+    },
+    twitter: { card: "summary_large_image", title, description },
+    alternates: { canonical: `/company/${symbol}` },
   };
 }
 

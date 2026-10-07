@@ -99,7 +99,12 @@ export function SectionHeader({
           (size === "sm" ? (
             <h3 className="subtitle">{title}</h3>
           ) : (
-            <h2 className="title">{title}</h2>
+            /* Same cause as the section below: `RouteTransition` hands
+               every `.title` to GSAP from the root layout, which sets a
+               transform on an element React has not hydrated yet. */
+            <h2 className="title" suppressHydrationWarning>
+              {title}
+            </h2>
           ))}
         {description && (
           <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink-muted">
@@ -144,9 +149,20 @@ export function Section({
   className?: string;
 }) {
   return (
+    /* Written to before React has hydrated it. `ScrollReveal` runs from
+       the root layout and marks sections with `data-revealed`, while the
+       Suspense boundary holding this one is still pending — so React
+       arrives to find attributes it did not render and reports a mismatch
+       it will not repair. Nothing is broken; the mark is the feature, and
+       the CSS that animates a section entering keys off it. But every
+       company page was opening its console with a wall of this, which is
+       exactly how a developer learns to stop reading the console.
+       Suppressed narrowly, on the one element known to be written from
+       outside React. */
     <section
       id={id}
       className={`${tight ? "gap-section-tight" : "gap-section"} ${className}`}
+      suppressHydrationWarning
     >
       {(eyebrow || title) && (
         <div className="gap-head">

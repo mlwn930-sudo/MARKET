@@ -11,6 +11,57 @@ import {
 } from "@/lib/news-shape";
 
 /**
+ * Stories whose publisher will not hand the page to a server.
+ *
+ * The analyser fetches the article text before it reads anything, so a
+ * paywall, a bot wall or a robots rule ends the attempt with a 422 and a
+ * sentence saying so. That is correct behaviour and it was being repeated
+ * on every single visit: the feed queues its first few unread stories
+ * automatically, the same blocked URLs sat at the top of it every time,
+ * and each page load spent eight round trips re-discovering the same
+ * answer — while the browser logged each one as a failed request, which is
+ * how a console fills with red lines that mean nothing.
+ *
+ * Kept for the session rather than forever. A paywall is a decision
+ * somebody can reverse, and a reader who opens the site tomorrow should
+ * get one more try rather than inheriting a permanent verdict.
+ *
+ * In memory AND in sessionStorage: the Set survives a client navigation
+ * between feed pages, and the storage survives a reload. Every access is
+ * wrapped, because a private window refuses the read outright and a
+ * feature this small must not be able to break the component it is in.
+ */
+const UNREACHABLE = new Set(["blocked", "not-found", "unreachable", "too-short"]);
+const STORE = "market-intel:unreachable:v1";
+const seen = new Set<string>();
+
+function isUnreachable(url: string): boolean {
+  if (seen.has(url)) return true;
+  try {
+    const raw = window.sessionStorage.getItem(STORE);
+    if (!raw) return false;
+    const list = JSON.parse(raw) as string[];
+    for (const item of list) seen.add(item);
+    return seen.has(url);
+  } catch {
+    return false;
+  }
+}
+
+function rememberUnreachable(url: string): void {
+  seen.add(url);
+  try {
+    /* Capped. A reader who leaves the feed open all day should not grow an
+       unbounded list in storage, and the oldest entries are the ones least
+       likely to still be on the page. */
+    const list = [...seen].slice(-200);
+    window.sessionStorage.setItem(STORE, JSON.stringify(list));
+  } catch {
+    /* Not remembering across a reload is survivable. Throwing is not. */
+  }
+}
+
+/**
  * Read this story now.
  *
  * The scheduled job analyses the feed every cycle and will reach this story
@@ -56,6 +107,7 @@ export function AnalyzeArticleButton({
   const [analysis, setAnalysis] = useState<ArticleSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [blocked, setBlocked] = useState(() => isUnreachable(url));
 
   /** Guards the queued call: a card that scrolled out of the list, or one
    *  the reader pressed first, must not fire a second request. */
@@ -77,6 +129,16 @@ export function AnalyzeArticleButton({
       const payload = await res.json();
 
       if (!res.ok) {
+        /* A publisher that will not hand the page to a server will not
+           hand it over on the next page load either, so the answer is
+           remembered and the queue stops asking. Without this, every visit
+           to the feed re-fired the same doomed requests at the same
+           paywalls — a round trip each, a red line in the console each,
+           and the same Hebrew sentence at the end of it. */
+        if (UNREACHABLE.has(String(payload?.reason))) {
+          rememberUnreachable(url);
+          setBlocked(true);
+        }
         setError(payload?.error ?? "הניתוח נכשל.");
         return;
       }
@@ -98,11 +160,13 @@ export function AnalyzeArticleButton({
    * the scheduled news job shares.
    */
   useEffect(() => {
-    if (!auto || started.current) return;
+    /* A story this session has already found unreachable keeps its button
+       — the reader may still want to try — but the queue leaves it alone. */
+    if (!auto || started.current || blocked) return;
 
     const timer = setTimeout(() => analyse(), 600 + order * 2_500);
     return () => clearTimeout(timer);
-  }, [auto, order, analyse]);
+  }, [auto, order, analyse, blocked]);
 
   if (analysis) {
     const verdict = analysis.catalystKind

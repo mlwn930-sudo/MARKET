@@ -670,6 +670,27 @@ body:not(:has(.gta-cover)) .research-context a,
 body:not(:has(.gta-cover)) .explore-groups a span {
   color: #7FA5FF;
 }
+/* The rest of them, found by sweeping every page for text still computing
+   to rgb(40, 85, 245). Each of these sets the brand blue as a word
+   somewhere — an active tab, a disclosure's summary, a link inside the
+   signal canvas — and each was reading at 3.2:1. The rule in CLAUDE.md is
+   already explicit: the blue is enough for a border and not for a word,
+   and what gets read is the lighter tint. These are the places that had
+   not been told. */
+body:not(:has(.gta-cover)) .primary-destinations a[aria-current],
+body:not(:has(.gta-cover)) .primary-destinations a:hover,
+body:not(:has(.gta-cover)) .financial-subnav a[aria-current],
+body:not(:has(.gta-cover)) .financial-subnav a:hover,
+body:not(:has(.gta-cover)) .studio-mobile-tabs a[aria-current],
+body:not(:has(.gta-cover)) .explore-groups h3,
+body:not(:has(.gta-cover)) .explore-groups a:hover,
+body:not(:has(.gta-cover)) .signal-tabs button[aria-pressed="true"],
+body:not(:has(.gta-cover)) .signal-link,
+body:not(:has(.gta-cover)) .depth-disclosure > summary,
+body:not(:has(.gta-cover)) .macro-pocket > a,
+body:not(:has(.gta-cover)) .score-ring {
+  color: #7FA5FF;
+}
 body:not(:has(.gta-cover)) .sector-ribbon > span,
 body:not(:has(.gta-cover)) .source-meta,
 body:not(:has(.gta-cover)) .signal-source {
