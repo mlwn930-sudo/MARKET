@@ -809,3 +809,18 @@
     color: var(--color-ink-ghost);
   }
 }
+
+@layer components {
+  /* The measurement that argues against the feature it sits inside. Gold,
+     which is this site's tone for a caveat that changes how a number
+     should be read. */
+  .setup-measured {
+    margin-top: 10px;
+    border-inline-start: 2px solid var(--color-event);
+    padding-inline-start: 12px;
+    max-inline-size: 720px;
+    font-size: 11.5px;
+    line-height: 1.75;
+    color: var(--color-ink-muted);
+  }
+}

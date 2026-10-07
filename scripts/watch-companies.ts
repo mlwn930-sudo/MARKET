@@ -359,7 +359,14 @@ async function main() {
         grade: null,
         relevance: rated.level,
         relevanceWhy:
-          `${setup.convergence} משפחות נמדדות נכונות בו-זמנית (${setup.families.join(", ")})` +
+          /* The count explains why the mail was sent, and it is not
+             allowed to explain why it should be believed. Measured over
+             17,566 observations, a three-family convergence is followed by
+             a higher price slightly less often than a random bar — so it
+             is stated as a reason for the message to exist, and the tier
+             below it is earned by the base rates instead. */
+          `${setup.convergence} משפחות נכונות בו-זמנית (${setup.families.join(", ")}) — ` +
+          `הסיבה שהמייל נשלח, לא סיבה להאמין לו` +
           (rated.why ? ` · ${rated.why}` : ""),
         at: stamp,
         href: `/company/${ticker}`,

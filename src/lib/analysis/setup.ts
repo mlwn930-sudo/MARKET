@@ -92,10 +92,48 @@ export type SetupRead = {
   caveats: string[];
 };
 
-/** Below this many independent families, what is on the chart is a fact
- *  rather than a situation. Three is the point where a reader looking at
- *  it would find more than one thing to say. */
+/**
+ * Below this many independent families, what is on the chart is a fact
+ * rather than a situation.
+ *
+ * THREE IS AN EDITORIAL THRESHOLD AND NOT A PREDICTIVE ONE, and that
+ * sentence is the result of measuring it rather than a hedge written
+ * before anybody did. `scripts/measure-convergence.ts` walked 41 names
+ * over ten years — 17,566 observations, every fifth bar, four families —
+ * and asked whether a convergence was followed by anything:
+ *
+ *   1 family    +1.9pp against the baseline
+ *   2 families  +0.4pp
+ *   3 families  -0.4pp
+ *   4 families  +0.1pp
+ *
+ * Nothing. A three-family convergence is followed by a higher price
+ * slightly LESS often than a random bar in the same window. The number was
+ * picked because three felt like the point where a reader would find more
+ * than one thing to say, and as a forecast it is worth exactly what that
+ * description suggests.
+ *
+ * It is kept anyway, because filtering was always its job. Its purpose is
+ * to stop mailing somebody a single true fact about a chart, and it does
+ * that. What changed is what the site is allowed to imply: the count
+ * measures how much there is to look at, the individual conditions carry
+ * whatever information exists, and `convergenceCaveat` travels in the data
+ * so no panel and no email can print the count without the finding that it
+ * predicts nothing.
+ *
+ * The alternative was to try thresholds until one looked good. That is
+ * p-hacking, and a site built on printing the unflattering number does not
+ * get to make an exception for its own.
+ */
 const WORTH_WATCHING = 3;
+
+/** Ships inside every read, because a count without this sentence is a
+ *  claim the measurement does not support. */
+export const CONVERGENCE_CAVEAT =
+  "מספר המשפחות הוא מדד לכמה יש להסתכל עליו, לא תחזית. נמדד על 41 ניירות " +
+  "ו-17,566 תצפיות: התכנסות של שלוש משפחות ומעלה לוותה בעלייה ב-57.6% " +
+  "מהמקרים מול 57.9% ליום אקראי — הפרש של 0.3 נקודות לרעה. מה שנושא מידע, " +
+  "אם בכלל, הוא שיעור הבסיס של כל תנאי בנפרד.";
 
 /** How close to a level counts as being at it. The same figure the
  *  watchlist agent uses, which is the point — two thresholds for one idea
@@ -372,6 +410,8 @@ export function readSetup(
     );
   }
   caveats.push(...tape.caveats);
+  /* First, because it is the one a reader of the count most needs. */
+  caveats.unshift(CONVERGENCE_CAVEAT);
 
   const all = [...observations, ...tension];
   observations.sort((a, b) => Number(Boolean(b.record)) - Number(Boolean(a.record)));

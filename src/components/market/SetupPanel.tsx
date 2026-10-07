@@ -1,3 +1,4 @@
+import { CONVERGENCE_CAVEAT } from "@/lib/analysis/setup";
 import type { Observation, SetupRead } from "@/lib/analysis/setup";
 
 /**
@@ -110,6 +111,17 @@ export function SetupPanel({ setup }: { setup: SetupRead | null }) {
               {setup.asOf}
             </span>
             . זו ספירה של מה שנכון עכשיו, לא ציון ולא המלצה.
+          </p>
+
+          {/* The count, measured against its own claim.
+
+              The threshold was asserted and then counted, and the count
+              says it predicts nothing. Printing the number without this
+              would be the site doing to itself exactly what it refuses to
+              do anywhere else — and the measurement that embarrasses the
+              feature is the one most worth showing. */}
+          <p className="setup-measured">
+            {CONVERGENCE_CAVEAT}
           </p>
 
           {setup.observations.length > 0 && (
