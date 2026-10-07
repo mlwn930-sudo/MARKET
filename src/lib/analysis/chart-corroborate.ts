@@ -2,6 +2,8 @@ import { detectTickers } from "@/lib/company-names";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { readLevels } from "@/lib/metrics/levels";
 import { readTape, type TapeRead } from "@/lib/metrics/tape";
+import { readSetup, type SetupRead } from "@/lib/analysis/setup";
+import { rankFor } from "@/lib/metrics/rank-store";
 import type { ChartRead } from "./chart-reader";
 import type { BaseRateRead } from "@/lib/metrics/base-rates";
 import { baseRatesFor } from "@/lib/metrics/base-rate-store";
@@ -88,6 +90,22 @@ export type Corroboration = {
    * than a claim about who was trading.
    */
   tape: TapeRead | null;
+  /**
+   * The convergence read — how many independent measured families are
+   * true on this instrument at once, and where they disagree.
+   *
+   * The reader could already say what the picture showed, test its levels
+   * against real candles, and quote a base rate for each condition it
+   * named. What it could not do is the thing a person actually wants from
+   * a chart: put those together and say whether anything is converging.
+   * Four panels each reporting one true thing leaves that work to the
+   * reader, and that work is what the site exists to do.
+   *
+   * The same engine the watchlist agent uses, deliberately. A setup
+   * described one way in an email and another way on the page would be
+   * two opinions with no way to tell which one is the site's.
+   */
+  setup: SetupRead | null;
 };
 
 /* Two readings of the same level will never be identical: one is measured
@@ -134,6 +152,10 @@ export async function corroborate(
      research universe simply has none, and the renderer says so rather
      than measuring whatever happens to be here. */
   const baseRates = await baseRatesFor(ticker).catch(() => null);
+  /* The universe rank, which is one of the five families the setup read
+     counts and the only one that cannot be computed from this
+     instrument alone. */
+  const rank = await rankFor(ticker).catch(() => null);
 
   const levels: LevelCheck[] = [];
   const usedReal = new Set<number>();
@@ -208,5 +230,6 @@ export async function corroborate(
        ten years, rebuilt nightly — which is why the two come from
        different places. */
     tape: readTape(history.candles),
+    setup: readSetup(ticker, history.candles, baseRates, rank),
   };
 }

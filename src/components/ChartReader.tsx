@@ -10,6 +10,7 @@ import type {
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 import { ChartScenarios } from "@/components/market/ChartScenarios";
 import { TapePanel } from "@/components/market/TapePanel";
+import { SetupPanel } from "@/components/market/SetupPanel";
 
 /**
  * Upload a chart, get it read back.
@@ -435,6 +436,11 @@ function ChartReadView({
           </div>
         </section>
       )}
+
+      {/* First, because it is the summary the panels below are the
+          evidence for — and a summary printed after its evidence is a
+          footnote. */}
+      {checked && <SetupPanel setup={checked.setup} />}
 
       {checked && <Corroborated checked={checked} />}
 

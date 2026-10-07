@@ -22,6 +22,9 @@ import { ExtendedHoursStrip } from "@/components/ExtendedHoursStrip";
 import { readLevels, readFlow } from "@/lib/metrics/levels";
 import { readTape } from "@/lib/metrics/tape";
 import { TapePanel } from "@/components/market/TapePanel";
+import { SetupPanel } from "@/components/market/SetupPanel";
+import { readSetup } from "@/lib/analysis/setup";
+import { rankFor } from "@/lib/metrics/rank-store";
 import { getExtendedHours } from "@/lib/sources/extended-hours";
 import { CapitalPanel } from "@/components/CapitalPanel";
 import { RevenueChart } from "@/components/RevenueChart";
@@ -251,7 +254,7 @@ export default async function CompanyPage({
   /* Why it moved today. Deterministic: the index, the sector and the
      coverage are all figures the site already holds, and the panel says
      so rather than picking a headline and calling it a cause. */
-  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote, news, baseRates, calendar] =
+  const [benchmarkToday, sectorViews, surprises, analystViews, fallbackQuote, news, baseRates, rank, calendar] =
     await Promise.all([
       getFallbackQuote("^GSPC").catch(() => null),
       getSectorViews().catch(() => []),
@@ -277,6 +280,9 @@ export default async function CompanyPage({
       /* A file read, not a measurement. Ten years of candles for the whole
          universe is a nightly job; see scripts/build-base-rates.ts. */
       baseRatesFor(ticker).catch(() => null),
+      /* One of the five families the setup read counts, and the only one
+         that cannot be computed from this instrument alone. */
+      rankFor(ticker).catch(() => null),
       /* The next scheduled report. One request for the whole market,
          cached six hours upstream, so asking here costs effectively
          nothing — and the tape panel needs it: a quiet bar eight sessions
@@ -290,6 +296,13 @@ export default async function CompanyPage({
      removed; market holidays are not, so this can run a day or two long
      across Thanksgiving. Close enough to be useful and stated as sessions
      rather than as a date arithmetic nobody checked. */
+  /* The convergence read, computed once and rendered above the panels it
+     summarises. Null when there are no candles — the page still works,
+     it simply has nothing to converge. */
+  const setup = history
+    ? readSetup(ticker, history.candles, baseRates, rank)
+    : null;
+
   const nextReport = calendar?.date ?? null;
   const sessionsToReport = (() => {
     if (!nextReport) return null;
@@ -828,6 +841,15 @@ export default async function CompanyPage({
       </Section>
 
       <LevelsPanel levels={priceLevels} flow={flow} />
+
+      {/* What is converging, before the panels that are its evidence.
+          The company page had the same problem the chart reader did: six
+          correct panels and nobody doing the arithmetic across them. */}
+      {setup && (
+        <Section eyebrow="מה מתכנס">
+          <SetupPanel setup={setup} />
+        </Section>
+      )}
 
       {/* The volume, ranked. `LevelsPanel` above already reports the flow —
           what share of the window's shares traded on up days, how many
