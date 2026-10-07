@@ -28,6 +28,11 @@ import { createHash } from "node:crypto";
 import { config } from "dotenv";
 import { approvedWithWatchlists, alertsConfigured } from "../src/lib/alerts/subscribers";
 import { mailConfigured, sendMail } from "../src/lib/alerts/mailer";
+import {
+  RELEVANCE_LABELS,
+  RELEVANCE_ORDER,
+  type Relevance,
+} from "../src/lib/alerts/relevance";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 config({ path: resolve(ROOT, ".env.local"), quiet: true });
@@ -43,13 +48,23 @@ type Finding = {
     | "event"
     | "story"
     | "opportunity"
-    /* From the per-company agent: a thesis that moved, and a date coming. */
+    /* From the per-company agent: a thesis that moved, a date coming, a
+       level being tested, the last session read, and a story read through
+       the three lenses before it is sent. */
     | "thesis"
-    | "catalyst";
+    | "catalyst"
+    | "level"
+    | "tape"
+    | "news";
   ticker: string | null;
   headline: string;
   detail: string;
   weight: number;
+  /** How much this is worth the reader looking at, and why. Absent on the
+   *  market scan findings, which have not been through the tiering yet —
+   *  they default to the middle rather than claiming a rank. */
+  relevance?: Relevance | null;
+  relevanceWhy?: string | null;
   href: string | null;
   at: string;
 };
@@ -138,21 +153,56 @@ const site = () => {
 };
 
 function digest(findings: Finding[], unsubscribeUrl: string) {
-  const rows = findings
+  /* Sorted by what was measured to matter, not by raw weight. A digest
+     whose first line is the largest number rather than the most
+     informative one teaches the reader to scroll. */
+  const ordered = [...findings].sort(
+    (a, b) =>
+      RELEVANCE_ORDER[a.relevance ?? "medium"] -
+        RELEVANCE_ORDER[b.relevance ?? "medium"] || b.weight - a.weight,
+  );
+
+  /* The three tiers, coloured by what they are rather than by direction.
+     Gold is this site's reserved tone for "a thing with a date on it, and
+     a caveat"; the quiet tier is ghost ink, because an item that says of
+     itself that it added no information should not be competing for
+     attention with one that did. */
+  const TIER_STYLE: Record<string, string> = {
+    high: "background:rgba(214,168,74,.16);color:#D6A84A",
+    medium: "background:rgba(148,178,224,.12);color:#AEBFDC",
+    low: "background:rgba(148,178,224,.07);color:#7C8DAC",
+  };
+
+  const rows = ordered
     .map((f) => {
       const link = f.href?.startsWith("http") ? f.href : `${site()}${f.href ?? ""}`;
       const title = f.headline.replace(/</g, "&lt;");
-      const detail = f.detail.replace(/</g, "&lt;");
-      return `<tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.14)">
-<a href="${link}" style="display:block;font-size:15px;line-height:1.5;color:#EAF1FF;text-decoration:none;font-weight:500">${title}</a>
-<div style="margin-top:5px;font-size:13px;line-height:1.6;color:#AEBFDC">${detail}</div>
+      /* Paragraph breaks survive into the mail. The reading carries the
+         impact, the price reaction and the value chain as separate
+         thoughts, and running them together is how an analysis becomes a
+         wall. */
+      const detail = f.detail
+        .replace(/</g, "&lt;")
+        .replace(/\n\n/g, "<br><br>")
+        .replace(/\n/g, "<br>");
+      const tier = f.relevance ?? "medium";
+      const why = (f.relevanceWhy ?? "").replace(/</g, "&lt;");
+      return `<tr><td style="padding:16px 0;border-top:1px solid rgba(255,255,255,.14)">
+<span style="display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;${TIER_STYLE[tier]}">${RELEVANCE_LABELS[tier as keyof typeof RELEVANCE_LABELS]}</span>
+<a href="${link}" style="display:block;margin-top:8px;font-size:15px;line-height:1.5;color:#EAF1FF;text-decoration:none;font-weight:500">${title}</a>
+<div style="margin-top:6px;font-size:13px;line-height:1.7;color:#AEBFDC">${detail}</div>
+${why ? `<div style="margin-top:8px;font-size:11px;line-height:1.6;color:#7C8DAC">למה בדירוג הזה: ${why}</div>` : ""}
 </td></tr>`;
     })
     .join("");
 
-  const plain = findings
-    .map((f) => `• ${f.headline}\n  ${f.detail}`)
-    .join("\n\n");
+  const plain = ordered
+    .map(
+      (f) =>
+        `[${RELEVANCE_LABELS[(f.relevance ?? "medium") as keyof typeof RELEVANCE_LABELS]}] ${f.headline}\n${f.detail}` +
+        (f.relevanceWhy ? `\nלמה בדירוג הזה: ${f.relevanceWhy}` : ""),
+    )
+    .join("\n\n———\n\n");
 
   const count = findings.length;
   return {
@@ -189,7 +239,18 @@ async function main() {
   const perCompany: Finding[] = await readFile(COMPANIES, "utf8")
     .then((raw) => {
       const parsed = JSON.parse(raw) as {
-        findings?: { kind: string; ticker: string; headline: string; detail: string; weight: number; grade?: string | null; at: string; href: string }[];
+        findings?: {
+          kind: string;
+          ticker: string;
+          headline: string;
+          detail: string;
+          weight: number;
+          grade?: string | null;
+          relevance?: Relevance | null;
+          relevanceWhy?: string | null;
+          at: string;
+          href: string;
+        }[];
       };
       return (parsed.findings ?? []).map((f) => ({
         kind: f.kind as Finding["kind"],
@@ -205,6 +266,12 @@ async function main() {
            0-100 score, and merging the two without this would sort every
            thesis change above everything else by arithmetic accident. */
         weight: 2.5 + Math.min(f.weight, 100) / 100,
+        /* The tier the agent earned, carried rather than recomputed. It
+           was decided next to the measurement that justified it — the base
+           rate, the level's record, the model's reading of the story — and
+           none of that is available here. */
+        relevance: f.relevance ?? null,
+        relevanceWhy: f.relevanceWhy ?? null,
         href: f.href,
         at: f.at,
       }));

@@ -1,16 +1,18 @@
 {
-  "builtAt": "2026-10-07T19:58:05.316Z",
+  "builtAt": "2026-10-07T20:08:18.244Z",
   "followed": 2,
   "findings": [
     {
       "kind": "tape",
       "ticker": "NVDA",
       "company": "NVDA",
-      "headline": "NVDA: סגירה חיובית על מחזור ברבעון התחתון — עלייה בלי השתתפות",
-      "detail": "2026-10-06 · מחזור ×0.8 (אחוזון 8 בשנה האחרונה), טווח 1.9%, סגירה ב-7% מהטווח. בעשר שנים זה קרה 104 פעמים, ואחרי חודש המחיר היה גבוה יותר ב-74% מהן מול בסיס של 66% — כלומר התנאי לא הוסיף מידע.",
+      "headline": "NVDA: סגירה שלילית על מחזור ברבעון התחתון",
+      "detail": "2026-10-07 · מחזור ×0.6 (אחוזון 1 בשנה האחרונה), טווח 1.1%, סגירה ב-40% מהטווח. אין מדגם מספיק כדי לומר מה זה היה שווה כאן.",
       "weight": 2.3,
       "grade": null,
-      "at": "2026-10-07T19:58:05.316Z",
+      "relevance": "low",
+      "relevanceWhy": "מחזור באחוזון 1 — מהשקטים של השנה",
+      "at": "2026-10-07T20:08:18.244Z",
       "href": "/company/NVDA"
     },
     {
@@ -21,40 +23,48 @@
       "detail": "המחיר 204.01 מול הרמה 206.45 (+1.2%). 3 תפניות נפרדות בתוך הרצועה, האחרונה ב-2026-09-09. זו ספירה של מה שקרה, לא תחזית שהרמה תחזיק שוב.",
       "weight": 2.3,
       "grade": null,
-      "at": "2026-10-07T19:58:05.316Z",
+      "relevance": "medium",
+      "relevanceWhy": "הרמה החזיקה 14 פעמים ונשברה 1, והמחיר במרחק 1.2% — ספירה של מה שקרה, לא תחזית",
+      "at": "2026-10-07T20:08:18.244Z",
       "href": "/company/TTWO"
     },
     {
       "kind": "news",
       "ticker": "NVDA",
       "company": "NVDA",
-      "headline": "NVDA: In 4 Months, SpaceX Has Now Sought to Raise Over $150 Billion. Should Investors Be Worried or Is This a Flashing Buy Signal?",
-      "detail": "חברת SpaceX מבקשת לגייס עוד 40 מיליארד דולר חוב (10 מיליארד בהלוואות בנקאיות ו-30 מיליארד בחוב בדירוג השקעה) במטרה לרכוש שבבים מ-Nvidia עבור מרכזי הנתונים שלה. גיוס זה מצטרף לגיוסים קודמים ומביא את סך ההון שגיוסה החברה ל · Yahoo",
+      "headline": "NVDA: חברת SpaceX מבקשת לגייס עוד 40 מיליארד דולר חוב (10 מיליארד בהלוואות בנקאיות ו-30 מיליארד בחוב בדירוג השקעה) במטרה…",
+      "detail": "היקף ההוצאות העצום והחוב הגבוה של SpaceX מחייבים את החברה להציג צמיחה מהירה בהכנסות וב-EBITDA כדי להצדיק את ההתחייבויות, כאשר אנליסטים מזהירים מפני הצורך בהנפקת חוב עתידית בהיקפים ניכרים. במקביל, רכישת השבבים המתוכננת מהווה ביקושים ישירים עבור Nvidia.\n\nתגובת מחיר: הכתבה מציינת מניית SPCX ירדה ב-2.62% למחיר של 167.42 דולר, אך אינה מספקת ניתוח מעמיק של משמעות תגובת המחיר מעבר לנתונים היבשים.\n\nשרשרת הערך: Nvidia מרוויחה ישירות מהשימוש בחוב לרכישת שבבים למרכזי הנתונים של SpaceX. חברות ענן כמו Amazon מתחרות בתחום הנתונים והחשמל המחושב.\n\nהכותרת במקור: In 4 Months, SpaceX Has Now Sought to Raise Over $150 Billion. Should Investors Be Worried or Is This a Flashing Buy Signal? · Yahoo",
       "weight": 2.25,
       "grade": null,
-      "at": "2026-10-07T19:58:05.316Z",
+      "relevance": "high",
+      "relevanceWhy": "זרז עסקי בעל השפעה גבוהה לפי הקריאה · היקף הגיוסים וקצב ההוצאות חסר ה תקדים (Capex) משנים דרמטית את מבנה ההון והסיכון הפיננסי של החברה, תוך יצירת ביקושים אדירים לשבבי בינה מלאכותית.",
+      "at": "2026-10-07T20:08:18.244Z",
       "href": "/company/NVDA"
     },
     {
       "kind": "news",
       "ticker": "NVDA",
       "company": "NVDA",
-      "headline": "NVDA: Nvidia Stock: Capitalize On The AI Chipmaker's Moves With This Spread Strategy",
-      "detail": "Nvidia stock is on the radar and this options strategy offers a robust profit zone on the downside. · Yahoo",
+      "headline": "NVDA: הכתבה מציגה אסטרטגיית מסחר באופציות (spread strategy) עבור מניית NVDA מאת GAVIN McMASTER מ-Investor's Business Daily,…",
+      "detail": "הכתבה דנה באסטרטגיית מסחר נגזרת ואינה מציינת נתונים פונדמנטליים המשפיעים ישירות על העסק או התזרים של NVDA.\n\nתגובת מחיר: הכתבה אינה מציינת תגובת מחיר עבור האסטרטגיה או המניה מעבר להמלצות על אופציות.\n\nשרשרת הערך: לא מופיע בנתונים שיש לאתר.\n\nהכותרת במקור: Nvidia Stock: Capitalize On The AI Chipmaker's Moves With This Spread Strategy · Yahoo",
       "weight": 2.25,
       "grade": null,
-      "at": "2026-10-07T19:58:05.316Z",
+      "relevance": "low",
+      "relevanceWhy": "הקריאה מסווגת את הכתבה כרעש ולא כזרז עסקי · רעש, מכיוון שהיא עוסקת בניתוח טכני ואסטרטגיות אופציות קצרות טווח ואינה משנה את התזרים העתידי, את מבנה התחרות או את הרגולציה של החברה.",
+      "at": "2026-10-07T20:08:18.244Z",
       "href": "/company/NVDA"
     },
     {
       "kind": "news",
       "ticker": "TTWO",
       "company": "TTWO",
-      "headline": "TTWO: How GTA VI Fuels Multiyear Growth for Take-Two Interactive Software (TTWO)?",
-      "detail": "ClearBridge Investments, a global equity manager, recently published third-quarter 2026 commentary for its “Large Cap Growth Strategy”. The letter can be downloaded here. In the third quarter, leadership among large grow · Yahoo",
+      "headline": "TTWO: קרן ClearBridge Large Cap Growth Strategy צירפה את Take-Two Interactive Software (TTWO) כפוזיציה חדשה ברבעון השלישי של…",
+      "detail": "ההשקה הקרובה של Grand Theft Auto VI צפויה לתמוך במכירות יחידות, בהכנסות חוזרות ובעדכוני תחזיות רווח (earnings revisions) עבור מפתחת המשחקים, ובכך לייצר הזדמנות צמיחה רב-שנתית.\n\nתגובת מחיר: הכתבה מציינת שהמניה רשמה ירידה (YTD pullback) של 20.90% ונסחרה ב-202.53 דולר, אך אינה מדווחת על תגובת מחיר מיידית בעקבות כניסת הקרן.\n\nשרשרת הערך: מתחרות, מפתחות משחקים אחרות ופלטפורמות הפצה בשרשרת הערך של תעשיית הבידור האינטראקטיבי מושפעות מסביבת התחרות וההשקות הגדולות בסקטור.\n\nהכותרת במקור: How GTA VI Fuels Multiyear Growth for Take-Two Interactive Software (TTWO)? · Yahoo",
       "weight": 2.25,
       "grade": null,
-      "at": "2026-10-07T19:58:05.316Z",
+      "relevance": "medium",
+      "relevanceWhy": "זרז עסקי, בהשפעה בינונית או נמוכה · ההשקה הצפויה של המשחק GTA VI פועלת כזרז (catalyst) שכן היא משנה ישירות את התזרים העתידי של החברה באמצעות גידול במכירות ובהכנסות חוזרות.",
+      "at": "2026-10-07T20:08:18.244Z",
       "href": "/company/TTWO"
     }
   ]

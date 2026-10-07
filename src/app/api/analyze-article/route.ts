@@ -1,18 +1,12 @@
 import { NextResponse } from "next/server";
 import { unstable_cache } from "next/cache";
-import {
-  ARTICLE_FAILURE_TEXT,
-  ArticleFetchError,
-  getArticleText,
-} from "@/lib/sources/article";
-import { ARTICLE_SYSTEM } from "@/lib/analysis/prompts";
+import { ARTICLE_FAILURE_TEXT, ArticleFetchError } from "@/lib/sources/article";
+import { analyseArticle } from "@/lib/analysis/article";
 import {
   GEMINI_FAILURE_TEXT,
   GeminiError,
-  generateJson,
   hasGeminiKey,
 } from "@/lib/sources/gemini";
-import type { ArticleSummary } from "@/lib/news-store";
 
 /**
  * One story, read on demand.
@@ -35,40 +29,20 @@ import type { ArticleSummary } from "@/lib/news-store";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-type ModelAnswer = Partial<ArticleSummary> & { skip?: boolean };
+/* The reading itself moved to lib/analysis/article.ts, because the
+   watchlist agent needs the same one for a story it is about to put in
+   somebody's inbox — and an email whose reading differs from the card on
+   the site is two opinions with no way to tell which is the site's.
 
+   What stays here is the cache, which is where it belongs: this is the
+   only model call a visitor can trigger by clicking, so two readers
+   pressing the same headline must cost one call. The agent's calls are
+   budgeted by the queue that makes them and want no cache at all. */
 const analyse = (url: string, title: string) =>
-  unstable_cache(
-    async () => {
-      const text = await getArticleText(url);
-
-      const answer = await generateJson<ModelAnswer>({
-        system: ARTICLE_SYSTEM,
-        prompt: `כותרת: ${title}\n\n${text}`,
-        temperature: 0.2,
-        maxOutputTokens: 900,
-      });
-
-      if (answer.skip || !answer.summary || !answer.impact) return null;
-
-      const summary: ArticleSummary = {
-        summary: answer.summary,
-        impact: answer.impact,
-        catalyst: answer.catalyst,
-        catalystKind: answer.catalystKind,
-        reaction: answer.reaction,
-        chain: answer.chain,
-        tickers: Array.isArray(answer.tickers)
-          ? answer.tickers.filter((t) => typeof t === "string").slice(0, 6)
-          : [],
-        significance: answer.significance ?? "medium",
-        writtenAt: new Date().toISOString(),
-      };
-      return summary;
-    },
-    ["article-analysis", url],
-    { revalidate: 86_400, tags: ["news"] },
-  )();
+  unstable_cache(() => analyseArticle(url, title), ["article-analysis", url], {
+    revalidate: 86_400,
+    tags: ["news"],
+  })();
 
 export async function POST(request: Request) {
   if (!hasGeminiKey()) {

@@ -38,6 +38,8 @@ import { readTape, CHARACTER_LABELS } from "../src/lib/metrics/tape";
 import { getTickerCoverage } from "../src/lib/news-store";
 import { baseRatesFor } from "../src/lib/metrics/base-rate-store";
 import { MIN_SAMPLE } from "../src/lib/metrics/base-rates";
+import { analyseArticle } from "../src/lib/analysis/article";
+import { readRelevance, type Relevance } from "../src/lib/alerts/relevance";
 import type { Candle } from "../src/lib/sources/prices";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -57,6 +59,10 @@ export type CompanyFinding = {
    *  than restated — a change graded "possible" must not arrive in an
    *  inbox reading like a fact. */
   grade: string | null;
+  /** How much this is worth the reader looking at, and why. Earned from
+   *  what was measured — see lib/alerts/relevance.ts. */
+  relevance: Relevance;
+  relevanceWhy: string;
   at: string;
   href: string;
 };
@@ -120,6 +126,15 @@ async function candlesFor(symbol: string): Promise<Candle[] | null> {
   }
 }
 
+/** Cut at a word, never through one. A headline that ends mid-word
+ *  reads as a bug in the mail client rather than as an abbreviation. */
+function trim(text: string, limit: number): string {
+  if (text.length <= limit) return text;
+  const cut = text.slice(0, limit);
+  const space = cut.lastIndexOf(" ");
+  return (space > limit * 0.6 ? cut.slice(0, space) : cut).trimEnd() + "…";
+}
+
 /** How close price has to sit to a level before it is worth saying so. A
  *  level three per cent away is not being tested; it is just nearby. */
 const NEAR_LEVEL = 1.8;
@@ -173,6 +188,18 @@ async function main() {
       detail: why || change.oldView,
       weight: change.materiality,
       grade: change.claim.grade,
+      /* A thesis that stopped holding is the most consequential thing this
+         site can say about a company, and the grade the diff assigned is
+         the honest ceiling on it: a change graded "possible" must not
+         arrive wearing the badge of one graded "confirmed". */
+      relevance:
+        change.claim.grade === "confirmed" || change.claim.grade === "likely"
+          ? "high"
+          : "medium",
+      relevanceWhy:
+        change.claim.grade === "confirmed" || change.claim.grade === "likely"
+          ? `שינוי בתזה בדרגת טענה ${change.claim.grade === "confirmed" ? "מאושרת" : "סבירה"} · מהותיות ${Math.round(change.materiality)}`
+          : `שינוי בתזה, אבל דרגת הטענה היא ${change.claim.grade ?? "לא מדורגת"} — לא עובדה`,
       at: stamp,
       href: `/company/${change.ticker}`,
     });
@@ -193,6 +220,11 @@ async function main() {
          that already happened. */
       weight: 1.5,
       grade: null,
+      /* A date that has not happened is a thing to prepare for, never a
+         thing that happened. Reported, and not claiming a tier the
+         calendar cannot support. */
+      relevance: "medium",
+      relevanceWhy: "מועד מתוזמן שטרם התרחש — תזכורת, לא ממצא",
       at: stamp,
       href: `/company/${catalyst.ticker}`,
     });
@@ -238,6 +270,21 @@ async function main() {
            happening now; a thesis that stopped holding already happened. */
         weight: 2.0 + Math.min(level.touches, 6) / 10,
         grade: null,
+        /* What makes a level worth looking at is its record, and the
+           record is a count the reader can check: a band that turned the
+           price back eleven times out of twelve is a different object from
+           one that has been cut through as often as it has held. Sitting
+           ON it rather than near it is the other half. */
+        relevance:
+          level.held >= 4 && level.broke <= 1 && distance < 1
+            ? "high"
+            : level.held >= 3
+              ? "medium"
+              : "low",
+        relevanceWhy:
+          `הרמה החזיקה ${level.held} פעמים ונשברה ${level.broke}` +
+          `, והמחיר ${distance < 0.5 ? "עליה ממש" : `במרחק ${distance.toFixed(1)}%`}` +
+          ` — ספירה של מה שקרה, לא תחזית`,
         at: stamp,
         href: `/company/${ticker}`,
       });
@@ -274,6 +321,22 @@ async function main() {
           record,
         weight: 2.3,
         grade: null,
+        /* The tier is decided by the measurement, not by the label on the
+           bar. A climax that has fired nine times in ten years and moved
+           the rate fifteen points is worth waking up for; the same shape
+           with a flat record is worth knowing and nothing more, and the
+           reason says which it was. This is the one place in the digest
+           where the site's own base rates do the ranking. */
+        ...(() => {
+          const rated = readRelevance({
+            occurrences: condition?.occurrences ?? null,
+            sessions: rates?.sessions ?? null,
+            liftPp: outcome?.liftPp ?? null,
+            sampleSize: outcome?.n ?? null,
+            volumePercentile: bar.volumePercentile,
+          });
+          return { relevance: rated.level, relevanceWhy: rated.why };
+        })(),
         at: stamp,
         href: `/company/${ticker}`,
       });
@@ -292,20 +355,60 @@ async function main() {
       return Number.isFinite(published) && Date.now() - published < 36 * 3600 * 1000;
     });
     for (const article of recent.slice(0, 2)) {
+      /* THE STORY IS READ BEFORE IT IS SENT, NOT AFTER.
+       *
+       * An English headline and a domain is not an alert, it is a
+       * forwarded link — and it leaves the reader to do the one piece of
+       * work the site exists to do for them. So where the queue has not
+       * already read this article, the agent reads it now, in Hebrew,
+       * through the same three lenses and the same prompt the site uses.
+       * Two readings of one story that disagree would be worse than one
+       * late reading, which is why this calls the shared analyser rather
+       * than writing its own.
+       *
+       * It is allowed to fail. A paywall, a bot wall or a model that is
+       * out of quota leaves the story unread, and an unread story is not
+       * mailed at all — a headline with nothing under it is exactly what
+       * this block exists to stop sending. */
+      let reading = article.analysis ?? null;
+      if (!reading) {
+        reading = await analyseArticle(article.url, article.title).catch(
+          () => null,
+        );
+      }
+      if (!reading) {
+        console.log(`  ${ticker}: skipped an unreadable story`);
+        continue;
+      }
+
+      /* The relevance comes from that reading rather than from a weight
+         this script chose: `catalystKind` is the model saying whether the
+         story changes anything, and `significance` is how far it reaches.
+         Using them means the tier in the inbox and the badge on the site
+         cannot disagree about the same article. */
+      const rated = readRelevance({
+        catalystKind: reading.catalystKind ?? null,
+        significance: reading.significance ?? null,
+        catalystNote: reading.catalyst ?? null,
+      });
+
       findings.push({
         kind: "news",
         ticker,
         company: ticker,
-        headline: `${ticker}: ${article.title}`,
+        /* Hebrew leads. The original headline is kept after it, because a
+           reader following a link wants to recognise what they are
+           opening. */
+        headline: `${ticker}: ${trim(reading.summary, 120)}`,
         detail:
-          /* The model's reading where the queue has already produced one,
-             the publisher's own words otherwise. Never a summary this
-             script invented out of the headline. */
-          (article.analysis?.summary?.slice(0, 220) ||
-            article.excerpt?.slice(0, 220) ||
-            "") + ` · ${article.domain}`,
+          `${reading.impact}` +
+          (reading.reaction ? `\n\nתגובת מחיר: ${reading.reaction}` : "") +
+          (reading.chain ? `\n\nשרשרת הערך: ${reading.chain}` : "") +
+          `\n\nהכותרת במקור: ${article.title} · ${article.domain}`,
         weight: 2.25,
         grade: null,
+        relevance: rated.level,
+        relevanceWhy: rated.why,
         at: stamp,
         href: `/company/${ticker}`,
       });
