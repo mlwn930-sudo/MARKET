@@ -236,6 +236,25 @@ function isRetryable(status: number, body: string): boolean {
   );
 }
 
+/**
+ * Arabic characters, anywhere in the string.
+ *
+ * The ranges are Arabic proper, the supplements, and the presentation
+ * forms — the last of those matters because a model can emit a ligature
+ * from the FB50-FEFF block that renders identically to the letter and
+ * would slip past a check that only covered 0600-06FF.
+ *
+ * Hebrew (0590-05FF) is deliberately not in here, and neither is the
+ * Arabic-Indic digit range on its own: the site prints Latin digits, and a
+ * false positive would silently throw away a correct answer.
+ */
+const ARABIC =
+  /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
+
+export function containsArabic(text: string): boolean {
+  return ARABIC.test(text);
+}
+
 export async function generateText(options: GenerateOptions): Promise<string> {
   const key = apiKey();
 
@@ -291,6 +310,32 @@ export async function generateText(options: GenerateOptions): Promise<string> {
       // points at the model's behaviour instead of at the cap that caused
       // it. So prose keeps whatever arrived; JSON treats a cut answer as
       // the failure it is, and says which one it was.
+      /* Arabic in the Hebrew. The one correction applied to every
+         answer this client returns, because it is a failure of the model
+         rather than of any one caller.
+
+         Seen live on the site: "ירידות בשוקי الأسهم" on the daily brief,
+         "תשעה מתוך أحد עשר סקטורים" in a news reading, and — worse,
+         because it is invisible until read aloud — single Arabic letters
+         sitting inside Hebrew words: "היقף" for "היקף", "סולلריות" for
+         "סולאריות". Hebrew and Arabic are both right-to-left Semitic
+         scripts and a multilingual model's token space runs them
+         together, so this is a known and recurring drift rather than a
+         one-off.
+
+         REJECTED, NOT REPAIRED. Stripping the characters leaves "הי" and
+         "ף" welded into a word that no longer exists, which is worse than
+         the original because it no longer looks wrong to a scanner. There
+         is no safe substitution either: ق is not always ק. So an answer
+         carrying Arabic is treated as a failed generation and the retry
+         loop takes another swing at it, exactly as it would for a cut
+         response. A caller that runs out of retries gets the error and
+         shows its own absence, which is rule 9. */
+      if (text && containsArabic(text)) {
+        lastProblem = "model returned Arabic inside Hebrew text";
+        continue;
+      }
+
       if (text && !(options.json && truncated)) return text;
 
       // A thinking model that spent the whole budget reasoning returns a

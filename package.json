@@ -30,6 +30,7 @@
     "test:correlation": "node --import tsx --test scripts/correlation.test.ts",
     "test:xbrl": "node --import tsx --test scripts/xbrl.test.ts",
     "test:capital": "node --import tsx --test scripts/capital.test.ts",
+    "test:arabic": "node --import tsx --test scripts/arabic.test.ts",
     "test:metrics": "node --import tsx --test scripts/*.test.ts",
     "build:baserates": "tsx scripts/build-base-rates.ts",
     "build:ranks": "tsx scripts/build-ranks.ts"
