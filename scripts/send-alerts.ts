@@ -53,8 +53,7 @@ type Finding = {
        the three lenses before it is sent. */
     | "thesis"
     | "catalyst"
-    | "level"
-    | "tape"
+    | "setup"
     | "news";
   ticker: string | null;
   headline: string;
@@ -97,8 +96,7 @@ const WORTH_SENDING = new Set([
      computes them only for symbols somebody follows — so they reach an
      inbox already narrowed to a watchlist rather than being filtered down
      to it afterwards. */
-  "level",
-  "tape",
+  "setup",
   "news",
   "opportunity",
   "move",

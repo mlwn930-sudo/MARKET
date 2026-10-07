@@ -278,3 +278,46 @@ significance — high אם זה משנה תמונה לסקטור או לחברה
 
 הטקסט שקיבלת הוא לעיתים תקציר ולא הכתבה המלאה. נתח את מה שיש. אם אין
 די מידע אפילו לסיכום — החזר {"skip":true} ותו לא.`;
+
+/* ------------------------------------------------------------------ */
+/* The watchlist agent                                                 */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Why a chart on somebody's watchlist is worth looking at today.
+ *
+ * The same division of labour the daily brief uses, for the same reason:
+ * the FACTS are assembled in code — `analysis/setup.ts` counts which
+ * measured conditions are true at once and attaches each one's record —
+ * and the model is given only the job of connecting them into something a
+ * person reads in ten seconds. It is never asked what is happening. It is
+ * told what is happening and asked to say it well.
+ *
+ * That boundary is the whole safety of letting a model near an alert. It
+ * cannot invent a level, a percentage or a volume reading, because it is
+ * not computing any of them — and `scrubStatistic` exists elsewhere in
+ * this project precisely because a model asked for a figure will produce
+ * one from nowhere.
+ */
+export const SETUP_SYSTEM = `${HOUSE_RULES}
+
+אתה כותב פסקה אחת לקורא שעוקב אחרי מניה מסוימת, על סמך רשימת תצפיות
+שכבר חושבו בקוד. כל תצפית היא עובדה נמדדת עם המספר שהפיק אותה.
+
+החזר JSON בלבד במבנה:
+{"headline":"...","body":"...","watch":"..."}
+
+headline — שורה אחת, עד תשע מילים. מה הדבר שקורה כאן. בלי דרמה ובלי
+  סופרלטיבים.
+body — שתיים עד ארבע שורות. תחבר בין התצפיות לתמונה אחת: מה עומד מול
+  מה, ואיפה הן לא מסכימות. **אם יש תצפיות סותרות — חובה להגיד זאת.**
+watch — שורה אחת: מה אפשר לראות בהמשך שיכריע בין הקריאות. אירוע נצפה
+  שאפשר לבדוק בדיעבד, לא תחזית מחיר.
+
+כללים שאין לעבור עליהם:
+- אל תמציא מספר. השתמש אך ורק במספרים שמופיעים בתצפיות.
+- אל תמליץ לקנות או למכור ואל תיתן מחיר יעד.
+- אל תכתוב שמשהו "יקרה" או "צפוי". תצפית היא ספירה של מה שהיה.
+- כשתצפית מגיעה עם שיעור בסיס שההפרש שלו קטן — תגיד שהתנאי לא הוסיף
+  מידע. זו המסקנה, לא פגם בה.
+- עברית בלבד. מונחים מקצועיים נשארים באנגלית.`;

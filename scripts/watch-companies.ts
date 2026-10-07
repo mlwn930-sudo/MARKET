@@ -33,11 +33,13 @@ import {
   historyIsEmpty,
 } from "../src/lib/intel/history-store";
 import { approvedWithWatchlists } from "../src/lib/alerts/subscribers";
-import { readLevels } from "../src/lib/metrics/levels";
-import { readTape, CHARACTER_LABELS } from "../src/lib/metrics/tape";
+import { readSetup } from "../src/lib/analysis/setup";
+import { generateJson } from "../src/lib/sources/gemini";
+import { SETUP_SYSTEM } from "../src/lib/analysis/prompts";
+import { getRanks } from "../src/lib/metrics/rank-store";
+import type { SetupRead } from "../src/lib/analysis/setup";
 import { getTickerCoverage } from "../src/lib/news-store";
 import { baseRatesFor } from "../src/lib/metrics/base-rate-store";
-import { MIN_SAMPLE } from "../src/lib/metrics/base-rates";
 import { analyseArticle } from "../src/lib/analysis/article";
 import { readRelevance, type Relevance } from "../src/lib/alerts/relevance";
 import type { Candle } from "../src/lib/sources/prices";
@@ -48,7 +50,7 @@ config({ path: resolve(ROOT, ".env.local"), quiet: true });
 const OUT = resolve(ROOT, "content/watch/companies.json");
 
 export type CompanyFinding = {
-  kind: "thesis" | "catalyst" | "level" | "tape" | "news";
+  kind: "thesis" | "catalyst" | "setup" | "news";
   ticker: string;
   company: string;
   headline: string;
@@ -126,6 +128,18 @@ async function candlesFor(symbol: string): Promise<Candle[] | null> {
   }
 }
 
+/** The volume percentile behind whichever tape observation the setup
+ *  found, when it found one. Pulled out because the relevance tier wants
+ *  it and the observation carries it only as prose. */
+function tapeOf(setup: SetupRead): number | null {
+  const bar = [...setup.observations, ...setup.tension].find((o) =>
+    o.key.startsWith("tape-"),
+  );
+  if (!bar) return null;
+  const match = bar.detail.match(/אחוזון (d+)/);
+  return match ? Number(match[1]) / 100 : null;
+}
+
 /** Cut at a word, never through one. A headline that ends mid-word
  *  reads as a bug in the mail client rather than as an abbreviation. */
 function trim(text: string, limit: number): string {
@@ -135,13 +149,11 @@ function trim(text: string, limit: number): string {
   return (space > limit * 0.6 ? cut.slice(0, space) : cut).trimEnd() + "…";
 }
 
-/** How close price has to sit to a level before it is worth saying so. A
- *  level three per cent away is not being tested; it is just nearby. */
-const NEAR_LEVEL = 1.8;
-
-/** A band price has turned at twice is a coincidence worth noting on a
- *  chart and not worth an email. Three is the floor for a message. */
-const MIN_TOUCHES = 3;
+/* The thresholds that used to live here — how near a level counts as
+   being at it, and how many turns a band needs before it is worth a
+   message — moved into analysis/setup.ts with the logic that applies
+   them. Two copies of one idea is how a panel and an email start
+   describing different charts. */
 
 async function main() {
   const stamp = new Date().toISOString();
@@ -164,6 +176,11 @@ async function main() {
     await write({ builtAt: stamp, followed: 0, findings: [] });
     return;
   }
+
+  /* The nightly ranking, read once. A company page reads it per request;
+     this reads it per run, because every followed company wants the same
+     file. */
+  const ranks = await getRanks().catch(() => null);
 
   const findings: CompanyFinding[] = [];
 
@@ -247,100 +264,109 @@ async function main() {
       console.log(`  ${ticker}: no usable history`);
       continue;
     }
-    const close = candles[candles.length - 1].close;
 
-    /* ---- Support and resistance ---- */
-    for (const level of readLevels(candles, 8)) {
-      if (level.touches < MIN_TOUCHES) continue;
-      const distance = Math.abs(level.distancePercent);
-      if (distance > NEAR_LEVEL) continue;
+    /* ---- Is this chart doing anything, and what ----
 
-      const side = level.kind === "support" ? "תמיכה" : "התנגדות";
-      findings.push({
-        kind: "level",
-        ticker,
-        company: ticker,
-        headline: `${ticker} ${distance < 0.5 ? "על" : "קרובה ל"}${side} שהחזיקה ${level.held} מתוך ${level.held + level.broke} פעמים`,
-        detail:
-          `המחיר ${close.toFixed(2)} מול הרמה ${level.price.toFixed(2)} ` +
-          `(${level.distancePercent >= 0 ? "+" : ""}${level.distancePercent.toFixed(1)}%). ` +
-          `${level.touches} תפניות נפרדות בתוך הרצועה, האחרונה ב-${level.lastTouch}. ` +
-          `זו ספירה של מה שקרה, לא תחזית שהרמה תחזיק שוב.`,
-        /* Above a catalyst, below a thesis change. A level being tested is
-           happening now; a thesis that stopped holding already happened. */
-        weight: 2.0 + Math.min(level.touches, 6) / 10,
-        grade: null,
-        /* What makes a level worth looking at is its record, and the
-           record is a count the reader can check: a band that turned the
-           price back eleven times out of twelve is a different object from
-           one that has been cut through as often as it has held. Sitting
-           ON it rather than near it is the other half. */
-        relevance:
-          level.held >= 4 && level.broke <= 1 && distance < 1
-            ? "high"
-            : level.held >= 3
-              ? "medium"
-              : "low",
-        relevanceWhy:
-          `הרמה החזיקה ${level.held} פעמים ונשברה ${level.broke}` +
-          `, והמחיר ${distance < 0.5 ? "עליה ממש" : `במרחק ${distance.toFixed(1)}%`}` +
-          ` — ספירה של מה שקרה, לא תחזית`,
-        at: stamp,
-        href: `/company/${ticker}`,
-      });
-    }
+       One read instead of two loose triggers. The agent used to fire on
+       any session that was not ordinary and any price near any level,
+       which on a two-company watchlist is a handful of messages a week
+       about nothing in particular — and the honest description of that is
+       noise. The reader stops opening them, and the one that mattered
+       arrives into an inbox that has learned to ignore it.
 
-    /* ---- The tape ---- */
-    const tape = readTape(candles);
-    const bar = tape.latest;
-    if (bar && bar.character !== "quiet") {
-      /* What that kind of session has been followed by on this instrument.
-         A shape with no track record is still worth reporting; a shape
-         whose track record says it meant nothing must say that too. */
-      const rates = await baseRatesFor(ticker).catch(() => null);
-      const condition = rates?.conditions.find((c) =>
-        c.key === `${bar.character}-bar`,
+       `readSetup` counts how many INDEPENDENT measured families are true
+       at once — trend, level, volume, rank, contraction — and reports the
+       ones pointing the other way separately. Below three families this
+       stays silent, because what is on the chart is a fact rather than a
+       situation. */
+    const rates = await baseRatesFor(ticker).catch(() => null);
+    const setup = readSetup(ticker, candles, rates, ranks?.reads[ticker] ?? null);
+
+    if (setup.worthWatching) {
+      /* The facts are assembled in code; the model is asked only to join
+         them into something a person reads in ten seconds. It cannot
+         invent a level or a percentage because it is computing none of
+         them — the same division of labour the daily brief uses, and the
+         only arrangement under which a model belongs near an alert.
+
+         When it is unavailable the finding still goes out, carrying the
+         observations as a list. A reading nobody wrote is better than no
+         alert about a chart four measured conditions just converged on. */
+      const lines = [...setup.observations, ...setup.tension]
+        .map((o) => {
+          const record = o.record
+            ? ` · בעשר שנים ${o.record.occurrences} מופעים, חודש אחרי ${Math.round(o.record.upRate * 100)}% מול בסיס ${Math.round(o.record.baselineRate * 100)}%${Math.abs(o.record.liftPp) < 10 ? " — התנאי לא הוסיף מידע" : ""}`
+            : "";
+          return `- ${o.label} (${o.detail})${record}`;
+        })
+        .join("\n");
+
+      const written = await generateJson<{
+        headline?: string;
+        body?: string;
+        watch?: string;
+      }>({
+        system: SETUP_SYSTEM,
+        prompt: `נייר: ${ticker}\nנכון ל: ${setup.asOf}\nתצפיות שהתכנסו (${setup.convergence} משפחות: ${setup.families.join(", ")}):\n${lines}`,
+        temperature: 0.3,
+        maxOutputTokens: 700,
+      }).catch(() => null);
+
+      const measured = [...setup.observations, ...setup.tension].filter(
+        (o) => o.record !== null,
       );
-      const outcome = condition?.outcomes.find((o) => o.days === 21);
-      const record =
-        outcome && outcome.n >= MIN_SAMPLE
-          ? ` בעשר שנים זה קרה ${condition!.occurrences} פעמים, ואחרי חודש המחיר היה גבוה יותר ב-${Math.round(outcome.up * 100)}% מהן מול בסיס של ${Math.round(outcome.baselineUp * 100)}%${Math.abs(outcome.liftPp) < 10 ? " — כלומר התנאי לא הוסיף מידע." : "."}`
-          : " אין מדגם מספיק כדי לומר מה זה היה שווה כאן.";
+      const best = measured.sort(
+        (a, b) => Math.abs(b.record!.liftPp) - Math.abs(a.record!.liftPp),
+      )[0];
+
+      const rated = readRelevance({
+        occurrences: best?.record?.occurrences ?? null,
+        sessions: rates?.sessions ?? null,
+        liftPp: best?.record?.liftPp ?? null,
+        sampleSize: best?.record?.sample ?? null,
+        volumePercentile: tapeOf(setup) ?? null,
+      });
 
       findings.push({
-        kind: "tape",
+        kind: "setup",
         ticker,
         company: ticker,
-        headline: `${ticker}: ${CHARACTER_LABELS[bar.character]}`,
+        headline: `${ticker}: ${written?.headline ?? `${setup.convergence} תנאים נמדדים נכונים בו-זמנית`}`,
         detail:
-          `${bar.date} · מחזור ×${bar.volumeRatio.toFixed(1)}` +
-          (bar.volumePercentile !== null
-            ? ` (אחוזון ${Math.round(bar.volumePercentile * 100)} בשנה האחרונה)`
+          (written?.body ? `${written.body}\n\n` : "") +
+          lines +
+          (setup.tension.length
+            ? `\n\nמה שמושך לכיוון השני: ${setup.tension.map((o) => o.label).join(" · ")}`
             : "") +
-          `, טווח ${bar.rangePercent.toFixed(1)}%, סגירה ב-${Math.round(bar.closePosition * 100)}% מהטווח.` +
-          record,
-        weight: 2.3,
+          (written?.watch ? `\n\nמה אפשר לראות בהמשך: ${written.watch}` : ""),
+        weight: 2.4 + setup.convergence / 10,
         grade: null,
-        /* The tier is decided by the measurement, not by the label on the
-           bar. A climax that has fired nine times in ten years and moved
-           the rate fifteen points is worth waking up for; the same shape
-           with a flat record is worth knowing and nothing more, and the
-           reason says which it was. This is the one place in the digest
-           where the site's own base rates do the ranking. */
-        ...(() => {
-          const rated = readRelevance({
-            occurrences: condition?.occurrences ?? null,
-            sessions: rates?.sessions ?? null,
-            liftPp: outcome?.liftPp ?? null,
-            sampleSize: outcome?.n ?? null,
-            volumePercentile: bar.volumePercentile,
-          });
-          return { relevance: rated.level, relevanceWhy: rated.why };
-        })(),
+        relevance: rated.level,
+        relevanceWhy:
+          `${setup.convergence} משפחות נמדדות נכונות בו-זמנית (${setup.families.join(", ")})` +
+          (rated.why ? ` · ${rated.why}` : ""),
         at: stamp,
         href: `/company/${ticker}`,
       });
+    } else {
+      /* Two different silences, and they must not read the same. Below
+         the family threshold is "there is nothing here"; at the threshold
+         with no measured record is "there is something here and the site
+         has never counted what it was worth" — which is a gap in the
+         measurement, not a quiet chart. */
+      const measured = [...setup.observations, ...setup.tension].some(
+        (o) => o.record !== null,
+      );
+      console.log(
+        `  ${ticker}: ${setup.convergence} משפחות` +
+          (setup.convergence < 3
+            ? " — מתחת לסף ההתכנסות, לא נשלח"
+            : measured
+              ? " — לא נשלח"
+              : " — התכנסו, אבל אף תצפית לא נמדדה על הנייר הזה, לא נשלח"),
+      );
     }
+
 
     /* ---- The wire ----
 
