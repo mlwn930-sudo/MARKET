@@ -1,3 +1,4 @@
+import { MIN_SAMPLE, type BaseRateRead } from "@/lib/metrics/base-rates";
 import type { TechnicalRead } from "@/lib/metrics/technical";
 import { fmtPrice } from "@/lib/format";
 
@@ -57,9 +58,14 @@ function Check({
 export function TechnicalPanel({
   technical,
   currency = "$",
+  rates,
 }: {
   technical: TechnicalRead;
   currency?: string;
+  /** This instrument's measured base rates, so the template can be shown
+   *  beside its own track record. Optional: a symbol outside the research
+   *  universe has none and the line is simply omitted. */
+  rates?: BaseRateRead | null;
 }) {
   const { stage, template, vcp, volume, risk, relative, averages } = technical;
 
@@ -142,6 +148,60 @@ export function TechnicalPanel({
               />
             ))}
           </ul>
+          {/* THE TEMPLATE, BESIDE ITS OWN TRACK RECORD.
+
+              Every panel on this site reports a reading and then, one
+              section down, what that KIND of reading has been followed by.
+              The trend template was the exception: the site's own flagship
+              instrument, shown without ever being asked what it had been
+              worth on the name it was being applied to.
+
+              It is asked now, and the answers are frequently unflattering
+              — on several names the day the template COMPLETED was
+              followed by a worse outcome than a random day, and on NVDA
+              the day it BROKE did better than the day it completed. That
+              belongs here, next to the checklist, rather than buried in a
+              panel further down that a reader convinced by the checklist
+              will never reach. Rule 8: hand the reader the argument,
+              including the part that argues against the instrument. */}
+          {(() => {
+            const condition = rates?.conditions.find(
+              (c) => c.key === "template-complete",
+            );
+            const outcome = condition?.outcomes.find((o) => o.days === 21);
+            if (!condition || !outcome || outcome.n < MIN_SAMPLE) return null;
+            const quiet = Math.abs(outcome.liftPp) < 10;
+            return (
+              <p className="template-record">
+                בנייר הזה התבנית הושלמה{" "}
+                <span className="num">{condition.occurrences}</span> פעמים בעשר
+                שנים. חודש אחרי, המחיר היה גבוה יותר ב-
+                <span className="num">{Math.round(outcome.up * 100)}%</span> מהן,
+                מול בסיס של{" "}
+                <span className="num">
+                  {Math.round(outcome.baselineUp * 100)}%
+                </span>{" "}
+                ליום אקראי באותו חלון —{" "}
+                {quiet ? (
+                  <span className="template-record-verdict">
+                    כלומר התבנית לא הוסיפה מידע על הנייר הזה.
+                  </span>
+                ) : (
+                  <span
+                    className={
+                      outcome.liftPp > 0
+                        ? "template-record-verdict tape-up"
+                        : "template-record-verdict tape-down"
+                    }
+                  >
+                    הפרש של {outcome.liftPp > 0 ? "+" : ""}
+                    {Math.round(outcome.liftPp)} נקודות.
+                  </span>
+                )}
+              </p>
+            );
+          })()}
+
           {/* The caveat follows what the criterion actually measured.
 
               It used to say, flatly, that the last criterion was excess

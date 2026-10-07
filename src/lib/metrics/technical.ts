@@ -412,6 +412,94 @@ const MIN_ABOVE_LOW_PERCENT = 25;
 /** Within 25% of the 52-week high. Further than that is not a leader. */
 const MAX_BELOW_HIGH_PERCENT = 25;
 
+/**
+ * The seven price criteria of the trend template, at any bar.
+ *
+ * Extracted so the template can be measured against its own history.
+ * `trendTemplate` below reads the last bar and produces labelled checks
+ * for a page; this produces the same seven booleans at an arbitrary index,
+ * which is what `base-rates.ts` needs to ask the question the site has
+ * never asked itself: when this template passed, what happened next.
+ *
+ * ONE DEFINITION, AND THAT IS THE WHOLE POINT OF THE EXTRACTION. The
+ * obvious shortcut was to let the base-rate pass recompute the criteria
+ * from the moving averages it already holds. That is how a measurement
+ * and the thing it claims to measure drift apart — the panel would report
+ * "seven of seven" under one set of thresholds and the track record
+ * beside it would have been counted under another. The same reasoning the
+ * tape conditions are built on.
+ *
+ * The eighth criterion is absent here by necessity, not by choice: it is
+ * a rank against the universe on that date, and reconstructing the
+ * universe at every historical bar is a different and much larger job.
+ * Measurements built on this must say they cover seven of eight.
+ */
+export type TemplateFacts = {
+  close: number | null;
+  ma50: number | null;
+  ma150: number | null;
+  ma200: number | null;
+  /** The 200-day average a month earlier, for the slope test. */
+  ma200Month: number | null;
+  high52: number | null;
+  low52: number | null;
+};
+
+export function templateFactsAt(
+  candles: Candle[],
+  index: number,
+  ma50s: (number | null)[],
+  ma150s: (number | null)[],
+  ma200s: (number | null)[],
+): TemplateFacts {
+  const window = candles.slice(Math.max(0, index - 251), index + 1);
+  return {
+    close: candles[index]?.close ?? null,
+    ma50: ma50s[index] ?? null,
+    ma150: ma150s[index] ?? null,
+    ma200: ma200s[index] ?? null,
+    ma200Month: ma200s[Math.max(0, index - SLOPE_WINDOW)] ?? null,
+    high52: window.length ? Math.max(...window.map((c) => c.high)) : null,
+    low52: window.length ? Math.min(...window.map((c) => c.low)) : null,
+  };
+}
+
+/** How many of the seven passed, and how many could be evaluated at all.
+ *  A criterion whose inputs are missing counts as neither — it is not a
+ *  failure, and calling it one would mark every young listing as weak. */
+export function priceCriteriaPassed(f: TemplateFacts): {
+  passed: number;
+  evaluated: number;
+} {
+  const tests: (boolean | null)[] = [
+    f.close !== null && f.ma150 !== null && f.ma200 !== null
+      ? f.close > f.ma150 && f.close > f.ma200
+      : null,
+    f.ma150 !== null && f.ma200 !== null ? f.ma150 > f.ma200 : null,
+    f.ma200 !== null && f.ma200Month !== null && f.ma200Month > 0
+      ? f.ma200 > f.ma200Month
+      : null,
+    f.ma50 !== null && f.ma150 !== null && f.ma200 !== null
+      ? f.ma50 > f.ma150 && f.ma50 > f.ma200
+      : null,
+    f.close !== null && f.ma50 !== null ? f.close > f.ma50 : null,
+    f.close !== null && f.low52 !== null && f.low52 > 0
+      ? ((f.close - f.low52) / f.low52) * 100 >= MIN_ABOVE_LOW_PERCENT
+      : null,
+    f.close !== null && f.high52 !== null && f.high52 > 0
+      ? ((f.high52 - f.close) / f.high52) * 100 <= MAX_BELOW_HIGH_PERCENT
+      : null,
+  ];
+  return {
+    passed: tests.filter((t) => t === true).length,
+    evaluated: tests.filter((t) => t !== null).length,
+  };
+}
+
+/** How many price criteria the template holds. Seven; the eighth is the
+ *  universe rank, which history cannot reconstruct cheaply. */
+export const PRICE_CRITERIA = 7;
+
 export function trendTemplate(
   candles: Candle[],
   relativeStrength6m: number | null,
@@ -433,17 +521,22 @@ export function trendTemplate(
 
   const checks: TemplateCheck[] = [];
   const last = candles.length - 1;
-  const close = candles[last]?.close ?? null;
 
-  const ma50 = sma(candles, 50)[last];
-  const ma150 = sma(candles, 150)[last];
-  const ma200full = sma(candles, 200);
-  const ma200 = ma200full[last];
-  const ma200Month = ma200full[Math.max(0, last - SLOPE_WINDOW)];
-
-  const window = candles.slice(-252);
-  const high52 = window.length ? Math.max(...window.map((c) => c.high)) : null;
-  const low52 = window.length ? Math.min(...window.map((c) => c.low)) : null;
+  /* The facts come from the shared reader rather than being gathered
+     again here. That is where two copies of this actually drift: not on
+     `close > ma150`, which is hard to get wrong, but on the boundaries —
+     how long the 52-week window is, how far back the slope looks, whether
+     the window includes the current bar. One function owns those now, and
+     scripts/template-facts.test.ts asserts that the criteria below agree
+     with `priceCriteriaPassed` on every name in the universe. */
+  const facts = templateFactsAt(
+    candles,
+    last,
+    sma(candles, 50),
+    sma(candles, 150),
+    sma(candles, 200),
+  );
+  const { close, ma50, ma150, ma200, ma200Month, high52, low52 } = facts;
 
   const fmt = (n: number | null, digits = 2) =>
     n === null ? "—" : n.toFixed(digits);

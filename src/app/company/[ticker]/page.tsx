@@ -850,7 +850,7 @@ export default async function CompanyPage({
 
       {technical && (
         <Section eyebrow="ניתוח טכני">
-          <TechnicalPanel technical={technical} />
+          <TechnicalPanel technical={technical} rates={baseRates} />
         </Section>
       )}
 

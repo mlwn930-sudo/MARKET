@@ -35,6 +35,11 @@
 import type { Candle } from "@/lib/sources/prices";
 import { rsi, sma } from "./technical";
 import { readBar, type BarRead } from "./tape";
+import {
+  PRICE_CRITERIA,
+  priceCriteriaPassed,
+  templateFactsAt,
+} from "./technical";
 
 /* ------------------------------------------------------------------ */
 /* Shape                                                               */
@@ -142,6 +147,18 @@ type Series = {
   sma50: (number | null)[];
   sma200: (number | null)[];
   rsi14: (number | null)[];
+  /**
+   * How many of the trend template's seven price criteria held on each
+   * bar, from the same reader the panel uses.
+   *
+   * This is the site measuring its own instrument. Everything else in this
+   * file counts a condition somebody else wrote down — a moving-average
+   * cross, an RSI threshold, a volume multiple — and reports what followed.
+   * None of it asks the question a reader of THIS site would ask first:
+   * when this page said a stock met the template, what happened next.
+   */
+  template: { passed: number; evaluated: number }[];
+
   /**
    * Every bar read by `tape.ts`, computed once for the whole series.
    *
@@ -299,6 +316,54 @@ const CONDITIONS: Condition[] = [
       return bar != null && bar.effortZ >= 2 && bar.resultZ <= 0;
     },
   },
+  /* ---- The site measuring itself ----------------------------------- */
+  /*
+     Every other condition in this file was written down by somebody else
+     and this file reports what followed it. These two are the site's own
+     instrument turned on its own history, which is the question a reader
+     of THIS page would ask first and the one it has never answered: when
+     this site said a stock met the trend template, what happened next.
+
+     Measured as EVENTS, like everything else here. The day the template
+     completed, not every day it stayed complete — a stock that holds all
+     seven criteria for a year would otherwise contribute two hundred and
+     fifty observations of the same advance and report the trend it was
+     already in as though it had predicted it.
+
+     SEVEN OF EIGHT, AND THE LABEL SAYS SO. The eighth criterion is a rank
+     against the universe on that date, and reconstructing the universe at
+     every historical bar is a different and far larger job. What is
+     counted here is the seven that need only this instrument's own price.
+  */
+  {
+    key: "template-complete",
+    label: `היום שבו תבנית המגמה הושלמה (${PRICE_CRITERIA} מתוך ${PRICE_CRITERIA} קריטריוני המחיר)`,
+    at: (s, i) => {
+      if (i < 1) return false;
+      const now = s.template[i];
+      const prev = s.template[i - 1];
+      return (
+        now.evaluated === PRICE_CRITERIA &&
+        now.passed === PRICE_CRITERIA &&
+        prev.passed < PRICE_CRITERIA
+      );
+    },
+  },
+  {
+    key: "template-broken",
+    label: "היום שבו תבנית המגמה נשברה אחרי שהייתה שלמה",
+    at: (s, i) => {
+      if (i < 1) return false;
+      const now = s.template[i];
+      const prev = s.template[i - 1];
+      return (
+        prev.evaluated === PRICE_CRITERIA &&
+        prev.passed === PRICE_CRITERIA &&
+        now.passed < PRICE_CRITERIA
+      );
+    },
+  },
+
   {
     key: "breakout-on-volume",
     /* The one condition here that pairs volume with a price event, because
@@ -420,6 +485,18 @@ export function readBaseRates(
        name in the universe is the difference between a nightly job that
        finishes and one that does not. */
     bars: candles.map((_, i) => readBar(candles, i)),
+    /* The same three averages the template reads, computed once for the
+       series instead of once per bar — `sma` over ten years of candles,
+       2,500 times, is the difference between a nightly job that finishes
+       and one that does not. */
+    template: (() => {
+      const ma50 = sma(candles, 50);
+      const ma150 = sma(candles, 150);
+      const ma200 = sma(candles, 200);
+      return candles.map((_, i) =>
+        priceCriteriaPassed(templateFactsAt(candles, i, ma50, ma150, ma200)),
+      );
+    })(),
   };
 
   const last = candles.length - 1;
