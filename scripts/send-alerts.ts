@@ -90,11 +90,35 @@ function fingerprint(f: Finding): string {
     .slice(0, 16);
 }
 
-const site = () =>
-  (process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://market-intel.vercel.app").replace(
-    /\/$/,
-    "",
+/**
+ * Where the links in an alert email point.
+ *
+ * This fell back to a hard-coded "market-intel.vercel.app", which is a
+ * guess at a domain rather than a fact about one. The failure mode is
+ * quiet and total: if the deployment ever lives anywhere else, every link
+ * in every alert goes somewhere unrelated, and the only person who would
+ * find out is a reader clicking one.
+ *
+ * It still falls back, because an alert with imperfect links beats no
+ * alert when something actually moved — but it now says so on the way
+ * past, on every run, in the job log. A guess that announces itself is a
+ * guess somebody can fix.
+ */
+const site = () => {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configured) {
+    const withScheme = /^https?:\/\//i.test(configured)
+      ? configured
+      : `https://${configured}`;
+    return withScheme.replace(/\/+$/, "");
+  }
+  console.warn(
+    "::warning::NEXT_PUBLIC_SITE_URL is not set, so every link in this " +
+      "email points at a guessed domain. Add it under Settings > Secrets " +
+      "and variables > Actions.",
   );
+  return "https://market-intel.vercel.app";
+};
 
 function digest(findings: Finding[], unsubscribeUrl: string) {
   const rows = findings

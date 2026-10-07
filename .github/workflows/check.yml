@@ -1,0 +1,79 @@
+name: Check
+
+# The checks nobody was running.
+#
+# Three scheduled workflows refresh data, and not one of them ever ran a
+# test, a typecheck or a production build. Seventy-one tests existed and
+# executed only when somebody typed the command on a laptop, which is the
+# same class of problem as the scanner that went green for weeks without
+# writing a file: a thing that is supposed to be watching, and is not.
+#
+# THE BUILD IS THE POINT, NOT THE TESTS. A commit earlier in this project
+# shipped `node:fs` into the browser bundle and took sixteen of eighteen
+# routes to a 500, and its message drew the lesson explicitly: typecheck
+# and lint passing is not the same as the site working, and `next build`
+# catches it. Then nothing was set up to run `next build`. This is that.
+#
+# Cheap on purpose. The Actions allowance is a real constraint here — the
+# news workflow was cut from every twenty minutes for exactly that reason —
+# so this runs on pushes to main and on pull requests, not on a schedule,
+# which is a handful of runs a day at most.
+
+on:
+  push:
+    branches: [main]
+    # Nothing here reads content/, and the scheduled jobs commit to it
+    # every few hours. Without this, half the month's allowance would go on
+    # re-checking the same code because a news file changed.
+    paths-ignore:
+      - "content/**"
+      - "**/*.md"
+      - ".claude/**"
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Types
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      # Pure arithmetic over constructed fixtures: no network, no keys, no
+      # reason for any of it to be flaky.
+      - name: Tests
+        run: npm run test:metrics
+
+      # Last, because it is the slowest and because the three above explain
+      # a failure better than a build log does.
+      #
+      # The keys are passed where they exist. They are not required: every
+      # source in this project degrades to a stated absence rather than
+      # throwing, which is the behaviour that lets a fork build at all — and
+      # a build that only succeeds with secrets is a build nobody outside
+      # can verify.
+      - name: Production build
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+        run: npm run build
