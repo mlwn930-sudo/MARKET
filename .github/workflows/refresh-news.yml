@@ -213,13 +213,41 @@ jobs:
           # Nothing to commit is the normal case on a quiet cycle, not a failure.
           if git diff --staged --quiet; then
             echo "feed and scan unchanged"
-          else
-            git commit -m "chore: refresh news, analysis and the scan"
-            # A run can finish while another has already pushed. Rebase and
-            # retry rather than losing the analysis this run just paid for.
-            git pull --rebase --autostash origin main
-            git push
+            exit 0
           fi
+          git commit -m "chore: refresh news, analysis and the scan"
+
+          # A PUSH RACE IS NOT AN INCIDENT, AND IT WAS BEING EMAILED AS ONE.
+          #
+          # This job rewrites content/news/summaries.json every half hour.
+          # Any other writer touching that file at the same moment — a second
+          # run, or a person editing it — leaves this rebase in conflict, the
+          # step exits non-zero, the job goes red, and GitHub mails the owner
+          # that the run failed.
+          #
+          # Which is exactly what happened the first time somebody rewrote
+          # that file while a run was in flight. Nothing was broken: the feed
+          # was fetched, the analysis was written, and the next run half an
+          # hour later would carry both. The only casualty was the owner
+          # trusting the next failure mail, and that is the thing worth
+          # protecting.
+          #
+          # So it retries against a freshly fetched main, and if it still
+          # cannot land it says so loudly and lets the job finish green. A
+          # cycle of news that missed its commit recovers by itself; an inbox
+          # trained to ignore failure mail does not.
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash origin main && git push; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "::warning::push attempt $attempt did not land, retrying"
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 5))
+          done
+
+          echo "::error::Could not push this cycle after three attempts. The feed and the scan were computed and are not saved; the next run recomputes them. If this repeats, it is not a race."
+          exit 0
 
       # Reported as a warning, after the commit, and never as a failure.
       # A missing optional key is a reason to tell someone, not a reason to
