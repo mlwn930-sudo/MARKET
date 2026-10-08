@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-08T23:45:35.046Z",
+  "builtAt": "2026-10-08T23:58:32.609Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 0,
     "range": 12,
     "event": 0,
-    "story": 4
+    "story": 9
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "3.73% ביום — פי 3.4 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.425163939625943,
       "href": "/company/PEP",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "4.03% ביום — פי 2.7 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.726778789908292,
       "href": "/company/LOW",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "4.05% ביום — פי 2.5 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.506702063343584,
       "href": "/company/PM",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "move",
@@ -44,7 +44,7 @@
       "detail": "3.39% ביום — פי 2.5 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.4762908939981507,
       "href": "/company/HD",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "move",
@@ -53,16 +53,52 @@
       "detail": "2.61% ביום — פי 2.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.2517905943831695,
       "href": "/company/MCD",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "story",
-      "ticker": "PLTR",
-      "headline": "Palantir Looks Like a Consulting Company. Its Numbers Tell a Different Story.",
-      "detail": "פלנטיר מתמודדת עם הביקורת לפיה היא מתפקדת כחברת ייעוץ בשל שליחת מהנדסים ללקוחות, אך הנתונים הפיננסיים שלה מוכיחים מודל עסקי תוכנתי לחלוטין. ברבעון השני, ההכנסות צמחו ב-93% ל-1.94 מיליארד דול",
+      "ticker": "NVDA",
+      "headline": "Nvidia vs. Broadcom: Which AI Chip Stock Is the Better Buy for the Next 5 Years?",
+      "detail": "הכתבה משווה בין אנבידיה (Nvidia) לברודקום (Broadcom) כהשקעות בתחום שבבי הבינה המלאכותית לחמש השנים הקרובות. אנבידיה מציעה מעבדי GPU גמישים עם ארכיטקטורת Vera Rubin החדשה, בעוד ברודקום מתמקדת",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=0d56efe9debf9d0b56130102fa21be3e9bf10771c8e0a85eeef74111cdfa438b",
-      "at": "2026-10-08T17:35:00.000Z"
+      "href": "https://finnhub.io/api/news?id=4f5c0ed61e2f3840a5c91a48ce06e2edd7964c85b43aac1ba3bca4ca906b05bd",
+      "at": "2026-10-08T21:49:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "MSFT",
+      "headline": "The Stock Market Is Facing a \"Capex Pickle\"",
+      "detail": "האנליסט יואכים קלמן מזהיר שהשוק נקלע ל\"מלכודת השקעות הון\" (capex pickle) בתחום הבינה המלאכותית. מצד אחד, הגדלת השקעות הון על ידי חברות הענק (Hyperscalers) פוגעת בתזרז המזומנים החופשי שלהן ומ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=98a9053fab34bab90b94458a5c043cbf27984775e1fe168f407b31c567c3e8d5",
+      "at": "2026-10-08T20:40:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "MSFT",
+      "headline": "Worries About OpenAI’s Revenue Rattle the AI Trade",
+      "detail": "מניות הקשורות ל-AI יורדות בעקבות דיווח לפיו ההכנסות של OpenAI עשויות להיות נמוכות מהציפיות.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=3c90a8bab1030d74b68fddb7555bf42e58aad2043571e29e3dc08f99d0407ad8",
+      "at": "2026-10-08T20:11:10.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Sector Update: Tech Stocks Fall Late Afternoon",
+      "detail": "מניות הטכנולוגיה ירדו במסחר, כאשר מדד XLK ירד ב-2.1%, מדד XSD ירד ב-4.1%, ומדד הפילדלפיה סמיקונדקטור ירד ב-3.8%. הכתבה מדווחת גם על עיכוב אפשרי בהנפקה של Firmus Grid, מינויים באפל, חקירות פד",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=41cc899fae1c361b4d4d29d0aa19c406dce6c54fdf154e5304f99a33169c7ff6",
+      "at": "2026-10-08T19:51:42.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia vs. Broadcom: Which AI Chip Stock Is the Better Buy for the Next 5 Years?",
+      "detail": "הכתבה משווה בין אנבידיה (Nvidia) לברודקום (Broadcom) כהשקעות בתחום שבבי הבינה המלאכותית לחמש השנים הקרובות. אנבידיה מציעה מעבדי GPU גמישים עם ארכיטקטורת Vera Rubin החדשה, בעוד ברודקום מתמקדת",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=4f5c0ed61e2f3840a5c91a48ce06e2edd7964c85b43aac1ba3bca4ca906b05bd",
+      "at": "2026-10-08T21:49:00.000Z"
     },
     {
       "kind": "story",
@@ -72,6 +108,15 @@
       "weight": 2.2,
       "href": "https://finnhub.io/api/news?id=b4b0e598df4fb5295420cc95c0000cf9d356ddf1df4dce0bb60a7f1b0cbae46a",
       "at": "2026-10-08T09:28:09.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": null,
+      "headline": "Treasury yields are 'really, really high,' but can come down soon, Bessent's new adviser says",
+      "detail": "יועץ בכיר במשרד האוצר, דייוויד זרווס, אמר כי תשואות האג\"ח של ממשלת ארה\"ב גבוהות מאוד בסטנדרטים היסטוריים וצפויות לרדת בעתיד. דבריו נאמרו לאחר שתשואות האג\"ח ל-10 ו-30 שנה עלו לשיאים של 24 שני",
+      "weight": 2.2,
+      "href": "https://www.cnbc.com/2026/10/08/treasury-yields-david-zervos.html",
+      "at": "2026-10-08T19:38:14.000Z"
     },
     {
       "kind": "story",
@@ -98,7 +143,7 @@
       "detail": "2.71% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.184837139590753,
       "href": "/company/CB",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "move",
@@ -107,16 +152,7 @@
       "detail": "4.07% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.1808561661885633,
       "href": "/company/EBAY",
-      "at": "2026-10-08T23:45:35.046Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TEAM",
-      "headline": "TEAM בשיא של רבעון",
-      "detail": "הסגירה האחרונה 203.57 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TEAM",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
@@ -125,7 +161,16 @@
       "detail": "הסגירה האחרונה 198.78 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PLTR",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TEAM",
+      "headline": "TEAM בשיא של רבעון",
+      "detail": "הסגירה האחרונה 203.57 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TEAM",
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
@@ -134,7 +179,7 @@
       "detail": "הסגירה האחרונה 272.42 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ABBV",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
@@ -143,25 +188,7 @@
       "detail": "הסגירה האחרונה 415.41 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ISRG",
-      "at": "2026-10-08T23:45:35.046Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "BAC",
-      "headline": "BAC בשפל של רבעון",
-      "detail": "הסגירה האחרונה 53.61 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/BAC",
-      "at": "2026-10-08T23:45:35.046Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "MS",
-      "headline": "MS בשפל של רבעון",
-      "detail": "הסגירה האחרונה 187.44 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/MS",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
@@ -170,25 +197,25 @@
       "detail": "הסגירה האחרונה 882.59 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GS",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
-      "ticker": "VLO",
-      "headline": "VLO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 443.80 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "BAC",
+      "headline": "BAC בשפל של רבעון",
+      "detail": "הסגירה האחרונה 53.61 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/VLO",
-      "at": "2026-10-08T23:45:35.046Z"
+      "href": "/company/BAC",
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
-      "ticker": "MPC",
-      "headline": "MPC בשיא של רבעון",
-      "detail": "הסגירה האחרונה 463.34 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "MS",
+      "headline": "MS בשפל של רבעון",
+      "detail": "הסגירה האחרונה 187.44 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/MPC",
-      "at": "2026-10-08T23:45:35.046Z"
+      "href": "/company/MS",
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
@@ -197,7 +224,7 @@
       "detail": "הסגירה האחרונה 200.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PM",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
@@ -206,7 +233,25 @@
       "detail": "הסגירה האחרונה 281.60 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PSX",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "MPC",
+      "headline": "MPC בשיא של רבעון",
+      "detail": "הסגירה האחרונה 463.34 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/MPC",
+      "at": "2026-10-08T23:58:32.609Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "VLO",
+      "headline": "VLO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 443.80 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/VLO",
+      "at": "2026-10-08T23:58:32.609Z"
     },
     {
       "kind": "range",
@@ -215,7 +260,7 @@
       "detail": "הסגירה האחרונה 93.21 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SBUX",
-      "at": "2026-10-08T23:45:35.046Z"
+      "at": "2026-10-08T23:58:32.609Z"
     }
   ]
 }
