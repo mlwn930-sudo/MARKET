@@ -113,8 +113,17 @@ export function chartEvidence(checked: Corroboration): string {
     lines.push(
       `\nשיעורי בסיס, נספרו מ-${rates.sessions} ימי מסחר (${rates.from} עד ${rates.to}), אופק חודש:`,
     );
+    /* EACH LINE CARRIES ITS OWN STATUS, not only the header above it.
+
+       With the status in the header alone, the first real answer this
+       route produced listed a death cross as something the reader
+       could wait for. It is true on the tape today, and it was
+       printed under the heading that says so — but the line itself
+       did not say which list it came from, so nothing contradicted
+       the misreading. A line that describes itself cannot be
+       misfiled. */
     const render = (r: (typeof usable)[number]) =>
-      `- ${r.c.label}: ${r.c.occurrences} מופעים · גבוה יותר ב-${Math.round(r.o!.up * 100)}% ` +
+      `- [${r.c.activeNow ? "נכון עכשיו" : "אינו נכון עכשיו"}] ${r.c.label}: ${r.c.occurrences} מופעים · גבוה יותר ב-${Math.round(r.o!.up * 100)}% ` +
       `מול בסיס ${Math.round(r.o!.baselineUp * 100)}% · הפרש ${r.o!.liftPp >= 0 ? "+" : ""}${Math.round(r.o!.liftPp)} נק׳` +
       (Math.abs(r.o!.liftPp) < 10 ? " (לא הוסיף מידע)" : "");
 
@@ -129,9 +138,16 @@ export function chartEvidence(checked: Corroboration): string {
       /* The honest answer to "where do I get in". Each one is an
          observable close that can be checked afterwards — it happened or
          it did not — which is the only kind of waiting this site will
-         describe. */
+         describe.
+
+         NOT "events that have not happened yet", which is what this
+         heading said first and is plainly false: a condition with
+         forty-one occurrences has happened forty-one times. What has
+         not happened is today. A reader told that a forty-one-time
+         event never occurred has been handed a reason to distrust
+         the count printed beside it. */
       lines.push(
-        "\nאירועים נצפים שעדיין לא קרו, ומה הם היו שווים על הנייר הזה:",
+        "\nתנאים שאינם נכונים בנר האחרון — אלה שאפשר להמתין להם, ומה הם היו שווים על הנייר הזה:",
       );
       for (const r of waitable.slice(0, 8)) lines.push(render(r));
     }

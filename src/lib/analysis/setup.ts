@@ -258,14 +258,28 @@ export function readSetup(
 
   if (atLevel) {
     const side = atLevel.kind === "support" ? "תמיכה" : "התנגדות";
+    /* TWO COUNTS THAT READ AS A CONTRADICTION AND ARE NOT, which is why
+       each one now carries its unit.
+
+       `touches` is the swings that formed the band — three pivots inside
+       one price zone is what made it a level in the first place.
+       `held + broke` is every later approach, counted as episodes of the
+       close entering the band and leaving it, and there are normally far
+       more of those than there are pivots.
+
+       Printed as "held 14 of 15" beside "3 touches", a reader concludes
+       one of the two is broken — and the model answering questions about
+       the chart repeats the apparent contradiction. Named, each number
+       says what it counted and both are true at once. */
+    const encounters = atLevel.held + atLevel.broke;
     push(
       {
         key: `level-${atLevel.kind}`,
-        label: `המחיר על ${side} שהחזיקה ${atLevel.held} מתוך ${atLevel.held + atLevel.broke} פעמים`,
+        label: `המחיר על ${side} שהחזיקה ב-${atLevel.held} מתוך ${encounters} המפגשים איתה`,
         detail:
           `${close.toFixed(2)} מול ${atLevel.price.toFixed(2)} ` +
           `(${atLevel.distancePercent >= 0 ? "+" : ""}${atLevel.distancePercent.toFixed(1)}%), ` +
-          `${atLevel.touches} תפניות נפרדות, האחרונה ב-${atLevel.lastTouch}`,
+          `הרמה נבנתה מ-${atLevel.touches} תפניות, האחרונה ב-${atLevel.lastTouch}`,
         /* A band that has broken as often as it held is not support. The
            count decides the side, not the word "support". */
         side:

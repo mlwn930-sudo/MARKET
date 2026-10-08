@@ -255,6 +255,31 @@ export function containsArabic(text: string): boolean {
   return ARABIC.test(text);
 }
 
+/**
+ * A Latin letter welded to a Hebrew letter with nothing between them.
+ *
+ * The same drift as the Arabic, one script over. Seen live: the chart
+ * agent answered with "ומקיj" where it meant "ומקיים" — a
+ * Latin j standing in for a Hebrew letter inside a Hebrew word. It is the
+ * worst kind of typo for this site: invisible at a glance, and it lands
+ * in the middle of a sentence a reader is being asked to trust with
+ * numbers.
+ *
+ * MEASURED BEFORE IT WAS TRUSTED. The pattern was run over every Hebrew
+ * string in `content/` and `src/` first and matched nothing, which is
+ * what makes rejecting on it safe: real text in this project always puts
+ * a hyphen or a space between the scripts ("ב-POC", "מול P/E"), so a
+ * letter touching a letter is a glitch rather than a style.
+ *
+ * Rejected rather than repaired, for the reason the Arabic is: there is
+ * no way to know which Hebrew letter the model meant.
+ */
+const GLUED_LATIN = /[א-ת][A-Za-z]|[A-Za-z][א-ת]/;
+
+export function containsGluedLatin(text: string): boolean {
+  return GLUED_LATIN.test(text);
+}
+
 export async function generateText(options: GenerateOptions): Promise<string> {
   const key = apiKey();
 
@@ -333,6 +358,10 @@ export async function generateText(options: GenerateOptions): Promise<string> {
          shows its own absence, which is rule 9. */
       if (text && containsArabic(text)) {
         lastProblem = "model returned Arabic inside Hebrew text";
+        continue;
+      }
+      if (text && containsGluedLatin(text)) {
+        lastProblem = "model welded a Latin letter into a Hebrew word";
         continue;
       }
 
@@ -576,6 +605,11 @@ export async function* streamText(
             "model returned Arabic inside Hebrew text",
           );
         }
+        /* `containsGluedLatin` is deliberately NOT checked here, and the
+           asymmetry with `generateText` is the decision rather than an
+           omission: Arabic earns the cost of discarding a half-written
+           answer because it cannot be read, and one Latin letter inside
+           one Hebrew word does not. `scripts/arabic.test.ts` pins it. */
         if (text) yield text;
       } catch (error) {
         if (error instanceof GeminiError) throw error;

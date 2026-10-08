@@ -438,9 +438,18 @@ function ChartReadView({
         </section>
       )}
 
-      {/* First, because it is the summary the panels below are the
-          evidence for — and a summary printed after its evidence is a
-          footnote. */}
+      {/* FIRST, ABOVE EVERYTHING THE SITE CHOSE TO SAY.
+          It was last, on the reasoning that a reader should have the
+          panels before asking about them. That reasoning describes how
+          the page was built, not how it is used: somebody who has just
+          had a chart explained has a question immediately, and putting
+          the box for it under six panels means they scroll past the
+          answer to the question they did not have. The evidence it
+          answers from is the same whether it sits above or below. */}
+      {checked && <ChartAsk checked={checked} />}
+
+      {/* Then the summary the panels below are the evidence for — a
+          summary printed after its evidence is a footnote. */}
       {checked && <SetupPanel setup={checked.setup} />}
 
       {checked && <Corroborated checked={checked} />}
@@ -469,11 +478,6 @@ function ChartReadView({
           lastClose={checked.lastClose}
         />
       )}
-
-      {/* Last, because every panel above answers a question the site
-          chose and this one answers the reader's. It needs them all to
-          have been read first. */}
-      {checked && <ChartAsk checked={checked} />}
 
       {read.volume && (
         <section className="read-block">

@@ -5,7 +5,7 @@ import {
   GEMINI_FAILURE_TEXT,
   GeminiError,
   hasGeminiKey,
-  streamText,
+  generateText,
 } from "@/lib/sources/gemini";
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 
@@ -87,7 +87,24 @@ export async function POST(request: Request) {
         );
 
       try {
-        for await (const delta of streamText({
+        /* GENERATED WHOLE, THEN STREAMED — NOT STREAMED FROM THE MODEL.
+         *
+         * The obvious shape is to pipe the model's stream straight
+         * through, and this did until the Arabic guard landed. A
+         * multilingual model drops Arabic letters into Hebrew often
+         * enough to matter; `generateText` answers that by rejecting the
+         * response and retrying, and a stream cannot — by the time the
+         * character arrives, the sentences before it are already on the
+         * reader's screen. So one stray letter killed the whole answer
+         * and the reader got "the model did not return a valid answer",
+         * which is exactly what the first person to use this saw.
+         *
+         * These answers are two to five lines. Generating one whole costs
+         * a second of waiting and buys the retry; chunking the finished
+         * text back out keeps the typing, which is the only part of
+         * streaming the reader was ever getting.
+         */
+        const answer = await generateText({
           system: CHART_ASK_SYSTEM,
           turns: [
             {
@@ -99,8 +116,15 @@ export async function POST(request: Request) {
           ],
           temperature: 0.3,
           maxOutputTokens: 900,
-        })) {
-          send({ type: "delta", text: delta });
+        });
+
+        /* Word by word, not character by character: a Hebrew word
+           assembled letter by letter reflows as it grows and the line
+           jitters. */
+        for (const chunk of answer.split(/(\s+)/)) {
+          if (!chunk) continue;
+          send({ type: "delta", text: chunk });
+          await new Promise((resolve) => setTimeout(resolve, 12));
         }
         send({ type: "done" });
       } catch (error) {
