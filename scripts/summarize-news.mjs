@@ -212,11 +212,7 @@ async function analyse(title, text) {
    * throw as a failed analysis and the article is queued again next
    * cycle.
    */
-  if (
-    /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/.test(
-      raw,
-    )
-  ) {
+  if (hasArabic(raw)) {
     throw new Error("model returned Arabic inside Hebrew text");
   }
 
@@ -282,6 +278,37 @@ async function analyse(title, text) {
  * always used — a run that analyses the general news is worth far more
  * than a run that fails because a watchlist could not be read.
  */
+/**
+ * Arabic code points, compared numerically rather than matched.
+ *
+ * A character class holding the actual ranges is the obvious form and it
+ * does not survive this file being edited: every tool in the chain has a
+ * view about backslash escapes, and the class arrives holding the literal
+ * Arabic characters instead of the escapes that produced them — correct
+ * by accident, unreadable, and one careless save from being wrong.
+ * Numbers cannot be mangled.
+ *
+ * The blocks: Arabic, the supplement, extended-A, and the two
+ * presentation-form ranges. The last of those matters because a ligature
+ * out of FB50 renders identically to the letter and would walk past a
+ * check covering only 0600.
+ */
+function hasArabic(text) {
+  for (const char of text) {
+    const c = char.codePointAt(0);
+    if (
+      (c >= 0x0600 && c <= 0x06ff) ||
+      (c >= 0x0750 && c <= 0x077f) ||
+      (c >= 0x08a0 && c <= 0x08ff) ||
+      (c >= 0xfb50 && c <= 0xfdff) ||
+      (c >= 0xfe70 && c <= 0xfeff)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 async function followedTickers() {
   const url = process.env.DATABASE_URL?.trim();
   if (!url) return [];

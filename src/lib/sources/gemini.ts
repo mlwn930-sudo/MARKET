@@ -556,8 +556,29 @@ export async function* streamText(
         const text = payload?.candidates?.[0]?.content?.parts
           ?.map((part: { text?: string }) => part?.text ?? "")
           .join("");
+        /* The third place this guard was needed, and the one that is
+           hardest to get right.
+           `generateText` rejects an Arabic answer and retries, and
+           `summarize-news.mjs` throws on one. A stream cannot retry:
+           by the time the Arabic arrives, the sentences before it are
+           already on the reader's screen.
+           So it stops. Throwing here ends the generator, the caller's
+           for-await unwinds into its own catch, and the reader is told
+           the answer was discarded rather than being left with a
+           paragraph containing "היסטוריה סצורה" — which is what reached
+           production and is how this was found.
+           Not filtered, for the reason the other two are not: removing
+           the character leaves a word that no longer exists and no
+           longer looks wrong to anything scanning for it. */
+        if (text && containsArabic(text)) {
+          throw new GeminiError(
+            "upstream",
+            "model returned Arabic inside Hebrew text",
+          );
+        }
         if (text) yield text;
-      } catch {
+      } catch (error) {
+        if (error instanceof GeminiError) throw error;
         // A malformed frame costs that frame, not the answer.
       }
     }

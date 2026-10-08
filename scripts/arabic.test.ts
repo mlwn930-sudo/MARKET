@@ -17,6 +17,7 @@
  */
 import { strict as assert } from "node:assert";
 import test from "node:test";
+import fs from "node:fs";
 import { containsArabic } from "../src/lib/sources/gemini";
 
 test("ordinary Hebrew passes", () => {
@@ -53,4 +54,28 @@ test("the presentation-form block is covered too", () => {
 
 test("an empty string is not Arabic", () => {
   assert.equal(containsArabic(""), false);
+});
+
+test("the guard is applied on all three paths the site generates text on", () => {
+  /* It took three separate discoveries to cover them, each one found in
+     production rather than in review:
+       generateText      the shared client, found on the daily brief
+       summarize-news    plain Node with its own fetch, found on the
+                         watchlist page an hour after the first fix
+       streamText        the chat and the chart question, found in the
+                         first answer the chart agent ever streamed
+     This pins the list so a fourth path is a failing test rather than a
+     sentence somebody reads in an inbox. */
+  const sources = [
+    fs.readFileSync("src/lib/sources/gemini.ts", "utf8"),
+    fs.readFileSync("scripts/summarize-news.mjs", "utf8"),
+  ];
+  const generate = sources[0].slice(sources[0].indexOf("export async function generateText"));
+  const stream = sources[0].slice(sources[0].indexOf("export async function* streamText"));
+  assert.ok(/containsArabic/.test(generate), "generateText must check");
+  assert.ok(/containsArabic/.test(stream), "streamText must check");
+  assert.ok(
+    /0x0600/.test(sources[1]),
+    "summarize-news.mjs must check, it has no access to the shared client",
+  );
 });
