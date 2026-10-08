@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { CHART_QUESTIONS } from "@/lib/analysis/chart-evidence";
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
+import { isPrivateBuild } from "@/lib/private-mode";
 
 /**
  * The questions a reader has once the chart has been explained to them.
@@ -185,11 +186,23 @@ export function ChartAsk({ checked }: { checked: Corroboration | null }) {
         </div>
       )}
 
-      <p className="ask-disclaimer">
-        זו אינה המלצה ואינה ייעוץ השקעות. האתר לא ייתן נקודת כניסה, מחיר יעד
-        או סטופ — לשאלה ״איפה להיכנס״ יש תשובה אחת שנשענת על מדידה, והיא מה
-        האירוע הנצפה שאפשר להמתין לו וכמה פעמים הוא קרה כאן בעבר.
-      </p>
+      {/* The private build's answer may state a direction, so the public
+          sentence here would be describing a different box. What does not
+          change is the half that is still true: the answer comes from the
+          counted block, and it is not an entry, a stop or a size. */}
+      {isPrivateBuild() ? (
+        <p className="ask-disclaimer">
+          התשובה יכולה לאמר לאיזה כיוון הרשומה נוטה, והכיוון הזה חושב בקוד
+          משיעורי הבסיס של הנייר עצמו ומגיע עם מה שיפריך אותו. אין כאן נקודת
+          כניסה, מחיר יעד, סטופ או גודל פוזיציה — ואין כאן המלצה. ההחלטה שלך.
+        </p>
+      ) : (
+        <p className="ask-disclaimer">
+          זו אינה המלצה ואינה ייעוץ השקעות. האתר לא ייתן נקודת כניסה, מחיר יעד
+          או סטופ — לשאלה ״איפה להיכנס״ יש תשובה אחת שנשענת על מדידה, והיא מה
+          האירוע הנצפה שאפשר להמתין לו וכמה פעמים הוא קרה כאן בעבר.
+        </p>
+      )}
     </section>
   );
 }

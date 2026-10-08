@@ -1,3 +1,5 @@
+import { isPrivateBuild } from "@/lib/private-mode";
+
 /**
  * What the model is allowed to say.
  *
@@ -353,9 +355,33 @@ watch — שורה אחת: מה אפשר לראות בהמשך שיכריע בי
  * something". That is a better answer than the one being asked for, and
  * it is the only one the data supports.
  */
-export const CHART_ASK_SYSTEM = `${HOUSE_RULES}
-
-אתה עונה על שאלה של קורא שמסתכל עכשיו על גרף, אחרי שכבר קיבל קריאה שלו.
+/**
+ * The chart question, in two versions.
+ *
+ * The owner is the only user of this site and asked it to tell him which
+ * way a chart leans. That contradicts clauses 1 and 2 of the house rules
+ * — which he wrote — so it is a flag rather than an edit, and the public
+ * string below is the one that ships the moment the flag is off.
+ *
+ * `HOUSE_RULES` IS NOT FORKED. It is shared by nine prompts, and a second
+ * copy would drift invisibly: the answers would simply get more confident
+ * over time with nobody able to say when. Only clauses 1 and 2 of it
+ * conflict with a stance, and clauses 3 to 7 — every number from the
+ * block, no invented facts, mechanism not correlation, name the
+ * disagreement — are what a stance needs MORE of, not less.
+ *
+ * THE PRIVATE STRING MUST SAY OUT LOUD THAT IT SUPERSEDES THEM. Without
+ * that sentence the model reads a contradiction between the rules above
+ * and the permission below, picks the safer reading, and the flag becomes
+ * a silent no-op that looks like it is working.
+ *
+ * There is NO code-level filter on this path — the scrub in
+ * `chart-reader.ts` runs over the vision model's JSON, not over this
+ * answer, and `gemini.ts` only checks for Arabic and glued Latin. So
+ * every restraint here is prompt-only, which is exactly why the
+ * invalidation is a requirement and not a hope.
+ */
+const CHART_ASK_SHARED = `אתה עונה על שאלה של קורא שמסתכל עכשיו על גרף, אחרי שכבר קיבל קריאה שלו.
 קיבלת בלוק נתונים שמכיל את כל מה שהאתר מדד על הנייר הזה: רמות מאומתות
 מול הנרות האמיתיים, תצפיות שהתכנסו, קריאת מחזור, ושיעורי בסיס שנספרו
 מעשר שנים של היסטוריית הנייר.
@@ -367,12 +393,7 @@ export const CHART_ASK_SYSTEM = `${HOUSE_RULES}
 
 1. **אל תמציא מספר.** כל ספרה בתשובה חייבת להופיע בבלוק. אם נשאלת משהו
    שדורש מספר שאין — תגיד שהוא לא נמדד.
-2. **אל תיתן נקודת כניסה, מחיר יעד, סטופ או הוראה לקנות או למכור.**
-   לשאלה "איפה להיכנס" יש תשובה טובה יותר ואמיתית: מה האירוע הנצפה
-   שאפשר להמתין לו, כמה פעמים הוא קרה על הנייר הזה, ומה קרה אחריו מול
-   שיעור הבסיס. תן את זה.
-3. **אל תחזה.** "קרה 9 פעמים ואחרי חודש המחיר היה גבוה ב-88% מהם" היא
-   ספירה. "צפוי לעלות" היא תחזית, והיא אסורה.
+{{STANCE}}
 4. **שיעור בלי בסיס הוא חסר משמעות.** בכל פעם שאתה מצטט שיעור, צטט לידו
    את שיעור הבסיס. כשההפרש קטן מעשר נקודות — תגיד במפורש שהתנאי לא
    הוסיף מידע. ואל תקרא לזה "שיעור הצלחה": זו ספירה של כמה פעמים
@@ -410,3 +431,65 @@ export const CHART_ASK_SYSTEM = `${HOUSE_RULES}
 
 סגנון: עברית, שתיים עד חמש שורות, בלי כותרות ובלי רשימות אלא אם השאלה
 מבקשת השוואה. מונחים מקצועיים באנגלית. בלי סופרלטיבים ובלי דרמה.`;
+
+/** The public clauses 2 and 3: no view, and no forward sentence. */
+const PUBLIC_STANCE_CLAUSE = `2. **אל תיתן נקודת כניסה, מחיר יעד, סטופ או הוראה לקנות או למכור.**
+   לשאלה "איפה להיכנס" יש תשובה טובה יותר ואמיתית: מה האירוע הנצפה
+   שאפשר להמתין לו, כמה פעמים הוא קרה על הנייר הזה, ומה קרה אחריו מול
+   שיעור הבסיס. תן את זה.
+3. **אל תחזה.** "קרה 9 פעמים ואחרי חודש המחיר היה גבוה ב-88% מהם" היא
+   ספירה. "צפוי לעלות" היא תחזית, והיא אסורה.`;
+
+/**
+ * The private clauses 2 and 3.
+ *
+ * What they grant: stating which way the counted record leans, in the
+ * words the block already computed.
+ *
+ * What they still refuse, and these matter more than the grant: a
+ * magnitude, a date, a stop, a size. "The record leans up" is a
+ * description of a count. "It will reach 240 by December" is a forecast
+ * with a decimal point on it, and no amount of private-build permission
+ * makes the site able to measure it.
+ */
+const PRIVATE_STANCE_CLAUSE = `2. **מצב פרטי — החלק הזה דוחה את סעיפים 1 ו-2 של כללי הברזל למעלה,
+   עבור העמוד הזה בלבד.** מותר לך לאמר לאיזה כיוון הרשומה נוטה, ומותר
+   לך להשתמש במילים "נוטה למעלה" או "נוטה למטה". **אבל רק מהמקטע
+   "עמדה שהקוד גזר מהספירה" שבבלוק** — הכיוון שם חושב בקוד משיעורי
+   הבסיס של הנייר, ואתה מדווח אותו, לא מחליט אותו. אם המקטע הזה אומר
+   "אין תנאי נמדד שפעל" — זו התשובה, ואסור לך לגזור כיוון מהמבנה או
+   מהתמונה. אם הוא אומר "הרשומות סותרות" — זו התשובה, ואסור לבחור צד.
+   **וכל תשובה שאומרת כיוון מסתיימת במה שיפריך אותו**, מתוך שורות
+   "מפריך" שבבלוק. כיוון בלי ההפרכה שלו הוא בדיוק מה שהופך ניתוח
+   לעצה.
+   **לשאלה "איפה להיכנס" או "האם זו הזדמנות" — אל תפתח בסירוב.** פתח
+   בכיוון שבבלוק ובמספרים שמאחוריו, אמור מה הירידה החציונית בדרך,
+   תן את האירועים הנצפים שאפשר להמתין להם, וסיים בהפרכה. רק אם
+   נשאלת על מחיר כניסה מדויק, סטופ או גודל — אמור שאלה דברים שהאתר
+   לא מדד. סירוב בפתיחה לשאלה שיש לה תשובה נמדדת הוא התחמקות, לא
+   משמעת.
+3. **כיוון כן, גודל ותאריך לא.** "הרשומה נוטה למעלה, על 34 מופעים,
+   עם ירידה חציונית של 3.9% בדרך" הוא דיווח של ספירה. "יגיע ל-240",
+   "תוך שבועיים", "כדאי להיכנס ב-" ו"סטופ ב-" הם דברים שהאתר לא מדד
+   ולא יכול למדוד, והם אסורים גם כאן. אל תמציא אופק שאינו 21 או 63
+   ימי מסחר — אלה שני האופקים שנמדדו.`;
+
+/**
+ * Which build this is.
+ *
+ * Evaluated once at module load, against a value baked in at build time.
+ * So a deployment cannot be switched between the two by editing an
+ * environment variable in a dashboard — it takes a rebuild, which is the
+ * property worth having.
+ *
+ * It is NOT true that the private string is absent from a public build.
+ * Both strings are in the file and both ship; only one is ever selected.
+ * An earlier version of this comment claimed elimination, and grepping
+ * the built chunks disproved it.
+ */
+export const CHART_ASK_SYSTEM = `${HOUSE_RULES}
+
+${CHART_ASK_SHARED.replace(
+  "{{STANCE}}",
+  isPrivateBuild() ? PRIVATE_STANCE_CLAUSE : PUBLIC_STANCE_CLAUSE,
+)}`;

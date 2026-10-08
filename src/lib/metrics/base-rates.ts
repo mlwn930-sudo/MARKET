@@ -665,7 +665,7 @@ export function reportable(outcome: Outcome): boolean {
  * and the measurements say that most conditions, on most names, sit well
  * inside it. That is the finding, not a failure of the method.
  */
-const MEANINGFUL_PP = 10;
+export const MEANINGFUL_PP = 10;
 
 export type Verdict = "no-signal" | "leans-up" | "leans-down" | "too-few";
 

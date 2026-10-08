@@ -1,5 +1,6 @@
 import type { BaseRateRead, ConditionRead } from "@/lib/metrics/base-rates";
 import { MIN_SAMPLE, readOutcome } from "@/lib/metrics/base-rates";
+import { isPrivateBuild } from "@/lib/private-mode";
 
 /**
  * The two questions a reader brings to a chart, answered with counted
@@ -142,7 +143,14 @@ export function ChartScenarios({
       </h4>
       <p className="mt-1 text-[12px] leading-relaxed text-ink-faint">
         כל שורה היא אירוע נצפה שאפשר לבדוק בדיעבד — הסגירה קרתה או לא קרתה.
-        זו אינה הוראה להיכנס או לצאת, וגם לא טענה שהאירוע יקרה.
+        {/* The second clause survives in both builds, and it is the one
+            that matters here: a base rate for an event says nothing about
+            whether the event will occur. Only the first clause — "this is
+            not an instruction" — belongs to the public build, because
+            this panel now sits below a stance. */}
+        {isPrivateBuild()
+          ? " זו אינה טענה שהאירוע יקרה — רק מה שנספר אחרי הפעמים שהוא כן קרה."
+          : " זו אינה הוראה להיכנס או לצאת, וגם לא טענה שהאירוע יקרה."}
       </p>
       {waiting.length === 0 ? (
         <p className="mt-2 text-[13px] text-ink-faint">

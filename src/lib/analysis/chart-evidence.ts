@@ -1,4 +1,12 @@
 import { HORIZONS, MIN_SAMPLE } from "@/lib/metrics/base-rates";
+import { isPrivateBuild } from "@/lib/private-mode";
+import {
+  buildChartStance,
+  DIRECTION_NAME,
+  HORIZON_NAME,
+  HORIZON_SPAN,
+} from "./stance";
+import type { HorizonStance } from "./stance";
 import type { ConditionRead, Horizon, Outcome } from "@/lib/metrics/base-rates";
 
 /** What a horizon is called in a sentence a person reads. */
@@ -252,7 +260,77 @@ export function chartEvidence(checked: Corroboration): string {
     );
   }
 
+  /* ---- The stance, private build only ---- */
+  if (isPrivateBuild()) lines.push(...stanceLines(checked));
+
   return lines.join("\n");
+}
+
+
+/**
+ * The stance, as lines the model may state a direction from.
+ *
+ * RECOMPUTED HERE RATHER THAN READ FROM THE POSTED BODY, and that
+ * distinction is the whole reason this is a function instead of a field
+ * on `Corroboration`. `ChartAsk` posts the corroboration back to the
+ * route, and the route's comment is right that posted MEASUREMENTS are
+ * not a trust boundary: the worst a tampered body can do is describe a
+ * chart that does not exist, to the person who tampered with it.
+ *
+ * A posted CONCLUSION is a different object. It would arrive with no
+ * numbers behind it and the model would read it out as the site's view.
+ * So the direction is derived server-side from the measurements in the
+ * body, by the same pure function the panel uses: the panel and the
+ * answer cannot disagree, and nothing a client sends can invent a view.
+ */
+function stanceLines(checked: Corroboration): string[] {
+  const stance = buildChartStance({
+    setup: checked.setup,
+    baseRates: checked.baseRates,
+    lastClose: checked.lastClose,
+  });
+
+  if (!stance) {
+    return [
+      "\nאין עמדה לנייר הזה: הוא אינו ביקום המחקר של האתר, והאתר לא ספר עליו דבר. אל תאמר לאן הוא נוטה.",
+    ];
+  }
+
+  const out: string[] = [
+    "\n=== עמדה שהקוד גזר מהספירה ===",
+    "זה המקום היחיד שממנו מותר לקחת כיוון. הכיוון חושב בקוד משיעורי הבסיס של הנייר עצמו — אל תמציא כיוון אחר, ואל תחזק אותו ממה שכתוב כאן.",
+  ];
+
+  for (const h of [stance.swing, stance.position] as HorizonStance[]) {
+    out.push(
+      `\n[${HORIZON_NAME[h.horizon]} · ${HORIZON_SPAN[h.horizon]}] ${DIRECTION_NAME[h.direction]}.`,
+    );
+    if (h.baseline) {
+      out.push(
+        `יום שרירותי על הנייר באותו חלון: ${Math.round(h.baseline.upShare * 100)}% סגרו גבוה יותר.`,
+      );
+    }
+    for (const line of h.because) out.push(`· בעד: ${line}`);
+    for (const line of h.against) out.push(`· נגד: ${line}`);
+    for (const line of h.invalidation) out.push(`· מפריך: ${line}`);
+    out.push(h.basis);
+  }
+
+  /* When the horizons disagree that is the most useful line here, and a
+     model will not notice it unless the block says so in words. */
+  /* One of them being `none` is the MOST interesting version of this,
+     not an exclusion. BKNG today leans up over three weeks on a 24-point
+     gap and reports nothing at all over a quarter, because the same
+     condition is worth two points at 63 days. That is the answer to
+     "swing or long term" and the first draft of this condition skipped
+     it by requiring both horizons to have a direction. */
+  if (stance.swing.direction !== stance.position.direction) {
+    out.push(
+      "\nשים לב: שני האופקים לא מסכימים. אלה שתי מדידות של חלונות שונים, וההבדל ביניהן הוא התשובה לשאלה לאיזה טווח מדובר.",
+    );
+  }
+
+  return out;
 }
 
 /**

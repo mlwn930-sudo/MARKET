@@ -31,6 +31,7 @@
     "test:relevance": "node --import tsx --test scripts/relevance.test.ts",
     "test:setup": "node --import tsx --test scripts/setup.test.ts",
     "test:bidi": "node --import tsx --test scripts/bidi.test.ts",
+    "test:stance": "node --import tsx --test scripts/stance.test.ts",
     "measure:convergence": "tsx scripts/measure-convergence.ts",
     "test:xbrl": "node --import tsx --test scripts/xbrl.test.ts",
     "test:capital": "node --import tsx --test scripts/capital.test.ts",

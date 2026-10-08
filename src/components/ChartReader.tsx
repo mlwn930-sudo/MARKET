@@ -12,6 +12,8 @@ import { ChartScenarios } from "@/components/market/ChartScenarios";
 import { TapePanel } from "@/components/market/TapePanel";
 import { SetupPanel } from "@/components/market/SetupPanel";
 import { ChartAsk } from "@/components/market/ChartAsk";
+import { StancePanel } from "@/components/market/StancePanel";
+import { isPrivateBuild } from "@/lib/private-mode";
 
 /**
  * Upload a chart, get it read back.
@@ -486,6 +488,15 @@ function ChartReadView({
           the box for it under six panels means they scroll past the
           answer to the question they did not have. The evidence it
           answers from is the same whether it sits above or below. */}
+      {/* ABOVE THE QUESTION BOX, which is above everything else.
+
+          The order is the reading order: which way the counted record
+          leans, then the box for asking about it, then the evidence
+          the lean is made of. Renders nothing in a public build, because
+          the flag is baked at build time — though the code does ship
+          there as a dead branch; see `StancePanel`. */}
+      {checked && <StancePanel checked={checked} />}
+
       {checked && <ChartAsk checked={checked} />}
 
       {/* Then the summary the panels below are the evidence for — a
@@ -611,10 +622,16 @@ function ChartReadView({
         </p>
       )}
 
+      {/* The read itself is still a model looking at pixels in both
+          builds, and that sentence stays. What changes is the claim
+          that the page carries no view: with a stance panel at the top,
+          "אינה המלצה" printed at the bottom would be describing a
+          different page than the one above it. */}
       <p className="data-caption">
         הקריאה נוצרה על ידי מודל שפה מתוך התמונה בלבד. היא מתארת את מה שנראה
-        בגרף ואינה תחזית, אינה המלצה ואינה מתחשבת בנתונים שאינם בתמונה —
+        בגרף ואינה תחזית, ואינה מתחשבת בנתונים שאינם בתמונה —
         דוחות, הקשר מאקרו או אירועים שעוד לא קרו.
+        {!isPrivateBuild() && " היא גם אינה המלצה."}
       </p>
     </div>
   );

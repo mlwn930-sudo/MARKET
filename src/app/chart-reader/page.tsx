@@ -1,5 +1,6 @@
 import { ChartReader } from "@/components/ChartReader";
 import { Disclaimer, Hero, Page, Section } from "@/components/ui";
+import { isPrivateBuild } from "@/lib/private-mode";
 
 export const metadata = {
   title: "קריאת גרף",
@@ -60,8 +61,10 @@ export default function ChartReaderPage() {
             <strong>מה יסגור את השאלה</strong>
             <p>
               אירועים שאפשר להבחין בהם, מסומנים לפי מה שהם יעשו למבנה — יאשרו
-              אותו או ישברו אותו. לא &quot;להמתין ל&quot; ולא &quot;להיכנס
-              ב&quot;: תנאי שאפשר לומר עליו בדיעבד אם קרה.
+              אותו או ישברו אותו.{" "}
+              {isPrivateBuild()
+                ? "תנאי שאפשר לומר עליו בדיעבד אם קרה — וזה גם מה שמפריך את הכיוון שבראש העמוד."
+                : 'לא "להמתין ל" ולא "להיכנס ב": תנאי שאפשר לומר עליו בדיעבד אם קרה.'}
             </p>
           </li>
           <li>
@@ -81,15 +84,34 @@ export default function ChartReaderPage() {
         description="כדי שהתשובה תהיה שימושית, חשוב שיהיה ברור מה היא לא."
       >
         <div className="reader-limits">
-          <div>
-            <strong>לא ממליצה ולא מתזמנת.</strong>
-            <p>
-              אין כאן &quot;לקנות&quot;, &quot;למכור&quot;, &quot;להמתין&quot; או
-              יעד מחיר. הקריאה מוסרת את הטיעון; ההחלטה היא שלכם. זה אותו קו
-              שעובר בכל האתר, והוא נאכף גם בקוד: משפט שנוסח כהמלצה נמחק מהתשובה,
-              והמחיקה מדווחת בתחתית הקריאה.
-            </p>
-          </div>
+          {/* The second half of this stays in both builds and is the more
+              important half: the scrub really does run, so the removal
+              counter at the foot of a read is a true claim. What the
+              private build cannot keep is the first half — a page with a
+              stance panel at the top is timing something. */}
+          {isPrivateBuild() ? (
+            <div>
+              <strong>אומרת לאן הרשומה נוטה, ולא מה לעשות.</strong>
+              <p>
+                הכיוון שמופיע למעלה חושב בקוד משיעורי הבסיס של הנייר עצמו,
+                ומגיע עם מה שיפריך אותו. אין כאן &quot;לקנות&quot;,
+                &quot;למכור&quot;, יעד מחיר, סטופ או גודל פוזיציה. הקריאה של
+                המודל עצמה עוד נאכפת בקוד: משפט שנוסח כהמלצה נמחק ממנה,
+                והמחיקה מדווחת בתחתית הקריאה.
+              </p>
+            </div>
+          ) : (
+            <div>
+              <strong>לא ממליצה ולא מתזמנת.</strong>
+              <p>
+                אין כאן &quot;לקנות&quot;, &quot;למכור&quot;,
+                &quot;להמתין&quot; או יעד מחיר. הקריאה מוסרת את הטיעון;
+                ההחלטה היא שלכם. זה אותו קו שעובר בכל האתר, והוא נאכף גם
+                בקוד: משפט שנוסח כהמלצה נמחק מהתשובה, והמחיקה מדווחת בתחתית
+                הקריאה.
+              </p>
+            </div>
+          )}
           <div>
             <strong>לא רואה מעבר לתמונה.</strong>
             <p>
