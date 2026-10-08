@@ -28,6 +28,7 @@ import { createHash } from "node:crypto";
 import { config } from "dotenv";
 import { approvedWithWatchlists, alertsConfigured } from "../src/lib/alerts/subscribers";
 import { mailConfigured, sendMail } from "../src/lib/alerts/mailer";
+import { isolateBlock, isolateLatin } from "../src/lib/alerts/bidi";
 import {
   RELEVANCE_LABELS,
   RELEVANCE_ORDER,
@@ -64,6 +65,9 @@ type Finding = {
    *  they default to the middle rather than claiming a rank. */
   relevance?: Relevance | null;
   relevanceWhy?: string | null;
+  /** A stable identity for this finding, supplied by whoever produced it.
+   *  See `fingerprint`. */
+  dedupeKey?: string | null;
   href: string | null;
   at: string;
 };
@@ -105,16 +109,52 @@ const WORTH_SENDING = new Set([
 ]);
 const MIN_WEIGHT = 2.2;
 
-/** Kind, ticker and calendar day. The same company moving unusually on two
- *  different days is two findings; the same one re-detected six times in
- *  one day is one. */
+/**
+ * What makes two findings the same finding.
+ *
+ * This used to hash the kind, the ticker, the calendar day and the
+ * HEADLINE, and both of those last two were wrong in a way that only
+ * shows up in somebody's inbox.
+ *
+ * The headline is prose. For a setup finding it is written by a model,
+ * which rewrites it every run — so one unchanged situation on TTWO
+ * produced four different hashes in an afternoon and four separate emails
+ * saying the same thing four ways. At a fifteen-minute cadence that is
+ * thirty-six a day.
+ *
+ * The calendar day is worse in the other direction: a situation that
+ * persists — a price sitting on a level, a stock in stage 4 — is one
+ * thing, and dating the fingerprint resends it every midnight for as long
+ * as it stays true.
+ *
+ * So identity comes from what the finding IS, which only its producer
+ * knows: the article's URL, the set of observations that converged, the
+ * condition that fired. `dedupeKey` carries it. Where there is none, the
+ * old scheme still applies — the market scan's findings genuinely are
+ * per-day events, and a stock moving unusually on Tuesday and again on
+ * Thursday is two of them.
+ */
 function fingerprint(f: Finding): string {
-  const day = f.at.slice(0, 10);
-  return createHash("sha256")
-    .update(`${f.kind}|${f.ticker ?? ""}|${day}|${f.headline.slice(0, 80)}`)
-    .digest("hex")
-    .slice(0, 16);
+  const identity = f.dedupeKey
+    ? `${f.kind}|${f.dedupeKey}`
+    : `${f.kind}|${f.ticker ?? ""}|${f.at.slice(0, 10)}|${f.headline.slice(0, 80)}`;
+  return createHash("sha256").update(identity).digest("hex").slice(0, 16);
 }
+
+/**
+ * How long the ledger remembers.
+ *
+ * Forever is wrong: a situation that resolved in March and recurs in
+ * September is news again, and a ledger with no expiry would swallow it.
+ * Thirty days is longer than any setup persists and short enough that a
+ * genuine recurrence gets through.
+ *
+ * The entries carry their date for this reason. The old ledger was a flat
+ * list of hashes with no way to age anything out, which is why it was
+ * capped at 400 and silently forgot the oldest — an arbitrary window that
+ * depended on how busy the market had been.
+ */
+const LEDGER_DAYS = 30;
 
 /**
  * Where the links in an alert email point.
@@ -174,22 +214,31 @@ function digest(findings: Finding[], unsubscribeUrl: string) {
   const rows = ordered
     .map((f) => {
       const link = f.href?.startsWith("http") ? f.href : `${site()}${f.href ?? ""}`;
-      const title = f.headline.replace(/</g, "&lt;");
+      /* Isolates first, escaping second. The isolate characters are not
+         markup and must survive into the body; escaping first would be
+         harmless but reversing the order of reasoning here is how
+         somebody later "simplifies" it into a bug. */
+      const title = isolateLatin(f.headline).replace(/</g, "&lt;");
       /* Paragraph breaks survive into the mail. The reading carries the
          impact, the price reaction and the value chain as separate
          thoughts, and running them together is how an analysis becomes a
          wall. */
-      const detail = f.detail
+      const detail = isolateBlock(f.detail)
         .replace(/</g, "&lt;")
         .replace(/\n\n/g, "<br><br>")
         .replace(/\n/g, "<br>");
       const tier = f.relevance ?? "medium";
-      const why = (f.relevanceWhy ?? "").replace(/</g, "&lt;");
-      return `<tr><td style="padding:16px 0;border-top:1px solid rgba(255,255,255,.14)">
+      const why = isolateLatin(f.relevanceWhy ?? "").replace(/</g, "&lt;");
+      /* dir and text-align on every cell, not inherited from <html>.
+         Gmail rewrites the document wrapper and drops both, which is why
+         an email that looks right in a browser preview arrives
+         left-aligned there. Declaring it per element is the only form
+         that survives. */
+      return `<tr><td dir="rtl" style="padding:16px 0;border-top:1px solid rgba(255,255,255,.14);text-align:right;direction:rtl">
 <span style="display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;${TIER_STYLE[tier]}">${RELEVANCE_LABELS[tier as keyof typeof RELEVANCE_LABELS]}</span>
-<a href="${link}" style="display:block;margin-top:8px;font-size:15px;line-height:1.5;color:#EAF1FF;text-decoration:none;font-weight:500">${title}</a>
-<div style="margin-top:6px;font-size:13px;line-height:1.7;color:#AEBFDC">${detail}</div>
-${why ? `<div style="margin-top:8px;font-size:11px;line-height:1.6;color:#7C8DAC">למה בדירוג הזה: ${why}</div>` : ""}
+<a href="${link}" dir="rtl" style="display:block;margin-top:8px;font-size:15px;line-height:1.55;color:#EAF1FF;text-decoration:none;font-weight:500;text-align:right;direction:rtl">${title}</a>
+<div dir="rtl" style="margin-top:6px;font-size:13px;line-height:1.85;color:#AEBFDC;text-align:right;direction:rtl">${detail}</div>
+${why ? `<div dir="rtl" style="margin-top:9px;font-size:11px;line-height:1.75;color:#7C8DAC;text-align:right;direction:rtl">למה בדירוג הזה: ${why}</div>` : ""}
 </td></tr>`;
     })
     .join("");
@@ -197,8 +246,15 @@ ${why ? `<div style="margin-top:8px;font-size:11px;line-height:1.6;color:#7C8DAC
   const plain = ordered
     .map(
       (f) =>
-        `[${RELEVANCE_LABELS[(f.relevance ?? "medium") as keyof typeof RELEVANCE_LABELS]}] ${f.headline}\n${f.detail}` +
-        (f.relevanceWhy ? `\nלמה בדירוג הזה: ${f.relevanceWhy}` : ""),
+        /* The plain-text body gets the isolates too. A client that falls
+           back to it is usually the one with the weakest bidi support,
+           which is exactly where they are needed most — and because they
+           are characters rather than markup, the same call works for
+           both bodies. */
+        `[${RELEVANCE_LABELS[(f.relevance ?? "medium") as keyof typeof RELEVANCE_LABELS]}] ${isolateLatin(f.headline)}\n${isolateBlock(f.detail)}` +
+        (f.relevanceWhy
+          ? `\nלמה בדירוג הזה: ${isolateLatin(f.relevanceWhy)}`
+          : ""),
     )
     .join("\n\n———\n\n");
 
@@ -209,13 +265,13 @@ ${why ? `<div style="margin-top:8px;font-size:11px;line-height:1.6;color:#7C8DAC
         ? `MARKET — ${findings[0].headline.slice(0, 70)}`
         : `MARKET — ${count} ממצאים חדשים`,
     text: `${plain}\n\nלאתר: ${site()}\nלהסרה: ${unsubscribeUrl}`,
-    html: `<!doctype html><html dir="rtl" lang="he"><body style="margin:0;background:#060B15;padding:28px 16px;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">
-<table role="presentation" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background:#0D1626;border:1px solid rgba(255,255,255,.14);border-radius:12px">
-<tr><td style="padding:26px 24px">
+    html: `<!doctype html><html dir="rtl" lang="he"><body dir="rtl" style="margin:0;background:#060B15;padding:28px 16px;direction:rtl;text-align:right;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#0D1626;border:1px solid rgba(255,255,255,.14);border-radius:12px;direction:rtl">
+<tr><td dir="rtl" style="padding:26px 24px;direction:rtl;text-align:right">
 <div style="font:600 11px/1 ui-monospace,monospace;letter-spacing:.34em;color:#7FA5FF;margin-bottom:6px">MARKET INTEL</div>
 <div style="font-size:12px;color:#7C8DAC;margin-bottom:16px">מה שהסורק מצא</div>
 <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">${rows}</table>
-<p style="margin:22px 0 0;font-size:11px;line-height:1.7;color:#7C8DAC">כל שורה היא תצפית עם המספר שהפיק אותה, לא המלצה. האתר אינו ייעוץ השקעות.<br><a href="${unsubscribeUrl}" style="color:#7FA5FF">להסרה מהרשימה</a></p>
+<p dir="rtl" style="margin:22px 0 0;font-size:11px;line-height:1.8;color:#7C8DAC;direction:rtl;text-align:right">כל שורה היא תצפית עם המספר שהפיק אותה, לא המלצה. האתר אינו ייעוץ השקעות.<br><a href="${unsubscribeUrl}" style="color:#7FA5FF">להסרה מהרשימה</a></p>
 </td></tr></table></body></html>`,
   };
 }
@@ -246,6 +302,7 @@ async function main() {
           grade?: string | null;
           relevance?: Relevance | null;
           relevanceWhy?: string | null;
+          dedupeKey?: string | null;
           at: string;
           href: string;
         }[];
@@ -270,6 +327,9 @@ async function main() {
            none of that is available here. */
         relevance: f.relevance ?? null,
         relevanceWhy: f.relevanceWhy ?? null,
+        /* The identity the agent computed. Without it a setup rewritten by
+           the model reads as a new finding every run. */
+        dedupeKey: f.dedupeKey ?? null,
         href: f.href,
         at: f.at,
       }));
@@ -277,10 +337,24 @@ async function main() {
     .catch(() => []);
 
   scan.findings = [...perCompany, ...scan.findings];
-  const sent: string[] = await readFile(LEDGER, "utf8")
-    .then((raw) => JSON.parse(raw).sent ?? [])
-    .catch(() => []);
-  const already = new Set(sent);
+  /* Dated entries, so anything older than the window can age out. The
+     old shape was a flat array of hashes, and both forms are read here:
+     a hash with no date is treated as recent, which is the safe reading
+     — it suppresses one more message rather than sending a duplicate. */
+  type Entry = { key: string; at: string };
+  const raw = await readFile(LEDGER, "utf8")
+    .then((text) => JSON.parse(text))
+    .catch(() => ({}));
+  const stamp0 = new Date().toISOString();
+  const previous: Entry[] = (raw.sent ?? []).map((e: unknown) =>
+    typeof e === "string" ? { key: e, at: stamp0 } : (e as Entry),
+  );
+  const cutoff = Date.now() - LEDGER_DAYS * 86_400_000;
+  const sent = previous.filter((e) => {
+    const at = Date.parse(e.at);
+    return !Number.isFinite(at) || at >= cutoff;
+  });
+  const already = new Set(sent.map((e) => e.key));
 
   const fresh = scan.findings
     .filter((f) => WORTH_SENDING.has(f.kind) && f.weight >= MIN_WEIGHT)
@@ -349,7 +423,11 @@ async function main() {
   /* The ledger records what was sent only if something actually went out.
      Marking findings as sent after a total failure would bury them. */
   if (delivered > 0) {
-    const updated = [...sent, ...sentFingerprints].slice(-400);
+    const now = new Date().toISOString();
+    const updated = [
+      ...sent,
+      ...[...sentFingerprints].map((key) => ({ key, at: now })),
+    ].slice(-600);
     await mkdir(dirname(LEDGER), { recursive: true });
     await writeFile(
       LEDGER,

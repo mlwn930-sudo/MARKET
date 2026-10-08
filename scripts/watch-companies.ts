@@ -65,6 +65,16 @@ export type CompanyFinding = {
    *  what was measured — see lib/alerts/relevance.ts. */
   relevance: Relevance;
   relevanceWhy: string;
+  /**
+   * What makes this the same finding as one already sent.
+   *
+   * Never the headline. A setup headline is written by a model and
+   * rewritten on every run, so identity taken from it turns one unchanged
+   * situation into a new message every fifteen minutes. Identity is the
+   * thing itself: the article URL, or the set of observations that
+   * converged.
+   */
+  dedupeKey: string;
   at: string;
   href: string;
 };
@@ -225,6 +235,8 @@ async function main() {
          site can say about a company, and the grade the diff assigned is
          the honest ceiling on it: a change graded "possible" must not
          arrive wearing the badge of one graded "confirmed". */
+      /* The thesis that changed, not the words describing it. */
+      dedupeKey: `${change.ticker}|${change.newView.slice(0, 60)}`,
       relevance:
         change.claim.grade === "confirmed" || change.claim.grade === "likely"
           ? "high"
@@ -256,6 +268,9 @@ async function main() {
       /* A date that has not happened is a thing to prepare for, never a
          thing that happened. Reported, and not claiming a tier the
          calendar cannot support. */
+      /* One reminder per scheduled event, not one per run until it
+         arrives. */
+      dedupeKey: `${catalyst.ticker}|${catalyst.title}|${catalyst.when}`,
       relevance: "medium",
       relevanceWhy: "מועד מתוזמן שטרם התרחש — תזכורת, לא ממצא",
       at: stamp,
@@ -357,6 +372,22 @@ async function main() {
           (written?.watch ? `\n\nמה אפשר לראות בהמשך: ${written.watch}` : ""),
         weight: 2.4 + setup.convergence / 10,
         grade: null,
+        /* THE SITUATION, NOT THE SENTENCE ABOUT IT.
+         *
+         * The observation keys, sorted — which is the set of things that
+         * are true, in an order that does not depend on how they were
+         * found. Two runs over an unchanged chart produce the same key
+         * however differently the model phrases the paragraph, and the
+         * day a new condition joins or an old one drops out, the key
+         * changes and the reader hears about it. That is the behaviour a
+         * person means by "do not send me the same thing again". */
+        dedupeKey:
+          ticker +
+          "|" +
+          [...setup.observations, ...setup.tension]
+            .map((o) => o.key)
+            .sort()
+            .join(","),
         relevance: rated.level,
         relevanceWhy:
           /* The count explains why the mail was sent, and it is not
@@ -458,6 +489,9 @@ async function main() {
           `\n\nהכותרת במקור: ${article.title} · ${article.domain}`,
         weight: 2.25,
         grade: null,
+        /* The article. The same story carried by two outlets is two
+           findings and should be; the same URL seen on two days is one. */
+        dedupeKey: article.url,
         relevance: rated.level,
         relevanceWhy: rated.why,
         at: stamp,
