@@ -11,6 +11,7 @@ import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 import { ChartScenarios } from "@/components/market/ChartScenarios";
 import { TapePanel } from "@/components/market/TapePanel";
 import { SetupPanel } from "@/components/market/SetupPanel";
+import { ChartAsk } from "@/components/market/ChartAsk";
 
 /**
  * Upload a chart, get it read back.
@@ -468,6 +469,11 @@ function ChartReadView({
           lastClose={checked.lastClose}
         />
       )}
+
+      {/* Last, because every panel above answers a question the site
+          chose and this one answers the reader's. It needs them all to
+          have been read first. */}
+      {checked && <ChartAsk checked={checked} />}
 
       {read.volume && (
         <section className="read-block">

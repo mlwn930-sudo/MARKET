@@ -192,6 +192,34 @@ async function analyse(title, text) {
   const raw = payload?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!raw) throw new Error("empty response");
 
+  /* ARABIC IN THE HEBREW, CHECKED HERE TOO.
+   *
+   * The shared client in src/lib/sources/gemini.ts rejects an answer
+   * carrying Arabic and retries, because a multilingual model runs the
+   * two right-to-left scripts together: "היקף" comes back as "היقף", and
+   * fourteen per cent of the stored readings were affected before anyone
+   * noticed.
+   *
+   * This script does not use that client. It is plain Node with its own
+   * fetch, so the guard has to be stated again — and this is the file
+   * that writes the readings the whole site displays, which makes it the
+   * worse place to have missed. Found by watching a run: "אילון מאسك"
+   * reached the watchlist page an hour after the guard shipped.
+   *
+   * Rejected rather than repaired, for the same reason as there.
+   * Stripping the characters leaves a word that no longer exists and no
+   * longer looks wrong to anything scanning for it. The caller treats a
+   * throw as a failed analysis and the article is queued again next
+   * cycle.
+   */
+  if (
+    /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/.test(
+      raw,
+    )
+  ) {
+    throw new Error("model returned Arabic inside Hebrew text");
+  }
+
   const parsed = JSON.parse(raw);
   if (parsed.skip) return null;
 
@@ -242,6 +270,53 @@ async function analyse(title, text) {
   };
 }
 
+/**
+ * Who is followed, and what was written about them.
+ *
+ * Both read their source directly rather than importing from src/lib:
+ * this script runs under plain Node with no bundler, so the path aliases
+ * and the TypeScript modules behind them are not available here.
+ *
+ * Both are also allowed to return nothing. A missing database or an
+ * unreachable wire means the queue falls back to the market feed it has
+ * always used — a run that analyses the general news is worth far more
+ * than a run that fails because a watchlist could not be read.
+ */
+async function followedTickers() {
+  const url = process.env.DATABASE_URL?.trim();
+  if (!url) return [];
+  try {
+    const { neon } = await import("@neondatabase/serverless");
+    const sql = neon(url);
+    const rows = await sql`
+      SELECT DISTINCT w.ticker
+        FROM alert_watchlist w
+        JOIN alert_subscribers s ON s.email = w.email
+       WHERE s.state = 'approved'
+    `;
+    return rows.map((r) => String(r.ticker).toUpperCase()).filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+async function companyNews(symbol, from, to) {
+  const key = process.env.FINNHUB_API_KEY?.trim();
+  if (!key) return [];
+  try {
+    const res = await fetch(
+      `https://finnhub.io/api/v1/company-news?symbol=${encodeURIComponent(symbol)}` +
+        `&from=${from}&to=${to}&token=${key}`,
+      { signal: AbortSignal.timeout(20_000) },
+    );
+    if (!res.ok) return [];
+    const json = await res.json();
+    return Array.isArray(json) ? json : [];
+  } catch {
+    return [];
+  }
+}
+
 async function main() {
   if (!API_KEY) {
     console.log(
@@ -264,14 +339,57 @@ async function main() {
 
   const seen = new Set();
   const queue = [];
-  for (const sector of feed.sectors ?? []) {
-    for (const article of sector.articles ?? []) {
-      if (seen.has(article.url) || summaries[article.url]) continue;
-      const failedAt = unfetchable[article.url];
-      if (failedAt && now - new Date(failedAt).getTime() < cooldownMs) continue;
-      seen.add(article.url);
-      queue.push(article);
+  const consider = (article) => {
+    if (!article?.url || !article?.title) return;
+    if (seen.has(article.url) || summaries[article.url]) return;
+    const failedAt = unfetchable[article.url];
+    if (failedAt && now - new Date(failedAt).getTime() < cooldownMs) return;
+    seen.add(article.url);
+    queue.push(article);
+  };
+
+  /* THE FOLLOWED COMPANIES GO FIRST, AND THEY USED TO BE ABSENT.
+   *
+   * This queue was built only from content/news/latest.json, the general
+   * market wire — a hundred stories about everything. A watchlist page
+   * showing a company's own news therefore showed stories with no reading
+   * under them, because the articles came from the per-symbol endpoint and
+   * nothing had ever put them in front of the model.
+   *
+   * They are queued ahead of the market feed rather than behind it. The
+   * run is capped, and when the cap bites it should bite on a story about
+   * a company nobody here follows rather than on the one somebody is
+   * waiting to read.
+   *
+   * The wire is read directly rather than through src/lib, because this
+   * script runs under plain Node with no bundler and no path aliases.
+   */
+  const followed = await followedTickers();
+  if (followed.length) {
+    const from = new Date(Date.now() - 14 * 86_400_000).toISOString().slice(0, 10);
+    const to = new Date().toISOString().slice(0, 10);
+    let added = 0;
+    for (const ticker of followed) {
+      const items = await companyNews(ticker, from, to);
+      for (const item of items.slice(0, 8)) {
+        const before = queue.length;
+        consider({
+          url: item.url,
+          title: item.headline,
+          excerpt: item.summary ?? "",
+          domain: item.source ?? "",
+          tickers: [ticker],
+        });
+        if (queue.length > before) added++;
+      }
     }
+    console.log(
+      `${followed.length} followed companies · ${added} of their articles queued first`,
+    );
+  }
+
+  for (const sector of feed.sectors ?? []) {
+    for (const article of sector.articles ?? []) consider(article);
   }
 
   if (queue.length === 0) {

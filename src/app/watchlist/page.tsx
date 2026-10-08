@@ -1,5 +1,6 @@
 import { ThesisNotebook } from "@/components/market/ThesisNotebook";
 import { WatchlistBoard } from "@/components/WatchlistBoard";
+import { WatchlistCoverage } from "@/components/market/WatchlistCoverage";
 import { PersonalIntel } from "@/components/PersonalIntel";
 import { getIntelBriefing } from "@/lib/intel/briefing";
 import { Disclaimer, Hero, MoreLink, Page, Section } from "@/components/ui";
@@ -49,6 +50,17 @@ export default async function WatchlistPage() {
         action={<MoreLink href="/intel">כל המודיעין</MoreLink>}
       >
         <PersonalIntel signals={briefing.signals} risks={briefing.risks} />
+      </Section>
+
+      {/* The coverage, before the list. A reader returning here has
+          already seen the list; what they came back for is what happened
+          to the things on it — and until now the page could not say. */}
+      <Section
+        eyebrow="כיסוי"
+        title="מה קרה בחברות שלך"
+        description="החדשות נמשכות מהחוט של כל חברה בנפרד ולא מסוננות מפיד השוק הכללי — זו הסיבה שעד היום הופיעו כאן שתי כתבות במקום עשרות. לצידן, מה שהגרף של אותה חברה עושה: אותה קריאה בדיוק ששולחת את ההתראות למייל."
+      >
+        <WatchlistCoverage />
       </Section>
 
       <Section

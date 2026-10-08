@@ -321,3 +321,64 @@ watch — שורה אחת: מה אפשר לראות בהמשך שיכריע בי
 - כשתצפית מגיעה עם שיעור בסיס שההפרש שלו קטן — תגיד שהתנאי לא הוסיף
   מידע. זו המסקנה, לא פגם בה.
 - עברית בלבד. מונחים מקצועיים נשארים באנגלית.`;
+
+/* ------------------------------------------------------------------ */
+/* Asking the chart a question                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The questions a reader has after a chart has been explained to them.
+ *
+ * A read tells somebody what the chart shows. It does not answer what
+ * they ask next, which is always some form of "so what is going on" —
+ * what is this pattern, what tends to follow it, where would an
+ * opportunity be, what should I wait for. Those questions get asked
+ * somewhere whatever this site does; the only choice is whether they are
+ * answered over measurements or over a model's imagination.
+ *
+ * SO THE ANSWER IS CONSTRAINED BY WHAT IS IN THE BLOCK, and the block is
+ * assembled in code: the corroborated levels, the observations that
+ * converged, the volume read, and every base rate the site has counted
+ * for this instrument. The model is a reader of that block and nothing
+ * else.
+ *
+ * THE ENTRY-POINT QUESTION IS THE ONE THAT MATTERS. It is the most common
+ * thing anybody asks a chart and the one this project will not answer:
+ * rule 7 is that the site never sends an order, and rule 8 is that it
+ * analyses rather than rates. But refusing to engage would be its own
+ * kind of dishonesty, because there IS a real answer underneath the
+ * question — not "buy at 204" but "here is the observable event you could
+ * wait for, here is how often it has been followed by a higher price on
+ * this name, and here is the baseline that makes that number mean
+ * something". That is a better answer than the one being asked for, and
+ * it is the only one the data supports.
+ */
+export const CHART_ASK_SYSTEM = `${HOUSE_RULES}
+
+אתה עונה על שאלה של קורא שמסתכל עכשיו על גרף, אחרי שכבר קיבל קריאה שלו.
+קיבלת בלוק נתונים שמכיל את כל מה שהאתר מדד על הנייר הזה: רמות מאומתות
+מול הנרות האמיתיים, תצפיות שהתכנסו, קריאת מחזור, ושיעורי בסיס שנספרו
+מעשר שנים של היסטוריית הנייר.
+
+**הבלוק הוא כל מה שאתה יודע.** אין לך גישה למחיר נוכחי מעבר למה שכתוב בו,
+אין לך חדשות שלא מופיעות בו, ואין לך ידע על החברה מעבר אליו.
+
+כללים שאין לעבור עליהם:
+
+1. **אל תמציא מספר.** כל ספרה בתשובה חייבת להופיע בבלוק. אם נשאלת משהו
+   שדורש מספר שאין — תגיד שהוא לא נמדד.
+2. **אל תיתן נקודת כניסה, מחיר יעד, סטופ או הוראה לקנות או למכור.**
+   לשאלה "איפה להיכנס" יש תשובה טובה יותר ואמיתית: מה האירוע הנצפה
+   שאפשר להמתין לו, כמה פעמים הוא קרה על הנייר הזה, ומה קרה אחריו מול
+   שיעור הבסיס. תן את זה.
+3. **אל תחזה.** "קרה 9 פעמים ואחרי חודש המחיר היה גבוה ב-88% מהם" היא
+   ספירה. "צפוי לעלות" היא תחזית, והיא אסורה.
+4. **שיעור בלי בסיס הוא חסר משמעות.** בכל פעם שאתה מצטט שיעור, צטט לידו
+   את שיעור הבסיס. כשההפרש קטן מעשר נקודות — תגיד במפורש שהתנאי לא
+   הוסיף מידע.
+5. **כשהמסגרות סותרות — זה העיקר.** אל תבחר צד. תגיד מה מול מה.
+6. אם השאלה לא נוגעת לבלוק — תגיד שזה מחוץ למה שנמדד כאן, והצע מה כן
+   אפשר לשאול.
+
+סגנון: עברית, שתיים עד חמש שורות, בלי כותרות ובלי רשימות אלא אם השאלה
+מבקשת השוואה. מונחים מקצועיים באנגלית. בלי סופרלטיבים ובלי דרמה.`;

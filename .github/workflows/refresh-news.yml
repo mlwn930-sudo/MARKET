@@ -138,6 +138,12 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          # The queue now puts the followed companies' own articles ahead
+          # of the market feed, so it has to know who is followed. Without
+          # this it falls back to the feed alone, which is what it always
+          # did — a missing key costs coverage, never the run.
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: node scripts/summarize-news.mjs
 
       # Commits FIRST, before anything is allowed to fail.
