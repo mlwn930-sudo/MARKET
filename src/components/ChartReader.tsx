@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type {
   ChartControl,
   ChartRead,
@@ -83,7 +83,31 @@ export function ChartReader() {
   const [context, setContext] = useState("");
   const [state, setState] = useState<State>({ phase: "idle" });
   const [dragging, setDragging] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
   const input = useRef<HTMLInputElement>(null);
+
+  /* SECONDS ON THE BUTTON WHILE IT READS.
+
+     A chart read is a vision call and it takes twenty to forty
+     seconds. For that whole time the only thing the page said was
+     "reading the chart…", which is indistinguishable from a page that
+     has died — and the first person to use it reported it as stuck.
+     It was not stuck; it was working, silently, for longer than
+     anybody waits without evidence.
+
+     A counter is not decoration here. It is the difference between
+     waiting and wondering whether to reload, and reloading mid-read
+     is how a read gets abandoned a second before it arrives. */
+  useEffect(() => {
+    if (state.phase !== "reading") return;
+    setElapsed(0);
+    const started = Date.now();
+    const id = setInterval(
+      () => setElapsed(Math.round((Date.now() - started) / 1000)),
+      1000,
+    );
+    return () => clearInterval(id);
+  }, [state.phase]);
 
   const accept = useCallback((file: File | null | undefined) => {
     if (!file) return;
@@ -195,6 +219,20 @@ export function ChartReader() {
               maxLength={200}
               placeholder="למשל: NVDA, יומי, אחרי הדוח"
               onChange={(event) => setContext(event.target.value)}
+              /* ENTER READS THE CHART.
+
+                 There is no form here, so Enter did nothing at all:
+                 the field accepted text and then swallowed the one
+                 gesture every text field has taught everybody to
+                 make. Typing the context and pressing Enter looked
+                 exactly like a broken page, and it was reported as
+                 one. A field beside a primary action has to reach
+                 it. */
+              onKeyDown={(event) => {
+                if (event.key !== "Enter") return;
+                event.preventDefault();
+                if (state.phase !== "reading") void run();
+              }}
             />
           </label>
 
@@ -205,7 +243,9 @@ export function ChartReader() {
               onClick={run}
               disabled={state.phase === "reading"}
             >
-              {state.phase === "reading" ? "קורא את הגרף…" : "לקריאת הגרף"}
+              {state.phase === "reading"
+                ? `קורא את הגרף… ${elapsed}s`
+                : "לקריאת הגרף"}
             </button>
             <button
               type="button"

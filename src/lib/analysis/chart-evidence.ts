@@ -1,4 +1,13 @@
-import { MIN_SAMPLE } from "@/lib/metrics/base-rates";
+import { HORIZONS, MIN_SAMPLE } from "@/lib/metrics/base-rates";
+import type { ConditionRead, Horizon, Outcome } from "@/lib/metrics/base-rates";
+
+/** What a horizon is called in a sentence a person reads. */
+const HORIZON_LABEL: Record<Horizon, string> = {
+  5: "שבוע",
+  10: "שבועיים",
+  21: "חודש",
+  63: "רבעון",
+};
 import { CHARACTER_LABELS } from "@/lib/metrics/tape";
 import type { Corroboration } from "./chart-corroborate";
 
@@ -127,9 +136,88 @@ export function chartEvidence(checked: Corroboration): string {
       `מול בסיס ${Math.round(r.o!.baselineUp * 100)}% · הפרש ${r.o!.liftPp >= 0 ? "+" : ""}${Math.round(r.o!.liftPp)} נק׳` +
       (Math.abs(r.o!.liftPp) < 10 ? " (לא הוסיף מידע)" : "");
 
+    /* THE SHAPE OF THE MOVE, FOR THE CONDITIONS THAT ARE TRUE TODAY.
+
+       "Higher 88% of the time" is the headline and it is the weakest
+       number in the file. It cannot answer the question anybody looking
+       at a chart actually has — how far, how wide, and how much of it
+       was given back on the way — and a model handed only the headline
+       will fill the gap from nowhere when asked.
+
+       Spent on at most three conditions, because printing four extra
+       lines for each of eight events turns a block a model reads
+       carefully into one it skims.
+
+       WHICH THREE WAS THE SECOND VERSION OF THIS. The first spent
+       them on the active conditions alone, which sounded right and
+       was measured wrong: on the day it was tried, TTWO had no
+       active condition at all, so the distribution — the whole point
+       of the addition — printed nowhere. Most days on most names are
+       not an event, which is the finding this file exists to report,
+       and a feature that only appears on the exceptions is a feature
+       nobody sees.
+
+       So: everything true today, then filled from the conditions
+       that carry the most information whether or not they fired
+       today. */
+    const shape = (condition: ConditionRead, o: Outcome) => {
+      const out: string[] = [];
+      const pct = (v: number) => `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
+
+      /* All four horizons, because a condition that pays over a week
+         and gives it back over a quarter is a different fact from one
+         that builds, and the month alone cannot tell them apart. */
+      out.push(
+        "  · לפי אופק: " +
+          HORIZONS.map((d) => {
+            const x = condition.outcomes.find((y) => y.days === d);
+            if (!x || x.n < MIN_SAMPLE) return `${HORIZON_LABEL[d]} מדגם קטן`;
+            return `${HORIZON_LABEL[d]} ${Math.round(x.up * 100)}% (בסיס ${Math.round(x.baselineUp * 100)}%)`;
+          }).join(" · "),
+      );
+
+      out.push(
+        `  · בחודש: תנועה חציונית ${pct(o.medianPct)} (בסיס ${pct(o.baselineMedianPct)})` +
+          ` · המחצית האמצעית ${pct(o.p25Pct)} עד ${pct(o.p75Pct)}` +
+          ` · המקרה הגרוע ${pct(o.worstPct)}`,
+      );
+
+      /* Absent on a stored file written before these were measured. The
+         block says nothing rather than printing a zero a model would
+         read as "it never went against you". */
+      if (typeof o.medianAdversePct === "number" && typeof o.medianFavourablePct === "number") {
+        out.push(
+          `  · בדרך (לפני שהחודש נגמר): הירידה הגדולה חציונית ${pct(o.medianAdversePct)}` +
+            ` (בסיס ${pct(o.baselineAdversePct)}) · העלייה הגדולה חציונית ${pct(o.medianFavourablePct)}` +
+            ` (בסיס ${pct(o.baselineFavourablePct)})`,
+        );
+      }
+
+      return out;
+    };
+
+    /* At most three, active first, then by how much the condition
+       moved the needle either way. `Math.abs` on purpose: a condition
+       that preceded a fall as reliably as another preceded a rise is
+       equally informative, and sorting by the signed lift would have
+       quietly shown only the encouraging ones. */
+    const detailed = new Set(
+      [
+        ...active,
+        ...waitable
+          .slice()
+          .sort((a, b) => Math.abs(b.o!.liftPp) - Math.abs(a.o!.liftPp)),
+      ]
+        .slice(0, 3)
+        .map((r) => r.c.key),
+    );
+
     if (active.length) {
       lines.push("נכון עכשיו על הנייר:");
-      for (const r of active) lines.push(render(r));
+      for (const r of active) {
+        lines.push(render(r));
+        if (detailed.has(r.c.key)) lines.push(...shape(r.c, r.o!));
+      }
     } else {
       lines.push("אף תנאי נמדד אינו נכון בנר האחרון. רוב הימים אינם אירוע.");
     }
@@ -149,7 +237,10 @@ export function chartEvidence(checked: Corroboration): string {
       lines.push(
         "\nתנאים שאינם נכונים בנר האחרון — אלה שאפשר להמתין להם, ומה הם היו שווים על הנייר הזה:",
       );
-      for (const r of waitable.slice(0, 8)) lines.push(render(r));
+      for (const r of waitable.slice(0, 6)) {
+        lines.push(render(r));
+        if (detailed.has(r.c.key)) lines.push(...shape(r.c, r.o!));
+      }
     }
 
     if (rates.caveats.length) {
@@ -178,4 +269,9 @@ export const CHART_QUESTIONS = [
   "מה אפשר להמתין לו, וכמה פעמים זה קרה בעבר?",
   "איפה הקריאות סותרות זו את זו?",
   "מה המחזור מוסיף למה שהמחיר מראה?",
+  /* The question a person about to act actually has, and the one the
+     block could not answer until the distribution was put into it: not
+     "will it go up" but "how far did this usually travel, and how much
+     of it was given back on the way". */
+  "מה הסטטיסטיקה של המצב הזה — כמה זה זז, וכמה זה ירד בדרך?",
 ];

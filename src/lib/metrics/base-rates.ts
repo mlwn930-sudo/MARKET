@@ -89,6 +89,25 @@ export type Outcome = {
   /** Conditional minus unconditional, in percentage points. The only
    *  number here that is about the SIGNAL rather than about the stock. */
   liftPp: number;
+  /**
+   * The path, not just the destination.
+   *
+   * `medianAdversePct` is the typical furthest the price fell below the
+   * trigger close during the window, and `medianFavourablePct` the
+   * typical furthest it rose above it. Both are medians of the
+   * per-occurrence extreme, so they describe a middling case rather than
+   * the worst one.
+   *
+   * They are here because the close at the horizon hides the only thing
+   * that decides whether a setup was survivable. Each is printed beside
+   * its unconditional twin for the reason every rate in this file is:
+   * a drawdown of six per cent means nothing until you know that an
+   * arbitrary month on the same stock also drew down six.
+   */
+  medianAdversePct: number;
+  medianFavourablePct: number;
+  baselineAdversePct: number;
+  baselineFavourablePct: number;
 };
 
 export type ConditionRead = {
@@ -417,6 +436,64 @@ function movesFrom(candles: Candle[], from: number[], days: number): number[] {
   return moves.sort((a, b) => a - b);
 }
 
+/**
+ * How far it went against you, and how far in your favour, on the way.
+ *
+ * `movesFrom` measures the close at the horizon and nothing in between,
+ * which answers the wrong question for anybody who would actually have
+ * acted on a setup. A condition can end the month +5% having been −12%
+ * on day four. The reader who sees only +5% is being told the outcome of
+ * a position nobody could have held.
+ *
+ * So this walks every bar in the window and records the two extremes
+ * relative to the trigger close: the lowest low and the highest high.
+ * Lows and highs rather than closes, deliberately — the question is how
+ * far the price actually travelled, and a wick is where a stop would
+ * have been taken out.
+ *
+ * WHAT IT IS NOT. This is not a stop level, a position size or a risk
+ * budget, and it must never be presented as one. It is a distribution of
+ * what already happened on this instrument, printed next to the
+ * unconditional distribution so the reader can see whether the condition
+ * changed anything at all. The site does not size trades.
+ */
+function excursionsFrom(
+  candles: Candle[],
+  from: number[],
+  days: number,
+): { adverse: number[]; favourable: number[] } {
+  const adverse: number[] = [];
+  const favourable: number[] = [];
+
+  for (const i of from) {
+    const target = i + days;
+    /* Dropped for the same reason `movesFrom` drops it: unmeasured is
+       not the same as flat. */
+    if (target >= candles.length) continue;
+    const start = candles[i].close;
+    if (!(start > 0)) continue;
+
+    let low = Infinity;
+    let high = -Infinity;
+    /* From the bar AFTER the trigger. The trigger bar's own low is
+       history by the time its close exists, and counting it would charge
+       every occurrence for a dip that had already finished. */
+    for (let k = i + 1; k <= target; k++) {
+      if (candles[k].low < low) low = candles[k].low;
+      if (candles[k].high > high) high = candles[k].high;
+    }
+    if (!Number.isFinite(low) || !Number.isFinite(high)) continue;
+
+    adverse.push(((low - start) / start) * 100);
+    favourable.push(((high - start) / start) * 100);
+  }
+
+  return {
+    adverse: adverse.sort((a, b) => a - b),
+    favourable: favourable.sort((a, b) => a - b),
+  };
+}
+
 function outcomesFor(
   candles: Candle[],
   triggers: number[],
@@ -434,6 +511,9 @@ function outcomesFor(
       : 0;
     const baselineMedianPct = base.length ? quantile(base, 0.5) : 0;
 
+    const path = excursionsFrom(candles, triggers, days);
+    const basePath = excursionsFrom(candles, allBars, days);
+
     const up = n === 0 ? 0 : sorted.filter((m) => m > 0).length / n;
 
     return {
@@ -447,6 +527,16 @@ function outcomesFor(
       baselineUp,
       baselineMedianPct,
       liftPp: n === 0 ? 0 : (up - baselineUp) * 100,
+      medianAdversePct: path.adverse.length ? quantile(path.adverse, 0.5) : 0,
+      medianFavourablePct: path.favourable.length
+        ? quantile(path.favourable, 0.5)
+        : 0,
+      baselineAdversePct: basePath.adverse.length
+        ? quantile(basePath.adverse, 0.5)
+        : 0,
+      baselineFavourablePct: basePath.favourable.length
+        ? quantile(basePath.favourable, 0.5)
+        : 0,
     };
   });
 }

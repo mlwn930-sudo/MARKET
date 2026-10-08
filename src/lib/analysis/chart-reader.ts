@@ -621,7 +621,22 @@ export async function readChartImage(
       images: [image],
       temperature: 0.15,
       maxOutputTokens: 4600,
-      timeoutMs: 45_000,
+      /* 24 seconds a model, 44 for everything together.
+
+         It asked for 45 per model before, which read as caution and
+         was the opposite. Three models in the chain and two passes
+         when the JSON does not parse is six attempts; at 45 seconds
+         each that is 270, and the route is cut at 60. The upload
+         spun and then nothing came back, because the platform killed
+         the function while an attempt was still in flight and no code
+         of ours survived to explain.
+
+         44 leaves the route sixteen seconds to corroborate the read
+         against real candles and answer. 24 a model fits two attempts
+         inside that, which is what the retry was for; a vision read
+         that has not answered in 24 seconds is not about to. */
+      timeoutMs: 24_000,
+      budgetMs: 44_000,
     });
 
     /* A shape check rather than trust. The model is reliable about the

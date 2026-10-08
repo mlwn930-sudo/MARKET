@@ -116,6 +116,11 @@ export async function POST(request: Request) {
           ],
           temperature: 0.3,
           maxOutputTokens: 900,
+          /* The same ceiling as the read, and the same arithmetic: no
+             per-attempt timeout meant the default 60 seconds times
+             three models against a route cut at 60. One clock. */
+          timeoutMs: 20_000,
+          budgetMs: 45_000,
         });
 
         /* Word by word, not character by character: a Hebrew word

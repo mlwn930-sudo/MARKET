@@ -67,6 +67,12 @@ const MODEL = MODEL_CHAIN[0];
  */
 const THINKING_HEADROOM = 900;
 
+/** Below this there is no point starting another model: the request and
+ *  the first tokens alone cost a few seconds, so an attempt given less
+ *  than this reports a timeout it was always going to hit while holding
+ *  the caller's remaining budget hostage. */
+const MIN_ATTEMPT_MS = 6_000;
+
 const MAX_PER_MINUTE = 10;
 const MAX_PER_DAY = 600;
 const MIN_GAP_MS = 400;
@@ -192,6 +198,28 @@ export type GenerateOptions = {
   temperature?: number;
   maxOutputTokens?: number;
   timeoutMs?: number;
+  /**
+   * Wall clock for EVERY attempt together, not for each one.
+   *
+   * `timeoutMs` caps a single call to a single model, and that is not
+   * the number a serverless caller needs. The chart read asked for 45
+   * seconds per model, and it meant it — but there are three models in
+   * the chain and `generateJson` runs the whole chain twice when the
+   * first answer does not parse. Six attempts at 45 seconds is 270,
+   * against a route ceiling of 60. What the reader saw was the upload
+   * spinning and then nothing at all: the platform killed the function
+   * mid-attempt, so no code of ours was left to say what happened.
+   *
+   * With a budget, every attempt draws from one clock. The last model
+   * gets whatever is left, and when too little is left to be worth
+   * starting the loop stops and reports — inside the function, where
+   * the page can turn it into a sentence.
+   */
+  budgetMs?: number;
+  /** An absolute deadline, in epoch milliseconds. Set by `generateJson`
+   *  so its second pass shares the budget of the first rather than
+   *  starting a fresh one. Callers pass `budgetMs`. */
+  deadlineAt?: number;
 };
 
 function bodyFor(options: GenerateOptions) {
@@ -283,17 +311,34 @@ export function containsGluedLatin(text: string): boolean {
 export async function generateText(options: GenerateOptions): Promise<string> {
   const key = apiKey();
 
+  /* Started before `schedule`, not inside it. Waiting for the rate
+     limiter spends the caller's wall clock exactly as a slow model does,
+     and a budget that ignores the queue is a budget that is wrong by
+     however long the queue was. */
+  const deadline =
+    options.deadlineAt ??
+    (options.budgetMs === undefined ? null : Date.now() + options.budgetMs);
+
   return schedule(async () => {
     let lastProblem = "no model answered";
 
     for (const model of MODEL_CHAIN) {
+      /* An attempt that cannot be given a workable slice is not started.
+         Starting it anyway is what produced the silent failure: the
+         platform cut the function while the request was in flight. */
+      const left = deadline === null ? Infinity : deadline - Date.now();
+      if (left < MIN_ATTEMPT_MS) {
+        lastProblem = `out of time before ${model} could be tried`;
+        break;
+      }
+
       let res: Response;
       try {
         res = await fetch(`${ENDPOINT}/${model}:generateContent`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "x-goog-api-key": key },
           body: JSON.stringify(bodyFor(options)),
-          signal: AbortSignal.timeout(options.timeoutMs ?? 60_000),
+          signal: AbortSignal.timeout(Math.min(options.timeoutMs ?? 60_000, left)),
           cache: "no-store",
         });
       } catch {
@@ -421,11 +466,20 @@ export async function generateJson<T>(options: GenerateOptions): Promise<T> {
     }
   };
 
-  const first = await generateText({ ...options, json: true });
+  /* ONE CLOCK ACROSS BOTH PASSES. Two passes over a three-model chain
+     is six attempts, and six attempts each honouring the full
+     per-attempt timeout is how a 45-second read became a request the
+     platform killed at 60 with nothing to show. The deadline is fixed
+     here, once, and both passes draw from it. */
+  const deadlineAt =
+    options.deadlineAt ??
+    (options.budgetMs === undefined ? undefined : Date.now() + options.budgetMs);
+
+  const first = await generateText({ ...options, json: true, deadlineAt });
   const parsedFirst = parse(first);
   if (parsedFirst !== null) return parsedFirst;
 
-  const second = await generateText({ ...options, json: true });
+  const second = await generateText({ ...options, json: true, deadlineAt });
   const parsedSecond = parse(second);
   if (parsedSecond !== null) return parsedSecond;
 

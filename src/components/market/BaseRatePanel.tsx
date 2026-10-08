@@ -1,5 +1,6 @@
 import type { BaseRateRead, ConditionRead } from "@/lib/metrics/base-rates";
 import { HORIZONS, MIN_SAMPLE, readOutcome } from "@/lib/metrics/base-rates";
+import type { Outcome } from "@/lib/metrics/base-rates";
 import { Empty, Section } from "@/components/ui";
 
 /**
@@ -25,6 +26,100 @@ import { Empty, Section } from "@/components/ui";
  */
 
 const HEAD = ["+שבוע", "+שבועיים", "+חודש", "+רבעון"] as const;
+
+/** One figure beside the figure it has to be read against. */
+function Pair({
+  label,
+  value,
+  baseline,
+}: {
+  label: string;
+  value: number;
+  baseline: number;
+}) {
+  const sign = (n: number) => `${n > 0 ? "+" : ""}${n.toFixed(1)}%`;
+  return (
+    <div className="bg-surface px-3 py-2">
+      <span className="block text-[10px] leading-tight text-ink-ghost">
+        {label}
+      </span>
+      <span className="num block text-[15px] text-ink">{sign(value)}</span>
+      <span className="num block text-[11px] text-ink-faint">
+        {`בסיס ${sign(baseline)}`}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * The shape of the month, not just whether it ended higher.
+ *
+ * "Higher 63% of the time" is the headline and it is the least useful
+ * number on the row. It says nothing about how far, how wide the spread
+ * was, or how much of the move was given back on the way — and the last
+ * of those is the one that decides whether anybody could have sat
+ * through it. A condition that ends +5% having been −12% on day four is
+ * a different event from one that never traded below its trigger, and
+ * until this block existed the page called them the same thing.
+ *
+ * Every figure here is a median of the occurrences, printed beside the
+ * same median over every day in the window. That pairing is the whole
+ * point: a six per cent drawdown means nothing until the reader can see
+ * that an arbitrary month on this stock also drew down six.
+ *
+ * NOT A STOP AND NOT A SIZE. The sentence under the block says so,
+ * because this is the most trade-shaped data on the site and the
+ * distance from here to advice is one confident caption.
+ */
+function Path({ outcome }: { outcome: Outcome }) {
+  /* Older stored files predate these fields. A panel that renders
+     `undefined.toFixed` takes the whole page with it, and the nightly
+     job is what fills them. */
+  const ready =
+    typeof outcome.medianAdversePct === "number" &&
+    typeof outcome.medianFavourablePct === "number" &&
+    typeof outcome.baselineAdversePct === "number" &&
+    typeof outcome.baselineFavourablePct === "number";
+  if (!ready) return null;
+
+  return (
+    <div className="mt-2">
+      <div className="grid grid-cols-2 gap-px overflow-hidden rounded border border-line bg-line sm:grid-cols-4">
+        <Pair
+          label="תנועה חציונית בחודש"
+          value={outcome.medianPct}
+          baseline={outcome.baselineMedianPct}
+        />
+        <Pair
+          label="הירידה הגדולה בדרך"
+          value={outcome.medianAdversePct}
+          baseline={outcome.baselineAdversePct}
+        />
+        <Pair
+          label="העלייה הגדולה בדרך"
+          value={outcome.medianFavourablePct}
+          baseline={outcome.baselineFavourablePct}
+        />
+        <div className="bg-surface px-3 py-2">
+          <span className="block text-[10px] leading-tight text-ink-ghost">
+            {"המחצית האמצעית"}
+          </span>
+          <span className="num block text-[15px] text-ink">
+            {`${outcome.p25Pct.toFixed(1)}% – ${outcome.p75Pct.toFixed(1)}%`}
+          </span>
+          <span className="num block text-[11px] text-ink-faint">
+            {`הגרוע ${outcome.worstPct.toFixed(1)}%`}
+          </span>
+        </div>
+      </div>
+      <p className="mt-2 text-[11px] leading-relaxed text-ink-ghost">
+        {
+          "חציונים של מה שכבר קרה על הנייר הזה, לא רמת סטופ, לא גודל פוזיציה ולא תחזית. המחצית האמצעית אומרת שברבע מהמקרים התוצאה היתה מתחת לטווח הזה, וברבע מעליו."
+        }
+      </p>
+    </div>
+  );
+}
 
 function Row({ condition }: { condition: ConditionRead }) {
   const month = condition.outcomes.find((o) => o.days === 21);
@@ -88,6 +183,8 @@ function Row({ condition }: { condition: ConditionRead }) {
           );
         })}
       </div>
+
+      {month && month.n >= MIN_SAMPLE && <Path outcome={month} />}
 
       {reading && (
         <p className="mt-3 text-[13px] leading-relaxed text-ink-muted">
