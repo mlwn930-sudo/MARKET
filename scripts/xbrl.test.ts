@@ -218,3 +218,73 @@ test("every figure carries the date it was filed", () => {
     "SEC data lags and a figure without its filing date is misleading",
   );
 });
+
+/* ── Banks file a different top line ──────────────────────────────────── */
+
+/**
+ * A bank does not report "revenue".
+ *
+ * It reports interest income, interest expense, and the net of the two
+ * plus fees — `RevenuesNetOfInterestExpense`. That tag was missing from
+ * the candidate list for the life of the project, and the cost was not a
+ * missing metric but a wrong date: with nothing current to merge, the
+ * reader fell back to whatever legacy tag the company last touched and
+ * reported it as the latest filing. Measured against SEC's own data:
+ * MS came back as 2018-03-31 from a single stray contract-revenue fact,
+ * WFC as 2020-09-30, JPM as 2014-12-31 — while all three were filing
+ * through 2026-06-30 under the tag nobody had asked for.
+ *
+ * The site said "this reading rests on an old report", which was honest
+ * and still wrong: there was a new one.
+ */
+function twoTags(
+  a: { tag: string; rows: XbrlFact[] },
+  b: { tag: string; rows: XbrlFact[] },
+): CompanyFacts {
+  return {
+    cik: 1,
+    entityName: "Bank",
+    facts: {
+      "us-gaap": {
+        [a.tag]: { label: null, description: null, units: { USD: a.rows } },
+        [b.tag]: { label: null, description: null, units: { USD: b.rows } },
+      },
+    },
+  };
+}
+
+test("a bank's net-of-interest line is read, not its abandoned legacy tag", () => {
+  const f = twoTags(
+    /* One stray fact from years ago, exactly as Morgan Stanley carries. */
+    { tag: "RevenueFromContractWithCustomerExcludingAssessedTax", rows: [
+      period("2018-01-01", "2018-03-31", 9),
+    ] },
+    { tag: "RevenuesNetOfInterestExpense", rows: [
+      period("2025-10-01", "2025-12-31", 100),
+      period("2026-01-01", "2026-03-31", 110),
+      period("2026-04-01", "2026-06-30", 120),
+      period("2025-07-01", "2025-09-30", 90),
+    ] },
+  );
+  const read = ttm(f, CONCEPTS.REVENUE);
+  assert.ok(read);
+  assert.equal(read.end, "2026-06-30", "the stale tag must not date the read");
+  assert.equal(read.value, 420);
+});
+
+test("the component tags are deliberately not candidates", () => {
+  /* `InterestIncomeExpenseNet` and `InterestAndDividendIncomeOperating`
+     are parts of the same line. Merged with the total they would give two
+     different values for one period, and `preferred` would resolve that
+     by filing date — returning whichever happened to be restated last. */
+  for (const component of [
+    "InterestIncomeExpenseNet",
+    "InterestAndDividendIncomeOperating",
+  ]) {
+    assert.ok(
+      !CONCEPTS.REVENUE.includes(component),
+      `${component} is a component of the top line, not the top line`,
+    );
+  }
+  assert.ok(CONCEPTS.REVENUE.includes("RevenuesNetOfInterestExpense"));
+});

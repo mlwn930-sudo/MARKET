@@ -3,6 +3,7 @@ import { isPrivateBuild } from "@/lib/private-mode";
 import {
   buildChartStance,
   DIRECTION_NAME,
+  ROUTE_KIND_NAME,
   HORIZON_NAME,
   HORIZON_SPAN,
 } from "./stance";
@@ -313,6 +314,11 @@ function stanceLines(checked: Corroboration): string[] {
     for (const line of h.because) out.push(`· בעד: ${line}`);
     for (const line of h.against) out.push(`· נגד: ${line}`);
     for (const line of h.invalidation) out.push(`· מפריך: ${line}`);
+    for (const r of h.route) {
+      out.push(
+        `· מסלול ${r.order} [${ROUTE_KIND_NAME[r.kind]}] ${r.label}: ${r.detail}`,
+      );
+    }
     out.push(h.basis);
   }
 

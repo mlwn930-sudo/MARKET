@@ -4,6 +4,7 @@ import { TermHint } from "./TermHint";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
+import { isPrivateBuild } from "@/lib/private-mode";
 
 /**
  * The shared layout vocabulary.
@@ -1126,15 +1127,44 @@ export function LiveBadge({
   );
 }
 
-/** The line every analysis page carries. Required by the project rules. */
+/**
+ * The line every analysis page carries. Required by the project rules.
+ *
+ * TWO VERSIONS, AND THE PRIVATE ONE IS NOT SHORTER. In the private build
+ * the pages do state conclusions, so "the analytical frameworks describe
+ * what already happened" would be describing a different site — and a
+ * disclaimer that does not match the page is worse than none, because it
+ * teaches the reader to skip the one at the bottom of every page.
+ *
+ * What survives both: not a forecast, not connected to a broker, no
+ * orders. Those stay true however opinionated the page above is, and the
+ * last of them is rule 7, which has no mode.
+ *
+ * `extra` is prepended by individual pages and several of those strings
+ * are themselves rule-8 statements ("אין בו המלצה להחזיק"). They are
+ * left alone on purpose: each belongs to its own page and should be
+ * changed when that page starts stating a view, not pre-emptively from
+ * here.
+ */
 export function Disclaimer({ extra }: { extra?: string }) {
   return (
     <p className="mt-24 border-t border-line pt-6 text-[12px] leading-relaxed text-ink-ghost">
       {extra && <>{extra} </>}
-      הנתונים מוצגים לצורכי מחקר בלבד ואינם ייעוץ השקעות, שיווק השקעות או
-      תחליף לייעוץ המתחשב בנתוניו של כל אדם. המסגרות האנליטיות מתארות את מה
-      שכבר קרה בדוחות ובמחיר, ואינן תחזית. המערכת אינה מחוברת לברוקר ואינה
-      מבצעת פעולות קנייה או מכירה.
+      {isPrivateBuild() ? (
+        <>
+          מצב פרטי: העמוד הזה מסיק מסקנות ולא רק מתאר מדידות, וכל מסקנה
+          מגיעה עם הנתונים שמאחוריה ועם מה שיפריך אותה. אין כאן ייעוץ
+          השקעות ואין התאמה לנתוניו של אדם מסוים. שום דבר כאן אינו תחזית,
+          והמערכת אינה מחוברת לברוקר ואינה מבצעת פעולות קנייה או מכירה.
+        </>
+      ) : (
+        <>
+          הנתונים מוצגים לצורכי מחקר בלבד ואינם ייעוץ השקעות, שיווק השקעות
+          או תחליף לייעוץ המתחשב בנתוניו של כל אדם. המסגרות האנליטיות
+          מתארות את מה שכבר קרה בדוחות ובמחיר, ואינן תחזית. המערכת אינה
+          מחוברת לברוקר ואינה מבצעת פעולות קנייה או מכירה.
+        </>
+      )}
     </p>
   );
 }

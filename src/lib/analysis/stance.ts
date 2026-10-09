@@ -143,6 +143,30 @@ export type ConditionCite = {
   baselineAdversePct: number | null;
 };
 
+/**
+ * One checkable state on the route.
+ *
+ * `kind` is what the step does to the stance, not what the reader should
+ * do about it. "now" is already true, "confirm" would add a counted
+ * condition to the same side, "end" refutes it, "expires" is the horizon
+ * running out. There is no "enter" and there will not be one: the site
+ * does not know this reader's position, horizon or risk, and a step that
+ * said "buy here" would be inventing all three.
+ */
+export type RouteStep = {
+  order: number;
+  kind: "now" | "confirm" | "end" | "expires";
+  label: string;
+  detail: string;
+};
+
+export const ROUTE_KIND_NAME: Record<RouteStep["kind"], string> = {
+  now: "נכון עכשיו",
+  confirm: "יחזק את זה",
+  end: "יסיים את זה",
+  expires: "פג",
+};
+
 /** Context from the chart's structure. Carries no record, is never
  *  counted, and cannot change a direction. */
 export type StructureNote = {
@@ -186,6 +210,22 @@ export type HorizonStance = {
   /** Never empty while anything is firing. */
   against: string[];
   invalidation: string[];
+  /**
+   * The same evidence in the order a person would actually use it.
+   *
+   * Asked for as "a route", and the honest version of that is a
+   * sequence of checkable states rather than a plan: what is true now,
+   * what would add to it, what would end it, and when it expires
+   * regardless. Every step is an observable close — it happened or it
+   * did not — so the whole thing can be scored afterwards instead of
+   * remembered favourably.
+   *
+   * It contains no new measurement. It is `agreeing`, the conditions
+   * that lean the same way and have not fired yet, and `invalidation`,
+   * put in order. A route that introduced a figure the panel above does
+   * not show would be a forecast wearing a checklist.
+   */
+  route: RouteStep[];
   /** The bar this was measured on, and the close it was measured from. */
   asOf: string;
   lastClose: number;
@@ -461,6 +501,66 @@ function stanceFor(
       "אחרי זה היא פגה ואינה אומרת דבר — עמדה שלא נפסלת בזמן הופכת לדעה קבועה.",
   );
 
+  /* ---- The route: the same evidence, in the order it gets used ---- */
+  const route: RouteStep[] = [];
+  let step = 1;
+
+  for (const c of agreeing) {
+    route.push({
+      order: step++,
+      kind: "now",
+      label: c.label,
+      detail:
+        `${share(c.upShareHist)} מול בסיס ${share(c.baselineUpShare)} (${points(c.liftPp)}), ` +
+        `על ${c.n} מופעים` +
+        (c.medianAdversePct !== null
+          ? `. ירידה חציונית בדרך ${pct(c.medianAdversePct)}.`
+          : "."),
+    });
+  }
+
+  /* What would add a second counted condition to the same side. Only
+     when there is a side: with no direction there is nothing to
+     confirm, and listing "events that would make a case" under a stance
+     that has no case is how a blank panel starts implying one. */
+  if (direction === "up" || direction === "down") {
+    const wanted = direction === "up" ? 1 : -1;
+    for (const condition of rates.conditions) {
+      if (condition.activeNow) continue;
+      const o = condition.outcomes.find((x) => x.days === days);
+      if (!o || o.n < MIN_SAMPLE) continue;
+      if (Math.abs(o.liftPp) < MEANINGFUL_PP) continue;
+      if (Math.sign(o.liftPp) !== wanted) continue;
+      route.push({
+        order: step++,
+        kind: "confirm",
+        label: condition.label,
+        detail:
+          `עוד לא קרה הפעם. כשקרה: ${share(o.up)} מול בסיס ${share(o.baselineUp)} ` +
+          `(${points(o.liftPp)}), על ${o.n} מופעים.`,
+      });
+    }
+  }
+
+  for (const line of invalidation) {
+    const expiry = line.includes("תום האופק");
+    /* The invalidation lines are written as "<event> — <why>", and the
+       row prints a label above a detail. Splitting on the dash keeps the
+       event out of the detail: printed whole it read as the event name
+       twice in one row. */
+    const dash = line.indexOf(" — ");
+    route.push({
+      order: step++,
+      kind: expiry ? "expires" : "end",
+      label: expiry
+        ? `תום ${HORIZON_SPAN[horizon]}`
+        : dash === -1
+          ? line
+          : line.slice(0, dash),
+      detail: dash === -1 ? line : line.slice(dash + 3),
+    });
+  }
+
   /* ---- Basis ---- */
   const basis =
     `נספר מ-${rates.sessions} ימי מסחר של ${rates.symbol} עצמו ` +
@@ -488,6 +588,7 @@ function stanceFor(
     because,
     against,
     invalidation,
+    route,
     asOf,
     lastClose,
     basis,

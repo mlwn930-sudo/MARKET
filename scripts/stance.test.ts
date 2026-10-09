@@ -235,6 +235,12 @@ test("no field is an average: every number out was a number in", () => {
   }
 
   const walk = (value: unknown, path: string) => {
+    /* `order` is an ordinal position in a list, not a measurement — it
+       makes no claim about the world. Excluded by FIELD NAME rather than
+       by adding 1, 2, 3 to the allowed values, because allowing those
+       values would let a genuine derived figure that happened to equal 2
+       slip through. */
+    if (/\.order$/.test(path)) return;
     if (typeof value === "number") {
       assert.ok(
         allowed.has(value),
@@ -482,4 +488,64 @@ test("the condition turned into prices is the best-sampled one", () => {
     condition("reclaim-50", "סגירה מעל ממוצע 50", true, { 21: { n: 70, liftPp: 12, up: 0.67 } }),
   ]);
   assert.equal(out!.swing.bestKey, "reclaim-50");
+});
+
+/* ── The route ───────────────────────────────────────────────────────── */
+
+test("the route runs now, then confirm, then end, then expiry", () => {
+  const out = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, { 21: { liftPp: 20, up: 0.78 } }),
+    condition("golden-cross", "חיתוך זהב", false, { 21: { liftPp: 18, up: 0.76 } }),
+    condition("lose-50", "סגירה מתחת לממוצע 50", false),
+  ]);
+  const kinds = out!.swing.route.map((s) => s.kind);
+  assert.equal(kinds[0], "now");
+  assert.ok(kinds.includes("confirm"));
+  assert.equal(kinds[kinds.length - 1], "expires");
+  assert.deepEqual(
+    out!.swing.route.map((s) => s.order),
+    out!.swing.route.map((_, i) => i + 1),
+    "numbered without gaps, because a reader counts them",
+  );
+});
+
+test("a confirming step must lean the same way as the stance", () => {
+  /* A condition with a big gap in the opposite direction is not
+     confirmation, and listing it as a step would turn the route into a
+     list of everything measurable. */
+  const out = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, { 21: { liftPp: 20, up: 0.78 } }),
+    condition("death-cross", "חיתוך מות", false, { 21: { liftPp: -25, up: 0.32 } }),
+  ]);
+  const confirms = out!.swing.route.filter((s) => s.kind === "confirm");
+  assert.equal(confirms.length, 0);
+});
+
+test("with no direction there is nothing to confirm", () => {
+  /* The 113-of-123 case. A blank stance that still listed "events that
+     would make the case" would be implying a case it does not have. */
+  const out = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", false, { 21: { liftPp: 20, up: 0.78 } }),
+  ]);
+  assert.equal(out!.swing.direction, "none");
+  assert.equal(out!.swing.route.filter((s) => s.kind === "confirm").length, 0);
+  assert.ok(out!.swing.route.some((s) => s.kind === "expires"));
+});
+
+test("no route step tells the reader to transact", () => {
+  /* The site does not know this reader's position, horizon or risk. A
+     step that said "enter here" would be inventing all three. */
+  const out = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, { 21: { liftPp: 20, up: 0.78 } }),
+    condition("lose-50", "סגירה מתחת לממוצע 50", false),
+  ]);
+  for (const s of [...out!.swing.route, ...out!.position.route]) {
+    const text = `${s.label} ${s.detail}`;
+    assert.doesNotMatch(
+      text,
+      /לקנות|למכור|להיכנס|לצאת|סטופ|גודל פוזיציה/,
+      `route step reads as an instruction: ${text}`,
+    );
+    assert.ok(["now", "confirm", "end", "expires"].includes(s.kind));
+  }
 });

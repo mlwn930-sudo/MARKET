@@ -29,10 +29,36 @@ export type Period = {
  *  date travels with the number and is shown next to it. */
 export type Sourced<T> = { value: T; filed: string; end: string } | null;
 
+/**
+ * Every tag a company might put its top line under.
+ *
+ * `RevenuesNetOfInterestExpense` IS NOT OPTIONAL, and leaving it out was
+ * a silent three-year error rather than a missing feature. A bank does
+ * not report "revenue": it reports interest income, interest expense,
+ * and the net of the two plus fees — which is this tag. Without it the
+ * merge below had nothing current to find, so it fell back to whatever
+ * legacy tag the company last touched years ago and reported that as the
+ * latest filing:
+ *
+ *   MS   one stray RevenueFromContractWithCustomer... fact, 2018-03-31
+ *   WFC  Revenues, discontinued after 2020-09-30
+ *   JPM  Revenues, stale
+ *
+ * All three actually file `RevenuesNetOfInterestExpense` through
+ * 2026-06-30. The site was not wrong about them being stale — it said so
+ * on the page — it was wrong that there was nothing newer to read.
+ *
+ * Only the net figure, deliberately. `InterestIncomeExpenseNet` and
+ * `InterestAndDividendIncomeOperating` are components of the same line,
+ * and merging a component with a total gives two different values for
+ * one period, where `preferred` would pick by filing date and silently
+ * return whichever was restated last.
+ */
 const REVENUE = [
   "RevenueFromContractWithCustomerExcludingAssessedTax",
   "RevenueFromContractWithCustomerIncludingAssessedTax",
   "Revenues",
+  "RevenuesNetOfInterestExpense",
   "SalesRevenueNet",
   "SalesRevenueGoodsNet",
 ];

@@ -6,6 +6,7 @@ import {
   HORIZON_NAME,
   HORIZON_SPAN,
 } from "@/lib/analysis/stance";
+import { ROUTE_KIND_NAME } from "@/lib/analysis/stance";
 import type { ConditionCite, HorizonStance } from "@/lib/analysis/stance";
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 
@@ -166,6 +167,38 @@ function Horizon({ stance }: { stance: HorizonStance }) {
             ))}
           </ul>
         </div>
+      )}
+
+      {/* THE ROUTE, BEFORE THE TWO LISTS IT IS MADE OF.
+
+          Asked for as a route, and the honest version is a sequence of
+          checkable states: what is true, what would add to it, what
+          ends it, when it expires. Every row is an observable close,
+          so the whole thing can be scored afterwards rather than
+          remembered favourably. There is no step that says to buy. */}
+      {stance.route.length > 0 && (
+        <ol className="mt-4 grid gap-px overflow-hidden rounded border border-line bg-line">
+          {stance.route.map((s) => (
+            <li key={s.order} className="bg-surface px-3 py-2">
+              <span className="flex flex-wrap items-baseline gap-x-2">
+                <span className="num text-[11px] text-ink-ghost">{s.order}</span>
+                <span
+                  className={`text-[10px] tracking-[0.06em] ${
+                    s.kind === "end" || s.kind === "expires"
+                      ? "text-ink"
+                      : "text-ink-ghost"
+                  }`}
+                >
+                  {ROUTE_KIND_NAME[s.kind]}
+                </span>
+                <span className="text-[13px] text-ink">{s.label}</span>
+              </span>
+              <span className="mt-0.5 block text-[12px] leading-relaxed text-ink-faint">
+                {s.detail}
+              </span>
+            </li>
+          ))}
+        </ol>
       )}
 
       <div className="read-block mt-4" data-tone="invalidation">
