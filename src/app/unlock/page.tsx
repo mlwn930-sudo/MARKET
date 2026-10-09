@@ -13,7 +13,9 @@ import type { Metadata } from "next";
  */
 
 export const metadata: Metadata = {
-  title: "כניסה · Market Intel",
+  /* The root layout appends "· Market Intel" through its template, so a
+     title that carries it too renders it twice in the tab. */
+  title: "כניסה",
   description: "האתר נעול.",
   robots: { index: false, follow: false },
 };
