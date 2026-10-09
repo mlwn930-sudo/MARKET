@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-10-09T18:42:50.031Z",
+  "refreshedAt": "2026-10-09T23:06:24.977Z",
   "sectors": [
     {
       "sector": "ai",
@@ -7,117 +7,113 @@
       "blurb": "מודלים, שבבי AI, מרכזי נתונים והמירוץ בין החברות",
       "accent": "#7f77dd",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=1fa9f1c674574e0933237001e1e66d77711e406a331cd57995c1136d4894f80d",
-          "title": "Explore the S&P500 index on Friday and find out which stocks are the most active in today's session.",
-          "excerpt": "Stay informed about the most active stocks in the S&P500 index on Friday's session. Discover the stocks that are generating the highest trading volume and driving market activity.",
-          "image": "https://www.chartmill.com/images/uploads/CM_Most_Active_Stocks_Small_free_fec0650b7f.webp",
-          "domain": "ChartMill",
-          "country": null,
-          "seenAt": "2026-10-09T18:05:02.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=189c880b9208fee07e2dc21b40797cd24c20700ff3dbe64102a6e1e800bb4227",
-          "title": "Elon Musk, Jensen Huang, and tech leaders receive White House National Medals",
-          "excerpt": "Elon Musk, Tesla (TSLA), SpaceX (SPCX) CEO, Jensen Huang Nvidia (NVDA) CEO, Dr. Lisa Su, AMD (AMD) CEO, Michael Dell, Dell Technologies (DELL) CEO, Satya Nadella Microsoft (MSFT) CEO, and Sergey Brin, Google (GOOG) co-founder all received the National Medal of Science and National Medal of Technology and Innovation at a White House ceremony.",
+          "url": "https://finnhub.io/api/news?id=11baf85dd4aad7c871114ee37abf59d73de56d714ba83f79b2cced423615a6bc",
+          "title": "Netflix Is Reportedly Cutting 5% of Its Staff. Its 2022 Layoffs Came Days After the Stock Bottomed.",
+          "excerpt": "The company's spending outside content is growing faster than its sales again. Does 2022 say anything about the stock?",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T17:45:53.000Z",
+          "seenAt": "2026-10-09T21:43:02.000Z",
+          "tickers": [
+            "NFLX"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=15e7488a7326496cdac3ee192b6b3e7fe42912cd446acc413bcd8a79dacf5db9",
+          "title": "If a Stock Market Crash Is Coming, Billionaire Investor Bill Ackman Says You Should Do This 1 Thing Right Now",
+          "excerpt": "Investors have been anxious despite a strong market run in recent years, with many warning signs along the way.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T21:05:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=ed78a891e9e8edaf64ffa329aaafae031836fe1d66cc691f988092441d276b1a",
+          "title": "Are markets still overconcentrated in tech heading into earnings season?",
+          "excerpt": "Big Bank stocks will kick off the third quarter earnings season next week. FBB Capital Partners senior portfolio manager Mel Casey sits down with Brooke DiPalma to discuss his earnings season forecasts and whether there are still overconcentration risks in the market (^DJI, ^IXIC, ^GSPC).",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T21:04:15.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=6bb4d29a577a78a61cc3724e3163c02f3c2bed9e2f5a700c3e7129c909dbc8c6",
+          "title": "Why Legendary Investor Peter Lynch Ignored Stock Market Crash Predictions, and Why You Should Too",
+          "excerpt": "Peter Lynch has noted that investors tend to lose a lot of money when trying to predict market corrections.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T20:50:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=14790d4f04e9db504c8716f25a340ce552e0811b3867eb7cad45a6db48e0af0a",
+          "title": "New Horizon Aircraft Ltd. Q1 2027 Earnings Call Summary",
+          "excerpt": "Moby summary of New Horizon Aircraft Ltd.'s Q1 2027 earnings call",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T20:49:36.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=1d72605c0992870fb58e326702fcc43d866e4c10a8462e08d3bcecd7536e0013",
+          "title": "Dow Jones Futures: S&P 500, Nasdaq Near Highs; ASML, Nvidia's Chipmaker Taiwan Semi To Kick Off AI Earnings",
+          "excerpt": "Despite some chop, the S&P 500 and Nasdaq are near highs. ASML and Nvidia chipmaker Taiwan Semi earnings may decide if the AI stock pullback is bullish.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T20:44:20.000Z",
           "tickers": [
             "NVDA",
-            "MSFT",
-            "GOOGL",
-            "AMD"
+            "ASML"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=0861bf3e9bc6fba4652910ee42145c37881ce716765e3123af657460fe8534fc",
-          "title": "Why T-Mobile Stock Just Crashed",
-          "excerpt": "SpaceX is buying spectrum, and T-Mobile investors are nervous.",
+          "url": "https://finnhub.io/api/news?id=9ad4154da01c569808a3d9306c5e9161000d54640d09229d43edf80f8d6c3de9",
+          "title": "If I Could Tell All Long-Term Investors Just 1 Thing Right Now, It's This",
+          "excerpt": "It's so simple, yet so powerful.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T17:41:24.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=2f56f577c7d7d9fd336a4cbc2a0b58b01bcca30bf705964c178adeee94348f62",
-          "title": "Prediction: $5,000 Invested in Credo Technology Could Be Worth This Much by 2029",
-          "excerpt": "Credo Technology is emerging as a popular artificial intelligence (AI) infrastructure stock.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T17:35:00.000Z",
-          "tickers": [
-            "INTC"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=7c26930592be7db833b3c86f4038da9da7e9ab8f539e463bdbcbded91bbd393d",
-          "title": "Jim Cramer Likes This Stock but Has a Problem With the Price",
-          "excerpt": "When a caller asked about Astera Labs, Inc. (NASDAQ:ALAB) during the October 6 episode of Mad Money, Jim Cramer praised the business but objected to its valuation: You know, Astera Labs, look, first of all, I’m going to tell you, this is one of those situations I try to explain in my book. It’s a […]",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T17:11:46.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=8ed142d3e023394cf8a168eacff517f21320a8d9f9f1cbb5173ad7887772be44",
-          "title": "Why Park Aerospace Stock Is Plunging Today",
-          "excerpt": "The company's second-quarter 2027 financial results had several bright spots. So what's moving investors to sell?",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T17:05:37.000Z",
+          "seenAt": "2026-10-09T20:35:00.000Z",
           "tickers": [
             "SO"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=38b3cef99524cba9ed89948b6b6d9cbc98e8a39c4aa0d99e1994dfccf964f143",
-          "title": "CoreWeave Stock Fell Nearly 8% in a Day on an OpenAI Revenue Report. Here’s Why Its Borrowing Model Raises the Stakes",
-          "excerpt": "Key Stats for CoreWeave StockCurrent Price: $81. 58Street Target: ~$141LTM Net Debt/EBITDA: 8.",
+          "url": "https://finnhub.io/api/news?id=cb05d8e23e33a34d47cd6a3789f2787364142fed3b5c4ca444402f9f00bdcc78",
+          "title": "Here's What $1,000 Invested in Nebius Could Be Worth by 2030",
+          "excerpt": "The neocloud company could still have plenty of room to grow.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T16:58:13.000Z",
+          "seenAt": "2026-10-09T20:30:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=d5dde9b9c6201412f0d95dba2869f82afb251eec32d07d192ea374ce33aca951",
-          "title": "Why Verizon Stock Just Crashed",
-          "excerpt": "SpaceX is buying spectrum, and Verizon investors are nervous.",
+          "url": "https://finnhub.io/api/news?id=743b0382a723cbdc32d43787735790af20fd09acef17e366f8d38a2214800229",
+          "title": "This Stock Is Up More than 560% This Year, but It Could Drop by 38%, According to Wall Street",
+          "excerpt": "Have Moderna’s shares risen too much, too fast?",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T16:55:46.000Z",
+          "seenAt": "2026-10-09T20:20:02.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=6006383a7adb0d5cd91b8b0488fe970ff648d00d7541539edb13a37027e75b63",
-          "title": "Prediction: This Will Be AMD's Stock Price in 1 Year",
-          "excerpt": "The No. 2 data center GPU maker is trading at an incredibly high premium after its latest rally.",
+          "url": "https://finnhub.io/api/news?id=ff12483af27594dbb86b499d88a1a76539f5f86eed250143c1e3e8fdedffa751",
+          "title": "I Know I'll Get Some Social Security in Retirement. Here's Why I'm Planning Like I Won't.",
+          "excerpt": "Social Security isn't disappearing, but it'll probably look different in the future.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T16:52:00.000Z",
-          "tickers": [
-            "AMD"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=39c783e0ebf737018d33bc3d800d1d0d3d0ed034bd656979df135bbafcc92cfd",
-          "title": "Delta Air Lines, Inc. Q3 2026 Earnings Call Summary",
-          "excerpt": "Moby summary of Delta Air Lines, Inc.'s Q3 2026 earnings call",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T16:50:43.000Z",
+          "seenAt": "2026-10-09T20:20:00.000Z",
           "tickers": []
         }
       ]
@@ -128,21 +124,31 @@
       "blurb": "ייצור שבבים, ציוד ליתוגרפיה, זיכרון ומגבלות יצוא",
       "accent": "#1d9e75",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=189c880b9208fee07e2dc21b40797cd24c20700ff3dbe64102a6e1e800bb4227",
-          "title": "Elon Musk, Jensen Huang, and tech leaders receive White House National Medals",
-          "excerpt": "Elon Musk, Tesla (TSLA), SpaceX (SPCX) CEO, Jensen Huang Nvidia (NVDA) CEO, Dr. Lisa Su, AMD (AMD) CEO, Michael Dell, Dell Technologies (DELL) CEO, Satya Nadella Microsoft (MSFT) CEO, and Sergey Brin, Google (GOOG) co-founder all received the National Medal of Science and National Medal of Technology and Innovation at a White House ceremony.",
+          "url": "https://finnhub.io/api/news?id=1d72605c0992870fb58e326702fcc43d866e4c10a8462e08d3bcecd7536e0013",
+          "title": "Dow Jones Futures: S&P 500, Nasdaq Near Highs; ASML, Nvidia's Chipmaker Taiwan Semi To Kick Off AI Earnings",
+          "excerpt": "Despite some chop, the S&P 500 and Nasdaq are near highs. ASML and Nvidia chipmaker Taiwan Semi earnings may decide if the AI stock pullback is bullish.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T17:45:53.000Z",
+          "seenAt": "2026-10-09T20:44:20.000Z",
           "tickers": [
             "NVDA",
-            "MSFT",
-            "GOOGL",
-            "AMD"
+            "ASML"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=bb274bcd89a9f182b5f8009184509266873d1bdabda01416b3b7e75b5cdc8e62",
+          "title": "Micron Stock Falls. Why Buybacks Could be Crucial for Gains.",
+          "excerpt": "Micron stock is recovering from a selloff on Thursday but investors may have to wait for major gains for the memory-chip company’s shares.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T20:22:00.000Z",
+          "tickers": [
+            "MU"
           ]
         },
         {
@@ -156,6 +162,19 @@
           "tickers": [
             "TSM",
             "INTC"
+          ]
+        },
+        {
+          "url": "https://www.cnbc.com/2026/10/09/two-massive-trades-just-happened-in-micron-and-nvidia-what-they-could-mean-for-chips.html",
+          "title": "Two massive trades just happened in Micron and Nvidia. What they could mean for chips",
+          "excerpt": "Bears continued to build up positions against the semiconductor group on Friday.",
+          "image": "https://image.cnbcfm.com/api/v1/image/108310210-17793162171779316215-46072347407-1080pnbcnews.jpg?v=1779316216&w=1920&h=1080",
+          "domain": "CNBC",
+          "country": null,
+          "seenAt": "2026-10-09T18:50:21.000Z",
+          "tickers": [
+            "NVDA",
+            "MU"
           ]
         },
         {
@@ -231,30 +250,6 @@
           "tickers": [
             "TSM"
           ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=c05eaa1ee8eef5fa9803f683aff6081bb7385abd1caa38ea5afbd2a8f142ed00",
-          "title": "A $2 Billion Reason Why GlobalFoundries Stock Is Up Today",
-          "excerpt": "GlobalFoundries stock rallies on a $2 billion deal with TSMC. But does that warrant buying GFS shares? Let’s find out!",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-08T20:17:37.000Z",
-          "tickers": [
-            "TSM"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=477188bceadb738f277e050174cdd0e2c7352efe48b1c691035ea093ea53c8c1",
-          "title": "3 Undervalued Tech Stocks Trading Up To 66% Below Fair Value",
-          "excerpt": "AI hardware is pulling global trade forward, with Samsung and TSMC reporting record chip demand that keeps capital flowing into the broader technology sector. When headlines focus on the giants, quietly cheaper US tech stocks can slip through the cracks. That is where undervalued software, hardware, and semiconductor players come in. This article walks through three such opportunities from our US tech value screen and explains why they deserve a closer look now. The stocks highlighted below...",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-08T20:13:57.000Z",
-          "tickers": [
-            "TSM"
-          ]
         }
       ]
     },
@@ -264,8 +259,18 @@
       "blurb": "מחירי נפט, אופ״ק, זיקוק ושרשרת האספקה העולמית",
       "accent": "#d85a30",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=c631beddb8e54fab195a40e1314bac30245aaccf8b679d9912b8c9b958d2ad30",
+          "title": "Forget Chasing the Biggest Yield. These 5 Dividend Stocks Have Something Better",
+          "excerpt": "One of these five blue chips has sent shareholders a dividend check every single quarter since 1916, and that kind of staying power changes how you think about building retirement income from scratch.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T18:45:50.000Z",
+          "tickers": []
+        },
         {
           "url": "https://finnhub.io/api/news?id=1b848e55def758de63b87e20c7b25878a553925e53b6518355c042797853a540",
           "title": "Retirees Who Picked VIG Over VYM in 2022 Are Still $10,000 Behind on Every $100,000",
@@ -277,6 +282,16 @@
           "tickers": [
             "SO"
           ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPSC1DZmo5R2daREU0YTBRSFBZTE04NW92WFQ3eXhLeGhiRlFyTEZBbHdWT2xuczBRYmtWcmlqMVJKTUo0Vk9KTEk1OU1jYUo1NlQ3Zi1KTzhmc1pmZkhQS01OajhXWHR1aWpQVEpuRTllX0RSd3ZmR3ZKMG51MlJRNGQtX3BkdUpfOHFGejVtbnhMUGlGNVdDa2lISkd5dFdmNWc3dFpRZnJuNGJ6M3duQ1pJcXo?oc=5",
+          "title": "US diesel prices remain high despite Trump's moves to boost supplies - Reuters",
+          "excerpt": "US diesel prices remain high despite Trump's moves to boost supplies  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-10-09T16:18:51.000Z",
+          "tickers": []
         },
         {
           "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQU3RwVkZ4Mkg3Vy1fdGF2T2t4RmRLV3lQaU5LcXdnd3hKd21HRlZqR1dBTDlEbmNheE1MYVNjZldOLVlUd2lpMDdSaDd5c0tSUEpVRWJPLU1rTU9hSVhTYlF3Z2JPUlQydXgyb0VraVpvMUlwdHlFY2RoNEZ3WUE4Y0JjNnlHMV9VakFsdzMzOFFzUnQ3MlE?oc=5",
@@ -321,16 +336,6 @@
           ]
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPSC1DZmo5R2daREU0YTBRSFBZTE04NW92WFQ3eXhLeGhiRlFyTEZBbHdWT2xuczBRYmtWcmlqMVJKTUo0Vk9KTEk1OU1jYUo1NlQ3Zi1KTzhmc1pmZkhQS01OajhXWHR1aWpQVEpuRTllX0RSd3ZmR3ZKMG51MlJRNGQtX3BkdUpfOHFGejVtbnhMUGlGNVdDa2lISkd5dFdmNWc3dFpRZnJuNGJ6M3duQ1pJcXo?oc=5",
-          "title": "Trump's moves to boost diesel supplies have not yet lowered prices - Reuters",
-          "excerpt": "Trump's moves to boost diesel supplies have not yet lowered prices  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-10-09T10:19:51.000Z",
-          "tickers": []
-        },
-        {
           "url": "https://finnhub.io/api/news?id=97b1ac4087e06cbaad52bbd54a9f1309f596d06ae21202366c3aa847d51dd8f2",
           "title": "Here's What $1,000 in These 6 Energy Dividend Stocks Could Pay You in a Year",
           "excerpt": "If you are looking to generate income from the energy sector, these six dividend stocks will likely show up on your screens.",
@@ -338,6 +343,16 @@
           "domain": "Yahoo",
           "country": null,
           "seenAt": "2026-10-09T06:35:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxONW0wejJNQmpGTE9heFBmZG8wTWE5a010VFNMSDBqcThNXzBFTjZkbWF3NnpxSWxoVkRJSEhMcDk4VDh5OVp3bzlZNzdiS0pNTnd6aGkwQVZsU0JiOU9wb0k1ckN1V2ZUVl9sTFRuZnVhLXFlaDUwZGIxT2VxNW1RZUwyNlJ3c2ZxRkdONll5RVdtTnlfcDllN0pnLWE4VU1FblRvbHdkTkIwbHNk?oc=5",
+          "title": "Oil prices settle higher as more production shut ahead of hurricane - Reuters",
+          "excerpt": "Oil prices settle higher as more production shut ahead of hurricane  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-10-09T02:28:00.000Z",
           "tickers": []
         },
         {
@@ -349,26 +364,6 @@
           "country": null,
           "seenAt": "2026-10-09T01:58:00.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=877885f2a30607f07d673a7a6c76d7dde0bdb410a268d5c4f9944b1d4cd96a8d",
-          "title": "Want Lifetime Passive Income? Put $100,000 Into These Dividend Stocks",
-          "excerpt": "Five dividend stocks spanning tobacco, pipelines, telecom, real estate, and oil each fund their payouts from real cash flow and decades of raise records, and together they could transform a single investment into something that pays you every month for life.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-08T13:30:09.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPLWZRemZfUzFpTFNOQmFCRmFoZXhiSWRWUlhHTm1qdHJfYlRPbjVsU2Zjc0theVVURncxNjdjZHNVR0tBZ05rQldTWE5FUllRcWFQQXRFMndSZldkUDlPb3ZmV0dnNEY2cF9jeEdzbzBjUUliMWN0X1R3elAxaDR3RDFmTGYwQ0NxOU9jbVgyR2xfb2lwNEZoajBPbDk5UVRtcDJadVRfLTlWWEthLTlsaUx3?oc=5",
-          "title": "Most Gulf bourses end lower as Hormuz attacks hit wartime peak - Reuters",
-          "excerpt": "Most Gulf bourses end lower as Hormuz attacks hit wartime peak  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-10-08T13:23:29.000Z",
-          "tickers": []
         }
       ]
     },
@@ -378,7 +373,7 @@
       "blurb": "רשת החשמל, גרעין, מתחדשות והביקוש שמרכזי הנתונים יוצרים",
       "accent": "#eda100",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
         {
           "url": "https://finnhub.io/api/news?id=78a5a23db3384a6d868dee988e879a2407088d6f0882f3eb5cb3ce351b6c4bfa",
@@ -496,8 +491,50 @@
       "blurb": "ריבית, אינפלציה, הפד, תשואות אג״ח ובנקים",
       "accent": "#378add",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNY0hWbFNBUlE5SFJjLVpMMnIwZzFpN2hVNEd2YkxlalYyVDRKTDZxcGJ0REJLUERXb0tlVVVreVZLMHFodlAtZlY0eDhuN2xiOHcybjM1c3gxMlBNTmZMWWdrdkhQOG9Pc2JRdTEwYXM5N181QmttRVEyRkdXTy1LT2J0ZVA4d2FXdjZZeGZwaGRaSUtDUXJUZXFjSU94cnprbTVUSXRpXzFtQzV2TWtpR1dNSjdaWVplUlE?oc=5",
+          "title": "Wall Street posts weekly gains with earnings, inflation data on tap - Reuters",
+          "excerpt": "Wall Street posts weekly gains with earnings, inflation data on tap  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-10-09T21:03:16.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=0973413301dd378d7d86a93f4ab0cbf8c0a421786e2a12a026401b2ec3b83ab8",
+          "title": "JPMorganChase to Present at the BancAnalysts Association of Boston Conference",
+          "excerpt": "NEW YORK, October 09, 2026--Charles Bristow, Head of Treasury and Chief Investment Officer, will present at the BancAnalysts Association of Boston Conference on Thursday, November 5, 2026 at 8:50 a.m. (Eastern).",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T20:50:00.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=adad364b9f05e7a4169d24160c4524f741a9c2eb3ff5ff7aecbe55495a47759d",
+          "title": "Technoprobe (BIT:TPRO) Stock Gets Fair Value Bump After Positive Analyst Calls",
+          "excerpt": "Technoprobe’s fair value estimate has shifted slightly from €41.88 to €42.80, putting fresh focus on how analysts frame upside from here. Recent research from firms such as J.P. Morgan, Goldman Sachs, and Deutsche Bank, with price targets clustered between €40 and €50, sits behind this adjustment and reflects different views on how much of Technoprobe’s growth story is already in the stock. In the sections that follow, you will see how this evolving narrative fits into your own investment...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T19:14:09.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e41ef7b7842e6b81d28197601b1a2f3ff2916488439418e8d4e549b4bea4d4fe",
+          "title": "Richest Americans Gained 19% in Wealth as Poorest Lost 56% Since 2022",
+          "excerpt": "America’s wealthiest households gained nearly $800,000 in median net worth over three years, while median wealth among the poorest quarter fell by more than half, new Federal Reserve data showed Friday. Between 2022 and 2025, inflation-adjusted median wealth among the...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T19:00:11.000Z",
+          "tickers": []
+        },
         {
           "url": "https://www.cnbc.com/2026/10/09/trump-lisa-cook-fed-firing-committee-explained.html",
           "title": "Trump created a committee to dig into the Fed's Lisa Cook. What is it and what comes next?",
@@ -517,18 +554,6 @@
           "country": null,
           "seenAt": "2026-10-09T16:18:35.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=e4f964f61b4a047b2e386c79ef264ee5fd929b32c59b4d7eebd5052298027acb",
-          "title": "As borrowing costs spike, Jamie Dimon asks corporate America: 'Are you prepared?' You should ask yourself the same thing",
-          "excerpt": "The JPMorgan CEO says corporate America isn’t ready for what’s coming in the credit markets, and his warning should put every household on notice.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T16:00:00.000Z",
-          "tickers": [
-            "JPM"
-          ]
         },
         {
           "url": "https://finnhub.io/api/news?id=2354b4a6289dca8775039831e3ef51c3ba716ebbf4daea640eb3b4ed5acf5a4b",
@@ -575,36 +600,6 @@
           "tickers": [
             "BAC"
           ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=a50c92ef7c319b294a211c09dcbdd47e8ce4043ec6e202edf39e9dfce5745b86",
-          "title": "The Biggest Change to Stock Trading in Decades Is Coming to Wall Street",
-          "excerpt": "Tokenization of financial assets could be the biggest revolution on Wall Street since the move from paper to electronic trading. Don’t think Bitcoin. Think blockchain.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T13:56:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=dafd51bf416d5079721b819ede9870957a05a33c1c97713a23fdde9632a4ce34",
-          "title": "Earnings Calendar Full Of Banks, But Watch These Three Reports",
-          "excerpt": "Several major banks will report third-quarter earnings. The most interesting reports, however, may be from a couple of industrial companies and an insurer.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T13:00:26.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://www.cnbc.com/2026/10/09/us-treasurys-bond-yields-midterms.html",
-          "title": "Treasury yields steady as Trump strikes diplomatic tone on Iran ahead of midterms",
-          "excerpt": "Yields were largely unchanged Friday as investors assessed President Trump's latest comments on Iran.",
-          "image": "https://image.cnbcfm.com/api/v1/image/108255380-17690331752026-01-21t220523z_286979253_rc2v5ja1vheb_rtrmadp_0_usa-stocks.jpeg?v=1769033262&w=1920&h=1080",
-          "domain": "CNBC",
-          "country": null,
-          "seenAt": "2026-10-09T08:24:50.000Z",
-          "tickers": []
         }
       ]
     },
@@ -614,8 +609,30 @@
       "blurb": "תקציבי ביטחון, עסקאות נשק וקבלני הביטחון",
       "accent": "#888780",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=9087a5d2420182fc4140c6982738d2e43cb7350bfd4c8f942ea3c2f89ef54831",
+          "title": "Barclays Initiates Coverage of Lockheed Martin at Equal-Weight",
+          "excerpt": "",
+          "image": null,
+          "domain": "Fintel",
+          "country": null,
+          "seenAt": "2026-10-09T22:31:49.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=c2f9a776ae2bb34a63030484e9d5ed8905e2b266dc838b41310020d4bc9ab846",
+          "title": "Lockheed Martin Declares Fourth Quarter 2026 Dividend",
+          "excerpt": "The Lockheed Martin Corporation (NYSE: LMT) board of directors has authorized a fourth quarter 2026 dividend of $3.60 per share, an increase of $0.15 per share over the last quarter. The dividend is payable on December 31, 2026, to holders of record as of the close of business on December 1, 2026. Lockheed Martin continues to invest in programs that are driving our backlog, while maintaining our historical practice of disciplined and dynamic capital allocation by increasing our dividend for the",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T20:30:00.000Z",
+          "tickers": [
+            "LMT"
+          ]
+        },
         {
           "url": "https://finnhub.io/api/news?id=d9780eb0e7405e8098a8af61429a289d35a6844d3cc84c61d22b3e930e4f5c87",
           "title": "TD Cowen Says De-Rating In Aerospace Stocks Has Been ‘Disorderly,’ Cuts Targets On Boeing, Lockheed Martin Among Others",
@@ -662,18 +679,6 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=b03911ac5c2a67189ba26fd2aa8e4a4ad55515991e716de858562ef19d7a3d4b",
-          "title": "Lockheed Martin (LMT) Faces An Earnings Test As Backlog Strength Meets Undervalued View",
-          "excerpt": "Lockheed Martin (LMT) is heading into its October 22, 2026 earnings report with the stock recently falling 2.14% and trailing the broader market, which keeps investor focus squarely on whether expectations still look realistic. Over the past year, Lockheed Martin has delivered a modest 2.61% total shareholder return. However, the share price has recently lost momentum, with a 30-day share price return of a 5.27% decline and a 90-day share price return of a 2.93% decline, even as fresh missile...",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T13:08:50.000Z",
-          "tickers": [
-            "LMT"
-          ]
-        },
-        {
           "url": "https://finnhub.io/api/news?id=2bc051f4ac23cda9de11abb73bf498a552026e5ae9815ec7196b6c5f2d019f4e",
           "title": "NetApp  highlighted as Zacks Bull and NVR Bear of the Day",
           "excerpt": "NetApp highlighted as Zacks Bull and NVR Bear of the Day",
@@ -716,16 +721,6 @@
           "tickers": [
             "NOC"
           ]
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPY0RkSExrMDJ0QVQySHp6M1RMbEpSRXA5U2hUZXZINGM1Vk03b0lsR2dRZ3h1SGh4OXNHclpDT0RuYWFHM2d3SXk1YzVkTXpkckZHc2syWllMUFgwdnpaaXZhWXk2bkxEdEl2U3F2YzJhaWVBcmVVbGV6d0RiY09Fb2lzMEYxOGVJZ3VmbERDSlVZQnJfYWJ4M3NHT3hQZ1dLUVBzcVhXRl9YR1c2aDMzM3o3RzNBR0FlMU9DYld0emJBR1pid0lDajNtQ0s?oc=5",
-          "title": "Turkey's foreign minister says Ankara weighing Saudi defence support, rules out offensive role - Reuters",
-          "excerpt": "Turkey's foreign minister says Ankara weighing Saudi defence support, rules out offensive role  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-10-08T16:35:49.000Z",
-          "tickers": []
         }
       ]
     },
@@ -735,18 +730,19 @@
       "blurb": "מכסים, סנקציות, מלחמות סחר ושרשראות אספקה",
       "accent": "#d4537e",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=a5e8033971684c106ff0ea6adad5b1577de082b8d1985edccdbb04d0b31e5efb",
-          "title": "Walmart activates automated e-commerce logistics center in California",
-          "excerpt": "Walmart is heavily investing in next-generation, automated fulfillment centers. The post Walmart activates automated e-commerce logistics center in California appeared first on FreightWaves.",
+          "url": "https://finnhub.io/api/news?id=2a303ac12a0a27d2e85b93eb39bb70544b176568c1e2018aafa954687f8c71f4",
+          "title": "Walmart vs. Costco: Why the Cheaper Earnings Stock Costs More for Cash Flow",
+          "excerpt": "Walmart Inc. (NASDAQ:WMT) and Costco Wholesale Corporation (NASDAQ:COST) compete for household spending through different models. Walmart combines stores, delivery, marketplaces and advertising. Costco relies on low merchandise markups and a paid membership relationship. Both can be resilient without being inexpensive. Trailing earnings cost investors about 39 times for Walmart and 45 times for Costco at […]",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T13:41:49.000Z",
+          "seenAt": "2026-10-09T21:18:36.000Z",
           "tickers": [
-            "WMT"
+            "WMT",
+            "COST"
           ]
         },
         {
@@ -780,24 +776,28 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=e8e88d695892fbef22d46c8e8678df39d67e2f7bb928d9d34a858aca5b3c7c09",
-          "title": "Stitch Fix Conference: AI, Client Retention Fuel Growth Ambitions",
-          "excerpt": "Stitch Fix (NASDAQ:SFIX) Chief Executive Officer Matt Baer said the online personal styling company’s transformation efforts helped drive fiscal-year revenue growth, higher client retention and record revenue per active client, while positioning the business to invest in future customer growth and a",
+          "url": "https://finnhub.io/api/news?id=bd480759557826b0b068751068a265d5b81b4f856bf07b6b23294fe43867232c",
+          "title": "'Surveillance Pricing' Comes Under Scrutiny",
+          "excerpt": "Bloomberg's Max Chafkin, David Gura, and Jessica Karl join Scarlet Fu and Tom Keene on \"Bloomberg Money.\" They discuss the ongoing fight over 'surveillance pricing,' the use of consumer data to set prices by retailers, grocers and others. Walmart strenuously denies engaging in this tactic.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-08T17:02:42.000Z",
-          "tickers": []
+          "seenAt": "2026-10-09T20:27:01.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=5346d97d82ac2a7bb433a1d6bca532f03007c528ef70f21e487ae9da37ae871f",
-          "title": "These dow jones stocks are moving in today's session",
-          "excerpt": "Curious about the dow jones stocks that are in motion on Thursday? Join us as we explore the top movers within the dow jones index during today's session.",
-          "image": "https://www.chartmill.com/images/uploads/CM_Top_Movers_Small_free_2b4ff2fc22.webp",
-          "domain": "ChartMill",
+          "url": "https://finnhub.io/api/news?id=a5e8033971684c106ff0ea6adad5b1577de082b8d1985edccdbb04d0b31e5efb",
+          "title": "Walmart activates automated e-commerce logistics center in California",
+          "excerpt": "Walmart is heavily investing in next-generation, automated fulfillment centers. The post Walmart activates automated e-commerce logistics center in California appeared first on FreightWaves.",
+          "image": null,
+          "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-08T16:40:11.000Z",
-          "tickers": []
+          "seenAt": "2026-10-09T13:41:49.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
           "url": "https://finnhub.io/api/news?id=d1de7c7af59bdbda62ce60053f59e5cfef8e2bd934849d47853eb20a1ef4876d",
@@ -855,18 +855,19 @@
       "blurb": "הוצאות הצרכן, קמעונאות, מזון ומותגים",
       "accent": "#97c459",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=a5e8033971684c106ff0ea6adad5b1577de082b8d1985edccdbb04d0b31e5efb",
-          "title": "Walmart activates automated e-commerce logistics center in California",
-          "excerpt": "Walmart is heavily investing in next-generation, automated fulfillment centers. The post Walmart activates automated e-commerce logistics center in California appeared first on FreightWaves.",
+          "url": "https://finnhub.io/api/news?id=2a303ac12a0a27d2e85b93eb39bb70544b176568c1e2018aafa954687f8c71f4",
+          "title": "Walmart vs. Costco: Why the Cheaper Earnings Stock Costs More for Cash Flow",
+          "excerpt": "Walmart Inc. (NASDAQ:WMT) and Costco Wholesale Corporation (NASDAQ:COST) compete for household spending through different models. Walmart combines stores, delivery, marketplaces and advertising. Costco relies on low merchandise markups and a paid membership relationship. Both can be resilient without being inexpensive. Trailing earnings cost investors about 39 times for Walmart and 45 times for Costco at […]",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T13:41:49.000Z",
+          "seenAt": "2026-10-09T21:18:36.000Z",
           "tickers": [
-            "WMT"
+            "WMT",
+            "COST"
           ]
         },
         {
@@ -906,13 +907,13 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=d1de7c7af59bdbda62ce60053f59e5cfef8e2bd934849d47853eb20a1ef4876d",
-          "title": "Here is What to Know Beyond Why Walmart Inc. (WMT) is a Trending Stock",
-          "excerpt": "Zacks.com users have recently been watching Walmart (WMT) quite a bit. Thus, it is worth knowing the facts that could determine the stock's prospects.",
+          "url": "https://finnhub.io/api/news?id=bd480759557826b0b068751068a265d5b81b4f856bf07b6b23294fe43867232c",
+          "title": "'Surveillance Pricing' Comes Under Scrutiny",
+          "excerpt": "Bloomberg's Max Chafkin, David Gura, and Jessica Karl join Scarlet Fu and Tom Keene on \"Bloomberg Money.\" They discuss the ongoing fight over 'surveillance pricing,' the use of consumer data to set prices by retailers, grocers and others. Walmart strenuously denies engaging in this tactic.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T12:00:05.000Z",
+          "seenAt": "2026-10-09T20:27:01.000Z",
           "tickers": [
             "WMT"
           ]
@@ -928,6 +929,30 @@
           "tickers": [
             "SO",
             "COST"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=a5e8033971684c106ff0ea6adad5b1577de082b8d1985edccdbb04d0b31e5efb",
+          "title": "Walmart activates automated e-commerce logistics center in California",
+          "excerpt": "Walmart is heavily investing in next-generation, automated fulfillment centers. The post Walmart activates automated e-commerce logistics center in California appeared first on FreightWaves.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T13:41:49.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d1de7c7af59bdbda62ce60053f59e5cfef8e2bd934849d47853eb20a1ef4876d",
+          "title": "Here is What to Know Beyond Why Walmart Inc. (WMT) is a Trending Stock",
+          "excerpt": "Zacks.com users have recently been watching Walmart (WMT) quite a bit. Thus, it is worth knowing the facts that could determine the stock's prospects.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T12:00:05.000Z",
+          "tickers": [
+            "WMT"
           ]
         },
         {
@@ -953,32 +978,6 @@
           "tickers": [
             "WMT"
           ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=e1bed298e4d9419d439eaeb3edef3b3973fb3f5d37814f608eeea546bca07833",
-          "title": "Walmart (WMT) Stock May Be Fully Priced Despite New Fulfillment News",
-          "excerpt": "Walmart shares have climbed over recent years, supported by steady execution in core retail and a growing push into higher margin digital services. This leaves investors asking whether the current price is still supported by what the business earns. Over the past 5 years the stock has returned 152.4%, which puts a lot of weight on the question of how its current earnings stack up against that share price. Recent moves such as new fulfillment and distribution centers, faster pickup options...",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T02:09:23.000Z",
-          "tickers": [
-            "WMT"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=e89d9f997bf89cd045d00ee9a981dccf4fc6414d4c971b424c9845181e36df61",
-          "title": "Jim Cramer Said It Was “Suddenly” A Market For Walmart (WMT) But Made A Big Prediction For Target (TGT)",
-          "excerpt": "Cramer has frequently discussed Walmart Inc. (NASDAQ:WMT) and Target Corporation (NYSE:TGT) in a group over the past month or so. The CNBC TV host has been clear that Target has been performing well. He has also fluctuated between advising viewers to hold off on Walmart to wondering whether the firm was worth buying in a […]",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-08T22:50:13.000Z",
-          "tickers": [
-            "WMT",
-            "SO",
-            "TGT"
-          ]
         }
       ]
     },
@@ -988,8 +987,21 @@
       "blurb": "פארמה, ביוטק, אישורי FDA וביטוח בריאות",
       "accent": "#5dcaa5",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=8ec035baab86cf7792f8c473ed9d920f88a6b869215a9474bf070dbaea0125ad",
+          "title": "Does The Move In Merck Stock Change Anything?",
+          "excerpt": "Merck (MRK) stock returned 69.6% over the year to October 8, 2026, against 16.3% for the S&P 500. The gain built up over a year of drug approvals and clinical trial results, arriving just as the company prepares for the patent loss on Keytruda, its top-selling drug. So what did Merck show investors over those twelve months.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T18:12:18.000Z",
+          "tickers": [
+            "SO",
+            "MRK"
+          ]
+        },
         {
           "url": "https://finnhub.io/api/news?id=c1c6bc50f1bb76077d171dfd002ae96bb4d4d8e5a80d9aa25071aa091aadc0da",
           "title": "Record Highs Beckon for Big Caps as Small Caps Lag and Deal Flow Builds",
@@ -998,6 +1010,16 @@
           "domain": "Yahoo",
           "country": null,
           "seenAt": "2026-10-09T17:30:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=a524689f9aa69a966b4f44e89502e1c86aa5ca5ea20a8b8e924f199f71e540ac",
+          "title": "QYLG Vs. QDVO: Market Fear Is Good For These Paychecks",
+          "excerpt": "",
+          "image": null,
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-10-09T16:55:35.000Z",
           "tickers": []
         },
         {
@@ -1056,36 +1078,6 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=432e0925ebab3aeb2ff78568017b127382217a73fb75460d7f75b5111e5a2c09",
-          "title": "Why Pacira BioSciences Stock Is Having Its Best Day Ever After $1.7 Billion Viatris Acquisition",
-          "excerpt": "Viatris has agreed to acquire Pacira BioXciences, acquiring its portfolio of non-opioid pain medications.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-08T17:29:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=5741fde32d2d428cfb091510e2b9dc970e9a9cdc9798a0a9de13df26fb600389",
-          "title": "Stay informed with the top movers within the S&P500 index on Thursday.",
-          "excerpt": "Join us in exploring the top gainers and losers within the S&P500 index in the middle of the day on Thursday as we examine the latest happenings in today's session.",
-          "image": "https://www.chartmill.com/images/uploads/CM_Top_Movers_Small_free_2b4ff2fc22.webp",
-          "domain": "ChartMill",
-          "country": null,
-          "seenAt": "2026-10-08T16:35:01.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQaG9Ld2VUSG10VS1samp4aVlRU0g2a1lMdGZqOUh0Tm1nNm1mZGdKc29yWGc5VGtCMktVVzFHMHRkSlhZMzc5b1QwbzFLcVFMaVk1UUFrX0Z1WkFKWFl3T3FYMEVTNU5tanVsVTNqckg2WWlxVVZkNXp6ZkRyVDhONHgwS0xLSzZZZGV5UzNqbDJmbDVSUDhJcFVSOFc2QktzYzVKNlpDRVVqdlhfZ0EwVDhod2hTQ0lmUlE?oc=5",
-          "title": "India's Sun Pharmaceuticals to consider raising $1.55 billion via debentures - Reuters",
-          "excerpt": "India's Sun Pharmaceuticals to consider raising $1.55 billion via debentures  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-10-07T15:54:29.000Z",
-          "tickers": []
-        },
-        {
           "url": "https://finnhub.io/api/news?id=1864a04e9096687280b7015d86d2b7d450016c9af37cd6c1afd47ba01dfa5806",
           "title": "Eli Lilly (LLY) Posted 48% Revenue Growth. Why Does the Stock Trade Below Its Average Multiple?",
           "excerpt": "Eli Lilly (NYSE:LLY) reported 48% revenue growth for the second quarter of 2026 a while ago and raised its outlook for the year. Yet the stock trades at 30.94 times forward earnings, as of October 6, well below the 45.59 it has averaged over five years. That’s an odd pairing for a company growing this […]",
@@ -1093,6 +1085,18 @@
           "domain": "Yahoo",
           "country": null,
           "seenAt": "2026-10-09T13:25:35.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=3555dac2014c647835f5a898f9266e50f392f4d705d5bb01eb9efc575730042f",
+          "title": "Eli Lilly’s Biggest Shareholder Just Filed to Sell $347 Million of Stock",
+          "excerpt": "Lilly's largest shareholder just filed to unload nearly $350 million in stock while analysts keep raising their price targets, and those two facts point in opposite directions for investors trying to read the room.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T13:20:32.000Z",
           "tickers": [
             "LLY"
           ]
@@ -1105,28 +1109,38 @@
       "blurb": "סטרימינג, גיימינג, פלטפורמות הזמנות ומסחר מקוון",
       "accent": "#d2789f",
       "ok": true,
-      "refreshedAt": "2026-10-09T18:42:50.031Z",
+      "refreshedAt": "2026-10-09T23:06:24.977Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=c2b0860975bc51f7cf5cd89410a04d04a6f63ad143416f3488ed9609fd735c72",
-          "title": "Netflix’s $2.8 Billion Windfall Complicates Its Cash-Flow Story",
-          "excerpt": "Netflix, Inc. (NASDAQ:NFLX) received a $2.8 billion termination fee in the first quarter of 2026. That cash was real, but investors should separate it from the streaming business’s capacity to finance content and generate recurring earnings. The distinction also matters when using trailing valuation multiples. The June-quarter filing records the fee in interest and other […]",
+          "url": "https://finnhub.io/api/news?id=7faa1d11b24fe5b9491932770161f82d7f2e1cdc7c39478f3200eabdf2d80d82",
+          "title": "Is Netflix’s (NFLX) 5% Job Cut a Margin Play or a Bet on New Growth Engines?",
+          "excerpt": "Earlier this week, reports indicated that Netflix plans to cut about 5% of its roughly 16,000-strong global workforce, or around 800 jobs, marking its largest staff reduction since 2022 as it responds to a maturing streaming market and intense competition. The move highlights Netflix’s focus on protecting its targeted operating margins while it broadens into advertising, live programming and gaming to support future growth. We’ll now examine how this planned 5% workforce reduction could...",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T14:04:51.000Z",
+          "seenAt": "2026-10-09T21:12:21.000Z",
           "tickers": [
             "NFLX"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=b6431f97ace56c4f4cbe601388022826e88d2fc08d11d926edd63d5728036947",
-          "title": "Full Video Highlights: 2nd LA CorpGov Forum Featuring Activism, IPOs, Entertainment",
-          "excerpt": "CorpGov is pleased to share complete highlights from the 2nd LA CorpGov Forum, which took place on Sept. 18, 2026, at The Huntington Library in San Marino, California. The event brought together members of the financial community from both LA and beyond in panels focused on the finance of entertainment and media, sports, along with capital markets […] The post Full Video Highlights: 2nd LA CorpGov Forum Featuring Activism, IPOs, Entertainment appeared first on CorpGov.",
+          "url": "https://finnhub.io/api/news?id=65c0d216677029f69b39ae03fcade21b4a110468623573609c837a4e3752a28f",
+          "title": "2 Nasdaq 100 Stocks to Own for Decades and 1 We Question",
+          "excerpt": "The Nasdaq 100 (^NDX) is home to some of the biggest success stories in tech and growth investing. However, certain stocks in the index face challenges like profitability concerns, rising costs, or shifts in market trends.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-08T22:04:58.000Z",
+          "seenAt": "2026-10-09T18:59:10.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d2bf43a547ab2efdb3d406b62b1bbceefcaf06f04d8a750a4ed41ec436c7d6f8",
+          "title": "How AI Agent Traffic Is Driving Fastly’s Next Growth Wave",
+          "excerpt": "Fastly rises after Oppenheimer upgrades shares to Outperform, citing anticipated revenue boosts from AI agent traffic and Grand Theft Auto VI.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-09T18:25:00.000Z",
           "tickers": []
         },
         {
@@ -1142,13 +1156,13 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=e8f0d85eb95a24026ef2036ad49410e7fd9a4f34d744d8ecfa17937b899da51a",
-          "title": "Looking for the most active stocks in the S&P500 index on Thursday?",
-          "excerpt": "Stay informed about the most active stocks in the S&P500 index on Thursday's session. Discover the stocks that are generating the highest trading volume and driving market activity.",
-          "image": "https://www.chartmill.com/images/uploads/CM_Most_Active_Stocks_Small_free_fec0650b7f.webp",
+          "url": "https://finnhub.io/api/news?id=5741fde32d2d428cfb091510e2b9dc970e9a9cdc9798a0a9de13df26fb600389",
+          "title": "Stay informed with the top movers within the S&P500 index on Thursday.",
+          "excerpt": "Join us in exploring the top gainers and losers within the S&P500 index in the middle of the day on Thursday as we examine the latest happenings in today's session.",
+          "image": "https://www.chartmill.com/images/uploads/CM_Top_Movers_Small_free_2b4ff2fc22.webp",
           "domain": "ChartMill",
           "country": null,
-          "seenAt": "2026-10-08T18:05:04.000Z",
+          "seenAt": "2026-10-08T16:35:01.000Z",
           "tickers": []
         },
         {
@@ -1185,16 +1199,15 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=4c362e1372a683e2b2b165ffb054aa464933fcd1b87ac33db280f1c794d8be4e",
-          "title": "Netflix Layoffs Report: What 800 Job Cuts Mean With Margins Near 30%",
-          "excerpt": "Netflix (NFLX:NASDAQ) is planning to cut about 5% of its workforce, with an announcement possibly coming as early as next week, Reuters reported on Friday, citing Puck News. Netflix declined to comment, so these are reported plans, not confirmed layoffs.",
+          "url": "https://finnhub.io/api/news?id=ec4b5d19828fddb7dda9506d0de1cf448af9b03928a8aa720f4de87b30f1a581",
+          "title": "Netflix plans substantial layoffs, sources say",
+          "excerpt": "Netflix plans to lay off employees, according to sources familiar with the streaming company's plans. The cuts come after investors have expressed concerns over user engagement. The stock has declined 43% compared to a year ago.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-09T13:58:24.000Z",
+          "seenAt": "2026-10-09T20:37:56.000Z",
           "tickers": [
-            "NFLX",
-            "SO"
+            "NFLX"
           ]
         },
         {
@@ -1207,22 +1220,6 @@
           "seenAt": "2026-10-08T17:00:11.000Z",
           "tickers": [
             "TTWO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=4142f7953cea56dfa30170f132a4b9ae58227495c68f8928e3a03f711b8df5b2",
-          "title": "Is Alphabet Stock Priced Right Against Its Peers?",
-          "excerpt": "Measured against five other large companies: Microsoft, Amazon, Meta Platforms, Apple, and Netflix, Alphabet (GOOGL) looks like an anomaly. In a group of this caliber, investors typically expect the fastest-growing businesses to command the highest valuations. Yet Alphabet carries the lowest P/E of the six, even though its sales are growing second fastest. So how much less are you paying for Alphabet than for its peers.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-09T13:30:03.000Z",
-          "tickers": [
-            "NFLX",
-            "MSFT",
-            "GOOGL",
-            "META",
-            "SO"
           ]
         }
       ]
