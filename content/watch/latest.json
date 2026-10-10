@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-09T23:08:57.409Z",
+  "builtAt": "2026-10-10T07:50:51.468Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 1,
     "range": 16,
     "event": 0,
-    "story": 5
+    "story": 8
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "-10.82% ביום — פי 7.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 7.179838789093334,
       "href": "/company/T",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "-10.14% ביום — פי 7.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 7.173807424564445,
       "href": "/company/VZ",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "-13.27% ביום — פי 5.6 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 5.596691692085374,
       "href": "/company/TMUS",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "opportunity",
@@ -44,7 +44,7 @@
       "detail": "-13.27% ביום — פי 5.6 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
       "weight": 3.1596691692085375,
       "href": "/company/TMUS",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "move",
@@ -53,7 +53,7 @@
       "detail": "-4.85% ביום — פי 2.5 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.506800474202208,
       "href": "/company/DE",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "move",
@@ -62,7 +62,7 @@
       "detail": "7.42% ביום — פי 2.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.3096343987372054,
       "href": "/company/SNOW",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "move",
@@ -71,34 +71,52 @@
       "detail": "2.76% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.2375962425889084,
       "href": "/company/V",
-      "at": "2026-10-09T23:08:57.409Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "AMD",
-      "headline": "AMD CEO delivers stark warning on chip market’s future",
-      "detail": "מנכ\"ל AMD הצהיר כי הוא מתכנן להגדיל משמעותית את היצע השבבים בשנת 2027, בעקבות פגישות עם TSMC וספקים בטאיוואן. בנוסף, נמסר אזהרה חמורה על עתיד שוק השבבים.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=dd4e4eee517fc2d9be85a0f25db35c688051272177d74e18221311d5363a8be8",
-      "at": "2026-10-09T01:03:00.000Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "story",
       "ticker": "TSM",
-      "headline": "TSMC's $46.7 billion quarter leaves 1 question for investors",
-      "detail": "TSMC דיווחה על רבעון בסך 46.7 מיליארד דולר, והשאלה המרכזית למשקיעים היא האם השוק כבר תמחר תוצאות אלו.",
+      "headline": "This Forgotten AI Stock Is Up 689% and Nobody's Talking About It",
+      "detail": "Taiwan Semiconductor (TSMC) דיווחה על עלייה של 34% בהכנסות ברבעון השני לעומת התקופה המקבילה אשתקד, מעל תחזיות ההנהלה. שולי הרווח הגולמי עלו ב-1.5 נקודות אחוז ל-67.7%, ושולי הרווח התפעולי עלו",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=8b6bcbe59f25de334e8fbb3fe8176075c3a7ef1ae1abc56ba9095760db78df40",
-      "at": "2026-10-09T00:03:00.000Z"
+      "href": "https://finnhub.io/api/news?id=a538b559a0f1e817098b81d148f7a81a230ac4f314dc28a0fa2198dabcdd31bc",
+      "at": "2026-10-10T05:20:00.000Z"
     },
     {
       "kind": "story",
-      "ticker": "XOM",
-      "headline": "ExxonMobil blocked $5B Kashagan environmental fine settlement",
-      "detail": "ExxonMobil שכנעה את TotalEnergies להתנגד להצעת פשרה של קנס סביבתי בגובה 5 מיליארד דולר בקשגן. במקביל, החברה קשרה פוטנציאל להשקעה חדשה בגובה 80 מיליארד דולר בפתרון הסכסוך.",
+      "ticker": "NVDA",
+      "headline": "MAG 7 Voices: How Nvidia, Microsoft, Alphabet, Meta Reshaped AI This Week",
+      "detail": "חברות ענק טכנולוגיות ממשיכות לקדם אסטרטגיות בינה מלאכותית שונות הכוללות מחשוב אישי, סוכני ענן ומכשירים לבישים, בעוד שאלות על קצב ייצור הכנסות בר-קיימא עולות בעקבות דיווח על פער בהכנסות הצפוי",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=3b1d5d59a7f9c905b04ba1d2f8fee5db8a45c5cf84e99e4c03f4e600a6b7511a",
-      "at": "2026-10-09T12:56:32.000Z"
+      "href": "https://finnhub.io/api/news?id=5ed97e542b4f63c0d4753236fb6f6abbb87923357a06e16b4a65ec207a3f3edd",
+      "at": "2026-10-10T03:26:37.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": null,
+      "headline": "10 Words From the Fed Chair That Could Reshape Market Expectations",
+      "detail": "יושב ראש הפדרל רזירן, קווין וורש, הדגיש כי המיקוד המרכזי של הפד צריך להיות על מחירי האינפלציה, שרצה מעל יעד ה-2%. במקביל, מדד המחירים לצריכה פרטית באוגוסט עלה ב-3.4% (וליבה ב-3%), נתונים נמו",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=2aeb5f6c292f4753ed05b482efb87ab482ae4a6df0940f2ae2dfc9a922aee427",
+      "at": "2026-10-10T02:35:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "MAG 7 Voices: How Nvidia, Microsoft, Alphabet, Meta Reshaped AI This Week",
+      "detail": "חברות ענק טכנולוגיות ממשיכות לקדם אסטרטגיות בינה מלאכותית שונות הכוללות מחשוב אישי, סוכני ענן ומכשירים לבישים, בעוד שאלות על קצב ייצור הכנסות בר-קיימא עולות בעקבות דיווח על פער בהכנסות הצפוי",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=5ed97e542b4f63c0d4753236fb6f6abbb87923357a06e16b4a65ec207a3f3edd",
+      "at": "2026-10-10T03:26:37.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Forget the Selloff: “$2 Trillion” is the Only Number that Matters for NVIDIA",
+      "detail": "מניות השבבים ירדו ביום חמישי למרות ש-Taiwan Semiconductor Manufacturing דיווחה על עלייה של 51% במכירות הרבעון השלישי, בשל חששות מהיקף הוצאות ה-AI הממומנות בחוב. לדברי דילן פאטל מ-SemiAnalysi",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=369bcf403dce2476cca3d5ba11a4ac418dc04ed38d90816590b9809fbb253cb7",
+      "at": "2026-10-09T18:12:16.000Z"
     },
     {
       "kind": "story",
@@ -119,40 +137,22 @@
       "at": "2026-10-09T15:12:45.000Z"
     },
     {
+      "kind": "story",
+      "ticker": "MSFT",
+      "headline": "S&P 500, Nasdaq 100, Dow End Week Higher With Traders Eyeing Earnings Season — MSFT, NFLX, SPCX, ASTS In Focus",
+      "detail": "מדדי המניות המוצבים בארה\"ב סיימו את השבוע בעליות, כאשר מדד S&P 500 עלה ב-0.6%, Nasdaq 100 ב-0.5% ו-Dow Jones ב-0.8%, לקראת עונת הדוחות הקרובה והתאוששות במניות הטכנולוגיה. במקביל, דווח על עסק",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=5c4e446abd334f8092f8ee0a0068885b5977f2f5175ab4b843013a4fece9ea30",
+      "at": "2026-10-09T22:53:11.000Z"
+    },
+    {
       "kind": "range",
       "ticker": "MSFT",
       "headline": "MSFT בשיא של רבעון",
       "detail": "הסגירה האחרונה 535.07 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MSFT",
-      "at": "2026-10-09T23:08:57.409Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "DDOG",
-      "headline": "DDOG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 293.26 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/DDOG",
-      "at": "2026-10-09T23:08:57.409Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "SNPS",
-      "headline": "SNPS בשיא של רבעון",
-      "detail": "הסגירה האחרונה 509.99 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/SNPS",
-      "at": "2026-10-09T23:08:57.409Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TEAM",
-      "headline": "TEAM בשיא של רבעון",
-      "detail": "הסגירה האחרונה 206.79 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TEAM",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -161,7 +161,34 @@
       "detail": "הסגירה האחרונה 209.05 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PLTR",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "SNPS",
+      "headline": "SNPS בשיא של רבעון",
+      "detail": "הסגירה האחרונה 509.99 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/SNPS",
+      "at": "2026-10-10T07:50:51.468Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TEAM",
+      "headline": "TEAM בשיא של רבעון",
+      "detail": "הסגירה האחרונה 206.79 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TEAM",
+      "at": "2026-10-10T07:50:51.468Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "DDOG",
+      "headline": "DDOG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 293.26 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/DDOG",
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -170,16 +197,7 @@
       "detail": "הסגירה האחרונה 368.89 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SNOW",
-      "at": "2026-10-09T23:08:57.409Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "SHOP",
-      "headline": "SHOP בשיא של רבעון",
-      "detail": "הסגירה האחרונה 170.85 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/SHOP",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -188,7 +206,16 @@
       "detail": "הסגירה האחרונה 276.47 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ABBV",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "SHOP",
+      "headline": "SHOP בשיא של רבעון",
+      "detail": "הסגירה האחרונה 170.85 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/SHOP",
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -197,7 +224,7 @@
       "detail": "הסגירה האחרונה 423.96 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ISRG",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -206,7 +233,7 @@
       "detail": "הסגירה האחרונה 385.45 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/V",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -215,7 +242,7 @@
       "detail": "הסגירה האחרונה 201.19 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PM",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -224,7 +251,7 @@
       "detail": "הסגירה האחרונה 90.75 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SBUX",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -233,16 +260,7 @@
       "detail": "הסגירה האחרונה 41.65 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/VZ",
-      "at": "2026-10-09T23:08:57.409Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "CHTR",
-      "headline": "CHTR בשפל של רבעון",
-      "detail": "הסגירה האחרונה 103.38 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/CHTR",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -251,7 +269,16 @@
       "detail": "הסגירה האחרונה 148.58 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TMUS",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "CHTR",
+      "headline": "CHTR בשפל של רבעון",
+      "detail": "הסגירה האחרונה 103.38 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/CHTR",
+      "at": "2026-10-10T07:50:51.468Z"
     },
     {
       "kind": "range",
@@ -260,7 +287,7 @@
       "detail": "הסגירה האחרונה 20.66 היא הנמוכה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/CMCSA",
-      "at": "2026-10-09T23:08:57.409Z"
+      "at": "2026-10-10T07:50:51.468Z"
     }
   ]
 }
