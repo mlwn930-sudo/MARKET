@@ -34,6 +34,11 @@ import {
 } from "../src/lib/intel/history-store";
 import { approvedWithWatchlists } from "../src/lib/alerts/subscribers";
 import { readSetup } from "../src/lib/analysis/setup";
+import {
+  buildChartStance,
+  DIRECTION_NAME,
+  HORIZON_NAME,
+} from "../src/lib/analysis/stance";
 import { generateJson } from "../src/lib/sources/gemini";
 import { SETUP_SYSTEM } from "../src/lib/analysis/prompts";
 import { getRanks } from "../src/lib/metrics/rank-store";
@@ -181,6 +186,27 @@ function trim(text: string, limit: number): string {
  */
 const CHARTS_ONLY = process.argv.includes("--charts-only");
 
+/**
+ * Check named companies instead of the followed list.
+ *
+ * For looking at what a mail would actually say about a name that has
+ * something to say. The followed list is two companies and on a quiet
+ * day neither produces a setup, so the only way to see the direction
+ * reach an inbox was to wait for a day it happened to.
+ *
+ * Never writes and never sends: it prints. The real run is the one
+ * with no arguments.
+ */
+const ONLY = (() => {
+  const at = process.argv.indexOf("--only");
+  if (at === -1) return null;
+  const list = (process.argv[at + 1] ?? "")
+    .split(",")
+    .map((t) => t.trim().toUpperCase())
+    .filter(Boolean);
+  return list.length ? list : null;
+})();
+
 async function main() {
   const stamp = new Date().toISOString();
 
@@ -194,8 +220,10 @@ async function main() {
   /* Only the companies somebody follows. The universe is scanned by the
      other job; this one exists precisely because reading a hundred and
      twenty-three thesis records would bury the six that matter. */
-  const readers = await approvedWithWatchlists();
-  const followed = new Set(readers.flatMap((r) => r.tickers));
+  const readers = ONLY ? [] : await approvedWithWatchlists();
+  const followed = new Set(
+    ONLY ?? readers.flatMap((r) => r.tickers),
+  );
 
   if (followed.size === 0) {
     console.log("nobody follows anything yet — nothing to check");
@@ -235,8 +263,29 @@ async function main() {
          site can say about a company, and the grade the diff assigned is
          the honest ceiling on it: a change graded "possible" must not
          arrive wearing the badge of one graded "confirmed". */
-      /* The thesis that changed, not the words describing it. */
-      dedupeKey: `${change.ticker}|${change.newView.slice(0, 60)}`,
+      /* THE FIELDS THAT MOVED, NOT THE SENTENCE ABOUT THEM.
+
+         This said it was keying on the thesis rather than the words
+         and then keyed on the words: `newView` is the synthesis
+         headline, which is a template carrying counts — "...ו-4
+         ממצאים תומכים". A finding appearing or disappearing while the
+         thesis itself held produced a different sentence, a different
+         key, and another mail about a position that had not moved.
+         Exactly the duplicate the reader complained about.
+
+         The deltas are the change: which fields moved and to what.
+         Same arrangement as the setup finding keying on observation
+         keys, and for the same reason. */
+      dedupeKey:
+        `${change.ticker}|${change.driver}|` +
+        /* Deduplicated: the same breaker is sometimes recorded twice,
+           and a repetition that comes and goes would change the key and
+           send the mail again for nothing. */
+        [
+          ...new Set(change.deltas.map((d) => `${d.field}=${d.after}`)),
+        ]
+          .sort()
+          .join(","),
       relevance:
         change.claim.grade === "confirmed" || change.claim.grade === "likely"
           ? "high"
@@ -313,6 +362,25 @@ async function main() {
     const rates = await baseRatesFor(ticker).catch(() => null);
     const setup = readSetup(ticker, candles, rates, ranks?.reads[ticker] ?? null);
 
+    /* WHICH WAY THE RECORD LEANS, IN THE EMAIL.
+
+       The engine has been stating directions since it was written and
+       the alerts never carried one: they sent the observations and let
+       the reader infer. That is the wrong way round for the channel
+       read away from a screen — the website can afford to make
+       somebody scroll, an inbox cannot. LRCX leaning down at both
+       horizons on samples of 53 and 50 was visible on the watchlist
+       page and absent from the mail about the same company on the same
+       day. */
+    const stance = buildChartStance({
+      setup,
+      baseRates: rates,
+      lastClose: candles[candles.length - 1].close,
+    });
+    const leaning = stance
+      ? [stance.swing, stance.position].filter((h) => h.direction !== "none")
+      : [];
+
     if (setup.worthWatching) {
       /* The facts are assembled in code; the model is asked only to join
          them into something a person reads in ten seconds. It cannot
@@ -362,8 +430,38 @@ async function main() {
         kind: "setup",
         ticker,
         company: ticker,
-        headline: `${ticker}: ${written?.headline ?? `${setup.convergence} תנאים נמדדים נכונים בו-זמנית`}`,
+        /* The model is told the ticker and often opens with it, so
+           prefixing unconditionally produced "LRCX: LRCX: ..." in the
+           subject line. Prefix only when it is not already there. */
+        headline: (() => {
+          const written_ =
+            written?.headline ??
+            `${setup.convergence} תנאים נמדדים נכונים בו-זמנית`;
+          return written_.startsWith(`${ticker}:`) || written_.startsWith(ticker + " ")
+            ? written_
+            : `${ticker}: ${written_}`;
+        })(),
+        /* THE DIRECTION FIRST, then the observations it rests on. An
+           inbox is read in a preview pane and the first line is most
+           of what gets read at all; burying the conclusion under a
+           list is how a mail becomes a thing to open later. */
         detail:
+          (leaning.length
+            ? leaning
+                .map((h) => {
+                  const lead = h.agreeing[0];
+                  const counter = h.against[0];
+                  const ends = h.route.find((r) => r.kind === "end");
+                  const head = `[${HORIZON_NAME[h.horizon]}] ${DIRECTION_NAME[h.direction]}`;
+                  const why = lead
+                    ? `\n${lead.label}: ${Math.round(lead.upShareHist * 100)}% מול בסיס ${Math.round(lead.baselineUpShare * 100)}% (${lead.liftPp >= 0 ? "+" : ""}${Math.round(lead.liftPp)} נק׳, n=${lead.n})`
+                    : "";
+                  const no = counter ? `\nנגד: ${counter}` : "";
+                  const stop = ends ? `\nמסתיים אם: ${ends.label}` : "";
+                  return head + why + no + stop;
+                })
+                .join("\n\n") + "\n\n"
+            : "") +
           (written?.body ? `${written.body}\n\n` : "") +
           lines +
           (setup.tension.length
@@ -386,6 +484,16 @@ async function main() {
           "|" +
           [...setup.observations, ...setup.tension]
             .map((o) => o.key)
+            .sort()
+            .join(",") +
+          /* AND THE DIRECTION, because a turn is the thing most worth
+             hearing about and the observation set does not always move
+             with it. A name that flipped from up to down while the same
+             conditions stayed true would produce an identical key and
+             no mail — silence on exactly the day it mattered. */
+          "|" +
+          leaning
+            .map((h) => `${h.horizon}:${h.direction}`)
             .sort()
             .join(","),
         relevance: rated.level,
@@ -501,6 +609,24 @@ async function main() {
   }
 
   findings.sort((a, b) => b.weight - a.weight);
+
+  /* `--only` is for looking, never for writing. Overwriting the real
+     findings file with a debug run would make the next mailer send
+     alerts about companies nobody follows. */
+  if (ONLY) {
+    console.log(
+      `
+--only: ${findings.length} findings, nothing written and nothing sent.`,
+    );
+    for (const f of findings) {
+      console.log(`
+=== [${f.kind}] ${f.headline}`);
+      console.log(f.detail);
+      console.log(`--- relevance: ${f.relevance} (${f.relevanceWhy})`);
+      console.log(`--- dedupeKey: ${f.dedupeKey}`);
+    }
+    return;
+  }
 
   await write({ builtAt: stamp, followed: followed.size, findings });
 
