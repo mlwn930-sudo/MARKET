@@ -79,11 +79,15 @@ jobs:
       # therefore had its output thrown away on every run where that key
       # was missing. A step that needs nothing should not be able to be
       # stopped by something it does not use.
-      - name: Rebuild the universe ranking
+      # MOVED TO THE DAILY JOB (`refresh-thesis.yml`). It stays referenced
+      # here so the alarm below keeps watching the file's age: the ranking
+      # is now rebuilt nightly because the daily scan written beside it
+      # reports which conditions fired on the LAST bar, and a weekly
+      # rebuild makes that claim false for four days out of five.
+      - name: Note where the ranking is rebuilt
         id: ranks
         if: always()
-        continue-on-error: true
-        run: npm run build:ranks
+        run: echo 'rebuilt nightly by refresh-thesis.yml'
 
       # And the alarm, for the same reason the news job has one: a step
       # allowed to fail quietly will, and nobody finds out until a page has
@@ -96,8 +100,8 @@ jobs:
             exit 0
           fi
           AGE=$(node -e 'const f=require("./content/ranks/latest.json");console.log(Math.round((Date.now()-new Date(f.builtAt).getTime())/60000))' 2>/dev/null || echo 99999)
-          if [ "$AGE" -gt 60 ]; then
-            echo "::error::The ranking step went green but content/ranks/latest.json is $AGE minutes old, so it did not write."
+          if [ "$AGE" -gt 2160 ]; then
+            echo "::error::content/ranks/latest.json is $AGE minutes old. The nightly job in refresh-thesis.yml has not written it for more than a day."
           else
             echo "ranking wrote a file $AGE minutes old"
           fi

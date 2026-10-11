@@ -19,6 +19,9 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { rankUniverse } from "../src/lib/metrics/rank";
 import { buildCorrelations } from "../src/lib/metrics/correlation";
+import { readSetup } from "../src/lib/analysis/setup";
+import { buildChartStance } from "../src/lib/analysis/stance";
+import { baseRatesFor } from "../src/lib/metrics/base-rate-store";
 import { UNIVERSE } from "../src/lib/universe";
 import type { Candle } from "../src/lib/sources/prices";
 
@@ -28,6 +31,11 @@ const OUT = resolve(ROOT, "content/ranks/latest.json");
    read on every company page; keeping them together would make every one
    of those reads parse forty kilobytes it has no use for. */
 const CORRELATION_OUT = resolve(ROOT, "content/correlation/latest.json");
+/* The daily scan. Written here because this is the one place in the
+   project that already holds every name's candles at once — computing
+   it anywhere else would mean 123 more price requests for figures that
+   are sitting in memory. */
+const SCAN_OUT = resolve(ROOT, "content/signals/scan.json");
 
 /* Yahoo refuses a default user agent. The same header the price source
    uses, for the same reason. */
@@ -160,6 +168,80 @@ async function main() {
   console.log(
     `wrote ${CORRELATION_OUT} (${correlations.symbols.length} names, ` +
       `thinnest pair ${correlations.weeks} shared weeks)`,
+  );
+
+  /* ---- The daily scan ----
+
+     Every name in the universe put through the same function the chart
+     reader uses, from the candles already in memory. The point is not
+     to find the best stock; it is to answer, once a day, which names
+     had a counted condition fire with a sample and a gap worth
+     printing.
+
+     EXPECT ROUGHLY TWENTY, EVERY DAY. Measured on the first real run:
+     21 of 123. `measure-selection.ts` implied ten, and the difference
+     is that it measured one horizon while a name lands here when
+     either fires. So this file is a FILTER and not a discovery, and
+     the stored denominator is what keeps it honest — a list of names
+     with no 'out of 123' beside it is a leaderboard. */
+  const scanned: unknown[] = [];
+  let withDirection = 0;
+  for (const [symbol, candles] of series) {
+    const rates = await baseRatesFor(symbol).catch(() => null);
+    if (!rates) continue;
+    /* From the object just computed above, not from the stored file:
+       the file on disk is yesterday's until this script finishes
+       writing it, and a scan that ranked today's candles against
+       yesterday's universe would be wrong in a way nothing reports. */
+    const rank = ranked.reads[symbol] ?? null;
+    const setup = readSetup(symbol, candles, rates, rank);
+    const stance = buildChartStance({
+      setup,
+      baseRates: rates,
+      lastClose: candles[candles.length - 1].close,
+    });
+    if (!stance) continue;
+    const live = [stance.swing, stance.position].filter(
+      (h) => h.direction !== "none",
+    );
+    if (live.length === 0) continue;
+    withDirection++;
+    scanned.push({
+      symbol,
+      asOf: stance.swing.asOf,
+      lastClose: stance.swing.lastClose,
+      horizons: live.map((h) => ({
+        horizon: h.horizon,
+        direction: h.direction,
+        /* The lead condition only. The panel can load the rest; a scan
+           file that carried every cite for every name would be a
+           megabyte of JSON for a list nobody reads in full. */
+        lead: h.agreeing[0] ?? null,
+        against: h.against[0] ?? null,
+        ends: h.route.find((r) => r.kind === "end")?.label ?? null,
+      })),
+    });
+  }
+
+  await mkdir(dirname(SCAN_OUT), { recursive: true });
+  await writeFile(
+    SCAN_OUT,
+    JSON.stringify(
+      {
+        builtAt: new Date().toISOString(),
+        asOf: latest,
+        /* Both numbers travel together, always. */
+        universe: series.size,
+        withDirection,
+        names: scanned,
+      },
+      null,
+      0,
+    ),
+    "utf8",
+  );
+  console.log(
+    `wrote ${SCAN_OUT} (${withDirection} of ${series.size} names have a direction)`,
   );
 
   /* What was actually learned, printed, because a build that reports only

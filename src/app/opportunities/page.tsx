@@ -3,6 +3,8 @@ import { FilmBand } from "@/components/market/FilmBand";
 import { runScreen, type ScreenResult } from "@/lib/screener";
 import { readScreen, type ReadingSegment } from "@/lib/analysis/screen-reading";
 import { identityFor } from "@/lib/company-identity";
+import { DailyScan } from "@/components/market/DailyScan";
+import { getScan } from "@/lib/signals/scan-store";
 import {
   Band,
   Disclaimer,
@@ -99,6 +101,10 @@ export default async function OpportunitiesPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const page = Math.max(1, Number((await searchParams).page) || 1);
+  /* Read from the file the nightly rank build writes, so this costs
+     nothing at request time. Its own absence is handled inside the
+     component rather than here. */
+  const scan = await getScan().catch(() => null);
   const { builtAt, results } = await runScreen().catch(() => ({
     builtAt: "",
     results: [] as ScreenResult[],
@@ -185,6 +191,19 @@ export default async function OpportunitiesPage({
           </span>
         )}
       </p>
+
+      {/* BEFORE THE SCREENER, because it answers an earlier question.
+          The screener ranks the whole universe on fundamentals and is
+          the same list every day; this says where something actually
+          happened on the tape since yesterday. A reader opening an
+          opportunity page wants the change first. */}
+      <Section
+        eyebrow="הסריקה היומית"
+        title="איפה פעל היום תנאי שנספר"
+        description="כל נייר ביקום עובר את אותה פונקציה שמפעיל קורא הגרפים. מוצגים רק אלה שבהם תנאי פעל עם מדגם והפרש שמצדיקים הדפסה."
+      >
+        <DailyScan scan={scan} />
+      </Section>
 
       <Section
         eyebrow="הפרופילים"

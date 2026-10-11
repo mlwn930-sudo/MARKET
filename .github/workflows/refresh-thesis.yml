@@ -1,4 +1,4 @@
-name: Rebuild the thesis history
+name: Daily — thesis history, ranking and the scan
 
 # Daily, and separate from the fundamentals workflow on purpose.
 #
@@ -80,6 +80,22 @@ jobs:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: npm run build:thesis | tee thesis-run.log
 
+      # THE RANKING AND THE DAILY SCAN, HERE BECAUSE THIS IS THE DAILY JOB.
+      #
+      # `build:ranks` used to run only in the weekly data refresh, and the
+      # scan it now also writes cannot live on that cadence: a condition is
+      # "active" when it fired on the LAST bar, so a scan rebuilt on Sunday
+      # is claiming on Thursday that something fired today when it fired
+      # five sessions ago. Relative strength has the same problem more
+      # quietly — a rank measured last week is compared against this week's
+      # prices everywhere it is shown.
+      #
+      # It costs nothing to move: 123 unauthenticated Yahoo requests paced
+      # at 350ms, on a public repository where Actions minutes are free.
+      - name: Rebuild the ranking and the daily scan
+        if: steps.preflight.outputs.ready == 'true'
+        run: npm run build:ranks | tee ranks-run.log
+
       # The changes detected go into the run summary, so the workflow page
       # answers "did anything move" without anyone opening the JSON.
       - name: Summarise
@@ -91,6 +107,12 @@ jobs:
             echo '```'
             tail -20 thesis-run.log
             echo '```'
+            echo ""
+            echo "## הדירוג והסריקה"
+            echo ""
+            echo '```'
+            tail -8 ranks-run.log
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit if anything changed
@@ -98,10 +120,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content/intel
+          git add content/intel content/ranks content/correlation content/signals
           if git diff --staged --quiet; then
             echo "no changes"
           else
-            git commit -m "chore: record the thesis history"
+            git commit -m "chore: thesis history, ranking and the daily scan"
             git push
           fi
