@@ -33,6 +33,7 @@
     "test:bidi": "node --import tsx --test scripts/bidi.test.ts",
     "test:stance": "node --import tsx --test scripts/stance.test.ts",
     "measure:convergence": "tsx scripts/measure-convergence.ts",
+    "measure:selection": "tsx scripts/measure-selection.ts",
     "test:xbrl": "node --import tsx --test scripts/xbrl.test.ts",
     "test:capital": "node --import tsx --test scripts/capital.test.ts",
     "test:arabic": "node --import tsx --test scripts/arabic.test.ts",

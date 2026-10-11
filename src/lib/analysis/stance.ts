@@ -99,6 +99,43 @@ const DAYS: Record<StanceHorizon, number> = {
  * is a claim that the price will range, because nothing in this file
  * measures ranging.
  */
+/**
+ * What a ten-point gap is worth, once you know how many were tested.
+ *
+ * Measured by `scripts/measure-selection.ts` over the stored base
+ * rates, after this panel was already built. The site tests about
+ * thirteen conditions per name, and the result is uncomfortable:
+ *
+ *   96% of the 123 names have at least one condition clearing 10pp
+ *   somewhere in their list, and the median largest gap on a name is
+ *   20.1pp.
+ *
+ * So "this condition beat its baseline by twenty-four points" is not a
+ * rare event. It is close to what the best of thirteen looks like on
+ * an arbitrary stock, and a reader who takes it as evidence of
+ * something unusual has been misled by a number that is true.
+ *
+ * One thing redeems the filter: it is not a selection. The stance
+ * reports whichever conditions are true today, and being true today
+ * does not make a gap bigger — 5.4pp median for active conditions
+ * against 5.8pp for inactive ones, 19% and 27% clearing the bar. The
+ * panel is not picking the flattering row; it is reporting the row
+ * that fired. But that row has a dozen siblings, and the reader is
+ * owed them.
+ *
+ * Shipped with every stance for the reason `CONVERGENCE_CAVEAT` is:
+ * the measurement that embarrasses the feature is the one most worth
+ * showing, and a project that prints the unflattering number
+ * everywhere else does not get an exception for its own panel.
+ */
+export const SELECTION_CAVEAT =
+  "האתר בודק כ-13 תנאים לכל נייר, וזה משנה איך לקרוא הפרש גדול: " +
+  "ב-96% מ-123 הניירות יש לפחות תנאי אחד שחוצה 10 נקודות מול הבסיס, " +
+  "והחציון של ההפרש הגדול ביותר בנייר הוא 20.1 נקודות. " +
+  "מה שמוצג כאן אינו התנאי המחמיא ביותר אלא זה שפעל — תנאי שפעל היום אינו בעל הפרש גדול יותר " +
+  "(חציון 5.4 מול 5.8 נקודות לתנאי שלא פעל) — " +
+  "אבל להפרש שמוצג יש עוד תריסר אחים שלא פעלו, וזה חלק מהתמונה.";
+
 export type StanceDirection = "up" | "down" | "split" | "none";
 
 export const DIRECTION_NAME: Record<StanceDirection, string> = {
@@ -568,6 +605,7 @@ function stanceFor(
     `המחיר שממנו נמדד: ${lastClose.toFixed(2)} — הסגירה היומית של ${asOf}, לא מחיר חי.`;
 
   const caveats = [
+    SELECTION_CAVEAT,
     ...(rates.caveats ?? []),
     ...(structure.length ? [CONVERGENCE_CAVEAT] : []),
     "כל מספר כאן שייך לתנאי אחד ולא מוזג עם אחר: שני תנאים שפעלו באותו נר " +

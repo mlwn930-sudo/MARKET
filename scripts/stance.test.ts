@@ -24,6 +24,7 @@ import test from "node:test";
 import {
   buildChartStance,
   quantileRows,
+  SELECTION_CAVEAT,
   POSITION_DAYS,
   SWING_DAYS,
 } from "../src/lib/analysis/stance";
@@ -548,4 +549,27 @@ test("no route step tells the reader to transact", () => {
     );
     assert.ok(["now", "confirm", "end", "expires"].includes(s.kind));
   }
+});
+
+test("every stance ships the selection caveat", () => {
+  /* The measurement that embarrasses the panel travels with the panel.
+     96% of names have a condition clearing the bar somewhere, so a
+     number that clears it is not by itself remarkable — and a reader
+     who sees the gap without that sentence has been handed the true
+     half of a fact. Same contract as CONVERGENCE_CAVEAT. */
+  const out = build([condition("reclaim-50", "סגירה מעל ממוצע 50", true)]);
+  for (const h of [out!.swing, out!.position]) {
+    assert.ok(
+      h.caveats.includes(SELECTION_CAVEAT),
+      "a stance without it is a gap printed as if it were rare",
+    );
+  }
+});
+
+test("the selection caveat is on the empty state too", () => {
+  /* Especially there: a reader who sees "nothing fired" should still
+     learn that a fired condition would not have been remarkable. */
+  const out = build([condition("reclaim-50", "סגירה מעל ממוצע 50", false)]);
+  assert.equal(out!.swing.direction, "none");
+  assert.ok(out!.swing.caveats.includes(SELECTION_CAVEAT));
 });
