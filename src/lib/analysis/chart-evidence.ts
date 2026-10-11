@@ -1,5 +1,6 @@
 import { HORIZONS, MIN_SAMPLE } from "@/lib/metrics/base-rates";
 import { isPrivateBuild } from "@/lib/private-mode";
+import type { WatchlistContext } from "@/lib/analysis/watchlist-context";
 import {
   buildChartStance,
   directionLabel,
@@ -42,7 +43,14 @@ import type { Corroboration } from "./chart-corroborate";
  * person reading it, which is the failure mode this whole project is
  * arranged against.
  */
-export function chartEvidence(checked: Corroboration): string {
+export function chartEvidence(
+  checked: Corroboration,
+  /** The reader's own followed names, when the page supplied them.
+   *  Optional because the page that renders the evidence has no list
+   *  and the question box does — and a missing list must mean "not
+   *  asked" rather than "follows nothing". */
+  watchlist?: WatchlistContext | null,
+): string {
   const lines: string[] = [];
 
   lines.push(`נייר: ${checked.ticker}`);
@@ -268,6 +276,12 @@ export function chartEvidence(checked: Corroboration): string {
   /* ---- The stance, private build only ---- */
   if (isPrivateBuild()) lines.push(...stanceLines(checked));
 
+  /* LAST, AFTER THE STANCE IT IS READ AGAINST.
+     "Two of the three names you follow lean the same way" only means
+     anything once this chart's own lean has been stated, and placed
+     before it the list would be a pile of other tickers. */
+  if (watchlist) lines.push(...watchlistLines(watchlist, checked.ticker));
+
   return lines.join("\n");
 }
 
@@ -362,6 +376,132 @@ function trendLines(checked: Corroboration): string[] {
       "[מאושר] הקריאה מהתמונה והמדידה מהנרות מתארות את אותו מבנה.",
     );
   }
+
+  return out;
+}
+
+/**
+ * What else the reader follows, while they look at this one chart.
+ *
+ * The half of a decision a chart cannot contain. A direction on one
+ * name is a reading; the same direction across everything the reader
+ * holds is a concentrated position they did not notice assembling, and
+ * both halves of that sentence were already on the site — the nightly
+ * scan has every name's direction, the correlation matrix has every
+ * pair — and nothing put them together.
+ *
+ * TWO FIGURES THAT MUST NOT BE CONFUSED, so the lines name both. Two
+ * names leaning the same way is an agreement between two readings.
+ * Two names that *move* together is a measured correlation over 104
+ * weeks. The first can be coincidence; the second is the one that
+ * decides whether a second position is a second bet. A model given
+ * only the first will reach for the word "correlated", which is why
+ * the correlation is printed whenever it exists.
+ *
+ * And both sides are dated. The chart's own stance is computed live
+ * from fresh candles; these come from last night's build. Comparing
+ * them without saying so would let the agent assert that two names
+ * agree today when one of them was measured yesterday.
+ */
+function watchlistLines(
+  watchlist: WatchlistContext,
+  ticker: string,
+): string[] {
+  const { followed, sameDirection, withAnyDirection, closeMovers } = watchlist;
+  const out: string[] = ["\n=== מה עוד במעקב של הקורא ==="];
+
+  out.push(
+    watchlist.isFollowed
+      ? `${ticker} נמצאת ברשימת המעקב של הקורא.`
+      : `${ticker} לא ברשימת המעקב של הקורא.`,
+  );
+
+  if (followed.length === 0) {
+    out.push("אין נייר אחר במעקב. אל תדבר על תיק או על ריכוזיות.");
+    return out;
+  }
+
+  out.push(
+    `נוסף לזה במעקב: ${followed.map((f) => f.ticker).join(", ")}. ` +
+      `הכיוונים למטה מהסריקה הלילית של ${watchlist.scanAsOf ?? "תאריך לא ידוע"} ` +
+      "— לא מחושבים עכשיו, בניגוד לעמדה של הגרף שלמעלה.",
+  );
+
+  for (const f of followed) {
+    const parts: string[] = [];
+    if (f.swing) {
+      parts.push(
+        `סווינג ${f.swing.direction === "up" ? "למעלה" : f.swing.direction === "down" ? "למטה" : "חלוק"}` +
+          (f.swing.lead ? ` (${f.swing.lead})` : ""),
+      );
+    }
+    if (f.position) {
+      parts.push(
+        `טווח ארוך ${f.position.direction === "up" ? "למעלה" : f.position.direction === "down" ? "למטה" : "חלוק"}`,
+      );
+    }
+    /* Said as a direction-shaped statement, not as an absence.
+       "אין תנאי נמדד שפעל" is a true line that a model reads past: the
+       answer came back describing two names with no direction at all
+       as "both leaning down", which is the block's own words inverted.
+       A line that states the conclusion — THERE IS NO DIRECTION — is
+       harder to summarise into one. */
+    if (parts.length === 0) {
+      parts.push("אין כיוון — לא למעלה ולא למטה. שום תנאי נמדד לא פעל");
+    }
+    if (f.nextEarnings) {
+      parts.push(`דוח ${f.nextEarnings.date} (בעוד ${f.nextEarnings.daysAway} ימים)`);
+    }
+    if (f.correlation !== null) {
+      parts.push(`מתאם עם ${ticker}: ${f.correlation.toFixed(2)}`);
+    }
+    out.push(`- ${f.ticker}: ${parts.join(" · ")}`);
+  }
+
+  /* The count with its denominator, always. Three of three is a
+     concentration; three of eleven is a coincidence, and one number
+     cannot tell them apart. */
+  if (withAnyDirection > 0) {
+    out.push(
+      `${sameDirection} מתוך ${withAnyDirection} הניירות במעקב שיש להם כיוון ` +
+        `נוטים לאותו צד כמו ${ticker}.`,
+    );
+  } else {
+    out.push(
+      "**לאף נייר אחר במעקב אין כיוון נמדד היום. אל תכתוב שהם נוטים " +
+        "למעלה או למטה — זו לא הסתייגות, זו עובדה על מה שנמדד.** " +
+        "אם השאלה נוגעת אליהם, אמור שלא פעל בהם תנאי נמדד.",
+    );
+  }
+
+  if (closeMovers.length) {
+    out.push(
+      `נעים יחד עם ${ticker} לפי מדידה (מתאם תשואות שבועיות על ` +
+        `${watchlist.correlationWeeks ?? "—"} שבועות): ` +
+        closeMovers
+          .map((m) => `${m.ticker} ${m.correlation.toFixed(2)}`)
+          .join(", ") +
+        ". זה מדוד, בניגוד להסכמה בין כיוונים — ולכן זה מה שקובע אם " +
+        "פוזיציה שנייה היא הימור שני או אותו הימור פעמיים.",
+    );
+  }
+
+  /* The instruction has to name the figure, not the topic. The first
+     version said "use this if asked about concentration" and the model
+     answered a concentration question — "does this add anything or is
+     it more of the same" — by comparing which conditions fired, with
+     the measured correlation printed two lines above and unused.
+     Agreement between directions is the weaker evidence and the more
+     available one, so it gets reached for unless the stronger one is
+     asked for by name. */
+  out.push(
+    "**לשאלה על התיק, על ריכוזיות, או על ״האם זה עוד מאותו דבר״ — צטט " +
+      `את המתאם המדוד מול ${ticker} במספרים.** הוא הדבר שמכריע אם פוזיציה ` +
+      "שנייה היא הימור שני או אותו הימור פעמיים, והסכמה בין כיוונים אינה " +
+      "תחליף לו: שני ניירות יכולים לנטות לאותו צד ולזוז בנפרד, ולהפך. " +
+      "בשאלות אחרות השתמש בחלק הזה רק אם הוא רלוונטי לשאלה. אל תמציא " +
+      "מתאם שלא מודפס כאן, ואל תקרא להסכמה בין כיוונים ״מתאם״.",
+  );
 
   return out;
 }
@@ -525,3 +665,26 @@ export const CHART_QUESTIONS = [
      of it was given back on the way". */
   "מה הסטטיסטיקה של המצב הזה — כמה זה זז, וכמה זה ירד בדרך?",
 ];
+
+/**
+ * Rejects an answer that calls a base rate a success rate.
+ *
+ * The figure is a count of sessions that closed higher than the one the
+ * condition fired on. Nobody succeeded at anything — there was no
+ * entry, no exit and no position — and the word turns a measurement
+ * into a claim about a strategy that was never run. It is also the
+ * single easiest slip for a model to make, because every other context
+ * it has seen a percentage beside a trading signal in called it that.
+ *
+ * Matched against the word near a number rather than the exact phrase
+ * the prompt banned: the prompt forbade "שיעור הצלחה" and the answer
+ * came back "70% הצלחה", which obeys the letter and breaks the point.
+ * Plain prose about a product launch succeeding is left alone, because
+ * the digit has to be within a few characters.
+ */
+export function callsItSuccess(text: string): string | null {
+  const near = /(\d\s*%[^.\n]{0,24}הצלחה)|(הצלחה[^.\n]{0,24}\d\s*%)|שיעור\s+הצלחה|אחוז\s+הצלחה/;
+  return near.test(text)
+    ? 'answer called a base rate a "success rate"'
+    : null;
+}

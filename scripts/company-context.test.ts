@@ -7,6 +7,7 @@ import {
   type EarningsDate,
 } from "../src/lib/sources/finnhub";
 import { isAbout } from "../src/lib/watchlist-news";
+import { callsItSuccess } from "../src/lib/analysis/chart-evidence";
 import type { WatchArticle } from "../src/lib/watchlist-news";
 
 /**
@@ -217,4 +218,35 @@ test("a story covering two companies reaches both of them", async () => {
   assert.equal(isAbout("TTWO", a), true);
   assert.equal(isAbout("GME", a), true);
   assert.equal(isAbout("NVDA", a), false);
+});
+
+/* ------------------------------------------------------------------ */
+/* A base rate is not a success rate                                   */
+/* ------------------------------------------------------------------ */
+
+test("an answer calling a base rate a success rate is rejected", () => {
+  /* Measured: the prompt forbade the exact phrase "שיעור הצלחה" and the
+     model answered "70% הצלחה" — obeying the letter and breaking the
+     point. The figure counts sessions that closed higher; there was no
+     entry, no exit and no position, so nobody succeeded at anything. */
+  assert.ok(callsItSuccess("הרשומה מראה 70% הצלחה מול בסיס של 55%"));
+  assert.ok(callsItSuccess("שיעור הצלחה של 70%"));
+  assert.ok(callsItSuccess("אחוז הצלחה גבוה"));
+  assert.ok(callsItSuccess("הצלחה ב-70% מהמקרים"));
+});
+
+test("the accepted phrasing passes, and so does ordinary prose", () => {
+  assert.equal(
+    callsItSuccess("70% סגרו גבוה יותר מול בסיס 55%, על 54 מופעים"),
+    null,
+  );
+  /* A launch succeeding is a fact about a company, not a mislabelled
+     rate. The digit has to be near the word for the guard to fire, so
+     prose like this is left alone — a blanket ban on the word would be
+     wrong in eight of this project's nine prompts. */
+  assert.equal(
+    callsItSuccess("ההשקה של המשחק נחשבת הצלחה גדולה לחברה בשנה שעברה"),
+    null,
+  );
+  assert.equal(callsItSuccess("אין כאן תנאי נמדד שפעל"), null);
 });

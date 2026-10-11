@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { CHART_ASK_SYSTEM } from "@/lib/analysis/prompts";
-import { chartEvidence } from "@/lib/analysis/chart-evidence";
+import { chartEvidence, callsItSuccess } from "@/lib/analysis/chart-evidence";
+import { watchlistFor } from "@/lib/analysis/watchlist-context";
 import {
   GEMINI_FAILURE_TEXT,
   GeminiError,
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: { question?: unknown; corroboration?: unknown };
+  let body: { question?: unknown; corroboration?: unknown; watchlist?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -76,7 +77,18 @@ export async function POST(request: Request) {
     );
   }
 
-  const evidence = chartEvidence(checked);
+  /* THE READER'S OWN LIST, WHICH IS WHAT MAKES A CHART A DECISION.
+     Supplied by the page rather than stored here: the watchlist lives
+     in the browser and the server keeps a copy only for the alert mail.
+     It is a query and never an assertion — every figure is looked up
+     server-side in the site's own files. See `watchlist-context.ts`. */
+  const followed = Array.isArray(body.watchlist)
+    ? (body.watchlist as unknown[]).filter(
+        (t): t is string => typeof t === "string",
+      )
+    : [];
+
+  const evidence = chartEvidence(checked, await watchlistFor(checked, followed));
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -114,6 +126,14 @@ export async function POST(request: Request) {
                 `\n\n---\n\nהשאלה: ${question}`,
             },
           ],
+          /* A base rate is a count of times price closed higher. It is
+             not a success rate, nobody succeeded at anything, and the
+             difference is the whole distance between a measurement and
+             a promise. The prompt has said so since it was written and
+             the answer came back "70% הצלחה" anyway — a rule stated
+             once in a long system prompt is a rule that survives until
+             the model is busy. Rejected and asked again instead. */
+          reject: callsItSuccess,
           temperature: 0.3,
           maxOutputTokens: 900,
           /* The same ceiling as the read, and the same arithmetic: no

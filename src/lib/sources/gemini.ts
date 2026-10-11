@@ -195,6 +195,25 @@ export type GenerateOptions = {
   images?: Attachment[];
   /** Forces a JSON object back. Set for you by generateJson. */
   json?: boolean;
+  /**
+   * One caller's own reason to throw an answer away and ask again.
+   *
+   * The script guards below are universal — Arabic inside Hebrew is
+   * wrong in every prompt this project has. A wording rule is not. The
+   * chart answers must never call a base rate a "success rate", because
+   * it is a count of times price closed higher and nobody succeeded at
+   * anything; a news summary may perfectly well say a launch succeeded.
+   * A blanket ban on the word would be wrong in eight of the nine
+   * prompts, and a rule enforced only in the prompt is a rule a model
+   * drops under load — measured, on exactly this: the instruction said
+   * not to write "success rate" and the answer came back "70% success".
+   *
+   * Returns the problem as a string, or null to accept. Rejection goes
+   * through the same retry the script guards use, so a caller that runs
+   * out of attempts gets the error and shows its own absence rather
+   * than printing a sentence it had already decided was wrong.
+   */
+  reject?: (text: string) => string | null;
   temperature?: number;
   maxOutputTokens?: number;
   timeoutMs?: number;
@@ -437,6 +456,15 @@ export async function generateText(options: GenerateOptions): Promise<string> {
       if (text && containsCyrillic(text)) {
         lastProblem = "model returned Cyrillic inside Hebrew text";
         continue;
+      }
+      /* Last of the guards, because it is the only one that is this
+         caller's rule rather than the project's. */
+      if (text && options.reject) {
+        const problem = options.reject(text);
+        if (problem) {
+          lastProblem = problem;
+          continue;
+        }
       }
 
       if (text && !(options.json && truncated)) return text;

@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from "react";
 import { CHART_QUESTIONS } from "@/lib/analysis/chart-evidence";
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 import { isPrivateBuild } from "@/lib/private-mode";
+import { getWatchlist } from "@/lib/watchlist";
 
 /**
  * The questions a reader has once the chart has been explained to them.
@@ -56,7 +57,20 @@ export function ChartAsk({ checked }: { checked: Corroboration | null }) {
         const res = await fetch("/api/chart-ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: text, corroboration: checked }),
+          /* THE READER'S OWN LIST TRAVELS WITH THE QUESTION.
+             It lives in this browser's localStorage and nowhere else;
+             sending it here is what lets the answer know whether this
+             chart is one of theirs and whether the rest of the list
+             leans the same way. Read at send time rather than captured
+             on mount, so a company starred in another tab a minute ago
+             is already in the next answer. Nothing is stored server
+             side: the list is a query, and every figure that comes back
+             is looked up in the site's own files. */
+          body: JSON.stringify({
+            question: text,
+            corroboration: checked,
+            watchlist: getWatchlist(),
+          }),
         });
 
         if (!res.ok || !res.body) {
