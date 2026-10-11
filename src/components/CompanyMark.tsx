@@ -45,9 +45,52 @@ const DIMENSION: Record<Size, number> = { sm: 26, md: 34, lg: 52 };
 const DARK_INK = "#0B1220";
 const LIGHT_INK = "#FFFFFF";
 
-/** Relative luminance, per WCAG. */
-function luminanceOf(hex: string): number {
-  const clean = hex.replace("#", "");
+/**
+ * The accent as three channels, whatever notation it arrived in.
+ *
+ * THIS USED TO READ HEX ONLY, and that was not a gap in coverage — it
+ * was the default path. A company with no hand-set brand colour and no
+ * sector accent gets `hsl(... 55% 58%)` from `hashColour`, and
+ * `parseInt("hs", 16)` is NaN. Every comparison against NaN is false,
+ * so `inkFor` fell through to white on a 58%-lightness background:
+ * measured at 2.44:1 for SK on the home page, where black would have
+ * been 7.77:1.
+ *
+ * And it was worst exactly where it mattered. A branded company has a
+ * logo covering the letters; an unbranded one does not, so the
+ * monogram IS the mark, and the monogram is what was unreadable.
+ */
+function channelsOf(colour: string): [number, number, number] | null {
+  const value = colour.trim();
+
+  const hsl = value.match(
+    /^hsla?\(\s*([\d.]+)(?:deg)?[\s,]+([\d.]+)%[\s,]+([\d.]+)%/i,
+  );
+  if (hsl) {
+    const h = Number(hsl[1]) / 360;
+    const sat = Number(hsl[2]) / 100;
+    const light = Number(hsl[3]) / 100;
+    if (sat === 0) return [light, light, light];
+    const q = light < 0.5 ? light * (1 + sat) : light + sat - light * sat;
+    const pp = 2 * light - q;
+    const toChannel = (t: number) => {
+      let x = t;
+      if (x < 0) x += 1;
+      if (x > 1) x -= 1;
+      if (x < 1 / 6) return pp + (q - pp) * 6 * x;
+      if (x < 1 / 2) return q;
+      if (x < 2 / 3) return pp + (q - pp) * (2 / 3 - x) * 6;
+      return pp;
+    };
+    return [toChannel(h + 1 / 3), toChannel(h), toChannel(h - 1 / 3)];
+  }
+
+  const rgb = value.match(/^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/i);
+  if (rgb) {
+    return [Number(rgb[1]) / 255, Number(rgb[2]) / 255, Number(rgb[3]) / 255];
+  }
+
+  const clean = value.replace("#", "");
   const full =
     clean.length === 3
       ? clean
@@ -55,7 +98,20 @@ function luminanceOf(hex: string): number {
           .map((c) => c + c)
           .join("")
       : clean;
-  const [r, g, b] = [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16) / 255);
+  if (!/^[0-9a-f]{6}$/i.test(full)) return null;
+  return [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16) / 255) as [
+    number,
+    number,
+    number,
+  ];
+}
+
+/** Relative luminance, per WCAG. Null for a colour that cannot be read,
+ *  so the caller decides rather than inheriting a NaN. */
+function luminanceOf(colour: string): number | null {
+  const channels = channelsOf(colour);
+  if (!channels) return null;
+  const [r, g, b] = channels;
   const channel = (v: number) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
   return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
 }
@@ -80,13 +136,19 @@ function luminanceOf(hex: string): number {
  * colour nobody has added yet, and the arithmetic is the definition of the
  * thing being decided rather than a proxy for it.
  */
-function inkFor(hex: string): string {
-  const background = luminanceOf(hex);
+export function inkFor(colour: string): string {
+  const background = luminanceOf(colour);
+  /* An unreadable colour gets the dark ink rather than the light one.
+     Unbranded accents are mid-lightness by construction (55% 58%), so
+     dark is the better guess when there is nothing to measure — and the
+     old fallback to white is the bug this function just stopped
+     having. */
+  if (background === null) return DARK_INK;
+  const dark = luminanceOf(DARK_INK)!;
+  const light = luminanceOf(LIGHT_INK)!;
   const against = (ink: number) =>
     (Math.max(background, ink) + 0.05) / (Math.min(background, ink) + 0.05);
-  return against(luminanceOf(DARK_INK)) >= against(luminanceOf(LIGHT_INK))
-    ? DARK_INK
-    : LIGHT_INK;
+  return against(dark) >= against(light) ? DARK_INK : LIGHT_INK;
 }
 
 export function CompanyMark({

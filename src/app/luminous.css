@@ -684,14 +684,37 @@ body:not(:has(.gta-cover)) .scene-reading .micro-label,
 body:not(:has(.gta-cover)) .world-guide span {
   color: var(--color-ink-muted);
 }
-body:not(:has(.gta-cover)) .dock-tabs button[aria-pressed=true],
 body:not(:has(.gta-cover)) .explore-stories a,
-body:not(:has(.gta-cover)) .market-filters button[aria-pressed=true],
 body:not(:has(.gta-cover)) .now-pick b,
 body:not(:has(.gta-cover)) .scene-bottom a,
 body:not(:has(.gta-cover)) .scene-stops button[aria-current],
 body:not(:has(.gta-cover)) .story-select button[aria-pressed=true] {
   color: #7FA5FF;
+}
+
+/* THE TWO SELECTORS REMOVED FROM THE LIST ABOVE, and the reason is the
+   sentence that list is introduced with: fills are untouched, because
+   on a fill the measurement does not apply.
+
+   `.dock-tabs button[aria-pressed=true]` and `.market-filters
+   button[aria-pressed=true]` ARE fills — `financial.css` gives each of
+   them `background:#2855F5` with white type. Putting them in the list
+   turned white on blue, which is 5.3:1, into #7FA5FF on blue, which is
+   2.35:1. The active research tab on the home page was close to
+   unreadable, and it was the rule meant to fix unreadable blue that
+   did it.
+
+   Measured, not noticed: a scan of every text node on the page against
+   the background actually painted behind it. */
+body:not(:has(.gta-cover)) .dock-tabs button[aria-pressed=true],
+body:not(:has(.gta-cover)) .market-filters button[aria-pressed=true] {
+  color: #FFFFFF;
+}
+
+/* 4.17:1 on this ground, from a paper value the dark sheet reassigned
+   on the child (`.scene-bridge b`) and not on the container. */
+body:not(:has(.gta-cover)) .scene-bridge {
+  color: var(--color-ink-ghost);
 }
 
 /* The last of the paper greys.

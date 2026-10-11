@@ -109,8 +109,18 @@ function hashColour(ticker: string): string {
   for (let i = 0; i < ticker.length; i++) {
     hash = (hash * 31 + ticker.charCodeAt(i)) >>> 0;
   }
-  // Mid saturation and lightness keep it legible on the dark canvas.
-  return `hsl(${hash % 360} 55% 58%)`;
+  /* 66% LIGHTNESS, AND THE NUMBER IS MEASURED RATHER THAN CHOSEN.
+
+     It was 58%, with the comment "mid saturation and lightness keep it
+     legible". They do not, for every hue. `inkFor` picks whichever of
+     black or white contrasts better with the tile, and at 58% the worst
+     hue — 277, a blue-violet — tops out at 4.33:1 whichever ink it
+     picks. AA wants 4.5. 62% is no better (4.33 at hue 236); 66% clears
+     every one of the 360 hues, worst case 4.92:1 at hue 240.
+
+     It matters here more than anywhere else on the site: an unbranded
+     company has no logo, so these two letters ARE the mark. */
+  return `hsl(${hash % 360} 55% 66%)`;
 }
 
 export type CompanyIdentity = {
