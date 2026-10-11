@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DIRECTION_NAME, HORIZON_NAME, SELECTION_CAVEAT } from "@/lib/analysis/stance";
+import { HORIZON_NAME, SELECTION_CAVEAT, directionLabel } from "@/lib/analysis/stance";
 import { ScanChange } from "@/components/market/ScanChange";
 import type { ScanFile } from "@/lib/signals/scan-store";
 
@@ -80,7 +80,8 @@ export function DailyScan({ scan }: { scan: ScanFile | null }) {
               {name.horizons.map((h) => (
                 <div key={h.horizon} className="mt-2">
                   <span className="text-[13px] text-ink">
-                    {HORIZON_NAME[h.horizon]} · {DIRECTION_NAME[h.direction]}
+                    {HORIZON_NAME[h.horizon]} ·{" "}
+                    {directionLabel(h)}
                   </span>
                   {h.lead && (
                     <span className="mt-0.5 block text-[12.5px] leading-relaxed text-ink-muted">

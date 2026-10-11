@@ -2,7 +2,7 @@ import { isPrivateBuild, PRIVATE_NOTE } from "@/lib/private-mode";
 import {
   buildChartStance,
   quantileRows,
-  DIRECTION_NAME,
+  directionLabel,
   HORIZON_NAME,
   HORIZON_SPAN,
 } from "@/lib/analysis/stance";
@@ -119,7 +119,7 @@ function Horizon({ stance }: { stance: HorizonStance }) {
       </span>
 
       <p className="mt-1 text-[15px] font-semibold text-ink">
-        {DIRECTION_NAME[stance.direction]}
+        {directionLabel(stance)}
       </p>
       <p className="num mt-0.5 text-[12px] text-ink-faint">
         {countedIn(stance)}

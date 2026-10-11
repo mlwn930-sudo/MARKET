@@ -35,6 +35,11 @@ import type {
   Outcome,
 } from "../src/lib/metrics/base-rates";
 import { isPrivateBuild } from "../src/lib/private-mode";
+import {
+  directionLabel,
+  DIRECTION_NAME,
+  STRUCTURE_DIRECTION_NAME,
+} from "../src/lib/analysis/stance";
 import type { Observation, SetupRead } from "../src/lib/analysis/setup";
 
 /* ── Fixtures ─────────────────────────────────────────────────────────── */
@@ -639,4 +644,71 @@ test("the verdict's strength always matches its evidence", () => {
   ]);
   assert.match(counted!.swing.verdict, /ולזה יש רשומה/);
   assert.doesNotMatch(counted!.swing.verdict, /אין לזה רשומה/);
+});
+
+test("a direction never ships without something arguing against it", () => {
+  /* THE INVARIANT THAT WAS BROKEN, and the shape that broke it.
+     `against` was only guaranteed non-empty while a condition was
+     firing. When every structure note points the same way, none of them
+     opposes the direction, `agreeing` is empty so none of the adverse-path
+     or small-sample clauses fire, and a direction shipped with an empty
+     counter-column — which reads as an endorsement. It stayed invisible
+     while the compact line was only on a watchlist of followed names and
+     appeared the day it went onto a company page, where a lean resting
+     on structure is what most names look like. */
+  const out = build(
+    [condition("reclaim-50", "סגירה מעל ממוצע 50", false)],
+    setup([
+      observation("trend-stage-4", "cautionary"),
+      observation("rank-weak", "cautionary"),
+      observation("level-resistance", "cautionary"),
+    ]),
+  );
+  assert.equal(out!.swing.direction, "down");
+  assert.equal(out!.swing.restsOn, "structure");
+  assert.ok(
+    out!.swing.against.length > 0,
+    "a stated direction with an empty counter-column reads as an endorsement",
+  );
+  /* And the counter has to be the real one: not a missing measurement,
+     but that the lean has no counted record at all. */
+  assert.match(out!.swing.against[0], /אין רשומה ספורה/);
+  assert.ok(out!.position.against.length > 0, "the long horizon too");
+});
+
+test("the heading never claims a record the row does not have", () => {
+  /* `DIRECTION_NAME` says "the record leans", and four call sites used it
+     for every direction — including the prompt, which is why the agent
+     answered "TTWO's record leans down" on a chart whose lean rested on
+     structure alone. The label is picked from `restsOn` now, in one
+     place, because a heading that overstates its evidence must not be
+     re-derived per component. */
+  const structural = build(
+    [condition("reclaim-50", "סגירה מעל ממוצע 50", false)],
+    setup([
+      observation("trend-stage-4", "cautionary"),
+      observation("rank-weak", "cautionary"),
+    ]),
+  );
+  assert.equal(directionLabel(structural!.swing), STRUCTURE_DIRECTION_NAME.down);
+  assert.doesNotMatch(directionLabel(structural!.swing), /הרשומה/);
+
+  const counted = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, { 21: { liftPp: 20, up: 0.78 } }),
+  ]);
+  assert.equal(directionLabel(counted!.swing), DIRECTION_NAME.up);
+});
+
+test("the heading derives what it rests on when a stored row cannot say", () => {
+  /* The scan file predates `restsOn`. The derivation is exact rather
+     than a default: `lead` IS the counted condition, so a stored row
+     without one rested on structure. */
+  assert.equal(
+    directionLabel({ direction: "down", lead: null }),
+    STRUCTURE_DIRECTION_NAME.down,
+  );
+  assert.equal(
+    directionLabel({ direction: "none", lead: null }),
+    DIRECTION_NAME.none,
+  );
 });

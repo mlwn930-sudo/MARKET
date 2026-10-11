@@ -254,6 +254,7 @@ async function main() {
         lead: h.agreeing[0] ?? null,
         against: h.against[0] ?? null,
         ends: h.route.find((r) => r.kind === "end")?.label ?? null,
+        restsOn: h.restsOn,
       })),
     });
   }

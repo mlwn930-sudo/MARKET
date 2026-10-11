@@ -23,6 +23,8 @@ import { readLevels, readFlow } from "@/lib/metrics/levels";
 import { readTape } from "@/lib/metrics/tape";
 import { TapePanel } from "@/components/market/TapePanel";
 import { SetupPanel } from "@/components/market/SetupPanel";
+import { StanceLine } from "@/components/market/StanceLine";
+import { buildChartStance } from "@/lib/analysis/stance";
 import { readSetup } from "@/lib/analysis/setup";
 import { rankFor } from "@/lib/metrics/rank-store";
 import { getExtendedHours } from "@/lib/sources/extended-hours";
@@ -302,6 +304,23 @@ export default async function CompanyPage({
   const setup = history
     ? readSetup(ticker, history.candles, baseRates, rank)
     : null;
+
+  /* WHICH WAY THE COUNTED RECORD LEANS, ON THE PAGE WHERE THE COMPANY IS.
+     The direction existed on the chart reader, which needs a screenshot,
+     and on the watchlist, which needs the company to be followed. A
+     company page needed neither and showed neither, so the one place a
+     person lands when they are looking at a company was the one place
+     that did not answer the question.
+     Costs nothing: the candles, the base rates, the rank and the setup
+     are all already loaded above for the panels below. The close comes
+     from those same candles rather than from a live quote, because a
+     direction dated to one bar and priced from another is two readings
+     wearing one label. */
+  const stanceClose = history?.candles.at(-1)?.close ?? null;
+  const stance =
+    stanceClose !== null
+      ? buildChartStance({ setup, baseRates, lastClose: stanceClose })
+      : null;
 
   const nextReport = calendar?.date ?? null;
   const sessionsToReport = (() => {
@@ -847,6 +866,12 @@ export default async function CompanyPage({
           correct panels and nobody doing the arithmetic across them. */}
       {setup && (
         <Section eyebrow="מה מתכנס">
+          {/* The lean above the count it is made of. `StanceLine` renders
+              nothing at all in a public build, so this reads as the
+              convergence section alone there — which is what it was
+              before, and why the eyebrow still describes the panel and
+              not the line. */}
+          {stance && <StanceLine stance={stance} />}
           <SetupPanel setup={setup} />
         </Section>
       )}

@@ -36,7 +36,7 @@ import { approvedWithWatchlists } from "../src/lib/alerts/subscribers";
 import { readSetup } from "../src/lib/analysis/setup";
 import {
   buildChartStance,
-  DIRECTION_NAME,
+  directionLabel,
   HORIZON_NAME,
 } from "../src/lib/analysis/stance";
 import { generateJson } from "../src/lib/sources/gemini";
@@ -452,7 +452,7 @@ async function main() {
                   const lead = h.agreeing[0];
                   const counter = h.against[0];
                   const ends = h.route.find((r) => r.kind === "end");
-                  const head = `[${HORIZON_NAME[h.horizon]}] ${DIRECTION_NAME[h.direction]}`;
+                  const head = `[${HORIZON_NAME[h.horizon]}] ${directionLabel(h)}`;
                   const why = lead
                     ? `\n${lead.label}: ${Math.round(lead.upShareHist * 100)}% מול בסיס ${Math.round(lead.baselineUpShare * 100)}% (${lead.liftPp >= 0 ? "+" : ""}${Math.round(lead.liftPp)} נק׳, n=${lead.n})`
                     : "";

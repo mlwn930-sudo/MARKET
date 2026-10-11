@@ -2,7 +2,7 @@ import { HORIZONS, MIN_SAMPLE } from "@/lib/metrics/base-rates";
 import { isPrivateBuild } from "@/lib/private-mode";
 import {
   buildChartStance,
-  DIRECTION_NAME,
+  directionLabel,
   ROUTE_KIND_NAME,
   HORIZON_NAME,
   HORIZON_SPAN,
@@ -380,7 +380,7 @@ function stanceLines(checked: Corroboration): string[] {
 
   for (const h of [stance.swing, stance.position] as HorizonStance[]) {
     out.push(
-      `\n[${HORIZON_NAME[h.horizon]} · ${HORIZON_SPAN[h.horizon]}] ${DIRECTION_NAME[h.direction]}.`,
+      `\n[${HORIZON_NAME[h.horizon]} · ${HORIZON_SPAN[h.horizon]}] ${directionLabel(h)}.`,
     );
     if (h.baseline) {
       out.push(

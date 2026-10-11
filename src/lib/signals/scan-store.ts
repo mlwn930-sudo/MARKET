@@ -22,6 +22,25 @@ export type ScanHorizon = {
   lead: ConditionCite | null;
   against: string | null;
   ends: string | null;
+  /**
+   * Whether the direction rests on a counted record or only on
+   * structure, which decides the heading the row is allowed to carry:
+   * "the record leans down" claims a record, and a structural lean does
+   * not have one.
+   *
+   * Optional because files written before it existed do not carry it.
+   * `directionLabel` fills the gap itself, and exactly rather than by
+   * assumption — `lead` IS the counted condition, so a row without one
+   * rested on structure.
+   *
+   * The derivation lives in `stance.ts` and not here on purpose: this
+   * module touches the filesystem, `DailyScan` is a client component,
+   * and the one time a client component imported a *value* from a store
+   * it dragged `node:fs/promises` into the browser bundle and five
+   * hundred'd sixteen of eighteen routes. A type import is free; a
+   * function import is not.
+   */
+  restsOn?: "counted" | "structure" | "none";
 };
 
 export type ScanName = {

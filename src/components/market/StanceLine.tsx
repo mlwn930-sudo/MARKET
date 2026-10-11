@@ -1,4 +1,5 @@
-import { DIRECTION_NAME, HORIZON_NAME } from "@/lib/analysis/stance";
+import { HORIZON_NAME, directionLabel } from "@/lib/analysis/stance";
+import { isPrivateBuild } from "@/lib/private-mode";
 import type { ChartStance } from "@/lib/analysis/stance";
 
 /**
@@ -27,6 +28,23 @@ import type { ChartStance } from "@/lib/analysis/stance";
  * says it is a measurement rather than a gap.
  */
 export function StanceLine({ stance }: { stance: ChartStance }) {
+  /* THE SWITCH HAS TO COVER THIS TOO, AND IT DID NOT.
+     `StancePanel` returns null in a public build and this did not, so
+     the one env var that was supposed to remove every stated direction
+     from the site before it is opened to other people would have left
+     them on the watchlist — the one page a visitor with a list of names
+     would actually be on. The flag was tested on the chart reader,
+     where it was written, and the second surface was added later
+     without it. Gated here rather than at the call site, the same way
+     `StancePanel` does it, so a third surface cannot repeat this by
+     forgetting a wrapper.
+
+     The alert mail is deliberately NOT gated and is not an exception to
+     this: it has one recipient, `ALERT_OWNER_EMAIL`, and gating it
+     would take the direction out of the owner's own inbox while
+     removing it from nowhere a visitor can reach. */
+  if (!isPrivateBuild()) return null;
+
   const rows = [stance.swing, stance.position].filter(
     (h) => h.direction !== "none",
   );
@@ -51,8 +69,23 @@ export function StanceLine({ stance }: { stance: ChartStance }) {
         return (
           <div key={h.horizon} className="cover-stance-row">
             <span className="cover-stance-head">
-              {HORIZON_NAME[h.horizon]} · {DIRECTION_NAME[h.direction]}
+              {HORIZON_NAME[h.horizon]} · {directionLabel(h)}
             </span>
+
+            {/* WHAT THE LEAN IS MADE OF, in the structural case.
+                A counted lean has the rate line below. A structural one
+                had nothing, so the row was a direction with no evidence
+                under it — which is the shape this project exists to
+                refuse. The notes are what the lean is actually resting
+                on, so they are what gets printed. */}
+            {!lead && h.structure.length > 0 && (
+              <span className="cover-stance-why">
+                {h.structure
+                  .slice(0, 3)
+                  .map((note) => note.label)
+                  .join(" · ")}
+              </span>
+            )}
 
             {/* The rate never appears without its baseline. The whole
                 file is built on the finding that a conditional rate

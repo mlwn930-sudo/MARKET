@@ -146,6 +146,45 @@ export const DIRECTION_NAME: Record<StanceDirection, string> = {
 };
 
 /**
+ * The same directions, for a lean that has no counted record behind it.
+ *
+ * `DIRECTION_NAME` says "the record leans", and on a structural lean
+ * there is no record — the label was making a claim the row underneath
+ * could not support, and on most names that is the only label shown.
+ * Two label sets rather than one sentence assembled at each call site,
+ * because a heading that overstates its evidence is exactly the thing
+ * that must not be re-derived in three components. Pick by `restsOn`.
+ */
+export const STRUCTURE_DIRECTION_NAME: Record<StanceDirection, string> = {
+  up: "המבנה נוטה למעלה — בלי רשומה ספורה",
+  down: "המבנה נוטה למטה — בלי רשומה ספורה",
+  split: "הרשומות סותרות זו את זו",
+  none: "אין תנאי נמדד שפעל",
+};
+
+/**
+ * Which heading a horizon has earned.
+ *
+ * Takes `restsOn` when the caller has it and derives it when the caller
+ * does not, because one of the callers reads rows off a file written
+ * before the field existed. The derivation is exact rather than a
+ * fallback: `lead` is the counted condition, so a row without one rested
+ * on structure, and there is nothing to guess.
+ */
+export function directionLabel(h: {
+  direction: StanceDirection;
+  restsOn?: "counted" | "structure" | "none";
+  lead?: ConditionCite | null;
+}): string {
+  const restsOn =
+    h.restsOn ??
+    (h.direction === "none" ? "none" : h.lead ? "counted" : "structure");
+  return restsOn === "structure"
+    ? STRUCTURE_DIRECTION_NAME[h.direction]
+    : DIRECTION_NAME[h.direction];
+}
+
+/**
  * One condition's own figures, never merged with another's.
  *
  * Every field is copied from a single `Outcome`. Nothing here is an
@@ -565,6 +604,30 @@ function stanceFor(
       );
     }
   }
+  /* A STRUCTURAL LEAN WITH NOTHING OPPOSING IT, which is the common case
+     and was shipping with an empty counter-column.
+     When every structure note points the same way, none of them opposes
+     the direction, `agreeing` is empty so none of the clauses above fire,
+     and the row renders as a bare direction. That is the one output this
+     engine is not allowed to produce — and it only became visible when
+     the compact line went onto a company page, where a lean resting on
+     structure rather than on a count is what most names look like.
+     The counter here is not a missing measurement. It is that the lean
+     has no counted record behind it at all, which is a stronger thing to
+     say against it than any single opposing note would have been. */
+  if (
+    agreeing.length === 0 &&
+    against.length === 0 &&
+    direction !== "none" &&
+    direction !== "split"
+  ) {
+    against.push(
+      "לכיוון הזה אין רשומה ספורה. הוא נשען על מה שנראה על הגרף עכשיו, " +
+        "ולא על מה שקרה אחרי מצב כזה בעבר על הנייר הזה. " +
+        CONVERGENCE_CAVEAT,
+    );
+  }
+
   if (agreeing.length && against.length === 0) {
     /* Reachable only on a stored file with no excursion fields, no quiet
        conditions, no opposing structure and a large sample. It is still
