@@ -1257,3 +1257,90 @@
     color: var(--color-text-subtle);
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* The trend check                                                     */
+/*                                                                     */
+/* Two readings side by side with equal weight, because the page is    */
+/* not declaring a winner. The only colour is on the edge, and it is   */
+/* the same pair `read-check-row` already uses: the data colour where  */
+/* they agree, the reservation colour where they do not. Never green   */
+/* or red — those mean price direction on this site, and a picture     */
+/* disagreeing with the candles is not a price going down.             */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .trend-check[data-agreement="agrees"] {
+    border-inline-start: 2px solid var(--color-intelligence);
+  }
+  .trend-check[data-agreement="qualified"],
+  .trend-check[data-agreement="contradicts"] {
+    border-inline-start: 2px solid var(--color-warning-text);
+  }
+
+  .trend-sides {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    max-inline-size: 680px;
+  }
+
+  .trend-side {
+    padding: 11px 13px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 8px;
+  }
+
+  .trend-side-who {
+    display: block;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .trend-side b {
+    display: block;
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .trend-side small {
+    display: block;
+    margin-top: 5px;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--color-text-subtle);
+  }
+
+  .trend-verdict {
+    margin-top: 13px;
+    max-inline-size: 680px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+  }
+
+  .trend-verdict strong { color: var(--color-text-primary); }
+
+  .trend-figures {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px 16px;
+    max-inline-size: 680px;
+  }
+
+  .trend-figures dt { font-size: 11px; color: var(--color-text-subtle); }
+  .trend-figures dd {
+    margin-top: 3px;
+    font-size: 14px;
+    color: var(--color-text-primary);
+  }
+
+  @media (max-width: 600px) {
+    .trend-sides { grid-template-columns: 1fr; }
+    .trend-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+}

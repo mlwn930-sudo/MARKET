@@ -705,7 +705,17 @@ function stanceFor(
   }
 
   for (const line of invalidation) {
-    const expiry = line.includes("תום האופק");
+    /* THE NOTE THAT A CONDITION HAS NO OPPOSITE IS NOT A STEP.
+       It names no event to watch — it says there is none — and it ends
+       with the words "תום האופק", which the substring test below used
+       to read as the expiry step. The route then printed two identical
+       "end of 21 sessions" rows, one for the note and one for the real
+       expiry. The note stays in `invalidation`, which is where it is
+       true; it leaves the route, which is a list of things to watch. */
+    if (line.includes("אין אירוע הפוך נמדד")) continue;
+    /* Anchored rather than a substring, so a line that merely mentions
+       the horizon's end cannot pose as the step that is it. */
+    const expiry = line.startsWith("תום האופק");
     /* The invalidation lines are written as "<event> — <why>", and the
        row prints a label above a detail. Splitting on the dash keeps the
        event out of the detail: printed whole it read as the event name

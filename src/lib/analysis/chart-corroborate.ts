@@ -1,7 +1,14 @@
 import { detectTickers } from "@/lib/company-names";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { readLevels, type PriceLevel } from "@/lib/metrics/levels";
+import type { Candle } from "@/lib/sources/prices";
 import { readTape, type TapeRead } from "@/lib/metrics/tape";
+import {
+  readTrendFor,
+  readStage,
+  type TrendRead,
+  type StageRead,
+} from "@/lib/metrics/technical";
 import { readSetup, type SetupRead } from "@/lib/analysis/setup";
 import { rankFor } from "@/lib/metrics/rank-store";
 import type { ChartRead } from "./chart-reader";
@@ -72,6 +79,8 @@ export type Corroboration = {
    * without that is rule 5 in its purest form.
    */
   realLevels: PriceLevel[];
+  /** The model's trend claim, against the one the candles support. */
+  trend: TrendCheck;
   confirmed: number;
   unconfirmed: number;
   /**
@@ -135,6 +144,58 @@ export type Corroboration = {
    * the one thing this project does not do.
    */
   context: CompanyContext;
+};
+
+/**
+ * The model's headline claim, tested.
+ *
+ * Everything else on this page got a test and the most important
+ * sentence in any chart read did not. The levels are checked against
+ * real bands, the volume is ranked inside the instrument's own year,
+ * the conditions are counted over ten years — and *which way the thing
+ * is trending*, which is the claim a reader actually carries away, was
+ * taken on the word of a model that looked at a JPEG.
+ *
+ * It is the easiest claim to get wrong from a picture and the most
+ * expensive to get wrong. A screenshot cropped to six months of a
+ * two-year decline shows a clean advance. The axis can be log or
+ * linear. The window can end on a bounce. None of that is visible in
+ * the image, and all of it is visible in the candles.
+ *
+ * NO NEW FORMULA. `readTrend` and `readStage` already answer this and
+ * already answer it on the company page; computing a second trend here
+ * would be the one thing rule 4 forbids, and would let the chart reader
+ * and the company page describe the same stock differently. Both are
+ * imported, and `agreement` is the only thing this file decides.
+ *
+ * Disagreement is not an accusation. The image may be of a different
+ * timeframe, a different instrument, or a window the site does not
+ * hold — so the figures are printed and the reader is told what each
+ * side measured, which is rule 8: hand over the argument, not a verdict
+ * about who was right.
+ */
+export type TrendCheck = {
+  /** What the model said the picture showed. */
+  read: ChartRead["trend"];
+  /** What the candles say, from the same function the company page uses. */
+  measured: TrendRead["verdict"];
+  stage: StageRead;
+  /** Distance from the long average, and which way that average points. */
+  vsAveragePercent: number | null;
+  averageDirection: TrendRead["averageDirection"];
+  fromHighPercent: number | null;
+  fromLowPercent: number | null;
+  /**
+   * How the two relate.
+   *
+   * `qualified` is its own answer rather than a softened agreement: the
+   * measured read returns `mixed` when price is above a falling average
+   * or below a rising one, which is a real finding and not an absence
+   * of one. A model calling that an uptrend is not wrong about the
+   * picture — it is describing the half of the structure the window
+   * showed.
+   */
+  agreement: "agrees" | "qualified" | "contradicts" | "unclear";
 };
 
 export type CompanyContext = {
@@ -284,6 +345,7 @@ export async function corroborate(
     levels,
     missedByRead,
     realLevels: real,
+    trend: checkTrend(read, history.candles),
     confirmed: levels.filter((l) => l.matched !== null).length,
     unconfirmed: levels.filter((l) => l.matched === null).length,
     baseRates,
@@ -308,6 +370,46 @@ export async function corroborate(
      * measured here, and merging them into one confident sentence would
      * dress a calendar entry as a measurement. */
     context: await companyContext(ticker),
+  };
+}
+
+/**
+ * The model's trend against the measured one.
+ *
+ * The comparison is possible without translation because `readTrend`
+ * already answers in the same three words the model is asked for, which
+ * is not luck — both describe a trend, and there are only so many
+ * honest answers. The fourth word on each side is where they differ:
+ * the model may say `range` or `unclear`, and the measurement never
+ * says "unclear", it says `mixed` and explains which two signals
+ * disagreed.
+ */
+function checkTrend(read: ChartRead, candles: Candle[]): TrendCheck {
+  const measured = readTrendFor(candles);
+  const stage = readStage(candles);
+
+  const agreement: TrendCheck["agreement"] = (() => {
+    if (measured.verdict === null || read.trend === "unclear") return "unclear";
+    /* A picture showing a range against candles that are trending is a
+       real contradiction and not a softer one: the structure the reader
+       was shown is not the structure the instrument is in. */
+    if (read.trend === "range") {
+      return measured.verdict === "mixed" ? "agrees" : "contradicts";
+    }
+    if (read.trend === measured.verdict) return "agrees";
+    if (measured.verdict === "mixed") return "qualified";
+    return "contradicts";
+  })();
+
+  return {
+    read: read.trend,
+    measured: measured.verdict,
+    stage,
+    vsAveragePercent: measured.vsAveragePercent,
+    averageDirection: measured.averageDirection,
+    fromHighPercent: measured.fromHighPercent,
+    fromLowPercent: measured.fromLowPercent,
+    agreement,
   };
 }
 

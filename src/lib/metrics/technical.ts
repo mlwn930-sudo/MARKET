@@ -237,6 +237,21 @@ export function readTrend(
   };
 }
 
+/**
+ * The trend read against the average this project means by "the long
+ * average".
+ *
+ * `readTrend` takes the average as an argument because the function is
+ * about the comparison and not about which average; the *choice* of 200
+ * is the convention, and a convention living at each call site is how
+ * two pages come to answer the same question differently. One caller
+ * reaching for 150 would not look like a bug anywhere — it would simply
+ * be a different site in two places.
+ */
+export function readTrendFor(candles: Candle[]): TrendRead {
+  return readTrend(candles, sma(candles, 200));
+}
+
 export const TREND_LABELS: Record<
   NonNullable<TrendRead["verdict"]>,
   { he: string; note: string }
@@ -1183,7 +1198,7 @@ export function readTechnicals(
     volume,
     risk,
     relative,
-    trend: readTrend(candles, ma200),
+    trend: readTrendFor(candles),
     rsi: rsi(candles)[last] ?? null,
     volatility: volatility(candles),
     cross: lastCross(candles, ma50, ma200),

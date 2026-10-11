@@ -712,3 +712,40 @@ test("the heading derives what it rests on when a stored row cannot say", () => 
     DIRECTION_NAME.none,
   );
 });
+
+test("the route lists the end of the horizon once, not twice", () => {
+  /* The note "this condition has no measured opposite" ends with the
+     words "end of the horizon", and the route's test for the expiry step
+     was a substring. Both lines matched, both became `expires`, and both
+     rendered the same label — so a route for a condition with no paired
+     opposite ended with two identical rows. A step nobody can act on,
+     printed twice, in the one list that is meant to be acted on. */
+  const out = build([
+    /* `breakout-on-volume` is one of the conditions with no opposite in
+       the pair map, which is what puts the note in `invalidation`. */
+    condition("breakout-on-volume", "פריצה על מחזור", true, {
+      21: { liftPp: 18, up: 0.74 },
+      63: { liftPp: 18, up: 0.74 },
+    }),
+  ]);
+
+  const expiries = out!.swing.route.filter((r) => r.kind === "expires");
+  assert.equal(expiries.length, 1, "the horizon ends once");
+
+  /* The note itself is not lost — it belongs with the invalidation,
+     where it is a true statement, rather than in a list of events to
+     watch where it is not one. */
+  assert.ok(
+    out!.swing.invalidation.some((l) => l.includes("אין אירוע הפוך נמדד")),
+    "the note stays where it is true",
+  );
+  assert.ok(
+    !out!.swing.route.some((r) => r.detail.includes("אין אירוע הפוך נמדד")),
+    "and leaves the route, which is a list of things to watch",
+  );
+
+  /* No two route steps may carry the same label, which is the general
+     form of the bug and catches the next one of its shape. */
+  const labels = out!.swing.route.map((r) => r.label);
+  assert.equal(new Set(labels).size, labels.length, "every step is distinct");
+});

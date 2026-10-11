@@ -48,6 +48,7 @@ export function chartEvidence(checked: Corroboration): string {
   lines.push(`נייר: ${checked.ticker}`);
   lines.push(`מחיר אחרון: ${checked.lastClose.toFixed(2)}`);
   lines.push(`נמדד על ${checked.candleCount} נרות יומיים.`);
+  lines.push(...trendLines(checked));
 
   /* ---- Levels, with the test attached ---- */
   const confirmed = checked.levels.filter((l) => l.matched !== null);
@@ -287,6 +288,84 @@ export function chartEvidence(checked: Corroboration): string {
  * entry as a measurement, so the block labels each side and the prompt
  * forbids borrowing the chart's authority for the news.
  */
+/**
+ * The trend the picture showed, against the trend the candles support.
+ *
+ * First in the block, because it is the claim every line after it
+ * assumes. An answer that opens "the stock is in an uptrend" on a chart
+ * whose candles say otherwise is wrong in a way no later caveat
+ * repairs, and the model has no way to know unless it is told before it
+ * starts.
+ *
+ * The instruction attached to a contradiction is deliberately not "the
+ * measurement wins". The image can be a different timeframe or a
+ * different instrument, and a model ordered to overrule the picture
+ * would start denying what it can see. It is told to say that the two
+ * disagree, which is the true statement and the useful one.
+ */
+function trendLines(checked: Corroboration): string[] {
+  const t = checked.trend;
+  if (!t) return [];
+
+  const READ: Record<string, string> = {
+    uptrend: "מגמה עולה",
+    downtrend: "מגמה יורדת",
+    range: "טווח",
+    unclear: "לא ברור",
+  };
+  const MEASURED: Record<string, string> = {
+    uptrend: "מגמה עולה (המחיר מעל ממוצע 200 והממוצע עולה)",
+    downtrend: "מגמה יורדת (המחיר מתחת לממוצע 200 והממוצע יורד)",
+    mixed: "מעורבת — המחיר והממוצע הארוך לא מצביעים לאותו כיוון",
+  };
+
+  const out: string[] = ["\n=== המגמה: מה שנקרא מהתמונה מול מה שנמדד מהנרות ==="];
+  out.push(`מהתמונה: ${READ[t.read] ?? t.read}.`);
+  out.push(
+    `מהנרות: ${t.measured ? MEASURED[t.measured] : "אין די היסטוריה כדי למדוד"}.`,
+  );
+
+  const figures: string[] = [];
+  if (t.vsAveragePercent !== null) {
+    figures.push(`מול ממוצע 200: ${t.vsAveragePercent.toFixed(1)}%`);
+  }
+  if (t.averageDirection) {
+    const d =
+      t.averageDirection === "rising"
+        ? "עולה"
+        : t.averageDirection === "falling"
+          ? "יורד"
+          : "שטוח";
+    figures.push(`כיוון הממוצע: ${d}`);
+  }
+  if (t.fromHighPercent !== null) {
+    figures.push(`משיא 52 שבועות: ${t.fromHighPercent.toFixed(1)}%`);
+  }
+  if (figures.length) out.push(figures.join(" · ") + ".");
+  if (t.stage.stage !== null) out.push(`${t.stage.label}. ${t.stage.note}`);
+
+  if (t.agreement === "contradicts") {
+    out.push(
+      "[סתירה] שתי הקריאות לא מתארות את אותו מבנה. אל תפתח את התשובה " +
+        "בכיוון מהתמונה כאילו הוא מוסכם — אמור במפורש שהתמונה והנרות " +
+        "חלוקים, ותן את שניהם. אל תכריע מי צודק: ייתכן שהצילום הוא של " +
+        "אופק זמן אחר, של נייר אחר, או של חלון שהאתר לא מחזיק.",
+    );
+  } else if (t.agreement === "qualified") {
+    out.push(
+      "[סייג] הנרות לא סותרים את הקריאה אבל לא נותנים מגמה נקייה. אם " +
+        "אתה מזכיר מגמה, הזכר גם שהמחיר והממוצע הארוך לא מצביעים לאותו " +
+        "כיוון.",
+    );
+  } else if (t.agreement === "agrees") {
+    out.push(
+      "[מאושר] הקריאה מהתמונה והמדידה מהנרות מתארות את אותו מבנה.",
+    );
+  }
+
+  return out;
+}
+
 function contextLines(checked: Corroboration): string[] {
   const context = checked.context;
   if (!context) return [];

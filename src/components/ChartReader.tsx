@@ -14,6 +14,7 @@ import { SetupPanel } from "@/components/market/SetupPanel";
 import { ChartAsk } from "@/components/market/ChartAsk";
 import { StancePanel } from "@/components/market/StancePanel";
 import { PriceLadder } from "@/components/market/PriceLadder";
+import { TrendCheckPanel } from "@/components/market/TrendCheckPanel";
 import { CompanyContextPanel } from "@/components/market/CompanyContextPanel";
 import { isPrivateBuild } from "@/lib/private-mode";
 
@@ -497,6 +498,15 @@ function ChartReadView({
           the lean is made of. Renders nothing in a public build, because
           the flag is baked at build time — though the code does ship
           there as a dead branch; see `StancePanel`. */}
+      {/* THE FIRST TEST, BEFORE ANYTHING THE SITE CONCLUDED.
+          The read's own header prints the model's trend as a label, and
+          that label is the sentence a reader carries away from the whole
+          page. Its test belongs immediately after the read and ahead of
+          every conclusion drawn on top of it: a check that arrives six
+          panels after the claim is a footnote on it, and this is the one
+          claim everything below assumes. */}
+      {checked && <TrendCheckPanel trend={checked.trend} />}
+
       {checked && <StancePanel checked={checked} />}
 
       {checked && <ChartAsk checked={checked} />}
