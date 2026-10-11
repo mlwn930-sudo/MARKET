@@ -201,21 +201,41 @@ function Horizon({ stance }: { stance: HorizonStance }) {
         </ol>
       )}
 
-      <div className="read-block mt-4" data-tone="invalidation">
-        <h3>מה יפריך את זה</h3>
-        <ul>
-          {stance.invalidation.map((line) => (
-            <li key={line}>{line}</li>
-          ))}
-        </ul>
-      </div>
+      {/* ONLY WHEN THE ROUTE DID NOT ALREADY SAY IT.
 
-      {stance.structure.length > 0 && (
-        <p className="read-watch-note mt-4">
-          הקשר מהמבנה, שלא נספר ולא נכנס לכיוון:{" "}
-          {stance.structure.map((s) => s.label).join(" · ")}.
-        </p>
+          The route is built from `agreeing` and `invalidation` put in
+          order, so rendering both printed every refutation twice and
+          made the panel 3,500 pixels tall. Seen by looking at it, not
+          by reading the code: the two blocks are assembled in different
+          functions and neither knows about the other. */}
+      {stance.route.length === 0 && (
+        <div className="read-block mt-4" data-tone="invalidation">
+          <h3>מה יפריך את זה</h3>
+          <ul>
+            {stance.invalidation.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </div>
       )}
+
+      {/* The notes that are NOT already in the counter-column above.
+          `against` pulls in every structural observation that opposes
+          the direction, and listing them again under "context" said the
+          same sentence twice in one panel. */}
+      {(() => {
+        const shown = new Set(stance.against);
+        const rest = stance.structure.filter(
+          (s) => !shown.has(`${s.label} (${s.detail})`),
+        );
+        if (rest.length === 0) return null;
+        return (
+          <p className="read-watch-note mt-4">
+            הקשר מהמבנה, שלא נספר ולא נכנס לכיוון:{" "}
+            {rest.map((s) => s.label).join(" · ")}.
+          </p>
+        );
+      })()}
 
       <p className="read-watch-note mt-3">{stance.basis}</p>
     </div>
