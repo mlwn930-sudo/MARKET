@@ -125,6 +125,22 @@ function Horizon({ stance }: { stance: HorizonStance }) {
         {countedIn(stance)}
       </p>
 
+      {/* The sentence the engine writes so its strength matches its
+          evidence — three different sentences for a counted lean, a
+          structural one and none at all. It was being written and
+          printed nowhere, which left the heading above to carry the
+          whole claim on its own and left a reader to infer how much
+          was behind it. */}
+      <p className="mt-2 text-[13px] leading-relaxed text-ink">
+        {stance.verdict}
+      </p>
+
+      {/* And the question a person actually brings to a chart. The
+          panel had every ingredient of the answer — the rate, the
+          drawdown, the events still to come — and never said which
+          window had already started. */}
+      <p className="read-watch-note mt-2">{stance.timing}</p>
+
       {/* The unconditional record, always. When nothing fired it is the
           only number there is; when something did, it is what the
           conditional rate has to be read against. */}

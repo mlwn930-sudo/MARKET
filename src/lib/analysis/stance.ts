@@ -278,6 +278,34 @@ export type HorizonStance = {
   /** One line a person can act on, written from the two fields above
    *  so the strength of the claim always matches its evidence. */
   verdict: string;
+  /**
+   * What "now versus waiting" means here, which is the question people
+   * actually ask a chart and the one this engine kept not answering.
+   *
+   * Asked "enter now or wait a bit", the agent used to return the
+   * direction, the rates, the drawdown and the list of events that
+   * would strengthen it — every ingredient of the answer and not the
+   * answer. The reader was left to assemble it, and the one fact that
+   * decides it was never stated.
+   *
+   * That fact: a condition is an EVENT, not a state. `activeNow` is
+   * true only on the bar it fired, so a counted stance is anchored to
+   * that bar and the horizon is counted forward from it. Waiting does
+   * not postpone the measured window — it spends it. Nothing on the
+   * site said so, and it is the difference between the rate describing
+   * the reader's next 21 sessions and describing somebody else's.
+   *
+   * The other half is what waiting would even mean. The route's
+   * `confirm` steps are the honest answer, and they come with a catch
+   * that has to travel with them: each is a SEPARATE condition with its
+   * own count, not a confirmation of this one. Two conditions firing is
+   * not one condition firing twice as hard — the convergence
+   * measurement is the whole reason this file refuses to add them up.
+   *
+   * It is still not an instruction. It says what the measurement does
+   * and does not cover; what to do inside that is the reader's.
+   */
+  timing: string;
   /** Conditions firing today with a sample and a gap worth leaning on. */
   agreeing: ConditionCite[];
   /** Firing and eligible, but inside `MEANINGFUL_PP` of their own
@@ -756,6 +784,40 @@ function stanceFor(
           `שנראה על הגרף עכשיו, לא מה שקרה אחרי מצב כזה בעבר.`
         : "הגרף הזה לא נוטה לשום כיוון — לא לפי מה שנספר ולא לפי מה שרואים.";
 
+  /* ---- Now versus waiting, which is the question actually asked ---- */
+  const waitables = route.filter((r) => r.kind === "confirm").length;
+  /* Singular and plural written out rather than assembled from a count
+     and a noun. Hebrew does not survive that: the first version read
+     "1 האירוע ... שטרם קרו" — a numeral glued to a definite noun, with
+     the verb in the plural for one event. */
+  const waitClause =
+    waitables === 0
+      ? " אין ברשימה אירוע נמדד נוסף שאפשר להמתין לו באופק הזה."
+      : waitables === 1
+        ? " מה שאפשר להמתין לו הוא אירוע אחד ברשימת המסלול שטרם קרה הפעם — " +
+          "אבל הוא תנאי נפרד עם הספירה שלו, ולא אישור לתנאי הזה. שני תנאים " +
+          "שפועלים אינם תנאי אחד שפועל חזק יותר."
+        : ` מה שאפשר להמתין לו הוא ${waitables} אירועים ברשימת המסלול שטרם ` +
+          "קרו הפעם — אבל כל אחד מהם תנאי נפרד עם הספירה שלו, ולא אישור " +
+          "לתנאי הזה. שני תנאים שפועלים אינם תנאי אחד שפועל חזק יותר.";
+
+  const timing =
+    restsOn === "counted" && direction !== "split"
+      ? `התנאי פעל על הנר של ${asOf}, ו-${days} ימי המסחר שנמדדו נספרים ` +
+        "קדימה מהנר הזה. המתנה לא דוחה את החלון — היא מוציאה ימים מתוכו, " +
+        "והשיעור שלמעלה מתאר חלון שכבר התחיל." +
+        waitClause
+      : restsOn === "counted"
+        ? "התנאים שפעלו מושכים לכיוונים הפוכים, ולכן אין כאן חלון אחד " +
+          "שהתחיל. המתנה כאן אינה דחייה של כניסה — אין מדידה שאומרת לאיזה " +
+          "צד להיכנס מלכתחילה."
+        : restsOn === "structure"
+          ? "לא פעל כאן אירוע נמדד, ולכן שום חלון לא התחיל ואין ממה לאחר. " +
+            "מה שנראה על הגרף יכול להימשך או להיגמר, ולאתר אין ספירה שתגיד " +
+            "מתי." + waitClause
+          : "אין תנאי נמדד שפעל ואין כיוון. אין כאן שאלה של עכשיו מול המתנה, " +
+            "כי אין מדידה שהתחילה.";
+
   /* ---- Basis ---- */
   const basis =
     `נספר מ-${rates.sessions} ימי מסחר של ${rates.symbol} עצמו ` +
@@ -778,6 +840,7 @@ function stanceFor(
     direction,
     restsOn,
     verdict,
+    timing,
     agreeing,
     quiet,
     structure,

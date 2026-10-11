@@ -461,6 +461,17 @@ function stanceLines(checked: Corroboration): string[] {
     out.push(
       `\n[${HORIZON_NAME[h.horizon]} · ${HORIZON_SPAN[h.horizon]}] ${directionLabel(h)}.`,
     );
+    /* The one sentence written so its strength matches its evidence.
+       It existed in the engine and reached nothing — not this block and
+       not the panel — so the model saw only the heading above, took the
+       confident reading of it, and answered "the record leans down" on
+       charts that have no record. A line the engine writes carefully
+       and nobody prints is the same as a line nobody wrote. */
+    out.push(`פסק: ${h.verdict}`);
+    /* And the answer to "now or wait", which is the question people
+       ask a chart and the block used to supply every ingredient of
+       without ever stating. */
+    out.push(`עכשיו מול המתנה: ${h.timing}`);
     if (h.baseline) {
       out.push(
         `יום שרירותי על הנייר באותו חלון: ${Math.round(h.baseline.upShare * 100)}% סגרו גבוה יותר.`,

@@ -749,3 +749,74 @@ test("the route lists the end of the horizon once, not twice", () => {
   const labels = out!.swing.route.map((r) => r.label);
   assert.equal(new Set(labels).size, labels.length, "every step is distinct");
 });
+
+test("every horizon answers now-versus-waiting, and says which window started", () => {
+  /* The question people actually ask a chart. The engine had every
+     ingredient of the answer — the rate, the drawdown, the events still
+     to come — and never stated the fact that decides it: a condition is
+     an event, so a counted stance is anchored to the bar it fired on and
+     the horizon counts forward from there. Waiting does not postpone the
+     measured window, it spends it. */
+  const counted = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, {
+      21: { liftPp: 20, up: 0.78 },
+      63: { liftPp: 20, up: 0.78 },
+    }),
+  ]);
+  assert.match(counted!.swing.timing, /קדימה מהנר/);
+  assert.match(counted!.swing.timing, /המתנה לא דוחה את החלון/);
+
+  /* Nothing fired, so no window started — and saying "wait" there would
+     imply one had. */
+  const quiet = build([condition("reclaim-50", "סגירה מעל ממוצע 50", false)]);
+  assert.match(quiet!.swing.timing, /אין מדידה שהתחילה|שום חלון לא התחיל/);
+
+  /* Never empty, on any shape, because a blank line where the answer
+     goes reads as the site declining to answer. */
+  for (const out of [counted, quiet]) {
+    for (const h of [out!.swing, out!.position]) {
+      assert.ok(h.timing.length > 0, "timing is never blank");
+      assert.ok(h.verdict.length > 0, "verdict is never blank");
+    }
+  }
+});
+
+test("waiting is described as separate conditions, never as confirmation", () => {
+  /* Two conditions firing is not one condition firing twice as hard.
+     The convergence measurement is the whole reason this file refuses to
+     add them up, and the sentence about waiting is the easiest place to
+     quietly undo that. */
+  const out = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, {
+      21: { liftPp: 20, up: 0.78 },
+    }),
+    /* Not firing, big enough gap, same side: a route step to wait for. */
+    condition("golden-cross", "חיתוך זהב", false, {
+      21: { liftPp: 18, up: 0.75 },
+    }),
+  ]);
+  const waitables = out!.swing.route.filter((r) => r.kind === "confirm");
+  assert.ok(waitables.length > 0, "there is something to wait for");
+  assert.match(out!.swing.timing, /תנאי נפרד/);
+  assert.match(out!.swing.timing, /ולא אישור/);
+});
+
+test("the waiting clause agrees with itself in number", () => {
+  /* Hebrew does not survive a count glued to a noun and a verb chosen
+     once. The first version rendered "1 האירוע ... שטרם קרו" — a
+     numeral against a definite noun, plural verb, for one event. */
+  const one = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, { 21: { liftPp: 20, up: 0.78 } }),
+    condition("golden-cross", "חיתוך זהב", false, { 21: { liftPp: 18, up: 0.75 } }),
+  ]);
+  const confirms = one!.swing.route.filter((r) => r.kind === "confirm").length;
+  assert.equal(confirms, 1);
+  assert.match(one!.swing.timing, /אירוע אחד/);
+  assert.match(one!.swing.timing, /שטרם קרה הפעם/);
+  assert.doesNotMatch(one!.swing.timing, /1 האירוע/);
+
+  /* And a numeral is never written against the following word without
+     a separator, anywhere in the sentence. */
+  assert.doesNotMatch(one!.swing.timing, /[֐-׿]\d/);
+  assert.doesNotMatch(one!.swing.verdict, /[֐-׿]\d/);
+});
