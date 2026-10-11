@@ -597,7 +597,7 @@ export default async function IsraelPage() {
                   <div className="mb-2.5 flex flex-wrap items-center gap-2">
                     <Link
                       href={`/company/${story.ticker}`}
-                      className="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
+                      className="num rounded border border-line inline-flex min-h-6 items-center px-1.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
                     >
                       {story.ticker}
                     </Link>

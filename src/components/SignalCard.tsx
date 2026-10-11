@@ -75,7 +75,7 @@ export function SignalCard({
         {signal.ticker && (
           <Link
             href={`/company/${signal.ticker}`}
-            className="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
+            className="num rounded border border-line inline-flex min-h-6 items-center px-1.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
           >
             {signal.ticker}
           </Link>

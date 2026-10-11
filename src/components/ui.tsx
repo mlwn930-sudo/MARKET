@@ -1087,7 +1087,11 @@ export function MoreLink({
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-1.5 text-[14px] text-ink-muted transition-colors hover:text-ink"
+      /* `py-1` for the tap area, not for the look. A 14px line in an
+         inline-flex is 21 pixels tall, measured at a 390-wide viewport,
+         and WCAG 2.2 asks for 24. The text does not move; the box
+         around it grows to 29. */
+      className="group inline-flex items-center gap-1.5 py-1 text-[14px] text-ink-muted transition-colors hover:text-ink"
     >
       {children}
       <span

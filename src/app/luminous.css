@@ -1198,3 +1198,28 @@ body:not(:has(.gta-cover)) .signal-canvas {
   }
 }
 
+
+/* ── Tap targets on a phone ───────────────────────────────────────────── */
+
+/* Measured at a 390-wide viewport, not guessed: a bare link or a sort
+   button with no padding is as tall as its line box, which is 15 to 17
+   pixels. WCAG 2.2 asks for 24, and on a phone the difference is whether
+   a thumb hits the control or the gap beside it.
+
+   Mobile only, and `min-height` with `inline-flex` because `min-height`
+   does nothing to an inline element — which is what these are. The text
+   does not move; the box around it grows.
+
+   Scoped to the three patterns the scan actually found rather than to
+   every link on the site: a blanket rule would add height inside prose,
+   where a link is part of a sentence and has no business being 24 pixels
+   tall. */
+@media (max-width: 800px) {
+  body:not(:has(.gta-cover)) .compact-heading > a,
+  body:not(:has(.gta-cover)) .sector-ribbon a,
+  body:not(:has(.gta-cover)) thead th > button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+  }
+}

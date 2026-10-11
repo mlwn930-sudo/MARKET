@@ -59,12 +59,26 @@ export function SiteFooter() {
           {COLUMNS.map((column) => (
             <nav key={column.title} aria-label={column.title}>
               <h2 className="eyebrow">{column.title}</h2>
-              <ul className="mt-4 space-y-2.5">
+              {/* THE TAP TARGET IS THE LINK BOX, NOT THE TEXT.
+
+                  A 13px line in a list is 18 pixels tall, and measured
+                  at a 390-wide viewport that is what these were: seven
+                  links, no padding, under the 24px WCAG 2.2 minimum.
+                  On a desk nobody notices; on a phone it is the
+                  difference between tapping a link and tapping the gap
+                  beside it.
+
+                  `inline-block` with `py-1` makes each box 26 pixels
+                  without moving the text, and the list gap drops from
+                  10 to 4 to pay for it — 28 pixels per row before, 30
+                  after. The footer is the same height and the targets
+                  are reachable. */}
+              <ul className="mt-4 space-y-1">
                 {column.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-[13px] text-ink-muted transition-colors hover:text-ink"
+                      className="inline-block py-1 text-[13px] text-ink-muted transition-colors hover:text-ink"
                     >
                       {link.label}
                     </Link>

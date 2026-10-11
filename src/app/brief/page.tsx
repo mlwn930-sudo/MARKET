@@ -264,7 +264,7 @@ export default async function BriefPage() {
                       <Link
                         key={ticker}
                         href={`/company/${ticker}`}
-                        className="num rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
+                        className="num rounded border border-line inline-flex min-h-6 items-center px-1.5 text-[10px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink"
                       >
                         {ticker}
                       </Link>
