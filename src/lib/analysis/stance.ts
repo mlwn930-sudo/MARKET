@@ -217,6 +217,28 @@ export type HorizonStance = {
   horizon: StanceHorizon;
   horizonDays: number;
   direction: StanceDirection;
+  /**
+   * What the direction rests on, and the reason it is a separate field
+   * rather than a tone of voice.
+   *
+   * `counted` — a condition fired today with a sample and a gap. The
+   * record exists and the panel can show it.
+   *
+   * `structure` — nothing fired, and the direction comes from what is
+   * true on the chart: the stage, the rank, the level, the tape. This
+   * is the common case, and refusing to state it was leaving the
+   * reader with nothing on four charts out of five. But it has NO
+   * counted record behind it, and `scripts/measure-convergence.ts`
+   * measured exactly this kind of agreement at minus three tenths of a
+   * point over 17,566 observations. So it is labelled, every time, and
+   * `CONVERGENCE_CAVEAT` travels with it.
+   *
+   * `none` — not even the structure leans. Said plainly.
+   */
+  restsOn: "counted" | "structure" | "none";
+  /** One line a person can act on, written from the two fields above
+   *  so the strength of the claim always matches its evidence. */
+  verdict: string;
   /** Conditions firing today with a sample and a gap worth leaning on. */
   agreeing: ConditionCite[];
   /** Firing and eligible, but inside `MEANINGFUL_PP` of their own
@@ -396,6 +418,29 @@ function structureOf(
   return notes;
 }
 
+/**
+ * Which way the chart leans when nothing has been counted.
+ *
+ * Families, not observations: price above the fifty-day and price
+ * above the twenty-day are one fact wearing two hats, and counting
+ * both is how a lean inflates itself. The family is the part of the
+ * key before the first dash, which is how `readSetup` builds them.
+ */
+function structuralLean(notes: StructureNote[]): StanceDirection {
+  const seen = new Set<string>();
+  let up = 0;
+  let down = 0;
+  for (const note of notes) {
+    const family = note.key.split("-")[0];
+    if (seen.has(family)) continue;
+    seen.add(family);
+    if (note.side === "constructive") up++;
+    else if (note.side === "cautionary") down++;
+  }
+  if (up === down) return "none";
+  return up > down ? "up" : "down";
+}
+
 /** The stance for one horizon. */
 function stanceFor(
   horizon: StanceHorizon,
@@ -414,7 +459,7 @@ function stanceFor(
   const up = agreeing.filter((c) => c.liftPp > 0);
   const down = agreeing.filter((c) => c.liftPp < 0);
 
-  const direction: StanceDirection =
+  const counted: StanceDirection =
     agreeing.length === 0
       ? "none"
       : up.length && down.length
@@ -422,6 +467,23 @@ function stanceFor(
         : up.length
           ? "up"
           : "down";
+
+  /* WHEN NOTHING WAS COUNTED, SAY WHAT THE CHART SHOWS ANYWAY.
+   *
+   * The first version refused, and on four charts in five that left
+   * somebody who had just uploaded a chart they care about with the
+   * sentence "no measured condition fired". True, and not an answer.
+   *
+   * The structure is real: the stage, the rank, the level, the tape.
+   * What it lacks is a counted record, and that difference belongs in
+   * the open rather than in a tone of voice — so it rides in `restsOn`
+   * and the convergence caveat rides with it. The measurement is not
+   * being discarded; it is being printed next to the thing it measured.
+   */
+  const structural = structuralLean(structure);
+  const direction: StanceDirection = counted !== "none" ? counted : structural;
+  const restsOn: HorizonStance["restsOn"] =
+    counted !== "none" ? "counted" : structural !== "none" ? "structure" : "none";
 
   /* The best-sampled row, not the widest gap: the figures the panel turns
      into prices should come from the count with the most behind it, and a
@@ -598,6 +660,29 @@ function stanceFor(
     });
   }
 
+  /* ---- The one line, written from the evidence it actually has ----
+   *
+   * Three separate sentences rather than one sentence with a hedge
+   * appended. A reader skims the first line and stops; if the strength
+   * of the claim is carried by a clause at the end, the claim they take
+   * away is the strong one.
+   */
+  const lead = agreeing[0];
+  const word = direction === "up" ? "מעלה" : "מטה";
+
+  const verdict =
+    restsOn === "counted"
+      ? direction === "split"
+        ? "התנאים שפעלו היום מושכים לכיוונים הפוכים. אין כאן כיוון, וזו " +
+          "מדידה ולא הימנעות."
+        : `הכיוון על הנייר הזה ${word}, ולזה יש רשומה: ${lead.label} קרה ` +
+          `${lead.n} פעמים, ואחריהם ${Math.round(lead.upShareHist * 100)}% ` +
+          `סגרו גבוה יותר מול בסיס ${Math.round(lead.baselineUpShare * 100)}%.`
+      : restsOn === "structure"
+        ? `המבנה על הגרף נוטה ל${word}, אבל אין לזה רשומה ספורה. זה מה ` +
+          `שנראה על הגרף עכשיו, לא מה שקרה אחרי מצב כזה בעבר.`
+        : "הגרף הזה לא נוטה לשום כיוון — לא לפי מה שנספר ולא לפי מה שרואים.";
+
   /* ---- Basis ---- */
   const basis =
     `נספר מ-${rates.sessions} ימי מסחר של ${rates.symbol} עצמו ` +
@@ -618,6 +703,8 @@ function stanceFor(
     horizon,
     horizonDays: days,
     direction,
+    restsOn,
+    verdict,
     agreeing,
     quiet,
     structure,

@@ -1,12 +1,14 @@
 import { detectTickers } from "@/lib/company-names";
 import { getPriceHistory } from "@/lib/sources/prices";
-import { readLevels } from "@/lib/metrics/levels";
+import { readLevels, type PriceLevel } from "@/lib/metrics/levels";
 import { readTape, type TapeRead } from "@/lib/metrics/tape";
 import { readSetup, type SetupRead } from "@/lib/analysis/setup";
 import { rankFor } from "@/lib/metrics/rank-store";
 import type { ChartRead } from "./chart-reader";
 import type { BaseRateRead } from "@/lib/metrics/base-rates";
 import { baseRatesFor } from "@/lib/metrics/base-rate-store";
+import { getNextEarnings } from "@/lib/sources/finnhub";
+import { watchlistNews } from "@/lib/watchlist-news";
 
 /**
  * Checks a read of a picture against the data the site already holds.
@@ -53,6 +55,23 @@ export type Corroboration = {
   /** Bands the candles show that the model did not mention. Not a failure
    *  — a screenshot may simply not reach back far enough to show them. */
   missedByRead: { price: number; kind: string; touches: number }[];
+  /**
+   * Every band the real candles support, in price order and whole.
+   *
+   * `levels` above is organised around the read — what the model named,
+   * and whether the candles back it — and `missedByRead` is the leftover,
+   * capped at four. Neither answers the question a person actually asks a
+   * chart, which is *which prices matter and how far away are they from
+   * here*. That needs one ladder rather than two lists sorted by whose
+   * claim they were, so the ladder is carried separately and the read's
+   * own arithmetic is left alone.
+   *
+   * Measured rather than drawn, and each rung keeps the count behind it:
+   * a band with six touches that held five times is a different object
+   * from one with two touches that broke both, and showing the price
+   * without that is rule 5 in its purest form.
+   */
+  realLevels: PriceLevel[];
   confirmed: number;
   unconfirmed: number;
   /**
@@ -106,6 +125,49 @@ export type Corroboration = {
    * two opinions with no way to tell which one is the site's.
    */
   setup: SetupRead | null;
+  /**
+   * What is happening at the company, which a picture cannot show.
+   *
+   * Kept beside the chart and never folded into it. The chart figures
+   * are counted over ten years; a catalyst is dated and its effect on
+   * this company is not measured anywhere here. Putting them in one
+   * sentence would dress a calendar entry as a measurement, which is
+   * the one thing this project does not do.
+   */
+  context: CompanyContext;
+};
+
+export type CompanyContext = {
+  nextEarnings: { date: string; daysAway: number } | null;
+  /** Catalysts and unclear stories, newest and most significant first.
+   *  Noise is dropped: the queue has already judged it, and a chart
+   *  reader listing every headline buries the dated event. */
+  stories: {
+    title: string;
+    at: string;
+    catalyst: string | null;
+    catalystKind: "catalyst" | "noise" | "unclear" | null;
+    significance: "high" | "medium" | "low";
+    impact: string;
+    /**
+     * The OTHER companies the reading names, when it names any.
+     *
+     * The piece of information that decides whether a catalyst can be
+     * trusted as this company's, and it was being thrown away. A story
+     * reaches this list because the model read it and named this company
+     * — which is the right test for "is it relevant" and the wrong one
+     * for "whose catalyst is this". Measured: a Fastly upgrade arrived on
+     * Take-Two's wire with `["FSLY","TTWO","DDOG"]`, because Take-Two is
+     * mentioned in it, and its catalyst paragraph is about Fastly.
+     *
+     * The readings are written per article and cannot be split per
+     * company, so the honest move is to carry the fact rather than guess
+     * at a primary subject. The panel prints these beside the headline
+     * and the prompt prints them too: a reader and a model both need to
+     * see `FSLY · DDOG` next to a sentence about a growth wave.
+     */
+    otherTickers: string[];
+  }[];
 };
 
 /* Two readings of the same level will never be identical: one is measured
@@ -221,6 +283,7 @@ export async function corroborate(
     lastClose,
     levels,
     missedByRead,
+    realLevels: real,
     confirmed: levels.filter((l) => l.matched !== null).length,
     unconfirmed: levels.filter((l) => l.matched === null).length,
     baseRates,
@@ -231,5 +294,85 @@ export async function corroborate(
        different places. */
     tape: readTape(history.candles),
     setup: readSetup(ticker, history.candles, baseRates, rank),
+    /* WHAT IS HAPPENING AT THE COMPANY, which the picture cannot show.
+     *
+     * The chart reader knew the candles and nothing else — it could not
+     * know that a company has a product launch dated in February, so it
+     * read every chart as if the next quarter were a blank page. A
+     * reader looking at TTWO is not asking what the trend template did
+     * on fifty-three occasions; they are asking that AND what happens
+     * when the game ships.
+     *
+     * Both sides stay separate in the output and separate on the page.
+     * The chart is counted; a catalyst is dated but its effect is not
+     * measured here, and merging them into one confident sentence would
+     * dress a calendar entry as a measurement. */
+    context: await companyContext(ticker),
+  };
+}
+
+/**
+ * The dated events and the analysed stories for one company.
+ *
+ * Nothing here is generated at read time: the earnings date comes from
+ * the calendar the site already polls, and the readings were written by
+ * the news queue. A chart read waits for neither.
+ */
+async function companyContext(ticker: string): Promise<CompanyContext> {
+  const [nextReport, articles] = await Promise.all([
+    getNextEarnings(ticker).catch(() => null),
+    /* A wider pool than the watchlist panel renders, because the two are
+       choosing differently: that panel wants the latest stories and this
+       wants the most significant ones, and a high-significance catalyst
+       can sit twenty headlines deep on an active name. The pool costs no
+       extra request — it is a slice of a window already fetched. */
+    watchlistNews(ticker, 24).catch(() => []),
+  ]);
+
+  const analysed = articles.filter((a) => a.analysis);
+
+  return {
+    nextEarnings: nextReport
+      ? {
+          date: nextReport.date,
+          daysAway: Math.round(
+            (new Date(nextReport.date).getTime() - Date.now()) / 86_400_000,
+          ),
+        }
+      : null,
+    /* Catalysts first and noise dropped. The queue has already decided
+       which is which, and a chart reader that listed every headline
+       would bury the one dated event under ten pieces of commentary. */
+    stories: analysed
+      .filter((a) => a.analysis!.catalystKind !== "noise")
+      .sort((a, b) => {
+        const rank = (s: string) => (s === "high" ? 0 : s === "medium" ? 1 : 2);
+        const bySignificance =
+          rank(a.analysis!.significance) - rank(b.analysis!.significance);
+        if (bySignificance !== 0) return bySignificance;
+        /* Then by how much of the story is about this company. A reading
+           naming one ticker is a story about it; a reading naming four is
+           a story the company appears in, and its catalyst paragraph is
+           as likely to belong to one of the others. Neither is dropped —
+           the count is shown — but the focused ones come first, which is
+           what a reader scanning five rows actually wants. */
+        const focus =
+          (a.analysis!.tickers?.length || 1) -
+          (b.analysis!.tickers?.length || 1);
+        if (focus !== 0) return focus;
+        return a.at < b.at ? 1 : -1;
+      })
+      .slice(0, 5)
+      .map((a) => ({
+        title: a.title,
+        at: a.at,
+        catalyst: a.analysis!.catalyst ?? null,
+        catalystKind: a.analysis!.catalystKind ?? null,
+        significance: a.analysis!.significance,
+        impact: a.analysis!.impact,
+        otherTickers: (a.analysis!.tickers ?? []).filter(
+          (t) => t.toUpperCase() !== ticker,
+        ),
+      })),
   };
 }

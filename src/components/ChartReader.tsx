@@ -13,6 +13,8 @@ import { TapePanel } from "@/components/market/TapePanel";
 import { SetupPanel } from "@/components/market/SetupPanel";
 import { ChartAsk } from "@/components/market/ChartAsk";
 import { StancePanel } from "@/components/market/StancePanel";
+import { PriceLadder } from "@/components/market/PriceLadder";
+import { CompanyContextPanel } from "@/components/market/CompanyContextPanel";
 import { isPrivateBuild } from "@/lib/private-mode";
 
 /**
@@ -499,6 +501,12 @@ function ChartReadView({
 
       {checked && <ChartAsk checked={checked} />}
 
+      {/* Straight under the question box, because it is the answer to the
+          question most often typed into it. Everything above speaks in
+          percentages and horizons; a person deciding anything needs those
+          as prices, ordered, with the distance from here. */}
+      {checked && <PriceLadder checked={checked} />}
+
       {/* Then the summary the panels below are the evidence for — a
           summary printed after its evidence is a footnote. */}
       {checked && <SetupPanel setup={checked.setup} />}
@@ -512,6 +520,19 @@ function ChartReadView({
           counted rather than remembered. */}
       {checked && (
         <ChartScenarios read={checked.baseRates} ticker={checked.ticker} />
+      )}
+
+      {/* AFTER the counted panels and not before them, and the order is
+          the argument. A dated catalyst placed above ten years of counting
+          borrows its authority; placed after, it is what it is — the thing
+          the chart cannot show, for a reader who has just seen what the
+          chart does show. It sits directly under the horizon panel because
+          that is where "the report falls inside this window" matters. */}
+      {checked && (
+        <CompanyContextPanel
+          context={checked.context}
+          ticker={checked.ticker}
+        />
       )}
 
       {/* The measured volume, before the model's impression of it and not

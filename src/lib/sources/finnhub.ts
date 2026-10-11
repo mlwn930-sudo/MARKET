@@ -404,6 +404,25 @@ export async function getEarningsCalendar(
   from: string,
   to: string,
 ): Promise<Map<string, EarningsDate>> {
+  return (await calendarWindow(from, to)).bySymbol;
+}
+
+/**
+ * One window, with whether the reply was cut kept alongside it.
+ *
+ * The row count is the whole point and the Map throws it away: a window
+ * that holds no match and a window that was sliced before the match look
+ * identical once the rows are folded by symbol. Everything below depends
+ * on telling those two apart.
+ */
+async function calendarWindow(
+  from: string,
+  to: string,
+): Promise<{
+  bySymbol: Map<string, EarningsDate>;
+  truncated: boolean;
+  failed: boolean;
+}> {
   try {
     const raw = await finnhubFetch(
       `/calendar/earnings?from=${from}&to=${to}`,
@@ -435,9 +454,17 @@ export async function getEarningsCalendar(
       });
     }
 
-    return bySymbol;
+    return {
+      bySymbol,
+      truncated: calendarWasTruncated(rows.length),
+      failed: false,
+    };
   } catch {
-    return new Map();
+    /* A failed request is not an empty calendar. It is also not a cut
+       one: narrowing a window that failed would turn one outage into
+       twenty requests that fail the same way. The search abandons
+       instead, and the caller gets no date rather than a wrong one. */
+    return { bySymbol: new Map(), truncated: false, failed: true };
   }
 }
 
@@ -464,25 +491,110 @@ export async function getEarningsCalendar(
  *
  * It also reports truncation rather than hiding it: a step that comes back
  * at exactly the cap cannot be trusted to be complete, and the search
- * simply moves on to a narrower one.
+ * narrows it rather than stepping past it.
+ *
+ * That last sentence described an intention this file did not carry out,
+ * and the cost was measured on TTWO on 2026-10-11:
+ *
+ *   2026-10-09 .. 2026-11-20   1500 rows, capped   TTWO absent
+ *   2026-10-25 .. 2026-11-08   1500 rows, capped   TTWO 2026-11-04
+ *
+ * The first window contains the second. The symbol is inside both and the
+ * wider reply dropped it, so stepping forward returned 2027-02-01 — the
+ * quarter after next — and the site told its one reader that nothing was
+ * due for a hundred and twelve days when results were twenty-four days
+ * out. A horizon that does contain a report read as one that does not,
+ * which is the most expensive way for a calendar to be wrong.
  */
 const CALENDAR_CAP = 1500;
 const STEP_DAYS = 40;
 const MAX_STEPS = 4;
+/**
+ * How a capped window gets broken up, largest slice first.
+ *
+ * The cap removes the tail: in the measurement above the symbol survived
+ * inside a capped fourteen-day window and vanished from a capped
+ * forty-day one, which is what truncation by date does. So narrowing is
+ * not a guess, it is how the missing dates are reached.
+ *
+ * Three days is where it stops because the busiest session on the US
+ * calendar is a few hundred companies and a three-day slice has no route
+ * to fifteen hundred rows. Only slices that came back capped are narrowed
+ * further, so a quiet month is still a single request, and every slice is
+ * cached for six hours and shared by every company on the site.
+ */
+const NARROW_LADDER = [10, 3];
+
+/** One window's reply: the dates folded by symbol, whether the list was
+ *  cut at the cap, and whether the request failed at all. The three are
+ *  genuinely different answers, and collapsing any two of them is how a
+ *  wrong date gets printed with confidence. */
+export type CalendarReader = (
+  from: string,
+  to: string,
+) => Promise<{
+  bySymbol: Map<string, EarningsDate>;
+  truncated: boolean;
+  failed: boolean;
+}>;
 
 export async function getNextEarnings(
   symbol: string,
   from = new Date(),
 ): Promise<EarningsDate | null> {
   const upper = symbol.toUpperCase();
-  const day = (offset: number) =>
-    new Date(from.getTime() + offset * 86_400_000).toISOString().slice(0, 10);
+  const at = (offset: number) => from.getTime() + offset * 86_400_000;
 
   for (let step = 0; step < MAX_STEPS; step++) {
-    const start = step * STEP_DAYS - (step === 0 ? 2 : 0);
-    const found = await getEarningsCalendar(day(start), day((step + 1) * STEP_DAYS));
-    const hit = found.get(upper);
+    /* The first step reaches two days back, so results that landed
+       overnight or in another timezone are still found rather than
+       reported as next quarter's. */
+    const start = at(step * STEP_DAYS - (step === 0 ? 2 : 0));
+    const hit = await searchCalendar(upper, start, at((step + 1) * STEP_DAYS));
     if (hit) return hit;
+  }
+  return null;
+}
+
+/**
+ * One window, narrowed where the reply was cut.
+ *
+ * Returns the nearest date because the slices are walked in order and
+ * each reply already keeps the earliest date per symbol. A window that
+ * comes back complete and without the symbol is an answer — the company
+ * does not report in it — and the search moves on.
+ */
+export async function searchCalendar(
+  symbol: string,
+  fromMs: number,
+  toMs: number,
+  ladder: readonly number[] = NARROW_LADDER,
+  /* Injected so the narrowing can be tested without the network. The
+     behaviour under test is not "does Finnhub answer" — it is what this
+     function concludes from a reply that was cut, and that was wrong for
+     as long as there was no way to stage one. */
+  read: CalendarReader = calendarWindow,
+): Promise<EarningsDate | null> {
+  const iso = (ms: number) => new Date(ms).toISOString().slice(0, 10);
+  const { bySymbol, truncated, failed } = await read(iso(fromMs), iso(toMs));
+
+  const hit = bySymbol.get(symbol);
+  if (hit) return hit;
+  /* Nothing further can be learned from a window whose request failed,
+     and nothing needs to be from one that came back whole. */
+  if (failed || !truncated || ladder.length === 0) return null;
+
+  const [slice, ...rest] = ladder;
+  const sliceMs = slice * 86_400_000;
+  for (let start = fromMs; start < toMs; start += sliceMs) {
+    const found = await searchCalendar(
+      symbol,
+      start,
+      Math.min(start + sliceMs, toMs),
+      rest,
+      read,
+    );
+    if (found) return found;
   }
   return null;
 }

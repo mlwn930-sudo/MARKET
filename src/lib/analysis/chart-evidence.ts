@@ -261,12 +261,88 @@ export function chartEvidence(checked: Corroboration): string {
     );
   }
 
+  /* ---- What is happening at the company ---- */
+  lines.push(...contextLines(checked));
+
   /* ---- The stance, private build only ---- */
   if (isPrivateBuild()) lines.push(...stanceLines(checked));
 
   return lines.join("\n");
 }
 
+
+/**
+ * The company's dated events and the stories the site has read.
+ *
+ * The chart reader knew the candles and nothing else. It could not know
+ * that a company has a product dated in February, so it read every
+ * chart as though the next quarter were a blank page — and the reader
+ * looking at it is asking both questions at once: what did this
+ * pattern do fifty-three times, AND what happens when the thing ships.
+ *
+ * THE TWO ARE KEPT APART IN THE BLOCK AND THE MODEL IS TOLD WHY. A
+ * chart figure is counted over ten years. A catalyst is dated, and
+ * nothing here has measured what this company's shares did after its
+ * last launch. Folding them into one sentence would dress a calendar
+ * entry as a measurement, so the block labels each side and the prompt
+ * forbids borrowing the chart's authority for the news.
+ */
+function contextLines(checked: Corroboration): string[] {
+  const context = checked.context;
+  if (!context) return [];
+
+  const out: string[] = [];
+  const { nextEarnings, stories } = context;
+
+  if (!nextEarnings && stories.length === 0) {
+    return [
+      "\nאין לאתר אירוע מתוזמן או כתבה מנותחת על הנייר הזה כרגע. אל תמציא סיבה עסקית לתנועה.",
+    ];
+  }
+
+  out.push("\n=== מה שקורה בחברה (לא נמדד על הגרף) ===");
+  out.push(
+    "הצד הזה מתוארך ולא ספור: האתר יודע מתי האירוע, ולא מה קרה למניה אחרי " +
+      "אירועים דומים בעבר. אל תיתן לו את הביטחון של שיעורי הבסיס.",
+  );
+  /* A story reaches this list because it is about this company, and that
+     is not the same as being about it alone. The summaries are written
+     per article, so one piece covering two companies carries both their
+     catalysts in a single paragraph — "for GameStop the warrant deadline,
+     for Take-Two the GTA VI launch" arrived exactly that way. The split
+     cannot be made in the data, so it is named here instead of papered
+     over: attributing another company's catalyst to this chart is the one
+     failure that reads as evidence. */
+  out.push(
+    `כתבה יכולה לכסות כמה חברות. ייחס רק את החלק שמדבר על ${checked.ticker} — ` +
+      "אם הזרז מתאר חברה אחרת, אל תייחס אותו לנייר הזה, וגם אל תזכיר אותו כסיבה. ליד כתבה כזאת מודפסות החברות הנוספות שהקריאה מזכירה.",
+  );
+
+  if (nextEarnings) {
+    out.push(
+      `דוח רבעוני: ${nextEarnings.date}, בעוד ${nextEarnings.daysAway} ימים.`,
+    );
+  }
+
+  for (const story of stories) {
+    out.push(
+      `- [${story.significance === "high" ? "השפעה גבוהה" : story.significance === "medium" ? "השפעה בינונית" : "השפעה נמוכה"}]` +
+        `${story.catalystKind === "catalyst" ? " [זרז]" : ""} ${story.title}` +
+        /* The other companies the reading names, printed before the
+           catalyst rather than after it. A model reading "the upgrade
+           points to a new growth engine" has no way to know that
+           sentence was written about Fastly unless the names arrive
+           first. */
+        (story.otherTickers.length > 0
+          ? `\n  הכתבה מזכירה גם: ${story.otherTickers.slice(0, 4).join(", ")} — ודא למי מהן הזרז שייך לפני שאתה מייחס אותו ל-${checked.ticker}.`
+          : "") +
+        (story.catalyst ? `\n  הזרז: ${story.catalyst}` : "") +
+        `\n  ההשפעה כפי שנקראה: ${story.impact}`,
+    );
+  }
+
+  return out;
+}
 
 /**
  * The stance, as lines the model may state a direction from.

@@ -573,3 +573,70 @@ test("the selection caveat is on the empty state too", () => {
   assert.equal(out!.swing.direction, "none");
   assert.ok(out!.swing.caveats.includes(SELECTION_CAVEAT));
 });
+
+/* ── A verdict on every chart, labelled by what it rests on ──────────── */
+
+test("a counted condition always outranks the structure", () => {
+  /* The whole convergence finding lives here. Structure may fill a gap;
+     it may never overrule a record. A maximal bullish structure against
+     a bearish counted condition must still read as bearish. */
+  const out = build(
+    [condition("death-cross", "חיתוך מות", true, { 21: { liftPp: -25, up: 0.3 } })],
+    setup([
+      observation("trend-stage-2", "constructive"),
+      observation("rank-strong", "constructive"),
+      observation("level-support", "constructive"),
+      observation("volume-thrust", "constructive"),
+    ]),
+  );
+  assert.equal(out!.swing.direction, "down");
+  assert.equal(out!.swing.restsOn, "counted");
+});
+
+test("with nothing counted, the structure speaks and says so", () => {
+  /* Four charts in five. Refusing to answer left the reader with
+     nothing; answering without the label would borrow authority the
+     structure has not earned. */
+  const out = build(
+    [condition("reclaim-50", "סגירה מעל ממוצע 50", false)],
+    setup([
+      observation("trend-stage-2", "constructive"),
+      observation("rank-strong", "constructive"),
+      observation("level-support", "cautionary"),
+    ]),
+  );
+  assert.equal(out!.swing.direction, "up");
+  assert.equal(out!.swing.restsOn, "structure");
+  assert.match(out!.swing.verdict, /אין לזה רשומה ספורה/);
+});
+
+test("the structural verdict carries the convergence caveat", () => {
+  /* The measurement that says this kind of agreement is worth minus
+     three tenths of a point travels with the claim it undercuts. */
+  const out = build(
+    [condition("reclaim-50", "סגירה מעל ממוצע 50", false)],
+    setup([observation("trend-stage-2", "constructive"), observation("rank-strong", "constructive")]),
+  );
+  assert.equal(out!.swing.restsOn, "structure");
+  assert.ok(out!.swing.caveats.some((c) => c.includes("17,566")));
+});
+
+test("a structure that does not lean says nothing rather than guessing", () => {
+  const out = build(
+    [condition("reclaim-50", "סגירה מעל ממוצע 50", false)],
+    setup([observation("trend-up", "constructive"), observation("rank-weak", "cautionary")]),
+  );
+  assert.equal(out!.swing.direction, "none");
+  assert.equal(out!.swing.restsOn, "none");
+});
+
+test("the verdict's strength always matches its evidence", () => {
+  /* The three sentences are separate on purpose: a reader skims the
+     first line and stops, so the hedge cannot live at the end of a
+     confident one. */
+  const counted = build([
+    condition("reclaim-50", "סגירה מעל ממוצע 50", true, { 21: { liftPp: 20, up: 0.78 } }),
+  ]);
+  assert.match(counted!.swing.verdict, /ולזה יש רשומה/);
+  assert.doesNotMatch(counted!.swing.verdict, /אין לזה רשומה/);
+});
