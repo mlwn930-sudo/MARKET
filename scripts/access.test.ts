@@ -23,9 +23,11 @@ import { readFileSync } from "node:fs";
 import {
   ACCESS_COOKIE,
   accessToken,
+  clearAttempts,
   safeReturn,
   sameToken,
   sitePassword,
+  tooManyAttempts,
 } from "../src/lib/access";
 
 /* ── The return path ─────────────────────────────────────────────────── */
@@ -129,4 +131,68 @@ test("the middleware gates the pages and leaves the door and the email links ope
     source.includes("/api/") && source.includes("401"),
     "an API call must get a status, not a redirect to a login form",
   );
+});
+
+/* ── The brute-force speed bump ──────────────────────────────────────── */
+
+/**
+ * The door had no limit at all.
+ *
+ * With a twenty-five character generated passphrase that is academic.
+ * But the owner can change it to something he will remember, and a
+ * memorable password against an endpoint answering as fast as it can is
+ * minutes of work. These pin the two halves and, just as importantly,
+ * pin what the counter does NOT promise: it lives in one instance's
+ * memory, so it is a speed bump and the per-failure delay is the part
+ * that holds regardless of how many instances exist.
+ */
+test("the allowance runs out, and only on failures", () => {
+  const who = `test-${Math.random()}`;
+  for (let i = 0; i < 8; i++) {
+    assert.equal(tooManyAttempts(who), false, `attempt ${i + 1} must be allowed`);
+  }
+  assert.equal(tooManyAttempts(who), true, "the ninth is refused");
+});
+
+test("getting it right clears the allowance", () => {
+  /* Otherwise a few mistypes earlier in the day lock the owner out of
+     his own site after he finally gets it right. */
+  const who = `test-${Math.random()}`;
+  for (let i = 0; i < 8; i++) tooManyAttempts(who);
+  clearAttempts(who);
+  assert.equal(tooManyAttempts(who), false);
+});
+
+test("one caller's failures do not spend another's allowance", () => {
+  const a = `a-${Math.random()}`;
+  const b = `b-${Math.random()}`;
+  for (let i = 0; i < 9; i++) tooManyAttempts(a);
+  assert.equal(tooManyAttempts(b), false);
+});
+
+test("every failure pays the delay, whatever the counter says", () => {
+  /* The counter can be defeated by rotating the forwarded header. The
+     delay cannot: it is paid on the server before the answer goes out,
+     so a single connection gets about one guess a second no matter how
+     many instances or identities are in play. */
+  const source = readFileSync("src/app/api/unlock/route.ts", "utf8");
+  const wrong = source.slice(source.indexOf("if (given !== password)"));
+  assert.ok(
+    wrong.includes("await failureDelay()"),
+    "the delay must be awaited on every wrong password",
+  );
+  const delayAt = wrong.indexOf("await failureDelay()");
+  const blockAt = wrong.indexOf("if (blocked)");
+  assert.ok(
+    delayAt < blockAt,
+    "the delay is paid before the refusal, so a blocked caller waits too",
+  );
+});
+
+test("a correct password is never delayed", () => {
+  /* The cost belongs to the attacker. A second on every successful
+     login is a second the owner pays for somebody else's behaviour. */
+  const source = readFileSync("src/app/api/unlock/route.ts", "utf8");
+  const after = source.slice(source.indexOf("clearAttempts(who)"));
+  assert.ok(!after.includes("failureDelay"), "the success path must not wait");
 });

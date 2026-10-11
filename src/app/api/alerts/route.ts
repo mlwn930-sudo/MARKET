@@ -92,7 +92,13 @@ export async function POST(request: Request) {
       `${origin}/api/alerts/decide?token=${encodeURIComponent(stored.token)}&verdict=approve`,
       `${origin}/api/alerts/decide?token=${encodeURIComponent(stored.token)}&verdict=block`,
     );
-    const sent = await sendMail({ to: ownerEmail(), ...message });
+    /* `mailConfigured()` above is what proves there is an address, so
+       this cannot be null here — and if that gate ever changes, the
+       type will say so rather than a mail going nowhere. */
+    const to = ownerEmail();
+    const sent = to
+      ? await sendMail({ to, ...message })
+      : { ok: false as const, reason: "no-key" as const, detail: "ALERT_OWNER_EMAIL is not set" };
     if (!sent.ok) {
       /* The address is already recorded, so this is not a failure of the
          sign-up — it is the owner not being told yet. Logged for the

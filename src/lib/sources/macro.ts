@@ -19,6 +19,7 @@
  */
 
 import { unstable_cache } from "next/cache";
+import { userAgent } from "./user-agent";
 
 const CHART = "https://query1.finance.yahoo.com/v8/finance/chart";
 
@@ -39,7 +40,7 @@ const CHART = "https://query1.finance.yahoo.com/v8/finance/chart";
  * around.
  */
 const HEADERS = {
-  "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)",
+  "User-Agent": userAgent(),
 };
 
 export type MacroKind = "index" | "rate" | "commodity" | "currency" | "vol";

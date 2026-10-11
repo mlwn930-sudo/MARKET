@@ -22,6 +22,7 @@
  */
 
 import { unstable_cache } from "next/cache";
+import { userAgent } from "./user-agent";
 
 const SPARK = "https://query1.finance.yahoo.com/v7/finance/spark";
 
@@ -42,7 +43,7 @@ const SPARK = "https://query1.finance.yahoo.com/v7/finance/spark";
  * around.
  */
 const HEADERS = {
-  "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)",
+  "User-Agent": userAgent(),
 };
 
 /** Which session a price belongs to. A board that prints a number with no

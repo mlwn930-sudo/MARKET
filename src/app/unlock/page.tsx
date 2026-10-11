@@ -51,10 +51,15 @@ export default async function UnlockPage({
           />
         </label>
 
+        {/* No detail, on purpose: "wrong password" and "no such user"
+            are the same sentence here because there are no users. */}
         {bad === "1" && (
-          /* No detail, on purpose: "wrong password" and "no such user"
-             are the same sentence here because there are no users. */
           <p className="text-[12px] text-down">הסיסמה שגויה.</p>
+        )}
+        {bad === "wait" && (
+          <p className="text-[12px] text-down">
+            יותר מדי ניסיונות שגויים. נסו שוב בעוד כמה דקות.
+          </p>
         )}
 
         <button type="submit" className="btn-primary mt-1">

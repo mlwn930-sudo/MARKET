@@ -21,6 +21,7 @@
  */
 
 import { unstable_cache } from "next/cache";
+import { userAgent } from "./user-agent";
 
 /**
  * Who is asking.
@@ -39,7 +40,7 @@ import { unstable_cache } from "next/cache";
  * around.
  */
 const HEADERS = {
-  "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)",
+  "User-Agent": userAgent(),
 };
 
 const CHART = "https://query1.finance.yahoo.com/v8/finance/chart";

@@ -24,6 +24,7 @@
  */
 
 import { unstable_cache } from "next/cache";
+import { userAgent } from "./user-agent";
 
 const CHART = "https://query1.finance.yahoo.com/v8/finance/chart";
 
@@ -120,7 +121,7 @@ async function fetchOne(
          baseline to measure today's volume against. */
       `${CHART}/${encodeURIComponent(symbol)}?range=1mo&interval=1d`,
       {
-        headers: { "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)" },
+        headers: { "User-Agent": userAgent() },
         next: { revalidate: 120 },
       },
     );

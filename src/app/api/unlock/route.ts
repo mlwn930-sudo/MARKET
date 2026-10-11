@@ -3,8 +3,11 @@ import {
   ACCESS_COOKIE,
   ACCESS_MAX_AGE,
   accessToken,
+  clearAttempts,
+  failureDelay,
   safeReturn,
   sitePassword,
+  tooManyAttempts,
 } from "@/lib/access";
 
 /**
@@ -31,8 +34,26 @@ export async function POST(request: Request) {
      for "is this site locked". */
   if (!password) return NextResponse.redirect(new URL(back, request.url), 303);
 
+  /* Who is asking. Behind a proxy the socket address is the proxy, so
+     the forwarded header is the only identity available — and it is
+     client-controlled, which is precisely why the delay below does not
+     depend on it. Someone who rotates the header defeats the counter
+     and still waits a second for every guess. */
+  const who =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "unknown";
+
   const given = String(form?.get("password") ?? "");
   if (given !== password) {
+    const blocked = tooManyAttempts(who);
+    await failureDelay();
+    if (blocked) {
+      const url = new URL("/unlock", request.url);
+      url.searchParams.set("from", back);
+      url.searchParams.set("bad", "wait");
+      return NextResponse.redirect(url, 303);
+    }
     const url = new URL("/unlock", request.url);
     url.searchParams.set("from", back);
     url.searchParams.set("bad", "1");
@@ -40,6 +61,10 @@ export async function POST(request: Request) {
        not resubmit the password. */
     return NextResponse.redirect(url, 303);
   }
+
+  /* So a few mistypes earlier in the day cannot lock the owner out
+     after he gets it right. */
+  clearAttempts(who);
 
   const response = NextResponse.redirect(new URL(back, request.url), 303);
   response.cookies.set({

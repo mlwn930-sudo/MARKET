@@ -18,6 +18,7 @@
 
 import { unstable_cache } from "next/cache";
 import { MARKET } from "@/lib/freshness";
+import { userAgent } from "./user-agent";
 
 export type Candle = {
   date: string;
@@ -51,7 +52,7 @@ export type PriceHistory = {
  * around.
  */
 const HEADERS = {
-  "User-Agent": "MarketIntel/1.0 (personal research; mlwn930@gmail.com)",
+  "User-Agent": userAgent(),
 };
 
 /**

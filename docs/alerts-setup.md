@@ -104,7 +104,7 @@ npm run alerts
 |---|---|
 | `DATABASE_URL` | אותו connection string |
 | `RESEND_API_KEY` | אותו מפתח |
-| `ALERT_OWNER_EMAIL` | `mlwn930@gmail.com` *(לא חובה — זו ברירת המחדל)* |
+| `ALERT_OWNER_EMAIL` | הכתובת שאליה ההתראות נשלחות. **חובה** — אין ברירת מחדל בקוד, בכוונה: ה-repo ציבורי. |
 | `NEXT_PUBLIC_SITE_URL` | כתובת האתר, אם יש |
 | `ALERT_FROM` | רק אחרי אימות דומיין |
 

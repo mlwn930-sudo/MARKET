@@ -1,3 +1,4 @@
+import { userAgent } from "./user-agent";
 /**
  * The text of one article, fetched from the publisher.
  *
@@ -81,7 +82,7 @@ export async function getArticleText(url: string): Promise<string> {
       headers: {
         // Many publishers reject a request with no user agent outright.
         "User-Agent":
-          "MarketIntelBot/1.0 (+mailto:mlwn930@gmail.com; reads one article to summarise it)",
+          userAgent("reads one article to summarise it"),
         Accept: "text/html",
       },
       cache: "no-store",

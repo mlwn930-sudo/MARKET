@@ -81,6 +81,70 @@ export function sameToken(a: string, b: string): boolean {
  * It is NOT `NEXT_PUBLIC_`. A password inlined into the client bundle is
  * not a password.
  */
+/**
+ * How many wrong passwords an address gets before it waits.
+ *
+ * The door had no limit at all. With the generated passphrase that is
+ * academic — twenty-five characters is not guessable — but the owner
+ * can change it to something he will remember, and a memorable
+ * password against an endpoint that answers as fast as it can is
+ * minutes of work for anyone who tries.
+ *
+ * WHAT THIS DOES NOT DO, said plainly because an overstated defence is
+ * worse than none: the counter lives in one serverless instance's
+ * memory. A platform running several instances gives an attacker one
+ * allowance per instance, and a cold start resets it. It is a speed
+ * bump, not a lock.
+ *
+ * The delay below is the part that holds regardless. Every failure
+ * waits, on the server, before answering — so a single connection can
+ * try roughly one password a second however many instances exist, and
+ * no amount of parallelism makes any single attempt faster.
+ */
+const MAX_ATTEMPTS = 8;
+const WINDOW_MS = 10 * 60 * 1000;
+const FAILURE_DELAY_MS = 1000;
+
+const attempts = new Map<string, { count: number; first: number }>();
+
+/** Records a failure and says whether this caller should be refused
+ *  outright. Call it only on a wrong password: a correct one must not
+ *  be able to fill anybody's allowance. */
+export function tooManyAttempts(who: string): boolean {
+  const now = Date.now();
+  const seen = attempts.get(who);
+
+  if (!seen || now - seen.first > WINDOW_MS) {
+    attempts.set(who, { count: 1, first: now });
+    return false;
+  }
+
+  seen.count++;
+
+  /* Bounded, so a flood of distinct addresses cannot grow the map
+     until the instance runs out of memory — which would turn a
+     brute-force defence into a denial of service against the owner. */
+  if (attempts.size > 5000) {
+    for (const [key, value] of attempts) {
+      if (now - value.first > WINDOW_MS) attempts.delete(key);
+    }
+  }
+
+  return seen.count > MAX_ATTEMPTS;
+}
+
+/** Clears the allowance once the password is right, so a mistyped
+ *  password earlier in the day does not lock the owner out after he
+ *  gets it right. */
+export function clearAttempts(who: string): void {
+  attempts.delete(who);
+}
+
+/** The wait every failure pays. Awaited before answering, so the cost
+ *  is the attacker's and not the owner's. */
+export const failureDelay = () =>
+  new Promise<void>((resolve) => setTimeout(resolve, FAILURE_DELAY_MS));
+
 export function sitePassword(): string | null {
   const value = process.env.SITE_PASSWORD?.trim();
   return value ? value : null;

@@ -32,13 +32,31 @@ export type SendResult =
   | { ok: false; reason: "no-key" | "rejected" | "failed"; detail?: string };
 
 export function mailConfigured(): boolean {
-  return Boolean(process.env.RESEND_API_KEY?.trim());
+  /* A key AND a destination. The owner address used to be compiled
+     in, so a key was the only thing that could be missing; now that
+     the address is configuration, a deployment with a key and no
+     address can send nothing, and the callers that gate on this
+     should know that before they compose a message. */
+  return Boolean(
+    process.env.RESEND_API_KEY?.trim() && process.env.ALERT_OWNER_EMAIL?.trim(),
+  );
 }
 
-/** Where approval requests go. The owner's own address, overridable so a
- *  personal address is configuration rather than a line of source. */
-export function ownerEmail(): string {
-  return process.env.ALERT_OWNER_EMAIL?.trim() || "mlwn930@gmail.com";
+/**
+ * Where approval requests go.
+ *
+ * CONFIGURATION ONLY, with no fallback. The comment above this used to
+ * say a personal address should be configuration rather than a line of
+ * source, and the line underneath it was a personal address in the
+ * source — in a public repository, where it is scrapeable by anyone
+ * who clones it.
+ *
+ * Returning null when it is unset is the right failure: the caller
+ * reports that alerts are not configured, which is true and fixable,
+ * instead of quietly mailing somebody whose address was compiled in.
+ */
+export function ownerEmail(): string | null {
+  return process.env.ALERT_OWNER_EMAIL?.trim() || null;
 }
 
 export async function sendMail(options: {
