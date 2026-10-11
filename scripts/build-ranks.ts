@@ -22,6 +22,12 @@ import { buildCorrelations } from "../src/lib/metrics/correlation";
 import { readSetup } from "../src/lib/analysis/setup";
 import { buildChartStance } from "../src/lib/analysis/stance";
 import { compareScans } from "../src/lib/signals/scan-diff";
+import {
+  recordStances,
+  resolveEntries,
+  scoreLedger,
+} from "../src/lib/signals/ledger";
+import type { LedgerEntry, StanceToRecord } from "../src/lib/signals/ledger";
 import { baseRatesFor } from "../src/lib/metrics/base-rate-store";
 import { UNIVERSE } from "../src/lib/universe";
 import type { Candle } from "../src/lib/sources/prices";
@@ -37,6 +43,7 @@ const CORRELATION_OUT = resolve(ROOT, "content/correlation/latest.json");
    it anywhere else would mean 123 more price requests for figures that
    are sitting in memory. */
 const SCAN_OUT = resolve(ROOT, "content/signals/scan.json");
+const LEDGER_OUT = resolve(ROOT, "content/signals/ledger.json");
 
 /* Yahoo refuses a default user agent. The same header the price source
    uses, for the same reason. */
@@ -192,6 +199,11 @@ async function main() {
     horizons: { horizon: string; direction: string }[];
   };
   const scanned: ScanRow[] = [];
+  /* The same stances, in the shape the ledger records. Collected here
+     rather than derived from `scanned` because the scan file keeps only
+     the lead condition's headline and the ledger needs its sample and
+     its baseline to score itself later. */
+  const taken: StanceToRecord[] = [];
   let withDirection = 0;
   for (const [symbol, candles] of series) {
     const rates = await baseRatesFor(symbol).catch(() => null);
@@ -213,6 +225,22 @@ async function main() {
     );
     if (live.length === 0) continue;
     withDirection++;
+    for (const h of live) {
+      const lead = h.agreeing[0] ?? null;
+      taken.push({
+        symbol,
+        asOf: h.asOf,
+        horizon: h.horizon,
+        horizonDays: h.horizonDays,
+        direction: h.direction as "up" | "down" | "split",
+        closeAt: h.lastClose,
+        leadKey: lead?.key ?? null,
+        leadLabel: lead?.label ?? null,
+        leadN: lead?.n ?? null,
+        upShareHist: lead?.upShareHist ?? null,
+        baselineUpShare: lead?.baselineUpShare ?? null,
+      });
+    }
     scanned.push({
       symbol,
       asOf: stance.swing.asOf,
@@ -283,6 +311,47 @@ async function main() {
           `${change.flipped.length ? `, ${change.flipped.length} flipped` : ""})`
         : "; no previous scan to compare)"),
   );
+
+  /* ---- The ledger: what the site said, and whether it held ----
+
+     This project measures ten years of history for every condition and
+     has never measured itself. A stance was stated, the horizon passed,
+     and nothing was written down — so there was no way to ask whether
+     any of it was right, and no way to start asking about the days
+     already gone. Every night without this is a night of evidence lost,
+     which is the only reason it is here rather than on a list.
+
+     Resolution uses the candles already in memory, and counts TRADING
+     days because that is what the base rates counted. */
+  let ledger: LedgerEntry[] = [];
+  try {
+    const prior = JSON.parse(await readFile(LEDGER_OUT, "utf8"));
+    if (Array.isArray(prior?.entries)) ledger = prior.entries;
+  } catch {
+    /* First run. */
+  }
+
+  ledger = recordStances(ledger, taken);
+  const scoredNow = resolveEntries(ledger, (symbol) => {
+    const candles = series.get(symbol);
+    return candles
+      ? candles.map((c) => ({ date: c.date, close: c.close }))
+      : null;
+  });
+  ledger = scoredNow.entries;
+
+  await mkdir(dirname(LEDGER_OUT), { recursive: true });
+  await writeFile(
+    LEDGER_OUT,
+    JSON.stringify({ builtAt: new Date().toISOString(), entries: ledger }, null, 0),
+    "utf8",
+  );
+  const score = scoreLedger(ledger);
+  console.log(
+    `wrote ${LEDGER_OUT} (${ledger.length} stances on record, ` +
+      `${scoredNow.resolved} resolved this run)`,
+  );
+  console.log(`  ${score.verdict}`);
 
   /* What was actually learned, printed, because a build that reports only
      counts hides the thing worth seeing. */

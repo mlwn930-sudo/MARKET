@@ -1,4 +1,6 @@
 import { getSignalValue } from "@/lib/metrics/signal-value";
+import { Scorecard } from "@/components/market/Scorecard";
+import { getLedger, recentlyResolved } from "@/lib/signals/ledger-store";
 import { Disclaimer, Empty, Hero, MoreLink, Page, Section } from "@/components/ui";
 
 export const revalidate = 3600;
@@ -25,6 +27,10 @@ const pp = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}`;
 
 export default async function SignalsPage() {
   const report = await getSignalValue();
+  /* The site own record, which belongs on this page more than
+     anywhere else. This is the page about what signals are worth, and
+     until now it measured only other historical records. */
+  const ledger = await getLedger().catch(() => null);
 
   if (!report) {
     return (
@@ -53,6 +59,23 @@ export default async function SignalsPage() {
         lede="לא דעה. מדידה: כל תנאי טכני קלאסי נספר על 123 מניות לאורך עשר שנים, וכל מניה נבדקה מול שיעור הבסיס של עצמה — כמה פעמים יום אקראי באותו חלון הסתיים גבוה יותר. מה שנשאר אחרי החיסור הוא מה שהאות באמת הוסיף."
         action={<MoreLink href="/learn#technical">איך לקרוא את זה</MoreLink>}
       />
+
+      {/* FIRST, because it is the only measurement on this page that is
+          about this site. Everything below measures how technical
+          conditions behaved over ten years of history; this measures
+          whether the stances this engine took actually held. A page
+          about what signals are worth that never scored its own was
+          missing the obvious question. */}
+      <Section
+        eyebrow="הרשומה של האתר עצמו"
+        title="האם העמדות שלקחנו החזיקו"
+        description="כל עמדה נרשמת ביום שבו נלקחה, עם המחיר שממנו נמדדה, ומקבלת ציון כשהאופק שלה נגמר — בימי מסחר, כמו ששיעורי הבסיס נספרו."
+      >
+        <Scorecard
+          entries={ledger?.entries ?? null}
+          recent={ledger ? recentlyResolved(ledger.entries) : []}
+        />
+      </Section>
 
       <Section
         eyebrow="השורה התחתונה"
