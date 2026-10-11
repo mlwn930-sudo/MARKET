@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { watchlistNews, type WatchArticle } from "@/lib/watchlist-news";
 import { readSetup, type SetupRead } from "@/lib/analysis/setup";
+import { buildChartStance, type ChartStance } from "@/lib/analysis/stance";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { baseRatesFor } from "@/lib/metrics/base-rate-store";
 import { rankFor } from "@/lib/metrics/rank-store";
@@ -42,6 +43,19 @@ export type CoverageRow = {
   ticker: string;
   articles: WatchArticle[];
   setup: SetupRead | null;
+  /**
+   * Which way the counted record leans, for both horizons.
+   *
+   * EVERY INPUT WAS ALREADY ON THIS ROUTE. The setup, the base rates,
+   * the rank and the candles are all loaded below, and the stance is a
+   * pure function over three of them — so a direction existed only for
+   * somebody who uploaded a screenshot of a chart they were already
+   * looking at. Opening a watchlist is when the question is actually
+   * asked.
+   *
+   * Null outside the research universe, where nothing has been counted.
+   */
+  stance: ChartStance | null;
   /** Null when the instrument has no usable history — said rather than
    *  rendered as an empty chart section. */
   error: string | null;
@@ -83,10 +97,23 @@ export async function POST(request: Request) {
         rankFor(ticker).catch(() => null),
       ]);
 
+      const setup = history
+        ? readSetup(ticker, history.candles, rates, rank)
+        : null;
+      const last = history?.candles.at(-1)?.close ?? null;
+
       return {
         ticker,
         articles,
-        setup: history ? readSetup(ticker, history.candles, rates, rank) : null,
+        setup,
+        /* The close the stance is measured from has to be the close the
+           setup was measured on, so it comes from the candles here and
+           not from a live quote. A stance dated to one bar and priced
+           from another is two readings wearing one label. */
+        stance:
+          last !== null
+            ? buildChartStance({ setup, baseRates: rates, lastClose: last })
+            : null,
         error: history ? null : "אין היסטוריית מחירים זמינה לנייר הזה.",
       };
     }),

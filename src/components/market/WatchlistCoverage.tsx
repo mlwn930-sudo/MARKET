@@ -5,6 +5,7 @@ import Link from "next/link";
 import { WATCHLIST_EVENT, getWatchlist } from "@/lib/watchlist";
 
 import { SIGNIFICANCE_LABELS } from "@/lib/news-shape";
+import { StanceLine } from "@/components/market/StanceLine";
 import type { CoverageRow } from "@/app/api/watchlist-coverage/route";
 
 /**
@@ -187,7 +188,13 @@ export function WatchlistCoverage() {
           {row.error ? (
             <p className="cover-quiet">{row.error}</p>
           ) : row.setup ? (
-            <Setup setup={row.setup} />
+            <>
+              {/* Which way the record leans, before what the chart is
+                  doing. A reader scanning a list wants the conclusion
+                  first and the evidence under it. */}
+              {row.stance && <StanceLine stance={row.stance} />}
+              <Setup setup={row.setup} />
+            </>
           ) : (
             <p className="cover-quiet">אין קריאה זמינה.</p>
           )}
