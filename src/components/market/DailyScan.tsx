@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DIRECTION_NAME, HORIZON_NAME, SELECTION_CAVEAT } from "@/lib/analysis/stance";
+import { ScanChange } from "@/components/market/ScanChange";
 import type { ScanFile } from "@/lib/signals/scan-store";
 
 /**
@@ -47,6 +48,13 @@ export function DailyScan({ scan }: { scan: ScanFile | null }) {
         , עם מדגם והפרש מול הבסיס שמצדיקים הדפסה. זו רשימת סינון ולא דירוג:
         מספר דומה יופיע כאן כמעט בכל יום.
       </p>
+
+      {/* ABOVE THE LIST, because it is the reason to come back. The
+          list itself is largely the same twenty-one names every
+          morning; the difference is the new information. */}
+      <div className="mt-3 border-s-2 border-line ps-3">
+        <ScanChange scan={scan} />
+      </div>
 
       {names.length === 0 ? (
         <p className="mt-3 text-[13px] text-ink-ghost">

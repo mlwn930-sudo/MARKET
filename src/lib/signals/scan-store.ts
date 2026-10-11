@@ -47,6 +47,23 @@ export type ScanFile = {
    */
   universe: number;
   withDirection: number;
+  /**
+   * The session this was compared against, and the difference.
+   *
+   * The list of what fired today answers a question nobody asks twice.
+   * Somebody opening the page every morning wants the difference, and
+   * that is the whole reason to look daily.
+   *
+   * `previousAsOf` is null before the second run ever happens, and the
+   * page says the comparison is not available rather than rendering
+   * three empty lists, which read as "nothing moved".
+   */
+  previousAsOf?: string | null;
+  entered?: string[];
+  left?: string[];
+  /** Present on both days with a different set of directions — the
+   *  turn, which is the one a holder cares about most. */
+  flipped?: { symbol: string; from: string; to: string }[];
   names: ScanName[];
 };
 

@@ -14,13 +14,14 @@
  *
  *   npx tsx scripts/build-ranks.ts
  */
-import { writeFile, mkdir } from "node:fs/promises";
+import { writeFile, mkdir, readFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { rankUniverse } from "../src/lib/metrics/rank";
 import { buildCorrelations } from "../src/lib/metrics/correlation";
 import { readSetup } from "../src/lib/analysis/setup";
 import { buildChartStance } from "../src/lib/analysis/stance";
+import { compareScans } from "../src/lib/signals/scan-diff";
 import { baseRatesFor } from "../src/lib/metrics/base-rate-store";
 import { UNIVERSE } from "../src/lib/universe";
 import type { Candle } from "../src/lib/sources/prices";
@@ -184,7 +185,13 @@ async function main() {
      either fires. So this file is a FILTER and not a discovery, and
      the stored denominator is what keeps it honest — a list of names
      with no 'out of 123' beside it is a leaderboard. */
-  const scanned: unknown[] = [];
+  type ScanRow = {
+    symbol: string;
+    asOf: string;
+    lastClose: number;
+    horizons: { horizon: string; direction: string }[];
+  };
+  const scanned: ScanRow[] = [];
   let withDirection = 0;
   for (const [symbol, candles] of series) {
     const rates = await baseRatesFor(symbol).catch(() => null);
@@ -223,6 +230,34 @@ async function main() {
     });
   }
 
+  /* ---- What changed since the previous session ----
+
+     The list of what fired today answers a question nobody asks twice.
+     Somebody opening this page every morning wants the difference: who
+     is here that was not here yesterday, who dropped off, and who
+     turned around. That is the whole reason to look daily.
+
+     Computed by reading the file about to be overwritten, which is
+     cheap and keeps the comparison in the one place that can be sure
+     both sides were produced the same way.
+
+     THE SAME-SESSION RE-RUN IS THE CASE THAT GETS THIS WRONG. Run the
+     script twice in a day and a naive diff compares today against
+     today, reports nothing changed, and silently erases a real
+     morning's movement. So when the stored scan is already on this
+     session, its comparison is carried forward untouched rather than
+     recomputed against itself. */
+  /* The comparison, from the file about to be overwritten. Extracted to
+     `scan-diff.ts` because the same-session re-run is the case that gets
+     it wrong, and inline here it had no way to be tested. */
+  let prior = null;
+  try {
+    prior = JSON.parse(await readFile(SCAN_OUT, "utf8"));
+  } catch {
+    /* No previous scan. `compareScans` returns a null basis and the
+       page says the comparison is not available yet. */
+  }
+  const change = compareScans({ asOf: latest, names: scanned }, prior);
   await mkdir(dirname(SCAN_OUT), { recursive: true });
   await writeFile(
     SCAN_OUT,
@@ -233,6 +268,7 @@ async function main() {
         /* Both numbers travel together, always. */
         universe: series.size,
         withDirection,
+        ...change,
         names: scanned,
       },
       null,
@@ -241,7 +277,11 @@ async function main() {
     "utf8",
   );
   console.log(
-    `wrote ${SCAN_OUT} (${withDirection} of ${series.size} names have a direction)`,
+    `wrote ${SCAN_OUT} (${withDirection} of ${series.size} have a direction` +
+      (change.previousAsOf
+        ? `; vs ${change.previousAsOf}: +${change.entered.length} -${change.left.length}` +
+          `${change.flipped.length ? `, ${change.flipped.length} flipped` : ""})`
+        : "; no previous scan to compare)"),
   );
 
   /* What was actually learned, printed, because a build that reports only
