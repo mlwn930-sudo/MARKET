@@ -31,6 +31,21 @@ export type SendResult =
   | { ok: true; id: string | null }
   | { ok: false; reason: "no-key" | "rejected" | "failed"; detail?: string };
 
+/**
+ * Which half of the configuration is missing, for a caller that has to
+ * report it.
+ *
+ * `mailConfigured()` returning false used to mean exactly one thing,
+ * so every caller said "no RESEND_API_KEY". It now means either the
+ * key or the destination, and a message naming the wrong one sends
+ * somebody looking in the wrong place.
+ */
+export function mailMissing(): "key" | "address" | null {
+  if (!process.env.RESEND_API_KEY?.trim()) return "key";
+  if (!process.env.ALERT_OWNER_EMAIL?.trim()) return "address";
+  return null;
+}
+
 export function mailConfigured(): boolean {
   /* A key AND a destination. The owner address used to be compiled
      in, so a key was the only thing that could be missing; now that

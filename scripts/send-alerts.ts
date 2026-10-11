@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { config } from "dotenv";
 import { approvedWithWatchlists, alertsConfigured } from "../src/lib/alerts/subscribers";
-import { mailConfigured, sendMail } from "../src/lib/alerts/mailer";
+import { mailConfigured, mailMissing, sendMail } from "../src/lib/alerts/mailer";
 import { isolateBlock, isolateLatin } from "../src/lib/alerts/bidi";
 import {
   RELEVANCE_LABELS,
@@ -282,7 +282,19 @@ async function main() {
     return;
   }
   if (!mailConfigured()) {
-    console.log("no RESEND_API_KEY — alerts are off");
+    /* LOUD, NOT QUIET. This used to log one line and exit green, which
+       was survivable while the owner's address was a fallback in the
+       source: the only way to reach here was a missing key, and that
+       was deliberate. Now the address is configuration too, so a
+       missing secret stops every alert — and a silent green run is
+       how somebody finds out a week later that nothing has arrived. */
+    const missing = mailMissing();
+    const what =
+      missing === "address"
+        ? "ALERT_OWNER_EMAIL is not set, so there is nowhere to send"
+        : "RESEND_API_KEY is not set";
+    console.log(`::error::Alerts did not go out: ${what}.`);
+    console.log(what);
     return;
   }
 
