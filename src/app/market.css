@@ -955,6 +955,26 @@
      it — and because the thing most likely to be skipped is the
      counter-argument, which is therefore given the same weight as the
      direction rather than a smaller one. */
+  /* The scheduled report. Set apart from the measurements around it,
+     because it is the one line on the card that is a calendar entry
+     rather than something counted. */
+  .cover-earnings {
+    margin-top: 12px;
+    display: grid;
+    gap: 2px;
+    border-inline-start: 2px solid var(--color-event);
+    padding-inline-start: 10px;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+  .cover-earnings-when { color: var(--color-ink); }
+  .cover-earnings-inside {
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--color-ink-ghost);
+  }
+
   .cover-stance { margin-top: 8px; display: grid; gap: 10px; }
   .cover-stance-row {
     display: grid;

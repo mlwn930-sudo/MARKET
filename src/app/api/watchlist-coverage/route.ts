@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { watchlistNews, type WatchArticle } from "@/lib/watchlist-news";
 import { readSetup, type SetupRead } from "@/lib/analysis/setup";
 import { buildChartStance, type ChartStance } from "@/lib/analysis/stance";
+import { getNextEarnings } from "@/lib/sources/finnhub";
 import { getPriceHistory } from "@/lib/sources/prices";
 import { baseRatesFor } from "@/lib/metrics/base-rate-store";
 import { rankFor } from "@/lib/metrics/rank-store";
@@ -56,6 +57,26 @@ export type CoverageRow = {
    * Null outside the research universe, where nothing has been counted.
    */
   stance: ChartStance | null;
+  /**
+   * The next scheduled report, and whether it lands inside a horizon.
+   *
+   * The one thing a holder can know in advance and the one the chart
+   * cannot show. It already reaches the alert mail as a catalyst and
+   * was missing from the page the reader actually opens.
+   *
+   * `insideSwing` / `insidePosition` do NOT invalidate the stance. The
+   * base rates were counted over ten years that contained every
+   * earnings date those instruments ever had, so a report inside the
+   * window is already in the number. What it changes is what the
+   * reader is agreeing to: a scheduled binary event they know about in
+   * advance, inside a window a technical condition is speaking for.
+   */
+  earnings: {
+    date: string;
+    daysAway: number;
+    insideSwing: boolean;
+    insidePosition: boolean;
+  } | null;
   /** Null when the instrument has no usable history — said rather than
    *  rendered as an empty chart section. */
   error: string | null;
@@ -90,17 +111,38 @@ export async function POST(request: Request) {
          its own absence rather than failing the row: a company with no
          base rates still gets its news, and a company the wire has
          nothing on still gets its chart. */
-      const [articles, history, rates, rank] = await Promise.all([
+      const [articles, history, rates, rank, nextReport] = await Promise.all([
         watchlistNews(ticker).catch(() => [] as WatchArticle[]),
         getPriceHistory(ticker).catch(() => null),
         baseRatesFor(ticker).catch(() => null),
         rankFor(ticker).catch(() => null),
+        getNextEarnings(ticker).catch(() => null),
       ]);
 
       const setup = history
         ? readSetup(ticker, history.candles, rates, rank)
         : null;
       const last = history?.candles.at(-1)?.close ?? null;
+
+      /* Calendar days, deliberately, and not the trading days the
+         horizons are counted in: a report lands on a date, and the
+         reader is being told how long until it does. The approximation
+         runs the other way from the one that would matter — 21 trading
+         days is about 30 calendar days, so using the trading count
+         would say a report is outside a window it is actually inside. */
+      const earnings = nextReport
+        ? (() => {
+            const days = Math.round(
+              (new Date(nextReport.date).getTime() - Date.now()) / 86_400_000,
+            );
+            return {
+              date: nextReport.date,
+              daysAway: days,
+              insideSwing: days >= 0 && days <= 30,
+              insidePosition: days >= 0 && days <= 91,
+            };
+          })()
+        : null;
 
       return {
         ticker,
@@ -110,6 +152,7 @@ export async function POST(request: Request) {
            setup was measured on, so it comes from the candles here and
            not from a live quote. A stance dated to one bar and priced
            from another is two readings wearing one label. */
+        earnings,
         stance:
           last !== null
             ? buildChartStance({ setup, baseRates: rates, lastClose: last })

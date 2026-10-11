@@ -6,6 +6,7 @@ import { WATCHLIST_EVENT, getWatchlist } from "@/lib/watchlist";
 
 import { SIGNIFICANCE_LABELS } from "@/lib/news-shape";
 import { StanceLine } from "@/components/market/StanceLine";
+import { EarningsNote } from "@/components/market/EarningsNote";
 import type { CoverageRow } from "@/app/api/watchlist-coverage/route";
 
 /**
@@ -183,6 +184,10 @@ export function WatchlistCoverage() {
               {row.articles.length} כתבות · 14 ימים
             </span>
           </div>
+
+          {/* Above the chart read, because a report inside the window
+              changes how the rest of the card is read. */}
+          <EarningsNote earnings={row.earnings} />
 
           <h4 className="cover-section">מה הגרף עושה</h4>
           {row.error ? (
