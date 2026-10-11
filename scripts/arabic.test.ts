@@ -18,7 +18,11 @@
 import { strict as assert } from "node:assert";
 import test from "node:test";
 import fs from "node:fs";
-import { containsArabic, containsGluedLatin } from "../src/lib/sources/gemini";
+import {
+  containsArabic,
+  containsCyrillic,
+  containsGluedLatin,
+} from "../src/lib/sources/gemini";
 
 test("ordinary Hebrew passes", () => {
   assert.equal(containsArabic("ירידות בשוקי המניות וביקושי ענק לשבבי AI"), false);
@@ -137,4 +141,62 @@ test("generateText rejects it and streamText deliberately does not", () => {
     false,
     "streamText must NOT kill a whole answer over one letter",
   );
+});
+
+/* ── A third script: Cyrillic ─────────────────────────────────────────── */
+
+/**
+ * The hardest of the three to see.
+ *
+ * Several Cyrillic letters are drawn exactly like Latin ones, so a
+ * reader does not notice a foreign alphabet — they see a Hebrew word
+ * that looks right and is not. Measured on the stored article readings
+ * before the guard existed: 26 of 1,243 carried it. "אינфлציה" with a
+ * Cyrillic ф and л. "זрз" with a Cyrillic р.
+ *
+ * Nothing in this project legitimately contains Cyrillic; the whole of
+ * `src/` and `content/` was searched before the guard was trusted, the
+ * same way the Latin one was.
+ */
+test("ordinary Hebrew and Latin pass the Cyrillic guard", () => {
+  assert.equal(containsCyrillic("אינפלציה עולה, וה-P/E מתרחב"), false);
+  assert.equal(containsCyrillic("S&P 500 · EV/EBITDA · ROIC"), false);
+  assert.equal(containsCyrillic(""), false);
+});
+
+test("the words that actually shipped are caught", () => {
+  /* Copied out of content/news/summaries.json. */
+  assert.equal(containsCyrillic("לחצי האינфляציה"), true);
+  assert.equal(containsCyrillic("מהווים זрз שמשנה"), true);
+});
+
+test("all three guards run on the shared client's generate path", () => {
+  const source = fs.readFileSync("src/lib/sources/gemini.ts", "utf8");
+  const generate = source.slice(source.indexOf("export async function generateText"));
+  for (const guard of ["containsArabic(", "containsGluedLatin(", "containsCyrillic("]) {
+    assert.ok(generate.includes(guard), `generateText must call ${guard}`);
+  }
+});
+
+test("the stream stops for a whole script and not for one letter", () => {
+  /* Arabic and Cyrillic are different alphabets: half an answer in two
+     of them cannot be read, so discarding what is already on screen is
+     the better trade. One Latin letter inside one Hebrew word is a
+     typo, and killing a whole chat answer over it is not. */
+  const source = fs.readFileSync("src/lib/sources/gemini.ts", "utf8");
+  const stream = source.slice(source.indexOf("export async function* streamText"));
+  assert.ok(stream.includes("containsArabic("));
+  assert.ok(stream.includes("containsCyrillic("));
+  assert.equal(stream.includes("containsGluedLatin("), false);
+});
+
+test("the news script carries its own copy of all three", () => {
+  /* It has its own fetch and cannot import the shared client, so the
+     guards are duplicated there on purpose — and that duplication is
+     exactly how it fell behind: it had Arabic only, and it is the path
+     that writes the article readings. 59 of 1,243 were corrupted. */
+  const source = fs.readFileSync("scripts/summarize-news.mjs", "utf8");
+  for (const guard of ["hasArabic(raw)", "hasGluedLatin(raw)", "hasCyrillic(raw)"]) {
+    assert.ok(source.includes(guard), `summarize-news.mjs must check: ${guard}`);
+  }
 });

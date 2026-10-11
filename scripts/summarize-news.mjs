@@ -215,6 +215,23 @@ async function analyse(title, text) {
   if (hasArabic(raw)) {
     throw new Error("model returned Arabic inside Hebrew text");
   }
+  /* THE OTHER TWO SCRIPTS, ADDED AFTER MEASURING WHAT THIS PATH HAD
+     ALREADY WRITTEN. The shared TypeScript client gained guards for a
+     Latin letter welded into a Hebrew word and for Cyrillic; this file
+     has its own fetch and its own checks, so it did not, and it is the
+     path that writes the article readings. 59 of 1,243 stored readings
+     carried one or the other: אינפלציה with a Cyrillic ф, בואינג
+     written as Hebrew plus "ing", הודעה running into "atively".
+
+     Both patterns were measured over `src/` and `content/` before being
+     trusted and matched nothing legitimate: real text here always puts
+     a hyphen or a space between the scripts ("ב-POC", "מול P/E"). */
+  if (hasGluedLatin(raw)) {
+    throw new Error("model welded a Latin letter into a Hebrew word");
+  }
+  if (hasCyrillic(raw)) {
+    throw new Error("model returned Cyrillic inside Hebrew text");
+  }
 
   const parsed = JSON.parse(raw);
   if (parsed.skip) return null;
@@ -307,6 +324,20 @@ function hasArabic(text) {
     }
   }
   return false;
+}
+
+/** A Latin letter touching a Hebrew letter with nothing between them.
+ *  `זerז` for `זרז`. The twin of `containsGluedLatin` in
+ *  `src/lib/sources/gemini.ts`; the two must change together. */
+function hasGluedLatin(text) {
+  return /[א-ת][A-Za-z]|[A-Za-z][א-ת]/.test(text);
+}
+
+/** Cyrillic, which is the hardest of the three to see because several
+ *  of its letters are drawn exactly like Latin ones. Twin of
+ *  `containsCyrillic`. */
+function hasCyrillic(text) {
+  return /[Ѐ-ԯ]/.test(text);
 }
 
 async function followedTickers() {

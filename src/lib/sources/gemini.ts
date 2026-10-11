@@ -308,6 +308,31 @@ export function containsGluedLatin(text: string): boolean {
   return GLUED_LATIN.test(text);
 }
 
+/**
+ * Cyrillic characters, anywhere in the string.
+ *
+ * The third script to turn up inside Hebrew words, and the worst of
+ * the three to read because several Cyrillic letters are drawn exactly
+ * like Latin ones. Measured on the stored article readings before this
+ * existed: 26 of 1,243 carried it — אינ״לציה with a Cyrillic ф and л,
+ * זרז with a Cyrillic р. A reader does not see a foreign letter; they
+ * see a word that looks right and is not.
+ *
+ * The range covers Cyrillic and its supplement. Nothing in this project
+ * legitimately contains any of it — checked across `src/` and `content/`
+ * before the guard was trusted, exactly as the Latin one was — so a
+ * match is drift rather than content.
+ *
+ * Rejected rather than repaired, for the reason the other two are:
+ * р is not always ר, and a stripped word is one that no longer looks
+ * wrong to anything scanning for it.
+ */
+const CYRILLIC = /[Ѐ-ԯ]/;
+
+export function containsCyrillic(text: string): boolean {
+  return CYRILLIC.test(text);
+}
+
 export async function generateText(options: GenerateOptions): Promise<string> {
   const key = apiKey();
 
@@ -407,6 +432,10 @@ export async function generateText(options: GenerateOptions): Promise<string> {
       }
       if (text && containsGluedLatin(text)) {
         lastProblem = "model welded a Latin letter into a Hebrew word";
+        continue;
+      }
+      if (text && containsCyrillic(text)) {
+        lastProblem = "model returned Cyrillic inside Hebrew text";
         continue;
       }
 
@@ -657,6 +686,12 @@ export async function* streamText(
           throw new GeminiError(
             "upstream",
             "model returned Arabic inside Hebrew text",
+          );
+        }
+        if (text && containsCyrillic(text)) {
+          throw new GeminiError(
+            "upstream",
+            "model returned Cyrillic inside Hebrew text",
           );
         }
         /* `containsGluedLatin` is deliberately NOT checked here, and the

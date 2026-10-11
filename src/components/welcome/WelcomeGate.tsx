@@ -28,8 +28,18 @@ import { reconcileWatchlist, rememberEmail } from "@/lib/watchlist";
 
 const KEY = "market-intel:welcome:v1";
 
-/** The launch story brings its own door and two in a row is one too many. */
-const HAS_OWN_GATE = ["/launch/"];
+/**
+ * Pages that bring their own door. Two in a row is one too many.
+ *
+ * `/unlock` is here because it is the REAL door, and this screen was
+ * rendering on top of it: a visitor redirected to the login saw an
+ * autoplaying video dialog and no password field, and had to dismiss a
+ * welcome screen before being allowed to prove they were welcome. Found
+ * by opening the page rather than by reading the code — the markup is
+ * correct, the form is in the DOM, and it is simply underneath
+ * something.
+ */
+const HAS_OWN_GATE = ["/launch/", "/unlock"];
 
 export function WelcomeGate() {
   const path = usePathname();
