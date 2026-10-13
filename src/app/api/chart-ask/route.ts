@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { CHART_ASK_SYSTEM } from "@/lib/analysis/prompts";
-import { chartEvidence, callsItSuccess } from "@/lib/analysis/chart-evidence";
+import {
+  chartEvidence,
+  callsItSuccess,
+  tooLong,
+} from "@/lib/analysis/chart-evidence";
 import { watchlistFor } from "@/lib/analysis/watchlist-context";
 import {
   GEMINI_FAILURE_TEXT,
@@ -133,7 +137,7 @@ export async function POST(request: Request) {
              the answer came back "70% הצלחה" anyway — a rule stated
              once in a long system prompt is a rule that survives until
              the model is busy. Rejected and asked again instead. */
-          reject: callsItSuccess,
+          reject: (text) => callsItSuccess(text) ?? tooLong(text),
           temperature: 0.3,
           maxOutputTokens: 900,
           /* The same ceiling as the read, and the same arithmetic: no

@@ -7,7 +7,7 @@ import {
   type EarningsDate,
 } from "../src/lib/sources/finnhub";
 import { isAbout } from "../src/lib/watchlist-news";
-import { callsItSuccess } from "../src/lib/analysis/chart-evidence";
+import { callsItSuccess, tooLong } from "../src/lib/analysis/chart-evidence";
 import type { WatchArticle } from "../src/lib/watchlist-news";
 
 /**
@@ -249,4 +249,30 @@ test("the accepted phrasing passes, and so does ordinary prose", () => {
     null,
   );
   assert.equal(callsItSuccess("אין כאן תנאי נמדד שפעל"), null);
+});
+
+test("a runaway answer is rejected, a normal one is not", () => {
+  /* The backstop under the five-sentence ceiling. It fires at ten, not
+     six: spending a retry on a borderline answer risks the whole reply
+     on a model that keeps landing one sentence over. Measured drift
+     without it — 80 words when the rule landed, 115 two block sections
+     later, with the rule unchanged. */
+  const normal =
+    "הנייר נוטה למעלה. התנאי פעל בנר האחרון, 70% סגרו גבוה יותר מול בסיס 55%. " +
+    "הירידה החציונית בדרך הייתה 5.8%. המסקנה תופרך בתום האופק.";
+  assert.equal(tooLong(normal), null);
+
+  const runaway = Array.from(
+    { length: 12 },
+    (_, i) => `משפט מספר ${i + 1} שמסכם עוד שורה מהבלוק.`,
+  ).join(" ");
+  assert.ok(tooLong(runaway));
+});
+
+test("a decimal is not a sentence boundary", () => {
+  /* "5.8%" would otherwise count as two sentences, and an answer full of
+     measured figures would be rejected for being measured. */
+  const decimals =
+    "הסטופ ב-187.42 והירידה החציונית 5.8%. היעד החציוני 206.20 מול בסיס 2.1%.";
+  assert.equal(tooLong(decimals), null);
 });

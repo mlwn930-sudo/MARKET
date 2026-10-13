@@ -118,6 +118,43 @@ export function chartEvidence(
       `מחזור 10 ימים מול 50 שלפניהם: ×${checked.tape.trend.toFixed(2)}.`,
     );
   }
+  /* THE SESSIONS THAT WERE NOT ORDINARY, which is what reading volume
+     actually means. The block carried today's bar and the ten-day
+     average and nothing in between, so an answer about volume could say
+     how heavy today was and not whether the heavy days of the last month
+     closed at their highs or their lows — which is the whole reading.
+     Only non-quiet bars are in `notable`, so this is a short list by
+     construction rather than every session reprinted. */
+  const notable = checked.tape?.notable ?? [];
+  if (notable.length) {
+    lines.push(
+      `\nימים חריגים מתוך ${checked.tape!.notableWindow} המסחר האחרונים ` +
+        "(רק מה שלא היה רגיל; הסגירה היא המקום בתוך טווח הנר עצמו):",
+    );
+    for (const b of notable.slice(0, 5)) {
+      lines.push(
+        `- ${b.date}: ${CHARACTER_LABELS[b.character]} · מחזור ×${b.volumeRatio.toFixed(1)}` +
+          (b.volumePercentile !== null
+            ? ` (אחוזון ${Math.round(b.volumePercentile * 100)})`
+            : "") +
+          ` · סגירה ב-${Math.round(b.closePosition * 100)}% מהטווח · ` +
+          `${b.changePercent >= 0 ? "+" : ""}${b.changePercent.toFixed(1)}%`,
+      );
+    }
+  }
+  /* The one volume reading that is about the series rather than a bar.
+     It is also the only place the block says price and volume disagree,
+     and a disagreement is worth more than either side alone. */
+  const obv = checked.tape?.obv;
+  if (obv) {
+    lines.push(
+      obv.divergence === "bearish"
+        ? `מחזור מצטבר (OBV) על ${obv.window} ימי מסחר: המחיר עשה שיא גבוה יותר והמחזור המצטבר לא. זו סתירה נמדדת, לא התרשמות.`
+        : obv.divergence === "bullish"
+          ? `מחזור מצטבר (OBV) על ${obv.window} ימי מסחר: המחיר עשה שפל נמוך יותר והמחזור המצטבר לא. זו סתירה נמדדת, לא התרשמות.`
+          : `מחזור מצטבר (OBV) על ${obv.window} ימי מסחר: נע עם המחיר, בלי סתירה. זה המצב הרגיל ונאמר כדי שלא ייראה כאילו לא נבדק.`,
+    );
+  }
   const profile = checked.tape?.profile;
   if (profile) {
     lines.push(
@@ -751,4 +788,33 @@ function planLines(checked: Corroboration): string[] {
       "שחסר מספר שלו — כמה הוא מוכן להפסיד — ולא שהאתר לא מודד.",
   );
   return out;
+}
+
+/**
+ * Rejects an answer that ignored the length ceiling by a wide margin.
+ *
+ * A backstop and not the mechanism: the prompt asks for five sentences
+ * and this fires at ten, because rejecting a six-sentence answer would
+ * spend a retry on something a reader would never notice while risking
+ * the whole answer on a model that keeps landing at six.
+ *
+ * It exists because the block keeps growing — levels, the tape day by
+ * day, the stop, the reader's own holdings — and every addition is an
+ * addition to the accuracy available, not to the length wanted. Without
+ * a floor under the rule, each new section quietly bought itself another
+ * paragraph: measured at 80 words when the length rule landed and 115
+ * two sections later, with the rule unchanged.
+ */
+export function tooLong(text: string): string | null {
+  /* Hebrew sentences end on a full stop, question or exclamation mark.
+     Decimals are the trap — "5.8%" is not two sentences — so a digit on
+     both sides of the stop does not end one. */
+  const sentences = text
+    .replace(/(\d)\.(\d)/g, "$1·$2")
+    .split(/[.!?]+\s/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  return sentences.length > 10
+    ? `answer ran to ${sentences.length} sentences against a ceiling of five`
+    : null;
 }
