@@ -2,10 +2,12 @@ import { NextResponse } from "next/server";
 import { CHART_ASK_SYSTEM } from "@/lib/analysis/prompts";
 import {
   chartEvidence,
-  callsItSuccess,
-  tooLong,
+  lengthRejectedOnce,
 } from "@/lib/analysis/chart-evidence";
 import { watchlistFor } from "@/lib/analysis/watchlist-context";
+import { readPositionFrom } from "@/lib/analysis/position";
+import { buildTradePlan } from "@/lib/analysis/trade-plan";
+import { buildChartStance } from "@/lib/analysis/stance";
 import {
   GEMINI_FAILURE_TEXT,
   GeminiError,
@@ -54,7 +56,12 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: { question?: unknown; corroboration?: unknown; watchlist?: unknown };
+  let body: {
+    question?: unknown;
+    corroboration?: unknown;
+    watchlist?: unknown;
+    position?: unknown;
+  };
   try {
     body = await request.json();
   } catch {
@@ -92,7 +99,39 @@ export async function POST(request: Request) {
       )
     : [];
 
-  const evidence = chartEvidence(checked, await watchlistFor(checked, followed));
+  /* THE ONE NUMBER CANDLES CANNOT SUPPLY, and the reason it arrives
+     from the page instead of being derived. A cost basis changes what
+     every figure above it means — a stop is protection at one entry and
+     a profit give-back at another — and it is the most personal number
+     on the site, so it lives in the reader's browser and is forgotten
+     as soon as this answer is written. Validated as a price, not
+     trusted as one: an entry outside a plausible band around the
+     instrument's own close is dropped rather than used. */
+  const stance = buildChartStance({
+    setup: checked.setup,
+    baseRates: checked.baseRates,
+    lastClose: checked.lastClose,
+  });
+  const lead =
+    stance?.swing.agreeing[0] ?? stance?.position.agreeing[0] ?? null;
+  const position = readPositionFrom(
+    body.position,
+    checked,
+    buildTradePlan({
+      lastClose: checked.lastClose,
+      asOf: checked.baseRates?.to ?? "",
+      levels: checked.realLevels,
+      atr: checked.atr,
+      lead,
+    }),
+    lead?.medianPct ?? null,
+  );
+
+  const evidence = chartEvidence(
+    checked,
+    await watchlistFor(checked, followed),
+    position,
+  );
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -137,7 +176,17 @@ export async function POST(request: Request) {
              the answer came back "70% הצלחה" anyway — a rule stated
              once in a long system prompt is a rule that survives until
              the model is busy. Rejected and asked again instead. */
-          reject: (text) => callsItSuccess(text) ?? tooLong(text),
+          /* THE TWO REJECTIONS ARE NOT THE SAME KIND, and treating them
+             alike cost a reader their answer. Calling a base rate a
+             success rate is wrong, and no answer beats a wrong one — so
+             it rejects every time. Running long is a style failure, and
+             an answer that is correct but wordy beats no answer at all.
+             Measured: "how far from the high, and what happened in the
+             last month" is a question whose honest answer is a list; it
+             was rejected on every attempt until the chain ran out and
+             the reader got the upstream error instead. So length costs
+             exactly one retry and then stands. */
+          reject: lengthRejectedOnce(),
           temperature: 0.3,
           maxOutputTokens: 900,
           /* The same ceiling as the read, and the same arithmetic: no

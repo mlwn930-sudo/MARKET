@@ -1,6 +1,7 @@
 import { HORIZONS, MIN_SAMPLE } from "@/lib/metrics/base-rates";
 import { isPrivateBuild } from "@/lib/private-mode";
 import { buildTradePlan } from "@/lib/analysis/trade-plan";
+import type { PositionRead } from "@/lib/analysis/position";
 import type { WatchlistContext } from "@/lib/analysis/watchlist-context";
 import {
   buildChartStance,
@@ -51,6 +52,8 @@ export function chartEvidence(
    *  and the question box does — and a missing list must mean "not
    *  asked" rather than "follows nothing". */
   watchlist?: WatchlistContext | null,
+  /** The reader's own cost basis, when the page has been told it. */
+  position?: PositionRead | null,
 ): string {
   const lines: string[] = [];
 
@@ -323,6 +326,11 @@ export function chartEvidence(
      anything once this chart's own lean has been stated, and placed
      before it the list would be a pile of other tickers. */
   if (watchlist) lines.push(...watchlistLines(watchlist, checked.ticker));
+
+  /* LAST OF ALL. Every section above is about the instrument; this is
+     the only one about the person holding it, and it changes how the
+     sections above are read rather than adding another of them. */
+  if (position) lines.push(...positionLines(position));
 
   return lines.join("\n");
 }
@@ -817,4 +825,80 @@ export function tooLong(text: string): string | null {
   return sentences.length > 10
     ? `answer ran to ${sentences.length} sentences against a ceiling of five`
     : null;
+}
+
+/**
+ * The reader's own position, when they have told the page about it.
+ *
+ * Last in the block, because every figure above it is about the
+ * instrument and this is the only one about the person holding it — and
+ * because it changes what the figures above MEAN rather than adding
+ * another. A stop at 211 is protection at a cost of 204 and a profit
+ * give-back at a cost of 226, and the same number is being read two
+ * ways.
+ *
+ * Nothing here is estimated. The cost basis is the one input candles
+ * cannot supply, and everything after it is arithmetic.
+ */
+export function positionLines(read: PositionRead): string[] {
+  const out: string[] = ["\n=== הפוזיציה של הקורא ==="];
+  out.push(
+    `נכנס ב-${read.entry.toFixed(2)}, הסגירה האחרונה ${read.last.toFixed(2)} — ` +
+      `${read.returnPercent >= 0 ? "+" : ""}${read.returnPercent.toFixed(1)}%` +
+      (read.returnValue !== null
+        ? ` (${read.returnValue >= 0 ? "+" : ""}${read.returnValue.toFixed(0)} דולר על ${read.shares} מניות)`
+        : "") +
+      ".",
+  );
+  out.push(
+    read.stopProtects === "gain"
+      ? `הסטופ שבתוכנית נמצא מעל מחיר הכניסה (${read.stopFromEntryPercent >= 0 ? "+" : ""}${read.stopFromEntryPercent.toFixed(1)}% ממנו). ` +
+        "כלומר הוא כבר לא מגן על הכסף אלא על רווח שנצבר — פגיעה בו סוגרת את הפוזיציה בירוק. " +
+        "זה הבדל מהותי מהמצב של מי ששוקל להיכנס עכשיו, ואסור לתאר אותו כסיכון להפסד."
+      : `הסטופ שבתוכנית נמצא מתחת למחיר הכניסה (${read.stopFromEntryPercent.toFixed(1)}% ממנו). ` +
+        "פגיעה בו סוגרת את הפוזיציה הזאת בהפסד, והמספר הזה הוא ההפסד בפועל — " +
+        "לא אחוז הסיכון שמחושב מהסגירה האחרונה.",
+  );
+  if (read.levelsBetween.length) {
+    out.push(
+      "רמות נמדדות בין מחיר הכניסה לסגירה האחרונה: " +
+        read.levelsBetween
+          .map((l) => `${l.price.toFixed(2)} (${l.touches} סווינגים)`)
+          .join(", ") +
+        ". אלה הרמות שהמחיר צריך לעבור בדרך חזרה.",
+    );
+  }
+  if (read.versusMedian) out.push(read.versusMedian.note);
+  out.push(
+    "**כששואלים ״מה לעשות עם הפוזיציה״ — ענה מהמספרים האלה, לא מהתוכנית " +
+      "שמחושבת מהסגירה האחרונה.** מי שכבר מחזיק שואל שאלה אחרת ממי ששוקל " +
+      "להיכנס, גם כשהמילים זהות.",
+  );
+  return out;
+}
+
+/**
+ * The chart answer's rejections, with length allowed to bite only once.
+ *
+ * A fresh closure per request, because the count is per answer and a
+ * module-level counter would leak one reader's retries into the next
+ * reader's first attempt.
+ */
+export function lengthRejectedOnce(): (text: string) => string | null {
+  let lengthRejections = 0;
+  return (text: string) => {
+    /* Always. A wrong label is worse than no answer. */
+    const wrong = callsItSuccess(text);
+    if (wrong) return wrong;
+    /* Once. A long answer is worse than a short one and better than
+       none, so this buys a single retry and then gets out of the way. */
+    if (lengthRejections === 0) {
+      const long = tooLong(text);
+      if (long) {
+        lengthRejections++;
+        return long;
+      }
+    }
+    return null;
+  };
 }

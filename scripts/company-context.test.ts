@@ -7,7 +7,11 @@ import {
   type EarningsDate,
 } from "../src/lib/sources/finnhub";
 import { isAbout } from "../src/lib/watchlist-news";
-import { callsItSuccess, tooLong } from "../src/lib/analysis/chart-evidence";
+import {
+  callsItSuccess,
+  tooLong,
+  lengthRejectedOnce,
+} from "../src/lib/analysis/chart-evidence";
 import type { WatchArticle } from "../src/lib/watchlist-news";
 
 /**
@@ -275,4 +279,34 @@ test("a decimal is not a sentence boundary", () => {
   const decimals =
     "הסטופ ב-187.42 והירידה החציונית 5.8%. היעד החציוני 206.20 מול בסיס 2.1%.";
   assert.equal(tooLong(decimals), null);
+});
+
+test("a wrong label is rejected every time; a long answer only once", () => {
+  /* The two rejections are not the same kind, and treating them alike
+     cost a reader their whole answer: a question whose honest reply is
+     a list was rejected on every attempt until the model chain ran out.
+     Wrong beats nothing is false; wordy beats nothing is true. */
+  const reject = lengthRejectedOnce();
+  const long = Array.from(
+    { length: 14 },
+    (_, i) => `משפט ${i + 1} שמסכם עוד שורה מהבלוק.`,
+  ).join(" ");
+
+  assert.ok(reject(long), "the first long answer buys a retry");
+  assert.equal(reject(long), null, "the second stands rather than failing");
+  assert.equal(reject(long), null, "and every one after it");
+
+  /* The wrong label never stops being rejected, however many attempts
+     have gone by. */
+  const wrong = "הרשומה מראה 70% הצלחה מול בסיס 55%";
+  assert.ok(reject(wrong));
+  assert.ok(reject(wrong));
+});
+
+test("each request gets its own retry budget", () => {
+  /* A module-level counter would leak one reader's retries into the
+     next reader's first attempt, so the closure is built per request. */
+  const long = Array.from({ length: 14 }, (_, i) => `משפט ${i + 1}.`).join(" ");
+  assert.ok(lengthRejectedOnce()(long));
+  assert.ok(lengthRejectedOnce()(long));
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CHART_QUESTIONS } from "@/lib/analysis/chart-evidence";
 import type { Corroboration } from "@/lib/analysis/chart-corroborate";
 import { isPrivateBuild } from "@/lib/private-mode";
@@ -44,6 +44,38 @@ type State =
 export function ChartAsk({ checked }: { checked: Corroboration | null }) {
   const [state, setState] = useState<State>({ phase: "idle" });
   const [draft, setDraft] = useState("");
+
+  /* Per ticker, in this browser. A cost basis is the most personal
+     number on the site and the server has no reason to hold one: the
+     page sends it with the question and the answer is forgotten. */
+  const key = checked ? `market-intel:position:${checked.ticker}` : null;
+  const [entry, setEntry] = useState("");
+  const [shares, setShares] = useState("");
+
+  useEffect(() => {
+    if (!key) return;
+    try {
+      const raw = window.localStorage.getItem(key);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as { entry?: string; shares?: string };
+      setEntry(saved.entry ?? "");
+      setShares(saved.shares ?? "");
+    } catch {
+      /* A browser with storage blocked still asks questions; it simply
+         retypes the entry each time. */
+    }
+  }, [key]);
+
+  useEffect(() => {
+    if (!key) return;
+    try {
+      if (entry.trim()) {
+        window.localStorage.setItem(key, JSON.stringify({ entry, shares }));
+      } else {
+        window.localStorage.removeItem(key);
+      }
+    } catch {}
+  }, [key, entry, shares]);
   const inFlight = useRef(false);
 
   const ask = useCallback(
@@ -70,6 +102,9 @@ export function ChartAsk({ checked }: { checked: Corroboration | null }) {
             question: text,
             corroboration: checked,
             watchlist: getWatchlist(),
+            position: entry.trim()
+              ? { entry: Number(entry), shares: Number(shares) || null }
+              : null,
           }),
         });
 
@@ -130,7 +165,13 @@ export function ChartAsk({ checked }: { checked: Corroboration | null }) {
         inFlight.current = false;
       }
     },
-    [checked],
+    /* `entry` and `shares` belong here and leaving them out was a real
+       bug rather than a lint complaint: the callback would have closed
+       over the values from the render it was created in, so typing a
+       cost basis and immediately asking would have sent the previous
+       one — or none at all — and the answer would have been measured
+       from the wrong number while looking entirely correct. */
+    [checked, entry, shares],
   );
 
   if (!checked) return null;
@@ -164,6 +205,47 @@ export function ChartAsk({ checked }: { checked: Corroboration | null }) {
           </button>
         ))}
       </div>
+
+      {/* THE ONE NUMBER THE CANDLES CANNOT SUPPLY.
+          Everything else on this page is measured from the instrument;
+          this is measured from the reader. Without it the whole page
+          answers as if nobody held anything — the stop is protection,
+          the risk is capital, the return is zero — and for somebody
+          already in, every one of those is the wrong reading of the
+          same number. Optional, remembered per ticker in this browser,
+          and sent nowhere else. */}
+      {isPrivateBuild() && (
+        <div className="ask-position">
+          <label>
+            <span>נכנסתי במחיר</span>
+            <input
+              className="num"
+              dir="ltr"
+              inputMode="decimal"
+              value={entry}
+              onChange={(e) => setEntry(e.target.value)}
+              placeholder="204"
+              aria-label="מחיר הכניסה שלך"
+            />
+          </label>
+          <label>
+            <span>מניות (לא חובה)</span>
+            <input
+              className="num"
+              dir="ltr"
+              inputMode="numeric"
+              value={shares}
+              onChange={(e) => setShares(e.target.value)}
+              placeholder="—"
+              aria-label="כמות מניות"
+            />
+          </label>
+          <small>
+            נשמר בדפדפן הזה בלבד, לכל נייר בנפרד. ברגע שהוא מלא, התשובות
+            נמדדות מהעלות שלך ולא מהסגירה האחרונה.
+          </small>
+        </div>
+      )}
 
       <form
         className="ask-form"
