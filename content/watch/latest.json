@@ -1,239 +1,203 @@
 {
-  "builtAt": "2026-10-13T08:38:41.062Z",
+  "builtAt": "2026-10-13T19:46:47.521Z",
   "universe": 123,
   "priced": 123,
   "counts": {
-    "move": 0,
-    "opportunity": 0,
+    "move": 3,
+    "opportunity": 2,
     "range": 16,
     "event": 0,
-    "story": 9
+    "story": 0
   },
   "findings": [
     {
-      "kind": "story",
-      "ticker": "AVGO",
-      "headline": "Broadcom’s AI Durability Warning Triggers Sharp Drop In SK Hynix, Samsung In Korea; Nvidia's China AI Chip Share Falls As Huawei Closes In",
-      "detail": "חששות סביב מימון תשתיות בינה מלאכותית, בעקבות הערכות של בכירים ב-Broadcom וב-Intel, הוצגו לצד נתונים של IDC לפיהם נתח השוק של Nvidia בשוק שבבי ה-AI למרכזי נתונים בסין ירד ל-34% במחצית הראשונ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ce213edbafba98c415a3d70fc97558ca898768c8114e37c645dd5734d7100b39",
-      "at": "2026-10-13T07:21:09.000Z"
+      "kind": "move",
+      "ticker": "JNJ",
+      "headline": "JNJ זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-5.51% ביום — פי 4.4 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 4.350202310271802,
+      "href": "/company/JNJ",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
-      "kind": "story",
-      "ticker": "AVGO",
-      "headline": "Broadcom’s AI Durability Warning Triggers Sharp Drop In SK Hynix, Samsung In Korea; Nvidia's China AI Chip Share Falls As Huawei Closes In",
-      "detail": "חששות סביב מימון תשתיות בינה מלאכותית, בעקבות הערכות של בכירים ב-Broadcom וב-Intel, הוצגו לצד נתונים של IDC לפיהם נתח השוק של Nvidia בשוק שבבי ה-AI למרכזי נתונים בסין ירד ל-34% במחצית הראשונ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ce213edbafba98c415a3d70fc97558ca898768c8114e37c645dd5734d7100b39",
-      "at": "2026-10-13T07:21:09.000Z"
+      "kind": "opportunity",
+      "ticker": "JNJ",
+      "headline": "JNJ עוברת 8 מתוך 10 המבחנים, וירדה חזק",
+      "detail": "-5.51% ביום — פי 4.4 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
+      "weight": 3.0350202310271803,
+      "href": "/company/JNJ",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
-      "kind": "story",
-      "ticker": "MU",
-      "headline": "35.16 Billion Reasons Micron Stock Is Headed to $3,000",
-      "detail": "מיקרון הרחיבה את אישור רכישת המניות העצמית (Buyback) ל-35.16 מיליארד דולר לקראת פקיעת ההגבלות של חוק CHIPS. החברה מדווחת על הכנסות של 133.2 מיליארד דולר ותזרים מזומנים חופשי של 33.2 מיליארד ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=de06fc6dea163aa1c4fb3fdc438d844486d53a24c4367013d12c09fb253bba00",
-      "at": "2026-10-13T00:20:00.000Z"
+      "kind": "move",
+      "ticker": "C",
+      "headline": "C זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-4.96% ביום — פי 2.9 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.940777307781621,
+      "href": "/company/C",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
-      "kind": "story",
-      "ticker": "TSM",
-      "headline": "TSMC Revenue Growth Accelerated Faster Than Expected Last Quarter. Here's Why It's My Top AI Chip Stock to Buy.",
-      "detail": "הכנסות TSMC ברבעון השלישי עקפו את תחזיות ההנהלה והאנליסטים, והגיעו ל-1.49 טริליון דולר טייוואני (כ-46.7 מיליארד דולר, גידול של 41% משנה קודמת). הצמיחה הונעה מביקוש חזק לשבבי AI, האצת ייצור ב",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=2bf91d69685b34cdc9d861c9d5f862a9769637d4c02d64ec49a549e8d626b417",
-      "at": "2026-10-12T22:50:00.000Z"
+      "kind": "opportunity",
+      "ticker": "VRTX",
+      "headline": "VRTX עוברת 10 מתוך 10 המבחנים, וירדה חזק",
+      "detail": "-3.98% ביום — פי 2.6 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
+      "weight": 2.863240985753741,
+      "href": "/company/VRTX",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
-      "kind": "story",
-      "ticker": "ASML",
-      "headline": "Is ASML Holding NV's Stock a Buy Ahead of Its Q3 Earnings Report Wednesday?",
-      "detail": "ASML מתכוננת לפרסם את דוחות הרבעון השלישי שלה, כאשר קונצנזוס האנליסטים צופה עלייה של 56% בהכנסות ל-11.7 מיליארד אירו וצמיחה חדה ברווח למניה. הציפיות הגבוהות מונעות מהביקוש לציוד EUV, ממחסור ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=fa73c65e185f744d28d2d9b85b923c92475b509ecac999e84c223e97d3ed59a3",
-      "at": "2026-10-12T19:44:41.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "MSFT",
-      "headline": "Maia 300: Microsoft Builds the Exit From a Compute Landlord Model It Helped Finance",
-      "detail": "מיקרוסופט חשפה את שבב ה-Maia 300 בכנס OCP Global Summit, ובכך עוברת מעמדת מימון וצריכת תשתיות מחשוב של ספקיות שבבים לעמדת פיתוח עצמאי של סיליקון.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=f5da460903b120e03641777b69800bb4b912d7c703c7891759803f237b9626e0",
-      "at": "2026-10-12T19:30:01.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Nvidia AI chip share in China falls as Huawei catches up- Reuters",
-      "detail": "נתח השוק של מעבדי הבינה המלאכותית של Nvidia בסין ירד במחצית הראשונה של 2026. הירידה התרחשה על רקע מגבלות היצוא של ארה\"ב והתקדמות מצד Huawei, לפי דיווח של IDC.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=3a6cd1bb01d3f581c6f0a0c6999eb7f328e2c511fc759080a8e3a265cdb7f1d4",
-      "at": "2026-10-13T06:15:58.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "GOOGL",
-      "headline": "Nuclear ETFs in Spotlight as Google and Constellation Sign 3.6 GW Deal",
-      "detail": "גוגל וקונסטליישן אנרג'י חתמו על הסכם רכש חשמל בהיקף של 3.59 גיגה-וואט הכולל חוזה ל-20 שנה בהיקף של 890 מגה-וואט וחוזה נוסף ל-15 שנה עבור 2,700 מגה-וואט נוספים. העסקה תוביל ליותר מ-4.3 מיליאר",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=5ada70bb74ba4cbfdd8b1a7cb59ae2d5c44bcfa262db7955cb5c5e4351842352",
-      "at": "2026-10-12T14:48:00.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "CEG",
-      "headline": "What Could Lift Constellation Energy Stock?",
-      "detail": "מניית Constellation Energy ירדה ב-20% ב-12 החודשים האחרונים לעומת עלייה של 17% ב-S&P 500. בחודש אוקטובר 2026 חתמה החברה על הסכמי אספקת אנרגיה גרעינית ל-20 שנה עם Google ועם Amazon.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=17c646f1fc0ceb51bcc95aa88eab0055b4d9320ec96cb78a03cc8d98ec6c57ba",
-      "at": "2026-10-12T14:16:59.000Z"
+      "kind": "move",
+      "ticker": "VRTX",
+      "headline": "VRTX זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-3.98% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.6324098575374104,
+      "href": "/company/VRTX",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
       "ticker": "MSFT",
       "headline": "MSFT בשיא של רבעון",
-      "detail": "הסגירה האחרונה 541.15 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 544.17 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MSFT",
-      "at": "2026-10-13T08:38:41.062Z"
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
       "ticker": "PLTR",
       "headline": "PLTR בשיא של רבעון",
-      "detail": "הסגירה האחרונה 209.00 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 208.41 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PLTR",
-      "at": "2026-10-13T08:38:41.062Z"
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
       "ticker": "TEAM",
       "headline": "TEAM בשיא של רבעון",
-      "detail": "הסגירה האחרונה 207.75 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 209.69 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TEAM",
-      "at": "2026-10-13T08:38:41.062Z"
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
-      "ticker": "ABBV",
-      "headline": "ABBV בשיא של רבעון",
-      "detail": "הסגירה האחרונה 281.12 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "BMY",
+      "headline": "BMY בשפל של רבעון",
+      "detail": "הסגירה האחרונה 56.65 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/ABBV",
-      "at": "2026-10-13T08:38:41.062Z"
+      "href": "/company/BMY",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
-      "ticker": "SHOP",
-      "headline": "SHOP בשיא של רבעון",
-      "detail": "הסגירה האחרונה 179.22 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "MS",
+      "headline": "MS בשפל של רבעון",
+      "detail": "הסגירה האחרונה 187.06 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/SHOP",
-      "at": "2026-10-13T08:38:41.062Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TTD",
-      "headline": "TTD בשפל של רבעון",
-      "detail": "הסגירה האחרונה 11.94 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TTD",
-      "at": "2026-10-13T08:38:41.062Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "ISRG",
-      "headline": "ISRG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 427.64 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/ISRG",
-      "at": "2026-10-13T08:38:41.062Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "V",
-      "headline": "V בשיא של רבעון",
-      "detail": "הסגירה האחרונה 389.27 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/V",
-      "at": "2026-10-13T08:38:41.062Z"
+      "href": "/company/MS",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
       "ticker": "XOM",
       "headline": "XOM בשיא של רבעון",
-      "detail": "הסגירה האחרונה 172.15 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 174.58 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/XOM",
-      "at": "2026-10-13T08:38:41.062Z"
+      "at": "2026-10-13T19:46:47.521Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "MA",
+      "headline": "MA בשיא של רבעון",
+      "detail": "הסגירה האחרונה 603.26 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/MA",
+      "at": "2026-10-13T19:46:47.521Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "CVX",
+      "headline": "CVX בשיא של רבעון",
+      "detail": "הסגירה האחרונה 218.46 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/CVX",
+      "at": "2026-10-13T19:46:47.521Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "C",
+      "headline": "C בשפל של רבעון",
+      "detail": "הסגירה האחרונה 125.38 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/C",
+      "at": "2026-10-13T19:46:47.521Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "V",
+      "headline": "V בשיא של רבעון",
+      "detail": "הסגירה האחרונה 393.60 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/V",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
       "ticker": "AAPL",
       "headline": "AAPL בשיא של רבעון",
-      "detail": "הסגירה האחרונה 340.97 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 341.73 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AAPL",
-      "at": "2026-10-13T08:38:41.062Z"
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
-      "ticker": "PSX",
-      "headline": "PSX בשיא של רבעון",
-      "detail": "הסגירה האחרונה 281.47 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "VLO",
+      "headline": "VLO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 455.89 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/PSX",
-      "at": "2026-10-13T08:38:41.062Z"
+      "href": "/company/VLO",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
       "ticker": "KMI",
       "headline": "KMI בשיא של רבעון",
-      "detail": "הסגירה האחרונה 33.08 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 33.41 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/KMI",
-      "at": "2026-10-13T08:38:41.062Z"
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
-      "ticker": "PG",
-      "headline": "PG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 153.20 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "MPC",
+      "headline": "MPC בשיא של רבעון",
+      "detail": "הסגירה האחרונה 475.00 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/PG",
-      "at": "2026-10-13T08:38:41.062Z"
+      "href": "/company/MPC",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
-      "ticker": "PM",
-      "headline": "PM בשיא של רבעון",
-      "detail": "הסגירה האחרונה 202.00 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "PSX",
+      "headline": "PSX בשיא של רבעון",
+      "detail": "הסגירה האחרונה 291.99 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/PM",
-      "at": "2026-10-13T08:38:41.062Z"
+      "href": "/company/PSX",
+      "at": "2026-10-13T19:46:47.521Z"
     },
     {
       "kind": "range",
-      "ticker": "CMCSA",
-      "headline": "CMCSA בשפל של רבעון",
-      "detail": "הסגירה האחרונה 20.68 היא הנמוכה ביותר מתוך 64 ימי מסחר ברבעון",
+      "ticker": "CAT",
+      "headline": "CAT בשפל של רבעון",
+      "detail": "הסגירה האחרונה 771.87 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/CMCSA",
-      "at": "2026-10-13T08:38:41.062Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "CHTR",
-      "headline": "CHTR בשפל של רבעון",
-      "detail": "הסגירה האחרונה 102.48 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/CHTR",
-      "at": "2026-10-13T08:38:41.062Z"
+      "href": "/company/CAT",
+      "at": "2026-10-13T19:46:47.521Z"
     }
   ]
 }
