@@ -33,6 +33,7 @@
     "test:scan": "node --import tsx --test scripts/scan-diff.test.ts",
     "test:ledger": "node --import tsx --test scripts/ledger.test.ts",
     "test:context": "node --import tsx --test scripts/company-context.test.ts",
+    "test:plan": "node --import tsx --test scripts/trade-plan.test.ts",
     "measure:convergence": "tsx scripts/measure-convergence.ts",
     "measure:selection": "tsx scripts/measure-selection.ts",
     "test:xbrl": "node --import tsx --test scripts/xbrl.test.ts",

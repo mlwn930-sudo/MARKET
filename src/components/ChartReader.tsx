@@ -14,6 +14,7 @@ import { SetupPanel } from "@/components/market/SetupPanel";
 import { ChartAsk } from "@/components/market/ChartAsk";
 import { StancePanel } from "@/components/market/StancePanel";
 import { PriceLadder } from "@/components/market/PriceLadder";
+import { TradePlanPanel } from "@/components/market/TradePlanPanel";
 import { TrendCheckPanel } from "@/components/market/TrendCheckPanel";
 import { CompanyContextPanel } from "@/components/market/CompanyContextPanel";
 import { isPrivateBuild } from "@/lib/private-mode";
@@ -516,6 +517,11 @@ function ChartReadView({
           percentages and horizons; a person deciding anything needs those
           as prices, ordered, with the distance from here. */}
       {checked && <PriceLadder checked={checked} />}
+
+      {/* Directly under the prices, because it is the same question asked
+          one step further: these are the levels, and this is the one the
+          position breaks at. Renders nothing in a public build. */}
+      {checked && <TradePlanPanel checked={checked} />}
 
       {/* Then the summary the panels below are the evidence for — a
           summary printed after its evidence is a footnote. */}

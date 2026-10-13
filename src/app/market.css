@@ -1344,3 +1344,73 @@
     .trend-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* The trade plan                                                      */
+/*                                                                     */
+/* The stop row is the only one marked, and it is marked with the      */
+/* reservation colour rather than red: red means price direction here, */
+/* and a stop level is not a price going down. The R-multiples are     */
+/* deliberately the quietest rows on the panel — they are arithmetic   */
+/* on the risk, not measurements, and type weight is the only honest   */
+/* way to say which is which.                                          */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .plan-rows {
+    margin-top: 14px;
+    display: grid;
+    max-inline-size: 680px;
+  }
+
+  .plan-row {
+    display: grid;
+    grid-template-columns: 92px 86px 1fr;
+    align-items: baseline;
+    gap: 12px;
+    padding: 9px 0;
+    border-top: 1px solid var(--color-line);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--color-text-subtle);
+  }
+
+  .plan-row:first-child { border-top: 0; }
+
+  .plan-label {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+  }
+
+  .plan-row b {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .plan-detail { color: var(--color-text-subtle); }
+
+  /* The two rows that are measurements rather than arithmetic get the
+     full ink; the R-multiples stay muted above. */
+  .plan-row.is-stop {
+    border-inline-start: 2px solid var(--color-warning-text);
+    padding-inline-start: 12px;
+  }
+  .plan-row.is-stop .plan-detail,
+  .plan-row.is-measured .plan-detail { color: var(--color-text-secondary); }
+  .plan-row.is-measured {
+    border-inline-start: 2px solid var(--color-intelligence);
+    padding-inline-start: 12px;
+  }
+
+  .plan-sizing {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  @media (max-width: 600px) {
+    .plan-row { grid-template-columns: 80px 1fr; }
+    .plan-detail { grid-column: 1 / -1; }
+  }
+}

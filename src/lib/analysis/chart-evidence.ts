@@ -1,5 +1,6 @@
 import { HORIZONS, MIN_SAMPLE } from "@/lib/metrics/base-rates";
 import { isPrivateBuild } from "@/lib/private-mode";
+import { buildTradePlan } from "@/lib/analysis/trade-plan";
 import type { WatchlistContext } from "@/lib/analysis/watchlist-context";
 import {
   buildChartStance,
@@ -275,6 +276,10 @@ export function chartEvidence(
 
   /* ---- The stance, private build only ---- */
   if (isPrivateBuild()) lines.push(...stanceLines(checked));
+  /* The risk arithmetic, so "where is the stop" stops being a refusal.
+     Private only and for the same reason the panel is: measured, but
+     measured for a decision. */
+  if (isPrivateBuild()) lines.push(...planLines(checked));
 
   /* LAST, AFTER THE STANCE IT IS READ AGAINST.
      "Two of the three names you follow lean the same way" only means
@@ -687,4 +692,63 @@ export function callsItSuccess(text: string): string | null {
   return near.test(text)
     ? 'answer called a base rate a "success rate"'
     : null;
+}
+
+/**
+ * The risk arithmetic, as lines the model may quote.
+ *
+ * "Where do I put the stop" used to be answered with a refusal, and the
+ * refusal was wrong: the site measures both inputs a stop needs. What
+ * it cannot do is size the position, and that one stays a refusal
+ * because the missing number is the reader's own risk budget and no
+ * amount of candle history supplies it.
+ *
+ * Recomputed here from the posted measurements, like the stance, so the
+ * panel and the answer cannot disagree and nothing a client sends can
+ * invent a level.
+ */
+function planLines(checked: Corroboration): string[] {
+  const stance = buildChartStance({
+    setup: checked.setup,
+    baseRates: checked.baseRates,
+    lastClose: checked.lastClose,
+  });
+  const lead =
+    stance?.swing.agreeing[0] ?? stance?.position.agreeing[0] ?? null;
+
+  const plan = buildTradePlan({
+    lastClose: checked.lastClose,
+    asOf: checked.baseRates?.to ?? "",
+    levels: checked.realLevels,
+    atr: checked.atr,
+    lead,
+  });
+  if (!plan) return [];
+
+  const out: string[] = ["\n=== איפה זה נשבר, ובאיזה מחיר ==="];
+  out.push(
+    `הפניה ${plan.reference.toFixed(2)} (סגירה יומית של ${plan.asOf}). ` +
+      `סטופ ${plan.stop.toFixed(2)}, סיכון ${plan.riskPercent.toFixed(1)}% — ${plan.stopReason}`,
+  );
+  out.push(
+    "יעדים ככפולות של הסיכון, ולא מחירים שנמדדו: " +
+      plan.targets
+        .map((t) => `${t.multiple}R=${t.price.toFixed(2)}`)
+        .join(" · ") +
+      ".",
+  );
+  if (plan.measuredMove) {
+    out.push(
+      `התנועה החציונית שנמדדה אחרי התנאי: ${plan.measuredMove.percent.toFixed(1)}% ` +
+        `(${plan.measuredMove.price.toFixed(2)}). זה נמדד — הכפולות שמעל לא.`,
+    );
+  }
+  if (plan.survival) out.push(plan.survival.note);
+  out.push(plan.sizing);
+  out.push(
+    "**לשאלה ״איפה הסטופ״ או ״איפה להיכנס״ — ענה מהשורות האלה במספרים. " +
+      "אל תסרב.** הסירוב היחיד שנשאר הוא גודל פוזיציה, ושם הסיבה היא " +
+      "שחסר מספר שלו — כמה הוא מוכן להפסיד — ולא שהאתר לא מודד.",
+  );
+  return out;
 }

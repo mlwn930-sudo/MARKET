@@ -4,6 +4,7 @@ import { readLevels, type PriceLevel } from "@/lib/metrics/levels";
 import type { Candle } from "@/lib/sources/prices";
 import { readTape, type TapeRead } from "@/lib/metrics/tape";
 import {
+  atr,
   readTrendFor,
   readStage,
   type TrendRead,
@@ -81,6 +82,10 @@ export type Corroboration = {
   realLevels: PriceLevel[];
   /** The model's trend claim, against the one the candles support. */
   trend: TrendCheck;
+  /** Average true range in price, so the risk arithmetic can place a
+   *  stop in the instrument's own volatility rather than in a round
+   *  percentage. Computed here because this is where the candles are. */
+  atr: number | null;
   confirmed: number;
   unconfirmed: number;
   /**
@@ -346,6 +351,7 @@ export async function corroborate(
     missedByRead,
     realLevels: real,
     trend: checkTrend(read, history.candles),
+    atr: atr(history.candles),
     confirmed: levels.filter((l) => l.matched !== null).length,
     unconfirmed: levels.filter((l) => l.matched === null).length,
     baseRates,
