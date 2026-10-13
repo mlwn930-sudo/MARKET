@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-10-13T08:35:11.889Z",
+  "refreshedAt": "2026-10-13T17:11:44.793Z",
   "sectors": [
     {
       "sector": "ai",
@@ -7,115 +7,116 @@
       "blurb": "מודלים, שבבי AI, מרכזי נתונים והמירוץ בין החברות",
       "accent": "#7f77dd",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=fba153bc5ff4d3807becabd139b45f070e49fe3eefd3026488cc18930232a0cb",
-          "title": "Netflix's Regions Abroad Are All Growing Faster Than Its Home Market. I Don't Think That Makes the Stock a Bargain.",
-          "excerpt": "Growth in the streaming giant's home region slid from 18% to 10% over just two quarters. Can the rest of the world make up for that?",
+          "url": "https://finnhub.io/api/news?id=a0c3a36afbac0c337f9344c8a67bc9d3d2de491a93b63df8de96e128703ceba9",
+          "title": "Why Sandisk Stock Dropped Again on Tuesday",
+          "excerpt": "The threat from CXMT torpedoed Sandisk's market cap in July. Could it happen again?",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-13T07:34:01.000Z",
+          "seenAt": "2026-10-13T15:43:45.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=fa0533907fd3e276e91c04e9329eb011c55b5382d8deace1d954e888621ab38d",
+          "title": "Does The Maia Chip Bet Materially Alter Microsoft's Operating Margin Outlook?",
+          "excerpt": "Microsoft (MSFT) says its own Maia chips will become the main hardware for running its AI models, reducing its reliance on Nvidia. The news lands while Microsoft is short of capacity: management has told investors for several quarters that demand exceeds supply, and has been spending heavily to add more. So how much of Microsoft's AI work will move to its own chips, and how soon.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T15:35:57.000Z",
+          "tickers": [
+            "NVDA",
+            "MSFT",
+            "SO"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=9027bd3d62398c0208074d80cfdf40b0dae45fb2ffc9b2e0461c56dda915a9ac",
+          "title": "Anthropic's IPO Could Value It at $2 Trillion Even as Its Losses Hit $42 Billion",
+          "excerpt": "The AI model developer's path to the public market is following a similar route to many hyper-growth tech companies.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T15:34:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b6eb0e458f25f21a3c8d91b2369ecc4e6eca1fd84c84e5eafa7805c304d94c3a",
+          "title": "Update: Market Chatter: JPMorgan, Goldman Limit Exposure on $5 Billion Loan Sale for AI Startup Volta",
+          "excerpt": "(Updates with JPMorgan Chase's response in the fourth paragraph.) JPMorgan Chase (JPM) and Goldma",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T15:30:26.000Z",
+          "tickers": [
+            "JPM"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=ae94f749b9a7eb7f7328f6f0321c04ed0671d689d7f934bce64a510fa98c613c",
+          "title": "My Netflix Stock Prediction for 2027: Why I'm Not Selling a Single Share",
+          "excerpt": "Netflix stock has tumbled, but its underlying economics remain resilient.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T15:20:00.000Z",
           "tickers": [
             "NFLX"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=ce213edbafba98c415a3d70fc97558ca898768c8114e37c645dd5734d7100b39",
-          "title": "Broadcom’s AI Durability Warning Triggers Sharp Drop In SK Hynix, Samsung In Korea; Nvidia's China AI Chip Share Falls As Huawei Closes In",
-          "excerpt": "Concerns about AI infrastructure funding rattled global semiconductor stocks, with South Korean memory makers among the hardest hit.",
+          "url": "https://finnhub.io/api/news?id=caac3bbb2fe2d7936c3801b78a19863dbbca104cbdc91af3ecb06d538846e873",
+          "title": "Lumentum (LITE) Is Down 8.8% After Long‑Term AI Optics Commitments Raise New Demand Questions",
+          "excerpt": "Earlier this week, Lumentum Holdings, Astera Labs, and Corning showcased a joint PCIe‑over‑optics demonstration for AI rack‑scale architectures at the OCP Global Summit, while Lumentum’s CEO highlighted that demand for its optical components is largely booked through 2029. The combination of long‑term product commitments and emerging doubts about the durability of AI infrastructure spending has created a complex picture for Lumentum’s role in the AI data center supply chain. With these...",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-13T07:21:09.000Z",
+          "seenAt": "2026-10-13T15:13:09.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=103d776b7584b566262ba36bb0a96cf633176b708bee18d79fe10f69fe7f1631",
+          "title": "Kroger to lay off 3,000 corporate employees over 3 years as it leans into artificial intelligence",
+          "excerpt": "Grocery store chain Kroger said it will lay off 3,000 corporate employees over the next three years as it ramps up its use of artificial intelligence to streamline operations.“Technology is reshaping what’s possible,” CEO Greg Foran wrote in a memo to employees on Monday.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T15:08:04.000Z",
           "tickers": [
-            "NVDA",
-            "AVGO"
+            "INTC"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=3839666a370e29405f41928d652d2967b00014aaf5733c73c25a5e5802a9f124",
-          "title": "If You Invest $5,000 in VOO Today, Here's What History Says It Could Be Worth in 20 Years",
-          "excerpt": "The Vanguard S&P 500 ETF has a long history of wealth-creating returns.",
+          "url": "https://finnhub.io/api/news?id=c8f20e06cd744110f27989d306adc4e88c038ee34fb409f7cd8dd2c8a9f74f1d",
+          "title": "Can Investing in AST SpaceMobile Stock Double Your Money?",
+          "excerpt": "It wasn't all that long ago that the space stock was trading at well over $100.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-13T07:20:00.000Z",
+          "seenAt": "2026-10-13T14:50:02.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=e4335ca30562d1d8d794a8d036b264ea486d78413c3dfc2d0f24fcd7274abfe8",
-          "title": "Will Eli Lilly Do a Stock Split Before the End of 2026?",
-          "excerpt": "Eli Lilly's stock price is comfortably above $1,000, and management could easily justify doing a stock split.",
+          "url": "https://finnhub.io/api/news?id=0dac5893cb2874cc7b5d6ae6bc4f6c9cde22084c9590015c8250db1824cd2bd4",
+          "title": "Should You Buy, Sell, or Hold Cisco Stock After a 68% Rise in a Year?",
+          "excerpt": "CSCO's 68% stock rally reflects surging AI infrastructure orders, robust networking demand, and security growth, strengthening its long-term growth prospects.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-13T06:20:01.000Z",
-          "tickers": [
-            "LLY"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=809d1c5dfc663bfedb3712fd28ea7be9915bc4c10487f3fcbc0141f756a5a662",
-          "title": "NOK, BB Stocks In Focus: Jim Cramer Expresses Confidence In Nokia, BlackBerry, But Retail Disagrees",
-          "excerpt": "Jim Cramer backed Nokia and BlackBerry, citing AI infrastructure and software growth.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-13T05:47:14.000Z",
+          "seenAt": "2026-10-13T14:35:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=deb352a4e57605ef119420a8a65fd4463c03dfed9562777a745f8150ca2107c1",
-          "title": "Syndax Pharmaceuticals (SNDX) Is Down 7.2% After Axatilimab IPF Trial Misses Endpoint Has The Bull Case Changed?",
-          "excerpt": "Earlier this week, Syndax Pharmaceuticals reported that its MAXPIRe Phase 2 trial of axatilimab in idiopathic pulmonary fibrosis failed to meet the primary endpoint of slowing lung function decline, leading the company to halt further IPF development for the drug while maintaining other trials. An important nuance for investors is that axatilimab’s safety profile in IPF remained comparable to placebo, and Syndax has indicated that ongoing studies and the approved chronic graft-versus-host...",
+          "url": "https://finnhub.io/api/news?id=7df831737a0f17cf6be592ea4779b8fc4148636077d27b2eb624866ab0382caf",
+          "title": "Kroger To Cut 37% Of Corporate Jobs–Another AI Win",
+          "excerpt": "Kroger just announced sweeping corporate layoffs, and the company is pointing directly at AI as the reason. The question now is whether this marks a turning point for white-collar work across every major American industry.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-13T04:34:37.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=030be7a929231f1a73f057e14d5b78a09f0420307f02e06d029aa76156b089cf",
-          "title": "Is SpaceX Stock Cheap? 1 Wall Street Analyst Thinks So.",
-          "excerpt": "SpaceX is growing fast, and growth rates provide another perspective on valuation.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-13T04:20:00.000Z",
-          "tickers": [
-            "SO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=3f0fc04fff1cb0f904d61f84a640d403ec516e28be54acf2af61aa1605f87d9f",
-          "title": "Wendy's Costs Less Than $7 a Share. Here's Why That Doesn't Make It Cheap.",
-          "excerpt": "A Wendy's share costs less than a Baconator, hold the fries and drink. The new CEO is a turnaround expert, but he has a messy kitchen to clean up.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-13T03:52:04.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=2f2b662830f6893e72c78a2261a66867553b540d7f13a612a7d28061dfaa58a2",
-          "title": "Beyond The AI Trade: Earnings, Infrastructure And A Broadening EM Opportunity",
-          "excerpt": "Outside AI, earnings momentum across emerging markets remains healthy, but the market is rewarding it unevenly.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2197655310/image_2197655310.jpg?io=getty-c-w1536",
-          "domain": "SeekingAlpha",
-          "country": null,
-          "seenAt": "2026-10-13T03:31:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPVlNmbDdlaDUwX1pOeWRzM1FhdDNhWTNnVnk4bXZLZlR2VGwxMFRCcWdiNngwM2p1Tmp3YjZMY0FwY1puZHk3bTlEYWNyd2pYYUxPd19nZVpqQU9CQjVlck9RUGtoajF5SGY4VnYzSWpZXzY2TWZ3TVY3Yl9ucVdEWnc3b2xzT19vbzBqazJUMzlCdmpfakw4VjAzOVZ3Ui13dmlJOV90Nk9pVUxWY1htUHYtNDZhTGhyTDYwZEk3SQ?oc=5",
-          "title": "AI investment props up global growth, but war and debt threaten outlook, IMF says - Reuters",
-          "excerpt": "AI investment props up global growth, but war and debt threaten outlook, IMF says  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-10-13T02:05:00.000Z",
+          "seenAt": "2026-10-13T14:14:32.000Z",
           "tickers": []
         }
       ]
@@ -126,44 +127,55 @@
       "blurb": "ייצור שבבים, ציוד ליתוגרפיה, זיכרון ומגבלות יצוא",
       "accent": "#1d9e75",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=ce213edbafba98c415a3d70fc97558ca898768c8114e37c645dd5734d7100b39",
-          "title": "Broadcom’s AI Durability Warning Triggers Sharp Drop In SK Hynix, Samsung In Korea; Nvidia's China AI Chip Share Falls As Huawei Closes In",
-          "excerpt": "Concerns about AI infrastructure funding rattled global semiconductor stocks, with South Korean memory makers among the hardest hit.",
+          "url": "https://finnhub.io/api/news?id=371a405bd01d5d03f030b8678573471e8055cb021119fa60267e7089ec80def3",
+          "title": "Micron to Hit $3,000? That's How High One Analyst Thinks the Stock Could Go",
+          "excerpt": "The tech company has been generating terrific results, and many analysts have been raising their price targets of late.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-13T07:21:09.000Z",
-          "tickers": [
-            "NVDA",
-            "AVGO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=de06fc6dea163aa1c4fb3fdc438d844486d53a24c4367013d12c09fb253bba00",
-          "title": "35.16 Billion Reasons Micron Stock Is Headed to $3,000",
-          "excerpt": "Micron just increased its stock buyback authorization to $35.16 billion.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-13T00:20:00.000Z",
+          "seenAt": "2026-10-13T15:40:01.000Z",
           "tickers": [
             "MU"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=2bf91d69685b34cdc9d861c9d5f862a9769637d4c02d64ec49a549e8d626b417",
-          "title": "TSMC Revenue Growth Accelerated Faster Than Expected Last Quarter. Here's Why It's My Top AI Chip Stock to Buy.",
-          "excerpt": "The manufacturing leader is driving growth across multiple dimensions.",
+          "url": "https://finnhub.io/api/news?id=fa0533907fd3e276e91c04e9329eb011c55b5382d8deace1d954e888621ab38d",
+          "title": "Does The Maia Chip Bet Materially Alter Microsoft's Operating Margin Outlook?",
+          "excerpt": "Microsoft (MSFT) says its own Maia chips will become the main hardware for running its AI models, reducing its reliance on Nvidia. The news lands while Microsoft is short of capacity: management has told investors for several quarters that demand exceeds supply, and has been spending heavily to add more. So how much of Microsoft's AI work will move to its own chips, and how soon.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T22:50:00.000Z",
+          "seenAt": "2026-10-13T15:35:57.000Z",
+          "tickers": [
+            "NVDA",
+            "MSFT",
+            "SO"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=306a799cf878b9c6f1971f73dc45c0bcee5666bb37d132b5d00af2d616e5004b",
+          "title": "Cadence Design Systems: It Seems That The Customers Are Gaining Leverage",
+          "excerpt": "Cadence Design Systems gains revenue stability via TSMC A14 certification, but peers match it, and pricing power weakens. Click for this CDNS update.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1205867011/image_1205867011.jpg?io=getty-c-w1536",
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-10-13T12:33:55.000Z",
           "tickers": [
             "TSM"
           ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=7da8ed446e1566ae92715482bf5bae6fbcc9b1f15f6189456f94c26839c6f987",
+          "title": "What's Going On With Applied Materials Stock Tuesday?",
+          "excerpt": "Applied Materials (AMAT) stock slips 2% in premarket trading. Here is a look at technical levels, analyst price targets, and more.",
+          "image": "https://cdn.benzinga.com/files/images/story/2026/10/13/Applied-Materials.jpg?width=2048&height=1536",
+          "domain": "Benzinga",
+          "country": null,
+          "seenAt": "2026-10-13T07:15:17.000Z",
+          "tickers": []
         },
         {
           "url": "https://finnhub.io/api/news?id=fa73c65e185f744d28d2d9b85b923c92475b509ecac999e84c223e97d3ed59a3",
@@ -191,60 +203,54 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=a4aaec38f4efec2de3cd1cd75cc95509b4ed5c3bbf07684b5028d79f837b0b00",
-          "title": "Applied Materials vs. SK Hynix: Which Technology Stock Is a Better Buy in 2026?",
-          "excerpt": "SK Hynix trades at a fraction of Applied Materials' valuation while posting a 44% net margin, but volatility in the memory market poses a different risk.",
+          "url": "https://finnhub.io/api/news?id=67c581591c064bd2f82841084ca7bc25cbba0c0e40d414289d0d212c3df626c1",
+          "title": "Why Micron Stock Dropped Again on Tuesday",
+          "excerpt": "The threat from CXMT torpedoed Micron's market cap once in July. Could it happen again?",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T14:45:02.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=45e2b20b5001799a264b162f3f8dd6b8fc0c67b0fed73b1d5a52803eb37b9c30",
-          "title": "NIHI Vs. IDVO: International Income Now Or Income Later",
-          "excerpt": "Compare NIHI vs. IDVO ETFs for international dividend income: NIHIâs ~10.5% monthly, tax-efficient yield vs IDVOâs ~6% total-return focus.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2237491523/image_2237491523.jpg?io=getty-c-w1536",
-          "domain": "SeekingAlpha",
-          "country": null,
-          "seenAt": "2026-10-12T14:44:22.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=3a6cd1bb01d3f581c6f0a0c6999eb7f328e2c511fc759080a8e3a265cdb7f1d4",
-          "title": "Nvidia AI chip share in China falls as Huawei catches up- Reuters",
-          "excerpt": "Investing.com-- Nvidia’s share of Chinese artificial intelligence chips fell in the first half of 2026 amid U.S. export controls and advancements by Huawei, Reuters reported on Tuesday, citing a report from IDC.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-13T06:15:58.000Z",
+          "seenAt": "2026-10-13T15:00:17.000Z",
           "tickers": [
-            "NVDA",
-            "INTC"
+            "MU"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=1ee9bc2d2d17e0827d07519a83fb2094f6fc0c0ccaa2ab2d7e523382caa4d07d",
-          "title": "The Death of Cheap Smartphones? Taiwan Semiconductor Could Profit From Major Market Shift",
-          "excerpt": "Taiwan Semiconductor Manufacturing Co. Ltd. could benefit as rising memory prices push smartphone buyers toward more expensive devices, according to Counterpoint Research Co-founder Neil Shah. Shah said higher memory costs are disrupting the lower end of the smartphone market while...",
+          "url": "https://finnhub.io/api/news?id=b82b2e8f8ad8149e4030c3f8d13f45cfa1c4395a69ba98a94772a7807b48ac1f",
+          "title": "Amazon Wants to Pay $7 Billion for a 3-Year-Old AI Startup That Makes AI Run Faster on Nvidia’s Chips and Its Own",
+          "excerpt": "Amazon is reportedly closing in on a $7 billion deal for a startup with barely 100 employees and no disclosed revenue, and the real prize has nothing to do with the flashy video models everyone is talking about.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T19:50:28.000Z",
+          "seenAt": "2026-10-13T15:32:57.000Z",
+          "tickers": [
+            "NVDA",
+            "AMZN"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=24a6016ee3ad2ad0463a3774fcb9c0bcd6e4647af6d9e794ad693cdb3e68d3fe",
+          "title": "Prediction: A $1,000 Investment in TSMC Stock Will More Than Double by 2030. Here’s Why You Should Buy It Before Oct. 15.",
+          "excerpt": "TSMC's Oct. 15 earnings report could supercharge the stock and send it on a bull run through the end of the decade.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T09:20:02.000Z",
           "tickers": [
             "TSM"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=882a545d9dcf20c1ac79ca817ca0358f3acf109e06e47f786569f7f8ed99ea52",
-          "title": "ASML: Memory Is Paying The Bills (Earnings Preview)",
-          "excerpt": "ASML Holding N.V. to hike replacement/maintenance part prices 10% for Samsung and SK hynix in January. Click for this earnings preview of ASML stock.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2226723342/image_2226723342.jpg?io=getty-c-w1536",
-          "domain": "SeekingAlpha",
+          "url": "https://www.cnbc.com/investingclub/2026/10/12/microsoft-micron-and-meta-make-news-what-it-all-means-for-our-stakes.html",
+          "title": "Microsoft, Micron and Meta make news. Here's what the updates mean for our stakes",
+          "excerpt": "Every weekday, the Investing Club releases the Homestretch; an actionable afternoon update just in time for the last hour of trading.",
+          "image": "https://image.cnbcfm.com/api/v1/image/108374361-1791402786453-gettyimages-2298479306-MICROSOFT_NVIDIA.jpeg?v=1791402821&w=1920&h=1080",
+          "domain": "CNBC",
           "country": null,
-          "seenAt": "2026-10-12T15:04:44.000Z",
+          "seenAt": "2026-10-12T18:47:58.000Z",
           "tickers": [
-            "ASML"
+            "MSFT",
+            "META",
+            "MU"
           ]
         }
       ]
@@ -255,12 +261,88 @@
       "blurb": "מחירי נפט, אופ״ק, זיקוק ושרשרת האספקה העולמית",
       "accent": "#d85a30",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
         {
+          "url": "https://finnhub.io/api/news?id=a49d8f8f4697280507b57619760ac326848943d464a2a762ecdfdd4cc07b922c",
+          "title": "How Has Chevron's Story Changed?",
+          "excerpt": "Chevron (CVX) stock is currently priced at 20.6 times earnings, compared with 21.9 for the S&P 500. Investors paying that multiple need to understand the company's debt, and executives have recently changed how they frame that burden. During its fiscal 2024 earnings calls, management emphasized the net debt ratio. Today, the company highlights a different measure. So what is the new debt measure.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:36:01.000Z",
+          "tickers": [
+            "CVX",
+            "SO"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e37c2727bb63e93b93ac2e181a9d0e7f67fed3d2ba303d81737ae6552181e6df",
+          "title": "Will Elevated Crude Prices Enhance ExxonMobil's Cash Flows?",
+          "excerpt": "XOM stands to benefit from oil prices above $90 per barrel, with low-cost production in the Permian and Guyana supporting its earnings and cash flow outlook.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:02:00.000Z",
+          "tickers": [
+            "XOM",
+            "COST"
+          ]
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNWWdiOFh3ZXNEdWNtbEZLVlFDZ2dJQTZaanZ3dUtaNVgycEpwX0tDZWVYVF9PQlpRX085YWNwTkdtZVNmY0R2S0hHcllmRVlxcnAyYm9fTEZQa3YtYlljLXd6ZlROZ3VOTFktSmZnNFFkdGkxUkwyRmJ0R1JiQ0FtLXUzZTdSZGY1dlJCUndmd2FjQkxrT2dWRGFvMmcteFU0VVNQMEdxQVN4eVE5QjdBYg?oc=5",
+          "title": "Saudi leads jump in OPEC+ oil output in September, despite Iran war disruption - Reuters",
+          "excerpt": "Saudi leads jump in OPEC+ oil output in September, despite Iran war disruption  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-10-13T13:58:40.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=49ec050c905a6901984cd922e91ad3778b7449e9af85b15c971c333bb6b9f185",
+          "title": "How VYM’s $94.6B Dividend Kings Aided Portfolio Is Beating Treasuries",
+          "excerpt": "VYM's trailing yield sits well below what a 10-year Treasury pays today, yet the fund keeps attracting billions in new assets. The reason comes down to what bonds cannot offer and what income investors often overlook when comparing the two.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T13:13:11.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNcWhnUmlGS0Y5eEs2Vm13V3cxZFZSWmUzMjZ6OEdCdzhoN294ZEl2Wk1YeVNLb2VhWThLZXlnbHpNMmxwak8zVXBxdDM1N3ZLeFRxUHBOclVEdXBHZUVWTXJrYUs3ZGZHdEo0eUpDVHh3SlJRQjVXVFdNNE5iMnJtLTRhTTJnT0l5Z2FPckNfcFJFcEVfVVlnRmQ4SWpEYTY5WGpRaDJ5c0g?oc=5",
+          "title": "Occidental oil prices jump as supply concerns lift crude - Reuters",
+          "excerpt": "Occidental oil prices jump as supply concerns lift crude  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-10-13T12:01:09.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b28ee841bb547fcc26557c569a6277ea410bc5cb494ceea2f398caae2601e85a",
+          "title": "Cyclicals Lead Sectors In Tuesday Trading As Health Care Trails",
+          "excerpt": "Four sectors are higher and seven are lower in Tuesday’s regular session, with cyclical sectors holding two of the top three positions. Materials sits well clear of the lower group, separated by a margin several times wider than any other gap in the table.",
+          "image": "https://cdn.benzinga.com/files/images/story/2026/10/13/Charts-Of-Financial-Instruments-With-Var.jpg?width=2048&height=1536",
+          "domain": "Benzinga",
+          "country": null,
+          "seenAt": "2026-10-13T11:01:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e4f2a0731ff2aa0a8381559229c72b75fcb53be602c1b4f205c54c9d8c7aa500",
+          "title": "South & Central America Pipe Relining Market Size, Share, Growth Trends, and Forecast, 2021 - 2031 | Smart City and Offshore Energy Investments Drive 4.8% CAGR Opportunities",
+          "excerpt": "Trenchless pipe relining can cut lifecycle costs by up to 40%, shorten timelines, reduce excavation and carbon footprints, and support low-disruption smart city upgrades.Dublin, Oct. 13, 2026 (GLOBE NEWSWIRE) -- \"South & Central America Pipe Relining Market Size and Forecast (2021 - 2031)\" has been added to ResearchAndMarkets.com's offering. The report projects that the South and Central America pipe relining market will grow from US$ 355.9 million in 2024 to US$ 484.5 million by 2031, registeri",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T08:42:00.000Z",
+          "tickers": []
+        },
+        {
           "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPa2sxWTVlekZ2bXloVXNiOUltMm5iODVOMW9NTUo4Q016ZU02OFQ5TU9relFTcUZSaW8xV0c2YmNVbE5jWW5uQjhKeXNKaWxBcE92SU1fQUU0R2RVamdNUzRhTER3NzEzMFUtRVd3bzVnZ1g0ZmtRek95VHdYbVNNMmNacmlDd3dLTThmaGF2VVJDYTc4c1hQeUZfX0ZGQzZjTXlpLU52U3JuUGpjOHJjWndoS19LandSX0dtMmdUMzNKZw?oc=5",
-          "title": "Oil falls as Russian diesel supply prospects counter Gulf supply risks - Reuters",
-          "excerpt": "Oil falls as Russian diesel supply prospects counter Gulf supply risks  Reuters",
+          "title": "Oil prices ease as US-Russia diesel deal hopes offset Middle East attacks - Reuters",
+          "excerpt": "Oil prices ease as US-Russia diesel deal hopes offset Middle East attacks  Reuters",
           "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
           "domain": "Reuters",
           "country": null,
@@ -278,88 +360,13 @@
           "tickers": []
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbG5FR1BDa09LM1I4UWVxVENCQ2gtR0hvZ2pUVWR0cDBSRjVKdnlKc0FrNDAtc010U2R3QlkxUG9lVGRMRHItdzc5Y0ROR1NtRzBWbWZzcG1GbFAteGpEMnVSWElFbEhrUDJGbzFJcllwZVVGVU03UWNQQmZFX3RyNGx4UlNzdS1rdjFQekFGSFNNdkpsRmhHQTZnTktxVkRZRGZGUERJdFljTllxTXp5eG1pRnZhM1FORS1wX3VreWdTcHVqNnZ6eQ?oc=5",
-          "title": "Americas have glut of heavy oil due to freight squeeze; Asia, Europe scramble for barrels - Reuters",
-          "excerpt": "Americas have glut of heavy oil due to freight squeeze; Asia, Europe scramble for barrels  Reuters",
+          "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPLXBaMl96X25takpKUC15RzZpMEhXT3FwMkM0a0xiZUxuV1FINXU4eXF4emoxdWl5TGZjYkNoeGhOeWdESE8yZXUyRXU2NlpoZ3hENzRoTlRaVTBUMWFTOWpQRlVYel9PbEZhdTVla2U2MS1QU3RDcXR0aEZ2cjFXMXV3ek45YWEwakhFVVBPQ1hRYjRZZk9SVXcxaFAwQ2hxOHBxTmdqTHZNWGVITUgzUWUwd0t1V3phQVBzaHR3?oc=5",
+          "title": "Russia says its diesel exports may exceed volumes announced by Trump - Reuters",
+          "excerpt": "Russia says its diesel exports may exceed volumes announced by Trump  Reuters",
           "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
           "domain": "Reuters",
           "country": null,
-          "seenAt": "2026-10-12T18:48:13.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=27207fe903afa40becfc1c195e3d83b3d028759275e0d5b3fcba3e0028120993",
-          "title": "Exxon, Oil Giants Top Buy Points After Deadly Saudi Airport Attacks",
-          "excerpt": "Attacks on a major Saudi airport and oil tankers in Hormuz revived supply fears and lifted oil prices. Exxon, Chevron and other oil majors are in buy areas.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T18:06:35.000Z",
-          "tickers": [
-            "XOM",
-            "CVX"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=77f078c5eba658e547f103903be4bd9b08cee267c3db86d2d90f1e7b276a3562",
-          "title": "Stock Market Today: Nasdaq Drops As Lumentum Dives; Tanker Firm Navios Glides Into Buy Zone (Live Coverage)",
-          "excerpt": "The Dow Jones index rises Monday amid Trump's \"energy ceasefire.\" Salesforce stock jumps on an upgrade.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T17:22:16.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=d7b89a9724b6684eca2328ec43aa70627caa9eab7fbe881eb5a41bc920aa007e",
-          "title": "Biogen Upgraded to Buy at J.P. Morgan. How the Stock Could Rise 28%.",
-          "excerpt": "Biogen stock is upgraded to Overweight from Neutral at J.P. Morgan ahead of a slate of data readouts for compelling pipeline candidates.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T17:15:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=24b33c08cf2e4246cd25e93cfa18caf87d1874dbf16960dd270daf649b1c0ae0",
-          "title": "Biogen Stock Could Keep Gaining. A J.P. Morgan Upgrade Is Just the Beginning.",
-          "excerpt": "Biogen stock is upgraded to Overweight from Neutral at J.P. Morgan ahead of a slate of data readouts for compelling pipeline candidates.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T16:37:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=70fecb3ac5defad33ee7d7fe28e99e784a13908d02991ed0fb929fe34d368554",
-          "title": "Stock Market Today: Dow Outperforms In Mixed Trade; Tanker Firm Navios Glides Into Buy Zone (Live Coverage)",
-          "excerpt": "The Dow Jones index rises Monday amid Trump's \"energy ceasefire.\" Salesforce stock jumps on an upgrade.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T15:56:02.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=2d1e1367756fb176b55a0982076a7ceab291e4f4c1f2863e1b8b73eed56a7fbc",
-          "title": "Helmerich & Payne Positioned for Steady Demand, Geothermal Growth, RBC Says",
-          "excerpt": "Helmerich & Payne (HP) highlighted its competitive positioning through automation, cost savings and",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T15:39:21.000Z",
-          "tickers": [
-            "COST"
-          ]
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOWUNYSF8xeXZscDAyZTZVNC1zZHNtdHhqMng2bVZTenRCTDJWX0FDeV9pMjllMzRMRmJ0blkwMFZ1MENpd1RmbWltR1R0SmV6Q1JUQnpHbnZxNmQtYmZZaFpxdXVLS3Vxd2xqYmI1UVhLM3hCM2gybXN2LUZ5Q2JOdDByZUIwemdsenlGY3FxOENNME5lT0xocWNDYmN6X0ZxQXBiVFNHNnlENmVTOXdqU3pxdlpscHM?oc=5",
-          "title": "Trump defends Russia diesel deal as lawmakers from both parties complain - Reuters",
-          "excerpt": "Trump defends Russia diesel deal as lawmakers from both parties complain  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-10-12T15:27:00.000Z",
+          "seenAt": "2026-10-12T18:52:00.000Z",
           "tickers": []
         }
       ]
@@ -370,19 +377,41 @@
       "blurb": "רשת החשמל, גרעין, מתחדשות והביקוש שמרכזי הנתונים יוצרים",
       "accent": "#eda100",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=0bec40ce5269ec4b4dd752aadfe391f3699a1a23f636a902b584919efe59aa6b",
-          "title": "NextEra Energy (NEE) Rises As Market Takes a Dip: Key Facts",
-          "excerpt": "In the closing of the recent trading day, NextEra Energy (NEE) stood at $78.51, denoting a +1.46% move from the preceding trading day.",
+          "url": "https://finnhub.io/api/news?id=ee209213261cc3e76afbd92eec663eb32c5a606d524ca962dae5033e63f35bbb",
+          "title": "Can Duke Energy's Grid Investments Strengthen Storm Resilience?",
+          "excerpt": "DUK restores 10,000 customers after Hurricane Isaias, highlighting grid upgrades and a $103 billion investment plan to strengthen reliability.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T20:45:04.000Z",
+          "seenAt": "2026-10-13T13:21:00.000Z",
+          "tickers": [
+            "DUK"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=bd54ab34b6492d9cde5d03041e802a5504b3072deb9001e2244ec1c382d77843",
+          "title": "Why NextEra Energy (NEE) Is Getting Attention Today",
+          "excerpt": "Why a lawsuit settlement is back in focus for NextEra Energy The fresh attention on NextEra Energy (NEE) stems from a proposed settlement in a shareholder derivative case, which includes a US$15.5 million insurance funded payment to the utility and a package of governance reforms. Recent trading shows how quickly sentiment can shift around NextEra Energy. The 1-day share price return of 1.46% and 7-day gain of 2.92% come after a 30-day share price decline of 4.62% and a 90-day drop of 12.32%...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T12:15:04.000Z",
           "tickers": [
             "NEE"
           ]
+        },
+        {
+          "url": "https://www.cnbc.com/2026/10/13/iran-us-war-houthis-saudi-arabia-airport.html",
+          "title": "Iran reportedly fortifies nuclear sites as it prepares for possible U.S. strikes after midterms",
+          "excerpt": "A Saudi-led coalition fighting the Houthis – a Yemeni militant group backed by Tehran – said it had intercepted another attack on Riyadh.",
+          "image": "https://image.cnbcfm.com/api/v1/image/108398587-1791817200941-gettyimages-2299319676-AA_12102026_2989970.jpeg?v=1791817236&w=1920&h=1080",
+          "domain": "CNBC",
+          "country": null,
+          "seenAt": "2026-10-13T11:53:45.000Z",
+          "tickers": []
         },
         {
           "url": "https://finnhub.io/api/news?id=f11d5104249a44531735a7dbc4774f70938d7842aed2cd72334ea800b212df7c",
@@ -439,13 +468,13 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=e160ad878ab8cc58943e6b4c60f7d83b3254443ae1d822ae4c656f43a2c96688",
-          "title": "NextEra Energy Has Two Growth Drivers. Here’s What Investors Should Watch",
-          "excerpt": "NextEra Energy, Inc. (NYSE:NEE) has a regulated electric utility business as well as one of the largest renewable energy development operations in the United States. The company’s investment appeal is based on electricity demand, infrastructure spending, and the possibility of steady earnings growth. The main issue for investors is whether or not the stock’s valuation […]",
+          "url": "https://finnhub.io/api/news?id=0bec40ce5269ec4b4dd752aadfe391f3699a1a23f636a902b584919efe59aa6b",
+          "title": "NextEra Energy (NEE) Rises As Market Takes a Dip: Key Facts",
+          "excerpt": "In the closing of the recent trading day, NextEra Energy (NEE) stood at $78.51, denoting a +1.46% move from the preceding trading day.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T13:45:25.000Z",
+          "seenAt": "2026-10-12T20:45:04.000Z",
           "tickers": [
             "NEE"
           ]
@@ -464,32 +493,6 @@
             "CEG",
             "AMZN"
           ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=1884659ab3b3fb052aeabfad65bc1e11bc459f5de3a401d4c9d14afe177f1e7a",
-          "title": "NextEra Energy: Extreme Quality That Is Rarely This Cheap",
-          "excerpt": "NextEra Energy stock looks undervalued vs. its history, with dividend growth and AI-driven power demand tailwinds. Click here to learn more about NEE.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2247820886/image_2247820886.jpg?io=getty-c-w1536",
-          "domain": "SeekingAlpha",
-          "country": null,
-          "seenAt": "2026-10-10T08:00:00.000Z",
-          "tickers": [
-            "NEE"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=1d2db8f587b0f2c87d09550cb482633845fb56a2c2dc8e9b99b5bfcec11d9915",
-          "title": "Stocktwits Power Watch: CEG Bags Google Deal, VST Secures Government Funding, Utility Merger Draws Fire",
-          "excerpt": "U.S. power and utility companies saw major developments last week as rising AI-driven electricity demand fueled new investments, while concerns over consumer costs and regulatory scrutiny complicated consolidation efforts in the sector.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T10:35:48.000Z",
-          "tickers": [
-            "GOOGL",
-            "CEG",
-            "VST"
-          ]
         }
       ]
     },
@@ -499,8 +502,72 @@
       "blurb": "ריבית, אינפלציה, הפד, תשואות אג״ח ובנקים",
       "accent": "#378add",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=86053c9cc156f0e9c968ed50a5151d32f30ed539f8d83b68c4ac690df716c5d8",
+          "title": "Stock Market Today: Dow's Losses Start To Multiply; Meta Approaches New Entry (Live Coverage)",
+          "excerpt": "The Dow Jones index rises Tuesday as JPMorgan and Goldman report earnings. Micron, Sandisk and SK Hynix sell off.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T15:48:04.000Z",
+          "tickers": [
+            "JPM",
+            "META",
+            "MU"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=f7b4a939506ead92f3efb65c4019b82ec2f3f8fc4a9bbf9aa360b70831957faf",
+          "title": "US banks post strong earnings but economic risks cloud the sector’s outlook",
+          "excerpt": "Wall Street's biggest banks reported another strong quarter on Tuesday, but they warned that higher rates and inflation could bite.View on euronews",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:21:06.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d61b6bb63c6d282aaee24ec32d338da0b6fec10a0da3ee55a4abc5b516a5abb9",
+          "title": "Big Bank Earnings Kick Off With Encouraging Consumer Picture",
+          "excerpt": "If you're looking for signs of consumer stress, you won't find them in the earnings results of the nation’s largest banks.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:18:33.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=76db78aa0c134d407453d1e31c7251f4b445a88f586d3bfd4e796f3bda8775b3",
+          "title": "Higher Rates Turbocharge Lending Income for Biggest US Banks",
+          "excerpt": "Three of the biggest US banks set a fresh record in the third quarter for how much they earned from lending, with customers continuing to borrow even as interest rates increased.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:13:15.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=943b0302e7c375c0a2acdd83ab73d9ab7f18e9f8d20f659b3155809d23294c03",
+          "title": "Small-Business Optimism Dips in September",
+          "excerpt": "Small-Business Optimism Dips in September.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:05:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNU0hXdVlXbkVhZGhjT1p6UXlndU52X2gwbVZod1BQbUNjM2stUlFvMHFyaEZsRHJWb0M1ekhCbTY0UFpEdEhZaWxZMHpncWFxRGdrUzhBcUFBcGNqYmtxX1JabV9sWnRfaEZSeUV2b3lhTVI5QVVNc0ViaVp0S1laRWxKd0s3YXc5NTFCYzJpTGh4dGFTM29vOHg1UENVMDNqeHdlQWRXMVBHS3pyR2RnTmVVTGIzbWh0bnl5Vg?oc=5",
+          "title": "South Korea's Lee says country cannot avoid raising interest rates - Reuters",
+          "excerpt": "South Korea's Lee says country cannot avoid raising interest rates  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-10-13T02:49:00.000Z",
+          "tickers": []
+        },
         {
           "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNRUVTdlJpcHF3dEZTQlg5WWlESlo0dXpTRWJQR1lwWHl2aHR2QVlEUzI4Vkx3OTZVNFdvdnhNMm5BSC04bnNJdzZyLU9BVTVhbFFsUHhzNXlWc0VlLW5KU2k0NWFHZUlicF9zQTVMYjJTTGZoNDRMREJBQk5YU3k0OFdCX2pROWxtYWhlM0ZrREQxVTQweWJMaFdoVW1XX1FrOXpGQnBjZy01eVktY3VQSktkb1YxVEJIbmMw?oc=5",
           "title": "Indian shares flat at open as inflation strengthens rate-hike concerns - Reuters",
@@ -512,101 +579,33 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=b6c90b9e140832c3d567dc5f839c662c1baec98d06950b5e9606f8b448679952",
-          "title": "U.S. stock futures steady as bank earnings, inflation data loom",
-          "excerpt": "Investing.com-- U.S. stock index futures were little changed on Monday night as investors braced for a busy week of corporate earnings and economic data, with quarterly results from major banks and healthcare companies set to test Wall Street's rally to record highs.",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://www.cnbc.com/investingclub/2026/10/12/jim-cramers-top-10-things-to-watch-in-the-stock-market-monday.html",
+          "title": "Jim Cramer's top 10 things to watch in the stock market Monday",
+          "excerpt": "Salesforce landed a double-upgrade, and stock futures are muted to start a busy week of earnings and inflation data.",
+          "image": "https://image.cnbcfm.com/api/v1/image/108363089-1789485723223-gettyimages-2294922441-train0827.jpeg?v=1789485827&w=1920&h=1080",
+          "domain": "CNBC",
           "country": null,
-          "seenAt": "2026-10-13T00:55:16.000Z",
+          "seenAt": "2026-10-12T13:06:04.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=0ed83cae897d5328a440303c15e0d102a8864a028c818d7dfc195d227dedb301",
-          "title": "Earnings from banks and  J&J and home sales data: What to Watch",
-          "excerpt": "Market Domination Overtime host Brooke DiPalma takes a closer look at the top stories for investors to watch on Tuesday, October 13, including earnings reports from JPMorgan Chase (JPM), The Goldman Sachs Group (GS), Wells Fargo & Company (WFC), and Citigroup (C), Johnson & Johnson (JNJ) delivers its earnings reports, and the release of home sales data for September.",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOM2hyc2tfZ1c4OFc2WGEwN3J5Ri1jaWVLOWtWbmpYTzlMcnNyVVhrN0pEdGg1ZXlKdEJMRjNiNXpRRC1KVDNXaWdDQ0ptQ245VEJaY19RZVNMUGJDYTJjUGNwV2NrLTU0LTRVbEcwWGZmSzhoX3hEdkVGcHAzTGZLb285UTBwYXhxZTVSWmxRNkt3X2xISDZwZg?oc=5",
+          "title": "India Sept inflation nears RBI tolerance ceiling, boosting case for further rate hikes - Reuters",
+          "excerpt": "India Sept inflation nears RBI tolerance ceiling, boosting case for further rate hikes  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
           "country": null,
-          "seenAt": "2026-10-13T00:00:00.000Z",
-          "tickers": [
-            "JPM",
-            "GS",
-            "WFC",
-            "C",
-            "JNJ"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=82c2af87be5d1a30858d0947aa9938559683f6993c6e04ede074b5b09e8ee3fe",
-          "title": "Don't Overlook These Top Bank Stocks as Q3 Earnings Approach: EQBK, HOMB",
-          "excerpt": "With encouraging Q3 expectations, reasonable valuations, and solid dividend yields, Equity Bancshares (EQBK) and Home BancShares (HOMB) are both worth watching as their quarterly results approach on Wednesday, Oct. 14.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T21:17:00.000Z",
+          "seenAt": "2026-10-12T12:21:58.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=1cc4306a8c6030e2855233a6c6a55a92e8ba2318d3907e49196fb20f538b2201",
-          "title": "Bank earnings expectations: 'You can't go from great to great to great'",
-          "excerpt": "Hennessy Funds Portfolio Manager David Ellison talks with Market Domination's Brooke DiPalma about what to expect from Q3 earnings season results from banks and why cyber risks could be mentioned on earnings calls.",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQdUxxMHVta3BKU2dCLTBRTU5iRm1Xd1gwWWNBTzI4djlyVmFnYWpyZzRJbFQtamt5WHVoaFhCd1lMLVRWMUxpaGw5WERwT3dWZGJvbmRxYjhVUE5pU1Y4NjRzX2lVN1BpXzlBckQxMW4tYmhkNnpKOVQtdUQwSFJKUUZHUThxbnNRYllBZGtGSTV3MXFWZkc4cjRVUHJyU2c2MkNiRWczUl9NTUpVQ2tiSFVjR090Wk9yNjU3NkR4ZklId2o1akswcXNhZ3ptdw?oc=5",
+          "title": "India inflation jumps to 5.54% in September, strengthening case for further rate hikes - Reuters",
+          "excerpt": "India inflation jumps to 5.54% in September, strengthening case for further rate hikes  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
           "country": null,
-          "seenAt": "2026-10-12T20:18:43.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=3603538b14f7c9205641d39b3b9158856ff48dbd944ac35454d83f748dda4cba",
-          "title": "Sector Update: Financial Stocks Advance Late Afternoon",
-          "excerpt": "Financial stocks rose in late Monday afternoon trading, with the NYSE Financial Index adding 0.5% an",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T20:00:11.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=d662550ff908f7ce69d41f89a95795b1e5b32172c6bc7360d749aab494b55fde",
-          "title": "Wall Street Is Shedding Risk Ahead of Earnings, Inflation Data",
-          "excerpt": "Traders were shedding risk and buying value stocks ahead of a major stretch of earnings reports and inflation data in the days and weeks ahead.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T18:33:30.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=8cb5fd11bb4ae12914c588b87c2df09bb0737fecb4a99ebf5d0bc186c1f71f40",
-          "title": "The bull market’s four-year run, EV demand, and interest rates threaten earnings",
-          "excerpt": "Market Hang's panel discusses what comes next after the bull market's four-year run, how gas prices are impacting EV demand, and if interest rates are going to affect this quarter's earnings.Today's Market Hang panel consists of Gerber Kawasaki Wealth & Investment Management CEO Ross Gerber, Yahoo Finance's Pras Subramanian, Kelly Intelligence founder Kevin Kelly, and Cleo Capital Managing Director Sarah Kunst.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T18:12:53.000Z",
-          "tickers": [
-            "INTC"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=89e31a59e5d6524e4e320fe96d87541d7e8350a985994c7c1d0ea561bec30986",
-          "title": "Stocks Face a Tricky Patch. Banks and Bonds Could Decide What’s Next.",
-          "excerpt": "Stocks are off to a solid October start. The next few weeks will likely determine how they finish the year.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T17:35:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=d5132b88bcf56cf84a25b5aab09de885f85758c47b677a51559ee917fe42586e",
-          "title": "Jamie Dimon Sharpened His Warning About a Looming Corporate Credit Squeeze, Saying Global Competition for Capital Means \"The Market Will Ask for More.\" Here's Why That Warning Matters for Borrowers and Bond Investors.",
-          "excerpt": "Investors demanding \"more\" from bond yields could be bad news for everyone.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T17:05:00.000Z",
+          "seenAt": "2026-10-12T12:13:42.000Z",
           "tickers": []
         }
       ]
@@ -617,8 +616,50 @@
       "blurb": "תקציבי ביטחון, עסקאות נשק וקבלני הביטחון",
       "accent": "#888780",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=500b2436030278ebe95b0246f0d8587c7262f89c1a304df97bd6a0764eeddd03",
+          "title": "L3Harris Delivers First VAMPIRE Counter-Drone Systems To US Army – A Look At The Key Highlights",
+          "excerpt": "L3Harris said its VAMPIRE technology has logged more than 350,000 operational hours since 2023 in support of European combat operations, while a separate GMLRS contract will be fulfilled at a planned Arkansas facility featuring automation and robotics.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T15:25:53.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=62509956b3eaf97057eb2b4b78bf4182f5bd3deeedb6cdb348a2e8114c5f4ffb",
+          "title": "Can Redwire's VLEO Spacecraft Expand Mission Opportunities?",
+          "excerpt": "RDW expands its VLEO spacecraft portfolio with SabreSat and Phantom, targeting specialized missions that benefit from proximity to Earth.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T12:42:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=9ba47fdf0e24bdbfcd70672b5f1a8b0eaf96a8e0bdb223bfb6373210f0ba1643",
+          "title": "Dividend Announcements: October 3-9, 2026",
+          "excerpt": "Track this weekâs top 5 dividend increases across 1,200+ stocks. Read the October edition here.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2209914068/image_2209914068.jpg?io=getty-c-w1536",
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-10-13T11:45:40.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=07f4462222d0896087385f1806afef3f54ad4398e5598552666bcbd524a34a8f",
+          "title": "Can Rising Counter-Drone Demand Support RTX's Defense Growth Outlook?",
+          "excerpt": "RTX's upgraded Coyote interceptor advances counter-drone capabilities as rising demand for protection against unmanned threats introduces new defense growth opportunities.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T11:35:00.000Z",
+          "tickers": [
+            "RTX"
+          ]
+        },
         {
           "url": "https://finnhub.io/api/news?id=0dc5fb13831b10d47e5ed7d0f2ef19a135baf91effe8795ed62947bba61603b4",
           "title": "Lockheed Martin (LMT) Debuts PAC 3 Edge Interceptor",
@@ -656,6 +697,16 @@
           "tickers": []
         },
         {
+          "url": "https://finnhub.io/api/news?id=1b52d712825c87ce45c55abd849c49664fbe4cf7a2b2e4c62068e8b50b4ab8b1",
+          "title": "'The Pentagon And The Small Business Administration Signed A New Agreement On Monday That Will Expand Access To Strategic Capital For Small Businesses In The U.S. Defense Industrial Base' - The Hill",
+          "excerpt": "https://thehill.com/policy/defense/6143284-smaller-war-plants-commission-agreement/https://legacy.sba.gov/article/2026/08/25/sba-dow-establish-smaller-war-plants-commission-historic-effort-strengthen-defense-industrial-b",
+          "image": null,
+          "domain": "Benzinga",
+          "country": null,
+          "seenAt": "2026-10-12T14:04:07.000Z",
+          "tickers": []
+        },
+        {
           "url": "https://finnhub.io/api/news?id=186b84e8b6f08b6c502e581ab6b137f72ee5b7d3c5506bbb3bf530562396be7d",
           "title": "L3Harris Awarded Solid Rocket Motor Contract with Record Production",
           "excerpt": "MELBOURNE, Fla., October 12, 2026--L3Harris Technologies (NYSE: LHX) has been awarded a follow-on contract from Lockheed Martin, valued at $250 million, to manufacture standard-range Guided Multiple Launch Rocket System (GMLRS) propulsion units.",
@@ -676,56 +727,6 @@
           "country": null,
           "seenAt": "2026-10-12T13:51:58.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=9eccc9f3e90fd4bd90b4da4f81637f7e8c1403c22da9b76ebce49df558a411a4",
-          "title": "Big Board Names Near Highs While Smaller Shares Lag the Broad Tape",
-          "excerpt": "Stock Preachers News Commentary - Large caps closed out last week within sight of fresh records while the broader market showed cracks beneath the surface. The S&P 500 gained 1.15% on the week to 7,811.54, just shy of its 52-week high of 7,844.52, and the Nasdaq Composite added 0.64% to 27,366.17. The Russell 2000 told a different story, falling 0.91% to 2,806.98. Corporate activity stayed brisk, with deals, defense contracts and legal notices crossing the wire even as investors weighed whether",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T13:50:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPbjQ4VHZvYkdYQm9yVEk1YjFFMmpzdkZlZURhdnpYUlNHTl9KMDZrbVFMSXB6WGRlU2ZIb2NnZm9yMjYwb2hYTnh0YnBrc2RkWWs0MzdxX01TUzllWERDajRXZHhxVXFIVmJhX0ljT0NWVHZMejdIdFhmWlZaOUFPQkVLUXZiN2hGVG1velpDX3FvTzY0VVhiQlpCQ1hoejRmSjhBZlVnYlNUcUlQOF9PeWVlMS0xT1RzS2Rlb1FUQlBwQQ?oc=5",
-          "title": "Saudi Arabia faces new missile and drone fire after major attacks on airports - Reuters",
-          "excerpt": "Saudi Arabia faces new missile and drone fire after major attacks on airports  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-10-12T13:17:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=996401578b72bc0bdab20599f8fda9d80477a9f629569ce74822bc283d95e389",
-          "title": "Lockheed bets on 'revolutionary' Patriot to stop faster missiles",
-          "excerpt": "The defense giant says its new interceptor beats older models on speed and reach. The price tag tells investors more than the specs do.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-11T18:03:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=be8a4c5c7b1b715569c8081cd5d6860488c61b76935cb22801cc59aac81af66a",
-          "title": "Firefly Aerospace vs. Rocket Lab: Which Industrials Stock Is a Better Buy in 2026?",
-          "excerpt": "Firefly's hypergrowth masks massive cash burn, while Rocket Lab trades at a premium despite better financial discipline. One valuation gap may matter more than you think.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-10T20:50:02.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=fbca539807f3ea01ca5f8f8d4ab545e8e6b91c7ea764649aa4596ff663af422d",
-          "title": "3 Space Stocks To Watch In October 2026",
-          "excerpt": "Space is quietly colliding with your everyday life. Starlink’s push to become a major US mobile carrier shows how satellites are moving from niche tech to mainstream infrastructure, with potential ripple effects across telecoms, defence and connectivity. That shift is exactly what this global space infrastructure stock list is built for. Read on to see three highlighted stocks from the wider group that could benefit if this trend continues. The three stocks covered next are only a small...",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-10T06:15:54.000Z",
-          "tickers": []
         }
       ]
     },
@@ -735,8 +736,65 @@
       "blurb": "מכסים, סנקציות, מלחמות סחר ושרשראות אספקה",
       "accent": "#d4537e",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=89483903f3a4522bcb1db26b6f12850ee32b6f94599ff88b97e67919fbfe0788",
+          "title": "Should You Buy Target Stock For Its Cash?",
+          "excerpt": "Over the last twelve months, Target (TGT) generated free cash flow equal to 6.4% of its market value, against 4.4% for the median S&P 500 company. A cash yield sitting that far above the median signals one of two things: a fundamentally sound business priced cheaply, or a company investors expect to shrink. So what are you actually getting when you buy Target for its cash.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:49:23.000Z",
+          "tickers": [
+            "SO",
+            "TGT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=e832354ec9f0e69442574416b750496f1be17674f9c07f4c134cf3daac2f08db",
+          "title": "Albertsons demands over $9bn from Kroger following merger collapse",
+          "excerpt": "A two-week court hearing is set to start later this month to establish legal responsibility for the collapse of the $24.6bn buyout.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:43:59.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=1ef40912dd33bb6d8389c90a2c01bfc1d3cb63d00cb20321188eef72aba03191",
+          "title": "Kraft Heinz vs. Coca-Cola: Which Consumer Goods Stock Is a Better Buy in 2026?",
+          "excerpt": "Kraft Heinz trades at a steep discount but carries turnaround risks; Coca-Cola commands a premium for its 27% net margins and consistent cash generation.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T13:35:01.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=f6a89caa1de6b78937b64170a8cb72ae0cf816f57b5048c8cb3889860eb15bde",
+          "title": "Atomic Names Chad Brinton General Manager to Help Enterprise Planning Teams Turn Supply Plans into Results",
+          "excerpt": "Atomic, the AI-native supply chain planning platform, today announced that Chad Brinton has joined the company as General Manager, Strategic Accounts. Brinton brings more than 15 years of supply chain and operations leadership, spanning management consulting, e-commerce analytics at Walmart, and operations for some of the fastest-growing direct-to-consumer brands of the last decade.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T13:00:00.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=6afa99142a6b9a1b2019e85fb94241248c320ae1cfddc7a3246d452cd66eebc6",
+          "title": "e.l.f. Beauty vs. Monster Beverage: Which Consumer Goods Stock Is a Better Buy in 2026?",
+          "excerpt": "Monster posted record quarterly revenue in Q2 2026 with growth across every region. e.l.f. Beauty delivered its 30th consecutive quarter of sales growth but faces rising costs and margin pressure.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T10:14:13.000Z",
+          "tickers": [
+            "F"
+          ]
+        },
         {
           "url": "https://finnhub.io/api/news?id=5341b8df92c053ac7373acfbaddf756a1a2209bb452be8294e218e39933335e1",
           "title": "Kroger To Reportedly Eliminate 37% Of Corporate Workforce In Operations Overhaul",
@@ -771,84 +829,25 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=f60e72e6e096383b84fe0c2e4e660eeecec01c2fa4f74d008bf383521e32454b",
-          "title": "Kroger to cut over one-third of corporate workforce in major restructuring",
-          "excerpt": "Investing.com -- The Kroger Co. (NYSE: KR) has announced plans to eliminate approximately 3,000 corporate positions over the next three years. The sweeping reduction is part of a broader strategic initiative led by Chief Executive Officer Greg Foran to streamline the grocery chain’s operations and enhance organizational agility.",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOLXU4YU9BUnl0d1dlTGlaSmdhcFBDcS1lRDFaeGRhbjNPaVFXU0NCQVlabFRhMXRFVVJER2gtclFYWE5hdHR4bXM1N245MWNKeS0yVkNkWFE0S0d5aDFaNmptQUlGWEtCZk4ySXJfWjU1ODczRTUxd2VwS19lTHc5ZTlMQ0hyZ09kOFRPUkVfcUdja3pjY0hGUXZvdWNiS1NEYms3c0I5UlpRX3Q4LUV2Z3d5QkkydkZiRmxXMUZB?oc=5",
+          "title": "EXCLUSIVE: US imposes sanctions on ICC hours after former judge wins Nobel Peace Prize - Reuters",
+          "excerpt": "EXCLUSIVE: US imposes sanctions on ICC hours after former judge wins Nobel Peace Prize  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
           "country": null,
-          "seenAt": "2026-10-12T21:16:54.000Z",
+          "seenAt": "2026-10-11T07:00:00.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=341981556baa45defaad2499685c52f7bc1c52fa27a1f8317a9c01e46efd92cd",
-          "title": "Is Walmart Stock Increasing Your Market Risk?",
-          "excerpt": "Investors often hold Walmart (WMT) stock alongside funds that already track the S&P 500. Walmart is a retailer of groceries and everyday essentials worth about $886 billion. A stock that moves in lockstep with the broader index simply compounds existing bets, while one that charts its own course helps spread risk. So what does Walmart stock do on the market's good days and bad days.",
+          "url": "https://finnhub.io/api/news?id=dccb32607c83e7b1f7fbba7c25ae1fef2123039705218965007534079fa5e0b8",
+          "title": "Walmart Trading at 36.32X Forward P/E: How to Play WMT Stock?",
+          "excerpt": "Walmart's 36.32X forward P/E reflects strong digital growth and market share gains, but rising costs and margin pressures raise questions about WMT stock's upside.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T21:09:05.000Z",
-          "tickers": [
-            "WMT",
-            "SO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=6d46c94f1085d978dfc1cf3692f7c5dc22d0032430e14f39480141c76ca0ae5c",
-          "title": "What Is The One Risk Every Home Depot Investor Should Know?",
-          "excerpt": "Shares of Home Depot (HD) have lost 22% over the past twelve months, significantly lagging the 17.0% return of the S&P 500. Total sales are still growing, up 5.7% in the fiscal second quarter. Yet during Home Depot’s August 18, 2026 earnings call, executives described a sector-wide pressure that remains out of their hands. So what is that pressure, and where does it come from.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T20:54:19.000Z",
-          "tickers": [
-            "SO",
-            "HD"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=cb5595db4b8085a6cdb803e3d0d1e986ca2242bd62d8f9f99c11078d36ec96ae",
-          "title": "Kroger Plans to Slash 37% of Corporate Jobs in Next Three Years",
-          "excerpt": "Kroger Co. plans to cut more than one-third of its corporate headcount as the grocer seeks to simplify operations and compete more effectively under new Chief Executive Officer Greg Foran.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T20:32:31.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=02ccc14928cac6b07e502b3a1349a262b04aa03aacb6c39874473bea74c00ca6",
-          "title": "Uncover the latest developments among dow jones stocks in today's session.",
-          "excerpt": "Curious about the top performers within the dow jones index one hour before the close of the markets on Monday? Dive into the list of today's session's top gainers and losers for a comprehensive overview.",
-          "image": "https://www.chartmill.com/images/uploads/CM_Top_Movers_Small_free_2b4ff2fc22.webp",
-          "domain": "ChartMill",
-          "country": null,
-          "seenAt": "2026-10-12T19:10:13.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=c4f5ca4944d6cc1aa39235a6683d2e678e8916128bf8870aaa7b5d9101b86bc0",
-          "title": "Walmart (WMT) Rises As Market Takes a Dip: Key Facts",
-          "excerpt": "In the most recent trading session, Walmart (WMT) closed at $113.08, indicating a +1.55% shift from the previous trading day.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T20:45:06.000Z",
+          "seenAt": "2026-10-13T12:59:00.000Z",
           "tickers": [
             "WMT"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=f0ed77ab805a7c8e1eab98efece0d8cb00ca29f19ee6a87a9f5ddc5374d7aa8e",
-          "title": "Should You Buy Target Stock At This Price?",
-          "excerpt": "Shares of Target (TGT) currently trade at 15.9 times earnings, below the 21.9 multiple for the median S&P 500 company, though one-time tariff refunds flatter that figure. This valuation gap persists even after the stock returned 80% over the past twelve months. The disconnect suggests one of two scenarios: either a fundamentally sound retailer remains on sale, or the broader market doubts Target can sustain its recent results. So what does a buyer actually get at this price.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T19:28:57.000Z",
-          "tickers": [
-            "SO",
-            "TGT"
           ]
         }
       ]
@@ -859,32 +858,30 @@
       "blurb": "הוצאות הצרכן, קמעונאות, מזון ומותגים",
       "accent": "#97c459",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=341981556baa45defaad2499685c52f7bc1c52fa27a1f8317a9c01e46efd92cd",
-          "title": "Is Walmart Stock Increasing Your Market Risk?",
-          "excerpt": "Investors often hold Walmart (WMT) stock alongside funds that already track the S&P 500. Walmart is a retailer of groceries and everyday essentials worth about $886 billion. A stock that moves in lockstep with the broader index simply compounds existing bets, while one that charts its own course helps spread risk. So what does Walmart stock do on the market's good days and bad days.",
+          "url": "https://finnhub.io/api/news?id=f6a89caa1de6b78937b64170a8cb72ae0cf816f57b5048c8cb3889860eb15bde",
+          "title": "Atomic Names Chad Brinton General Manager to Help Enterprise Planning Teams Turn Supply Plans into Results",
+          "excerpt": "Atomic, the AI-native supply chain planning platform, today announced that Chad Brinton has joined the company as General Manager, Strategic Accounts. Brinton brings more than 15 years of supply chain and operations leadership, spanning management consulting, e-commerce analytics at Walmart, and operations for some of the fastest-growing direct-to-consumer brands of the last decade.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T21:09:05.000Z",
+          "seenAt": "2026-10-13T13:00:00.000Z",
           "tickers": [
-            "WMT",
-            "SO"
+            "WMT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=f0ed77ab805a7c8e1eab98efece0d8cb00ca29f19ee6a87a9f5ddc5374d7aa8e",
-          "title": "Should You Buy Target Stock At This Price?",
-          "excerpt": "Shares of Target (TGT) currently trade at 15.9 times earnings, below the 21.9 multiple for the median S&P 500 company, though one-time tariff refunds flatter that figure. This valuation gap persists even after the stock returned 80% over the past twelve months. The disconnect suggests one of two scenarios: either a fundamentally sound retailer remains on sale, or the broader market doubts Target can sustain its recent results. So what does a buyer actually get at this price.",
+          "url": "https://finnhub.io/api/news?id=963c3915c3a0212b98fe55722862f25d3afb1c7dbdcd508f02eae8895192c606",
+          "title": "Two Reasons Keep Me Buying Amazon Without Fear",
+          "excerpt": "AWS is accelerating while spending $200 billion, and the math behind it either makes this the most confident buy of the decade or a very expensive lesson in timing.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T19:28:57.000Z",
+          "seenAt": "2026-10-13T12:45:10.000Z",
           "tickers": [
-            "SO",
-            "TGT"
+            "AMZN"
           ]
         },
         {
@@ -901,64 +898,40 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=c4f5ca4944d6cc1aa39235a6683d2e678e8916128bf8870aaa7b5d9101b86bc0",
-          "title": "Walmart (WMT) Rises As Market Takes a Dip: Key Facts",
-          "excerpt": "In the most recent trading session, Walmart (WMT) closed at $113.08, indicating a +1.55% shift from the previous trading day.",
+          "url": "https://finnhub.io/api/news?id=dccb32607c83e7b1f7fbba7c25ae1fef2123039705218965007534079fa5e0b8",
+          "title": "Walmart Trading at 36.32X Forward P/E: How to Play WMT Stock?",
+          "excerpt": "Walmart's 36.32X forward P/E reflects strong digital growth and market share gains, but rising costs and margin pressures raise questions about WMT stock's upside.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T20:45:06.000Z",
+          "seenAt": "2026-10-13T12:59:00.000Z",
           "tickers": [
             "WMT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=f4f3146c04caa5ae01beec6607c141f094da0b920e5a40abcddd849b04a2685f",
-          "title": "What Cheaper Gas Would Mean For Costco’s Sales And Margins",
-          "excerpt": "Costco Wholesale (COST) stock currently trades at 45.6 times earnings, compared with 21.9 for the S&P 500. Investors paying that price may be counting on growth. That growth has materialized, as September net sales rose 13.0% from a year earlier. However, gas hit $4.32 a gallon in mid-September, and those higher fuel costs add to Costco's sales. So how much of that growth would go if gas prices came back down.",
+          "url": "https://finnhub.io/api/news?id=81be8c5f274501b8197b0bd4836afc56d017d9b6a23ef85853794d5833f0498c",
+          "title": "Walmart’s ‘Next-Gen’ CA Fulfillment Center to Boost Shipping Speed and Volume",
+          "excerpt": "Walmart has opened a 900,000-square-foot facility in Stockton, Calif. that it says represents the latest step in the total transformation of its supply chain.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T15:07:25.000Z",
+          "seenAt": "2026-10-13T12:22:46.000Z",
           "tickers": [
-            "SO",
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=555826c5242344f5f0fe5ab12dd0a21c5bdd7a69ba9ec09878d547ef21f88f58",
+          "title": "'Walmart to Cover Some GLP-1s, Insulin at No Cost for Workers' - Bloomberg",
+          "excerpt": "https://www.bloomberg.com/news/articles/2026-10-13/walmart-to-cover-some-glp-1s-insulin-at-no-cost-for-workers",
+          "image": null,
+          "domain": "Benzinga",
+          "country": null,
+          "seenAt": "2026-10-13T09:35:58.000Z",
+          "tickers": [
+            "WMT",
             "COST"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=534fc7d8e743d2b73621b6787ffe978d3c7e52ae35e146f540d14be3d60fe360",
-          "title": "Walmart's billion-dollar robot push runs into trouble",
-          "excerpt": "Walmart is counting on warehouse robots to keep shelves stocked and orders moving, but technical problems and rising costs are complicating its plans.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T18:47:00.000Z",
-          "tickers": [
-            "WMT"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=5acfbfd7a729b8f4c2fe2316bab274e918d8ed4d2e4935d8af96ed35db0c04ee",
-          "title": "Walmart and the Walmart Foundation Commit $1 Million to Support Communities Impacted by Hurricane Isaias",
-          "excerpt": "BENTONVILLE, Ark., October 12, 2026--Walmart and the Walmart Foundation commit $1 million to Hurricane Isaias relief, providing meals, essential supplies and resources across Florida.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T16:00:00.000Z",
-          "tickers": [
-            "WMT"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=bcc52e384c72f235305b61c67a96f9b84ee8bb837646492310ec21a295d17b51",
-          "title": "Walmart's Fulfillment Center to Boost West Coast Delivery Reach",
-          "excerpt": "Walmart's new automated fulfillment center in California aims to accelerate West Coast deliveries, boost e-commerce efficiency and support growing online demand.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T15:09:00.000Z",
-          "tickers": [
-            "WMT"
           ]
         }
       ]
@@ -969,19 +942,41 @@
       "blurb": "פארמה, ביוטק, אישורי FDA וביטוח בריאות",
       "accent": "#5dcaa5",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=5c26291ca92708763cb3875dc9ab591493dcebb54023a277eefc0cab5d20c7fa",
-          "title": "AbbVie vs. Eli Lilly: Which Healthcare Stock Is a Better Buy in 2026?",
-          "excerpt": "AbbVie trades at a 40% valuation discount but faces revenue concentration risk, while Eli Lilly's cardiometabolic dominance commands a premium.",
+          "url": "https://finnhub.io/api/news?id=2ff4753f6076df55fb644a028f9dfaca3053e50f1086a97994376eefb51d31a1",
+          "title": "Walmart to cover GLP-1s, insulin at no cost for workers in benefits push - report",
+          "excerpt": "Investing.com -- Walmart Inc (NASDAQ:WMT) plans to cover more than 250 prescription medications at no cost for its workforce, according to a staff memo from Chief People Officer Donna Morris reported by Bloomberg. The expansion includes popular diabetes treatments like Novo Nordisk’s Ozempic and Eli Lilly’s Mounjaro for employees with Type 2 diabetes, subject to prior approval.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T23:51:01.000Z",
+          "seenAt": "2026-10-13T15:36:59.000Z",
           "tickers": [
-            "LLY"
+            "LLY",
+            "WMT",
+            "COST"
           ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d6cc5a18341120b4042d9c7782d95ce246363cae42d5930c60a8044f46d2e33f",
+          "title": "Why A Biotech M&A Wave May Hit This Winter",
+          "excerpt": "Biotech stocks have slumped from their August highs. But experts say renewed M&A, likely coming, could catalyze them.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T12:00:52.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=5f1d44ee9040cebe4a76a89e50cae884c71ec8c68ec1998c091446bcf93be2b2",
+          "title": "Prelude Announces Clinical Trial Collaboration and Supply Agreement with Lilly to Evaluate KAT6A Selective Degrader PRT13722 in Combination with Verzenio® and Inluriyo® in Patients with HR+/HER2- Breast Cancer",
+          "excerpt": "Combination cohorts are part of Prelude’s Phase 1 trial evaluating PRT13722 in patients with HR+/HER2- breast cancer, on track to initiate enrollment in the fourth quarter of 2026 The collaboration is underpinned by pre-clinical data that demonstrate monotherapy efficacy for PRT13722 and synergy with both CDK4/6 inhibitors and endocrine therapies across multiple HR+ breast cancer models WILMINGTON, Del., Oct. 13, 2026 (GLOBE NEWSWIRE) -- Prelude Therapeutics Incorporated (Nasdaq: PRLD), a precis",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T11:01:00.000Z",
+          "tickers": []
         },
         {
           "url": "https://finnhub.io/api/news?id=db2d71f668cfe165e13f89cb01429985e98f0c46c6e9c5d7c7e8c751d51658d0",
@@ -1006,6 +1001,16 @@
           "tickers": []
         },
         {
+          "url": "https://finnhub.io/api/news?id=e92e5da1b8e377426927ca70ae2862f75de3248f3edf2f37f1de97e1e81e077c",
+          "title": "Pharma’s manufacturing boom has a workforce problem",
+          "excerpt": "Drugmakers are pouring billions into U.S. production, but building enough plants won’t matter without enough skilled workers to run them.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-12T17:42:52.000Z",
+          "tickers": []
+        },
+        {
           "url": "https://finnhub.io/api/news?id=e56eedd987cc94a618712e6a1e61bc2c1f2659bbfefcac8700a32838ef55df07",
           "title": "4 Healthcare Stocks Worth Owning for the Next Decade",
           "excerpt": "Two healthcare stocks that are leading their niches, and two that investors aren't giving enough credit to in the same niches.",
@@ -1026,62 +1031,27 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=ec6b899d8677cc971c4128635ebd24145e6368a585d1c01f876ab504597c907a",
-          "title": "Will Skyrizi & Rinvoq Drive AbbVie's Top-Line Growth in Q3?",
-          "excerpt": "ABBV's Skyrizi and Rinvoq are expected to drive Q3 growth, offset Humira's ongoing decline and face rising competition in the immunology market.",
+          "url": "https://finnhub.io/api/news?id=1be5bdb11756d458dec4cc6421c0708fb51b03187c26b9ce4aa436210f407c1b",
+          "title": "Eli Lilly Reports Earnings on Oct. 29. Here's Why the Retatrutide Story Matters More Than the Quarter.",
+          "excerpt": "Eli Lilly's next big growth driver could be bigger than Zepbound.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T14:17:00.000Z",
+          "seenAt": "2026-10-13T14:20:00.000Z",
           "tickers": [
-            "ABBV"
+            "LLY"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=44cb329f094ddd80ed20743b5ebf17257e25590c37560957fde5f2175889b630",
-          "title": "Lilly is fighting a black market for its new obesity drug even before it launches",
-          "excerpt": "The large pharma’s promising new candidate retatrutide is still in the clinic. But Lilly is already fighting a web of illicit sellers for the drug online.",
+          "url": "https://finnhub.io/api/news?id=27fe6a6c0ffc73d7fbae71f2d4474784813cf52a1bb26805c081c0845a548648",
+          "title": "Eli Lilly Expects Up to $87 Billion in 2026 Revenue. Here's Why the Stock Still Looks Undervalued.",
+          "excerpt": "This pharma stock has climbed in the triple digits in recent years.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T13:43:59.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=ea45af680e879736f052cc3e056d4f3d54a04e72978df2b6c3a14f74a948875f",
-          "title": "Pfizer Moves Past 50-Day SMA: Time to Buy, Hold or Exit the Stock?",
-          "excerpt": "PFE moves above its 50-day SMA as newer drugs, oncology and obesity treatments fuel growth prospects, but declining COVID sales and patent expirations pose challenges.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T12:53:00.000Z",
+          "seenAt": "2026-10-13T09:30:00.000Z",
           "tickers": [
-            "PFE"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=52b179860418821eea1130cb59b60518198ee0e511f9ff88a48e3c8d5f21f51a",
-          "title": "Novo Down 11% in a Month: How Should Investors Approach the Stock Now?",
-          "excerpt": "NVO's 11% slide in a month reflects intensifying LLY competition, pricing pressure and a lack of near-term growth visibility despite its long-term pipeline potential.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T15:24:00.000Z",
-          "tickers": [
-            "LLY",
-            "NVO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=471dbe8e44ee052eb30f6c569e370934be3284f5b7ba0d58c5ba598bcbe43d12",
-          "title": "JPMorgan gets bullish on Biogen ahead of 2027 catalysts",
-          "excerpt": "Investing.com -- JPMorgan lifted its rating for Biogen to Overweight from Neutral on Monday, pointing to a stronger run of clinical catalysts in 2027 and an improved long-term growth outlook.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T11:51:33.000Z",
-          "tickers": [
-            "JPM"
+            "LLY"
           ]
         }
       ]
@@ -1092,8 +1062,42 @@
       "blurb": "סטרימינג, גיימינג, פלטפורמות הזמנות ומסחר מקוון",
       "accent": "#d2789f",
       "ok": true,
-      "refreshedAt": "2026-10-13T08:35:11.889Z",
+      "refreshedAt": "2026-10-13T17:11:44.793Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=b2b44152033d7a1d9bc60d3459a0337a4d1d81edc5f5cdd6d9f545c80036ba9f",
+          "title": "PENN or TTWO: Which Is the Better Value Stock Right Now?",
+          "excerpt": "PENN vs. TTWO: Which Stock Is the Better Value Option?",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:40:02.000Z",
+          "tickers": [
+            "TTWO"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=392b9cfb0ec46a3da2e38df468fdb40143aa3578aecf2d49a9071b3d86d0c81c",
+          "title": "What the Street wants to hear from the next Netflix earnings call",
+          "excerpt": "Yahoo Finance Executive Editor Brian Sozzi goes in on Netflix (NFLX) ahead of its earnings call on Oct. 20, with its stock down about 25% year over year, and the specifics Wall Street wants from the streaming company's executives .",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:39:05.000Z",
+          "tickers": [
+            "NFLX"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b3c49b407cb7fece04c834ac0d6ccc424a17358f3b5dc6d34114cb2ac636943a",
+          "title": "October 2026s Top Cash Flow Stocks To Own",
+          "excerpt": "The IMF has warned that the global economy could soon test its limits as high debt and energy costs strain government budgets. When public finances look stretched, investors often pay closer attention to companies that generate solid cash and trade at a discount to the cash they can produce. This article highlights three such stocks that screen as potentially undervalued based on their future cash flow profiles. The three stocks below are only a sample of what screens as potentially...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T14:11:10.000Z",
+          "tickers": []
+        },
         {
           "url": "https://finnhub.io/api/news?id=e2b063bad7c2760edf3d0cff5c25e5fb5aaea8771033821f72e7746045b1a6db",
           "title": "1 Profitable Stock for Long-Term Investors and 2 Facing Headwinds",
@@ -1103,18 +1107,6 @@
           "country": null,
           "seenAt": "2026-10-13T08:03:04.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=287207c2272d0fd1ee7a85a48f93665da25b78372c8ee8ac76c7b97c7a55eae6",
-          "title": "Hold Netflix Through Earnings, But Be Aware Of Upcoming November Tax Loss Selling Season",
-          "excerpt": "Netflix faces significant price declines, underperforming the S&P 500 and its peers year-to-date. Learn why NFLX stock is a hold.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1393651026/image_1393651026.jpg?io=getty-c-w1536",
-          "domain": "SeekingAlpha",
-          "country": null,
-          "seenAt": "2026-10-13T03:55:09.000Z",
-          "tickers": [
-            "NFLX"
-          ]
         },
         {
           "url": "https://finnhub.io/api/news?id=cb5bc97432ad31a4da15b5f412e6b89e1d44081ff52439d5a9938e3541e5f63a",
@@ -1127,14 +1119,28 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=dc0ddd1b2a13c7571a099adc4b3495f5da5f24bbba6ebd983c2c0bacef741990",
-          "title": "Disney: Skydance Is A Bullish Catalyst",
-          "excerpt": "Disney's valuable IP portfolio, improving results, and streaming industry tailwinds create an attractive margin of safety. Check out the bullish thesis of DIS stock.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/458971009/image_458971009.jpg?io=getty-c-w1536",
-          "domain": "SeekingAlpha",
+          "url": "https://finnhub.io/api/news?id=77a6d1ff3ec11e1027eb0968d01ca3d0828f0fe6d6dfdb723f2bfe77bf4d6a95",
+          "title": "Take-Two Interactive Software, Inc. to Report Second Quarter Fiscal Year 2027 Results on Monday, November 9, 2026",
+          "excerpt": "NEW YORK, October 13, 2026--Take-Two Interactive Software, Inc. (NASDAQ: TTWO) today announced that it plans to report financial results for its second quarter of fiscal year 2027, ended September 30, 2026, after the market close on Monday, November 9, 2026. The Company plans to hold a conference call to discuss its results at 4:30 p.m. Eastern Time, which can be accessed by dialing (833) 461-5787 (Meeting ID: 112-490-011). A live, listen-only webcast and a replay of the call will be available a",
+          "image": null,
+          "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T01:34:06.000Z",
-          "tickers": []
+          "seenAt": "2026-10-13T12:00:00.000Z",
+          "tickers": [
+            "TTWO"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=8a9b2d9219d87e528c9daf46c9f0a4c7ada85ef3ea59e30aaaa35cd79794b427",
+          "title": "Netflix could stop its stock free-fall with these 4 actions: KeyBanc analyst",
+          "excerpt": "Changes need to come to Netflix.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-10-13T13:05:07.000Z",
+          "tickers": [
+            "NFLX"
+          ]
         },
         {
           "url": "https://finnhub.io/api/news?id=223a0021db2d910ffe20e77e8068d60a3af919753e35d56cabaab7b62a42e8ec",
@@ -1149,16 +1155,15 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=35dbb6e5ea1790d14bcc8fe50eae814a50bc94068819bc4c1cb3bce02b7a6bbd",
-          "title": "What Could Netflix Stock Be Worth In Three Years?",
-          "excerpt": "Over the past twelve months, Netflix (NFLX) stock has lost 40%, trailing the 17.0% return of the S&P 500. The shares now trade at 21.6 times earnings. That multiple sits well below what investors used to pay for them. Excluding readings above 100, the company's P/E averaged 39.7 at the last twelve quarter-ends. Yet the company's sales are still growing. So if Netflix keeps selling more, what would a share you buy today be worth three years from now.",
+          "url": "https://finnhub.io/api/news?id=c065567a231d2bef290b9933701f777b974fe8737bff2d4a7bc94c04ffce2c64",
+          "title": "Netflix (NFLX) Earnings Expected to Grow: What to Know Ahead of Next Week's Release",
+          "excerpt": "Netflix (NFLX) doesn't possess the right combination of the two key ingredients for a likely earnings beat in its upcoming report. Get prepared with the key expectations.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-10-12T18:57:43.000Z",
+          "seenAt": "2026-10-13T13:00:15.000Z",
           "tickers": [
-            "NFLX",
-            "SO"
+            "NFLX"
           ]
         },
         {
@@ -1171,45 +1176,6 @@
           "seenAt": "2026-10-10T07:27:00.000Z",
           "tickers": [
             "TTWO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=0abf86f0f2c498ebe646a1abf0c6cf381a3f4a3864f16963c2d18a18009bf0e7",
-          "title": "Skydance: The Next Netflix? Not So Fast",
-          "excerpt": "Skydance Corporation post-merger outlook: big IP, $6B synergy target and $10B+ FCF potential by 2030âyet execution risk is high. Click for this SKYD update.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2254004225/image_2254004225.jpg?io=getty-c-w1536",
-          "domain": "SeekingAlpha",
-          "country": null,
-          "seenAt": "2026-10-12T16:26:56.000Z",
-          "tickers": [
-            "NFLX",
-            "SO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=53384cfc6dce3a376e893c6bf00f2fd2407c5159d94fb25524d0b1414e28d2e6",
-          "title": "Netflix, Inc. (NFLX) Is a Trending Stock: Facts to Know Before Betting on It",
-          "excerpt": "Recently, Zacks.com users have been paying close attention to Netflix (NFLX). This makes it worthwhile to examine what the stock has in store.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T12:00:03.000Z",
-          "tickers": [
-            "NFLX"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=23fad4fbd4fdc86d8c237921f08ebc057e053233f0048b4a0c937fe2dcc59522",
-          "title": "President Trump Just Dropped Over $1 Million Into 3 Tech Stocks -- Should You Buy Them Too?",
-          "excerpt": "President Trump's investment team was buying shares of Meta Platforms, Microsoft, and Netflix in August.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-10-12T09:20:00.000Z",
-          "tickers": [
-            "NFLX",
-            "MSFT",
-            "META"
           ]
         }
       ]
