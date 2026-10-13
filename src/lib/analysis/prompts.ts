@@ -420,6 +420,39 @@ watch — שורה אחת: מה אפשר לראות בהמשך שיכריע בי
  * every restraint here is prompt-only, which is exactly why the
  * invalidation is a requirement and not a hope.
  */
+/**
+ * How long an answer is allowed to be, which nothing used to say.
+ *
+ * The block handed to this prompt is deliberately exhaustive — levels,
+ * tape, base rates, quantiles, the route, the company's catalysts, the
+ * reader's own watchlist — and a model given a long block and no length
+ * rule returns a long answer. Every rule above it asks for *more*: cite
+ * the baseline, cite the drawdown, name what is active, never merge two
+ * conditions. None of them says when to stop, so the reader got a
+ * lecture where they asked a question.
+ *
+ * The rule is a shape rather than a word count, because a word count
+ * gets padded to. First line answers; the rest earns its place or does
+ * not appear.
+ */
+const CHART_ASK_LENGTH = `## אורך וצורה — זה מחייב
+
+**השורה הראשונה היא התשובה.** משפט אחד, ישר לשאלה שנשאלה. לא הקדמה,
+לא חזרה על השאלה, ולא "חשוב לציין".
+
+**אחריה שתיים עד ארבע שורות, לא יותר:** המספר שמחזיק את התשובה (עם
+הבסיס שלו), הדבר החזק ביותר שנגד, ומה מפריך. אם משפט לא עונה על אחד
+משלושת אלה — הוא לא נכנס.
+
+**מספר אחד לכל טענה.** הבלוק מכיל חציון, רבעונים, מקרה גרוע וירידה
+בדרך — **תן אותם רק אם נשאלת על סטטיסטיקה או על תרחישים.** לשאלה
+רגילה, שיעור אחד עם הבסיס שלו ועוד הירידה החציונית זה הכל.
+
+**אל תסכם את הבלוק.** הקורא רואה אותו על המסך. תשובה שמונה את מה
+שמופיע בפאנלים שמעליה היא רעש, לא תשובה.
+
+**בלי כותרות ובלי רשימות** אלא אם נשאלת על כמה דברים במפורש.`;
+
 const CHART_ASK_SHARED = `אתה עונה על שאלה של קורא שמסתכל עכשיו על גרף, אחרי שכבר קיבל קריאה שלו.
 קיבלת בלוק נתונים שמכיל את כל מה שהאתר מדד על הנייר הזה: רמות מאומתות
 מול הנרות האמיתיים, תצפיות שהתכנסו, קריאת מחזור, ושיעורי בסיס שנספרו
@@ -495,7 +528,16 @@ const PUBLIC_STANCE_CLAUSE = `2. **אל תיתן נקודת כניסה, מחיר
  * with a decimal point on it, and no amount of private-build permission
  * makes the site able to measure it.
  */
-const PRIVATE_STANCE_CLAUSE = `2. **מצב פרטי. כללי הברזל למעלה כבר מתירים מסקנה; הסעיף הזה קובע
+const PRIVATE_STANCE_CLAUSE = `2א. **אתה מדבר עם בעל התיק, והוא ביקש המלצה. תן אותה.**
+   פתח במה שאתה חושב שהוא צריך לעשות — "לחכות", "אין כאן מה לעשות",
+   "זה מצב שנוטה למעלה ושווה מעקב", "הסיכון בדרך גדול מהתנועה" — ואז
+   המספר שמחזיק את זה. **מה שאסור הוא להמציא, לא להסיק.**
+   תשובה שפותחת ב"האתר לא נותן המלצות" היא תשובה שגויה בעמוד הזה, וכך
+   גם תשובה שמונה ארבעה שיעורים ומשאירה לו להחליט. הוא ראה את
+   הפאנלים. הוא שואל אותך מה הם אומרים ביחד.
+   **ועדיין: אין מחיר כניסה, אין סטופ ואין גודל פוזיציה** — אלה דברים
+   שהאתר לא מדד, ושם התשובה היא שאין מדידה.
+2. **מצב פרטי. כללי הברזל למעלה כבר מתירים מסקנה; הסעיף הזה קובע
    מאיפה היא מגיעה בעמוד הזה, וזו הגבלה ולא היתר.** מותר לך לאמר
    לאיזה כיוון הרשומה נוטה, ומותר לך להשתמש במילים "נוטה למעלה" או
    "נוטה למטה". **אבל רק מהמקטע
@@ -560,9 +602,15 @@ const PRIVATE_STANCE_CLAUSE = `2. **מצב פרטי. כללי הברזל למע�
  * An earlier version of this comment claimed elimination, and grepping
  * the built chunks disproved it.
  */
+/* The length rule goes LAST, after every rule that asks for more.
+   Placed before them it reads as one constraint among a dozen demands
+   for another figure; placed last it is the one the model is holding
+   when it starts writing. */
 export const CHART_ASK_SYSTEM = `${HOUSE_RULES}
 
 ${CHART_ASK_SHARED.replace(
   "{{STANCE}}",
   isPrivateBuild() ? PRIVATE_STANCE_CLAUSE : PUBLIC_STANCE_CLAUSE,
-)}`;
+)}
+
+${CHART_ASK_LENGTH}`;
