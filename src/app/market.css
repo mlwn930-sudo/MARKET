@@ -1457,3 +1457,44 @@
     color: var(--color-text-subtle);
   }
 }
+
+@layer components {
+  /* The control read. One block rather than a figure row, because the
+     sentence under it is half the measurement: the number alone invites
+     exactly the reading the note exists to refuse. Edged in the data
+     colour whichever way it leans — this is not a price direction, and
+     green or red here would turn a measurement into a verdict. */
+  .tape-control {
+    margin-top: 10px;
+    max-inline-size: 680px;
+    padding: 11px 13px;
+    border: 1px solid var(--color-border-default);
+    border-inline-start: 2px solid var(--color-intelligence);
+    border-radius: 8px;
+  }
+
+  .tape-control-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+
+  .tape-control-head b {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .tape-control-head .num {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  .tape-control p {
+    margin-top: 7px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--color-text-subtle);
+  }
+}

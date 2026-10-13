@@ -15,6 +15,7 @@
 import { strict as assert } from "node:assert";
 import test from "node:test";
 import {
+  readControl,
   NORMAL_WINDOW,
   readBar,
   readObv,
@@ -221,4 +222,76 @@ test("the normal window is a trading year", () => {
      the file is a percentile of this window, so changing it silently
      changes what "heavy" means on every page. */
   assert.equal(NORMAL_WINDOW, 252);
+});
+
+/* ------------------------------------------------------------------ */
+/* Which end the heavy sessions closed at                              */
+/* ------------------------------------------------------------------ */
+
+function bar(
+  date: string,
+  low: number,
+  high: number,
+  close: number,
+  volume: number,
+) {
+  return { date, open: (low + high) / 2, high, low, close, volume };
+}
+
+test("heavy sessions closing high read as the upper end", () => {
+  /* Twenty quiet mid-range days, then heavy days closing on their
+     highs. The quiet days must not dilute the heavy ones — that is the
+     reason the measure takes the top quartile rather than the window. */
+  const rows = [];
+  for (let i = 0; i < 60; i++) {
+    rows.push(bar(`2026-01-${String((i % 28) + 1).padStart(2, "0")}`, 100, 102, 101, 1_000));
+  }
+  for (let i = 0; i < 20; i++) {
+    rows.push(bar(`2026-03-${String((i % 28) + 1).padStart(2, "0")}`, 100, 110, 109.8, 9_000));
+  }
+  const read = readControl(rows);
+  assert.ok(read);
+  assert.ok(read!.heavyWeightedClose! > 0.9, "closes sat at the top");
+  assert.equal(read!.lean, "upper");
+  assert.ok(read!.heavyTopThird > read!.heavyBottomThird);
+});
+
+test("heavy sessions closing low read as the lower end", () => {
+  const rows = [];
+  for (let i = 0; i < 60; i++) {
+    rows.push(bar(`2026-01-${String((i % 28) + 1).padStart(2, "0")}`, 100, 102, 101, 1_000));
+  }
+  for (let i = 0; i < 20; i++) {
+    rows.push(bar(`2026-03-${String((i % 28) + 1).padStart(2, "0")}`, 100, 110, 100.2, 9_000));
+  }
+  const read = readControl(rows);
+  assert.equal(read!.lean, "lower");
+  assert.ok(read!.heavyBottomThird > read!.heavyTopThird);
+});
+
+test("the note refuses to name a participant, whichever way it leans", () => {
+  /* The discipline this whole file is built on. A panel that prints
+     "the heavy days closed at the top" and stops has invited the reader
+     to finish the sentence with "so buyers are in control", which the
+     data cannot support. */
+  const rows = [];
+  for (let i = 0; i < 80; i++) {
+    rows.push(bar(`2026-0${(i % 9) + 1}-01`, 100, 110, 109, 5_000 + i));
+  }
+  const read = readControl(rows);
+  assert.match(read!.note, /בכל עסקה יש שני הצדדים|לא אומר מי קנה ומי מכר/);
+});
+
+test("a flat tape is called even rather than forced into a side", () => {
+  const rows = [];
+  for (let i = 0; i < 80; i++) {
+    rows.push(bar(`2026-0${(i % 9) + 1}-01`, 100, 110, 105, 5_000));
+  }
+  const read = readControl(rows);
+  assert.equal(read!.lean, "even");
+});
+
+test("too little history produces nothing rather than a guess", () => {
+  const rows = [bar("2026-01-01", 100, 102, 101, 1_000)];
+  assert.equal(readControl(rows), null);
 });

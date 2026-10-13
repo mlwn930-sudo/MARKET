@@ -342,7 +342,7 @@ export function TapePanel({
     );
   }
 
-  const { latest, notable, profile, obv, trend } = tape;
+  const { latest, notable, profile, obv, trend, control } = tape;
   /* The lead bar is already first in `notable` when it was abnormal; this
      keeps it from being printed twice. */
   const rest = notable.filter((b) => b.date !== latest.date);
@@ -395,6 +395,44 @@ export function TapePanel({
 
       {earnings && (
         <Earnings date={earnings.date} sessionsAway={earnings.sessionsAway} />
+      )}
+
+      {/* THE QUESTION EVERYONE ASKS ABOUT VOLUME, CORRECTLY ASKED.
+          "Are buyers or sellers in control" has no answer in daily
+          OHLCV — every trade has both, and nothing in a day bar says
+          which side was in a hurry. What the bar does carry is where
+          the close landed inside its own range, and weighting that by
+          volume asks the real question: on the sessions when the most
+          shares changed hands, which end did price finish at. The note
+          says the refusal out loud rather than letting the panel imply
+          a participant it cannot see. */}
+      {control && (
+        <>
+          <h4 className="tape-heading">באיזה קצה נסגרו הימים הכבדים</h4>
+          <div className="tape-control" data-lean={control.lean}>
+            <div className="tape-control-head">
+              <b>
+                {control.lean === "upper"
+                  ? "הקצה העליון"
+                  : control.lean === "lower"
+                    ? "הקצה התחתון"
+                    : "בערך באמצע"}
+              </b>
+              {control.heavyWeightedClose !== null && (
+                <span className="num" dir="ltr">
+                  {Math.round(control.heavyWeightedClose * 100)}%
+                </span>
+              )}
+              {control.percentile !== null && (
+                <span className="tape-rank">
+                  אחוזון {Math.round(control.percentile * 100)} מול ההיסטוריה
+                  של הנייר עצמו
+                </span>
+              )}
+            </div>
+            <p>{control.note}</p>
+          </div>
+        </>
       )}
 
       <h4 className="tape-heading">כיוון ההשתתפות</h4>

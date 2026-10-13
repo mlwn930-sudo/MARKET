@@ -737,6 +737,16 @@ export type TapeRead = {
    * participation rising or falling. Under 1 is a contraction.
    */
   trend: number | null;
+  /**
+   * Which end of their ranges the heavy sessions closed at, ranked
+   * against this instrument's own history of the same measure.
+   *
+   * Carried on `TapeRead` rather than computed at each call site,
+   * because the tape reaches the company page, the chart reader and the
+   * convergence engine through this one object — and a volume reading
+   * that differs between two pages is two sites.
+   */
+  control: ControlRead | null;
   caveats: string[];
 };
 
@@ -753,6 +763,7 @@ export function readTape(input: Candle[]): TapeRead {
   const { rows: candles, droppedPartial } = completeSessions(input);
 
   const empty: TapeRead = {
+    control: null,
     sessions: candles.length,
     through: candles[candles.length - 1]?.date ?? null,
     droppedPartial,
@@ -785,6 +796,10 @@ export function readTape(input: Candle[]): TapeRead {
   const baseAverage = mean(base.map((c) => c.volume));
 
   return {
+    /* Measured on the complete sessions, like everything else here: a
+       partial bar has no settled close and so no position inside its
+       own range. */
+    control: readControl(candles),
     sessions: candles.length,
     through: candles[candles.length - 1].date,
     droppedPartial,
@@ -800,5 +815,182 @@ export function readTape(input: Candle[]): TapeRead {
       "קריאת נר היא תיאור של צורה, לא זיהוי של מי שעמד בצד השני. " +
         "הטייפ לא מוסר מי סחר.",
     ],
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* Who controlled the tape — measured, without naming anybody          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Where the closes landed on the sessions that actually moved shares.
+ *
+ * The question every reader asks about volume is "are buyers or sellers
+ * in control", and the honest answer starts by refusing the premise:
+ * **every trade has a buyer and a seller, and daily OHLCV cannot tell
+ * you which one was in a hurry.** Volume is shares that changed hands,
+ * not a direction. Any tool that prints "selling volume" from a daily
+ * bar has split a number that does not divide.
+ *
+ * What a daily bar DOES carry is where the close landed inside its own
+ * range. A session that opened, ran up, and closed on its low gave the
+ * day back; one that closed on its high did not. Weight that by volume
+ * and you have the real question, correctly asked: **on the days when
+ * the most shares changed hands, which end of the range did price
+ * finish at.** That is a measurement, it is the closest thing to "who
+ * won the day" that exists in this data, and it never names a
+ * participant.
+ *
+ * TWO THINGS MAKE IT A READING RATHER THAN A NUMBER.
+ *
+ * It is restricted to the heaviest quartile of sessions. A quiet drift
+ * closing mid-range every day is not information, and averaging it in
+ * dilutes the sessions that are.
+ *
+ * And it is ranked inside the instrument's own history of the same
+ * measure, not against 0.5. Some names systematically close near their
+ * highs; for those, 0.55 is a weak tape and not a strong one. The same
+ * rule every other reading on this site follows — the baseline is the
+ * instrument, not the textbook.
+ */
+export type ControlRead = {
+  window: number;
+  /** Volume-weighted close position across the whole window, 0..1. */
+  weightedClose: number;
+  /** The same, restricted to the heaviest quartile. Null when the
+   *  window holds too few sessions to have a quartile worth the name. */
+  heavyWeightedClose: number | null;
+  /** How many sessions that quartile holds, and how they split. */
+  heavyCount: number;
+  heavyTopThird: number;
+  heavyBottomThird: number;
+  /** Where `heavyWeightedClose` ranks among every window of the same
+   *  length in the history available. Null when there is not enough. */
+  percentile: number | null;
+  /** The reading. `upper` means the heavy sessions finished near the
+   *  top of their ranges relative to how this name usually finishes. */
+  lean: "upper" | "lower" | "even";
+  note: string;
+};
+
+/** The window the reading covers. A quarter, matching `NOTABLE_WINDOW`,
+ *  so the list of abnormal days and the balance across them describe
+ *  the same stretch of tape. */
+const CONTROL_WINDOW = 63;
+/** Below this there is no quartile worth taking. */
+const MIN_FOR_QUARTILE = 20;
+/** How far from the instrument's own middle the reading has to sit
+ *  before it is called anything. Inside this band it is called even,
+ *  which is the common and correct answer. */
+const LEAN_PERCENTILE = 0.25;
+
+/** Volume-weighted close position over a slice. */
+function weighted(rows: Candle[]): number | null {
+  let volume = 0;
+  let sum = 0;
+  for (const bar of rows) {
+    const range = bar.high - bar.low;
+    const position = range > 0 ? (bar.close - bar.low) / range : 0.5;
+    const v = bar.volume || 0;
+    volume += v;
+    sum += v * position;
+  }
+  return volume > 0 ? sum / volume : null;
+}
+
+/** The heaviest quartile of a slice, by volume. */
+function heaviest(rows: Candle[]): Candle[] {
+  const sorted = [...rows].sort((a, b) => (b.volume || 0) - (a.volume || 0));
+  return sorted.slice(0, Math.max(1, Math.round(rows.length / 4)));
+}
+
+export function readControl(
+  candles: Candle[],
+  window = CONTROL_WINDOW,
+): ControlRead | null {
+  if (candles.length < MIN_FOR_QUARTILE) return null;
+
+  const slice = candles.slice(-window);
+  const all = weighted(slice);
+  if (all === null) return null;
+
+  const heavy = slice.length >= MIN_FOR_QUARTILE ? heaviest(slice) : [];
+  const heavyWeightedClose = heavy.length ? weighted(heavy) : null;
+
+  let heavyTopThird = 0;
+  let heavyBottomThird = 0;
+  for (const bar of heavy) {
+    const range = bar.high - bar.low;
+    const position = range > 0 ? (bar.close - bar.low) / range : 0.5;
+    if (position >= 2 / 3) heavyTopThird++;
+    else if (position <= 1 / 3) heavyBottomThird++;
+  }
+
+  /* Ranked against every window of the same length this instrument has,
+     because the figure on its own is meaningless: a name that closes
+     near its high by habit makes 0.55 a weak tape, not a strong one. */
+  let percentile: number | null = null;
+  if (heavyWeightedClose !== null && candles.length >= window * 2) {
+    const history: number[] = [];
+    for (let end = window; end <= candles.length; end++) {
+      const past = candles.slice(end - window, end);
+      const value = weighted(heaviest(past));
+      if (value !== null) history.push(value);
+    }
+    if (history.length >= 30) {
+      const below = history.filter((v) => v < heavyWeightedClose).length;
+      percentile = below / history.length;
+    }
+  }
+
+  const lean: ControlRead["lean"] =
+    percentile !== null
+      ? percentile >= 1 - LEAN_PERCENTILE
+        ? "upper"
+        : percentile <= LEAN_PERCENTILE
+          ? "lower"
+          : "even"
+      : heavyWeightedClose === null
+        ? "even"
+        : heavyWeightedClose >= 0.6
+          ? "upper"
+          : heavyWeightedClose <= 0.4
+            ? "lower"
+            : "even";
+
+  const share = (v: number) => `${Math.round(v * 100)}%`;
+  const ranked =
+    percentile !== null
+      ? ` זה אחוזון ${Math.round(percentile * 100)} מול כל חלון באותו אורך בהיסטוריה של הנייר עצמו.`
+      : " אין די היסטוריה כדי לדרג את זה מול העבר של הנייר, ולכן זה מספר ולא דירוג.";
+
+  const note =
+    heavyWeightedClose === null
+      ? "אין די מסחר בחלון כדי לבודד את הימים הכבדים."
+      : (lean === "upper"
+          ? `בימים הכבדים של החלון הסגירות נטו לקצה העליון של הטווח ` +
+            `(${share(heavyWeightedClose)} בממוצע משוקלל מחזור).`
+          : lean === "lower"
+            ? `בימים הכבדים של החלון הסגירות נטו לקצה התחתון של הטווח ` +
+              `(${share(heavyWeightedClose)} בממוצע משוקלל מחזור).`
+            : `בימים הכבדים של החלון הסגירות התחלקו בערך באמצע הטווח ` +
+              `(${share(heavyWeightedClose)} בממוצע משוקלל מחזור).`) +
+        ranked +
+        ` מתוך ${heavy.length} הימים הכבדים, ${heavyTopThird} נסגרו בשליש העליון ` +
+        `ו-${heavyBottomThird} בשליש התחתון.` +
+        " זה לא אומר מי קנה ומי מכר — בכל עסקה יש שני הצדדים, ומנתוני יום " +
+        "אי אפשר לדעת מי מהם מיהר. זה אומר באיזה קצה של הטווח נסגרו הימים " +
+        "שבהם עברו הכי הרבה מניות.";
+
+  return {
+    window: slice.length,
+    weightedClose: all,
+    heavyWeightedClose,
+    heavyCount: heavy.length,
+    heavyTopThird,
+    heavyBottomThird,
+    percentile,
+    lean,
+    note,
   };
 }

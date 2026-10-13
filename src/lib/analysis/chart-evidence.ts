@@ -145,6 +145,20 @@ export function chartEvidence(
       );
     }
   }
+  /* THE QUESTION THE READER ACTUALLY ASKS ABOUT VOLUME.
+     Printed with its refusal attached, because a model handed "the
+     heavy sessions closed at the top of their ranges" will reach for
+     "buyers are in control" unless it is told, in the same breath, that
+     daily data cannot see a participant. */
+  const control = checked.tape?.control;
+  if (control) {
+    lines.push(`\n${control.note}`);
+    lines.push(
+      "**אל תתרגם את זה למי קנה או מי מכר.** בכל עסקה יש קונה ומוכר, " +
+        "ומנתוני יום אי אפשר לדעת מי מהם מיהר. אמור באיזה קצה של הטווח " +
+        "נסגרו הימים הכבדים — זו המדידה, וזו גם התשובה.",
+    );
+  }
   /* The one volume reading that is about the series rather than a bar.
      It is also the only place the block says price and volume disagree,
      and a disagreement is worth more than either side alone. */
