@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-19T19:06:56.659Z",
+  "builtAt": "2026-10-19T19:13:23.905Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,26 +7,35 @@
     "opportunity": 0,
     "range": 14,
     "event": 0,
-    "story": 6
+    "story": 8
   },
   "findings": [
     {
       "kind": "story",
-      "ticker": "TSLA",
-      "headline": "A SpaceX-Tesla Merger Could Happen Before the End of 2026. Here's What That Could Mean for the Stocks",
-      "detail": "אנליסטים מעריכים כי מיזוג בין טסלה ל-SpaceX עשוי להתרחש לפני סוף שנת 2026, בין היתר בשל תנאים נוחים תחת ממשל טראמפ. השילוב עשוי לפתוח סינרגיות ולהקל על גיוסי הון, אך שני הנכסים נסחרים בהערכו",
+      "ticker": "AMZN",
+      "headline": "AMZN Stock Set For Best Day In Three Months: Morgan Stanley Expects Amazon's AWS To Grow 47% In 2027, Denotes Stock As 'Top Pick'",
+      "detail": "מורגן סטנלי העלה את יעד המחיר לאמזון ל-$350 מ-$335, הגדיר אותה כ-'Top Pick' וצפה שחטיבת AWS תצמח ב-47% ב-2027 וב-42% ב-2028, בין היתר בעקבות פריסת 2 מיליון מעבדי GPU של נבידיה. בנוסף, אמזון ",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=8ebd8302e0aa12e923fed5b8878b1342e8928aa29f7040f0f081aacea4b94ab6",
-      "at": "2026-10-19T15:40:01.000Z"
+      "href": "https://finnhub.io/api/news?id=948792b45d937f2b1377bed687c0cd01d2b00ef91cf990f3dbb58b1ae98faf0b",
+      "at": "2026-10-19T17:48:58.000Z"
     },
     {
       "kind": "story",
-      "ticker": "TSM",
-      "headline": "Opinion: The Most Important Number in Taiwan Semiconductor's Earnings Report Was 68%",
-      "detail": "Taiwan Semiconductor Manufacturing דיווחה על הכנסות ברבעון השלישי בסך 46.72 מיליארד דולר, גידול של 41.2% לעומת השנה המקבילה. הרווח הנקי זינק ב-68.7% ומרג'ין הרווח הגולמי הגיע ל-66.4%, כאשר מ",
+      "ticker": "VRT",
+      "headline": "Where Will Vertiv Stock Be in 1 Year?",
+      "detail": "מניית Vertiv ירדה לכ-211 דולר לאחר ששיאה עמד על 376.06 דולר ב-14 במאי 2026. הירידה מיוחסת לפספוס קל של תחזיות ההכנסות ברבעון השני עקב תזמון חוזים ואילוצי שרשרת אספקה, לרבות רכישת UtilityInno",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=8ef068114aacf3de84501e2941c0189374db8388dff522028d3c4e65bd67d6d4",
-      "at": "2026-10-19T15:05:00.000Z"
+      "href": "https://finnhub.io/api/news?id=98b26193ea3693ccac8d7387ce196d9b2b973cc9712f3c2ac7e8f2c8b5ae6a25",
+      "at": "2026-10-19T17:15:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia: The Real Competitive Advantage Isn't About The Chip",
+      "detail": "היתרון התחרותי של Nvidia אינו טמון בשבב עצמו, אלא בכך שבינה מלאכותית נותרת מוגבלת בהיצע, כאשר קיבולת הייצור של TSMC מהווה צוואר בקבוק מרכזי. חברות הענן הגדולות (Hyperscalers) מפתחות חלופות פ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=d3b857cb0880721a1864c12daeae468ca1a9317166ce0ea23e4f94e984922c07",
+      "at": "2026-10-19T12:50:37.000Z"
     },
     {
       "kind": "story",
@@ -36,6 +45,15 @@
       "weight": 2.2,
       "href": "https://finnhub.io/api/news?id=5c9a058b791abb54d991b66f87cc15847ce9844f9eef1b8610820c30c0c3473f",
       "at": "2026-10-19T05:19:22.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TSM",
+      "headline": "Samsung Turns to Rival TSMC for Nvidia’s Next-Generation Memory—Micron, SK Hynix Face Same Request: Report",
+      "detail": "סמסונג תשתמש בתהליך הייצור של TSMC לייצור בסיס הזיכ עבור הזיכרון ברוחב פס גבוה המותאם אישית של אנבידיה. הדיווח מציין שגם מיקרון ו-SK הייניקס קיבלו בקשה דומה.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=749feea00fa59435421fe7c636fffa30cb34e381c6a00369b9bd201b273de436",
+      "at": "2026-10-19T03:10:01.000Z"
     },
     {
       "kind": "story",
@@ -66,129 +84,129 @@
     },
     {
       "kind": "range",
-      "ticker": "ISRG",
-      "headline": "ISRG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 433.09 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/ISRG",
-      "at": "2026-10-19T19:06:56.659Z"
-    },
-    {
-      "kind": "range",
       "ticker": "BAC",
       "headline": "BAC בשפל של רבעון",
-      "detail": "הסגירה האחרונה 50.41 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 50.38 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BAC",
-      "at": "2026-10-19T19:06:56.659Z"
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
       "ticker": "GS",
       "headline": "GS בשפל של רבעון",
-      "detail": "הסגירה האחרונה 874.43 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 874.23 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GS",
-      "at": "2026-10-19T19:06:56.659Z"
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
       "ticker": "MS",
       "headline": "MS בשפל של רבעון",
-      "detail": "הסגירה האחרונה 178.94 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 179.03 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MS",
-      "at": "2026-10-19T19:06:56.659Z"
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
-      "ticker": "SCHW",
-      "headline": "SCHW בשפל של רבעון",
-      "detail": "הסגירה האחרונה 89.69 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "ISRG",
+      "headline": "ISRG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 433.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/SCHW",
-      "at": "2026-10-19T19:06:56.659Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "CVX",
-      "headline": "CVX בשיא של רבעון",
-      "detail": "הסגירה האחרונה 225.22 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/CVX",
-      "at": "2026-10-19T19:06:56.659Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "XOM",
-      "headline": "XOM בשיא של רבעון",
-      "detail": "הסגירה האחרונה 178.75 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/XOM",
-      "at": "2026-10-19T19:06:56.659Z"
+      "href": "/company/ISRG",
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
       "ticker": "V",
       "headline": "V בשיא של רבעון",
-      "detail": "הסגירה האחרונה 403.44 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 403.40 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/V",
-      "at": "2026-10-19T19:06:56.659Z"
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
-      "ticker": "C",
-      "headline": "C בשפל של רבעון",
-      "detail": "הסגירה האחרונה 122.06 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "SCHW",
+      "headline": "SCHW בשפל של רבעון",
+      "detail": "הסגירה האחרונה 89.77 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/C",
-      "at": "2026-10-19T19:06:56.659Z"
+      "href": "/company/SCHW",
+      "at": "2026-10-19T19:13:23.905Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "XOM",
+      "headline": "XOM בשיא של רבעון",
+      "detail": "הסגירה האחרונה 178.71 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/XOM",
+      "at": "2026-10-19T19:13:23.905Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "CVX",
+      "headline": "CVX בשיא של רבעון",
+      "detail": "הסגירה האחרונה 225.04 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/CVX",
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
       "ticker": "EOG",
       "headline": "EOG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 157.97 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 157.87 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/EOG",
-      "at": "2026-10-19T19:06:56.659Z"
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
-      "ticker": "AAPL",
-      "headline": "AAPL בשיא של רבעון",
-      "detail": "הסגירה האחרונה 343.12 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "C",
+      "headline": "C בשפל של רבעון",
+      "detail": "הסגירה האחרונה 121.86 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/AAPL",
-      "at": "2026-10-19T19:06:56.659Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "WMT",
-      "headline": "WMT בשיא של רבעון",
-      "detail": "הסגירה האחרונה 119.13 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/WMT",
-      "at": "2026-10-19T19:06:56.659Z"
+      "href": "/company/C",
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
       "ticker": "COST",
       "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 995.40 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 995.21 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-10-19T19:06:56.659Z"
+      "at": "2026-10-19T19:13:23.905Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "WMT",
+      "headline": "WMT בשיא של רבעון",
+      "detail": "הסגירה האחרונה 119.16 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/WMT",
+      "at": "2026-10-19T19:13:23.905Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "AAPL",
+      "headline": "AAPL בשיא של רבעון",
+      "detail": "הסגירה האחרונה 343.15 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/AAPL",
+      "at": "2026-10-19T19:13:23.905Z"
     },
     {
       "kind": "range",
       "ticker": "CAT",
       "headline": "CAT בשפל של רבעון",
-      "detail": "הסגירה האחרונה 726.32 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 726.23 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/CAT",
-      "at": "2026-10-19T19:06:56.659Z"
+      "at": "2026-10-19T19:13:23.905Z"
     }
   ]
 }
