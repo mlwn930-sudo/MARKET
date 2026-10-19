@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-19T22:54:49.631Z",
+  "builtAt": "2026-10-19T23:05:06.949Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,35 +7,26 @@
     "opportunity": 0,
     "range": 10,
     "event": 0,
-    "story": 7
+    "story": 8
   },
   "findings": [
     {
       "kind": "story",
-      "ticker": "AMZN",
-      "headline": "AMZN Stock Set For Best Day In Three Months: Morgan Stanley Expects Amazon's AWS To Grow 47% In 2027, Denotes Stock As 'Top Pick'",
-      "detail": "מורגן סטנלי העלה את יעד המחיר לאמזון ל-$350 מ-$335, הגדיר אותה כ-'Top Pick' וצפה שחטיבת AWS תצמח ב-47% ב-2027 וב-42% ב-2028, בין היתר בעקבות פריסת 2 מיליון מעבדי GPU של נבידיה. בנוסף, אמזון ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=948792b45d937f2b1377bed687c0cd01d2b00ef91cf990f3dbb58b1ae98faf0b",
-      "at": "2026-10-19T17:48:58.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "VRT",
-      "headline": "Where Will Vertiv Stock Be in 1 Year?",
-      "detail": "מניית Vertiv ירדה לכ-211 דולר לאחר ששיאה עמד על 376.06 דולר ב-14 במאי 2026. הירידה מיוחסת לפספוס קל של תחזיות ההכנסות ברבעון השני עקב תזמון חוזים ואילוצי שרשרת אספקה, לרבות רכישת UtilityInno",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=98b26193ea3693ccac8d7387ce196d9b2b973cc9712f3c2ac7e8f2c8b5ae6a25",
-      "at": "2026-10-19T17:15:00.000Z"
-    },
-    {
-      "kind": "story",
       "ticker": "NVDA",
-      "headline": "Nvidia: The Real Competitive Advantage Isn't About The Chip",
-      "detail": "היתרון התחרותי של Nvidia אינו טמון בשבב עצמו, אלא בכך שבינה מלאכותית נותרת מוגבלת בהיצע, כאשר קיבולת הייצור של TSMC מהווה צוואר בקבוק מרכזי. חברות הענן הגדולות (Hyperscalers) מפתחות חלופות פ",
+      "headline": "Dario Amodei Predicted at Davos in January 2025 That AI Could Surpass Humans \"at Almost Everything\" Within Two to Three Years. With Anthropi",
+      "detail": "אנתרופיק (Anthropic) דיווחה על הכנסות בקצב שנתי של 16.8 מיליארד דולר ברבעון השלישי, והיא צפויה להנפיק לפי שווי של 2 טריליון דולר בנובמבר. במקביל, מנכ\"ל אנוידיה ג'נסן הואנג טוען שבינה מלאכותי",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=d3b857cb0880721a1864c12daeae468ca1a9317166ce0ea23e4f94e984922c07",
-      "at": "2026-10-19T12:50:37.000Z"
+      "href": "https://finnhub.io/api/news?id=1b877caa1178d0b0d473e026afd7ca3ff529e147c74eb2fca1dedde48ab90e4b",
+      "at": "2026-10-19T20:51:34.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TSM",
+      "headline": "The AI Conundrum: Massive AI Panic While TSMC's Profits Soar 69%",
+      "detail": "TSMC דיווחה על תוצאות הרבעון השלישי העולות על ציפיות החברה ווול סטריט, עם צמיחה של 69% ברווחים ועלייה בהכנסות. הצמיחה מונעת מביקוש חזק לשירותי ייצור שבבים בתחום ה-AI וה-HPC.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=4b67c7e0fd3b887b635b2fb5292bfa5c6a596f2c7265a2ff9ee34c196bf9db79",
+      "at": "2026-10-19T18:03:23.000Z"
     },
     {
       "kind": "story",
@@ -48,21 +39,39 @@
     },
     {
       "kind": "story",
-      "ticker": "TSM",
-      "headline": "Samsung Turns to Rival TSMC for Nvidia’s Next-Generation Memory—Micron, SK Hynix Face Same Request: Report",
-      "detail": "סמסונג תשתמש בתהליך הייצור של TSMC לייצור בסיס הזיכ עבור הזיכרון ברוחב פס גבוה המותאם אישית של אנבידיה. הדיווח מציין שגם מיקרון ו-SK הייניקס קיבלו בקשה דומה.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=749feea00fa59435421fe7c636fffa30cb34e381c6a00369b9bd201b273de436",
-      "at": "2026-10-19T03:10:01.000Z"
-    },
-    {
-      "kind": "story",
       "ticker": "EWQ",
       "headline": "French unrest compounds debt crisis fears. Paris-listed stocks, bonds and the euro fall",
       "detail": "מהומות בצרפת ואי-יציבות פוליטית הובילו לעליית תשואות האג\"ח הממשלתיות, להיחלשות האירו ולירידת מדד ה-CAC 40 ב-1.7%. המשקיעים חוששים מיכולת הממשלה להעביר את תקציב 2027 ולצמצם את הגירעון.",
       "weight": 2.2,
       "href": "https://www.cnbc.com/2026/10/19/france-protests-bond-yields-markets.html",
       "at": "2026-10-19T09:07:09.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "WMT",
+      "headline": "WMT, TGT & DG Bet Big on Capital Spending to Drive Next Growth Wave",
+      "detail": "קמעונאיות ענק כמו Walmart, Target ו-Dollar General מגדילות את ההשקעות ההוניות (CapEx) ברשתות החנויות, בשרשרת האספקה ובטכנולוגיה. Walmart העלתה את תחזית ה-CapEx לשנת הכספים 2027 לכ-4% מהמכירו",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=5e5102e9fc7c12cbb7dd22119f72faece10b803093c8d6eeaf41870676dde4da",
+      "at": "2026-10-19T12:15:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "Prediction: Eli Lilly Stock Could Be a Long-Term Winner for Investors",
+      "detail": "Eli Lilly עקפה את ציפיות הרווח ונסחרת קרוב לשיא כל הזמנים, אך היא מתמודדת עם תחרות מתהווה מול Novo Nordisk וריכוזיות הכנסות גבוהה.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=e1026ed1b5c5d490d0342961f462869ea7cb8df27b3f53fe7b00306a8d10a369",
+      "at": "2026-10-19T16:30:08.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "RBLX",
+      "headline": "Roblox Is Now Down 38% in 2026: Is RBLX Stock Dead Money or Poised for a Comeback?",
+      "detail": "מניית Roblox ירדה ב-38% בשנת 2026 על רקע תביעה בגין ניצול ילדים, הורדת דירוג מוול סטריט וירידה בהוצאות לשחקן. זאת למרות עלייה בסיס המשתמשים של הפלטפורמה.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=8e377750995071306bb963e94910ebbf6dc7d019736b48b16db47a5145fbdd80",
+      "at": "2026-10-19T18:41:07.000Z"
     },
     {
       "kind": "story",
@@ -80,16 +89,7 @@
       "detail": "הסגירה האחרונה 178.47 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MS",
-      "at": "2026-10-19T22:54:49.631Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "GS",
-      "headline": "GS בשפל של רבעון",
-      "detail": "הסגירה האחרונה 875.78 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/GS",
-      "at": "2026-10-19T22:54:49.631Z"
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
@@ -98,7 +98,7 @@
       "detail": "הסגירה האחרונה 433.18 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ISRG",
-      "at": "2026-10-19T22:54:49.631Z"
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
@@ -107,16 +107,16 @@
       "detail": "הסגירה האחרונה 50.39 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BAC",
-      "at": "2026-10-19T22:54:49.631Z"
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
-      "ticker": "C",
-      "headline": "C בשפל של רבעון",
-      "detail": "הסגירה האחרונה 121.69 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "GS",
+      "headline": "GS בשפל של רבעון",
+      "detail": "הסגירה האחרונה 875.78 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/C",
-      "at": "2026-10-19T22:54:49.631Z"
+      "href": "/company/GS",
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
@@ -125,7 +125,7 @@
       "detail": "הסגירה האחרונה 402.92 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/V",
-      "at": "2026-10-19T22:54:49.631Z"
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
@@ -134,16 +134,16 @@
       "detail": "הסגירה האחרונה 89.58 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SCHW",
-      "at": "2026-10-19T22:54:49.631Z"
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
-      "ticker": "WMT",
-      "headline": "WMT בשיא של רבעון",
-      "detail": "הסגירה האחרונה 118.70 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "C",
+      "headline": "C בשפל של רבעון",
+      "detail": "הסגירה האחרונה 121.69 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/WMT",
-      "at": "2026-10-19T22:54:49.631Z"
+      "href": "/company/C",
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
@@ -152,7 +152,16 @@
       "detail": "הסגירה האחרונה 995.53 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-10-19T22:54:49.631Z"
+      "at": "2026-10-19T23:05:06.949Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "WMT",
+      "headline": "WMT בשיא של רבעון",
+      "detail": "הסגירה האחרונה 118.70 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/WMT",
+      "at": "2026-10-19T23:05:06.949Z"
     },
     {
       "kind": "range",
@@ -161,7 +170,7 @@
       "detail": "הסגירה האחרונה 725.79 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/CAT",
-      "at": "2026-10-19T22:54:49.631Z"
+      "at": "2026-10-19T23:05:06.949Z"
     }
   ]
 }
