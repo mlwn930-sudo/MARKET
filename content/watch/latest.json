@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-21T21:26:08.184Z",
+  "builtAt": "2026-10-21T21:35:53.675Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 1,
     "range": 15,
     "event": 0,
-    "story": 5
+    "story": 12
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "-6.45% ביום — פי 3.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.228522222346067,
       "href": "/company/T",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "opportunity",
@@ -26,7 +26,7 @@
       "detail": "-5.31% ביום — פי 2.6 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
       "weight": 2.8590303303569677,
       "href": "/company/NFLX",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "3.66% ביום — פי 2.7 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.6758023177492767,
       "href": "/company/MS",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "move",
@@ -44,25 +44,34 @@
       "detail": "-5.31% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.5903033035696765,
       "href": "/company/NFLX",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "SMCI",
+      "headline": "Why Super Micro Computer Stock Popped Today",
+      "detail": "מניית Super Micro Computer זינקה ב-9.55% ל-35.57 דולר לאחר שדיווחה על תוצאות ראשוניות המעידות על הכנסות צפויות של 18.5 עד 19.5 מיליארד דולר ברבעון הראשון של שנת הכספים 2027, מעל לתחזית הקודמ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=a448c7728c803953bb9dd43d35fc0a892a2b676b30b152bb31cb9ead482a8092",
+      "at": "2026-10-21T19:38:02.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "SPCX",
+      "headline": "Is SpaceX a Buy After Its Monster Earnings Report?",
+      "detail": "SpaceX דיווחה על הכנסות של $14.6 מיליארד ברבעון השלישי, גידול של 161% משנה לשנה, ורווח נקי של $4.4 מיליארד לעומת הפסד של $1.1 מיליארד אשתקד. חטיבת הבינה המלאכותית (SI) הגיעה להכנסות של $7.6 ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=816df7ea85ecff11bcfe81855b11c4403fc6176d1c40f9cc7d124d097fca9280",
+      "at": "2026-10-21T19:20:00.000Z"
     },
     {
       "kind": "story",
       "ticker": "TSLA",
-      "headline": "Elon Musk Thinks Elon Musk’s Companies Should Merge",
-      "detail": "SpaceX ו-Tesla הקימו ועדות עצמאיות לבחינת מיזוג פוטנציאלי, לאחר שמנכ\"ל שתי החברות הביע תמיכה במהלך בשיחת רווחים פומבית.",
+      "headline": "SpaceX gives the AI trade a shot in the arm. What it means for our stocks",
+      "detail": "ספייס אקס דיווחה על תוצאות חזקות לרבעון השלישי ותחזית חזקה, מה שהוציא את המניה לעלייה של 7% ביום רביעי. אילון מאסק ציין כי צוותי ההנדסה של החברה הוסבו לפיתוח תשתיות חשמל וקירור לטובת מחשוב ב",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=c75a8193680233ab5baf7a7c53367e4b6fba2392b22a70d791110ebc9ad59060",
-      "at": "2026-10-21T15:06:56.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "GOOGL",
-      "headline": "OpenAI expands ChatGPT Ads to 26 new countries as diversification push accelerates",
-      "detail": "OpenAI הרחיבה את פעילות הפרסום ב-ChatGPT ל-26 מדינות נוספות, והביאה את סך המדינות בהן המוצר פעיל ל-89. עסקי הפרסום של החברה הגיעו לקצב הכנסות שנתי של 1 מיליארד דולר באוגוסט.",
-      "weight": 2.2,
-      "href": "https://www.cnbc.com/2026/10/21/openai-chatgpt-ads-26-countries.html",
-      "at": "2026-10-21T13:00:01.000Z"
+      "href": "https://www.cnbc.com/investingclub/2026/10/21/spacex-gives-the-ai-trade-a-shot-in-the-arm-what-it-means-for-our-stocks-.html",
+      "at": "2026-10-21T19:01:23.000Z"
     },
     {
       "kind": "story",
@@ -84,12 +93,66 @@
     },
     {
       "kind": "story",
-      "ticker": "AMD",
-      "headline": "AMD vs. Nvidia. 1 Metric Proves Which Is the Best Stock.",
-      "detail": "הכתבה משווה בין התוצאות והתמחור של AMD ו-Nvidia בתחום ה-GPU והבינה המלאכותית. לפי הנתונים, Nvidia מציגה צמיחה מהירה וגבוהה יותר בהכנסות (צמיחה של 106% ל-96.2 מיליארד דולר, מתוכם 89 מיליארד ב",
+      "ticker": "NEE",
+      "headline": "Virginia Wants 6-Year Rate Freeze in NextEra-Dominion Deal",
+      "detail": "מושלת וירג'יניה אביגיל ספנברגר מתנגדת לעסקת הרכישה של Dominion Energy על ידי NextEra Energy בשווי 67 מיליארד דולר, אלא אם תובטח הקפאה של תעריפי החשמל הביתייים למשך שש שנים.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=0c998c48b5282eb333f3fff9ff77e7388dea045b303e0f412843f2fd0b9759bd",
-      "at": "2026-10-21T15:35:00.000Z"
+      "href": "https://finnhub.io/api/news?id=69d4b5b25c380aebb5c1327cc789d979a41a2e19eb1b2a0912dff62ee9903e29",
+      "at": "2026-10-21T19:11:02.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NEE",
+      "headline": "NextEra Energy (NEE) Q3 2026 Earnings Call Transcript",
+      "detail": "NextEra Energy דיווחה על עלייה של 9.7% ברווח המתואם למניה ברבעון השלישי ל-1.24 דולר. הצמיחה נתמכה בגידול של 9.2% בהון הרגולטורי המושקע ב-Florida Power & Light ובצמיחה של 13% ברווחים המתואמים",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=158d74d8e1e613092ded1440be52ea46f7e2f382e7931298ac689b7a2ef4649b",
+      "at": "2026-10-21T18:57:40.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "SPCX",
+      "headline": "The simple reason JPMorgan thinks SpaceX will triple: It's going after a $28 trillion market",
+      "detail": "ג'יי פי מורגן העלה את מחיר היעד של ספייס אקס ל-500 דולר במקום 240 דולר, בעקבות פוטנציאל שוק של מעל 28 טריליון דולר והתרחבות לתחומי הבינה המלאכותית והתקשורת. החברה דיווחה על רווחיות והכנסות מ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=21285b2e3f87304ce8385fc26ab585fdb5cd64ffd537663b879bc32cbcc1a478",
+      "at": "2026-10-21T18:36:20.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "SPCX",
+      "headline": "SpaceX stock soars to its best day in 2 months while space peers climb out of a 26% hole",
+      "detail": "מניית SpaceX זינקה בעקבות תוצאות הרבעון השלישי שהכו את תחזיות וול סטריט בהכנסות וברווח, כאשר תחום הבינה המלאכותית מהווה כמעט מחצית מהמכירות. בנוסף, החברה וטסלה הקימו ועדות לבחינת מיזוג אפשרי",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=beac8db741206467d17a52b582dace0e17fbc0d74ae021ce2008e10ed1b0e56f",
+      "at": "2026-10-21T14:14:28.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "CVS",
+      "headline": "What Could Stop CVS Health Stock Over The Next Six Months?",
+      "detail": "CVS Health דיווחה כי עסקי ה-340B ופעילות Caremark צפויים להוות רוח נגדית ב-2027, בין היתר עקב אובדן חברים וירידה בדירוגי ה-Star של תוכניות ה-Medicare Advantage שלה. החברה צפויה לפרסם את תוצא",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=f017bffca2dcbea9f77f19a54d90ff3ea5162ba41ef276529b4afd0f426159c1",
+      "at": "2026-10-21T13:21:19.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "GOOGL",
+      "headline": "Alphabet Has Lost About $860 Billion Since Its Peak, Nearly a Whole Walmart. Apple Has Avoided the AI Race and Is Near All-Time Highs.",
+      "detail": "Alphabet איבדה כ-860 מיליארד דולר מהשיא שלה, בעוד Apple נמנעה ממרוץ ה-AI ונסחרת קרוב לשיא כל הזמנים. ההבדל בין השתיים משקף גישות השקעה שונות סביב הוצאות על בינה מלאכותית.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=38f1ac5655414ebb9f503108f276a5e1b66747bba211d0fc9a6c65815630b771",
+      "at": "2026-10-21T16:06:18.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "GOOGL",
+      "headline": "Alphabet Has Lost About $860 Billion Since Its Peak, Nearly a Whole Walmart. Apple Has Avoided the AI Race and Is Near All-Time Highs.",
+      "detail": "Alphabet איבדה כ-860 מיליארד דולר מהשיא שלה, בעוד Apple נמנעה ממרוץ ה-AI ונסחרת קרוב לשיא כל הזמנים. ההבדל בין השתיים משקף גישות השקעה שונות סביב הוצאות על בינה מלאכותית.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=38f1ac5655414ebb9f503108f276a5e1b66747bba211d0fc9a6c65815630b771",
+      "at": "2026-10-21T16:06:18.000Z"
     },
     {
       "kind": "move",
@@ -98,7 +161,7 @@
       "detail": "3.51% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0596838279271448,
       "href": "/company/WMB",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "move",
@@ -107,7 +170,7 @@
       "detail": "4.29% ביום — פי 2.0 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.00543313629679,
       "href": "/company/DHR",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -116,7 +179,7 @@
       "detail": "הסגירה האחרונה 153.12 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NOW",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -125,7 +188,7 @@
       "detail": "הסגירה האחרונה 225.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TEAM",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -134,7 +197,7 @@
       "detail": "הסגירה האחרונה 122.90 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/EBAY",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -143,7 +206,7 @@
       "detail": "הסגירה האחרונה 65.04 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NFLX",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -152,34 +215,7 @@
       "detail": "הסגירה האחרונה 233.86 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DHR",
-      "at": "2026-10-21T21:26:08.184Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "CVX",
-      "headline": "CVX בשיא של רבעון",
-      "detail": "הסגירה האחרונה 226.78 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/CVX",
-      "at": "2026-10-21T21:26:08.184Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "EOG",
-      "headline": "EOG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 157.88 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/EOG",
-      "at": "2026-10-21T21:26:08.184Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "MA",
-      "headline": "MA בשיא של רבעון",
-      "detail": "הסגירה האחרונה 622.62 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/MA",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -188,7 +224,34 @@
       "detail": "הסגירה האחרונה 407.85 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/V",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "MA",
+      "headline": "MA בשיא של רבעון",
+      "detail": "הסגירה האחרונה 622.62 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/MA",
+      "at": "2026-10-21T21:35:53.675Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "EOG",
+      "headline": "EOG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 157.88 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/EOG",
+      "at": "2026-10-21T21:35:53.675Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "CVX",
+      "headline": "CVX בשיא של רבעון",
+      "detail": "הסגירה האחרונה 226.78 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/CVX",
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -197,7 +260,7 @@
       "detail": "הסגירה האחרונה 343.99 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AAPL",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -206,25 +269,7 @@
       "detail": "הסגירה האחרונה 998.31 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-10-21T21:26:08.184Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "DIS",
-      "headline": "DIS בשיא של רבעון",
-      "detail": "הסגירה האחרונה 111.83 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/DIS",
-      "at": "2026-10-21T21:26:08.184Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TSLA",
-      "headline": "TSLA בשיא של רבעון",
-      "detail": "הסגירה האחרונה 386.47 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TSLA",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -233,7 +278,25 @@
       "detail": "הסגירה האחרונה 295.88 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GE",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "DIS",
+      "headline": "DIS בשיא של רבעון",
+      "detail": "הסגירה האחרונה 111.83 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/DIS",
+      "at": "2026-10-21T21:35:53.675Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TSLA",
+      "headline": "TSLA בשיא של רבעון",
+      "detail": "הסגירה האחרונה 386.47 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TSLA",
+      "at": "2026-10-21T21:35:53.675Z"
     },
     {
       "kind": "range",
@@ -242,7 +305,7 @@
       "detail": "הסגירה האחרונה 21.91 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/T",
-      "at": "2026-10-21T21:26:08.184Z"
+      "at": "2026-10-21T21:35:53.675Z"
     }
   ]
 }
