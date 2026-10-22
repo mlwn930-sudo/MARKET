@@ -1,41 +1,86 @@
 {
-  "builtAt": "2026-10-22T00:08:35.887Z",
+  "builtAt": "2026-10-22T06:46:42.400Z",
   "universe": 123,
-  "priced": 0,
+  "priced": 123,
   "counts": {
-    "move": 0,
-    "opportunity": 0,
-    "range": 0,
+    "move": 5,
+    "opportunity": 1,
+    "range": 15,
     "event": 0,
-    "story": 12
+    "story": 14
   },
   "findings": [
     {
-      "kind": "story",
-      "ticker": "SMCI",
-      "headline": "Why Super Micro Computer Stock Popped Today",
-      "detail": "מניית Super Micro Computer זינקה ב-9.55% ל-35.57 דולר לאחר שדיווחה על תוצאות ראשוניות המעידות על הכנסות צפויות של 18.5 עד 19.5 מיליארד דולר ברבעון הראשון של שנת הכספים 2027, מעל לתחזית הקודמ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=a448c7728c803953bb9dd43d35fc0a892a2b676b30b152bb31cb9ead482a8092",
-      "at": "2026-10-21T19:38:02.000Z"
+      "kind": "move",
+      "ticker": "T",
+      "headline": "T זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-6.45% ביום — פי 3.2 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 3.228522222346067,
+      "href": "/company/T",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "opportunity",
+      "ticker": "NFLX",
+      "headline": "NFLX עוברת 8 מתוך 10 המבחנים, וירדה חזק",
+      "detail": "-5.31% ביום — פי 2.6 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
+      "weight": 2.8590303303569677,
+      "href": "/company/NFLX",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "move",
+      "ticker": "MS",
+      "headline": "MS זזה למעלה הרבה מעבר לרגיל שלה",
+      "detail": "3.66% ביום — פי 2.7 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.6758023177492767,
+      "href": "/company/MS",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "move",
+      "ticker": "NFLX",
+      "headline": "NFLX זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-5.31% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.5903033035696765,
+      "href": "/company/NFLX",
+      "at": "2026-10-22T06:46:42.400Z"
     },
     {
       "kind": "story",
-      "ticker": "SPCX",
-      "headline": "Is SpaceX a Buy After Its Monster Earnings Report?",
-      "detail": "SpaceX דיווחה על הכנסות של $14.6 מיליארד ברבעון השלישי, גידול של 161% משנה לשנה, ורווח נקי של $4.4 מיליארד לעומת הפסד של $1.1 מיליארד אשתקד. חטיבת הבינה המלאכותית (SI) הגיעה להכנסות של $7.6 ",
+      "ticker": "NVDA",
+      "headline": "NVDA Logs Best Day In Over A Month: Burry Spotlights Partnership Blitz — Analyst Calls Full-Stack Strategy ‘Underappreciated’",
+      "detail": "מניית NVDA רשמה את היום הטוב ביותר שלה זה כחודש וסגרה עליות של קרוב ל-3% ל-$221.97, על רקע זץ שותפויות בהובלת Google Cloud, Dell, HPE ואחרות, וכן דיווחים על ביקוש חזק לשבבי Rubin ו-DSX Pod.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=816df7ea85ecff11bcfe81855b11c4403fc6176d1c40f9cc7d124d097fca9280",
-      "at": "2026-10-21T19:20:00.000Z"
+      "href": "https://finnhub.io/api/news?id=8e9e066d599fe6f1f0ecfd5d4bdcfa88c4a6f09b6c6e8b7d1f4ca7c31e3a2a0d",
+      "at": "2026-10-22T05:46:57.000Z"
     },
     {
       "kind": "story",
-      "ticker": "TSLA",
-      "headline": "SpaceX gives the AI trade a shot in the arm. What it means for our stocks",
-      "detail": "ספייס אקס דיווחה על תוצאות חזקות לרבעון השלישי ותחזית חזקה, מה שהוציא את המניה לעלייה של 7% ביום רביעי. אילון מאסק ציין כי צוותי ההנדסה של החברה הוסבו לפיתוח תשתיות חשמל וקירור לטובת מחשוב ב",
+      "ticker": "META",
+      "headline": "Meta Delivers Another Blowout Earnings Report. Here's What Investors Need To Know",
+      "detail": "מטה דיווחה על הכנסות רבעוניות של 64.6 מיליארד דולר, גידול של 26% לעומת ציפיות ל-63.4 מיליארד דולר. החברה הכריזה גם על פיצול מניות בשיטת דיבידנד מניות בר율 2 ל-1.",
       "weight": 2.2,
-      "href": "https://www.cnbc.com/investingclub/2026/10/21/spacex-gives-the-ai-trade-a-shot-in-the-arm-what-it-means-for-our-stocks-.html",
-      "at": "2026-10-21T19:01:23.000Z"
+      "href": "https://finnhub.io/api/news?id=990379e9cd9d3e03a39560f27d7c0bf81af8826189b5ed9a32b0127fab253e43",
+      "at": "2026-10-22T04:05:02.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "DeepSeek wrapping up $15 billion fundraising to fuel AI race - Reuters",
+      "detail": "החברה DeepSeek נמצאת בשלבי סיום של סבב גיוס הון בהיקף של 15 מיליארד דולר, במטרה לממן את פעילותה במרוץ הבינה המלאכותית.",
+      "weight": 2.2,
+      "href": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOQkI4b1B0WkYzUnhGdTF6b0VTRnBCWjRxelF3Q2g4VlRjTzNUOFFTZUhrM3VHSWs2M1VpWkZqN0FleF9JREgzdXpEWFNHM0VvSXhhNm5pdHRXZkRrNUR0UGFJVUMzRjNDWWRwZ0ZtOEsyMm93VU82Rno1R3FxQTNxMllyeWh2YnJRY19hUjZMbExjank3YUg5anFYdjRHRUdnSlN3cFMwMU9TLVBDSldIYUpUdy1vYTdtS3RHTnphNU1KYTdtYWVzNFFR?oc=5",
+      "at": "2026-10-22T02:46:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "NVDA Logs Best Day In Over A Month: Burry Spotlights Partnership Blitz — Analyst Calls Full-Stack Strategy ‘Underappreciated’",
+      "detail": "מניית NVDA רשמה את היום הטוב ביותר שלה זה כחודש וסגרה עליות של קרוב ל-3% ל-$221.97, על רקע זץ שותפויות בהובלת Google Cloud, Dell, HPE ואחרות, וכן דיווחים על ביקוש חזק לשבבי Rubin ו-DSX Pod.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=8e9e066d599fe6f1f0ecfd5d4bdcfa88c4a6f09b6c6e8b7d1f4ca7c31e3a2a0d",
+      "at": "2026-10-22T05:46:57.000Z"
     },
     {
       "kind": "story",
@@ -45,15 +90,6 @@
       "weight": 2.2,
       "href": "https://finnhub.io/api/news?id=df4d7adf1649fc99c7e1d9995894e733861ea5a087f1462aaffac448f75ad0b5",
       "at": "2026-10-21T08:44:16.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TSM",
-      "headline": "TSMC: Q3 Earnings Reveal The Coiled Spring For 2027 Profits",
-      "detail": "הכנסות TSMC ברבעון השלישי עלו ב-17% רבעונית ל-46.8 מיליארד דולר, בעיקר הודות למחירים ממוצעים גבוהים יותר לפרוסת סיליקון מחוזעי 3 ננו-מטר ו-2 ננו-מטר חדשים.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=fcd7c7723712805929c8dafaed25b7649fa2137c44c139521e6aceea308f4f27",
-      "at": "2026-10-21T05:33:06.000Z"
     },
     {
       "kind": "story",
@@ -72,15 +108,6 @@
       "weight": 2.2,
       "href": "https://finnhub.io/api/news?id=158d74d8e1e613092ded1440be52ea46f7e2f382e7931298ac689b7a2ef4649b",
       "at": "2026-10-21T18:57:40.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "SPCX",
-      "headline": "The simple reason JPMorgan thinks SpaceX will triple: It's going after a $28 trillion market",
-      "detail": "ג'יי פי מורגן העלה את מחיר היעד של ספייס אקס ל-500 דולר במקום 240 דולר, בעקבות פוטנציאל שוק של מעל 28 טריליון דולר והתרחבות לתחומי הבינה המלאכותית והתקשורת. החברה דיווחה על רווחיות והכנסות מ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=21285b2e3f87304ce8385fc26ab585fdb5cd64ffd537663b879bc32cbcc1a478",
-      "at": "2026-10-21T18:36:20.000Z"
     },
     {
       "kind": "story",
@@ -117,6 +144,186 @@
       "weight": 2.2,
       "href": "https://finnhub.io/api/news?id=38f1ac5655414ebb9f503108f276a5e1b66747bba211d0fc9a6c65815630b771",
       "at": "2026-10-21T16:06:18.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "MRNA",
+      "headline": "Not Lilly. Not Johnson & Johnson. This Stock Will Be the Biggest Healthcare Winner of 2026",
+      "detail": "מודרנה רשמה זינוק של מעל 600% במחיר המניה השנה, בין היתר הודות להצלחת חיסון לסרטן מותאם אישית שפותח בשיתוף עם מרק, ואישור חיסון לשפעת mFLUSIVA. עם זאת, החברה עדיין מציגה הפסדים נקיים ושווי ש",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=7c39446ebb9278bb2d99569bee16687e10aca18b31406bd86220786f8f187137",
+      "at": "2026-10-21T14:20:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVO",
+      "headline": "Obesity ETFs to Gain as Novo's CagriSema Shows 25% Weight Loss",
+      "detail": "נובו נורדיסק דיווחה כי הזרקת CagriSema הפחיתה 25% ממשקל גופן של נשים מבוגרות בממוצע לאחר 68 שבועות, לעומת 3% בפלצבו. הנתונים מחזקים את מעמדה של החברה בשוק תרופות ההשמנה, המוערך להגיע ל-185 מ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=5aa6c03a04564feb99ddc2d569289f0385b5c39518e52a1ceac8d353d7e32c80",
+      "at": "2026-10-21T12:30:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "Eli Lilly (LLY) Grew Revenue 48% While Prices Fell, Can Volume Keep Winning?",
+      "detail": "אלי לילי דיווחה ברבעון השני על עלייה של 48% בהכנסות ל-2.3 מיליארד דולר, שנגרמה כתוצאה מקפיצה של 60% בכמות התרופות שנמכרו, בעוד המחיר ליחידה ירד ב-13%.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=c067df46b5716077439350f72e8968a612c49af08a30fd72c8681e7a5dc244df",
+      "at": "2026-10-21T17:31:37.000Z"
+    },
+    {
+      "kind": "move",
+      "ticker": "WMB",
+      "headline": "WMB זזה למעלה הרבה מעבר לרגיל שלה",
+      "detail": "3.51% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.0596838279271448,
+      "href": "/company/WMB",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "move",
+      "ticker": "DHR",
+      "headline": "DHR זזה למעלה הרבה מעבר לרגיל שלה",
+      "detail": "4.29% ביום — פי 2.0 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.00543313629679,
+      "href": "/company/DHR",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "NOW",
+      "headline": "NOW בשיא של רבעון",
+      "detail": "הסגירה האחרונה 153.12 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/NOW",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TEAM",
+      "headline": "TEAM בשיא של רבעון",
+      "detail": "הסגירה האחרונה 225.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TEAM",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "EBAY",
+      "headline": "EBAY בשיא של רבעון",
+      "detail": "הסגירה האחרונה 122.90 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/EBAY",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "NFLX",
+      "headline": "NFLX בשפל של רבעון",
+      "detail": "הסגירה האחרונה 65.04 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/NFLX",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "DHR",
+      "headline": "DHR בשיא של רבעון",
+      "detail": "הסגירה האחרונה 233.86 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/DHR",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "MA",
+      "headline": "MA בשיא של רבעון",
+      "detail": "הסגירה האחרונה 622.62 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/MA",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "V",
+      "headline": "V בשיא של רבעון",
+      "detail": "הסגירה האחרונה 407.85 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/V",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "CVX",
+      "headline": "CVX בשיא של רבעון",
+      "detail": "הסגירה האחרונה 226.78 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/CVX",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "EOG",
+      "headline": "EOG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 157.88 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/EOG",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "AAPL",
+      "headline": "AAPL בשיא של רבעון",
+      "detail": "הסגירה האחרונה 343.99 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/AAPL",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "COST",
+      "headline": "COST בשיא של רבעון",
+      "detail": "הסגירה האחרונה 998.31 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/COST",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "GE",
+      "headline": "GE בשפל של רבעון",
+      "detail": "הסגירה האחרונה 295.88 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/GE",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TSLA",
+      "headline": "TSLA בשיא של רבעון",
+      "detail": "הסגירה האחרונה 386.47 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TSLA",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "DIS",
+      "headline": "DIS בשיא של רבעון",
+      "detail": "הסגירה האחרונה 111.83 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/DIS",
+      "at": "2026-10-22T06:46:42.400Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "T",
+      "headline": "T בשפל של רבעון",
+      "detail": "הסגירה האחרונה 21.91 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/T",
+      "at": "2026-10-22T06:46:42.400Z"
     }
   ]
 }
