@@ -649,10 +649,17 @@ function stanceFor(
     direction !== "none" &&
     direction !== "split"
   ) {
+    /* The short sentence only. An earlier version welded
+       CONVERGENCE_CAVEAT onto the end of it, and because this line goes
+       into `against` — which the panel renders per horizon — the
+       seventeen-thousand-observation paragraph appeared three times on
+       one page: once in each column and once more in the deduplicated
+       caveat list at the bottom. A methodological footnote printed
+       three times is how a reader learns to skip all of them. It lives
+       in `caveats`, which is printed once. */
     against.push(
-      "לכיוון הזה אין רשומה ספורה. הוא נשען על מה שנראה על הגרף עכשיו, " +
-        "ולא על מה שקרה אחרי מצב כזה בעבר על הנייר הזה. " +
-        CONVERGENCE_CAVEAT,
+      "לכיוון הזה אין רשומה ספורה — הוא נשען על מה שנראה על הגרף עכשיו, " +
+        "לא על מה שקרה אחרי מצב כזה בעבר.",
     );
   }
 
@@ -811,12 +818,15 @@ function stanceFor(
         ? "התנאים שפעלו מושכים לכיוונים הפוכים, ולכן אין כאן חלון אחד " +
           "שהתחיל. המתנה כאן אינה דחייה של כניסה — אין מדידה שאומרת לאיזה " +
           "צד להיכנס מלכתחילה."
-        : restsOn === "structure"
-          ? "לא פעל כאן אירוע נמדד, ולכן שום חלון לא התחיל ואין ממה לאחר. " +
-            "מה שנראה על הגרף יכול להימשך או להיגמר, ולאתר אין ספירה שתגיד " +
-            "מתי." + waitClause
-          : "אין תנאי נמדד שפעל ואין כיוון. אין כאן שאלה של עכשיו מול המתנה, " +
-            "כי אין מדידה שהתחילה.";
+        : /* One sentence, not three. The structural and the empty case
+             were each saying the same thing in three clauses — "no
+             event fired", "so no window started", "so there is nothing
+             to be late for" — and the panel printed both of them under
+             a heading that had already said it. */
+          restsOn === "structure"
+          ? "לא פעל אירוע נמדד, ולכן אין חלון שהתחיל ואין ממה לאחר." +
+            waitClause
+          : "אין מדידה שהתחילה, ולכן אין כאן שאלה של עכשיו מול המתנה.";
 
   /* ---- Basis ---- */
   const basis =

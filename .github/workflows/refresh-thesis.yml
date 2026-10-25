@@ -92,6 +92,27 @@ jobs:
       #
       # It costs nothing to move: 123 unauthenticated Yahoo requests paced
       # at 350ms, on a public repository where Actions minutes are free.
+      # BEFORE THE RANKING, because the scan reads this file.
+      #
+      # `build:baserates` existed as an npm script and nothing in the
+      # repository ran it. Measured on 2026-10-25: the file had been
+      # built once by hand on 2026-10-08 and was seventeen days old,
+      # which meant `activeNow` — "this condition fired on the LAST
+      # bar" — was describing the bar of the eighth on all 123 names.
+      # Every stance, every rate quoted on a company page, the daily
+      # scan, the watchlist directions and the alert mail were all
+      # computed from it, and the site said "no measured condition
+      # fired" on names where one had. The rebuild found 35 of 123 with
+      # a live condition; the stale file was simply blind to them.
+      #
+      # It is NOT gated on the preflight: it reads Yahoo and needs no
+      # key, and the comment in refresh-data.yml explains at length why
+      # a step that needs nothing must not be stoppable by something it
+      # does not use. That lesson was written down and then not applied
+      # to the one file everything else depends on.
+      - name: Rebuild the base rates
+        run: npm run build:baserates | tee baserates-run.log
+
       - name: Rebuild the ranking and the daily scan
         if: steps.preflight.outputs.ready == 'true'
         run: npm run build:ranks | tee ranks-run.log

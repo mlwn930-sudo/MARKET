@@ -54,7 +54,13 @@ const share = (v: number) => `${Math.round(v * 100)}%`;
  *  they light up. */
 function countedIn(stance: HorizonStance): string {
   const { agreeing } = stance;
-  if (agreeing.length === 0) return "אין תנאי נמדד שפעל בנר האחרון";
+  /* THE HEADING ABOVE THIS HAS ALREADY SAID IT.
+     With nothing counted, `directionLabel` prints "the structure leans
+     down — with no counted record", and this line used to follow it
+     with "no measured condition fired on the last bar", which is the
+     same fact in different words. Two restatements of an absence,
+     stacked, before the panel has said anything a reader can use. */
+  if (agreeing.length === 0) return "";
   if (agreeing.length === 1) {
     return `תנאי נמדד אחד פעל (n=${agreeing[0].n})`;
   }
@@ -121,9 +127,11 @@ function Horizon({ stance }: { stance: HorizonStance }) {
       <p className="mt-1 text-[15px] font-semibold text-ink">
         {directionLabel(stance)}
       </p>
-      <p className="num mt-0.5 text-[12px] text-ink-faint">
-        {countedIn(stance)}
-      </p>
+      {countedIn(stance) && (
+        <p className="num mt-0.5 text-[12px] text-ink-faint">
+          {countedIn(stance)}
+        </p>
+      )}
 
       {/* The sentence the engine writes so its strength matches its
           evidence — three different sentences for a counted lean, a
@@ -287,18 +295,34 @@ export function StancePanel({ checked }: { checked: Corroboration }) {
         <Horizon stance={stance.position} />
       </div>
 
-      {/* Both horizons' caveats, deduplicated — they overlap almost
-          entirely, and printing each twice is how a reader learns to
-          skip them. */}
-      <ul className="mt-5" data-tone="missing">
-        {[...new Set([...stance.swing.caveats, ...stance.position.caveats])].map(
-          (line) => (
-            <li key={line} className="text-[12px] text-ink-faint">
-              {line}
-            </li>
-          ),
-        )}
-      </ul>
+      {/* FOLDED, NOT DROPPED.
+          Eight paragraphs of methodology, identical on every chart,
+          printed in full under every answer. Each one is true and the
+          set is the reason this panel can be trusted — and a reader who
+          meets the same eight walls every time stops reading all of
+          them, including the one that matters for the chart in front of
+          them. The count is on the summary so nothing is hidden, and a
+          `details` element needs no JavaScript and no state. */}
+      {(() => {
+        const caveats = [
+          ...new Set([...stance.swing.caveats, ...stance.position.caveats]),
+        ];
+        if (caveats.length === 0) return null;
+        return (
+          <details className="stance-caveats mt-5">
+            <summary>
+              איך לקרוא את המספרים האלה — {caveats.length} הסתייגויות
+            </summary>
+            <ul data-tone="missing">
+              {caveats.map((line) => (
+                <li key={line} className="text-[12px] text-ink-faint">
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </details>
+        );
+      })()}
 
       <p className="setup-measured mt-3">{PRIVATE_NOTE}</p>
     </section>
