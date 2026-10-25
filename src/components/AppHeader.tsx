@@ -25,7 +25,6 @@ import { Wordmark } from "./Wordmark";
 const PRIMARY: [string, string][] = [
   ["/", "שווקים"],
   ["/intel", "מודיעין"],
-  ["/research", "מחקר"],
   ["/opportunities", "הזדמנויות"],
   ["/watchlist", "מעקב"],
   ["/launch/ttwo", "GTA VI"],
@@ -42,9 +41,15 @@ const SECONDARY: { href: string; label: string; group: string }[] = [
   { href: "/macro", label: "מאקרו", group: "market" },
   { href: "/israel", label: "תל אביב", group: "market" },
   { href: "/compare", label: "השוואה", group: "study" },
-  { href: "/chart-reader", label: "קריאת גרף", group: "study" },
-  /* Beside the chart reader on purpose: it is the page that says what the
-     thing you are about to read is worth. */
+  /* THE CHART READER AND THE RESEARCH CONSOLE ARE NO LONGER DOORS.
+     Both live inside the company page now, where the instrument is
+     already known. Reading a screenshot and asking a deep question are
+     steps in researching a company, not separate errands, and a nav
+     item for each was the fourth and fifth door to a single question —
+     which is what the owner was describing when he said he visits four
+     pages and still cannot form a view. The routes still answer, for a
+     chart or a question about something the company pages do not
+     cover; they are simply not advertised as places to go. */
   { href: "/signals", label: "ערך האותות", group: "study" },
   { href: "/institutional", label: "מוסדיים", group: "study" },
   { href: "/ai", label: "שרשרת AI", group: "study" },

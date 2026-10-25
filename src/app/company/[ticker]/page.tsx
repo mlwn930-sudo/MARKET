@@ -26,6 +26,8 @@ import { SetupPanel } from "@/components/market/SetupPanel";
 import { StanceLine } from "@/components/market/StanceLine";
 import { SituationPanel } from "@/components/market/SituationPanel";
 import { ChartReader } from "@/components/ChartReader";
+import { ResearchConsole } from "@/components/ResearchConsole";
+import { hasGeminiKey } from "@/lib/sources/gemini";
 import { readSituation } from "@/lib/analysis/situation";
 import { buildChartStance } from "@/lib/analysis/stance";
 import { readSetup } from "@/lib/analysis/setup";
@@ -887,6 +889,16 @@ export default async function CompanyPage({
         className="max-lg:order-first"
       >
         <CompanyNewsCorner ticker={ticker} name={name} news={news} />
+      </Section>
+
+      {/* THE RESEARCH CONSOLE, WHERE THE COMPANY IS.
+          It had its own page, reached from a nav item, with a ticker
+          field the reader filled in for a company they were already
+          looking at. Asking a deep question about NVDA should not
+          require leaving NVDA and typing NVDA. The ticker is bound
+          here, so the box is a question box and not a form. */}
+      <Section eyebrow="לשאול על החברה" id="company-research">
+        <ResearchConsole enabled={hasGeminiKey()} initialTicker={ticker} />
       </Section>
 
       {/* THE CHART READER, WHERE THE COMPANY IS.
