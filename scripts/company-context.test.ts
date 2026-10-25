@@ -7,6 +7,7 @@ import {
   type EarningsDate,
 } from "../src/lib/sources/finnhub";
 import { isAbout } from "../src/lib/watchlist-news";
+import { HORIZONS } from "../src/lib/metrics/base-rates";
 import {
   callsItSuccess,
   tooLong,
@@ -309,4 +310,17 @@ test("each request gets its own retry budget", () => {
   const long = Array.from({ length: 14 }, (_, i) => `משפט ${i + 1}.`).join(" ");
   assert.ok(lengthRejectedOnce()(long));
   assert.ok(lengthRejectedOnce()(long));
+});
+
+test("half a trading year is one of the measured horizons", () => {
+  /* Added because the owner asked what the site expects six months out
+     and the honest answer was that nothing counted that far. Pinned so
+     it cannot quietly fall back out of the set: every consumer reads
+     `HORIZONS`, so dropping 126 here would silently remove the row
+     from the company page rather than break anything. */
+  assert.ok(HORIZONS.includes(126), "126 sessions is about six months");
+  assert.ok(
+    HORIZONS.indexOf(126) === HORIZONS.length - 1,
+    "and it is the longest, so a thinning sample reads down the list",
+  );
 });

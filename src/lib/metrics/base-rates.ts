@@ -49,7 +49,15 @@ import {
  *  week, two weeks, a month, a quarter — the spans a swing position is
  *  judged on, and short enough that a daily chart has something to say
  *  about them. */
-export const HORIZONS = [5, 10, 21, 63] as const;
+/* 126 is half a trading year, and it is here because the owner asked
+   what the site expects six months out and the honest answer was that
+   nothing counted that far. It is counted now rather than estimated:
+   the same occurrences, the same baseline, measured 126 sessions
+   forward instead of 63. The sample thins — an occurrence needs half a
+   year of history after it to be measurable at all — and `n` carries
+   that per horizon, so a thin six-month row says so instead of
+   borrowing the confidence of the quarter above it. */
+export const HORIZONS = [5, 10, 21, 63, 126] as const;
 export type Horizon = (typeof HORIZONS)[number];
 
 export type Outcome = {
@@ -676,7 +684,15 @@ export type Reading = {
 };
 
 const horizonWord = (days: number) =>
-  days === 5 ? "שבוע" : days === 10 ? "שבועיים" : days === 21 ? "חודש" : "רבעון";
+  days === 5
+    ? "שבוע"
+    : days === 10
+      ? "שבועיים"
+      : days === 21
+        ? "חודש"
+        : days === 63
+          ? "רבעון"
+          : "חצי שנה";
 
 /**
  * Says what the numbers say, and says "nothing" out loud when that is the

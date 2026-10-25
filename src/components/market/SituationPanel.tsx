@@ -21,7 +21,7 @@ export function SituationPanel({
   ticker: string;
 }) {
   if (!situation) return null;
-  const { state, strength, weakness, balance, watch, asOf } = situation;
+  const { state, strength, weakness, balance, watch, outlook, asOf } = situation;
 
   return (
     <section className="read-block situation">
@@ -60,6 +60,74 @@ export function SituationPanel({
           </div>
         )}
       </dl>
+
+      {/* WHAT FOLLOWED THIS, OUT TO HALF A YEAR.
+          Asked for as "forecasts six months ahead". It is not a
+          forecast and the copy says so twice — once here and once in
+          the row that runs out of sample — because a table of
+          percentages beside a date is read as a prediction unless it is
+          stopped from being. Each rate sits against the baseline for
+          the same window on the same instrument, which is the only
+          thing that makes it mean anything. */}
+      {outlook && (() => {
+        /* When nothing fired, the rate IS the baseline and the two
+           columns print the same number twice, which reads as a bug
+           rather than as the point. */
+        const isBaseline = outlook.condition === "יום אקראי על הנייר הזה";
+        return (
+        <div className="situation-outlook">
+          <h4>
+            {outlook.condition === "יום אקראי על הנייר הזה"
+              ? "מה קרה בעבר מיום אקראי על הנייר הזה"
+              : `מה קרה בעבר אחרי ${outlook.condition}`}
+          </h4>
+          <table>
+            <thead>
+              <tr>
+                <th>אופק</th>
+                <th>סגרו גבוה</th>
+                {!isBaseline && <th>בסיס</th>}
+                <th>תנועה חציונית</th>
+                <th>מדגם</th>
+              </tr>
+            </thead>
+            <tbody>
+              {outlook.rows.map((row) => (
+                <tr key={row.days} data-thin={row.thin ? "true" : undefined}>
+                  <td>{row.label}</td>
+                  <td className="num" dir="ltr">
+                    {row.upPercent}%
+                  </td>
+                  {!isBaseline && (
+                    <td className="num" dir="ltr">
+                      {row.baselinePercent}%
+                    </td>
+                  )}
+                  <td className="num" dir="ltr">
+                    {row.medianPct >= 0 ? "+" : "−"}
+                    {Math.abs(row.medianPct).toFixed(1)}%
+                  </td>
+                  <td className="num" dir="ltr">
+                    n={row.n}
+                    {row.thin && " ⚠"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <small>
+            זו לא תחזית. זו ספירה של מה שכבר קרה על הנייר הזה עצמו, כל
+            שיעור מול הבסיס של אותו חלון. כשאין תנאי נמדד שפעל, השורות
+            האלה הן הבסיס עצמו — מה שקרה מיום אקראי — וזו תשובה, לא
+            היעדר נתונים. ככל שהאופק ארוך יותר
+            המדגם קטן — לאירוע צריך להיות חצי שנה של היסטוריה אחריו כדי
+            להימדד בכלל — ולכן שורה עם{" "}
+            <span dir="ltr">⚠</span> היא שורה שהמדגם שלה קטן מכדי להישען
+            עליה, ומודפסת כדי שתדע שהספירה נגמרה ולא שהיא אומרת אפס.
+          </small>
+        </div>
+        );
+      })()}
 
       <p className="situation-note">
         ארבע השורות האלה לא מודדות כלום — כל אחת נבחרה מתוך הפאנלים שלמטה,

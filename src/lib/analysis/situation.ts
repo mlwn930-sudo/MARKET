@@ -1,6 +1,7 @@
 import type { SetupRead } from "@/lib/analysis/setup";
 import type { ChartStance } from "@/lib/analysis/stance";
 import type { TapeRead } from "@/lib/metrics/tape";
+import { MIN_SAMPLE, type BaseRateRead } from "@/lib/metrics/base-rates";
 
 /**
  * Four lines, at the top, before anything asks to be studied.
@@ -54,6 +55,35 @@ export type Situation = {
   /** The next observable thing worth waiting for, or the next dated
    *  event. Null when there is neither. */
   watch: string | null;
+  /**
+   * What the counted record says about the months ahead, per horizon.
+   *
+   * ASKED FOR AS "FORECASTS SIX MONTHS OUT", and the first honest
+   * answer was that nothing counted that far: the site measured a week,
+   * a fortnight, a month and a quarter. So half a trading year was
+   * added to the measured set rather than estimated from the quarter,
+   * and this reports it beside the shorter horizons — the same
+   * occurrences, the same baseline, counted 126 sessions forward.
+   *
+   * It is not a forecast and the copy must never let it read as one.
+   * It is what followed this condition on this instrument, with the
+   * sample attached, and the sample is the thing that thins: an
+   * occurrence needs half a year of history after it to be measurable
+   * at all, so the six-month row is always the smallest n on the list
+   * and says so.
+   */
+  outlook: {
+    condition: string;
+    rows: {
+      label: string;
+      days: number;
+      upPercent: number;
+      baselinePercent: number;
+      medianPct: number;
+      n: number;
+      thin: boolean;
+    }[];
+  } | null;
   /** What the lines were drawn from, so the reader can go and check. */
   asOf: string | null;
 };
@@ -62,9 +92,11 @@ export function readSituation(input: {
   setup: SetupRead | null;
   stance: ChartStance | null;
   tape: TapeRead | null;
+  /** The counted history, for the forward rows. */
+  rates: BaseRateRead | null;
   nextReport: { date: string; daysAway: number } | null;
 }): Situation | null {
-  const { setup, stance, tape, nextReport } = input;
+  const { setup, stance, tape, rates, nextReport } = input;
   if (!setup && !stance) return null;
 
   /* ---- Where this stands ---- */
@@ -130,12 +162,87 @@ export function readSituation(input: {
                 : `${forCount} בעד ו-${againstCount} נגד. המדידות חלוקות, וזו תשובה ולא היעדר תשובה.`,
         };
 
+  /* ---- What followed this, out to half a year ----
+     Built from the condition with the largest sample that is true
+     today, because a record is only worth quoting when there is one
+     behind it — and the largest sample is the one least likely to be
+     describing three coincidences. */
+  const live = (rates?.conditions ?? []).filter((c) => c.activeNow);
+  const best = live
+    .slice()
+    .sort((a, b) => (b.occurrences ?? 0) - (a.occurrences ?? 0))[0];
+
+  /* NO LIVE CONDITION IS THE COMMON CASE AND MUST NOT BE A BLANK.
+     Most days on most names nothing fires, and the first version
+     printed nothing at all then — which is exactly the "I have no
+     data" state the owner said must never happen. The unconditional
+     baseline is always there: it is what a random day on this
+     instrument was followed by, over the same windows, and it is the
+     number every conditional rate is read against anyway. Taken off
+     any condition's outcomes, because the baseline is a property of
+     the instrument and the window, not of the condition. */
+  const fallback = rates?.conditions[0];
+
+  const outlook = best
+    ? {
+        condition: best.label,
+        rows: best.outcomes
+          .filter((o) => o.days >= 21 && o.n > 0)
+          .map((o) => ({
+            label:
+              o.days === 21
+                ? "חודש"
+                : o.days === 63
+                  ? "רבעון"
+                  : o.days === 126
+                    ? "חצי שנה"
+                    : `${o.days} ימי מסחר`,
+            days: o.days,
+            upPercent: Math.round(o.up * 100),
+            baselinePercent: Math.round(o.baselineUp * 100),
+            medianPct: o.medianPct,
+            n: o.n,
+            /* Below the sample the rest of the site refuses to quote a
+               rate on. Printed anyway here, marked, because the reader
+               asked what is known further out and "the sample runs out"
+               is the answer rather than a blank. */
+            thin: o.n < MIN_SAMPLE,
+          })),
+      }
+    : fallback
+      ? {
+          condition: "יום אקראי על הנייר הזה",
+          rows: fallback.outcomes
+            .filter((o) => o.days >= 21)
+            .map((o) => ({
+              label:
+                o.days === 21
+                  ? "חודש"
+                  : o.days === 63
+                    ? "רבעון"
+                    : o.days === 126
+                      ? "חצי שנה"
+                      : String(o.days) + " ימי מסחר",
+              days: o.days,
+              upPercent: Math.round(o.baselineUp * 100),
+              baselinePercent: Math.round(o.baselineUp * 100),
+              medianPct: o.baselineMedianPct,
+              /* Every session in the window is a sample here, which is
+                 why this row is never thin — and why it can never be
+                 called a signal either. */
+              n: rates?.sessions ?? 0,
+              thin: false,
+            })),
+        }
+      : null;
+
   return {
     state,
     strength: withRecord(strongest),
     weakness: withRecord(against),
     balance,
     watch,
+    outlook: outlook && outlook.rows.length > 0 ? outlook : null,
     asOf: setup?.asOf ?? stance?.swing.asOf ?? null,
   };
 }

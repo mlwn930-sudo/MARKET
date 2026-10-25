@@ -19,6 +19,7 @@ const HORIZON_LABEL: Record<Horizon, string> = {
   10: "שבועיים",
   21: "חודש",
   63: "רבעון",
+  126: "חצי שנה",
 };
 import { CHARACTER_LABELS } from "@/lib/metrics/tape";
 import type { Corroboration } from "./chart-corroborate";

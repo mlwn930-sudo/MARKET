@@ -608,6 +608,7 @@ export default async function CompanyPage({
             setup,
             stance,
             tape,
+            rates: baseRates,
             nextReport: nextReport
               ? {
                   date: nextReport,

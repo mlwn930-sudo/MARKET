@@ -1625,3 +1625,57 @@
     color: var(--color-text-primary);
   }
 }
+
+@layer components {
+  /* The forward rows. A table because five numbers across four
+     horizons is a table and prose about it is worse. The thin row is
+     marked rather than hidden: the sample running out is the answer to
+     "what about further ahead", and a blank there would read as zero. */
+  .situation-outlook {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-line);
+    max-inline-size: 760px;
+  }
+
+  .situation-outlook h4 {
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: var(--color-text-muted);
+  }
+
+  .situation-outlook table {
+    margin-top: 10px;
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .situation-outlook th {
+    text-align: start;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-text-subtle);
+    padding-bottom: 6px;
+  }
+
+  .situation-outlook td {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    padding: 7px 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .situation-outlook td:first-child { color: var(--color-text-primary); }
+
+  .situation-outlook tr[data-thin] td { color: var(--color-text-subtle); }
+
+  .situation-outlook small {
+    display: block;
+    margin-top: 10px;
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: var(--color-text-subtle);
+  }
+}
