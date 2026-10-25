@@ -1597,32 +1597,47 @@
 }
 
 @layer components {
-  /* The chart reader, folded into the company page. Closed by default
-     because most visits are not carrying a screenshot, and a file drop
-     zone open at full height is a hole in the middle of the page. */
+  /* The chart reader, folded into the company page. It was a dashed
+     hairline and the owner could not find it, so it is a panel now:
+     a real surface, a heading that says what it is for, and the
+     company accent on the edge. Still closed by default — most visits
+     are not carrying a screenshot, and an open drop zone is a hole in
+     the middle of the page. */
   .chart-attach > summary {
     cursor: pointer;
     list-style: none;
-    padding: 13px 15px;
-    border: 1px dashed var(--color-border-default);
-    border-radius: 9px;
-    font-size: 13px;
-    color: var(--color-text-secondary);
+    display: grid;
+    gap: 6px;
+    padding: 16px 18px;
+    border: 1px solid var(--color-border-default);
+    border-inline-start: 3px solid var(--color-accent, var(--color-brand));
+    border-radius: 10px;
   }
 
   .chart-attach > summary::-webkit-details-marker { display: none; }
 
-  .chart-attach > summary::before {
-    content: "+";
-    margin-inline-end: 8px;
-    color: var(--color-text-muted);
+  .chart-attach > summary strong {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--color-text-primary);
   }
 
-  .chart-attach[open] > summary::before { content: "−"; }
+  .chart-attach > summary strong::before {
+    content: "+";
+    margin-inline-end: 9px;
+    color: var(--color-accent, var(--color-brand));
+  }
+
+  .chart-attach[open] > summary strong::before { content: "−"; }
+
+  .chart-attach > summary span {
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--color-text-subtle);
+  }
 
   .chart-attach > summary:hover {
     border-color: var(--color-accent, var(--color-brand));
-    color: var(--color-text-primary);
   }
 }
 

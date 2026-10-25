@@ -629,11 +629,26 @@ export default async function CompanyPage({
           inside researching a company rather than a different errand.
           `/chart-reader` still answers for a chart of something the
           site does not cover. */}
+      {/* THE READER IS FOR THE CHART THE OWNER IS LOOKING AT, NOT OURS.
+          He said it plainly: do not analyse the charts on the site —
+          they are not clear enough — give me the option to attach one
+          and have it read that. He is right about which chart matters.
+          A screenshot from his own terminal has his drawings, his
+          timeframe and his indicators on it, and that is the chart the
+          decision is actually being made against; the site's own canvas
+          is a summary of the same prices.
+          So the entrance says what it is for in one line, and it is a
+          panel rather than a dashed hairline — the previous version
+          looked like a footnote and he could not find it. */}
       <Section eyebrow="לצרף גרף" id="company-chart">
         <details className="chart-attach">
           <summary>
-            יש לך צילום של גרף {ticker}? צרף אותו, והאתר יצליב אותו מול
-            הנרות האמיתיים
+            <strong>צרף צילום של הגרף שלך ל-{ticker}</strong>
+            <span>
+              מ-TradingView או מכל מקום אחר — עם הקווים, האינדיקטורים
+              ואופק הזמן שאתה עובד איתם. האתר יקרא אותו ויצליב כל רמה מול
+              הנרות האמיתיים.
+            </span>
           </summary>
           <div className="mt-4">
             <ChartReader ticker={ticker} />

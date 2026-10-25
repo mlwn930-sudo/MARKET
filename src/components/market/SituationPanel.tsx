@@ -1,5 +1,17 @@
 import type { Situation } from "@/lib/analysis/situation";
 
+/** Hebrew weekday names, indexed the way `getUTCDay` returns them. The
+ *  date is parsed at midday UTC so a timezone cannot roll it a day. */
+const DAY_NAME = [
+  "ראשון",
+  "שני",
+  "שלישי",
+  "רביעי",
+  "חמישי",
+  "שישי",
+  "שבת",
+];
+
 /**
  * The picture, before the evidence for it.
  *
@@ -133,12 +145,21 @@ export function SituationPanel({
         ארבע השורות האלה לא מודדות כלום — כל אחת נבחרה מתוך הפאנלים שלמטה,
         שם היא מופיעה עם המספרים המלאים שלה
         {asOf && (
+          /* NAMED AS THE LAST SESSION, NOT AS A DATE.
+             It read "as of 2026-10-23" on a Sunday and the owner took
+             it for stale data. It was not — the 23rd was Friday, and
+             Friday is the last close there is until Monday opens. A
+             bare date cannot say that, so the label does: the figure is
+             anchored to a trading session, and a weekend is not one. */
           <>
             {" "}
-            (נכון ל-
+            (נמדד על יום המסחר האחרון שנסגר,{" "}
             <span className="num" dir="ltr">
               {asOf}
             </span>
+            {DAY_NAME[new Date(`${asOf}T12:00:00Z`).getUTCDay()]
+              ? ` — יום ${DAY_NAME[new Date(`${asOf}T12:00:00Z`).getUTCDay()]}`
+              : ""}
             )
           </>
         )}
