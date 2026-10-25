@@ -24,6 +24,9 @@ import { readTape } from "@/lib/metrics/tape";
 import { TapePanel } from "@/components/market/TapePanel";
 import { SetupPanel } from "@/components/market/SetupPanel";
 import { StanceLine } from "@/components/market/StanceLine";
+import { SituationPanel } from "@/components/market/SituationPanel";
+import { ChartReader } from "@/components/ChartReader";
+import { readSituation } from "@/lib/analysis/situation";
 import { buildChartStance } from "@/lib/analysis/stance";
 import { readSetup } from "@/lib/analysis/setup";
 import { rankFor } from "@/lib/metrics/rank-store";
@@ -592,6 +595,32 @@ export default async function CompanyPage({
         ...(fundamentals.groups.length ? [{ id: "company-financials", label: "נתונים כספיים" }] : []),
         { id: "company-connections", label: "קשרים" },
       ]} />
+      {/* FIRST, BEFORE THE EVIDENCE FOR IT.
+          The page opened with eleven correct sections and no sentence,
+          so a reader had to assemble the picture from panels that were
+          each written to be unarguable rather than readable. This adds
+          no measurement — every line is a selection out of readings the
+          panels below show in full — which is exactly why it is allowed
+          to conclude, and why it can be four lines. */}
+      <div className="mt-6">
+        <SituationPanel
+          situation={readSituation({
+            setup,
+            stance,
+            tape,
+            nextReport: nextReport
+              ? {
+                  date: nextReport,
+                  daysAway: Math.round(
+                    (new Date(nextReport).getTime() - Date.now()) / 86_400_000,
+                  ),
+                }
+              : null,
+          })}
+          ticker={ticker}
+        />
+      </div>
+
       <div className="mt-6"><EvidenceKey /></div>
       {fundamentals.stale && (
         <p
@@ -857,6 +886,27 @@ export default async function CompanyPage({
         className="max-lg:order-first"
       >
         <CompanyNewsCorner ticker={ticker} name={name} news={news} />
+      </Section>
+
+      {/* THE CHART READER, WHERE THE COMPANY IS.
+          It had its own page, and that page was one of four a reader
+          had to visit — chart, news, research, company — before they
+          could form a view on a single name. None of the four was
+          wrong; the sum of them was. The reader lives here now, folded,
+          with the ticker prefilled, so attaching a screenshot is a step
+          inside researching a company rather than a different errand.
+          `/chart-reader` still answers for a chart of something the
+          site does not cover. */}
+      <Section eyebrow="לצרף גרף" id="company-chart">
+        <details className="chart-attach">
+          <summary>
+            יש לך צילום של גרף {ticker}? צרף אותו, והאתר יצליב אותו מול
+            הנרות האמיתיים
+          </summary>
+          <div className="mt-4">
+            <ChartReader ticker={ticker} />
+          </div>
+        </details>
       </Section>
 
       <LevelsPanel levels={priceLevels} flow={flow} />

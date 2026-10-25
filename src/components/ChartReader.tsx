@@ -84,9 +84,14 @@ const LEVEL_LABEL: Record<ChartRead["levels"][number]["kind"], string> = {
   pivot: "ציר",
 };
 
-export function ChartReader() {
+export function ChartReader({ ticker }: { ticker?: string } = {}) {
   const [preview, setPreview] = useState<string | null>(null);
-  const [context, setContext] = useState("");
+  /* Prefilled when the reader is embedded on a company page, where the
+     instrument is already known. The vision model reads the symbol off
+     the image anyway, but a context line that names it is the
+     difference between a confident read and one that hedges about
+     which chart this is. */
+  const [context, setContext] = useState(ticker ? `${ticker}, יומי` : "");
   const [state, setState] = useState<State>({ phase: "idle" });
   const [dragging, setDragging] = useState(false);
   const [elapsed, setElapsed] = useState(0);
