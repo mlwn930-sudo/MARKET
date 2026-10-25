@@ -1,11 +1,8 @@
-import Link from "next/link";
 import {
   OUTLOOK_LABELS,
   type Outlook,
-  type Scenario,
 } from "@/lib/analysis/outlook";
 import { CONFIDENCE_LABELS } from "@/lib/agents/types";
-import { fmtPercent, fmtPrice } from "@/lib/format";
 
 /**
  * The view, at the top of the page.
@@ -21,58 +18,8 @@ import { fmtPercent, fmtPrice } from "@/lib/format";
  * price moved up or down today, and nothing else.
  */
 
-function ScenarioCard({ scenario }: { scenario: Scenario }) {
-  const positive = (scenario.impliedReturn ?? 0) > 0;
 
-  return (
-    <article className="inset flex flex-col p-4">
-      <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[12px] text-ink-muted">{scenario.label}</span>
-        <span
-          className={`num text-[15px] ${
-            scenario.impliedReturn === null
-              ? "text-ink-faint"
-              : positive
-                ? "text-up"
-                : "text-down"
-          }`}
-        >
-          {scenario.impliedReturn === null
-            ? "—"
-            : fmtPercent(scenario.impliedReturn)}
-        </span>
-      </div>
-
-      <div className="num mt-1 text-[20px] text-ink">
-        {fmtPrice(scenario.impliedPrice)}
-      </div>
-
-      <ul className="mt-3 space-y-1.5 border-t border-line pt-3">
-        {scenario.assumptions.map((assumption, i) => (
-          <li key={i} className="text-[12px] leading-relaxed text-ink-faint">
-            {assumption}
-          </li>
-        ))}
-      </ul>
-
-      <ul className="mt-2 space-y-1">
-        {scenario.drivers.map((driver, i) => (
-          <li key={i} className="text-[12px] leading-relaxed text-ink-ghost">
-            {driver}
-          </li>
-        ))}
-      </ul>
-    </article>
-  );
-}
-
-export function OutlookPanel({
-  outlook,
-  ticker,
-}: {
-  outlook: Outlook;
-  ticker: string;
-}) {
+export function OutlookPanel({ outlook }: { outlook: Outlook }) {
   const stance = OUTLOOK_LABELS[outlook.stance];
 
   return (
@@ -204,58 +151,20 @@ export function OutlookPanel({
         </section>
       )}
 
-      {/* Scenarios */}
-      {outlook.scenarios.length > 0 && (
-        <section>
-          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <span className="section-mark" aria-hidden="true" />
-              <span className="eyebrow">שלושה תרחישים לשנה קדימה</span>
-            </div>
-            <span className="text-[12px] text-ink-ghost">
-              חישוב מכני מהמספרים שבעמוד — לא תחזית
-            </span>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {outlook.scenarios.map((scenario) => (
-              <ScenarioCard key={scenario.key} scenario={scenario} />
-            ))}
-          </div>
-
-          <p className="mt-3 text-[12px] leading-relaxed text-ink-ghost">
-            כל תרחיש הוא משפט אריתמטי אחד: מחיר × (1 + צמיחה) × (מכפיל יעד ÷
-            מכפיל נוכחי). ההנחות מודפסות מתחת לכל מספר כדי שאפשר יהיה לחלוק
-            עליהן. הן אינן תחזית של האתר ואינן מחיר יעד.
-          </p>
-        </section>
-      )}
-
-      {/* Limits */}
-      {outlook.caveats.length > 0 && (
-        <section className="surface p-5">
-          <div className="mb-3 flex items-center gap-2.5">
-            <span className="section-mark" aria-hidden="true" />
-            <span className="eyebrow">גבולות הניתוח</span>
-          </div>
-          <ul className="space-y-1.5">
-            {outlook.caveats.map((caveat, i) => (
-              <li key={i} className="text-[12px] leading-relaxed text-ink-faint">
-                {caveat}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 border-t border-line pt-3 text-[12px] text-ink-ghost">
-            רוצה את הטיעון המלא, מפורק לשאלות משנה?{" "}
-            <Link
-              href={`/research?ticker=${ticker}`}
-              className="text-ink-muted transition-colors hover:text-ink"
-            >
-              מחקר עומק על {ticker} ←
-            </Link>
-          </p>
-        </section>
-      )}
+      {/* REMOVED: the three scenarios and the limits list.
+          The scenarios were one arithmetic sentence — price x (1 +
+          growth) x (target multiple / current multiple) — printed as
+          three cards under a headline of +94%. It was captioned "not
+          a forecast" and read as one anyway: a number that large
+          beside a date is a forecast whatever the caption says.
+          The site now counts what actually followed, out to half a
+          trading year, from this instrument own history. A measured
+          row beside a mechanical extrapolation makes the
+          extrapolation worse than useless, because a reader cannot
+          tell by looking which of the two was counted.
+          The limits list went with it: every caveat in it is already
+          carried by the panel it belongs to, and the page still ends
+          with the disclaimer rule 6 requires. */}
     </div>
   );
 }

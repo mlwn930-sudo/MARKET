@@ -261,7 +261,7 @@ export default async function TtwoLaunchPage() {
         <div className="evidence-figures"><div><span>דווח · Q1 FY2027</span><strong>$1.39B</strong><p>Net Bookings ברבעון שהסתיים ב־30 ביוני 2026.</p></div><div><span>דווח · Q1 FY2027</span><strong>84%</strong><p>חלק ההוצאות החוזרות של שחקנים מתוך Net Bookings.</p></div><div><span>הנחיית הנהלה · FY2027</span><strong>$8.0–8.2B</strong><p>טווח Net Bookings לשנה המסתיימת במרץ 2027. תחזית, לא תוצאה.</p></div><div><span>דווח · Q1 FY2027</span><strong>−$34.1M</strong><p>הפסד נקי GAAP. פעילות גדולה אינה מבטיחה רווח.</p></div></div>
         <a className="evidence-source" href="https://www.take2games.com/ir/news/take-two-interactive-software-inc-reports-results-fiscal-first-6" target="_blank" rel="noopener noreferrer">מקור: Take-Two, תוצאות Q1 FY2027 · פורסם 07.08.2026 · נבדק 28.09.2026 ↗</a>
       </section>
-      {outlook && <details className="depth-disclosure"><summary>להעמיק בהערכת המצב של Take-Two</summary><div><OutlookPanel outlook={outlook} ticker="TTWO" /></div></details>}
+      {outlook && <details className="depth-disclosure"><summary>להעמיק בהערכת המצב של Take-Two</summary><div><OutlookPanel outlook={outlook} /></div></details>}
 
       {/* ---- Accounting mechanics ---- */}
       <Section

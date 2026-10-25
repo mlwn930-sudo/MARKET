@@ -18,7 +18,6 @@ import { VerdictPanel } from "@/components/VerdictPanel";
 import { IntelligencePanel } from "@/components/IntelligencePanel";
 import { TechnicalPanel } from "@/components/TechnicalPanel";
 import { LevelsPanel } from "@/components/LevelsPanel";
-import { ExtendedHoursStrip } from "@/components/ExtendedHoursStrip";
 import { readLevels, readFlow } from "@/lib/metrics/levels";
 import { readTape } from "@/lib/metrics/tape";
 import { TapePanel } from "@/components/market/TapePanel";
@@ -57,14 +56,12 @@ import { readChart } from "@/lib/analysis/chart-read";
 import { changesFor, historyFor } from "@/lib/intel/history-store";
 import { buildExpectationEngine } from "@/lib/intel/surprise";
 import { readEarnings } from "@/lib/intel/earnings";
-import { buildCompanyGraph } from "@/lib/intel/graph";
 import { sectorOf } from "@/lib/universe";
 import { ThesisChangePanel } from "@/components/ThesisChangePanel";
 import {
   EarningsReadPanel,
   ExpectationEnginePanel,
 } from "@/components/ExpectationPanel";
-import { ConnectionIndex } from "@/components/ConnectionIndex";
 import {
   Band,
   Disclaimer,
@@ -427,7 +424,7 @@ export default async function CompanyPage({
      loaded, plus two reads of a file the nightly job writes. None of them
      adds a request, which is why they can sit on a page that already fans
      out to SEC and two quote providers. */
-  const [thesisChanges, thesisHistory] = await Promise.all([
+  const [thesisChanges] = await Promise.all([
     changesFor(ticker).catch(() => []),
     historyFor(ticker).catch(() => []),
   ]);
@@ -443,18 +440,6 @@ export default async function CompanyPage({
 
   /* The last quarter against four yardsticks rather than one. */
   const earnings = readEarnings({ ticker, surprises, fundamentals });
-
-  /* Everything this company is attached to, as a navigable index. */
-  const graph = buildCompanyGraph({
-    ticker,
-    companyName: name,
-    sectorKey: sectorOf(ticker),
-    intelligence,
-    sector: sectorToday ?? null,
-    articles,
-    fundamentals,
-    history: thesisHistory,
-  });
 
   return (
     <Page>
@@ -595,7 +580,6 @@ export default async function CompanyPage({
         { id: "company-capital", label: "איכות הרווח" },
         ...(intelligence ? [{ id: "company-thesis", label: "התזה" }] : []),
         ...(fundamentals.groups.length ? [{ id: "company-financials", label: "נתונים כספיים" }] : []),
-        { id: "company-connections", label: "קשרים" },
       ]} />
       {/* FIRST, BEFORE THE EVIDENCE FOR IT.
           The page opened with eleven correct sections and no sentence,
@@ -706,7 +690,7 @@ export default async function CompanyPage({
           title={`מה אומרים הנתונים על ${name}`}
           description="עמדה מנומקת, לא דירוג: מה הנתונים מראים, מה צריך לקרות כדי שזה יעבוד, ומה היה הופך את התמונה. כולל מה שעדיין לא נמצא בדוחות."
         >
-          <OutlookPanel outlook={outlook} ticker={ticker} />
+          <OutlookPanel outlook={outlook} />
         </Section>
       )}
 
@@ -858,16 +842,14 @@ export default async function CompanyPage({
           two different fetches from two different endpoints, and the one
           that fails more often was gating the one that matters most at
           seven in the morning. */}
-      {extended && (
-        <Section
-          id="company-session"
-          eyebrow="מחוץ לשעות המסחר"
-          title="לפני הפתיחה ואחרי הסגירה"
-          className="max-lg:order-first"
-        >
-          <ExtendedHoursStrip data={extended} />
-        </Section>
-      )}
+      {/* REMOVED: the extended-hours strip.
+          It printed a pre-market tick — +0.04% on NVDA this morning — as
+          a full section near the top of a research page. For somebody
+          deciding whether to hold a company for months, a four
+          hundredths of a percent move on thin overnight volume is not
+          information, and giving it a heading made it look like some.
+          `ExtendedHoursStrip` is still used where it belongs, on the
+          pages about today's session. */}
 
       {history && (
         <Section
@@ -1056,18 +1038,14 @@ export default async function CompanyPage({
         </div>
       </Section>
 
-      {/* ---- Everything this connects to ----
-           Near the end on purpose. It is the index out of this page and
-           into the rest of the site, and an index belongs after the thing
-           it indexes. */}
-      <Section
-        id="company-connections"
-        eyebrow="קשרים"
-        title={`מה עוד מחובר ל-${ticker}`}
-        description={`${graph.count} קשרים, כל אחד עם הסיבה שהוא קיים ועם דרגת הראיות שמאחוריה. קישור מאקרו מסומן כהשערה ויושב ליד קישור סקטור שמסומן כמאושש — וההשוואה הזאת היא מה שדיאגרמה הייתה משטחת.`}
-      >
-        <ConnectionIndex graph={graph} />
-      </Section>
+      {/* REMOVED: the connection index.
+          2,600 pixels of "15 of the 15 companies in the sector traded
+          today, 8 of them green" — true, and not a reason to buy or
+          avoid anything. It was an index out of this page into the rest
+          of the site, sitting at the bottom of the page a reader goes
+          to in order to decide, and it was the single tallest block
+          there. `WorkflowLinks` below already carries the one thing it
+          was needed for: where to go next. */}
       </div>
 
       <WorkflowLinks ticker={ticker} title="מהראיות אל השאלה הבאה" />
