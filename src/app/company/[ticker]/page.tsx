@@ -625,6 +625,37 @@ export default async function CompanyPage({
       </div>
 
       <div className="mt-6"><EvidenceKey /></div>
+
+      {/* THE RESEARCH CONSOLE, WHERE THE COMPANY IS.
+          It had its own page, reached from a nav item, with a ticker
+          field the reader filled in for a company they were already
+          looking at. Asking a deep question about NVDA should not
+          require leaving NVDA and typing NVDA. The ticker is bound
+          here, so the box is a question box and not a form. */}
+      <Section eyebrow="לשאול על החברה" id="company-research">
+        <ResearchConsole enabled={hasGeminiKey()} initialTicker={ticker} />
+      </Section>
+
+      {/* THE CHART READER, WHERE THE COMPANY IS.
+          It had its own page, and that page was one of four a reader
+          had to visit — chart, news, research, company — before they
+          could form a view on a single name. None of the four was
+          wrong; the sum of them was. The reader lives here now, folded,
+          with the ticker prefilled, so attaching a screenshot is a step
+          inside researching a company rather than a different errand.
+          `/chart-reader` still answers for a chart of something the
+          site does not cover. */}
+      <Section eyebrow="לצרף גרף" id="company-chart">
+        <details className="chart-attach">
+          <summary>
+            יש לך צילום של גרף {ticker}? צרף אותו, והאתר יצליב אותו מול
+            הנרות האמיתיים
+          </summary>
+          <div className="mt-4">
+            <ChartReader ticker={ticker} />
+          </div>
+        </details>
+      </Section>
       {fundamentals.stale && (
         <p
           className="surface mt-8 border-s-2 px-5 py-4 text-sm text-ink"
@@ -653,7 +684,7 @@ export default async function CompanyPage({
            which is most of them on most days. */}
       {thesisChanges.length > 0 && (
         <Section
-          eyebrow="שינוי בתזה"
+          eyebrow="שינוי בתזה" folded
           title="מה האתר אמר קודם, ומה הוא אומר עכשיו"
           description="זוהה בהשוואה בין שתי מדידות שמורות. ההבחנה שהכול תלוי בה היא האם הקלטים המדודים השתנו — דוח חדש — או שרק המחיר זז ואיתו המכפיל."
         >
@@ -773,7 +804,7 @@ export default async function CompanyPage({
       {/* ---- What the market is paying for, against what arrived ---- */}
       {gap && (
         <Section
-          eyebrow="פער ציפיות"
+          eyebrow="פער ציפיות" folded
           title="מה המחיר מגלם, ומה הדוחות מראים"
           description="מכפיל הוא משפט על העתיד שנכתב במספר אחד. כאן הוא מוצג מול מה שכבר דווח — וכשהשניים לא מסתדרים, אי-ההסכמה היא הממצא."
         >
@@ -789,7 +820,7 @@ export default async function CompanyPage({
            not. */}
       {expectations && (
         <Section
-          eyebrow="מנוע הציפיות"
+          eyebrow="מנוע הציפיות" folded
           title="מה היה מפתיע את השוק"
           description="המרה אריתמטית מפרמיית מכפיל לקצב צמיחה נדרש, ומולה הקצב שנמסר בפועל. כל הנחה שהחישוב נשען עליה מודפסת מתחתיו."
           tight
@@ -801,7 +832,7 @@ export default async function CompanyPage({
       {/* ---- The last report, against four yardsticks ---- */}
       {earnings && (
         <Section
-          eyebrow="הדוח האחרון"
+          eyebrow="הדוח האחרון" folded
           title="מה הוא אמר, מול ארבע אמות מידה"
           description="הכאה מול קונצנזוס שנחתך פעמיים ברבעון אינה אותו אירוע כמו הכאה מול המספר שהוחזק כל הדרך. לכן ההשוואה נעשית גם מול הרבעון הקודם, גם מול אותו רבעון אשתקד, וגם מול שיא ההכאות."
           tight
@@ -813,7 +844,7 @@ export default async function CompanyPage({
       {/* ---- The Core Test: quantitative, trailing, pass or fail ---- */}
       {intelligence && (
         <Section
-          eyebrow="מבחן הליבה"
+          eyebrow="מבחן הליבה" folded
           description="בדיקה כמותית על מה שכבר דווח. היא מסתכלת אחורה בהגדרה — וחברה יכולה להיכשל בה ועדיין להיות מעניינת, וזה בדיוק מה שהתזה שמתחת בודקת."
         >
           <VerdictPanel verdict={intelligence.verdict} />
@@ -891,37 +922,6 @@ export default async function CompanyPage({
         <CompanyNewsCorner ticker={ticker} name={name} news={news} />
       </Section>
 
-      {/* THE RESEARCH CONSOLE, WHERE THE COMPANY IS.
-          It had its own page, reached from a nav item, with a ticker
-          field the reader filled in for a company they were already
-          looking at. Asking a deep question about NVDA should not
-          require leaving NVDA and typing NVDA. The ticker is bound
-          here, so the box is a question box and not a form. */}
-      <Section eyebrow="לשאול על החברה" id="company-research">
-        <ResearchConsole enabled={hasGeminiKey()} initialTicker={ticker} />
-      </Section>
-
-      {/* THE CHART READER, WHERE THE COMPANY IS.
-          It had its own page, and that page was one of four a reader
-          had to visit — chart, news, research, company — before they
-          could form a view on a single name. None of the four was
-          wrong; the sum of them was. The reader lives here now, folded,
-          with the ticker prefilled, so attaching a screenshot is a step
-          inside researching a company rather than a different errand.
-          `/chart-reader` still answers for a chart of something the
-          site does not cover. */}
-      <Section eyebrow="לצרף גרף" id="company-chart">
-        <details className="chart-attach">
-          <summary>
-            יש לך צילום של גרף {ticker}? צרף אותו, והאתר יצליב אותו מול
-            הנרות האמיתיים
-          </summary>
-          <div className="mt-4">
-            <ChartReader ticker={ticker} />
-          </div>
-        </details>
-      </Section>
-
       <LevelsPanel levels={priceLevels} flow={flow} />
 
       {/* What is converging, before the panels that are its evidence.
@@ -959,7 +959,7 @@ export default async function CompanyPage({
       </Section>
 
       {technical && (
-        <Section eyebrow="ניתוח טכני">
+        <Section eyebrow="ניתוח טכני" folded>
           <TechnicalPanel technical={technical} rates={baseRates} />
         </Section>
       )}
@@ -1041,7 +1041,7 @@ export default async function CompanyPage({
         </Section>
       ))}
 
-      <Section eyebrow="מגמות רב-שנתיות">
+      <Section eyebrow="מגמות רב-שנתיות" folded>
         <div className="grid gap-4 lg:grid-cols-2">
           <RevenueChart
             series={fundamentals.revenueSeries}

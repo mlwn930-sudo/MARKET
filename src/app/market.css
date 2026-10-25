@@ -1679,3 +1679,33 @@
     color: var(--color-text-subtle);
   }
 }
+
+@layer components {
+  /* A folded section. The heading is the handle, so the page still
+     reads as a list of what is available — the difference is that
+     twelve reference sections are twelve lines instead of twelve
+     screens. */
+  .section-fold > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 2px 0;
+  }
+
+  .section-fold > summary::-webkit-details-marker { display: none; }
+
+  .section-fold > summary .section-head::after {
+    content: "+";
+    margin-inline-start: 10px;
+    font-size: 15px;
+    color: var(--color-text-subtle);
+  }
+
+  .section-fold[open] > summary .section-head::after { content: "−"; }
+
+  .section-fold > summary:hover .eyebrow { color: var(--color-text-primary); }
+
+  /* A closed section carries no description — the eyebrow is the whole
+     handle, and three lines of explanation under every closed heading
+     is the wall again in a smaller font. */
+  .section-fold:not([open]) > summary .section-head p { display: none; }
+}

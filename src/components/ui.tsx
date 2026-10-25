@@ -139,6 +139,7 @@ export function Section({
   id,
   tight = false,
   className = "",
+  folded = false,
 }: {
   eyebrow?: string;
   title?: string;
@@ -148,6 +149,20 @@ export function Section({
   id?: string;
   tight?: boolean;
   className?: string;
+  /**
+   * Starts closed, with the heading as the handle.
+   *
+   * A company page had twenty sections, every one of them correct, and
+   * reaching the bottom was work. Most of them are reference rather
+   * than reading — the multi-year trends, the expectations engine, the
+   * connections — and reference that is always open is what turns a
+   * page into a scroll. Folding keeps them one click away and gives the
+   * page its shape back.
+   *
+   * `details` rather than state: no JavaScript, survives a server
+   * render, and the browser's own find-in-page opens it to show a hit.
+   */
+  folded?: boolean;
 }) {
   return (
     /* Written to before React has hydrated it. `ScrollReveal` runs from
@@ -165,17 +180,32 @@ export function Section({
       className={`${tight ? "gap-section-tight" : "gap-section"} ${className}`}
       suppressHydrationWarning
     >
-      {(eyebrow || title) && (
-        <div className="gap-head">
-          <SectionHeader
-            eyebrow={eyebrow}
-            title={title}
-            description={description}
-            action={action}
-          />
-        </div>
+      {folded ? (
+        <details className="section-fold">
+          <summary>
+            <SectionHeader
+              eyebrow={eyebrow}
+              title={title}
+              description={description}
+            />
+          </summary>
+          <div className="mt-4">{children}</div>
+        </details>
+      ) : (
+        <>
+          {(eyebrow || title) && (
+            <div className="gap-head">
+              <SectionHeader
+                eyebrow={eyebrow}
+                title={title}
+                description={description}
+                action={action}
+              />
+            </div>
+          )}
+          {children}
+        </>
       )}
-      {children}
     </section>
   );
 }
