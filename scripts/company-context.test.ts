@@ -8,6 +8,7 @@ import {
 } from "../src/lib/sources/finnhub";
 import { isAbout } from "../src/lib/watchlist-news";
 import { HORIZONS } from "../src/lib/metrics/base-rates";
+import { withDeadline } from "../src/lib/analysis/chart-corroborate";
 import {
   callsItSuccess,
   tooLong,
@@ -323,4 +324,26 @@ test("half a trading year is one of the measured horizons", () => {
     HORIZONS.indexOf(126) === HORIZONS.length - 1,
     "and it is the longest, so a thinning sample reads down the list",
   );
+});
+
+test("the dated half gives way rather than taking the read down with it", async () => {
+  /* Measured on production: the same 8KB chart came back 502 at 29.4
+     seconds with a context line and 200 at 4.7 without one. The context
+     was never the problem — it made the model name the instrument,
+     which starts the corroboration, and the corroboration was parsing
+     nine megabytes of JSON in series inside a ceiling near thirty
+     seconds. The levels and the base rates are what a chart read is;
+     the catalysts make it better. When they cannot both fit, the second
+     has to yield by itself rather than have the function killed around
+     it. */
+  await Promise.all([
+    withDeadline(new Promise((r) => setTimeout(() => r("slow"), 500)), 20, "fallback")
+      .then((v) => assert.equal(v, "fallback", "late work yields the fallback")),
+    withDeadline(Promise.resolve("fast"), 500, "fallback")
+      .then((v) => assert.equal(v, "fast", "work that finishes in time is used")),
+    /* A rejection after the deadline must not surface as an unhandled
+       rejection once the response has already gone out. */
+    withDeadline(Promise.reject(new Error("boom")), 500, "fallback")
+      .then((v) => assert.equal(v, "fallback", "a failure is a fallback, not a throw")),
+  ]);
 });

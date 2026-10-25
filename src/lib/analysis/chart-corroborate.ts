@@ -279,11 +279,27 @@ export async function corroborate(
      nightly job writes already has the long window. A ticker outside the
      research universe simply has none, and the renderer says so rather
      than measuring whatever happens to be here. */
-  const baseRates = await baseRatesFor(ticker).catch(() => null);
-  /* The universe rank, which is one of the five families the setup read
-     counts and the only one that cannot be computed from this
-     instrument alone. */
-  const rank = await rankFor(ticker).catch(() => null);
+  /* IN PARALLEL, AND THE COMPANY CONTEXT ON A LEASH.
+     Measured against production on the same 8KB chart: a read with a
+     context line came back 502 at 29.4 seconds and the identical read
+     without one answered 200 in 4.7. The context was not the problem —
+     it made the model name the instrument confidently, which is what
+     starts all of this, and all of this was too much. These four used
+     to run one after another: 4.3MB of base rates parsed, then the
+     rank, then a company context that parses another 4.4MB of article
+     readings and can make a dozen calendar requests after the window
+     narrowing landed. Nine megabytes of JSON and a handful of network
+     round trips, in series, after the vision model had already spent
+     its share of a ceiling near thirty seconds.
+     The three that the check cannot do without run together. The
+     company context — the dated half, the nice-to-have — gets a
+     deadline of its own: if it is not back in time it comes back
+     empty, and the reader loses the catalysts rather than the read. */
+  const [baseRates, rank, context] = await Promise.all([
+    baseRatesFor(ticker).catch(() => null),
+    rankFor(ticker).catch(() => null),
+    withDeadline(companyContext(ticker), CONTEXT_BUDGET_MS, EMPTY_CONTEXT),
+  ]);
 
   const levels: LevelCheck[] = [];
   const usedReal = new Set<number>();
@@ -375,7 +391,7 @@ export async function corroborate(
      * The chart is counted; a catalyst is dated but its effect is not
      * measured here, and merging them into one confident sentence would
      * dress a calendar entry as a measurement. */
-    context: await companyContext(ticker),
+    context,
   };
 }
 
@@ -483,4 +499,52 @@ async function companyContext(ticker: string): Promise<CompanyContext> {
         ),
       })),
   };
+}
+
+/**
+ * How long the dated half may take before the read goes on without it.
+ *
+ * The levels check, the base rates and the tape are what a chart read
+ * IS; the catalysts and the report date are what makes it better. When
+ * the two cannot both fit inside the platform's ceiling, the one that
+ * gives way has to be the second — and it has to give way by itself,
+ * not by having the whole function killed around it.
+ *
+ * Six seconds is enough for two warm file reads and a cached calendar
+ * window, and not enough to matter when everything is cold.
+ */
+const CONTEXT_BUDGET_MS = 6_000;
+
+const EMPTY_CONTEXT: CompanyContext = { nextEarnings: null, stories: [] };
+
+/**
+ * Resolves whatever came back in time, or the fallback.
+ *
+ * The work is not cancelled — there is nothing to cancel a file read
+ * with — it is simply no longer waited on. A promise that settles late
+ * settles into nothing, and its rejection is swallowed here rather than
+ * surfacing as an unhandled rejection after the response has gone.
+ */
+export async function withDeadline<T>(
+  work: Promise<T>,
+  ms: number,
+  fallback: T,
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const late = new Promise<T>((resolve) => {
+    timer = setTimeout(() => resolve(fallback), ms);
+  });
+  /* THE SWALLOW HAS TO BE IN THE RACE, not beside it.
+     An earlier version attached `work.catch(() => {})` as a separate
+     handler and raced the original — so a failure before the deadline
+     still rejected into the race and threw, which is the one outcome
+     this function exists to prevent. The test caught it. A context
+     that failed and a context that was late are the same thing to a
+     reader: no catalysts, and the read goes on. */
+  const guarded = work.catch(() => fallback);
+  try {
+    return await Promise.race([guarded, late]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
 }
