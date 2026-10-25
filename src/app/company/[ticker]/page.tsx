@@ -610,25 +610,6 @@ export default async function CompanyPage({
 
       <div className="mt-6"><EvidenceKey /></div>
 
-      {/* THE RESEARCH CONSOLE, WHERE THE COMPANY IS.
-          It had its own page, reached from a nav item, with a ticker
-          field the reader filled in for a company they were already
-          looking at. Asking a deep question about NVDA should not
-          require leaving NVDA and typing NVDA. The ticker is bound
-          here, so the box is a question box and not a form. */}
-      <Section eyebrow="לשאול על החברה" id="company-research">
-        <ResearchConsole enabled={hasGeminiKey()} initialTicker={ticker} />
-      </Section>
-
-      {/* THE CHART READER, WHERE THE COMPANY IS.
-          It had its own page, and that page was one of four a reader
-          had to visit — chart, news, research, company — before they
-          could form a view on a single name. None of the four was
-          wrong; the sum of them was. The reader lives here now, folded,
-          with the ticker prefilled, so attaching a screenshot is a step
-          inside researching a company rather than a different errand.
-          `/chart-reader` still answers for a chart of something the
-          site does not cover. */}
       {/* THE READER IS FOR THE CHART THE OWNER IS LOOKING AT, NOT OURS.
           He said it plainly: do not analyse the charts on the site —
           they are not clear enough — give me the option to attach one
@@ -655,6 +636,25 @@ export default async function CompanyPage({
           </div>
         </details>
       </Section>
+      {/* THE RESEARCH CONSOLE, WHERE THE COMPANY IS.
+          It had its own page, reached from a nav item, with a ticker
+          field the reader filled in for a company they were already
+          looking at. Asking a deep question about NVDA should not
+          require leaving NVDA and typing NVDA. The ticker is bound
+          here, so the box is a question box and not a form. */}
+      <Section eyebrow="לשאול על החברה" id="company-research">
+        <ResearchConsole enabled={hasGeminiKey()} initialTicker={ticker} />
+      </Section>
+
+      {/* THE CHART READER, WHERE THE COMPANY IS.
+          It had its own page, and that page was one of four a reader
+          had to visit — chart, news, research, company — before they
+          could form a view on a single name. None of the four was
+          wrong; the sum of them was. The reader lives here now, folded,
+          with the ticker prefilled, so attaching a screenshot is a step
+          inside researching a company rather than a different errand.
+          `/chart-reader` still answers for a chart of something the
+          site does not cover. */}
       {fundamentals.stale && (
         <p
           className="surface mt-8 border-s-2 px-5 py-4 text-sm text-ink"
