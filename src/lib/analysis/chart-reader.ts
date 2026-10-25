@@ -631,12 +631,20 @@ export async function readChartImage(
          the function while an attempt was still in flight and no code
          of ours survived to explain.
 
-         44 leaves the route sixteen seconds to corroborate the read
-         against real candles and answer. 24 a model fits two attempts
-         inside that, which is what the retry was for; a vision read
-         that has not answered in 24 seconds is not about to. */
-      timeoutMs: 24_000,
-      budgetMs: 44_000,
+         THE BUDGET WAS LONGER THAN THE PLATFORM ALLOWS, which made it
+         worthless. `maxDuration = 60` is declared on the route and the
+         deployment does not honour it: measured on production, a small
+         chart answered in 5 seconds and a full-screen TradingView
+         capture died at 32.8 seconds with a 502 — a function killed,
+         not a request that timed out. A 44-second budget inside a
+         ceiling near 30 means the code never reaches its own give-up
+         path, so the reader gets a platform error instead of the
+         sentence this project wrote for exactly that case.
+         22 leaves the route a few seconds to corroborate the read and
+         answer, and leaves the whole thing inside the ceiling. A vision
+         read that has not answered in 18 seconds is not about to. */
+      timeoutMs: 18_000,
+      budgetMs: 22_000,
     });
 
     /* A shape check rather than trust. The model is reliable about the

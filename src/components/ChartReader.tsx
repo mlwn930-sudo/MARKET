@@ -131,8 +131,9 @@ export function ChartReader({ ticker }: { ticker?: string } = {}) {
       return;
     }
     const reader = new FileReader();
-    reader.onload = () => {
-      setPreview(String(reader.result));
+    reader.onload = async () => {
+      const raw = String(reader.result);
+      setPreview(await shrink(raw));
       setState({ phase: "idle" });
     };
     reader.readAsDataURL(file);
@@ -765,4 +766,67 @@ function Corroborated({ checked }: { checked: Corroboration }) {
       )}
     </section>
   );
+}
+
+/**
+ * Shrinks a chart screenshot before it is ever sent.
+ *
+ * MEASURED ON PRODUCTION, after the owner's full-screen TradingView
+ * capture came back as a failure: an 8KB chart answered in 5 seconds
+ * and his 306KB one was killed at 32.8 seconds with a 502. The
+ * function did not run out of patience — the platform ended it. More
+ * pixels mean more image tokens, more tokens mean more time, and the
+ * ceiling is not ours to raise.
+ *
+ * 1400 across is the compromise and it is chosen against the one thing
+ * that actually matters here: a chart is read by its axis labels, and
+ * a label that has been resampled into mush makes the read worse than
+ * no read. A terminal screenshot is typically 1400–2600 wide, so a
+ * common capture is untouched and a retina one comes down by half with
+ * its text still legible.
+ *
+ * JPEG rather than PNG, at 0.9. A candle chart is flat colour and PNG
+ * is the better format for it — but the format that gets the picture
+ * past the ceiling is the one that lets the read happen at all, and at
+ * 0.9 the artefacts land in the gradients of the background rather
+ * than on the type.
+ *
+ * Returns the original string on any failure. A browser that cannot
+ * give us a canvas should still be able to upload a chart, and the
+ * worst case is the behaviour that existed before this function.
+ */
+async function shrink(dataUrl: string): Promise<string> {
+  const MAX_WIDTH = 1400;
+  try {
+    /* `createElement` rather than `new Image()`: this module imports
+       next/image as `Image`, and the global constructor is shadowed. */
+    const image = document.createElement("img");
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error("decode"));
+      image.src = dataUrl;
+    });
+
+    if (!image.width || image.width <= MAX_WIDTH) return dataUrl;
+
+    const scale = MAX_WIDTH / image.width;
+    const canvas = document.createElement("canvas");
+    canvas.width = MAX_WIDTH;
+    canvas.height = Math.round(image.height * scale);
+
+    const context = canvas.getContext("2d");
+    if (!context) return dataUrl;
+    /* The browser's own resampling, asked for explicitly. The default
+       is already smooth in every current engine, but a chart is the
+       case where the difference shows up as unreadable axis numbers. */
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = "high";
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    const out = canvas.toDataURL("image/jpeg", 0.9);
+    /* Only if it actually helped. A small PNG can re-encode larger. */
+    return out.length < dataUrl.length ? out : dataUrl;
+  } catch {
+    return dataUrl;
+  }
 }

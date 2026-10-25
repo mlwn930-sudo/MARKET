@@ -205,13 +205,40 @@ export function ResearchConsole({
 
   return (
     <div className="space-y-8">
-      {!report.finishedAt && <div className="research-prompt-list" aria-label="שאלות מחקר לדוגמה">
-        {[
-          { ticker: "NVDA", text: "האם צמיחת ההכנסות מצדיקה את התמחור?" },
-          { ticker: "MSFT", text: "מה הפער בין הרווח המדווח לתזרים החופשי?" },
-          { ticker: "TTWO", text: "איזה נתון יכול לשנות את תזת ההשקעה?" },
-        ].map((item) => <button key={item.ticker} type="button" disabled={busy} onClick={() => { setTicker(item.ticker); setQuestion(item.text); document.getElementById("research-question")?.focus(); }}><span className="num">{item.ticker}</span><span>{item.text}</span><span className="ms-auto" aria-hidden="true">↖</span></button>)}
-      </div>}
+      {/* THE EXAMPLES ARE ABOUT THE COMPANY IN FRONT OF THE READER.
+          They were three fixed rows — NVDA, MSFT, TTWO — written when
+          this lived on its own page where no company was in context.
+          Embedded on a company page they turned into an advert for two
+          other companies: on NVDA's page, two of the three suggestions
+          were for Microsoft and Take-Two, and clicking one silently
+          retargeted the console away from the company being read.
+          Bound to `initialTicker`, the same three questions become
+          three ways into this company. */}
+      {!report.finishedAt && (
+        <div className="research-prompt-list" aria-label="שאלות מחקר לדוגמה">
+          {[
+            "האם צמיחת ההכנסות מצדיקה את התמחור?",
+            "מה הפער בין הרווח המדווח לתזרים החופשי?",
+            "איזה נתון יכול לשנות את תזת ההשקעה?",
+          ].map((text) => (
+            <button
+              key={text}
+              type="button"
+              disabled={busy}
+              onClick={() => {
+                setQuestion(text);
+                document.getElementById("research-question")?.focus();
+              }}
+            >
+              <span className="num">{ticker || initialTicker || "—"}</span>
+              <span>{text}</span>
+              <span className="ms-auto" aria-hidden="true">
+                ↖
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
       {/* The request */}
       <form
         onSubmit={(event) => {
