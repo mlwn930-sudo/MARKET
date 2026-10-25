@@ -336,12 +336,29 @@ h4 {
 
 /* A small uppercase label above a section. Carries the structure so the
    headings do not have to shout. */
+/* THE SINGLE LOUDEST GENERIC SIGNAL ON THE SITE, and it was on twenty
+   elements per page. Small uppercase text on wide tracking above every
+   block is the house style of every dashboard template ever generated:
+   it reads as decoration pretending to be structure, and it shouts in a
+   language — Hebrew — that has no uppercase at all, so the tracking was
+   doing all the work and doing it badly.
+
+   What replaces it is a label that behaves like a label. Sentence case,
+   normal tracking, one step down in size, and the colour carrying the
+   hierarchy instead of the capitals. The section mark beside it already
+   says "a section starts here"; the words only have to say which. */
 .eyebrow {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: var(--color-ink-faint);
+}
+
+/* Latin strings inside an eyebrow are the one place the old treatment
+   was earning its keep — "THE READ", "MARKET / CHART READER" — so they
+   keep a touch of tracking without the shout. */
+.eyebrow:lang(en) {
+  letter-spacing: 0.04em;
 }
 
 .editorial {
@@ -1049,12 +1066,15 @@ h4 {
   font-size: 13.5px;
 }
 
+/* Same correction as the eyebrow, for the same reason: a Hebrew table
+   header has no capitals to set, so the tracking was carrying the whole
+   effect and carrying it as decoration. A header earns its place by
+   being quieter than the data under it, not by being wider. */
 .dt thead th {
   padding: 0.7rem 1rem;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: var(--color-ink-faint);
   text-align: start;
   white-space: nowrap;

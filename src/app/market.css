@@ -22,7 +22,7 @@
   .btn-editorial { background: #eff5ff; color: #080f1b; padding: 12px 22px; gap: 24px; font-size: 16px; }
   .btn-editorial:hover { background: #bfeef6; transform: translateY(-2px); }
   .btn-editorial span { font-size: 21px; }
-  .micro-label { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; letter-spacing: .13em; font-weight: 400; color: var(--color-ink-faint); }
+  .micro-label { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; letter-spacing: .02em; font-weight: 400; color: var(--color-ink-faint); }
   /* The midnight layer runs a finer rule than the light pages do. It sizes
      the ::after now rather than the element, because the element is the
      dollar plus the rule and setting a width on the pair squeezed the rule
