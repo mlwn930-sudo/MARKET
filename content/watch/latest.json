@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-27T22:38:17.086Z",
+  "builtAt": "2026-10-27T22:56:21.104Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 4,
     "range": 12,
     "event": 0,
-    "story": 4
+    "story": 9
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "-10.69% ביום — פי 5.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 5.131197601908899,
       "href": "/company/BA",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "-9.24% ביום — פי 4.5 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 4.541204057760627,
       "href": "/company/VLO",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "-7.03% ביום — פי 4.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 4.142607100956535,
       "href": "/company/PSX",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "move",
@@ -44,7 +44,7 @@
       "detail": "5.75% ביום — פי 3.9 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.882077519251964,
       "href": "/company/UPS",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "move",
@@ -53,7 +53,7 @@
       "detail": "-7.36% ביום — פי 3.6 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.589291865664618,
       "href": "/company/MPC",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "move",
@@ -62,7 +62,7 @@
       "detail": "6.49% ביום — פי 2.7 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.728986772911075,
       "href": "/company/CDNS",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "opportunity",
@@ -71,7 +71,7 @@
       "detail": "הסגירה 62.52 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NFLX",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "opportunity",
@@ -80,7 +80,7 @@
       "detail": "הסגירה 65.78 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/UBER",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "opportunity",
@@ -89,7 +89,7 @@
       "detail": "הסגירה 150.14 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 9 המבחנים",
       "weight": 2.6,
       "href": "/company/BKNG",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "opportunity",
@@ -98,16 +98,43 @@
       "detail": "הסגירה 146.83 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/TMUS",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Nvidia Stock Leads Search For AI Infrastructure Shares Tied To Meta",
-      "detail": "Nvidia מתחייבת להשקיע 3 מיליארד דולר בהנפקת המניות של Meta, וספקיות שבבים נוספות נערכות לרכוש מניות של החברה במסגרת פרויקט תשתיות ה-AI.",
+      "headline": "Nvidia’s New $3 Billion AI Bet Is on One of Its Own Customers",
+      "detail": "אנבידיה הודיעה על כוונה להשקיע 3 מיליארד דולר בהנפקת המניות של מטה פלטפורמס, כחלק מהרחבת שיתוף הפעולה הטכנולוגי ביניהן במודלי הבינה המלאכותית של מטה. מטה מתכננת להרחיב את השימוש בחומרה של אנ",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=acfe5d43d5bf843596b0c2ffe60b3adf16942f88d108a092fe0ff3fe0dbf477e",
-      "at": "2026-10-27T13:15:14.000Z"
+      "href": "https://finnhub.io/api/news?id=995b09e1776ebfbb47f422fd5d6dadf7dcb149e84ac3a45287398f342a51db9e",
+      "at": "2026-10-27T21:40:01.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia’s New $3 Billion AI Bet Is on One of Its Own Customers",
+      "detail": "אנבידיה הודיעה על כוונה להשקיע 3 מיליארד דולר בהנפקת המניות של מטה פלטפורמס, כחלק מהרחבת שיתוף הפעולה הטכנולוגי ביניהן במודלי הבינה המלאכותית של מטה. מטה מתכננת להרחיב את השימוש בחומרה של אנ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=995b09e1776ebfbb47f422fd5d6dadf7dcb149e84ac3a45287398f342a51db9e",
+      "at": "2026-10-27T21:40:01.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TSM",
+      "headline": "TSMC: The Toll Road Of The AI Economy Is On Sale",
+      "detail": "TSMC מציגה צמיחה שיא בהכנסות המונעת מבינה מלאכותית וכוח תמחור חזק.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=9a2a00cd3b47557784954790fb6ba794b98978f4f88f64844a6974ff4d1f05ca",
+      "at": "2026-10-27T15:35:08.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Jensen Huang's Late-Night Calls With President Trump Come as Nvidia's China AI Chip Shipments Fall 44% in the First Half of 2026. Here's Why",
+      "detail": "משלוחי שבבי ה-AI של אינבידיה לסין ירדו ב-44% במחצית הראשונה של 2026, בעוד חברות סיניות כמו ByteDance, Alibaba ו-Tencent הזמינו מעל 35 מיליארד דולר בכרטיסי RTX PRO 5500. למרות קשריו של המנכ\"ל",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=2bd5147d1bbd37ead4a993d669e21660010ab4ba55377370ce14f8c7ee422eff",
+      "at": "2026-10-27T21:39:00.000Z"
     },
     {
       "kind": "story",
@@ -121,20 +148,38 @@
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Nvidia and Meta expand their AI partnership: What to know",
-      "detail": "Nvidia משקיעה 3 מיליארד דולר בהנפקת המניות של Meta, אשר הרחיבה את גיוס ההון המתוכנן שלה ל-97.5 מיליארד דולר ומכרה מניות בסך 25 מיליארד דולר.",
+      "headline": "NVIDIA Is Buying a Piece of Meta: What the $3 Billion Stake Means",
+      "detail": "NVIDIA תשקיע 3 מיליארד דולר בהנפקת המניות של Meta, בזמן ש-Meta מגייסת עד 95 מיליארד דולר ומציגה תזרים מזומנים חופשי שלילי עם תחזית הוצאות הוניות של עד 145 מיליארד דולר. במקביל, סוכן ה-AI האי",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=6b0010819fbad6501fcd749f9d754de15e25ab9015e7661b215060aba251d1de",
-      "at": "2026-10-27T13:14:49.000Z"
+      "href": "https://finnhub.io/api/news?id=67efecb897dc4a3fe14157c8f0124022052a3997d1028ec4b6d4d9017d1a3618",
+      "at": "2026-10-27T21:20:04.000Z"
     },
     {
       "kind": "story",
-      "ticker": "XOM",
-      "headline": "ExxonMobil's Q3 Earnings on Deck: Should You Bet on the Stock?",
-      "detail": "אקסון מוביל צפויה לדווח על תוצאות הרבעון השלישי של 2026 ב-30 באוקטובר, עם תחזית רווח של 3.90 דולר למניה והכנסות של 102.98 מיליארד דולר. החברה ציינה כי צפויה ירידה רבעונית של 1.3 מיליארד דולר",
+      "ticker": "NVDA",
+      "headline": "Nvidia, AMD Get Their Jollies Hooking Up With Meta's Muse",
+      "detail": "Nvidia ו-AMD הודיעו בנפרד על הסכמים עם Meta Platforms להפעלת מאמצי הבינה המלאכותית של חברת המדיה החברתית.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=b2286521690ed9dac8e1934aec8be1139e4b9a01175b9b2297df95ecefdfbec9",
-      "at": "2026-10-27T12:48:00.000Z"
+      "href": "https://finnhub.io/api/news?id=e9fbfac689c4f6b9e750a8ac7270e5d1bcaeefd6f25760c5067178e33f65db96",
+      "at": "2026-10-27T21:08:07.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "CVX",
+      "headline": "The Events That Matter Most For Chevron Stock",
+      "detail": "שברון צפויה לסיים את 2026 ברף התחתון של תקציב ההון בסך 18 עד 19 מיליארד דולר, לצד השקעה של מעל 7 מיליארד דולר בונצואלה ומימוש נכסים. החברה צפויה לדווח על תוצאות הרבעונים השלישי והרביעי, כאשר",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=350fcf89cfd9bb4f7a4cf66584328a30916025a38dd9519193c64864a997f27d",
+      "at": "2026-10-27T17:33:08.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TTWO",
+      "headline": "'Grand Theft Auto VI' sales would astonish the 'godfather of video games' if it hit this number",
+      "detail": "Take-Two Interactive מתכוננת להשקת המשחק Grand Theft Auto VI ב-19 בנובמבר במחיר של 79.99 דולר. מניית החברה ירדה ב-12% בשלושת החודשים האחרונים למרות ציפיות למכירות פתיחה של עד 4.5 מיליארד דול",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=6860ee62b388961bb2caf6cf0f9ff612d99bb109b34632b5768fa7a054114058",
+      "at": "2026-10-27T19:55:52.000Z"
     },
     {
       "kind": "move",
@@ -143,7 +188,7 @@
       "detail": "3.20% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.085423278325365,
       "href": "/company/GE",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -152,7 +197,7 @@
       "detail": "הסגירה האחרונה 308.91 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TXN",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -161,7 +206,7 @@
       "detail": "הסגירה האחרונה 425.35 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ADI",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -170,7 +215,7 @@
       "detail": "הסגירה האחרונה 62.52 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NFLX",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -179,7 +224,7 @@
       "detail": "הסגירה האחרונה 65.78 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/UBER",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -188,16 +233,7 @@
       "detail": "הסגירה האחרונה 150.14 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BKNG",
-      "at": "2026-10-27T22:38:17.086Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "GILD",
-      "headline": "GILD בשיא של רבעון",
-      "detail": "הסגירה האחרונה 159.08 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/GILD",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -206,7 +242,16 @@
       "detail": "הסגירה האחרונה 447.95 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AMGN",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "GILD",
+      "headline": "GILD בשיא של רבעון",
+      "detail": "הסגירה האחרונה 159.08 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/GILD",
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -215,16 +260,7 @@
       "detail": "הסגירה האחרונה 89.30 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SCHW",
-      "at": "2026-10-27T22:38:17.086Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "BA",
-      "headline": "BA בשפל של רבעון",
-      "detail": "הסגירה האחרונה 168.18 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/BA",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -233,16 +269,16 @@
       "detail": "הסגירה האחרונה 407.46 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TSLA",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
-      "ticker": "TMUS",
-      "headline": "TMUS בשפל של רבעון",
-      "detail": "הסגירה האחרונה 146.83 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "BA",
+      "headline": "BA בשפל של רבעון",
+      "detail": "הסגירה האחרונה 168.18 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/TMUS",
-      "at": "2026-10-27T22:38:17.086Z"
+      "href": "/company/BA",
+      "at": "2026-10-27T22:56:21.104Z"
     },
     {
       "kind": "range",
@@ -251,7 +287,16 @@
       "detail": "הסגירה האחרונה 166.27 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/EMR",
-      "at": "2026-10-27T22:38:17.086Z"
+      "at": "2026-10-27T22:56:21.104Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TMUS",
+      "headline": "TMUS בשפל של רבעון",
+      "detail": "הסגירה האחרונה 146.83 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TMUS",
+      "at": "2026-10-27T22:56:21.104Z"
     }
   ]
 }
