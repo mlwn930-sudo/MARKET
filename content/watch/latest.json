@@ -1,167 +1,59 @@
 {
-  "builtAt": "2026-10-28T07:39:21.367Z",
+  "builtAt": "2026-10-28T16:30:16.269Z",
   "universe": 123,
   "priced": 123,
   "counts": {
-    "move": 7,
-    "opportunity": 4,
-    "range": 12,
+    "move": 0,
+    "opportunity": 3,
+    "range": 11,
     "event": 0,
-    "story": 11
+    "story": 4
   },
   "findings": [
-    {
-      "kind": "move",
-      "ticker": "BA",
-      "headline": "BA זזה למטה הרבה מעבר לרגיל שלה",
-      "detail": "-10.69% ביום — פי 5.1 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 5.131197601908899,
-      "href": "/company/BA",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "move",
-      "ticker": "VLO",
-      "headline": "VLO זזה למטה הרבה מעבר לרגיל שלה",
-      "detail": "-9.24% ביום — פי 4.5 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 4.541204057760627,
-      "href": "/company/VLO",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "move",
-      "ticker": "PSX",
-      "headline": "PSX זזה למטה הרבה מעבר לרגיל שלה",
-      "detail": "-7.03% ביום — פי 4.1 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 4.142607100956535,
-      "href": "/company/PSX",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "move",
-      "ticker": "UPS",
-      "headline": "UPS זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "5.75% ביום — פי 3.9 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 3.882077519251964,
-      "href": "/company/UPS",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "move",
-      "ticker": "MPC",
-      "headline": "MPC זזה למטה הרבה מעבר לרגיל שלה",
-      "detail": "-7.36% ביום — פי 3.6 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 3.589291865664618,
-      "href": "/company/MPC",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "move",
-      "ticker": "CDNS",
-      "headline": "CDNS זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "6.49% ביום — פי 2.7 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.728986772911075,
-      "href": "/company/CDNS",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
     {
       "kind": "opportunity",
       "ticker": "NFLX",
       "headline": "NFLX עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 62.52 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
+      "detail": "הסגירה 61.90 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NFLX",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "opportunity",
       "ticker": "UBER",
       "headline": "UBER עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 65.78 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
+      "detail": "הסגירה 65.68 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/UBER",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "opportunity",
       "ticker": "BKNG",
       "headline": "BKNG עוברת 8 מתוך 9 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 150.14 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 9 המבחנים",
+      "detail": "הסגירה 147.81 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 9 המבחנים",
       "weight": 2.6,
       "href": "/company/BKNG",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "opportunity",
-      "ticker": "TMUS",
-      "headline": "TMUS עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 146.83 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
-      "weight": 2.6,
-      "href": "/company/TMUS",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "story",
-      "ticker": "GOOGL",
-      "headline": "Is AI Overhyped? Apollo Economist Sees \"Zero Financial Payoff\" Beyond Tech Companies",
-      "detail": "כלכלן אפולו, טורסטן סלוק, פרסם מחקר לפיו טכנולוגיית הבינה המלאכותית ייצרה \"אפס תשואה פיננסית\" לחברות בארה\"ב מחוץ למגזר הטכנולוגיה. בעוד ההכנסות לעובד ושולי הרווח עלו עבור ה-Magnificent Seven",
+      "ticker": "MU",
+      "headline": "SK Hynix Says Memory Is Sold Out Through 2029. Micron Is a Winner, Too",
+      "detail": "SK Hynix דיווחה על תוצאות רבעוניות חזקות וציינה כי הייצור של זיכרונות DRAM ו-HBM אזל עד שנת 2029, עם מחסור שצפוי להימשך עד 2030 עקב עודף ביקוש על היצע. החברה דיווחה על הכנסות של 104.62 טרילי",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=7367a9352b2042b891d51381cbd28361c091413c5e1b955ce5dea00e88d3970b",
-      "at": "2026-10-28T05:20:00.000Z"
+      "href": "https://finnhub.io/api/news?id=f90b01b62b8bc402d3006149e49c24ea0da53710fb656e8fbb53ffa93f7b30fa",
+      "at": "2026-10-28T15:10:06.000Z"
     },
     {
       "kind": "story",
-      "ticker": "ANT",
-      "headline": "Anthropic's First-Half Revenue Rose 1,300%. Should You Buy the Stock When It Starts Trading?",
-      "detail": "חברת הבינה המלאכותית Anthropic הגישה תשקיף לקראת הנפקה ראשונית לציבור (IPO) בנאסד\"ק תחת הסימול ANT. הכנסות החברה במחצית הראשונה של 2026 עמדו על 16.3 מיליארד דולר, גידול של 1,300% לעומת 1.2 מ",
+      "ticker": "XOM",
+      "headline": "'A Freaking Fortune.' How The Iran War Rescued Big Oil's Bottom Line.",
+      "detail": "מלחמת איראן מצמצמת את אספקת האנרגיה העולמית ומקפיצה את רווחי חברות האנרגיה הגדולות, כאשר מניית אקסון עלתה ב-18% מאז פברואר, שברון עלתה ב-22% וואלרו ב-89%. במקביל, הממשל בראשות טראמפ מותח ביק",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=8721a15129f1d537c6a275be19a8f243f915c74ab0ba4c0590862882d66ffd34",
-      "at": "2026-10-28T05:03:02.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "CRM",
-      "headline": "Is Anthropic a SaaS Stock? Here's How It Stacks Up With the Other Top Software Players",
-      "detail": "אנתרופיק פרסמה תשקיף לקראת הנפקה לפי שווי מוערך של כ-2 טריליון דולר. החברה דיווחה על הכנסות של 16.8 מיליארד דולר ברבעון השלישי ועל מעל 11,900 לקוחות עם ARR של 10,000 דולר ומעלה.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=5d2ccf570a385aac1c6558f761221ce18ea0a81aa9f4885c368968fcb8c5a74b",
-      "at": "2026-10-28T03:50:02.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TSM",
-      "headline": "TSMC: The Toll Road Of The AI Economy Is On Sale",
-      "detail": "TSMC מציגה צמיחה שיא בהכנסות המונעת מבינה מלאכותית וכוח תמחור חזק.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=9a2a00cd3b47557784954790fb6ba794b98978f4f88f64844a6974ff4d1f05ca",
-      "at": "2026-10-27T15:35:08.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TSM",
-      "headline": "TSM Q3 Earnings Call Highlights Strong AI Demand and Expansion",
-      "detail": "TSM דיווחה על תוצאות הרבעון השלישי של 2026 עם רווח של 4.60 דולר למניה והכנסות של 46.72 מיליארד דולר, מעל תחזיות האנליסטים, והעלתה את תחזית הצמיחה להכנסות השנה לכ-44%. החברה דיווחה על ביקוש ח",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=652268cfd3ab3aebefcc8fbcb54c386333a04ea897e78da9debe64ae25f04cc9",
-      "at": "2026-10-27T13:00:00.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "NVDA",
-      "headline": "The Last Month Exposed The Risk Narrative Between Nvidia Vs.Taiwan Semiconductor",
-      "detail": "נבידיה ו-TSMC דיווחו על רבעוני שיא אך מניותיהן ירדו בחודש האחרון בכ-4% עד 6%, למרות ביקושים גבוהים המעלות את השאלה האם ההיצע יוכל לעמוד בביקוש. נבידיה דיווחה על הכנסות של $96.22B (עלייה של 1",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=2ad5e1440ba602c1eb532949957b877fbf72f55cbc4101f6932299d09235b8ff",
-      "at": "2026-10-27T12:45:36.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "CVX",
-      "headline": "The Events That Matter Most For Chevron Stock",
-      "detail": "שברון צפויה לסיים את 2026 ברף התחתון של תקציב ההון בסך 18 עד 19 מיליארד דולר, לצד השקעה של מעל 7 מיליארד דולר בונצואלה ומימוש נכסים. החברה צפויה לדווח על תוצאות הרבעונים השלישי והרביעי, כאשר",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=350fcf89cfd9bb4f7a4cf66584328a30916025a38dd9519193c64864a997f27d",
-      "at": "2026-10-27T17:33:08.000Z"
+      "href": "https://finnhub.io/api/news?id=8b1bb2af30e2e4245a820db9c65c887532d2ae17428761c5aa5205cb801d3f12",
+      "at": "2026-10-28T14:43:44.000Z"
     },
     {
       "kind": "story",
@@ -174,24 +66,6 @@
     },
     {
       "kind": "story",
-      "ticker": "DASH",
-      "headline": "DoorDash soon could acquire grocery delivery service Instacart",
-      "detail": "DoorDash נמצאת במגעים לרכישת פלטפורמת משלוחי המזון Instacart בעסקה שעשויה להגיע לשווי של כ-17 מיליארד דולר. Instacart נסחרה לפי שווי של כ-13 עד 14 מיליארד דולר לפני הדיווח.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=c960c7ae79390adeed00d80377eb1444e5527ab303c45a1a23eb359c89ed0e6d",
-      "at": "2026-10-27T20:23:05.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "DASH",
-      "headline": "DoorDash nears $17 billion deal to acquire Instacart, report says",
-      "detail": "DoorDash נמצאת במגעים מתקדמים לרכישת פלטפורמת משלוחי המצרכים Instacart בעסקה המוערכת בכ-17 מיליארד דולר.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=2b828a9cf9740a466d53724e99add49800fb9676c63bcdddceeb66466dcdaaa2",
-      "at": "2026-10-27T14:45:00.000Z"
-    },
-    {
-      "kind": "story",
       "ticker": "TTWO",
       "headline": "'Grand Theft Auto VI' sales would astonish the 'godfather of video games' if it hit this number",
       "detail": "Take-Two Interactive מתכוננת להשקת המשחק Grand Theft Auto VI ב-19 בנובמבר במחיר של 79.99 דולר. מניית החברה ירדה ב-12% בשלושת החודשים האחרונים למרות ציפיות למכירות פתיחה של עד 4.5 מיליארד דול",
@@ -200,121 +74,103 @@
       "at": "2026-10-27T19:55:52.000Z"
     },
     {
-      "kind": "move",
-      "ticker": "GE",
-      "headline": "GE זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "3.20% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.085423278325365,
-      "href": "/company/GE",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TXN",
-      "headline": "TXN בשיא של רבעון",
-      "detail": "הסגירה האחרונה 308.91 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TXN",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "ADI",
-      "headline": "ADI בשיא של רבעון",
-      "detail": "הסגירה האחרונה 425.35 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/ADI",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
       "kind": "range",
       "ticker": "NFLX",
       "headline": "NFLX בשפל של רבעון",
-      "detail": "הסגירה האחרונה 62.52 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 61.90 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NFLX",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "range",
       "ticker": "UBER",
       "headline": "UBER בשפל של רבעון",
-      "detail": "הסגירה האחרונה 65.78 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 65.68 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/UBER",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "range",
       "ticker": "BKNG",
       "headline": "BKNG בשפל של רבעון",
-      "detail": "הסגירה האחרונה 150.14 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 147.81 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BKNG",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TTWO",
+      "headline": "TTWO בשפל של רבעון",
+      "detail": "הסגירה האחרונה 199.64 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TTWO",
+      "at": "2026-10-28T16:30:16.269Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "DHR",
+      "headline": "DHR בשיא של רבעון",
+      "detail": "הסגירה האחרונה 234.39 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/DHR",
+      "at": "2026-10-28T16:30:16.269Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TMO",
+      "headline": "TMO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 700.82 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TMO",
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "range",
       "ticker": "GILD",
       "headline": "GILD בשיא של רבעון",
-      "detail": "הסגירה האחרונה 159.08 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 159.31 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GILD",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "range",
       "ticker": "AMGN",
       "headline": "AMGN בשיא של רבעון",
-      "detail": "הסגירה האחרונה 447.95 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 450.08 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AMGN",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "range",
       "ticker": "SCHW",
       "headline": "SCHW בשפל של רבעון",
-      "detail": "הסגירה האחרונה 89.30 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 88.80 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SCHW",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TSLA",
-      "headline": "TSLA בשיא של רבעון",
-      "detail": "הסגירה האחרונה 407.46 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TSLA",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "range",
       "ticker": "BA",
       "headline": "BA בשפל של רבעון",
-      "detail": "הסגירה האחרונה 168.18 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 166.92 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BA",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     },
     {
       "kind": "range",
       "ticker": "EMR",
       "headline": "EMR בשיא של רבעון",
-      "detail": "הסגירה האחרונה 166.27 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 167.44 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/EMR",
-      "at": "2026-10-28T07:39:21.367Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TMUS",
-      "headline": "TMUS בשפל של רבעון",
-      "detail": "הסגירה האחרונה 146.83 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TMUS",
-      "at": "2026-10-28T07:39:21.367Z"
+      "at": "2026-10-28T16:30:16.269Z"
     }
   ]
 }
