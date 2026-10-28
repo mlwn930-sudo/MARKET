@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-28T22:53:34.420Z",
+  "builtAt": "2026-10-28T23:03:43.513Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 3,
     "range": 14,
     "event": 0,
-    "story": 5
+    "story": 10
   },
   "findings": [
     {
@@ -17,25 +17,7 @@
       "detail": "10.73% ביום — פי 3.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.0821613490608044,
       "href": "/company/ORCL",
-      "at": "2026-10-28T22:53:34.420Z"
-    },
-    {
-      "kind": "opportunity",
-      "ticker": "UBER",
-      "headline": "UBER עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 65.27 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
-      "weight": 2.6,
-      "href": "/company/UBER",
-      "at": "2026-10-28T22:53:34.420Z"
-    },
-    {
-      "kind": "opportunity",
-      "ticker": "NFLX",
-      "headline": "NFLX עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 61.99 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
-      "weight": 2.6,
-      "href": "/company/NFLX",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "opportunity",
@@ -44,7 +26,43 @@
       "detail": "הסגירה 147.94 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 9 המבחנים",
       "weight": 2.6,
       "href": "/company/BKNG",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
+    },
+    {
+      "kind": "opportunity",
+      "ticker": "NFLX",
+      "headline": "NFLX עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
+      "detail": "הסגירה 61.99 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
+      "weight": 2.6,
+      "href": "/company/NFLX",
+      "at": "2026-10-28T23:03:43.513Z"
+    },
+    {
+      "kind": "opportunity",
+      "ticker": "UBER",
+      "headline": "UBER עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
+      "detail": "הסגירה 65.27 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
+      "weight": 2.6,
+      "href": "/company/UBER",
+      "at": "2026-10-28T23:03:43.513Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "AI Spending Is Nearing $1 Trillion Annually. These 2 Stocks Are Most at Risk If It Slows.",
+      "detail": "הוצאות הון על בינה מלאכותית מתקרבות לטריליון דולר בשנה, ומייצרות הזדמנויות שיא עבור יצרניות השבבים Nvidia ו-Micron Technology, ששתיהן דיווחו לאחרונה על תוצאות שיא. עם זאת, קיים חשש שצמצום הש",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=457a2dce64698a4d8cc92750d597e4910d68705c663cb61206d833e571f4d710",
+      "at": "2026-10-28T21:40:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "AI Spending Is Nearing $1 Trillion Annually. These 2 Stocks Are Most at Risk If It Slows.",
+      "detail": "הוצאות הון על בינה מלאכותית מתקרבות לטריליון דולר בשנה, ומייצרות הזדמנויות שיא עבור יצרניות השבבים Nvidia ו-Micron Technology, ששתיהן דיווחו לאחרונה על תוצאות שיא. עם זאת, קיים חשש שצמצום הש",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=457a2dce64698a4d8cc92750d597e4910d68705c663cb61206d833e571f4d710",
+      "at": "2026-10-28T21:40:00.000Z"
     },
     {
       "kind": "story",
@@ -66,12 +84,39 @@
     },
     {
       "kind": "story",
-      "ticker": "MSFT",
-      "headline": "Corporate Insiders Open The Equity Issuance Floodgates",
-      "detail": "הוצאות ההון של חברות הענן הגדולות (Hyperscalers) צפויות להגיע ל-800 מיליארד דולר בשנת 2026. השקעות אלו צפויות לייצר תזרים מזומנים חופשי שלילי לכל החברות בסקטור למעט Microsoft.",
+      "ticker": "WMT",
+      "headline": "What Can Make Walmart Stock A Buy?",
+      "detail": "וולמארט דיווחה כי כמעט מחצית מצמיחת הרווחים שלה ברבעון השני של פיסקלית 2027 הגיעה מתחומי הפרסום (הצמיחה עמדה על 38%), המנויים (עלו בכ-17%) והמרקטפלייס (עלו ב-52%). מנגד, המכירות הפיזיות בחנו",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ed7ddb00e964169edf383ad0878b4874d9fbda58ea32746e20bf130fec3755b1",
-      "at": "2026-10-28T10:16:26.000Z"
+      "href": "https://finnhub.io/api/news?id=f3fed87be4bec6e8e3e45ecf07c87280e3fe0c3b95f06a055148b0f4ebdb1615",
+      "at": "2026-10-28T12:30:28.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "16% of Employers Are Thinking About Cutting Weight-Loss Drug Coverage",
+      "detail": "סקר של WTW מראה ש-16% מהמעסיקים הגדולים שוקלים להפסיק את כיסוי תרופות ההרזיה מסוג GLP-1, עלייה מ-9% בסקר הקודם. אחוז המעסיקים המעניקים כיסוי בפועל ירד ל-53% לעומת 57% ב-2025.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=bb85edd5ca4ef911dd157b866397613353bbf508624d96028ae81a3d91c71060",
+      "at": "2026-10-28T19:24:50.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "Lilly’s retatrutide beats Ozempic in head-to-head trial",
+      "detail": "אלי לילי הודיעה כי תרופת הניסוי שלה retatrutide הציגה תוצאות טובות יותר מאוזמפיק של נובו נורדיסק בניסוי שלב III השוואתי (TRANSCEND-T2D-2). במינונים של 9 מ\"ג ו-12 מ\"ג, התרופה הביאה לירידה במש",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=80bb138cc088ee38ba4e92963e4e15fd9a419973771043debeadb3dbb3c7aa28",
+      "at": "2026-10-28T18:23:29.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "Lilly’s ‘triple-G’ drug tops Novo’s Ozempic in diabetes trial",
+      "detail": "בניסוי שלב 3 ראש בראש, תרופת ה-triple-G של אלי לילי, retatrutide, השיגה תוצאות טובות יותר מאוזמפיק של נובו נורדיסק בהורדת רמת הסוכר בדם ובירידה במשקל, אך לוותה בשיעורי תופעות לוואי והפסקת טי",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=ddae336d802548e459db2f3e3647edaa5b1c7aa818c4932f912cc96a7900d94d",
+      "at": "2026-10-28T15:53:00.000Z"
     },
     {
       "kind": "story",
@@ -85,11 +130,11 @@
     {
       "kind": "story",
       "ticker": "LLY",
-      "headline": "Lilly’s ‘triple-G’ drug tops Novo’s Ozempic in diabetes trial",
-      "detail": "בניסוי שלב 3 ראש בראש, תרופת ה-triple-G של אלי לילי, retatrutide, השיגה תוצאות טובות יותר מאוזמפיק של נובו נורדיסק בהורדת רמת הסוכר בדם ובירידה במשקל, אך לוותה בשיעורי תופעות לוואי והפסקת טי",
+      "headline": "Update: Eli Lilly Says Retatrutide Delivers Greater Weight Loss Than Ozempic in Adults With Type 2 Diabetes",
+      "detail": "אלי לילי הודיעה שתוצאות ניסוי שלב 3 הראו כי תרופת ה-retatrutide שלה השיגה ירידה גדולה יותר במשקל והפחתת A1C בהשוואה ל-Ozempic של נובו נורדיסק אצל מבוגרים עם סוכרת סוג 2 לאחר 80 שבועות.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ddae336d802548e459db2f3e3647edaa5b1c7aa818c4932f912cc96a7900d94d",
-      "at": "2026-10-28T15:53:00.000Z"
+      "href": "https://finnhub.io/api/news?id=209eae84b893d2809202665d940e52256f76a2864af3f740684e392093a7de3a",
+      "at": "2026-10-28T17:28:34.000Z"
     },
     {
       "kind": "range",
@@ -98,7 +143,7 @@
       "detail": "הסגירה האחרונה 309.83 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TXN",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -107,25 +152,7 @@
       "detail": "הסגירה האחרונה 428.27 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ADI",
-      "at": "2026-10-28T22:53:34.420Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "UBER",
-      "headline": "UBER בשפל של רבעון",
-      "detail": "הסגירה האחרונה 65.27 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/UBER",
-      "at": "2026-10-28T22:53:34.420Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "NFLX",
-      "headline": "NFLX בשפל של רבעון",
-      "detail": "הסגירה האחרונה 61.99 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/NFLX",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -134,7 +161,7 @@
       "detail": "הסגירה האחרונה 147.94 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BKNG",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -143,16 +170,25 @@
       "detail": "הסגירה האחרונה 195.29 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TTWO",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
-      "ticker": "TMO",
-      "headline": "TMO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 704.15 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "NFLX",
+      "headline": "NFLX בשפל של רבעון",
+      "detail": "הסגירה האחרונה 61.99 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/TMO",
-      "at": "2026-10-28T22:53:34.420Z"
+      "href": "/company/NFLX",
+      "at": "2026-10-28T23:03:43.513Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "UBER",
+      "headline": "UBER בשפל של רבעון",
+      "detail": "הסגירה האחרונה 65.27 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/UBER",
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -161,7 +197,16 @@
       "detail": "הסגירה האחרונה 451.83 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AMGN",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TMO",
+      "headline": "TMO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 704.15 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TMO",
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -170,7 +215,7 @@
       "detail": "הסגירה האחרונה 159.20 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GILD",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -179,7 +224,7 @@
       "detail": "הסגירה האחרונה 234.07 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DHR",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -188,7 +233,7 @@
       "detail": "הסגירה האחרונה 88.76 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SCHW",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -197,7 +242,7 @@
       "detail": "הסגירה האחרונה 167.14 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BA",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -206,7 +251,7 @@
       "detail": "הסגירה האחרונה 20.70 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/T",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     },
     {
       "kind": "range",
@@ -215,7 +260,7 @@
       "detail": "הסגירה האחרונה 167.71 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/EMR",
-      "at": "2026-10-28T22:53:34.420Z"
+      "at": "2026-10-28T23:03:43.513Z"
     }
   ]
 }
