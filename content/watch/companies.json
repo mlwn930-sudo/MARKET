@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-03T08:46:38.295Z",
+  "builtAt": "2026-11-03T20:00:34.359Z",
   "followed": 2,
   "findings": [
     {
@@ -13,49 +13,7 @@
       "dedupeKey": "NVDA|price|EV/EBITDA=24.5x,P/E=25.6x,רמת המחיר=נמוך",
       "relevance": "high",
       "relevanceWhy": "שינוי בתזה בדרגת טענה סבירה · מהותיות 97",
-      "at": "2026-11-03T08:46:38.295Z",
-      "href": "/company/NVDA"
-    },
-    {
-      "kind": "thesis",
-      "ticker": "TTWO",
-      "company": "Take-Two Interactive Software, Inc.",
-      "headline": "TTWO: Take-Two Interactive Software, Inc.: יש סיבה להסתכל, אבל 3 סיכונים מדודים עומדים מולה.",
-      "detail": "נוסף גורם שיכול לשבור את התזה: הקריאה נשענת על דוח ישן",
-      "weight": 93,
-      "grade": "likely",
-      "dedupeKey": "TTWO|filing|שובר תזה חדש=הקריאה נשענת על דוח ישן",
-      "relevance": "high",
-      "relevanceWhy": "שינוי בתזה בדרגת טענה סבירה · מהותיות 93",
-      "at": "2026-11-03T08:46:38.295Z",
-      "href": "/company/TTWO"
-    },
-    {
-      "kind": "news",
-      "ticker": "NVDA",
-      "company": "NVDA",
-      "headline": "NVDA: Nvidia הורתה לשותפי מרכזי הנתונים שלה להגביל את המכירות ללקוחות בסין, על פי דיווח של ה-Financial Times המבוסס על חמישה…",
-      "detail": "הנחיה זו פוגעת ביכולתה של Nvidia למכור את שבבי מרכזי הנתונים שלה לשוק הסיני, שהוא שוק משמעותי עבור החברה. הדבר עלול להוביל לירידה בהכנסות מסין עקב מגבלות רגולטוריות או אסטרטגיות פנימיות.\n\nתגובת מחיר: הכתבה אינה מציינת תגובת מחיר\n\nשרשרת הערך: חברות מתחרות בתחום השבבים ושותפי מרכזי הנתונים של Nvidia מושפעים מהשינוי בהקצאת המוצרים ובביקושים בשוק הסיני.\n\nהכותרת במקור: Nvidia tells data center partners to limit China sales- FT · Yahoo",
-      "weight": 2.25,
-      "grade": null,
-      "dedupeKey": "https://finnhub.io/api/news?id=0dc561740f75cba79d9b0aa15358fa0d2f4057edf7f3e1e2b64e37ab4cc9ae88",
-      "relevance": "high",
-      "relevanceWhy": "זרז עסקי בעל השפעה גבוהה לפי הקריאה · זהו זרז מכיוון שהוא משנה באופן ישיר את יכולת החברה לייצר הכנסות בשוק גיאוגרפי מרכזי, ומשפיע על מבנה התחרות והציות לרגולציה.",
-      "at": "2026-11-03T08:46:38.295Z",
-      "href": "/company/NVDA"
-    },
-    {
-      "kind": "news",
-      "ticker": "NVDA",
-      "company": "NVDA",
-      "headline": "NVDA: הכנסות IonQ ברבעון השני צמחו ב-287% והיא השלימה את רכישת SkyWater Technology. הכנסות Rigetti צמחו ב-185% והיא משתמשת…",
-      "detail": "החברות פועלות בתחום המחשוב הקוונטי עם צמיחת הכנסות מהירה אך הערכות שווי גבוהות (IonQ נסחרת בכ-42 פעמים מכירות ו-Rigetti בכ-278 פעמים). ההשפעה תלויה ביכולתן להתגבר על סיכוני ביצוע וטכנולוגיה ולהגיע לאימוץ מסחרי רחב.\n\nתגובת מחיר: IonQ ירדה ב-6.22% ו-Rigetti ירדה ב-5.16%\n\nשרשרת הערך: IonQ משתפת פעולה עם Nvidia, Sandia National Laboratories ו-Anduril, בעוד Rigetti מספקת מערכות למרכזים כמו India's Center for Development of Advanced Computing.\n\nהכותרת במקור: 2 Unstoppable Quantum Computing Stocks to Buy Hand Over Fist Before the Next Rally · Yahoo",
-      "weight": 2.25,
-      "grade": null,
-      "dedupeKey": "https://finnhub.io/api/news?id=04089cb7c518629375abf7cbbbf5c1c0bc228530434c6cc13415d9b0ceff11c0",
-      "relevance": "medium",
-      "relevanceWhy": "זרז עסקי, בהשפעה בינונית או נמוכה · צמיחת הכנסות חזקה, אבן הדרך הטכנולוגיות ורכישות (כמו הרכישה של SkyWater על ידי IonQ) מהוות זרזים פוטנציאליים לשינוי מבני בתזרים העתידי אם האימוץ המסחרי יאוץ.",
-      "at": "2026-11-03T08:46:38.295Z",
+      "at": "2026-11-03T20:00:34.359Z",
       "href": "/company/NVDA"
     },
     {
@@ -63,13 +21,13 @@
       "ticker": "NVDA",
       "company": "NVIDIA Corporation",
       "headline": "NVDA: דוח רבעוני",
-      "detail": "בעוד 15 ימים — הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "detail": "בעוד 14 ימים — הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
       "weight": 1.5,
       "grade": null,
-      "dedupeKey": "NVDA|דוח רבעוני|בעוד 15 ימים",
+      "dedupeKey": "NVDA|דוח רבעוני|בעוד 14 ימים",
       "relevance": "medium",
       "relevanceWhy": "מועד מתוזמן שטרם התרחש — תזכורת, לא ממצא",
-      "at": "2026-11-03T08:46:38.295Z",
+      "at": "2026-11-03T20:00:34.359Z",
       "href": "/company/NVDA"
     }
   ]
