@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-04T00:33:34.661Z",
+  "builtAt": "2026-11-04T08:15:06.089Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 1,
     "range": 7,
     "event": 1,
-    "story": 0
+    "story": 8
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "7.00% ביום — פי 2.9 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.9432596124135992,
       "href": "/company/ETN",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "opportunity",
@@ -26,7 +26,7 @@
       "detail": "-4.05% ביום — פי 2.4 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
       "weight": 2.840558755332978,
       "href": "/company/VRTX",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "-8.74% ביום — פי 2.5 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.4974354698414074,
       "href": "/company/SHOP",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "move",
@@ -44,7 +44,79 @@
       "detail": "-4.05% ביום — פי 2.4 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.4055875533297786,
       "href": "/company/VRTX",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia China clients to get 1% of $70 bln RTX chips ordered- Bloomberg",
+      "detail": "מפתחי בינה מלאכותית בסין צפויים לקבל רק אחוז אחד מהשבים המתקדמים שהוזמנו מ-NVIDIA, מתוך הזמנות בשווי של 70 מיליארד דולר.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=184fae6e23b41243ccb7d17074a72421af86c7ca34bef17f29ed892859b12db3",
+      "at": "2026-11-04T05:31:11.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "GOOGL",
+      "headline": "Alphabet's Free Cash Flow Is Declining Faster Than Analysts Expected. Is This AI Stock Still a Buy?",
+      "detail": "אלפבית דיווחה על הכנסות חיפוש של 63.4 מיליארד דולר ברבעון השלישי, מתחת לצפי האנליסטים שעמד על 64.5 מיליארד דולר. החברה רשמה תזרים מזומנים חופשי שלילי של 9.1 מיליארד דולר, בשל השקעות בתשתיות ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=b9e2387c8a4282ed3041e6252d54bc18808b92882204259aae54a9fe1ef987ff",
+      "at": "2026-11-04T05:20:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia China clients to get 1% of $70 bln RTX chips ordered- Bloomberg",
+      "detail": "מפתחי בינה מלאכותית בסין צפויים לקבל רק אחוז אחד מהשבים המתקדמים שהוזמנו מ-NVIDIA, מתוך הזמנות בשווי של 70 מיליארד דולר.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=184fae6e23b41243ccb7d17074a72421af86c7ca34bef17f29ed892859b12db3",
+      "at": "2026-11-04T05:31:11.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": null,
+      "headline": "Iran's IRGC says four tankers ablaze after hitting mines near Strait of Hormuz - Reuters",
+      "detail": "משמר המהפכה באיראן דיווח כי ארבע מכליות נפט עלו באש לאחר שנפגעו ממוקשים בסמוך למצר הורמוז.",
+      "weight": 2.2,
+      "href": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQbjcyLUxfeTMxaHFnbENrc2tqdlowSDFqWU5DUWtqOWhVUUdSYWdSbFpBRGQ4VHI3Rm5DbDVsLTV6bkM4d3FjcmVPRnpsQlJ6RkNSLWNZX0ZtWURvUExKaGZ2M2diWUFvZWZfSE5FN01PR2FXc1pSN1kyeXhHX0ZFS0k4S1FjSDJLc2ZfbGx2cm9TYW9JSThiZVZIeFQxTnVBXzAwYnhlaGxsN3lwQkxOZTdFRVVpc3RPa2J2M0JZNVduZXA3Z2pz?oc=5",
+      "at": "2026-11-04T03:50:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "CVX",
+      "headline": "Big Oil Puts Debt Reduction Ahead of New Investments",
+      "detail": "חברות הנפט והגז הגדולות רשמו רווחי שיא ברבעון השלישי, על רקע מלחמות שדחפו את מחירי האנרגיה ושולי הזיקוק כלפי מעלה. למרות הרווחים הגבוהים, ענקיות האנרגיה בוחרות שלא להגדיל השקעות חדשות, אלא ל",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=06bdc061fc35fca721027c746dcbaccf72ba7f01700d1812a8cb1d525d683c35",
+      "at": "2026-11-03T23:00:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "XOM",
+      "headline": "Trump Says Iran “Wants a Settlement.” CEO Predicts Peace Sends Oil 40% Lower for Exxon, Chevron",
+      "detail": "מחירי נפט מסוג ברנט ירדו ב-8% ל-104.77 דולר לחבית לאחר שאיראן אאותתה על פתיחות לשיחות שלום והנשיא טראמפ הצהיר שאיראן מעוניינת בהסדר. מנכ\"ל PIMCO מעריך הסכם שלום מלא יוריד את מחירי הנפט ב-40%",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=5cade93409d591c0a903f9441682dc2ec57f6c872d46cbd7e86afe325222db94",
+      "at": "2026-11-03T20:36:27.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": null,
+      "headline": "Change in Congress Could Bring Wall Street a Headache",
+      "detail": "לוביסטים של הבנקים הצליחו להשיג דרישות הון מוחלשות, מסגרת מבחני קיץ נוחה יותר, אכיפת הגנת צרכן מצומצמת ופיקוח מופחת על בנקים קטנים תחת שליטת הרפובליקנים בקונגרס ופקידים שמינה טראמפ.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=5142f2f108e12b230c47b81d8668e89144f5ca2ca88b6f65d780aa6a02f78806",
+      "at": "2026-11-03T19:00:01.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "ICE",
+      "headline": "CFTC Clears First Stock Perpetual Futures for Trading on US Exchanges",
+      "detail": "ה-CFTC אישרה מסחר בחוזים עתידיים מתגלגלים (perpetual futures) הצמודים למניות בודדות בבורסות בארה\"ב, תחת פיקוח משותף עם ה-SEC. המהלך מרחיב את שוק הנגזרים המסורתי ונועד להחזיר סוחרים מפלטפורמו",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=b7a49763d6753d9380c4b07e4d41c6e08c41c66b30071f2bb38f6302765da460",
+      "at": "2026-11-03T16:43:00.000Z"
     },
     {
       "kind": "move",
@@ -53,7 +125,7 @@
       "detail": "3.28% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0872913809252545,
       "href": "/company/CVS",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "event",
@@ -62,7 +134,7 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.025,
       "href": "/company/TTWO",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "move",
@@ -71,7 +143,7 @@
       "detail": "-2.18% ביום — פי 2.0 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.004999944905674,
       "href": "/company/PFE",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "range",
@@ -80,16 +152,7 @@
       "detail": "הסגירה האחרונה 312.49 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TXN",
-      "at": "2026-11-04T00:33:34.661Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "INTC",
-      "headline": "INTC בשפל של רבעון",
-      "detail": "הסגירה האחרונה 60.55 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/INTC",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "range",
@@ -98,7 +161,16 @@
       "detail": "הסגירה האחרונה 171.97 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MRVL",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "INTC",
+      "headline": "INTC בשפל של רבעון",
+      "detail": "הסגירה האחרונה 60.55 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/INTC",
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "range",
@@ -107,16 +179,7 @@
       "detail": "הסגירה האחרונה 600.09 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SPOT",
-      "at": "2026-11-04T00:33:34.661Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "BAC",
-      "headline": "BAC בשפל של רבעון",
-      "detail": "הסגירה האחרונה 49.66 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/BAC",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "range",
@@ -125,7 +188,16 @@
       "detail": "הסגירה האחרונה 973.36 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/REGN",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "BAC",
+      "headline": "BAC בשפל של רבעון",
+      "detail": "הסגירה האחרונה 49.66 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/BAC",
+      "at": "2026-11-04T08:15:06.089Z"
     },
     {
       "kind": "range",
@@ -134,7 +206,7 @@
       "detail": "הסגירה האחרונה 114.18 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DIS",
-      "at": "2026-11-04T00:33:34.661Z"
+      "at": "2026-11-04T08:15:06.089Z"
     }
   ]
 }
