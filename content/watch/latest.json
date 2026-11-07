@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-07T07:57:35.035Z",
+  "builtAt": "2026-11-07T16:01:10.260Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 0,
     "range": 7,
     "event": 1,
-    "story": 7
+    "story": 10
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "11.67% ביום — פי 5.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 5.214088532634252,
       "href": "/company/ABNB",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "-16.15% ביום — פי 4.8 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 4.838157697431694,
       "href": "/company/TEAM",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "-10.02% ביום — פי 3.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.3018507532116406,
       "href": "/company/MCHP",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "move",
@@ -44,7 +44,7 @@
       "detail": "11.04% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.618903909971555,
       "href": "/company/AMD",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "move",
@@ -53,43 +53,61 @@
       "detail": "8.23% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.2074236874979287,
       "href": "/company/LRCX",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "story",
-      "ticker": "NVDA",
-      "headline": "A Retiree Who Bought 1,000 Nvidia Shares at $122 Just Watched Chips Have Their Worst Day Since 2020",
-      "detail": "מניות השבבים רשמו את יום המסחר הגרוע ביותר מאז מרץ 2020 על רקע חששות לגבי השפעת הקונגרס החדש על בניית מרכזי נתונים. מניית אנבידיה ירדה ב-9.26% ל-181.60 דולר ביום חמישי לפני שעלתה ב-2.78% ל-1",
+      "ticker": null,
+      "headline": "OpenAI Just Raised $11 Billion at a $1.25 Trillion Valuation, Below the $1.4 Trillion It First Sought",
+      "detail": "OpenAI גייסה 11 מיליארד דולר לפי שווי של 1.25 טריליון דולר, מתחת לשווי של 1.4 טריליון דולר שביקשה תחילה.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=503b3f79cba6e965d861363bde40300b0828734624581be399cdb8203a1b80d6",
-      "at": "2026-11-07T05:06:52.000Z"
+      "href": "https://finnhub.io/api/news?id=b3b504e090d22e065db694cc7b4f6aa6a9decacbc11a6f82f4242a84c9d3f56a",
+      "at": "2026-11-07T13:38:42.000Z"
     },
     {
       "kind": "story",
-      "ticker": "ARM",
-      "headline": "Think Arm Is Too Expensive? 1 Thing You Need To Understand About the Chip Stock",
-      "detail": "ארם דיווחה על תוצאות הרבעון השני הפיסקאלי שעקפו את תחזיות ההכנסות והרווח למניה, עם סך הכנסות של 1.44 מיליארד דולר ורווח מתואם למניה של 0.52 דולר. עם זאת, צמיחת הכנסות התמלוגים הסתכמה ב-8% ל-",
+      "ticker": "SPCX",
+      "headline": "Better IPO to Buy: Anthropic vs. SpaceX",
+      "detail": "הכתבה משווה בין ההנפקות המתוכננות של חברות הטכנולוגיה Anthropic ו-SpaceX (הנסחרת תחת הטיקר SPCX, שרכשה את xAI ומתחרה בתחום מודלי הבינה המלאכותית). לפי הנתונים, ההכנסות של Anthropic עמדו על 1",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=760e131fe6eab4dc539906a3a2f8a369877f6749d479ced58ee63f95fcf7a820",
-      "at": "2026-11-07T03:05:27.000Z"
+      "href": "https://finnhub.io/api/news?id=597feb6c4371c8f9358b614794cefbd5ea47d1dc469b7c6437d025486098b38b",
+      "at": "2026-11-07T13:07:00.000Z"
     },
     {
       "kind": "story",
-      "ticker": "NVDA",
-      "headline": "A Retiree Who Bought 1,000 Nvidia Shares at $122 Just Watched Chips Have Their Worst Day Since 2020",
-      "detail": "מניות השבבים רשמו את יום המסחר הגרוע ביותר מאז מרץ 2020 על רקע חששות לגבי השפעת הקונגרס החדש על בניית מרכזי נתונים. מניית אנבידיה ירדה ב-9.26% ל-181.60 דולר ביום חמישי לפני שעלתה ב-2.78% ל-1",
+      "ticker": "ABNB",
+      "headline": "Airbnb Just Popped After a Blowout Quarter. Is the Stock Still a Buy?",
+      "detail": "איירביאנבי דיווחה על צמיחה של 19% בהכנסות ברבעון השלישי ועקפה את תחזיות האנליסטים ברווח למניה, שהגיע ל-$3.16 לעומת $2.85 צפוי. החברה העלתה את התחזית השנתית, דיווחה על 155 מיליון לילות ומועדי",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=503b3f79cba6e965d861363bde40300b0828734624581be399cdb8203a1b80d6",
-      "at": "2026-11-07T05:06:52.000Z"
+      "href": "https://finnhub.io/api/news?id=049a5060a53c5af5c78012bd5a8dc8eadb121cc89f1340fc2cdb5dc00c780bcb",
+      "at": "2026-11-07T13:02:02.000Z"
     },
     {
       "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Our top 10 things to watch in the stock market Friday",
-      "detail": "הכתבה סוקרת עשרה אירועים מרכזיים בשווקים, ובהם התאוששות בחוזים על הנאסד\"ק, דוח תעסוקה חזק לאוקטובר עם תוספת של 165,000 משרות, ודוחות כספיים של חברות שונות כמו Iren, Airbnb, Moderna ו-DraftKi",
+      "ticker": "INTC",
+      "headline": "Intel Stock’s (INTC) Deep Sell-Off Shows Signs of an Overreaction",
+      "detail": "מניית אינטל נפלה ביותר מחצי מאז שיאה ביוני, כולל צניחה של כמעט 30% ביום מסחר אחד בסוף אוקטובר לאחר פרסום תחזית מאכזבת לרבעון הרביעי.",
       "weight": 2.2,
-      "href": "https://www.cnbc.com/investingclub/2026/11/06/our-top-10-things-to-watch-in-the-stock-market-friday.html",
-      "at": "2026-11-06T14:01:45.000Z"
+      "href": "https://finnhub.io/api/news?id=4efca12a9d3c1b8739659ddd126d8be38b93edf6be9416f699c2aaa9bb302ecb",
+      "at": "2026-11-06T21:33:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TSM",
+      "headline": "TSMC Makes the Chips for Both Nvidia and AMD. Here's What a $5,000 Investment Could Be Worth by 2030.",
+      "detail": "הכתבה דנה במודל העסקי של Taiwan Semiconductor (TSMC) כיצרנית שבבים עבור חברות כמו Nvidia ו-AMD, ומציינת את תחזיות הצמיחה וההשקעות של החברה במתקני ייצור בארה\"ב.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=120b3b5589321826597f01c9eddf3d0d673551d18b7bd44e70b0351d88a3bf19",
+      "at": "2026-11-06T18:34:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TSM",
+      "headline": "TSMC Soars 5% on Report It’s Weighing Advanced Memory Chips for Nvidia After Chip Rout",
+      "detail": "מניית TSMC עלתה ב-5% בעקבות דיוח לפליו היא שוקלת לייצר שבבי זיכרון 3D DRAM לבקשת Nvidia.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=464f36c3661cb9dc77b0221d249aacd29b761b062a83498ed8541ee5d6f6d46f",
+      "at": "2026-11-06T16:22:07.000Z"
     },
     {
       "kind": "story",
@@ -102,21 +120,30 @@
     },
     {
       "kind": "story",
-      "ticker": "LMT",
-      "headline": "LMT Trades at a Discount to the Industry: Right Time to Buy the Stock?",
-      "detail": "מניית לוקהיד מרטין (LMT) עלתה ב-6 החודשים האחרונים ב-12%, לעומת ירידה של 8.8% בסקטור הביטחוני. צבר ההזמנות של החברה זינק ל-292 מיליארד דולר נכון לספטמבר 2026, בין היתר בזכות חוזי הגנה ארוכי ",
+      "ticker": "CVS",
+      "headline": "What Did CVS Health's Quarter Change For Its Stock?",
+      "detail": "CVS Health דיווחה על תוצאות רבעון שלישי לשנת 2026 שעקפו את תחזיות האנליסטים עם רווח מתואם של $2.09 למניה והכנסות של $108 מיליארד, והעלתה את תחזית הרווח לשנת 2026 לכך שתעמוד על לפחות $8.20 למ",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=5d3c498f1b92b7b857950d484882dcbef9cb9b5d7be286ef8440bf026c684685",
-      "at": "2026-11-06T13:07:00.000Z"
+      "href": "https://finnhub.io/api/news?id=31ae7a6982cae0644ebffe657c1d51011ae3f241a4f6fe9428ebd13f12b2eb35",
+      "at": "2026-11-07T10:09:08.000Z"
     },
     {
       "kind": "story",
-      "ticker": "CW",
-      "headline": "Defense Watch: Strong Q3 Earnings, New Military Contracts, But Democrats’ Sweep Poses Spending Hurdles",
-      "detail": "Curtiss-Wright, Leidos ו-BWX Technologies דיווחו על תוצאות רבעון שלישי חזקות עם צמיחה בהכנסות וברווחים, לצד חוזים חדשים מצבא ארה\"ב. עם זאת, ניצחון הדמוקרטים בבחירות אמצע הכהונה מעורר חששות מ",
+      "ticker": "MRNA",
+      "headline": "Moderna (MRNA) Stock Hits 52-Week Highs After Q3 Earnings: Buy, Hold, or Sell?",
+      "detail": "מודרנה דיווחה על תוצאות הרבעון השלישי שעלו על ציפיות האנליסטים עם רווח של 0.38 דולר למניה והכנסות של 1.31 מיליארד דולר. החברה גם העלתה את תחזית צמיחת ההכנסות לשנת 2026 ל-15%-25% והקיטנה את ה",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=da4e98194b4a180cc73f370e30e6572cf5272ec888a59a94cff567a65d8a9807",
-      "at": "2026-11-06T12:00:00.000Z"
+      "href": "https://finnhub.io/api/news?id=ffac9eda5b673d2d4443d2edc382303530a03034f3b3afd97cd3da2471c0b9c2",
+      "at": "2026-11-06T18:55:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "Eli Lilly Is Much More Than a Weight-Loss Drug Company. Here's the Evidence",
+      "detail": "אלי לילי דיווחה על תוצאות הרבעון השלישי לשנת 2026 עם הכנסות של 24.4 מיליארד דולר, גידול של 39% לעומת התקופה המקבילה אשתקד. Zepbound ו-Mounjaro היו מנועי הצמיחה המרכזיים והיוו 66% מההכנסות, א",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=d3c175fbb727bb4838d67eb08c16ecd46bd094ec43904c75119f5c1d34ffb1e4",
+      "at": "2026-11-07T00:38:02.000Z"
     },
     {
       "kind": "move",
@@ -125,7 +152,7 @@
       "detail": "-3.23% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.120207722453828,
       "href": "/company/ABT",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "event",
@@ -134,7 +161,7 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.1,
       "href": "/company/TTWO",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "move",
@@ -143,7 +170,7 @@
       "detail": "-2.61% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0924415420097575,
       "href": "/company/UNP",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "move",
@@ -152,7 +179,7 @@
       "detail": "6.69% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0774073988414576,
       "href": "/company/KLAC",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "range",
@@ -161,7 +188,7 @@
       "detail": "הסגירה האחרונה 58.35 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MCHP",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "range",
@@ -170,7 +197,7 @@
       "detail": "הסגירה האחרונה 101.97 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NOW",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "range",
@@ -179,7 +206,7 @@
       "detail": "הסגירה האחרונה 313.84 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PANW",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "range",
@@ -188,7 +215,7 @@
       "detail": "הסגירה האחרונה 865.82 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GS",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "range",
@@ -197,7 +224,7 @@
       "detail": "הסגירה האחרונה 49.42 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BAC",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "range",
@@ -206,7 +233,7 @@
       "detail": "הסגירה האחרונה 64.08 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/WMB",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     },
     {
       "kind": "range",
@@ -215,7 +242,7 @@
       "detail": "הסגירה האחרונה 29.96 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/KMI",
-      "at": "2026-11-07T07:57:35.035Z"
+      "at": "2026-11-07T16:01:10.260Z"
     }
   ]
 }
