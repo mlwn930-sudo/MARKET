@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-08T08:12:13.813Z",
+  "builtAt": "2026-11-08T16:27:03.877Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 0,
     "range": 7,
     "event": 1,
-    "story": 4
+    "story": 6
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "11.67% ביום — פי 5.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 5.214088532634252,
       "href": "/company/ABNB",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "-16.15% ביום — פי 4.8 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 4.838157697431694,
       "href": "/company/TEAM",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "-10.02% ביום — פי 3.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.3018507532116406,
       "href": "/company/MCHP",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "move",
@@ -44,7 +44,7 @@
       "detail": "11.04% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.618903909971555,
       "href": "/company/AMD",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "move",
@@ -53,25 +53,43 @@
       "detail": "8.23% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.2074236874979287,
       "href": "/company/LRCX",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "story",
-      "ticker": "BRKA",
-      "headline": "Warren Buffett and Greg Abel Just Sent Shockwaves Through Wall Street With This $377 Billion Warning",
-      "detail": "ברקשייר האתוויי דיווחה על תוצאות הרבעון השלישי ועל עליית עתודות המזומנים ואג\"ח ממשלתיות לשיא של 377.4 מיליארד דולר. החברה הייתה מוכרת נטו של מניות ב-15 מתוך 16 הרבעונים האחרונים תחת וורן באפ",
+      "ticker": "SPCX",
+      "headline": "AI Power Stocks Just Fell 6.3% to 9.3% on Financing Fears. SpaceX Just Said New Compute Pays Back in Under a Year.",
+      "detail": "מניית SpaceX עלתה ב-8.6% לאחר שדיווחה בדוח הרבעון השלישי כי השקעות מחשוב חדשות מחזירות את עלותן בפחות משנה, עם תמחור מעט מעל טווח של 30-50 דולר לוואט. במקביל, מניות בתחום תשתיות האנרגיה ל-AI",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ab5502bf95c77b264a1cea1c42c8bb47fb55d2552cf59a4d5745ea3f0d903665",
-      "at": "2026-11-08T00:43:01.000Z"
+      "href": "https://finnhub.io/api/news?id=088887f0c5ca2bdfd21c14ff453f58e00c3c56bb319e1ab8061b5d2296cf18a2",
+      "at": "2026-11-08T14:55:00.000Z"
     },
     {
       "kind": "story",
-      "ticker": "CVS",
-      "headline": "What Did CVS Health's Quarter Change For Its Stock?",
-      "detail": "CVS Health דיווחה על תוצאות רבעון שלישי לשנת 2026 שעקפו את תחזיות האנליסטים עם רווח מתואם של $2.09 למניה והכנסות של $108 מיליארד, והעלתה את תחזית הרווח לשנת 2026 לכך שתעמוד על לפחות $8.20 למ",
+      "ticker": "NVDA",
+      "headline": "Ben Thompson: NVIDIA Will “Almost Certainly Be a Short-Term Loser” From the Blue Wave",
+      "detail": "מניית NVIDIA ירדה בכ-12% ביום רביעי וביום חמישי לאחר דמוקרטים שזכו בשליטה בקונגרס והערכה של Dan Ives לפיה 10% מהתכנון בארצות הברית נפגעים.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=31ae7a6982cae0644ebffe657c1d51011ae3f241a4f6fe9428ebd13f12b2eb35",
-      "at": "2026-11-07T10:09:08.000Z"
+      "href": "https://finnhub.io/api/news?id=b707987fe150612b3c0e9e7df79d9cff3d7a9d000a7e1789f730527519bd57c7",
+      "at": "2026-11-08T14:21:04.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Ben Thompson: NVIDIA Will “Almost Certainly Be a Short-Term Loser” From the Blue Wave",
+      "detail": "מניית NVIDIA ירדה בכ-12% ביום רביעי וביום חמישי לאחר דמוקרטים שזכו בשליטה בקונגרס והערכה של Dan Ives לפיה 10% מהתכנון בארצות הברית נפגעים.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=b707987fe150612b3c0e9e7df79d9cff3d7a9d000a7e1789f730527519bd57c7",
+      "at": "2026-11-08T14:21:04.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "XOM",
+      "headline": "ExxonMobil Is Up 38% in 2026 and Chevron Is Up 39%: Take Profits, or Hold On?",
+      "detail": "ExxonMobil עלתה ב-38% ו-Chevron עלתה ב-39% בשנת 2026, בעקבות מלחמה עם איראן שהדחפה את מחיר הנפט מעל 100 דולר וגרמה למרג'ינים של הזיקוק לנסוק. הרווח המתואם של ExxonMobil ברבעון השלישי הגיע ל-",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=b887977c6fbef93dc2d29bf42bc29f56582fa3ce8d6add52b3c5e0cdf93362be",
+      "at": "2026-11-07T23:45:59.000Z"
     },
     {
       "kind": "story",
@@ -98,7 +116,7 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.125,
       "href": "/company/TTWO",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "move",
@@ -107,7 +125,7 @@
       "detail": "-3.23% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.120207722453828,
       "href": "/company/ABT",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "move",
@@ -116,7 +134,7 @@
       "detail": "-2.61% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0924415420097575,
       "href": "/company/UNP",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "move",
@@ -125,7 +143,7 @@
       "detail": "6.69% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0774073988414576,
       "href": "/company/KLAC",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "range",
@@ -134,16 +152,7 @@
       "detail": "הסגירה האחרונה 58.35 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MCHP",
-      "at": "2026-11-08T08:12:13.813Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PANW",
-      "headline": "PANW בשפל של רבעון",
-      "detail": "הסגירה האחרונה 313.84 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PANW",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "range",
@@ -152,7 +161,16 @@
       "detail": "הסגירה האחרונה 101.97 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NOW",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PANW",
+      "headline": "PANW בשפל של רבעון",
+      "detail": "הסגירה האחרונה 313.84 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PANW",
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "range",
@@ -161,7 +179,7 @@
       "detail": "הסגירה האחרונה 865.82 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GS",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "range",
@@ -170,16 +188,7 @@
       "detail": "הסגירה האחרונה 49.42 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BAC",
-      "at": "2026-11-08T08:12:13.813Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "KMI",
-      "headline": "KMI בשפל של רבעון",
-      "detail": "הסגירה האחרונה 29.96 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/KMI",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
     },
     {
       "kind": "range",
@@ -188,7 +197,16 @@
       "detail": "הסגירה האחרונה 64.08 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/WMB",
-      "at": "2026-11-08T08:12:13.813Z"
+      "at": "2026-11-08T16:27:03.877Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "KMI",
+      "headline": "KMI בשפל של רבעון",
+      "detail": "הסגירה האחרונה 29.96 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/KMI",
+      "at": "2026-11-08T16:27:03.877Z"
     }
   ]
 }
