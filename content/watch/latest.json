@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-07T16:01:10.260Z",
+  "builtAt": "2026-11-08T08:12:13.813Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 0,
     "range": 7,
     "event": 1,
-    "story": 10
+    "story": 4
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "11.67% ביום — פי 5.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 5.214088532634252,
       "href": "/company/ABNB",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "-16.15% ביום — פי 4.8 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 4.838157697431694,
       "href": "/company/TEAM",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "move",
@@ -35,7 +35,7 @@
       "detail": "-10.02% ביום — פי 3.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.3018507532116406,
       "href": "/company/MCHP",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "move",
@@ -44,7 +44,7 @@
       "detail": "11.04% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.618903909971555,
       "href": "/company/AMD",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "move",
@@ -53,70 +53,16 @@
       "detail": "8.23% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.2074236874979287,
       "href": "/company/LRCX",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "story",
-      "ticker": null,
-      "headline": "OpenAI Just Raised $11 Billion at a $1.25 Trillion Valuation, Below the $1.4 Trillion It First Sought",
-      "detail": "OpenAI גייסה 11 מיליארד דולר לפי שווי של 1.25 טריליון דולר, מתחת לשווי של 1.4 טריליון דולר שביקשה תחילה.",
+      "ticker": "BRKA",
+      "headline": "Warren Buffett and Greg Abel Just Sent Shockwaves Through Wall Street With This $377 Billion Warning",
+      "detail": "ברקשייר האתוויי דיווחה על תוצאות הרבעון השלישי ועל עליית עתודות המזומנים ואג\"ח ממשלתיות לשיא של 377.4 מיליארד דולר. החברה הייתה מוכרת נטו של מניות ב-15 מתוך 16 הרבעונים האחרונים תחת וורן באפ",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=b3b504e090d22e065db694cc7b4f6aa6a9decacbc11a6f82f4242a84c9d3f56a",
-      "at": "2026-11-07T13:38:42.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "SPCX",
-      "headline": "Better IPO to Buy: Anthropic vs. SpaceX",
-      "detail": "הכתבה משווה בין ההנפקות המתוכננות של חברות הטכנולוגיה Anthropic ו-SpaceX (הנסחרת תחת הטיקר SPCX, שרכשה את xAI ומתחרה בתחום מודלי הבינה המלאכותית). לפי הנתונים, ההכנסות של Anthropic עמדו על 1",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=597feb6c4371c8f9358b614794cefbd5ea47d1dc469b7c6437d025486098b38b",
-      "at": "2026-11-07T13:07:00.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "ABNB",
-      "headline": "Airbnb Just Popped After a Blowout Quarter. Is the Stock Still a Buy?",
-      "detail": "איירביאנבי דיווחה על צמיחה של 19% בהכנסות ברבעון השלישי ועקפה את תחזיות האנליסטים ברווח למניה, שהגיע ל-$3.16 לעומת $2.85 צפוי. החברה העלתה את התחזית השנתית, דיווחה על 155 מיליון לילות ומועדי",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=049a5060a53c5af5c78012bd5a8dc8eadb121cc89f1340fc2cdb5dc00c780bcb",
-      "at": "2026-11-07T13:02:02.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "INTC",
-      "headline": "Intel Stock’s (INTC) Deep Sell-Off Shows Signs of an Overreaction",
-      "detail": "מניית אינטל נפלה ביותר מחצי מאז שיאה ביוני, כולל צניחה של כמעט 30% ביום מסחר אחד בסוף אוקטובר לאחר פרסום תחזית מאכזבת לרבעון הרביעי.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=4efca12a9d3c1b8739659ddd126d8be38b93edf6be9416f699c2aaa9bb302ecb",
-      "at": "2026-11-06T21:33:00.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TSM",
-      "headline": "TSMC Makes the Chips for Both Nvidia and AMD. Here's What a $5,000 Investment Could Be Worth by 2030.",
-      "detail": "הכתבה דנה במודל העסקי של Taiwan Semiconductor (TSMC) כיצרנית שבבים עבור חברות כמו Nvidia ו-AMD, ומציינת את תחזיות הצמיחה וההשקעות של החברה במתקני ייצור בארה\"ב.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=120b3b5589321826597f01c9eddf3d0d673551d18b7bd44e70b0351d88a3bf19",
-      "at": "2026-11-06T18:34:00.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TSM",
-      "headline": "TSMC Soars 5% on Report It’s Weighing Advanced Memory Chips for Nvidia After Chip Rout",
-      "detail": "מניית TSMC עלתה ב-5% בעקבות דיוח לפליו היא שוקלת לייצר שבבי זיכרון 3D DRAM לבקשת Nvidia.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=464f36c3661cb9dc77b0221d249aacd29b761b062a83498ed8541ee5d6f6d46f",
-      "at": "2026-11-06T16:22:07.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "LMT",
-      "headline": "Is Lockheed Martin Stock A Real Bargain?",
-      "detail": "לוקהיד מרטין נסחרת במכפיל רווח של 20.4, לעומת חציון של 22.3 ב-S&P 500, לאחר תשואה של 24.9% בשנה האחרונה. צבר ההזמנות של החברה הגיע לשיא של 292 מיליארד דולר, המכירות ברבעון השלישי של 2026 עלו",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=b4a5b12509c8307bc31045f53e75d75f8b0c11b3dd7f28992828bac2a834cd79",
-      "at": "2026-11-06T23:54:04.000Z"
+      "href": "https://finnhub.io/api/news?id=ab5502bf95c77b264a1cea1c42c8bb47fb55d2552cf59a4d5745ea3f0d903665",
+      "at": "2026-11-08T00:43:01.000Z"
     },
     {
       "kind": "story",
@@ -129,21 +75,30 @@
     },
     {
       "kind": "story",
-      "ticker": "MRNA",
-      "headline": "Moderna (MRNA) Stock Hits 52-Week Highs After Q3 Earnings: Buy, Hold, or Sell?",
-      "detail": "מודרנה דיווחה על תוצאות הרבעון השלישי שעלו על ציפיות האנליסטים עם רווח של 0.38 דולר למניה והכנסות של 1.31 מיליארד דולר. החברה גם העלתה את תחזית צמיחת ההכנסות לשנת 2026 ל-15%-25% והקיטנה את ה",
+      "ticker": "LLY",
+      "headline": "Eli Lilly Just Raised Its 2026 Revenue Forecast by $5.5 Billion. Is the Stock Still a Buy?",
+      "detail": "אלי לילי העלתה את תחזית ההכנסות לשנת 2026 ב-5.5 מיליארד דולר, לטווח של 91 עד 92 מיליארד דולר. ההכנסות ברבעון השלישי עמדו על 24.4 מיליארד דולר, גידול של 39% לעומת התקופה המקבילה אשתקד, בהובלת",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ffac9eda5b673d2d4443d2edc382303530a03034f3b3afd97cd3da2471c0b9c2",
-      "at": "2026-11-06T18:55:00.000Z"
+      "href": "https://finnhub.io/api/news?id=93af364d8de0b73e914b73a21a7582bc4f7a6407c19cdd1f80a9f328fedfbd77",
+      "at": "2026-11-07T18:50:00.000Z"
     },
     {
       "kind": "story",
-      "ticker": "LLY",
-      "headline": "Eli Lilly Is Much More Than a Weight-Loss Drug Company. Here's the Evidence",
-      "detail": "אלי לילי דיווחה על תוצאות הרבעון השלישי לשנת 2026 עם הכנסות של 24.4 מיליארד דולר, גידול של 39% לעומת התקופה המקבילה אשתקד. Zepbound ו-Mounjaro היו מנועי הצמיחה המרכזיים והיוו 66% מההכנסות, א",
+      "ticker": "HIMS",
+      "headline": "Hims & Hers Stock After Lilly Weight Loss Drug Deal Has The Bull Case Changed?",
+      "detail": "Eli Lilly הגיעה להסכם עם Hims & Hers Health להצעת תרופות ההרזיה המאושרות על ידי ה-FDA, Zepbound ו-Foundayo, בפלטפורמה של Hims & Hers. שיתוף הפעולה מעביר את היצע ירידת המשקל של החברה באופן מל",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=d3c175fbb727bb4838d67eb08c16ecd46bd094ec43904c75119f5c1d34ffb1e4",
-      "at": "2026-11-07T00:38:02.000Z"
+      "href": "https://finnhub.io/api/news?id=c67881c94d9aeb8b5d28637fff7ac634380671c694cb05cec2196b8679e30759",
+      "at": "2026-11-07T18:13:07.000Z"
+    },
+    {
+      "kind": "event",
+      "ticker": "TTWO",
+      "headline": "השקת GTA VI — בעוד 11 ימים",
+      "detail": "תאריך שהחברה אישרה: 2026-11-19",
+      "weight": 2.125,
+      "href": "/company/TTWO",
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "move",
@@ -152,16 +107,7 @@
       "detail": "-3.23% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.120207722453828,
       "href": "/company/ABT",
-      "at": "2026-11-07T16:01:10.260Z"
-    },
-    {
-      "kind": "event",
-      "ticker": "TTWO",
-      "headline": "השקת GTA VI — בעוד 12 ימים",
-      "detail": "תאריך שהחברה אישרה: 2026-11-19",
-      "weight": 2.1,
-      "href": "/company/TTWO",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "move",
@@ -170,7 +116,7 @@
       "detail": "-2.61% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0924415420097575,
       "href": "/company/UNP",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "move",
@@ -179,7 +125,7 @@
       "detail": "6.69% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.0774073988414576,
       "href": "/company/KLAC",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "range",
@@ -188,16 +134,7 @@
       "detail": "הסגירה האחרונה 58.35 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MCHP",
-      "at": "2026-11-07T16:01:10.260Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "NOW",
-      "headline": "NOW בשפל של רבעון",
-      "detail": "הסגירה האחרונה 101.97 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/NOW",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "range",
@@ -206,7 +143,16 @@
       "detail": "הסגירה האחרונה 313.84 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PANW",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "NOW",
+      "headline": "NOW בשפל של רבעון",
+      "detail": "הסגירה האחרונה 101.97 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/NOW",
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "range",
@@ -215,7 +161,7 @@
       "detail": "הסגירה האחרונה 865.82 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/GS",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "range",
@@ -224,16 +170,7 @@
       "detail": "הסגירה האחרונה 49.42 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BAC",
-      "at": "2026-11-07T16:01:10.260Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "WMB",
-      "headline": "WMB בשפל של רבעון",
-      "detail": "הסגירה האחרונה 64.08 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/WMB",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
     },
     {
       "kind": "range",
@@ -242,7 +179,16 @@
       "detail": "הסגירה האחרונה 29.96 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/KMI",
-      "at": "2026-11-07T16:01:10.260Z"
+      "at": "2026-11-08T08:12:13.813Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "WMB",
+      "headline": "WMB בשפל של רבעון",
+      "detail": "הסגירה האחרונה 64.08 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/WMB",
+      "at": "2026-11-08T08:12:13.813Z"
     }
   ]
 }
