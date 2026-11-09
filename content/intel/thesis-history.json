@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-06T10:50:35.085Z",
+  "builtAt": "2026-11-09T11:27:49.486Z",
   "history": {
     "NVDA": [
       {
@@ -442,6 +442,44 @@
         "metrics": {
           "pe": 86.64823185169966,
           "ev_ebitda": 79.0434213149842,
+          "operating_margin": 17.717228629280747,
+          "fcf_margin": 8.803591865481117,
+          "rev_cagr_3": 13.643599335368428,
+          "roic": 12.838411952582327,
+          "net_debt_ebitda": -1.055205047318612
+        },
+        "filingEnd": "2026-09-26"
+      },
+      {
+        "ticker": "AMD",
+        "at": "2026-11-09T11:23:54.543Z",
+        "status": "watch",
+        "headline": "Advanced Micro Devices, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 5,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "rich",
+          "verdict": "עסק חזק, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "כל דולר כבול 138 ימים",
+          "הכסף המוסדי במעקב הקטין ב-AMD",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 96.21296248933537,
+          "ev_ebitda": 87.8851687947399,
           "operating_margin": 17.717228629280747,
           "fcf_margin": 8.803591865481117,
           "rev_cagr_3": 13.643599335368428,
@@ -1702,6 +1740,41 @@
           "net_debt_ebitda": -0.3688891338900986
         },
         "filingEnd": "2026-09-03"
+      },
+      {
+        "ticker": "MU",
+        "at": "2026-11-09T11:24:05.385Z",
+        "status": "watch",
+        "headline": "Micron Technology, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "cheap",
+          "verdict": "עסק חזק, תמחור נמוך"
+        },
+        "conditions": [],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "כל דולר כבול 185 ימים",
+          "דילול מתמשך",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 9.187844991583379,
+          "ev_ebitda": 6.803662165594923,
+          "operating_margin": 74.58629906598192,
+          "fcf_margin": 0.8701985163828573,
+          "rev_cagr_3": 104.64667570381798,
+          "roic": 86.15555823390035,
+          "net_debt_ebitda": -0.3688891338900986
+        },
+        "filingEnd": "2026-09-03"
       }
     ],
     "MSFT": [
@@ -2015,6 +2088,41 @@
           "net_debt_ebitda": 2.726872677488754
         },
         "filingEnd": "2026-07-31"
+      },
+      {
+        "ticker": "CRM",
+        "at": "2026-11-09T11:24:24.217Z",
+        "status": "watch",
+        "headline": "Salesforce, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "cheap",
+          "verdict": "עסק חזק, תמחור נמוך"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 18.198504499301205,
+          "ev_ebitda": 19.921665408981834,
+          "operating_margin": 19.88028585734444,
+          "fcf_margin": 34.48950794301061,
+          "rev_cagr_3": 9.820006113830493,
+          "roic": 10.260820559878123,
+          "net_debt_ebitda": 2.726872677488754
+        },
+        "filingEnd": "2026-07-31"
       }
     ],
     "ADBE": [
@@ -2266,6 +2374,41 @@
           "net_debt_ebitda": 1.3461005999077065
         },
         "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "NOW",
+        "at": "2026-11-09T11:24:27.875Z",
+        "status": "watch",
+        "headline": "ServiceNow, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "דילול מתמשך",
+          "המרווח על ההכנסה החדשה כבר השתפר",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 73.24903641888719,
+          "ev_ebitda": 50.190058894920156,
+          "operating_margin": 9.6753288834165,
+          "fcf_margin": 32.03940120536582,
+          "rev_cagr_3": 22.376517864742617,
+          "roic": 6.66306116389237,
+          "net_debt_ebitda": 1.3461005999077065
+        },
+        "filingEnd": "2026-09-30"
       }
     ],
     "INTU": [
@@ -2413,41 +2556,6 @@
       }
     ],
     "GOOGL": [
-      {
-        "ticker": "GOOGL",
-        "at": "2026-09-25T20:48:23.018Z",
-        "status": "watch",
-        "headline": "Alphabet Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-        "confidence": "low",
-        "verdict": {
-          "passed": 8,
-          "evaluated": 8,
-          "corePassed": 5,
-          "coreEvaluated": 5
-        },
-        "quadrant": {
-          "businessQuality": "strong",
-          "priceLevel": "cheap",
-          "verdict": "עסק חזק, תמחור נמוך"
-        },
-        "conditions": [],
-        "breakers": [
-          "הצמיחה שמצדיקה את התמונה כבר מאטה",
-          "התזרים המדווח נדיב מהכלכלה בפועל",
-          "הצמיחה שמצדיקה את התמונה כבר מאטה",
-          "התזרים המדווח נדיב מהכלכלה בפועל"
-        ],
-        "metrics": {
-          "pe": 17.14568825372126,
-          "ev_ebitda": 27.39827674966809,
-          "operating_margin": 33.1103963971238,
-          "fcf_margin": 14.157841145097406,
-          "rev_cagr_3": 12.511745609215975,
-          "roic": 24.18154163635167,
-          "net_debt_ebitda": -0.9639770233289078
-        },
-        "filingEnd": "2026-06-30"
-      },
       {
         "ticker": "GOOGL",
         "at": "2026-10-01T10:03:53.792Z",
@@ -2843,6 +2951,41 @@
           "net_debt_ebitda": -0.8853582713281011
         },
         "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "GOOGL",
+        "at": "2026-11-09T11:24:48.392Z",
+        "status": "watch",
+        "headline": "Alphabet Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 7,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "unknown",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": null,
+          "ev_ebitda": null,
+          "operating_margin": 33.32137542799041,
+          "fcf_margin": 13.399575883522926,
+          "rev_cagr_3": 12.511745609215975,
+          "roic": 23.883374192115564,
+          "net_debt_ebitda": -0.8853582713281011
+        },
+        "filingEnd": "2026-09-30"
       }
     ],
     "META": [
@@ -3183,14 +3326,12 @@
           "net_debt_ebitda": 0.012818222889983924
         },
         "filingEnd": "2026-09-30"
-      }
-    ],
-    "NFLX": [
+      },
       {
-        "ticker": "NFLX",
-        "at": "2026-10-08T10:29:31.246Z",
+        "ticker": "META",
+        "at": "2026-11-09T11:24:50.082Z",
         "status": "positive",
-        "headline": "Netflix Inc עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
+        "headline": "Meta Platforms, Inc. עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
         "confidence": "low",
         "verdict": {
           "passed": 7,
@@ -3200,26 +3341,27 @@
         },
         "quadrant": {
           "businessQuality": "strong",
-          "priceLevel": "fair",
-          "verdict": "עסק חזק, תמחור סביר"
+          "priceLevel": "unknown",
+          "verdict": "אין די נתונים לקביעת הצירוף"
         },
-        "conditions": [
-          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
-        ],
+        "conditions": [],
         "breakers": [
-          "החברה מפספסת את הציפיות לעיתים קרובות"
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
         ],
         "metrics": {
-          "pe": 21.262894519364984,
-          "ev_ebitda": 20.059034718862723,
-          "operating_margin": 29.676018762077028,
-          "fcf_margin": 23.055259164399388,
-          "rev_cagr_3": 12.639718371360665,
-          "roic": 33.62240899554201,
-          "net_debt_ebitda": 0.3518313489755605
+          "pe": null,
+          "ev_ebitda": null,
+          "operating_margin": 32.85500833999015,
+          "fcf_margin": 18.350047804906314,
+          "rev_cagr_3": 19.89383144293926,
+          "roic": 27.68333597973886,
+          "net_debt_ebitda": 0.012818222889983924
         },
-        "filingEnd": "2026-06-30"
-      },
+        "filingEnd": "2026-09-30"
+      }
+    ],
+    "NFLX": [
       {
         "ticker": "NFLX",
         "at": "2026-10-16T08:06:53.757Z",
@@ -3570,6 +3712,36 @@
         "metrics": {
           "pe": 18.23124074440382,
           "ev_ebitda": 17.303953044018723,
+          "operating_margin": 31.295837650998653,
+          "fcf_margin": 22.871512895249474,
+          "rev_cagr_3": 12.639718371360665,
+          "roic": 35.874808412559034,
+          "net_debt_ebitda": 0.43300218624260184
+        },
+        "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "NFLX",
+        "at": "2026-11-09T11:24:52.029Z",
+        "status": "positive",
+        "headline": "NETFLIX INC עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 6,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "unknown",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": null,
+          "ev_ebitda": null,
           "operating_margin": 31.295837650998653,
           "fcf_margin": 22.871512895249474,
           "rev_cagr_3": 12.639718371360665,
@@ -6109,39 +6281,6 @@
     "MS": [
       {
         "ticker": "MS",
-        "at": "2026-10-06T10:12:58.474Z",
-        "status": "watch",
-        "headline": "MORGAN STANLEY אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-        "confidence": "low",
-        "verdict": {
-          "passed": 2,
-          "evaluated": 2,
-          "corePassed": 2,
-          "coreEvaluated": 2
-        },
-        "quadrant": {
-          "businessQuality": "unknown",
-          "priceLevel": "unknown",
-          "verdict": "אין די נתונים לקביעת הצירוף"
-        },
-        "conditions": [],
-        "breakers": [
-          "הקריאה נשענת על דוח ישן",
-          "הקריאה נשענת על דוח ישן"
-        ],
-        "metrics": {
-          "pe": null,
-          "ev_ebitda": null,
-          "operating_margin": null,
-          "fcf_margin": null,
-          "rev_cagr_3": 2.0749544501010853,
-          "roic": null,
-          "net_debt_ebitda": null
-        },
-        "filingEnd": "2018-03-31"
-      },
-      {
-        "ticker": "MS",
         "at": "2026-10-07T10:12:43.614Z",
         "status": "watch",
         "headline": "Morgan Stanley אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
@@ -6471,6 +6610,36 @@
         "breakers": [],
         "metrics": {
           "pe": 14.008708061475406,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": null,
+          "rev_cagr_3": 9.594478086029511,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "MS",
+        "at": "2026-11-09T11:25:47.995Z",
+        "status": "watch",
+        "headline": "MORGAN STANLEY אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 2,
+          "evaluated": 2,
+          "corePassed": 2,
+          "coreEvaluated": 2
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "unknown",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [],
+        "metrics": {
+          "pe": null,
           "ev_ebitda": null,
           "operating_margin": null,
           "fcf_margin": null,
@@ -7340,6 +7509,39 @@
           "net_debt_ebitda": 0.9022832006702974
         },
         "filingEnd": "2026-06-30"
+      },
+      {
+        "ticker": "SLB",
+        "at": "2026-11-09T11:26:18.408Z",
+        "status": "positive",
+        "headline": "SLB N.V. עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 23.791863979352872,
+          "ev_ebitda": 8.607764648631957,
+          "operating_margin": 18.383668600553055,
+          "fcf_margin": 0.688608144011278,
+          "rev_cagr_3": 8.326017106596773,
+          "roic": 15.499481667606943,
+          "net_debt_ebitda": 0.9388009991673605
+        },
+        "filingEnd": "2026-09-30"
       }
     ],
     "EOG": [
@@ -8934,6 +9136,41 @@
         "metrics": {
           "pe": 38.59134971647932,
           "ev_ebitda": 30.109179047711066,
+          "operating_margin": 33.00997840587761,
+          "fcf_margin": 30.546703032783807,
+          "rev_cagr_3": 7.701326503022221,
+          "roic": 98.28858589404214,
+          "net_debt_ebitda": 0.12574579270048966
+        },
+        "filingEnd": "2026-09-26"
+      },
+      {
+        "ticker": "AAPL",
+        "at": "2026-11-09T11:26:44.498Z",
+        "status": "positive",
+        "headline": "Apple Inc. עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 8,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "רוב התזה כבר מתומחרת",
+          "רוב התזה כבר מתומחרת"
+        ],
+        "metrics": {
+          "pe": 37.64239203569351,
+          "ev_ebitda": 29.371889227771938,
           "operating_margin": 33.00997840587761,
           "fcf_margin": 30.546703032783807,
           "rev_cagr_3": 7.701326503022221,
@@ -10766,6 +11003,39 @@
           "net_debt_ebitda": -0.6240955412164496
         },
         "filingEnd": "2026-09-27"
+      },
+      {
+        "ticker": "LRCX",
+        "at": "2026-11-09T11:24:08.752Z",
+        "status": "watch",
+        "headline": "Lam Research Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 193 ימים",
+          "הכסף המוסדי במעקב הקטין ב-LRCX"
+        ],
+        "metrics": {
+          "pe": 29.631664456630457,
+          "ev_ebitda": 24.257721221864124,
+          "operating_margin": 36.95062009301539,
+          "fcf_margin": 27.426017402446845,
+          "rev_cagr_3": 10.055823901653271,
+          "roic": 110.07424246188877,
+          "net_debt_ebitda": -0.6240955412164496
+        },
+        "filingEnd": "2026-09-27"
       }
     ],
     "KLAC": [
@@ -11784,6 +12054,41 @@
           "net_debt_ebitda": 2.6495968164205674
         },
         "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "MCHP",
+        "at": "2026-11-09T11:24:17.414Z",
+        "status": "watch",
+        "headline": "Microchip Technology Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 8,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "כל דולר כבול 212 ימים",
+          "הצמיחה מאטה",
+          "המרווח על ההכנסה החדשה כבר השתפר",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 37.805219161391,
+          "ev_ebitda": 19.240105864049536,
+          "operating_margin": 20.88731841382018,
+          "fcf_margin": 34.65039083413642,
+          "rev_cagr_3": -17.647453001122358,
+          "roic": 8.688101140741683,
+          "net_debt_ebitda": 2.6495968164205674
+        },
+        "filingEnd": "2026-09-30"
       }
     ],
     "ON": [
@@ -12358,6 +12663,45 @@
         "metrics": {
           "pe": 78.37892049057275,
           "ev_ebitda": 63.89795889583897,
+          "operating_margin": 8.52077717062613,
+          "fcf_margin": 6.970896190874177,
+          "rev_cagr_3": 15.186745455184925,
+          "roic": 1.7683131108997763,
+          "net_debt_ebitda": 4.524255537729742
+        },
+        "filingEnd": "2026-07-31"
+      },
+      {
+        "ticker": "SNPS",
+        "at": "2026-11-09T11:24:34.211Z",
+        "status": "watch",
+        "headline": "Synopsys, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 5,
+          "evaluated": 8,
+          "corePassed": 3,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהמדד הבא יתהפך: המינוף הפיננסי בשליטה — חוב נטו / EBITDA 4.5x",
+          "שהמדד הבא יתהפך: בעל המניות לא מדולל — ספירת המניות +5.9% בשלוש שנים",
+          "שהמדד הבא יתהפך: הצמיחה החדשה לא פחות רווחית מהקיימת — מרווח על ההכנסה שנוספה -48%",
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "מינוף פיננסי גבוה",
+          "התגמול במניות מדלל את בעלי המניות",
+          "הצמיחה החדשה פחות רווחית מהקיימת"
+        ],
+        "metrics": {
+          "pe": 80.18570671613952,
+          "ev_ebitda": 65.26663798349267,
           "operating_margin": 8.52077717062613,
           "fcf_margin": 6.970896190874177,
           "rev_cagr_3": 15.186745455184925,
@@ -13015,6 +13359,41 @@
           "net_debt_ebitda": -1.6550591631738212
         },
         "filingEnd": "2026-06-30"
+      },
+      {
+        "ticker": "TEAM",
+        "at": "2026-11-09T11:24:41.622Z",
+        "status": "watch",
+        "headline": "Atlassian Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 5,
+          "evaluated": 7,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "דילול מתמשך"
+        ],
+        "metrics": {
+          "pe": 435.9068986947872,
+          "ev_ebitda": 85.44046931165217,
+          "operating_margin": 4.275015353943667,
+          "fcf_margin": 24.118184494723234,
+          "rev_cagr_3": 22.967578218768093,
+          "roic": 13.524134784646854,
+          "net_debt_ebitda": -0.28896237657096535
+        },
+        "filingEnd": "2026-09-30"
       }
     ],
     "DDOG": [
@@ -13845,6 +14224,44 @@
           "net_debt_ebitda": 0.9730872741253364
         },
         "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "UBER",
+        "at": "2026-11-09T11:24:58.750Z",
+        "status": "watch",
+        "headline": "Uber Technologies, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 7,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "rich",
+          "verdict": "עסק חזק, מחיר גבוה"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "התגמול במניות מדלל את בעלי המניות",
+          "החברה מפספסת את הציפיות לעיתים קרובות",
+          "דילול מתמשך",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 39.32444091832612,
+          "ev_ebitda": 18.435497601179033,
+          "operating_margin": 12.443831157343524,
+          "fcf_margin": 11.400063687506634,
+          "rev_cagr_3": 17.7305807366942,
+          "roic": 14.931642985132548,
+          "net_debt_ebitda": 0.9730872741253364
+        },
+        "filingEnd": "2026-09-30"
       }
     ],
     "ABNB": [
@@ -14183,6 +14600,42 @@
         "metrics": {
           "pe": 31.76258486586658,
           "ev_ebitda": 28.852360354102487,
+          "operating_margin": 22.493361085193424,
+          "fcf_margin": 50.03679753104141,
+          "rev_cagr_3": 13.378255972989672,
+          "roic": null,
+          "net_debt_ebitda": -3.216961531196877
+        },
+        "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "ABNB",
+        "at": "2026-11-09T11:25:00.707Z",
+        "status": "watch",
+        "headline": "Airbnb, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "strong",
+          "priceLevel": "fair",
+          "verdict": "עסק חזק, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה החדשה פחות רווחית מהקיימת",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "התזרים המדווח נדיב מהכלכלה בפועל"
+        ],
+        "metrics": {
+          "pe": 35.47036677050486,
+          "ev_ebitda": 32.595948978343046,
           "operating_margin": 22.493361085193424,
           "fcf_margin": 50.03679753104141,
           "rev_cagr_3": 13.378255972989672,
@@ -16546,42 +16999,6 @@
     "C": [
       {
         "ticker": "C",
-        "at": "2026-10-08T10:30:44.864Z",
-        "status": "watch",
-        "headline": "Citigroup Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-        "confidence": "low",
-        "verdict": {
-          "passed": 3,
-          "evaluated": 4,
-          "corePassed": 2,
-          "coreEvaluated": 3
-        },
-        "quadrant": {
-          "businessQuality": "unknown",
-          "priceLevel": "fair",
-          "verdict": "אין די נתונים לקביעת הצירוף"
-        },
-        "conditions": [
-          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
-        ],
-        "breakers": [
-          "שריפת מזומן",
-          "הקריאה נשענת על דוח ישן",
-          "הקריאה נשענת על דוח ישן"
-        ],
-        "metrics": {
-          "pe": 14.928789063888495,
-          "ev_ebitda": null,
-          "operating_margin": null,
-          "fcf_margin": -135.2396597242593,
-          "rev_cagr_3": 4.195982557608935,
-          "roic": null,
-          "net_debt_ebitda": null
-        },
-        "filingEnd": "2025-12-31"
-      },
-      {
-        "ticker": "C",
         "at": "2026-10-09T20:47:38.602Z",
         "status": "high-risk",
         "headline": "Citigroup Inc: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
@@ -16953,6 +17370,40 @@
         ],
         "metrics": {
           "pe": 13.888744702687056,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": -135.2396597242593,
+          "rev_cagr_3": 4.195982557608935,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2025-12-31"
+      },
+      {
+        "ticker": "C",
+        "at": "2026-11-09T11:25:49.730Z",
+        "status": "high-risk",
+        "headline": "CITIGROUP INC: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 2,
+          "evaluated": 3,
+          "corePassed": 2,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "unknown",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [],
+        "breakers": [
+          "שריפת מזומן",
+          "הקריאה נשענת על דוח ישן",
+          "הקריאה נשענת על דוח ישן"
+        ],
+        "metrics": {
+          "pe": null,
           "ev_ebitda": null,
           "operating_margin": null,
           "fcf_margin": -135.2396597242593,
@@ -17982,6 +18433,39 @@
           "net_debt_ebitda": null
         },
         "filingEnd": "2026-06-30"
+      },
+      {
+        "ticker": "SCHW",
+        "at": "2026-11-09T11:25:59.266Z",
+        "status": "positive",
+        "headline": "The Charles Schwab Corporation עוברת את מבחן הליבה, ו1 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 3,
+          "evaluated": 4,
+          "corePassed": 3,
+          "coreEvaluated": 3
+        },
+        "quadrant": {
+          "businessQuality": "unknown",
+          "priceLevel": "rich",
+          "verdict": "אין די נתונים לקביעת הצירוף"
+        },
+        "conditions": [
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [],
+        "metrics": {
+          "pe": 87.856707402853,
+          "ev_ebitda": null,
+          "operating_margin": null,
+          "fcf_margin": 79.68663390118621,
+          "rev_cagr_3": 4.834295603081085,
+          "roic": null,
+          "net_debt_ebitda": null
+        },
+        "filingEnd": "2026-09-30"
       }
     ],
     "SPGI": [
@@ -19475,38 +19959,6 @@
     "PG": [
       {
         "ticker": "PG",
-        "at": "2026-10-09T20:48:51.988Z",
-        "status": "positive",
-        "headline": "Procter & Gamble Co עוברת את מבחן הליבה, ו4 ממצאים תומכים בקריאה קדימה.",
-        "confidence": "medium",
-        "verdict": {
-          "passed": 7,
-          "evaluated": 8,
-          "corePassed": 5,
-          "coreEvaluated": 5
-        },
-        "quadrant": {
-          "businessQuality": "mixed",
-          "priceLevel": "fair",
-          "verdict": "תמונה מעורבת, תמחור סביר"
-        },
-        "conditions": [],
-        "breakers": [
-          "הצמיחה החדשה פחות רווחית מהקיימת"
-        ],
-        "metrics": {
-          "pe": 21.72492226814116,
-          "ev_ebitda": 16.113508316617455,
-          "operating_margin": 22.69050464197077,
-          "fcf_margin": 16.862763121610442,
-          "rev_cagr_3": 2.002569409339938,
-          "roic": 21.238074629659224,
-          "net_debt_ebitda": 0.8449886502531867
-        },
-        "filingEnd": "2026-06-30"
-      },
-      {
-        "ticker": "PG",
         "at": "2026-10-12T10:43:49.975Z",
         "status": "watch",
         "headline": "Procter & Gamble Co אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
@@ -19862,6 +20314,38 @@
         "metrics": {
           "pe": 24.084422000870067,
           "ev_ebitda": 17.834082394131066,
+          "operating_margin": 22.552944655490094,
+          "fcf_margin": 18.080798889925163,
+          "rev_cagr_3": 2.002569409339938,
+          "roic": 19.894564875820457,
+          "net_debt_ebitda": 1.0226582168591023
+        },
+        "filingEnd": "2026-09-30"
+      },
+      {
+        "ticker": "PG",
+        "at": "2026-11-09T11:26:46.190Z",
+        "status": "positive",
+        "headline": "The Procter & Gamble Company עוברת את מבחן הליבה, ו4 ממצאים תומכים בקריאה קדימה.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 7,
+          "evaluated": 8,
+          "corePassed": 5,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [],
+        "breakers": [
+          "הצמיחה החדשה פחות רווחית מהקיימת"
+        ],
+        "metrics": {
+          "pe": 23.83939795897013,
+          "ev_ebitda": 17.66305055031681,
           "operating_margin": 22.552944655490094,
           "fcf_margin": 18.080798889925163,
           "rev_cagr_3": 2.002569409339938,
@@ -22312,40 +22796,6 @@
     "DIS": [
       {
         "ticker": "DIS",
-        "at": "2026-10-01T10:06:04.244Z",
-        "status": "watch",
-        "headline": "Walt Disney Co אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-        "confidence": "medium",
-        "verdict": {
-          "passed": 6,
-          "evaluated": 7,
-          "corePassed": 4,
-          "coreEvaluated": 5
-        },
-        "quadrant": {
-          "businessQuality": "mixed",
-          "priceLevel": "fair",
-          "verdict": "תמונה מעורבת, תמחור סביר"
-        },
-        "conditions": [],
-        "breakers": [
-          "שריפת מזומן",
-          "הצמיחה שמצדיקה את התמונה כבר מאטה",
-          "הצמיחה שמצדיקה את התמונה כבר מאטה"
-        ],
-        "metrics": {
-          "pe": 21.06156523449841,
-          "ev_ebitda": 9.34007072902286,
-          "operating_margin": 18.44812413388495,
-          "fcf_margin": -2.840351604778426,
-          "rev_cagr_3": 4.50939232231049,
-          "roic": 8.755808385599085,
-          "net_debt_ebitda": 1.7190221736020532
-        },
-        "filingEnd": "2026-06-27"
-      },
-      {
-        "ticker": "DIS",
         "at": "2026-10-02T09:43:41.780Z",
         "status": "watch",
         "headline": "Walt Disney Co אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
@@ -22724,6 +23174,42 @@
         "metrics": {
           "pe": 22.70994864953382,
           "ev_ebitda": 9.936532098539608,
+          "operating_margin": 18.44812413388495,
+          "fcf_margin": -2.840351604778426,
+          "rev_cagr_3": 4.50939232231049,
+          "roic": 8.755808385599085,
+          "net_debt_ebitda": 1.7190221736020532
+        },
+        "filingEnd": "2026-06-27"
+      },
+      {
+        "ticker": "DIS",
+        "at": "2026-11-09T11:27:08.016Z",
+        "status": "watch",
+        "headline": "The Walt Disney Company אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 6,
+          "evaluated": 7,
+          "corePassed": 4,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [
+          "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם."
+        ],
+        "breakers": [
+          "שריפת מזומן",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "הצמיחה שמצדיקה את התמונה כבר מאטה"
+        ],
+        "metrics": {
+          "pe": 23.44077781328338,
+          "ev_ebitda": 10.200979896252663,
           "operating_margin": 18.44812413388495,
           "fcf_margin": -2.840351604778426,
           "rev_cagr_3": 4.50939232231049,
@@ -23186,6 +23672,46 @@
         "metrics": {
           "pe": 37.157179391191576,
           "ev_ebitda": 14.484576974603199,
+          "operating_margin": 27.0053977450347,
+          "fcf_margin": -11.381114144592877,
+          "rev_cagr_3": -4.576331885156371,
+          "roic": 14.197161850143193,
+          "net_debt_ebitda": 2.6547759048739055
+        },
+        "filingEnd": "2026-08-02"
+      },
+      {
+        "ticker": "DE",
+        "at": "2026-11-09T11:27:29.453Z",
+        "status": "watch",
+        "headline": "Deere & Co אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "low",
+        "verdict": {
+          "passed": 4,
+          "evaluated": 7,
+          "corePassed": 3,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "rich",
+          "verdict": "תמונה מעורבת, מחיר גבוה"
+        },
+        "conditions": [
+          "שהמדד הבא יתהפך: העסק מייצר מזומן חופשי — FCF Margin -11.4%",
+          "שהמדד הבא יתהפך: ההכנסות צומחות בשלוש השנים האחרונות — -4.6% בשנה",
+          "שהמדד הבא יתהפך: התמחור אינו בפרמיה קיצונית על הסקטור — P/E 37.2 מול חציון 23.1 (+61%)",
+          "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק."
+        ],
+        "breakers": [
+          "הצמיחה מאטה",
+          "שריפת מזומן",
+          "המרווח על ההכנסה החדשה כבר השתפר",
+          "המרווח על ההכנסה החדשה כבר השתפר"
+        ],
+        "metrics": {
+          "pe": 37.16271243851129,
+          "ev_ebitda": 14.486338541282212,
           "operating_margin": 27.0053977450347,
           "fcf_margin": -11.381114144592877,
           "rev_cagr_3": -4.576331885156371,
@@ -24365,10 +24891,1880 @@
           "net_debt_ebitda": 4.361726954492416
         },
         "filingEnd": "2026-06-30"
+      },
+      {
+        "ticker": "CHTR",
+        "at": "2026-11-09T11:27:47.984Z",
+        "status": "watch",
+        "headline": "Charter Communications, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+        "confidence": "medium",
+        "verdict": {
+          "passed": 4,
+          "evaluated": 6,
+          "corePassed": 3,
+          "coreEvaluated": 5
+        },
+        "quadrant": {
+          "businessQuality": "mixed",
+          "priceLevel": "fair",
+          "verdict": "תמונה מעורבת, תמחור סביר"
+        },
+        "conditions": [
+          "שהמדד הבא יתהפך: ההכנסות צומחות בשלוש השנים האחרונות — -6.9% בשנה",
+          "שהמדד הבא יתהפך: המינוף הפיננסי בשליטה — חוב נטו / EBITDA 7.0x"
+        ],
+        "breakers": [
+          "מינוף פיננסי גבוה",
+          "הצמיחה מאטה",
+          "מינוף פיננסי"
+        ],
+        "metrics": {
+          "pe": 14.481068823064703,
+          "ev_ebitda": 8.357332380978457,
+          "operating_margin": 341.0562180579217,
+          "fcf_margin": 259.28449744463376,
+          "rev_cagr_3": -6.852824154993165,
+          "roic": 3.8784732794133996,
+          "net_debt_ebitda": 6.9918576400288925
+        },
+        "filingEnd": "2026-09-30"
       }
     ]
   },
   "changes": [
+    {
+      "ticker": "CHTR",
+      "companyName": "Charter Communications, Inc.",
+      "from": "2026-11-06T10:50:33.585Z",
+      "to": "2026-11-09T11:27:47.984Z",
+      "driver": "both",
+      "oldView": "Charter Communications, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Charter Communications, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "רמת המחיר",
+          "before": "נמוך",
+          "after": "סביר",
+          "weight": 0.5
+        },
+        {
+          "field": "P/E",
+          "before": "4.5x",
+          "after": "14.5x",
+          "weight": 0.4
+        },
+        {
+          "field": "EV/EBITDA",
+          "before": "5.4x",
+          "after": "8.4x",
+          "weight": 0.4
+        },
+        {
+          "field": "מרווח תפעולי",
+          "before": "2478.1%",
+          "after": "341.1%",
+          "weight": 0.4
+        },
+        {
+          "field": "מרווח תזרים חופשי",
+          "before": "893.5%",
+          "after": "259.3%",
+          "weight": 0.4
+        },
+        {
+          "field": "ROIC",
+          "before": "8.8%",
+          "after": "3.9%",
+          "weight": 0.4
+        },
+        {
+          "field": "חוב נטו / EBITDA",
+          "before": "4.4x",
+          "after": "7.0x",
+          "weight": 0.4
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הקריאה נשענת על דוח ישן",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "תנאי חדש",
+          "before": "—",
+          "after": "שהמדד הבא יתהפך: המינוף הפיננסי בשליטה — חוב נטו / EBITDA 7.0x",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-06-30 ← 2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "דוח חדש הוגש מאז המדידה הקודמת"
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "נמוך ← סביר",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "P/E",
+          "value": "4.5x ← 14.5x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "EV/EBITDA",
+          "value": "5.4x ← 8.4x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "מרווח תפעולי",
+          "value": "2478.1% ← 341.1%",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "מרווח תזרים חופשי",
+          "value": "893.5% ← 259.3%",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "ROIC",
+          "value": "8.8% ← 3.9%",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "confirmed",
+        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-09-30, ו-9 מדדים שזזו מעבר לסף הרעש",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 100
+    },
+    {
+      "ticker": "DE",
+      "companyName": "Deere & Co",
+      "from": "2026-10-01T10:06:22.732Z",
+      "to": "2026-11-09T11:27:29.453Z",
+      "driver": "filing",
+      "oldView": "Deere & Co אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Deere & Co אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת ירד מ-5 ל-4.",
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "5/7",
+          "after": "4/7",
+          "weight": 0.6
+        },
+        {
+          "field": "רמת המחיר",
+          "before": "סביר",
+          "after": "גבוה",
+          "weight": 0.5
+        },
+        {
+          "field": "תנאי חדש",
+          "before": "—",
+          "after": "שהמדד הבא יתהפך: התמחור אינו בפרמיה קיצונית על הסקטור — P/E 37.2 מול חציון 23.1 (+61%)",
+          "weight": 0.4
+        },
+        {
+          "field": "תנאי חדש",
+          "before": "—",
+          "after": "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-08-02",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-08-02"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "5/7 ← 4/7",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-08-02"
+          }
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "סביר ← גבוה",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-08-02"
+          }
+        },
+        {
+          "label": "תנאי חדש",
+          "value": "— ← שהמדד הבא יתהפך: התמחור אינו בפרמיה קיצונית על הסקטור — P/E 37.2 מול חציון 23.1 (+61%)",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-08-02"
+          }
+        },
+        {
+          "label": "תנאי חדש",
+          "value": "— ← שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-08-02"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "4 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 100
+    },
+    {
+      "ticker": "DIS",
+      "companyName": "The Walt Disney Company",
+      "from": "2026-11-03T10:49:06.064Z",
+      "to": "2026-11-09T11:27:08.016Z",
+      "driver": "filing",
+      "oldView": "The Walt Disney Company: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
+      "newView": "The Walt Disney Company אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "מצב התזה עבר מ״סיכון גבוה״ ל״במעקב — דורש אישור״.",
+        "נוסף גורם שיכול לשבור את התזה: הצמיחה שמצדיקה את התמונה כבר מאטה",
+        "נוסף גורם שיכול לשבור את התזה: הצמיחה שמצדיקה את התמונה כבר מאטה"
+      ],
+      "deltas": [
+        {
+          "field": "מצב התזה",
+          "before": "סיכון גבוה",
+          "after": "במעקב — דורש אישור",
+          "weight": 1
+        },
+        {
+          "field": "שובר תזה חדש",
+          "before": "—",
+          "after": "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "weight": 0.7
+        },
+        {
+          "field": "שובר תזה חדש",
+          "before": "—",
+          "after": "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "weight": 0.7
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "המרווח על ההכנסה החדשה כבר השתפר",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הקריאה נשענת על דוח ישן",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "המרווח על ההכנסה החדשה כבר השתפר",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הקריאה נשענת על דוח ישן",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "תנאי חדש",
+          "before": "—",
+          "after": "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם.",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "סיכון גבוה ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-06-27",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-06-27"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "מצב התזה",
+          "value": "סיכון גבוה ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-06-27"
+          }
+        },
+        {
+          "label": "שובר תזה חדש",
+          "value": "— ← הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-06-27"
+          }
+        },
+        {
+          "label": "שובר תזה חדש",
+          "value": "— ← הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-06-27"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "המרווח על ההכנסה החדשה כבר השתפר ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-06-27"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "הקריאה נשענת על דוח ישן ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-06-27"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "המרווח על ההכנסה החדשה כבר השתפר ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-06-27"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "8 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 100
+    },
+    {
+      "ticker": "PG",
+      "companyName": "The Procter & Gamble Company",
+      "from": "2026-11-06T10:49:27.492Z",
+      "to": "2026-11-09T11:26:46.190Z",
+      "driver": "filing",
+      "oldView": "The Procter & Gamble Company אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "The Procter & Gamble Company עוברת את מבחן הליבה, ו4 ממצאים תומכים בקריאה קדימה.",
+      "why": [
+        "מצב התזה עבר מ״במעקב — דורש אישור״ ל״תזה חיובית״."
+      ],
+      "deltas": [
+        {
+          "field": "מצב התזה",
+          "before": "במעקב — דורש אישור",
+          "after": "תזה חיובית",
+          "weight": 1
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "החברה מפספסת את הציפיות לעיתים קרובות",
+          "after": "—",
+          "weight": 0.5
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← תזה חיובית",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← תזה חיובית",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "החברה מפספסת את הציפיות לעיתים קרובות ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 98
+    },
+    {
+      "ticker": "AAPL",
+      "companyName": "Apple Inc.",
+      "from": "2026-11-05T10:48:59.716Z",
+      "to": "2026-11-09T11:26:44.498Z",
+      "driver": "filing",
+      "oldView": "Apple Inc. עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+      "newView": "Apple Inc. עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת עלה מ-7 ל-8."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "7/8",
+          "after": "8/8",
+          "weight": 0.6
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "תזה חיובית ← תזה חיובית",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-26",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-26"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "7/8 ← 8/8",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-26"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 93
+    },
+    {
+      "ticker": "SLB",
+      "companyName": "SLB N.V.",
+      "from": "2026-10-26T08:51:02.025Z",
+      "to": "2026-11-09T11:26:18.408Z",
+      "driver": "filing",
+      "oldView": "SLB NV עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+      "newView": "SLB N.V. עוברת את מבחן הליבה, ו5 ממצאים תומכים בקריאה קדימה.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת ירד מ-8 ל-7."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "8/8",
+          "after": "7/8",
+          "weight": 0.6
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "תזה חיובית ← תזה חיובית",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-06-30 ← 2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "דוח חדש הוגש מאז המדידה הקודמת"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "8/8 ← 7/8",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "confirmed",
+        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-09-30, ו-1 מדדים שזזו מעבר לסף הרעש",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 100
+    },
+    {
+      "ticker": "SCHW",
+      "companyName": "The Charles Schwab Corporation",
+      "from": "2026-10-28T09:36:43.545Z",
+      "to": "2026-11-09T11:25:59.266Z",
+      "driver": "both",
+      "oldView": "The Charles Schwab Corporation עוברת את מבחן הליבה, ו1 ממצאים תומכים בקריאה קדימה.",
+      "newView": "The Charles Schwab Corporation עוברת את מבחן הליבה, ו1 ממצאים תומכים בקריאה קדימה.",
+      "why": [
+        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
+      ],
+      "deltas": [
+        {
+          "field": "P/E",
+          "before": "123.3x",
+          "after": "87.9x",
+          "weight": 0.4
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הקריאה נשענת על דוח ישן",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הקריאה נשענת על דוח ישן",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "תנאי חדש",
+          "before": "—",
+          "after": "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם.",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "תזה חיובית ← תזה חיובית",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-06-30 ← 2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "דוח חדש הוגש מאז המדידה הקודמת"
+        },
+        {
+          "label": "P/E",
+          "value": "123.3x ← 87.9x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "הקריאה נשענת על דוח ישן ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "הקריאה נשענת על דוח ישן ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "תנאי חדש",
+          "value": "— ← שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם.",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "confirmed",
+        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-09-30, ו-4 מדדים שזזו מעבר לסף הרעש",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 100
+    },
+    {
+      "ticker": "C",
+      "companyName": "CITIGROUP INC",
+      "from": "2026-11-06T10:48:31.078Z",
+      "to": "2026-11-09T11:25:49.730Z",
+      "driver": "filing",
+      "oldView": "Citigroup Inc.: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
+      "newView": "CITIGROUP INC: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת ירד מ-3 ל-2.",
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "3/4",
+          "after": "2/3",
+          "weight": 0.6
+        },
+        {
+          "field": "רמת המחיר",
+          "before": "סביר",
+          "after": "לא ידוע",
+          "weight": 0.5
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "סיכון גבוה ← סיכון גבוה",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2025-12-31",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2025-12-31"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "3/4 ← 2/3",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2025-12-31"
+          }
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "סביר ← לא ידוע",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2025-12-31"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 96
+    },
+    {
+      "ticker": "MS",
+      "companyName": "MORGAN STANLEY",
+      "from": "2026-11-06T10:48:29.137Z",
+      "to": "2026-11-09T11:25:47.995Z",
+      "driver": "filing",
+      "oldView": "Morgan Stanley אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "MORGAN STANLEY אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת ירד מ-3 ל-2.",
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "3/3",
+          "after": "2/2",
+          "weight": 0.6
+        },
+        {
+          "field": "רמת המחיר",
+          "before": "סביר",
+          "after": "לא ידוע",
+          "weight": 0.5
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "3/3 ← 2/2",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "סביר ← לא ידוע",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 96
+    },
+    {
+      "ticker": "ABNB",
+      "companyName": "Airbnb, Inc.",
+      "from": "2026-11-06T10:47:32.744Z",
+      "to": "2026-11-09T11:25:00.707Z",
+      "driver": "price",
+      "oldView": "Airbnb, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Airbnb, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
+      ],
+      "deltas": [
+        {
+          "field": "P/E",
+          "before": "31.8x",
+          "after": "35.5x",
+          "weight": 0.4
+        },
+        {
+          "field": "EV/EBITDA",
+          "before": "28.9x",
+          "after": "32.6x",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "P/E",
+          "value": "31.8x ← 35.5x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "EV/EBITDA",
+          "value": "28.9x ← 32.6x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
+      },
+      "materiality": 94
+    },
+    {
+      "ticker": "UBER",
+      "companyName": "Uber Technologies, Inc.",
+      "from": "2026-11-06T10:47:30.857Z",
+      "to": "2026-11-09T11:24:58.750Z",
+      "driver": "filing",
+      "oldView": "Uber Technologies, Inc.: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
+      "newView": "Uber Technologies, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "מצב התזה עבר מ״סיכון גבוה״ ל״במעקב — דורש אישור״.",
+        "מספר הבדיקות שהחברה עוברת עלה מ-5 ל-6.",
+        "נוסף גורם שיכול לשבור את התזה: החברה מפספסת את הציפיות לעיתים קרובות",
+        "נוסף גורם שיכול לשבור את התזה: המרווח על ההכנסה החדשה כבר השתפר"
+      ],
+      "deltas": [
+        {
+          "field": "מצב התזה",
+          "before": "סיכון גבוה",
+          "after": "במעקב — דורש אישור",
+          "weight": 1
+        },
+        {
+          "field": "בדיקות שעברו",
+          "before": "5/7",
+          "after": "6/7",
+          "weight": 0.6
+        },
+        {
+          "field": "שובר תזה חדש",
+          "before": "—",
+          "after": "החברה מפספסת את הציפיות לעיתים קרובות",
+          "weight": 0.7
+        },
+        {
+          "field": "שובר תזה חדש",
+          "before": "—",
+          "after": "המרווח על ההכנסה החדשה כבר השתפר",
+          "weight": 0.7
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הצמיחה שמצדיקה את התמונה כבר מאטה",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "רוב התזה כבר מתומחרת",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "תנאי חדש",
+          "before": "—",
+          "after": "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם.",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "סיכון גבוה ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "מצב התזה",
+          "value": "סיכון גבוה ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "5/7 ← 6/7",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה חדש",
+          "value": "— ← החברה מפספסת את הציפיות לעיתים קרובות",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה חדש",
+          "value": "— ← המרווח על ההכנסה החדשה כבר השתפר",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "הצמיחה שמצדיקה את התמונה כבר מאטה ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "הצמיחה שמצדיקה את התמונה כבר מאטה ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "8 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 100
+    },
+    {
+      "ticker": "NFLX",
+      "companyName": "NETFLIX INC",
+      "from": "2026-11-06T10:47:24.164Z",
+      "to": "2026-11-09T11:24:52.029Z",
+      "driver": "filing",
+      "oldView": "Netflix, Inc. עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
+      "newView": "NETFLIX INC עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת ירד מ-7 ל-6.",
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "7/7",
+          "after": "6/6",
+          "weight": 0.6
+        },
+        {
+          "field": "רמת המחיר",
+          "before": "סביר",
+          "after": "לא ידוע",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "החברה מפספסת את הציפיות לעיתים קרובות",
+          "after": "—",
+          "weight": 0.5
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "תזה חיובית ← תזה חיובית",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "7/7 ← 6/6",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "סביר ← לא ידוע",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "החברה מפספסת את הציפיות לעיתים קרובות ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "3 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 99
+    },
+    {
+      "ticker": "META",
+      "companyName": "Meta Platforms, Inc.",
+      "from": "2026-11-06T10:47:21.563Z",
+      "to": "2026-11-09T11:24:50.082Z",
+      "driver": "filing",
+      "oldView": "Meta Platforms, Inc. עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
+      "newView": "Meta Platforms, Inc. עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת ירד מ-8 ל-7.",
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "8/8",
+          "after": "7/7",
+          "weight": 0.6
+        },
+        {
+          "field": "רמת המחיר",
+          "before": "סביר",
+          "after": "לא ידוע",
+          "weight": 0.5
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "תזה חיובית ← תזה חיובית",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "8/8 ← 7/7",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "סביר ← לא ידוע",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 96
+    },
+    {
+      "ticker": "GOOGL",
+      "companyName": "Alphabet Inc.",
+      "from": "2026-11-06T10:47:18.793Z",
+      "to": "2026-11-09T11:24:48.392Z",
+      "driver": "filing",
+      "oldView": "Alphabet Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Alphabet Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת ירד מ-8 ל-7.",
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "8/8",
+          "after": "7/7",
+          "weight": 0.6
+        },
+        {
+          "field": "רמת המחיר",
+          "before": "נמוך",
+          "after": "לא ידוע",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "החברה מפספסת את הציפיות לעיתים קרובות",
+          "after": "—",
+          "weight": 0.5
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "8/8 ← 7/7",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "נמוך ← לא ידוע",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "החברה מפספסת את הציפיות לעיתים קרובות ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "3 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 99
+    },
+    {
+      "ticker": "TEAM",
+      "companyName": "Atlassian Corp",
+      "from": "2026-11-02T10:56:49.152Z",
+      "to": "2026-11-09T11:24:41.622Z",
+      "driver": "both",
+      "oldView": "Atlassian Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Atlassian Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "רמת המחיר",
+          "before": "סביר",
+          "after": "גבוה",
+          "weight": 0.5
+        },
+        {
+          "field": "EV/EBITDA",
+          "before": "318.1x",
+          "after": "85.4x",
+          "weight": 0.4
+        },
+        {
+          "field": "מרווח תפעולי",
+          "before": "0.2%",
+          "after": "4.3%",
+          "weight": 0.4
+        },
+        {
+          "field": "מרווח תזרים חופשי",
+          "before": "20.1%",
+          "after": "24.1%",
+          "weight": 0.4
+        },
+        {
+          "field": "ROIC",
+          "before": "-3.1%",
+          "after": "13.5%",
+          "weight": 0.4
+        },
+        {
+          "field": "חוב נטו / EBITDA",
+          "before": "-1.7x",
+          "after": "-0.3x",
+          "weight": 0.4
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הקריאה נשענת על דוח ישן",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "הקריאה נשענת על דוח ישן",
+          "after": "—",
+          "weight": 0.5
+        },
+        {
+          "field": "תנאי חדש",
+          "before": "—",
+          "after": "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-06-30 ← 2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "דוח חדש הוגש מאז המדידה הקודמת"
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "סביר ← גבוה",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "EV/EBITDA",
+          "value": "318.1x ← 85.4x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "מרווח תפעולי",
+          "value": "0.2% ← 4.3%",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "מרווח תזרים חופשי",
+          "value": "20.1% ← 24.1%",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "ROIC",
+          "value": "-3.1% ← 13.5%",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "חוב נטו / EBITDA",
+          "value": "-1.7x ← -0.3x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "confirmed",
+        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-09-30, ו-9 מדדים שזזו מעבר לסף הרעש",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 100
+    },
+    {
+      "ticker": "SNPS",
+      "companyName": "Synopsys, Inc.",
+      "from": "2026-11-06T10:47:02.287Z",
+      "to": "2026-11-09T11:24:34.211Z",
+      "driver": "filing",
+      "oldView": "Synopsys, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Synopsys, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת עלה מ-4 ל-5."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "4/8",
+          "after": "5/8",
+          "weight": 0.6
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-07-31",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-07-31"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "4/8 ← 5/8",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-07-31"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 93
+    },
+    {
+      "ticker": "NOW",
+      "companyName": "ServiceNow, Inc.",
+      "from": "2026-10-30T09:56:26.718Z",
+      "to": "2026-11-09T11:24:27.875Z",
+      "driver": "filing",
+      "oldView": "ServiceNow, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "ServiceNow, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "מספר הבדיקות שהחברה עוברת עלה מ-6 ל-7."
+      ],
+      "deltas": [
+        {
+          "field": "בדיקות שעברו",
+          "before": "6/8",
+          "after": "7/8",
+          "weight": 0.6
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "בדיקות שעברו",
+          "value": "6/8 ← 7/8",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 93
+    },
+    {
+      "ticker": "CRM",
+      "companyName": "Salesforce, Inc.",
+      "from": "2026-09-25T20:48:14.018Z",
+      "to": "2026-11-09T11:24:24.217Z",
+      "driver": "price",
+      "oldView": "Salesforce Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Salesforce, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
+      ],
+      "deltas": [
+        {
+          "field": "רמת המחיר",
+          "before": "סביר",
+          "after": "נמוך",
+          "weight": 0.5
+        },
+        {
+          "field": "P/E",
+          "before": "20.3x",
+          "after": "18.2x",
+          "weight": 0.4
+        },
+        {
+          "field": "EV/EBITDA",
+          "before": "21.9x",
+          "after": "19.9x",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-07-31",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-07-31"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "רמת המחיר",
+          "value": "סביר ← נמוך",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-07-31"
+          }
+        },
+        {
+          "label": "P/E",
+          "value": "20.3x ← 18.2x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-07-31"
+          }
+        },
+        {
+          "label": "EV/EBITDA",
+          "value": "21.9x ← 19.9x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-07-31"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "3 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
+      },
+      "materiality": 97
+    },
+    {
+      "ticker": "MCHP",
+      "companyName": "Microchip Technology Inc",
+      "from": "2026-11-06T10:46:44.752Z",
+      "to": "2026-11-09T11:24:17.414Z",
+      "driver": "price",
+      "oldView": "Microchip Technology Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Microchip Technology Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
+      ],
+      "deltas": [
+        {
+          "field": "P/E",
+          "before": "42.0x",
+          "after": "37.8x",
+          "weight": 0.4
+        },
+        {
+          "field": "EV/EBITDA",
+          "before": "21.1x",
+          "after": "19.2x",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-30",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-30"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "P/E",
+          "value": "42.0x ← 37.8x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        },
+        {
+          "label": "EV/EBITDA",
+          "value": "21.1x ← 19.2x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-30"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
+      },
+      "materiality": 94
+    },
+    {
+      "ticker": "LRCX",
+      "companyName": "Lam Research Corporation",
+      "from": "2026-11-06T10:46:35.216Z",
+      "to": "2026-11-09T11:24:08.752Z",
+      "driver": "price",
+      "oldView": "Lam Research Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Lam Research Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
+      ],
+      "deltas": [
+        {
+          "field": "P/E",
+          "before": "27.4x",
+          "after": "29.6x",
+          "weight": 0.4
+        },
+        {
+          "field": "EV/EBITDA",
+          "before": "22.4x",
+          "after": "24.3x",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-27",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-27"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "P/E",
+          "value": "27.4x ← 29.6x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-27"
+          }
+        },
+        {
+          "label": "EV/EBITDA",
+          "value": "22.4x ← 24.3x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-27"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
+      },
+      "materiality": 94
+    },
+    {
+      "ticker": "MU",
+      "companyName": "Micron Technology, Inc.",
+      "from": "2026-11-06T10:46:31.251Z",
+      "to": "2026-11-09T11:24:05.385Z",
+      "driver": "filing",
+      "oldView": "Micron Technology, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Micron Technology, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "נוסף גורם שיכול לשבור את התזה: המרווח על ההכנסה החדשה כבר השתפר"
+      ],
+      "deltas": [
+        {
+          "field": "שובר תזה חדש",
+          "before": "—",
+          "after": "המרווח על ההכנסה החדשה כבר השתפר",
+          "weight": 0.7
+        },
+        {
+          "field": "שובר תזה שהוסר",
+          "before": "התזרים המדווח נדיב מהכלכלה בפועל",
+          "after": "—",
+          "weight": 0.5
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-03",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-03"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "שובר תזה חדש",
+          "value": "— ← המרווח על ההכנסה החדשה כבר השתפר",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-03"
+          }
+        },
+        {
+          "label": "שובר תזה שהוסר",
+          "value": "התזרים המדווח נדיב מהכלכלה בפועל ← —",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-03"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
+      },
+      "materiality": 96
+    },
+    {
+      "ticker": "AMD",
+      "companyName": "Advanced Micro Devices, Inc.",
+      "from": "2026-11-06T10:46:20.217Z",
+      "to": "2026-11-09T11:23:54.543Z",
+      "driver": "price",
+      "oldView": "Advanced Micro Devices, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "newView": "Advanced Micro Devices, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
+      "why": [
+        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
+      ],
+      "deltas": [
+        {
+          "field": "P/E",
+          "before": "86.6x",
+          "after": "96.2x",
+          "weight": 0.4
+        },
+        {
+          "field": "EV/EBITDA",
+          "before": "79.0x",
+          "after": "87.9x",
+          "weight": 0.4
+        }
+      ],
+      "evidence": [
+        {
+          "label": "מצב התזה",
+          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-11-09"
+          },
+          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
+        },
+        {
+          "label": "הדוח שעליו נשענת התזה",
+          "value": "2026-09-26",
+          "source": {
+            "origin": "SEC",
+            "asOf": "2026-09-26"
+          },
+          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
+        },
+        {
+          "label": "P/E",
+          "value": "86.6x ← 96.2x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-26"
+          }
+        },
+        {
+          "label": "EV/EBITDA",
+          "value": "79.0x ← 87.9x",
+          "source": {
+            "origin": "חישוב",
+            "asOf": "2026-09-26"
+          }
+        }
+      ],
+      "claim": {
+        "grade": "likely",
+        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
+        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
+      },
+      "materiality": 94
+    },
     {
       "ticker": "CHTR",
       "companyName": "Charter Communications, Inc.",
@@ -32675,1979 +35071,170 @@
         "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
       },
       "materiality": 91
-    },
-    {
-      "ticker": "XOM",
-      "companyName": "Exxonmobil Holdings Corp",
-      "from": "2026-10-28T09:36:57.359Z",
-      "to": "2026-11-03T10:48:11.362Z",
-      "driver": "filing",
-      "oldView": "Exxonmobil Holdings Corp: יש סיבה להסתכל, אבל 0 סיכונים מדודים עומדים מולה.",
-      "newView": "Exxonmobil Holdings Corp אינה עומדת בכל הקריטריונים, אך נשארת במעקב כנקודת השוואה.",
-      "why": [
-        "מצב התזה עבר מ״סיכון גבוה״ ל״במעקב — דורש אישור״.",
-        "מספר הבדיקות שהחברה עוברת עלה מ-0 ל-1.",
-        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
-      ],
-      "deltas": [
-        {
-          "field": "מצב התזה",
-          "before": "סיכון גבוה",
-          "after": "במעקב — דורש אישור",
-          "weight": 1
-        },
-        {
-          "field": "בדיקות שעברו",
-          "before": "0/0",
-          "after": "1/1",
-          "weight": 0.6
-        },
-        {
-          "field": "רמת המחיר",
-          "before": "לא ידוע",
-          "after": "סביר",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30 ← 2026-09-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-30"
-          },
-          "note": "דוח חדש הוגש מאז המדידה הקודמת"
-        },
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "בדיקות שעברו",
-          "value": "0/0 ← 1/1",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "רמת המחיר",
-          "value": "לא ידוע ← סביר",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "הקריאה נשענת על דוח ישן ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "הקריאה נשענת על דוח ישן ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "confirmed",
-        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-09-30, ו-5 מדדים שזזו מעבר לסף הרעש",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "PGR",
-      "companyName": "The Progressive Corporation",
-      "from": "2026-10-28T09:36:48.388Z",
-      "to": "2026-11-03T10:48:03.130Z",
-      "driver": "filing",
-      "oldView": "The Progressive Corporation עוברת את מבחן הליבה, ו1 ממצאים תומכים בקריאה קדימה.",
-      "newView": "The Progressive Corporation עוברת את מבחן הליבה, ו1 ממצאים תומכים בקריאה קדימה.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "תזה חיובית ← תזה חיובית",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30 ← 2026-09-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-30"
-          },
-          "note": "דוח חדש הוגש מאז המדידה הקודמת"
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "הקריאה נשענת על דוח ישן ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "הקריאה נשענת על דוח ישן ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "confirmed",
-        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-09-30, ו-2 מדדים שזזו מעבר לסף הרעש",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "BLK",
-      "companyName": "BlackRock, Inc.",
-      "from": "2026-10-29T09:53:35.438Z",
-      "to": "2026-11-03T10:47:57.090Z",
-      "driver": "filing",
-      "oldView": "BlackRock, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "BlackRock, Inc.: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "why": [
-        "מצב התזה עבר מ״במעקב — דורש אישור״ ל״סיכון גבוה״."
-      ],
-      "deltas": [
-        {
-          "field": "מצב התזה",
-          "before": "במעקב — דורש אישור",
-          "after": "סיכון גבוה",
-          "weight": 1
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← סיכון גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-06-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← סיכון גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 95
-    },
-    {
-      "ticker": "C",
-      "companyName": "Citigroup Inc.",
-      "from": "2026-10-29T09:53:26.512Z",
-      "to": "2026-11-03T10:47:49.180Z",
-      "driver": "filing",
-      "oldView": "CITIGROUP INC: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "newView": "Citigroup Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "מצב התזה עבר מ״סיכון גבוה״ ל״במעקב — דורש אישור״.",
-        "מספר הבדיקות שהחברה עוברת עלה מ-2 ל-3.",
-        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
-      ],
-      "deltas": [
-        {
-          "field": "מצב התזה",
-          "before": "סיכון גבוה",
-          "after": "במעקב — דורש אישור",
-          "weight": 1
-        },
-        {
-          "field": "בדיקות שעברו",
-          "before": "2/3",
-          "after": "3/4",
-          "weight": 0.6
-        },
-        {
-          "field": "רמת המחיר",
-          "before": "לא ידוע",
-          "after": "סביר",
-          "weight": 0.5
-        },
-        {
-          "field": "תנאי חדש",
-          "before": "—",
-          "after": "שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם.",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2025-12-31",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2025-12-31"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2025-12-31"
-          }
-        },
-        {
-          "label": "בדיקות שעברו",
-          "value": "2/3 ← 3/4",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2025-12-31"
-          }
-        },
-        {
-          "label": "רמת המחיר",
-          "value": "לא ידוע ← סביר",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2025-12-31"
-          }
-        },
-        {
-          "label": "תנאי חדש",
-          "value": "— ← שהדוח הקרוב יאשר את הכיוון ולא רק יחזור על הרבעון הקודם.",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2025-12-31"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "4 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "MS",
-      "companyName": "MORGAN STANLEY",
-      "from": "2026-11-02T10:57:57.893Z",
-      "to": "2026-11-03T10:47:47.132Z",
-      "driver": "filing",
-      "oldView": "MORGAN STANLEY אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "אין די נתונים מדווחים כדי לבנות תזה על MORGAN STANLEY.",
-      "why": [
-        "מצב התזה עבר מ״במעקב — דורש אישור״ ל״אין די נתונים״."
-      ],
-      "deltas": [
-        {
-          "field": "מצב התזה",
-          "before": "במעקב — דורש אישור",
-          "after": "אין די נתונים",
-          "weight": 1
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← אין די נתונים",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-06-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← אין די נתונים",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 95
-    },
-    {
-      "ticker": "GS",
-      "companyName": "The Goldman Sachs Group, Inc.",
-      "from": "2026-11-02T10:57:56.176Z",
-      "to": "2026-11-03T10:47:45.420Z",
-      "driver": "filing",
-      "oldView": "GOLDMAN SACHS GROUP INC: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "newView": "The Goldman Sachs Group, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "מצב התזה עבר מ״סיכון גבוה״ ל״במעקב — דורש אישור״.",
-        "מספר הבדיקות שהחברה עוברת עלה מ-2 ל-3.",
-        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
-      ],
-      "deltas": [
-        {
-          "field": "מצב התזה",
-          "before": "סיכון גבוה",
-          "after": "במעקב — דורש אישור",
-          "weight": 1
-        },
-        {
-          "field": "בדיקות שעברו",
-          "before": "2/3",
-          "after": "3/4",
-          "weight": 0.6
-        },
-        {
-          "field": "רמת המחיר",
-          "before": "לא ידוע",
-          "after": "סביר",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30 ← 2026-09-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-30"
-          },
-          "note": "דוח חדש הוגש מאז המדידה הקודמת"
-        },
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "בדיקות שעברו",
-          "value": "2/3 ← 3/4",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "רמת המחיר",
-          "value": "לא ידוע ← סביר",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "הקריאה נשענת על דוח ישן ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "הקריאה נשענת על דוח ישן ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "confirmed",
-        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-09-30, ו-5 מדדים שזזו מעבר לסף הרעש",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "ABT",
-      "companyName": "Abbott Laboratories",
-      "from": "2026-10-09T20:47:03.026Z",
-      "to": "2026-11-03T10:47:23.875Z",
-      "driver": "price",
-      "oldView": "Abbott Laboratories: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "newView": "Abbott Laboratories: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "27.2x",
-          "after": "30.4x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "25.6x",
-          "after": "28.2x",
-          "weight": 0.4
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "החברה מפספסת את הציפיות לעיתים קרובות",
-          "after": "—",
-          "weight": 0.5
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← סיכון גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-03-31",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-03-31"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "27.2x ← 30.4x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-03-31"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "25.6x ← 28.2x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-03-31"
-          }
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "החברה מפספסת את הציפיות לעיתים קרובות ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-03-31"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "3 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 97
-    },
-    {
-      "ticker": "ABNB",
-      "companyName": "Airbnb, Inc.",
-      "from": "2026-10-29T09:52:33.133Z",
-      "to": "2026-11-03T10:46:55.033Z",
-      "driver": "filing",
-      "oldView": "Airbnb, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Airbnb, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה.",
-        "נוסף גורם שיכול לשבור את התזה: רוב התזה כבר מתומחרת"
-      ],
-      "deltas": [
-        {
-          "field": "רמת המחיר",
-          "before": "סביר",
-          "after": "גבוה",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה חדש",
-          "before": "—",
-          "after": "רוב התזה כבר מתומחרת",
-          "weight": 0.7
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "התזרים המדווח נדיב מהכלכלה בפועל",
-          "after": "—",
-          "weight": 0.5
-        },
-        {
-          "field": "תנאי חדש",
-          "before": "—",
-          "after": "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-06-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "רמת המחיר",
-          "value": "סביר ← גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        },
-        {
-          "label": "שובר תזה חדש",
-          "value": "— ← רוב התזה כבר מתומחרת",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        },
-        {
-          "label": "שובר תזה שהוסר",
-          "value": "התזרים המדווח נדיב מהכלכלה בפועל ← —",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        },
-        {
-          "label": "תנאי חדש",
-          "value": "— ← שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "4 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "NFLX",
-      "companyName": "NETFLIX INC",
-      "from": "2026-11-02T10:57:00.738Z",
-      "to": "2026-11-03T10:46:47.663Z",
-      "driver": "filing",
-      "oldView": "Netflix, Inc. עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
-      "newView": "NETFLIX INC עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
-      "why": [
-        "מספר הבדיקות שהחברה עוברת ירד מ-7 ל-6.",
-        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה."
-      ],
-      "deltas": [
-        {
-          "field": "בדיקות שעברו",
-          "before": "7/7",
-          "after": "6/6",
-          "weight": 0.6
-        },
-        {
-          "field": "רמת המחיר",
-          "before": "סביר",
-          "after": "לא ידוע",
-          "weight": 0.5
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "תזה חיובית ← תזה חיובית",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-09-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "בדיקות שעברו",
-          "value": "7/7 ← 6/6",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "רמת המחיר",
-          "value": "סביר ← לא ידוע",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 96
-    },
-    {
-      "ticker": "DDOG",
-      "companyName": "Datadog Inc",
-      "from": "2026-11-02T10:56:50.820Z",
-      "to": "2026-11-03T10:46:38.844Z",
-      "driver": "price",
-      "oldView": "Datadog Inc: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "newView": "Datadog Inc: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "475.8x",
-          "after": "437.1x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← סיכון גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-06-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "475.8x ← 437.1x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 91
-    },
-    {
-      "ticker": "ORCL",
-      "companyName": "Oracle Corporation",
-      "from": "2026-11-02T10:56:30.147Z",
-      "to": "2026-11-03T10:46:18.911Z",
-      "driver": "price",
-      "oldView": "Oracle Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Oracle Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "21.1x",
-          "after": "19.2x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "15.9x",
-          "after": "14.3x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-08-31",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-08-31"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "21.1x ← 19.2x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-08-31"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "15.9x ← 14.3x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-08-31"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 94
-    },
-    {
-      "ticker": "ON",
-      "companyName": "ON Semiconductor Corp",
-      "from": "2026-11-02T10:56:26.789Z",
-      "to": "2026-11-03T10:46:15.515Z",
-      "driver": "both",
-      "oldView": "ON Semiconductor Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "ON Semiconductor Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "האבחנה בין העסק למחיר השתנתה בצד של העסק.",
-        "נוסף גורם שיכול לשבור את התזה: כל דולר כבול 195 ימים"
-      ],
-      "deltas": [
-        {
-          "field": "איכות העסק",
-          "before": "חלש",
-          "after": "מעורב",
-          "weight": 0.9
-        },
-        {
-          "field": "P/E",
-          "before": "44.3x",
-          "after": "39.6x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "20.0x",
-          "after": "17.8x",
-          "weight": 0.4
-        },
-        {
-          "field": "מרווח תפעולי",
-          "before": "10.8%",
-          "after": "12.3%",
-          "weight": 0.4
-        },
-        {
-          "field": "ROIC",
-          "before": "8.3%",
-          "after": "9.6%",
-          "weight": 0.4
-        },
-        {
-          "field": "חוב נטו / EBITDA",
-          "before": "0.4x",
-          "after": "0.1x",
-          "weight": 0.4
-        },
-        {
-          "field": "שובר תזה חדש",
-          "before": "—",
-          "after": "כל דולר כבול 195 ימים",
-          "weight": 0.7
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "כל דולר כבול 199 ימים",
-          "after": "—",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה שהוסר",
-          "before": "הקריאה נשענת על דוח ישן",
-          "after": "—",
-          "weight": 0.5
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-07-03 ← 2026-10-02",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-10-02"
-          },
-          "note": "דוח חדש הוגש מאז המדידה הקודמת"
-        },
-        {
-          "label": "איכות העסק",
-          "value": "חלש ← מעורב",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-02"
-          }
-        },
-        {
-          "label": "P/E",
-          "value": "44.3x ← 39.6x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-02"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "20.0x ← 17.8x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-02"
-          }
-        },
-        {
-          "label": "מרווח תפעולי",
-          "value": "10.8% ← 12.3%",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-02"
-          }
-        },
-        {
-          "label": "ROIC",
-          "value": "8.3% ← 9.6%",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-02"
-          }
-        },
-        {
-          "label": "חוב נטו / EBITDA",
-          "value": "0.4x ← 0.1x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-02"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "confirmed",
-        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-10-02, ו-10 מדדים שזזו מעבר לסף הרעש",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "MRVL",
-      "companyName": "Marvell Technology, Inc.",
-      "from": "2026-11-02T10:56:22.726Z",
-      "to": "2026-11-03T10:46:11.495Z",
-      "driver": "price",
-      "oldView": "Marvell Technology, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Marvell Technology, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "מספר הבדיקות שהחברה עוברת עלה מ-4 ל-5."
-      ],
-      "deltas": [
-        {
-          "field": "בדיקות שעברו",
-          "before": "4/7",
-          "after": "5/7",
-          "weight": 0.6
-        },
-        {
-          "field": "P/E",
-          "before": "65.2x",
-          "after": "56.9x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "92.8x",
-          "after": "81.1x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-08-01",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-08-01"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "בדיקות שעברו",
-          "value": "4/7 ← 5/7",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-08-01"
-          }
-        },
-        {
-          "label": "P/E",
-          "value": "65.2x ← 56.9x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-08-01"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "92.8x ← 81.1x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-08-01"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "3 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 97
-    },
-    {
-      "ticker": "KLAC",
-      "companyName": "KLA Corporation",
-      "from": "2026-10-30T09:56:08.960Z",
-      "to": "2026-11-03T10:46:06.159Z",
-      "driver": "price",
-      "oldView": "KLA Corporation: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "newView": "KLA Corporation: יש סיבה להסתכל, אבל 1 סיכונים מדודים עומדים מולה.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "41.6x",
-          "after": "37.9x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "216.4x",
-          "after": "197.8x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "סיכון גבוה ← סיכון גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-09-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "41.6x ← 37.9x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "216.4x ← 197.8x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 94
-    },
-    {
-      "ticker": "LRCX",
-      "companyName": "Lam Research Corporation",
-      "from": "2026-10-29T09:51:42.693Z",
-      "to": "2026-11-03T10:46:04.214Z",
-      "driver": "price",
-      "oldView": "Lam Research Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Lam Research Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "37.5x",
-          "after": "33.6x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "30.9x",
-          "after": "27.6x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-09-27",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-27"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "37.5x ← 33.6x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-27"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "30.9x ← 27.6x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-27"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 94
-    },
-    {
-      "ticker": "AMAT",
-      "companyName": "Applied Materials Inc",
-      "from": "2026-10-29T09:51:40.955Z",
-      "to": "2026-11-03T10:46:02.220Z",
-      "driver": "price",
-      "oldView": "Applied Materials Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Applied Materials Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "35.6x",
-          "after": "32.1x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "33.9x",
-          "after": "30.5x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-07-26",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-07-26"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "35.6x ← 32.1x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-07-26"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "33.9x ← 30.5x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-07-26"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 94
-    },
-    {
-      "ticker": "AVGO",
-      "companyName": "Broadcom Inc",
-      "from": "2026-10-29T09:51:32.586Z",
-      "to": "2026-11-03T10:45:52.723Z",
-      "driver": "price",
-      "oldView": "Broadcom Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Broadcom Inc אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "43.9x",
-          "after": "40.2x",
-          "weight": 0.4
-        },
-        {
-          "field": "EV/EBITDA",
-          "before": "40.1x",
-          "after": "36.8x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-08-02",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-08-02"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "43.9x ← 40.2x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-08-02"
-          }
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "40.1x ← 36.8x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-08-02"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "2 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 94
-    },
-    {
-      "ticker": "INTC",
-      "companyName": "Intel Corp",
-      "from": "2026-11-02T10:56:04.153Z",
-      "to": "2026-11-03T10:45:51.099Z",
-      "driver": "price",
-      "oldView": "Intel Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Intel Corp אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "EV/EBITDA",
-          "before": "176.2x",
-          "after": "159.6x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-03"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-09-26",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-26"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "EV/EBITDA",
-          "value": "176.2x ← 159.6x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-26"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 91
-    },
-    {
-      "ticker": "CHTR",
-      "companyName": "Charter Communications, Inc.",
-      "from": "2026-10-28T09:39:00.840Z",
-      "to": "2026-11-02T10:59:47.114Z",
-      "driver": "price",
-      "oldView": "Charter Communications, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "newView": "Charter Communications, Inc. אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "P/E",
-          "before": "3.7x",
-          "after": "2.6x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "במעקב — דורש אישור ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-02"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-06-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-06-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "P/E",
-          "value": "3.7x ← 2.6x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-06-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "1 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "מה שהשתנה הוא המחיר, לא העסק. אותו דוח, מכפיל אחר — וזו אמירה על מה שהשוק מוכן לשלם, לא על מה שהחברה עשתה."
-      },
-      "materiality": 91
-    },
-    {
-      "ticker": "GD",
-      "companyName": "General Dynamics Corp",
-      "from": "2026-10-30T09:59:15.334Z",
-      "to": "2026-11-02T10:59:27.179Z",
-      "driver": "filing",
-      "oldView": "General Dynamics Corp עוברת את מבחן הליבה, ו4 ממצאים תומכים בקריאה קדימה.",
-      "newView": "General Dynamics Corp עוברת את מבחן הליבה, ו4 ממצאים תומכים בקריאה קדימה.",
-      "why": [
-        "המדדים שהתזה נשענת עליהם זזו מספיק כדי לשנות את הניסוח שלה."
-      ],
-      "deltas": [
-        {
-          "field": "ROIC",
-          "before": "14.9%",
-          "after": "16.1%",
-          "weight": 0.4
-        },
-        {
-          "field": "חוב נטו / EBITDA",
-          "before": "0.7x",
-          "after": "0.4x",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "תזה חיובית ← תזה חיובית",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-02"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-04-05 ← 2026-10-04",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-10-04"
-          },
-          "note": "דוח חדש הוגש מאז המדידה הקודמת"
-        },
-        {
-          "label": "ROIC",
-          "value": "14.9% ← 16.1%",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-04"
-          }
-        },
-        {
-          "label": "חוב נטו / EBITDA",
-          "value": "0.7x ← 0.4x",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-10-04"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "confirmed",
-        "basis": "דוח חדש לתקופה שמסתיימת ב-2026-10-04, ו-2 מדדים שזזו מעבר לסף הרעש",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "RTX",
-      "companyName": "RTX Corporation",
-      "from": "2026-10-21T08:33:30.165Z",
-      "to": "2026-11-02T10:59:21.606Z",
-      "driver": "filing",
-      "oldView": "RTX Corp עוברת את מבחן הליבה, ו6 ממצאים תומכים בקריאה קדימה.",
-      "newView": "RTX Corporation אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "מצב התזה עבר מ״תזה חיובית״ ל״במעקב — דורש אישור״.",
-        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה.",
-        "נוסף גורם שיכול לשבור את התזה: רוב התזה כבר מתומחרת",
-        "נוסף גורם שיכול לשבור את התזה: רוב התזה כבר מתומחרת"
-      ],
-      "deltas": [
-        {
-          "field": "מצב התזה",
-          "before": "תזה חיובית",
-          "after": "במעקב — דורש אישור",
-          "weight": 1
-        },
-        {
-          "field": "רמת המחיר",
-          "before": "סביר",
-          "after": "גבוה",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה חדש",
-          "before": "—",
-          "after": "רוב התזה כבר מתומחרת",
-          "weight": 0.7
-        },
-        {
-          "field": "שובר תזה חדש",
-          "before": "—",
-          "after": "רוב התזה כבר מתומחרת",
-          "weight": 0.7
-        },
-        {
-          "field": "תנאי חדש",
-          "before": "—",
-          "after": "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "תזה חיובית ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-02"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-09-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "מצב התזה",
-          "value": "תזה חיובית ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "רמת המחיר",
-          "value": "סביר ← גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה חדש",
-          "value": "— ← רוב התזה כבר מתומחרת",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה חדש",
-          "value": "— ← רוב התזה כבר מתומחרת",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "תנאי חדש",
-          "value": "— ← שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "5 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
-    },
-    {
-      "ticker": "GE",
-      "companyName": "General Electric Company",
-      "from": "2026-10-21T08:33:24.375Z",
-      "to": "2026-11-02T10:59:16.156Z",
-      "driver": "filing",
-      "oldView": "General Electric Co עוברת את מבחן הליבה, ו4 ממצאים תומכים בקריאה קדימה.",
-      "newView": "General Electric Company אינה עומדת בכל הקריטריונים, אך קיימת סיבה מבוססת להמשיך לעקוב.",
-      "why": [
-        "מצב התזה עבר מ״תזה חיובית״ ל״במעקב — דורש אישור״.",
-        "רמת המחיר מול הסקטור וההיסטוריה עברה קטגוריה.",
-        "נוסף גורם שיכול לשבור את התזה: רוב התזה כבר מתומחרת",
-        "נוסף גורם שיכול לשבור את התזה: רוב התזה כבר מתומחרת"
-      ],
-      "deltas": [
-        {
-          "field": "מצב התזה",
-          "before": "תזה חיובית",
-          "after": "במעקב — דורש אישור",
-          "weight": 1
-        },
-        {
-          "field": "רמת המחיר",
-          "before": "סביר",
-          "after": "גבוה",
-          "weight": 0.5
-        },
-        {
-          "field": "שובר תזה חדש",
-          "before": "—",
-          "after": "רוב התזה כבר מתומחרת",
-          "weight": 0.7
-        },
-        {
-          "field": "שובר תזה חדש",
-          "before": "—",
-          "after": "רוב התזה כבר מתומחרת",
-          "weight": 0.7
-        },
-        {
-          "field": "תנאי חדש",
-          "before": "—",
-          "after": "שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
-          "weight": 0.4
-        }
-      ],
-      "evidence": [
-        {
-          "label": "מצב התזה",
-          "value": "תזה חיובית ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-11-02"
-          },
-          "note": "נגזר מהממצאים של הסוכנים, לא נכתב ידנית"
-        },
-        {
-          "label": "הדוח שעליו נשענת התזה",
-          "value": "2026-09-30",
-          "source": {
-            "origin": "SEC",
-            "asOf": "2026-09-30"
-          },
-          "note": "אותו דוח — מה שהשתנה אינו הנתון המדווח"
-        },
-        {
-          "label": "מצב התזה",
-          "value": "תזה חיובית ← במעקב — דורש אישור",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "רמת המחיר",
-          "value": "סביר ← גבוה",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה חדש",
-          "value": "— ← רוב התזה כבר מתומחרת",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "שובר תזה חדש",
-          "value": "— ← רוב התזה כבר מתומחרת",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        },
-        {
-          "label": "תנאי חדש",
-          "value": "— ← שהצמיחה תצדיק את המכפיל הנוכחי — במחיר הזה ביצוע לפי הציפיות כבר לא מספיק.",
-          "source": {
-            "origin": "חישוב",
-            "asOf": "2026-09-30"
-          }
-        }
-      ],
-      "claim": {
-        "grade": "likely",
-        "basis": "5 מדדים שזזו מעבר לסף הרעש, על אותו דוח",
-        "limits": "שינוי בתזה אינו תחזית ואינו המלצה. הוא אומר שהנתונים שהמסקנה הקודמת נשענה עליהם כבר לא אותם נתונים."
-      },
-      "materiality": 100
     }
   ],
   "catalysts": [
     {
-      "ticker": "QCOM",
-      "companyName": "QUALCOMM Incorporated",
-      "title": "דוח רבעוני",
-      "when": "דווח לאחרונה",
-      "date": "2026-11-04",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 2.20 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "MCD",
-      "companyName": "McDonald's Corp",
-      "title": "דוח רבעוני",
-      "when": "דווח לאחרונה",
-      "date": "2026-11-04",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 3.42 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "EMR",
-      "companyName": "Emerson Electric Co",
-      "title": "דוח רבעוני",
-      "when": "דווח לאחרונה",
-      "date": "2026-11-04",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 1.87 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
       "ticker": "NVDA",
       "companyName": "NVIDIA Corporation",
       "title": "דוח רבעוני",
-      "when": "בעוד 11 ימים",
+      "when": "בעוד 8 ימים",
       "date": "2026-11-17",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
       "impact": "הציפייה עומדת על 2.53 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "HD",
-      "companyName": "The Home Depot, Inc.",
+      "ticker": "DIS",
+      "companyName": "The Walt Disney Company",
       "title": "דוח רבעוני",
-      "when": "בעוד 11 ימים",
+      "when": "בעוד 8 ימים",
       "date": "2026-11-17",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 3.95 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 1.69 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "LOW",
+      "companyName": "Lowe's Companies Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 9 ימים",
+      "date": "2026-11-18",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 2.91 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "TJX",
+      "companyName": "The TJX Companies, Inc.",
+      "title": "דוח רבעוני",
+      "when": "בעוד 9 ימים",
+      "date": "2026-11-18",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 1.35 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
       "ticker": "AVGO",
       "companyName": "Broadcom Inc",
       "title": "דוח רבעוני",
-      "when": "בעוד 33 ימים",
+      "when": "בעוד 30 ימים",
       "date": "2026-12-09",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
       "impact": "הציפייה עומדת על 3.89 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "NKE",
-      "companyName": "NIKE, Inc.",
+      "ticker": "BLK",
+      "companyName": "BlackRock, Inc.",
       "title": "דוח רבעוני",
-      "when": "בעוד 40 ימים",
-      "date": "2026-12-16",
+      "when": "בעוד 65 ימים",
+      "date": "2027-01-13",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 0.38 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 15.63 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "JPM",
-      "companyName": "JPMorgan Chase & Co.",
+      "ticker": "SCHW",
+      "companyName": "The Charles Schwab Corporation",
       "title": "דוח רבעוני",
-      "when": "בעוד 69 ימים",
-      "date": "2027-01-14",
+      "when": "בעוד 71 ימים",
+      "date": "2027-01-19",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 5.91 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "WFC",
-      "companyName": "Wells Fargo & Company",
-      "title": "דוח רבעוני",
-      "when": "בעוד 69 ימים",
-      "date": "2027-01-14",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 1.88 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "BAC",
-      "companyName": "Bank of America Corporation",
-      "title": "דוח רבעוני",
-      "when": "בעוד 70 ימים",
-      "date": "2027-01-15",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 1.13 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "NFLX",
-      "companyName": "Netflix, Inc.",
-      "title": "דוח רבעוני",
-      "when": "בעוד 73 ימים",
-      "date": "2027-01-18",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 0.70 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 1.75 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
       "ticker": "INTC",
       "companyName": "Intel Corp",
       "title": "דוח רבעוני",
-      "when": "בעוד 75 ימים",
+      "when": "בעוד 72 ימים",
       "date": "2027-01-20",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 0.28 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 0.25 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "PG",
-      "companyName": "The Procter & Gamble Company",
+      "ticker": "SBUX",
+      "companyName": "Starbucks Corp",
       "title": "דוח רבעוני",
-      "when": "בעוד 75 ימים",
-      "date": "2027-01-20",
+      "when": "בעוד 78 ימים",
+      "date": "2027-01-26",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 1.87 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 0.77 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "TXN",
-      "companyName": "Texas Instruments Incorporated",
+      "ticker": "TSLA",
+      "companyName": "Tesla Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 78 ימים",
+      "date": "2027-01-26",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 0.46 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "AXP",
+      "companyName": "American Express Company",
       "title": "דוח רבעוני",
       "when": "בעוד 80 ימים",
-      "date": "2027-01-25",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 2.65 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "META",
-      "companyName": "Meta Platforms, Inc.",
-      "title": "דוח רבעוני",
-      "when": "בעוד 81 ימים",
-      "date": "2027-01-26",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 8.57 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "T",
-      "companyName": "AT&T Inc.",
-      "title": "דוח רבעוני",
-      "when": "בעוד 81 ימים",
-      "date": "2027-01-26",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 0.55 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "AAPL",
-      "companyName": "Apple Inc.",
-      "title": "דוח רבעוני",
-      "when": "בעוד 82 ימים",
-      "date": "2027-01-27",
-      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 2.94 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
-    },
-    {
-      "ticker": "VZ",
-      "companyName": "Verizon Communications Inc",
-      "title": "דוח רבעוני",
-      "when": "בעוד 83 ימים",
       "date": "2027-01-28",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 1.19 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 4.33 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
       "ticker": "AMD",
       "companyName": "Advanced Micro Devices, Inc.",
       "title": "דוח רבעוני",
-      "when": "בעוד 87 ימים",
+      "when": "בעוד 84 ימים",
       "date": "2027-02-01",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 2.67 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 2.95 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "ETN",
-      "companyName": "Eaton Corporation PLC",
+      "ticker": "MDLZ",
+      "companyName": "Mondelez International, Inc.",
       "title": "דוח רבעוני",
-      "when": "בעוד 87 ימים",
+      "when": "בעוד 84 ימים",
       "date": "2027-02-01",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 4.11 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 0.90 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "GOOGL",
-      "companyName": "Alphabet Inc.",
+      "ticker": "QCOM",
+      "companyName": "QUALCOMM Incorporated",
       "title": "דוח רבעוני",
-      "when": "בעוד 88 ימים",
+      "when": "בעוד 85 ימים",
       "date": "2027-02-02",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 3.32 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 2.30 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     },
     {
-      "ticker": "TMUS",
-      "companyName": "T-Mobile US Inc",
+      "ticker": "UBER",
+      "companyName": "Uber Technologies, Inc.",
       "title": "דוח רבעוני",
-      "when": "בעוד 95 ימים",
-      "date": "2027-02-09",
+      "when": "בעוד 85 ימים",
+      "date": "2027-02-02",
       "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
-      "impact": "הציפייה עומדת על 2.81 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+      "impact": "הציפייה עומדת על 1.04 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "AMZN",
+      "companyName": "Amazon.com Inc",
+      "title": "דוח רבעוני",
+      "when": "בעוד 86 ימים",
+      "date": "2027-02-03",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 2.45 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "SPGI",
+      "companyName": "S&P Global Inc.",
+      "title": "דוח רבעוני",
+      "when": "בעוד 91 ימים",
+      "date": "2027-02-08",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 4.08 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
+    },
+    {
+      "ticker": "BKNG",
+      "companyName": "Booking Holdings Inc.",
+      "title": "דוח רבעוני",
+      "when": "בעוד 99 ימים",
+      "date": "2027-02-16",
+      "why": "הדוח הוא הנקודה שבה כל הנחה בתזה נפגשת עם מספר. רוב השינויים בקריאה של האתר קורים ביום הזה.",
+      "impact": "הציפייה עומדת על 2.25 דולר למניה. פער מהותי לכאן או לכאן מזיז את הקריאה."
     }
   ]
 }
