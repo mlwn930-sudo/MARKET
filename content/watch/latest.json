@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-11T20:02:47.151Z",
+  "builtAt": "2026-11-11T20:09:49.888Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,53 +7,71 @@
     "opportunity": 0,
     "range": 8,
     "event": 1,
-    "story": 3
+    "story": 5
   },
   "findings": [
     {
       "kind": "move",
       "ticker": "MU",
       "headline": "MU זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "12.76% ביום — פי 3.1 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 3.0664528484972657,
+      "detail": "12.42% ביום — פי 3.0 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.9870729815515458,
       "href": "/company/MU",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "move",
       "ticker": "ORCL",
       "headline": "ORCL זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "9.34% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.5869238305726108,
+      "detail": "9.15% ביום — פי 2.5 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.534381919127329,
       "href": "/company/ORCL",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "story",
-      "ticker": "AMZN",
-      "headline": "Is Wall Street too optimistic about Big Tech?",
-      "detail": "מניות הטכנולוגיה ספגו ירידות בעקבות חששות מרגולציה של המפלגה הדמוקרטית על מרכזי נתונים של AI ותזרימי מזומנים חלשים אצל ספקי ענן כמו אמזון ומטה. בנוסף, מנכ״ל אנבידיה ג'נסן הואנג נקשר לפרשת רי",
+      "ticker": "NVDA",
+      "headline": "Nvidia Vs. AMD: No, Neither is Getting Choked Out By Congress Come January",
+      "detail": "הבינה המלאכותית מביאה לתוצאות שיא בחברות NVIDIA ו-AMD, אך שתיהן ניצבות בפני פיקוח קונגרס אפשרי על יצוא שבבים מתקדמים. חברה אחת כבר הסירה את סין תחזיותיה, ולשנייה יש סיכון משמעותי להפסיד מעבר",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=7f81269b4cd4d2f01646f8c13910fa43b688323730487adedfc35882176d5f6b",
-      "at": "2026-11-11T15:29:27.000Z"
+      "href": "https://finnhub.io/api/news?id=4d037af40aa0c83f8068c30e4c7001a7de1ea5e0fcac513d1939fdf190959b90",
+      "at": "2026-11-11T17:45:08.000Z"
     },
     {
       "kind": "story",
-      "ticker": null,
-      "headline": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
-      "detail": "וול סטריט ירדה על רקע נתוני אינפלציה גבוהים מהצפוי, אשר הגבירו את החששות מפני העלאות ריבית נוספות.",
+      "ticker": "NVDA",
+      "headline": "Nvidia Vs. AMD: No, Neither is Getting Choked Out By Congress Come January",
+      "detail": "הבינה המלאכותית מביאה לתוצאות שיא בחברות NVIDIA ו-AMD, אך שתיהן ניצבות בפני פיקוח קונגרס אפשרי על יצוא שבבים מתקדמים. חברה אחת כבר הסירה את סין תחזיותיה, ולשנייה יש סיכון משמעותי להפסיד מעבר",
       "weight": 2.2,
-      "href": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
-      "at": "2026-11-10T21:27:01.000Z"
+      "href": "https://finnhub.io/api/news?id=4d037af40aa0c83f8068c30e4c7001a7de1ea5e0fcac513d1939fdf190959b90",
+      "at": "2026-11-11T17:45:08.000Z"
     },
     {
       "kind": "story",
-      "ticker": null,
-      "headline": "Fed officials open door to a half-percentage-point rate hike as inflation worsens - Reuters",
-      "detail": "בכירים בפדרל ריזוב פתחו את הדלת לאפשרות של העלאת ריבית של חצי אחוז על רקע החמרה באינפלציה.",
+      "ticker": "NVDA",
+      "headline": "Is Nvidia Stock a Buy After Hitting a Seven-Month Low? (Hint: Yes.)",
+      "detail": "מניית אנבידיה ירדה בכ-30% מהשיא שרשמה באוקטובר, בין היתר עקב תיקון רוחבי בסקטור ה-AI וחששות סביב המנכ\"ל ג'נסן הואנג. החברה נסחרת במכפיל רווח היסטורי של 21 ותחזיות צמיחת ההכנסות עומדות על 91%",
       "weight": 2.2,
-      "href": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOTXo5UzFWVEh5WllQOHNxS1Q2cERxOEM0X1QyN1dPX0R4XzdfT1BpajYxdi0xOEltNWh6cE15Z2ZvZ2dXV0Vwb3NkbWZ1VGQ2M2tvVVVSaWd6clhPcS1XUEU2QXE3c0tlLUhPX0c2emRnWVpwOGtoajlnSS1VRXRNZXFaNEpyVlVwcFVIOUdkT18yQ2t6a1psZGVlOFpiZl90QnVhcmxqQzNxNnlNSEdXcWpjcUdzYUNJSi1hcnl6ZEpUSUU?oc=5",
-      "at": "2026-11-10T20:42:14.000Z"
+      "href": "https://finnhub.io/api/news?id=5f4370c9a86c86eb4313b9b488a838cf20f64b3138d9905ce68aae7177c81e45",
+      "at": "2026-11-11T17:41:02.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Jensen Huang espionage controversy will cast a long shadow over Nvidia, veteran tech strategist warns",
+      "detail": "מנכ\"ל אנבידיה, ג'נסן הואנג, הודה בניהול רומן עם אישה שעל פי החשד הייתה מרגלת של ממשלת סין. דירקטוריון החברה פתח בחקירה עצמאית בהובלת משרד עורכי הדין Wachtell, Lipton, Rosen & Katz והתובע לשע",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=5afbefda6030e4a542af030194ca421776b2de33e1aaa895ada599932f30f171",
+      "at": "2026-11-11T17:38:44.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "BA",
+      "headline": "Boeing Stock Drops 25.6% in 3 Months: Should You Exercise Caution?",
+      "detail": "מניית בואינג ירדה ב-25.6% בשלושה חודשים על רקע סיכוני ביצוע, עיכובים ברגולציה ובאישורים, מחסור בכוח אדם וחוב גבוה. במקביל, החברה דיווחה על צבר הזמנות כולל של 745 מיליארד דולר וביצועים חזקים ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=d73ca616a9b5eab5a1e6ddbaf0d6ea3dfa8f8706fc74df0faf63a81e1869dec4",
+      "at": "2026-11-11T16:35:00.000Z"
     },
     {
       "kind": "event",
@@ -62,79 +80,79 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.1999999999999997,
       "href": "/company/TTWO",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "range",
       "ticker": "NXPI",
       "headline": "NXPI בשיא של רבעון",
-      "detail": "הסגירה האחרונה 271.31 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 271.09 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NXPI",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "range",
       "ticker": "TTD",
       "headline": "TTD בשיא של רבעון",
-      "detail": "הסגירה האחרונה 16.09 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 16.13 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TTD",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "range",
       "ticker": "LLY",
       "headline": "LLY בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1430.55 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1430.34 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/LLY",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "range",
       "ticker": "BLK",
       "headline": "BLK בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1230.47 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1229.48 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BLK",
-      "at": "2026-11-11T20:02:47.151Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "AAPL",
-      "headline": "AAPL בשיא של רבעון",
-      "detail": "הסגירה האחרונה 354.57 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/AAPL",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "range",
       "ticker": "COST",
       "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1081.04 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1081.24 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "AAPL",
+      "headline": "AAPL בשיא של רבעון",
+      "detail": "הסגירה האחרונה 354.89 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/AAPL",
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "range",
       "ticker": "KO",
       "headline": "KO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 97.31 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 97.41 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/KO",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     },
     {
       "kind": "range",
       "ticker": "DIS",
       "headline": "DIS בשיא של רבעון",
-      "detail": "הסגירה האחרונה 119.44 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 119.43 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DIS",
-      "at": "2026-11-11T20:02:47.151Z"
+      "at": "2026-11-11T20:09:49.888Z"
     }
   ]
 }
