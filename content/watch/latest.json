@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-11T00:48:25.605Z",
+  "builtAt": "2026-11-11T08:35:28.085Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 1,
     "range": 12,
     "event": 1,
-    "story": 7
+    "story": 5
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "8.31% ביום — פי 4.0 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.9840512229857454,
       "href": "/company/TTWO",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "10.61% ביום — פי 3.1 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.112165643582749,
       "href": "/company/CHTR",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "opportunity",
@@ -35,34 +35,43 @@
       "detail": "-5.47% ביום — פי 2.0 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
       "weight": 2.804961860482358,
       "href": "/company/NVDA",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "story",
-      "ticker": "AMD",
-      "headline": "Advanced Micro Devices Stocks Rise 2.66% on $2.5 Billion Anthropic Stake Commitment",
-      "detail": "מניית AMD עלתה ב-2.66% ל-522.12 דולר לאחר שתשקיף ה-IPO המתוקן של Anthropic ציין את AMD כרוכשת בהיקף של 2.5 מיליארד דולר בהנפקה פרטית. בנוסף, אופנהיימר שדרגו את AMD ל-Outperform עם יעד מחיר ש",
+      "ticker": "NVDA",
+      "headline": "Asian shares mostly rise on AI chip demand despite Wall Street's retreat on inflation data",
+      "detail": "בורסות אסיה רשמו עלייה בהובלת מניות השבבים ותמיכה מביקושים חזקים לבינה מלאכותית, זאת למרות ירידות בוול סטריט בעקבות נתוני אינפלציה גבוהים מהצפוי באוקטובר. TSMC דיווחה על הכנסות אוקטובר הגבוה",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=584fcb61a33d5a9da3d73fda79a38091d74aaf3aaa41f2181a465de090ea1dc6",
-      "at": "2026-11-10T17:31:27.000Z"
+      "href": "https://finnhub.io/api/news?id=8ac2f6c7fe75995e87c673bb16503fe0d6cacb5437b83b24211b532bdac35193",
+      "at": "2026-11-11T04:46:20.000Z"
     },
     {
       "kind": "story",
-      "ticker": "TSM",
-      "headline": "AI Slump Sends Investors Scouring Emerging Markets for Bargains",
-      "detail": "ירידות בשוק ה-AI הובילו את מדד השווקים המתעוררים (MSCI) לשפל של שבעה חודשים, עקב משקלן של ענקיות השבבים כמו TSMC, סמסונג ו-SK Hynix המהוות כמעט 30% מהמדד. מנהלי השקעות מנצלים את המצב ומפנים ",
+      "ticker": "GOOGL",
+      "headline": "Google, Nvidia and Microsoft “Literally Feeding Themselves Money” with $26 Billion Anthropic IPO Buy",
+      "detail": "Google, Nvidia, Microsoft, Broadcom, AMD, Micron ו-TSMC צפויות לרכוש מניות של Anthropic בשווי של 26 מיליארד דולר לפי מחיר ההנפקה שלה, מעבר להנפקה של עד 64.4 מיליארד דולר.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=0e72623883cf4874123823c35000c0a98894b9db3c700f1f996d625719b4083c",
-      "at": "2026-11-10T06:15:00.000Z"
+      "href": "https://finnhub.io/api/news?id=00468a3345e78589c39b2f0d9525737b11501cd13514f6fee8b20ef2ed9ba4dd",
+      "at": "2026-11-10T18:21:34.000Z"
     },
     {
       "kind": "story",
       "ticker": null,
-      "headline": "Wall St falls as hot inflation data fuels rate-hike jitters - Reuters",
+      "headline": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "detail": "וול סטריט ירדה על רקע נתוני אינפלציה גבוהים מהצפוי, אשר הגבירו את החששות מפני העלאות ריבית נוספות.",
       "weight": 2.2,
       "href": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSEE5eGJXT1lYRVFJMUpWb2VCTENjZ2hBNWk0QWl5QVZBNmJ4TFBodVUtRVRzV0JubVE0NFJYRFlmYkpuc0tlbTBValFhV0ppcGdYNEZERXV4ZnhLZUJKTF9fUzZEeHM3cDRwdmlMdUVIUWlERHprb3lKakQ1S1gzSmI5LVZYWWx2cTBjVC1sVEc1OG8tOS0ta0k5VQ?oc=5",
-      "at": "2026-11-10T17:20:50.000Z"
+      "at": "2026-11-10T21:27:01.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": null,
+      "headline": "Fed officials open door to a half-percentage-point rate hike as inflation worsens - Reuters",
+      "detail": "בכירים בפדרל ריזוב פתחו את הדלת לאפשרות של העלאת ריבית של חצי אחוז על רקע החמרה באינפלציה.",
+      "weight": 2.2,
+      "href": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOTXo5UzFWVEh5WllQOHNxS1Q2cERxOEM0X1QyN1dPX0R4XzdfT1BpajYxdi0xOEltNWh6cE15Z2ZvZ2dXV0Vwb3NkbWZ1VGQ2M2tvVVVSaWd6clhPcS1XUEU2QXE3c0tlLUhPX0c2emRnWVpwOGtoajlnSS1VRXRNZXFaNEpyVlVwcFVIOUdkT18yQ2t6a1psZGVlOFpiZl90QnVhcmxqQzNxNnlNSEdXcWpjcUdzYUNJSi1hcnl6ZEpUSUU?oc=5",
+      "at": "2026-11-10T20:42:14.000Z"
     },
     {
       "kind": "story",
@@ -74,40 +83,13 @@
       "at": "2026-11-10T15:55:43.000Z"
     },
     {
-      "kind": "story",
-      "ticker": null,
-      "headline": "Instant view: Hot October inflation report rattles markets - Reuters",
-      "detail": "דוח האינפלציה לחודש אוקטובר היה גבוה מהצפוי וגרם לתנודתיות בשווקים.",
-      "weight": 2.2,
-      "href": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQRGxVcWRPUjR6aDlqZEVjYjNScVg4MHpQRXQ0Z1VBLU5WbENmYi1XWlJUOWt3MFdlNGdJcVlaRjEtUzZUd0dYVXJDTEY2Ung1Nm9meGZfWFpUYnVPbElHQjJIaW9pVUQwWWY0czJsMEV0YkNTNmh0SDA5MVM3dVhaRUI1Q19JLTlIVFM3SHJKSEU3MmNZczROOExR?oc=5",
-      "at": "2026-11-10T14:51:39.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TTWO",
-      "headline": "Take-Two stock rises on 'unprecedented' preorders for 'Grand Theft Auto VI'",
-      "detail": "טייק-טו אינטראקטיב דיווחה על הכנסות רבעוניות של 1.5 מיליארד דולר והפסד של 54 מיליון דולר (0.29 דולר למניה), מתחת לציפיות האנליסטים. למרות זאת, מניית החברה עלתה ב-8% הודง הזמנות מוקדמות חסרות",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=e426b1d5ab73071432f6686117a8f4c6cf90ac76eaa2f73d79104864030f5346",
-      "at": "2026-11-10T16:06:44.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TTWO",
-      "headline": "Take-Two Jumps 8% as GTA VI Preorders Run ‘Far in Excess’ of Expectations; Sony and Roblox Slide 2%",
-      "detail": "מניית Take-Two Interactive זינקה ב-8% ל-223.49 דולר במסחר המוקדם לאחר שדיווחה על תוצאות הרבעון השני של שנת הכספים 2027 וציינה שביקושי ההזמנות המוקדמות ל-GTA VI עולים בהרבה על הציפיות.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=0c47c27414726c8ff5cfbbe697663b8e9b59eee5369d48777ae0ce272ac5a438",
-      "at": "2026-11-10T15:51:57.000Z"
-    },
-    {
       "kind": "event",
       "ticker": "TTWO",
       "headline": "השקת GTA VI — בעוד 8 ימים",
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.1999999999999997,
       "href": "/company/TTWO",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "move",
@@ -116,7 +98,7 @@
       "detail": "-5.47% ביום — פי 2.0 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.049618604823576,
       "href": "/company/NVDA",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -125,16 +107,7 @@
       "detail": "הסגירה האחרונה 168.89 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NVDA",
-      "at": "2026-11-11T00:48:25.605Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TEAM",
-      "headline": "TEAM בשפל של רבעון",
-      "detail": "הסגירה האחרונה 148.60 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TEAM",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -143,7 +116,16 @@
       "detail": "הסגירה האחרונה 99.61 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NOW",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TEAM",
+      "headline": "TEAM בשפל של רבעון",
+      "detail": "הסגירה האחרונה 148.60 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TEAM",
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -152,7 +134,7 @@
       "detail": "הסגירה האחרונה 1432.29 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/LLY",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -161,25 +143,7 @@
       "detail": "הסגירה האחרונה 15.42 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/TTD",
-      "at": "2026-11-11T00:48:25.605Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "KO",
-      "headline": "KO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 96.91 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/KO",
-      "at": "2026-11-11T00:48:25.605Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "COST",
-      "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1066.14 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/COST",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -188,7 +152,7 @@
       "detail": "הסגירה האחרונה 282.17 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MCD",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -197,7 +161,25 @@
       "detail": "הסגירה האחרונה 168.66 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PG",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "KO",
+      "headline": "KO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 96.91 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/KO",
+      "at": "2026-11-11T08:35:28.085Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "COST",
+      "headline": "COST בשיא של רבעון",
+      "detail": "הסגירה האחרונה 1066.14 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/COST",
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -206,16 +188,7 @@
       "detail": "הסגירה האחרונה 109.95 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/SBUX",
-      "at": "2026-11-11T00:48:25.605Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "LOW",
-      "headline": "LOW בשיא של רבעון",
-      "detail": "הסגירה האחרונה 231.87 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/LOW",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
     },
     {
       "kind": "range",
@@ -224,7 +197,16 @@
       "detail": "הסגירה האחרונה 119.21 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DIS",
-      "at": "2026-11-11T00:48:25.605Z"
+      "at": "2026-11-11T08:35:28.085Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "LOW",
+      "headline": "LOW בשיא של רבעון",
+      "detail": "הסגירה האחרונה 231.87 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/LOW",
+      "at": "2026-11-11T08:35:28.085Z"
     }
   ]
 }
