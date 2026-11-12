@@ -1,5 +1,5 @@
 {
-  "writtenAt": "2026-11-12T08:58:51.749Z",
+  "writtenAt": "2026-11-12T17:54:59.189Z",
   "summaries": {
     "https://www.aol.com/articles/defense-stocks-fall-while-oil-155213000.html": {
       "summary": "לפי רויטרס, איראן הציעה לפתוח מחדש את מיצרי הורמוז בתוך שבעה ימים אם ארה\"ב תנקוט צעדים ראשונים להפחתת הלחץ הצבאי. מניות הביטחון ירדו בתגובה: לוקהיד מרטין ו-RTX ירדו 3% ביום, ובחודש האחרון 7% ו-10% בהתאמה. נפט WTI נסחר ב-91.64 דולר, בירידה רביעית ברציפות.",
@@ -52071,6 +52071,54 @@
       ],
       "significance": "medium",
       "writtenAt": "2026-11-12T08:58:49.247Z"
+    },
+    "https://finnhub.io/api/news?id=2192ae397c35dc1f91d891a2ad045489e8b098ee34cf7de416375cafcd94a1cc": {
+      "summary": "ב-5 בנובמבר ירד מדד ה-S&P 500 ב-4.36% ומדד הנאסד\"ק ירד ב-5.52% ונכנס לתיקון. מניות השבבים נפגעו קשות ומדד ה-Philadelphia Semiconductor Index ירד בכ-12%.",
+      "impact": "הירידות החדות משקפות לחץ רוחבי בשווקים ופגיעה קשה במיוחד בססקטור השבבים, דבר המעיד על יציאת הון מנכסים בסיכון ועל חששות המשקיעים.",
+      "catalyst": "הכתבה מתארת אירוע מאקרו-כלכלי וירידות רוחביות בשוק ללא פירוט על שינוי בתזרים של חברה ספציפית, ולכן מדובר באירוע שוק רחב ולא בשינוי פרטני במבנה התחרות.",
+      "catalystKind": "noise",
+      "reaction": "הכתבה אינה מציינת תגובת מחיר פרטנית למניות אלא מציגה את נתוני הירידות של המדדים המרכזיים ביום המסחר.",
+      "chain": "הירידות משפיעות על כלל חברות הטכנולוגיה ומניות השבבים הנכללות במדדים, ובפרט על מדד ה-Philadelphia Semiconductor Index.",
+      "tickers": [],
+      "significance": "medium",
+      "writtenAt": "2026-11-12T17:50:17.550Z"
+    },
+    "https://news.google.com/rss/articles/CBMitwFBVV95cUxQcDQ2cWxyeTFpazFaX1ZNM2RoS0t2ZVpEa0JpMElTZVFMUElROEF5c20tMlU0dEszWFlEdkhfR2VOb3hEQmo3MjRtdVlSaEhkZnpKXzExbE5QcXItQ3Z6REoyY1Fpak9IUUplYWp6NTQ2UjBiNVk1WDN0MmJjaFRkOHNLdDYxMU9xOWhuMnVaTlNiVXJNTlhLYV9EZEpnd1oxYmF0cG82b2VkMURkYnkzZkZBX0hhWHM?oc=5": {
+      "summary": "ארבע מכליות נפגעו מפיצוצים במצר הורמוז, לפי דיווח של איראן רויטרס.",
+      "impact": "הפגעות מכליות במצר הורמוז עלולה לשבש את תעבורת הנפט העולמית דרך אחד מנתיבי הים הקריטיים ביותר, מה שעשוי להוביל לעלייה במחירי האנרגיה עקב חשש מפגיעה בהיצע הנפט הגולמי.",
+      "catalyst": "אירוע גיאופוליטי פתאומי המאייימים על נתיבי הסחר הימיים של נפט, ויכול לשנות באופן מהותי את מחירי האנרגיה ועלויות ההובלה הימית.",
+      "catalystKind": "catalyst",
+      "reaction": "הכתבה אינה מציינת תגובת מחיר.",
+      "chain": "חברות ספנות, חברות אנרגיה ומפיקות נפט מושפעות ישירות משינויים בסיכוני ההובלה במצר הורמוז ומשינויים פוטנציאליים במחירי הנפט.",
+      "tickers": [],
+      "significance": "high",
+      "writtenAt": "2026-11-12T17:51:08.797Z"
+    },
+    "https://finnhub.io/api/news?id=84a083e3f4c74c3a6e00a54eb6834718388ca2b54610012fd546b919110aa581": {
+      "summary": "השקעה בקרנת הסל XLE מרוכזת במידה רבה בשתי חברות אנרגיה בלבד, המחזיקות יחד בנתח משמעותי מנכסי הקרן.",
+      "impact": "ריכוז גבוה של ההון בשתי חברות בודדות בתוך קרן סל מגדיל את חשיפת המשקיעים לסיכון הספציפי של אותן חברות, בניגוד להנחה המקובלת שקרן סל מפזרת את הסיכון על פני כל סקטור האנרגיה.",
+      "catalyst": "רעש. המבנה הפנימי של הריכוזיות בקרן הסל אינו אירוע חדש או שינוי בפעילות העסקית של החברות המוחזקות, אלא נתון מבני קיים.",
+      "catalystKind": "noise",
+      "reaction": "הכתבה אינה מציינת תגובת מחיר.",
+      "chain": "החברות המרכזיות בקרן XLE מושפעות מזרמי ההון של משקיעים הקונים או מוכרים את הקרן, וחברות אנרגיה מתחרות מחוץ לקרן אינן נפגעות ישירות מכך.",
+      "tickers": [
+        "XLE"
+      ],
+      "significance": "low",
+      "writtenAt": "2026-11-12T17:52:30.127Z"
+    },
+    "https://finnhub.io/api/news?id=8972c2c006934350f288baad954832ab454636c15159bdc99d806a52277441fe": {
+      "summary": "קרנות סל (ETFs) מכרו נטו מניות של NextEra Energy בסך של 78.7 מיליון דולר ביום שלישי, ה-10 בנובמבר, בהובלת קרן הסקלקיטורית XLU שמכרה מניות בשווי של 88.3 מיליון דולר.",
+      "impact": "זרימת כספים שלילית מצד קרנות סל משקפת התאמות פסיביות של פוזיציות ואיזוני תיקים ולא שינוי מהותי בפעילות העסקית של החברה. מכיוון שמדובר בפעילות של קרנות סל כמו XLU ו-IVV, ההשפעה נובעת מביקושים רוחביים בסกטור השבבים והתשתיות ולא מאירוע פרטני של NextEra Energy.",
+      "catalyst": "זהו רעש, שכן תנועות יומיות של קרנות סל משקפות זרימות הון פסיביות ואיזונים תקופתיים של מדדים, ואינן משנות את התזרים, מבנה התחרות או הרגולציה של החברה.",
+      "catalystKind": "noise",
+      "reaction": "הכתבה אינה מציינת תגובת מחיר",
+      "chain": "האירוע משפיע על מניות בתוך סกטור השבבים והתשתיות, ובעיקר על קרנות הסל המחזיקות בחברה כגון XLU, IVV ו-IDU, דרך מנגנון של שינוי בהיקף האחזקות הפסיביות.",
+      "tickers": [
+        "NEE"
+      ],
+      "significance": "low",
+      "writtenAt": "2026-11-12T17:53:18.158Z"
     }
   },
   "unfetchable": {
@@ -52453,6 +52501,8 @@
     "https://www.cnbc.com/make-it/2026/11/11/push-back-coworker-boss-extra-work-ai.html": "2026-11-12T02:00:48.164Z",
     "https://news.google.com/rss/articles/CBMizgFBVV95cUxNSmRMSFZZUld1UEFab291N25WYXZVNENjbmtrWVU0OEEwZm84Z2RONXZHM0JnY2FId2ROLTRvek9lWmZiSFNQNlMwVVpVQ0Q1V3NsSDk1alc5Z0JoMExVY3NpYjVSVDhXd3RtYmo2M2lsdHoydlUteHlDMkp5QlZsWGQxam1JUXFuRkV0UHhOTVB0ZWtxeUhCTkNHNkRMMG5TaUdQaHBUYTlmMkhBRjBWUkZUTlNMVU1ISzFfVlduXzBJd3p0U0psdDNTa1F4Zw?oc=5": "2026-11-12T02:01:39.200Z",
     "https://news.google.com/rss/articles/CBMizwFBVV95cUxNa0VablB0SWViZWpCRFg4bC0yX2ZTM19HNmFFVUdqVVlwbWRuRjdpSnNXZ3liU04zeTYyZWJPSlhLeEVRTUlMS0N2SnlPdEpINzVHUTJjRXJjd3RKdEZMLS14czdZSlpjcWlJWm95bFpTNHgxblNSVlFyLWhsQ0JncVFZRGRmQ0p6cDZQRGRtNlh6LWxnVXlLRkJyelFzdTFoM285d2tQZTJvS1BkYkRzLVZwUERKc2pHbVBqOUZDSmFRbGJ4TmpmQVExbnEzOTQ?oc=5": "2026-11-12T02:02:12.860Z",
-    "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYjlBX041WVNOU3VBZEk1UVBkeDJQZ2tmNDFiTExBWUtNMldua215TURPWTU3aTFEbGhlcGRiSnFrX191UVpONXpMSjc5dlVhNVpDZzJWM25lNEtoSE4wSFZpTmtKX1BMWnpkSUdoNk9OeTd0SzFUa2NqdlVxcGpRQ2ZSZEcyTlN3MnRzbTlUZm9tVlU?oc=5": "2026-11-12T08:56:21.565Z"
+    "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYjlBX041WVNOU3VBZEk1UVBkeDJQZ2tmNDFiTExBWUtNMldua215TURPWTU3aTFEbGhlcGRiSnFrX191UVpONXpMSjc5dlVhNVpDZzJWM25lNEtoSE4wSFZpTmtKX1BMWnpkSUdoNk9OeTd0SzFUa2NqdlVxcGpRQ2ZSZEcyTlN3MnRzbTlUZm9tVlU?oc=5": "2026-11-12T08:56:21.565Z",
+    "https://finnhub.io/api/news?id=20b6be766f3483b48e3e9d0d50803e9a759c61e626600f95f4e0bc5c3dabec7f": "2026-11-12T17:50:41.868Z",
+    "https://finnhub.io/api/news?id=84c37186e29f3436fe6b2dfc2a24dbe5fa2548bb9b42cee8e31fe239d4b28378": "2026-11-12T17:54:23.432Z"
   }
 }

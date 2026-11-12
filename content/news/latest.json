@@ -1,5 +1,5 @@
 {
-  "refreshedAt": "2026-11-12T08:54:12.601Z",
+  "refreshedAt": "2026-11-12T17:47:10.449Z",
   "sectors": [
     {
       "sector": "ai",
@@ -7,69 +7,72 @@
       "blurb": "מודלים, שבבי AI, מרכזי נתונים והמירוץ בין החברות",
       "accent": "#7f77dd",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=5f4418330d495695fb8137cd06e6087263b26b141e8225511eb9e16aefedb90d",
-          "title": "CRWV Stock Eyes Best Week Since Nvidia’s Stake Reveal — Is Debt Scare Hiding A Bargain? Morningstar Thinks So",
-          "excerpt": "Morningstar sees a buying opportunity, calling debt-yield concerns overblown with over $20 billion available for deployment.",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://www.cnbc.com/2026/11/12/nvidia-kress-jones-employee-emails.html",
+          "title": "Here's what Colette Kress and Harvey Jones wrote to Nvidia employees",
+          "excerpt": "Interim CEO Colette Kress and board chair Harvey Jones emailed Nvidia employees, expressing gratitude for \"resilience, professionalism and continued dedication",
+          "image": "https://image.cnbcfm.com/api/v1/image/108550106-1794496355859-Untitled-2.jpg?v=1794496460&w=1920&h=1080",
+          "domain": "CNBC",
           "country": null,
-          "seenAt": "2026-11-12T07:49:06.000Z",
+          "seenAt": "2026-11-12T17:07:31.000Z",
           "tickers": [
-            "NVDA",
-            "SO"
+            "NVDA"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=669b0dea77fed1eace1ef8f85ab32224b707b23dea5d05cf9cc20c73311f1adb",
-          "title": "Tech giant Foxconn beats forecasts with third-quarter profit jump",
-          "excerpt": "Taiwanese tech giant Foxconn on Thursday reported a record net profit for the third quarter, as the global buildout of data centres fuels demand for the AI servers needed to operate them.Chief financial officer David Huang said Foxconn's \"third-quarter revenue, operating income, net income, and earnings per share all reached record quarterly highs\".",
+          "url": "https://finnhub.io/api/news?id=85479a559ba0f656a7c76b24e5803afd8afd109604be8bc18b88ba8b9f891a1d",
+          "title": "SpaceX's New Deal with Qualcomm Aims to Take on Mobile Carriers. History Says It's Going to Be an Uphill Battle.",
+          "excerpt": "Starlink Mobile will face some hurdles, but it has a few things working in its favor, too.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T07:43:52.000Z",
+          "seenAt": "2026-11-12T15:41:02.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=14b9ae4766058c1f89fe2215fd04c3ea437fee8980919edf3e7d1c303e818d96",
-          "title": "Procter & Gamble (PG) Has Raised Its Dividend for 70 Straight Years. Here's Why I'd Buy Before 2027.",
-          "excerpt": "That kind of track record reflects a company you can count on for growing income over the years.",
+          "url": "https://finnhub.io/api/news?id=f6445335e1c0c5ab8fbce374965719ac395bfafcf135c57206ecefa8ff259f65",
+          "title": "Artificial Intelligence (AI)-Enabled Counter-Drone System Market Global Report 2026 | Secure the $1.66B Market by 2030 with Lockheed Martin, Thales, Rheinmetall and Anduril",
+          "excerpt": "Players: Lockheed Martin, BAE Systems, Thales, L3Harris and Rheinmetall. Profiles cover AI counter-drone offerings, detection, tracking, sensor fusion and threat neutralization.Dublin, Nov. 12, 2026 (GLOBE NEWSWIRE) -- \"Artificial Intelligence (AI)-Enabled Counter-Drone System Market Global Report 2026\" has been added to ResearchAndMarkets.com's offering. The global artificial intelligence (AI)-enabled counter-drone system market is experiencing rapid expansion as governments, defense organizati",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T07:25:00.000Z",
+          "seenAt": "2026-11-12T14:19:00.000Z",
+          "tickers": [
+            "INTC"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=83cd260eca4059e5bad67721c0b6747d7cd9adb4a3ff5922f11d905999ec3276",
+          "title": "Amkor Technology: The AI Expansion Could Take Years To Pay Off",
+          "excerpt": "Analyst rates Amkor Technology, Inc., a Hold: its $12 billion Arizona expansion strains free cash flow, and sector-lagging growth could limit upside.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2234313941/image_2234313941.jpg?io=getty-c-og",
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-11-12T12:21:43.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=a0a66fbe7a828df75451d878862b2a326c6675ea372f40ab7b367ee48f403fbe",
-          "title": "This Is Still A Market You Have To Own Until Proven Otherwise, Says Northern Trust’s Eric Freedman",
-          "excerpt": "Eric Freedman, Northern Trust Wealth Management’s Chief Investment Officer, believes that now is a good time to stay invested in the stock market, especially in technology names.",
+          "url": "https://finnhub.io/api/news?id=fd2f85f40a3a1926a57404c59eff6fa86b969700d14f4874e4b678ef5b4351d6",
+          "title": "JPMorgan Holds $29 Billion in Data Center Loans as Lenders Turn “Reluctant” on AI Debt",
+          "excerpt": "Key TakeawaysJPMorgan Chase holds $29 billion of loans in the commercial property category that includes data centers, as banks grow wary of adding AI debt. That category is now 12% of JPMorgan’s commercial real estate book, up from 8% three years ago, ranking second behind apartments.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T07:03:10.000Z",
-          "tickers": []
+          "seenAt": "2026-11-12T06:31:18.000Z",
+          "tickers": [
+            "JPM"
+          ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=228188377f2eb7a0455ea728710b296e9d0bb2762a31492246c2cdb1e264742a",
-          "title": "Prediction: $1,000 Invested in SpaceX Today Will Be Worth This Much by 2029",
-          "excerpt": "SpaceX is growing fast with Starlink and AI, but its spending is heavy. Here are three earnings-based price scenarios for the stock through 2029.",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://finnhub.io/api/news?id=a8f544640b6979ffc8607d89714f2ab4ae48c15253ca632c365e6daeef82f777",
+          "title": "Plug Power: Sell On Increased Risk Of Near-Term Dilution (Rating Downgrade)",
+          "excerpt": "Data center moratoriums in New York and Texas have precluded Plug Power from closing important asset sales. Read why PLUG stock is downgraded to a sell.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1486731600/image_1486731600.jpg?io=getty-c-og",
+          "domain": "SeekingAlpha",
           "country": null,
-          "seenAt": "2026-11-12T06:50:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=f6f3c8739e10f4811bdf67bf91af5e97edc17f7ab5419fac307a75e8d6a189f5",
-          "title": "China chip stocks rally as U.S. weighs curbs on remote AI access",
-          "excerpt": "Investing.com -- Chinese chip stocks rallied on Thursday, with Cambricon surging more than 11% and Moore Threads gaining around 7%, as a rebound in global semiconductor shares and the prospect of tighter U.S. controls on access to advanced AI processors renewed focus on China's domestic chip industry.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-12T06:38:31.000Z",
+          "seenAt": "2026-11-12T05:24:19.000Z",
           "tickers": []
         },
         {
@@ -95,6 +98,16 @@
           "tickers": []
         },
         {
+          "url": "https://finnhub.io/api/news?id=5ee6992ff1d73d532927c530ecd1ea6fd76203840c4c5b6f53bd942abe76dfc6",
+          "title": "J.P. Morgan Report, CoreWeave Earnings Provide Positive Signals For Data Center Construction In 2027",
+          "excerpt": "J.P. Morgan researchers and CoreWeave executives see robust AI data center construction continuing through 2027 before slowing in 2028.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-11T18:09:00.000Z",
+          "tickers": []
+        },
+        {
           "url": "https://www.cnbc.com/make-it/2026/11/11/push-back-coworker-boss-extra-work-ai.html",
           "title": "Tired of spending time fixing other people's AI slop at work? How to talk to them about it",
           "excerpt": "Executive coach Melody Wilding shares four ways to address the extra work landing on your plate without the conversation becoming confrontational.",
@@ -103,18 +116,6 @@
           "country": null,
           "seenAt": "2026-11-11T16:05:01.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=97d92db52ca1ec5b31755eac1f9d0cafe48d40c06c71dd5d2ae632d3f95db123",
-          "title": "JPMorgan Partners With OpenAI: What It Means for JPM's AI Strategy",
-          "excerpt": "JPMorgan's OpenAI partnership aims to boost coding efficiency and cybersecurity, but rising technology costs and implementation risks could weigh on AI gains.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T15:38:00.000Z",
-          "tickers": [
-            "JPM"
-          ]
         }
       ]
     },
@@ -124,42 +125,89 @@
       "blurb": "ייצור שבבים, ציוד ליתוגרפיה, זיכרון ומגבלות יצוא",
       "accent": "#1d9e75",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=5f4418330d495695fb8137cd06e6087263b26b141e8225511eb9e16aefedb90d",
-          "title": "CRWV Stock Eyes Best Week Since Nvidia’s Stake Reveal — Is Debt Scare Hiding A Bargain? Morningstar Thinks So",
-          "excerpt": "Morningstar sees a buying opportunity, calling debt-yield concerns overblown with over $20 billion available for deployment.",
+          "url": "https://finnhub.io/api/news?id=adfe922bf490ec4012adea26b531cfb959bce5cdc37e0c9f051c968a77223907",
+          "title": "Who is Colette Kress, Nvidia's interim CEO? Longtime exec takes top spot after Jensen Huang resigns",
+          "excerpt": "CHICAGO (AP) — With Jensen Huang's resignation on Thursday, Nvidia is bringing longtime tech executive Colette Kress into the role of interim CEO.Kress first joined the California-based chipmaker back in 2013.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T07:49:06.000Z",
+          "seenAt": "2026-11-12T15:55:44.000Z",
           "tickers": [
             "NVDA",
-            "SO"
+            "SPOT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=f6f3c8739e10f4811bdf67bf91af5e97edc17f7ab5419fac307a75e8d6a189f5",
-          "title": "China chip stocks rally as U.S. weighs curbs on remote AI access",
-          "excerpt": "Investing.com -- Chinese chip stocks rallied on Thursday, with Cambricon surging more than 11% and Moore Threads gaining around 7%, as a rebound in global semiconductor shares and the prospect of tighter U.S. controls on access to advanced AI processors renewed focus on China's domestic chip industry.",
+          "url": "https://finnhub.io/api/news?id=0a4ff1215f873825316354607b6b5ef152e3a00c315909ee9597ba54d09204f4",
+          "title": "Alphabet’s Misunderstood TPUs Are a Hidden Catalyst Investors Haven’t Yet Noticed",
+          "excerpt": "Alphabet stock just tumbled, yet one investor keeps buying faster. A quiet business inside Google may be draining spending from the market's favorite chipmaker, and Wall Street still prices the company as if it doesn't exist. What is the market overlooking?",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T06:38:31.000Z",
+          "seenAt": "2026-11-12T15:45:30.000Z",
+          "tickers": [
+            "GOOGL"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=2f10baa63a5165fbe44a26d5b34ac272fcb8ff323b113325e98fc143573ec735",
+          "title": "Micron Is Back Above $800 After Its Best Day Since July",
+          "excerpt": "A memory maker briefly outranked the biggest US bank, but only until the closing bell. One week after a brutal selloff, Micron's rebound faces a test that has nothing to do with a single strong day.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T13:56:58.000Z",
+          "tickers": [
+            "MU"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=2192ae397c35dc1f91d891a2ad045489e8b098ee34cf7de416375cafcd94a1cc",
+          "title": "5 Best Growth Stocks to Buy for the Next Decade",
+          "excerpt": "On November 5, the S&P 500 fell 4.36%, its worst day since the April 2025 tariff crash, with roughly $3 trillion in value wiped off S&P 500 companies. The Nasdaq Composite dropped 5.52% to slip into a correction, and chip stocks took the hardest hit, with the Philadelphia Semiconductor Index falling about 12%, its worst […]",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:31:28.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=f4304f9a9af91eecf1a08fb3f39eeb07533009fb60b0471004336ff89a794b2e",
-          "title": "Dell Technologies vs. Taiwan Semiconductor: Which Technology Stock Is a Better Buy for 2027?",
-          "excerpt": "Dell trades at a far lower forward multiple, but Taiwan Semiconductor's 44.6% net margin tells a very different story about pricing power.",
+          "url": "https://finnhub.io/api/news?id=0ad47de328f215489eec6408413a57e5b3cad9e83049df9fcfda702e0f134760",
+          "title": "iShares PHLX SOX Semiconductor (SOXX) Adds ASML and Analog Devices on Tuesday",
+          "excerpt": "The fund bought $27.5 million of ASML and $17.6 million of Analog Devices while selling $17.0 million of AMD.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T23:50:02.000Z",
+          "seenAt": "2026-11-12T11:05:20.000Z",
+          "tickers": [
+            "AMD",
+            "ASML"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=744f813e64ad1887a945055dafbec1565b08cee4ddcb2c7ccc8cdcd0629ac59b",
+          "title": "ETFs Are Net Sellers of Taiwan Semiconductor (TSM) on Nov. 10",
+          "excerpt": "ETFs sold $38.0 million of Taiwan Semiconductor (TSM) on net, with 12 buying and 3 selling.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:02:33.000Z",
           "tickers": [
             "TSM"
           ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=20b6be766f3483b48e3e9d0d50803e9a759c61e626600f95f4e0bc5c3dabec7f",
+          "title": "SCHD-Inspired 4-Factor Dividend Growth Strategy Selections For November 2026",
+          "excerpt": "",
+          "image": null,
+          "domain": "SeekingAlpha",
+          "country": null,
+          "seenAt": "2026-11-12T06:29:46.000Z",
+          "tickers": []
         },
         {
           "url": "https://www.cnbc.com/investingclub/2026/11/11/were-adding-a-chipmaker-to-our-bullpen-watchlist-and-downgrading-another-name.html",
@@ -169,26 +217,6 @@
           "domain": "CNBC",
           "country": null,
           "seenAt": "2026-11-11T20:04:42.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=99ace456e3c377ec9152f194b498ab480f15cf1da08677bbe2b76c569f90b42a",
-          "title": "Nasdaq Jumps Over 4% This Week as Chip Names Drive a Sharp Midweek Rally",
-          "excerpt": "Stock Preachers News Commentary - Stocks staged a broad midweek advance, with the Nasdaq Composite climbing 2.06% on the session and 4.08% for the week to 25,583.42, while the S&P 500 added 1.4% on the day for a 3.38% weekly gain and the Dow rose 2.05% over the same stretch. The Russell 2000 gained 3.27% for the week. Volatility eased sharply, with the VIX down 2.10 points and the VXN down 5.45 points from last week, even as one closely watched chipmaker found itself sidelined by headlines rathe",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T18:30:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=6a09bf4c0516fb0620408de9446a69b040e0f6d62f4487fbe575414528f2db2d",
-          "title": "How $300,000 in EWT Ends Up With $60,924 in a Single Chipmaker",
-          "excerpt": "A Taiwan fund with 83 holdings sounds like a safe way to diversify beyond U.S. stocks. One line in its SEC filing shows why retirees may be taking a much bigger bet on a single company than they realize.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T12:33:55.000Z",
           "tickers": []
         },
         {
@@ -205,40 +233,13 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=003e0d883eef0ac1d460132072e0af5b592b1eab50b7741504c32d70c1471989",
-          "title": "Michael Burry Says Nvidia Earnings Will Be 'Great' — So Why Is He Telling NVDA Bulls To 'Get Out'?",
-          "excerpt": "Burry says customers could renegotiate deals or switch suppliers, slowing Nvidia’s growth and squeezing margins.",
+          "url": "https://finnhub.io/api/news?id=28f6a6dff9c7f9366e3bbe15b173d6e58a039661ea56a12a5335e96aa3dbc349",
+          "title": "The Latest: Nvidia CEO Jensen Huang resigns after his affair raises US security concerns",
+          "excerpt": "Nvidia CEO Jensen Huang resigned Thursday after his extramarital affair with a Chinese businesswoman who reportedly was also acting as a spy for Beijing raised U. The company named Colette Kress as interim CEO.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T07:17:47.000Z",
-          "tickers": [
-            "NVDA",
-            "SO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=68f60a3ede1ca172a9ff4199fcbc654822ad3aeef0402c46f30c85662e8fe5ed",
-          "title": "Cathie Wood, Brad Gerstner and 8 Other Big Funds Bought Cerebras. Is It a Buy Before Earnings?",
-          "excerpt": "Key TakeawaysCathie Wood’s ARK Invest, Brad Gerstner’s Altimeter Capital and eight other big funds reported new Cerebras stakes as of June 30, and the stock is down 58% since. Several of the same funds held far bigger positions in NVIDIA, Taiwan Semiconductor and Broadcom, which trade below or near their usual multiples.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T20:33:14.000Z",
-          "tickers": [
-            "TSM",
-            "NVDA",
-            "AVGO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=f8ab33f4201afd61377fe7c22788c00731aa6006d79a463d62544df6d5c11ed7",
-          "title": "Nvidia Stock Concerns Are Sending Investors Toward More Resilient AI Infrastructure Names",
-          "excerpt": "When a powerhouse like Nvidia suddenly faces questions over governance, leadership and national security, it can jolt every corner of large-cap tech and semiconductors. Sharp moves like this often reshuffle where risk and resilience really sit, creating a window where some investors hesitate and others quietly reposition. This article walks through three stocks exposed to the same headlines, using our screener to spotlight where sturdier governance and corporate resilience may matter most...",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-12T07:14:26.000Z",
+          "seenAt": "2026-11-12T15:53:19.000Z",
           "tickers": [
             "NVDA"
           ]
@@ -251,20 +252,94 @@
       "blurb": "מחירי נפט, אופ״ק, זיקוק ושרשרת האספקה העולמית",
       "accent": "#d85a30",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=ccf7278140996935a397cb4110bdb5335b1740f3ec56c9225f8068adee4ad14a",
-          "title": "Exxon, Chevron, and Shell Just Reported. Here's What Each One Said About Where Oil Goes Next.",
-          "excerpt": "Uncertainty is the main issue in the oil market, but that doesn't mean that these integrated energy giants aren't making plans.",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQcDQ2cWxyeTFpazFaX1ZNM2RoS0t2ZVpEa0JpMElTZVFMUElROEF5c20tMlU0dEszWFlEdkhfR2VOb3hEQmo3MjRtdVlSaEhkZnpKXzExbE5QcXItQ3Z6REoyY1Fpak9IUUplYWp6NTQ2UjBiNVk1WDN0MmJjaFRkOHNLdDYxMU9xOWhuMnVaTlNiVXJNTlhLYV9EZEpnd1oxYmF0cG82b2VkMURkYnkzZkZBX0hhWHM?oc=5",
+          "title": "Four tankers struck by explosions in Strait of Hormuz, Iran says - Reuters",
+          "excerpt": "Four tankers struck by explosions in Strait of Hormuz, Iran says  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-11-12T16:27:35.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=14830ff76e5fcd64184bc9404c450f13a6d5f867641bcb383ed3b01cd98e84a6",
+          "title": "Sector Update: Energy Stocks Rise Pre-Bell Thursday",
+          "excerpt": "Energy stocks were rising pre-bell Thursday, with the State Street Energy Select Sector SPDR ETF (XL",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T03:35:00.000Z",
+          "seenAt": "2026-11-12T14:26:39.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=0aa46968aa40acbfcebeabd0694e6a25850bbf085500f0b05c1c547fc7d479cb",
+          "title": "Oil Price is Still High: Boon for ExxonMobil's Upstream Business?",
+          "excerpt": "Oil above $85 per barrel boosts XOM's upstream outlook, backed by low-cost Permian and Guyana assets.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T14:09:00.000Z",
           "tickers": [
             "XOM",
+            "COST"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=49ab416c0dc269043e0d8392e07612d18ab0e84f7d9190d042c1cec342309604",
+          "title": "Can Occidental Petroleum Stock Fall 30%?",
+          "excerpt": "For questions about this article or underlying research, email help@trefis.com.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T13:41:55.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d3f2bb9b8855dd1b29ec043df460e767410966c4906151e3fec7dd2978f61563",
+          "title": "Oil Still Above $85, EOG Up 41% in a Year: Is the Stock Still a Buy?",
+          "excerpt": "EOG Resources has surged 40.8% in a year. High oil prices, low debt, steady dividends and attractive valuation support its appeal.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T13:41:00.000Z",
+          "tickers": [
+            "EOG"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=be370d03326d49c370fcd0ccda0d9e18a24877c3b8dfe40c5aa3fef31bf5c18b",
+          "title": "Chevron Q3 Earnings Surge on Strong Refining: Is the Stock a Buy Now?",
+          "excerpt": "CVX's surging Q3 earnings, record U.S. refinery throughput, rising estimates and strong cash flow bolster its appeal. It also outpaces energy rivals in 2026.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T12:30:00.000Z",
+          "tickers": [
             "CVX"
           ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=84a083e3f4c74c3a6e00a54eb6834718388ca2b54610012fd546b919110aa581",
+          "title": "Your $300,000 in XLE Holds $116,286 in Just Two Oil Companies",
+          "excerpt": "You think a sector ETF spreads your risk across the whole energy industry. A look inside XLE's filing shows how much of your money rides on just two names, and why a rock-bottom fee hides the real price.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T12:03:45.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNSVNfOWE4dnhlMzA3cExiOE1nR0FNQXFJejNsQTExRExKTlVKNjNjcFRGMWQxMGNmYnNOWFdLaUp0OUo2SHFlNVoxMUo0Y21WazFhVmhZU1VxYlRuWVRfZEtiQ0NGWENEejFpMFRzaUtNbVV3TEhKUHp2aUc0SHJ2VkNzM1BHNU5VeGNNbnRldWZaZUFkTWdDNm9ibk5kQXlOQlRRWHRhdGk5ZEtPZjVjMjE1Q1BJaTZ1NmplRWJVSDlvRFBUQnc?oc=5",
+          "title": "Oil prices rise as geopolitical risks offset rising crude output - Reuters",
+          "excerpt": "Oil prices rise as geopolitical risks offset rising crude output  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-11-12T01:52:00.000Z",
+          "tickers": []
         },
         {
           "url": "https://finnhub.io/api/news?id=2c79933322b131570dedb8fcf5a735893c64261868369b2eb9e643fa2e42e2f3",
@@ -285,80 +360,6 @@
           "country": null,
           "seenAt": "2026-11-12T01:00:00.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYjlBX041WVNOU3VBZEk1UVBkeDJQZ2tmNDFiTExBWUtNMldua215TURPWTU3aTFEbGhlcGRiSnFrX191UVpONXpMSjc5dlVhNVpDZzJWM25lNEtoSE4wSFZpTmtKX1BMWnpkSUdoNk9OeTd0SzFUa2NqdlVxcGpRQ2ZSZEcyTlN3MnRzbTlUZm9tVlU?oc=5",
-          "title": "NEWSLETTER: Hormuz traffic is up. So are the attacks - Reuters",
-          "excerpt": "NEWSLETTER: Hormuz traffic is up. So are the attacks  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-11-11T16:12:11.000Z",
-          "tickers": [
-            "SO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=b3c098f665be93468a3d60ffd9478748bf2b4db862566c78416fefb033ab0fb5",
-          "title": "TRGP Q3 Earnings Beat on Permian Growth and Higher Fees",
-          "excerpt": "Targa Resources' Q3 2026 earnings beat estimates as record Permian volumes and higher fees fueled growth, prompting a raised full-year EBITDA outlook.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T16:11:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=6838acf78758b8c8127572869a52123cad2ecfa4263365a93a74019e0ba0d141",
-          "title": "Imperial Oil Stock Rises 43% YTD: Time to Buy or Lock in Profits?",
-          "excerpt": "IMO stock rallies 42.8% YTD. With rising production, favorable refining margins and strong cash flow, is the stock still worth buying?",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T16:06:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOSDZlTWwtdThPTnp0UjFXeXowU3I2SzZTbDA1Zk9BZUJER0dMV1o3S2oza0sxUmxlT2xhb2k4Ykx1TDlORm5zNVdJSk8wVzZBM2VRV2xFUlpJQTdiTTJJY1ZULXJNbjIyaWVudGx5UUNjZWlMaGRJcXZHVjBmUkUxVmVxZC1FUWk0SUFmZkFQZGhaeFVPdWtkV2xIQ0hRT1ZDWGYySlk3RHdRTDloMDlLdQ?oc=5",
-          "title": "OPEC+ oil output in October nears pre-Iran war rate, led by Saudi Arabia - Reuters",
-          "excerpt": "OPEC+ oil output in October nears pre-Iran war rate, led by Saudi Arabia  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-11-11T14:14:31.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPWWNsbHZIOFpSN0NER012RTNDdE9jRzFkWXRJZVY1X2hkVTlnUHhDcFNrVDU0Ul9yVXlvcHpfblFEYkYyNW9jRXA2OHNldXhuaEhQQTZYX3V0R1R5dFdVNkRNZFNrVWtWdHI3N0FrYVFFNEx1MlhBYkFJY1c0MEQ3Ym1RRzF0YWY2OWZWZmR0RlFYeU5YOWhlR0UycW9jODJDMjZob2VIR0JNcHd5dkFKSzZYYUpSYUJkcEtwMlRXZ3pPcHN2dWc?oc=5",
-          "title": "Poland's Orlen ends long-term QatarEnergy LNG contract over delivery failure - Reuters",
-          "excerpt": "Poland's Orlen ends long-term QatarEnergy LNG contract over delivery failure  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-11-10T22:04:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=17d73eb69b1f35a300d1f36908382a4cefe497f6bb4114a9406e1cae9a25f67f",
-          "title": "Treasuries Now Offer 2.66% Above Inflation. Are Dividend Stocks in Trouble?",
-          "excerpt": "Real yields hit a level that crushed income stocks once before, and one dividend name is already repeating the old script. Which holdings sat out the damage this time, and what single number could turn the tide again?",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-10T19:17:54.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=0aaebe2619886165b49294cf68b8d2c2a7f8b11571a445703be7217fe08817d5",
-          "title": "Is Chevron Stock A Real Bargain?",
-          "excerpt": "For questions about this article or underlying research, email help@trefis.com.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-10T18:05:03.000Z",
-          "tickers": [
-            "CVX"
-          ]
         }
       ]
     },
@@ -368,16 +369,38 @@
       "blurb": "רשת החשמל, גרעין, מתחדשות והביקוש שמרכזי הנתונים יוצרים",
       "accent": "#eda100",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=734741a6971e709107c1ce8389afde77e905572194c8b9071fa513e9c1381415",
-          "title": "NextEra Energy (NEE) Draws Fresh Virginia Questions Over Merger Consumer Protections",
-          "excerpt": "NextEra Energy (NYSE:NEE) faces fresh scrutiny as Virginia's Consumer Counsel flags ongoing gaps in the merger case with Dominion Energy. The Consumer Counsel's latest regulatory filing questions the completeness of merger data on competitive effects, rate impacts, and consumer safeguards. Regulators in Virginia are being asked to examine alleged filing errors, unclear market impact assumptions, and the enforceability of promised protections for customers. The Consumer Counsel's criticism of...",
+          "url": "https://finnhub.io/api/news?id=0c13ac60e8d6ea8fa511f20de96ac68506df9f553b87c4a0f9165dfd453604e1",
+          "title": "Solar Stocks’ Market-Cap Mirage: Diversified Giants Carry the Theme While Pure Plays Lag",
+          "excerpt": "Solar energy stocks show narrow leadership: weighted returns mask weak pure-play performance, so selectivity and business-model focus matter.",
+          "image": "https://www.chartmill.com/images/uploads/solar_theme_7031e1d4e1.webp",
+          "domain": "ChartMill",
+          "country": null,
+          "seenAt": "2026-11-12T13:36:16.000Z",
+          "tickers": [
+            "SO"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=0c9d59a2037c456ab3f36acb312e1945f50892a42ca415fa40e18d4646a95aa3",
+          "title": "What Utilities Select Sector SPDR ETF (XLU) Sold: NextEra Leads on Nov. 10",
+          "excerpt": "The fund sold $673.0 million of stock, cutting all 31 positions and adding nothing.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T01:09:09.000Z",
+          "seenAt": "2026-11-12T11:04:33.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=8972c2c006934350f288baad954832ab454636c15159bdc99d806a52277441fe",
+          "title": "ETFs Are Net Sellers of NextEra Energy (NEE) on Nov. 10",
+          "excerpt": "ETFs sold $78.7 million of NextEra Energy stock on Nov. 10.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:02:13.000Z",
           "tickers": [
             "NEE"
           ]
@@ -403,16 +426,6 @@
           "tickers": []
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNSmRMSFZZUld1UEFab291N25WYXZVNENjbmtrWVU0OEEwZm84Z2RONXZHM0JnY2FId2ROLTRvek9lWmZiSFNQNlMwVVpVQ0Q1V3NsSDk1alc5Z0JoMExVY3NpYjVSVDhXd3RtYmo2M2lsdHoydlUteHlDMkp5QlZsWGQxam1JUXFuRkV0UHhOTVB0ZWtxeUhCTkNHNkRMMG5TaUdQaHBUYTlmMkhBRjBWUkZUTlNMVU1ISzFfVlduXzBJd3p0U0psdDNTa1F4Zw?oc=5",
-          "title": "Iran will not allow enriched nuclear material to leave the country, security chief says - Reuters",
-          "excerpt": "Iran will not allow enriched nuclear material to leave the country, security chief says  Reuters",
-          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
-          "domain": "Reuters",
-          "country": null,
-          "seenAt": "2026-11-11T20:03:05.000Z",
-          "tickers": []
-        },
-        {
           "url": "https://finnhub.io/api/news?id=b87afc6bde03e4c22ef69ea0ac5dd19fd145bc8479949a994460aa1ebf3f5ec7",
           "title": "State Street Utilities SPDR (XLU) Buys $76 Million More NextEra on Monday",
           "excerpt": "The fund added $576.0 million across all 31 of its holdings, led by a $76.0 million increase in NextEra Energy.",
@@ -420,6 +433,16 @@
           "domain": "Yahoo",
           "country": null,
           "seenAt": "2026-11-11T11:03:36.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNSmRMSFZZUld1UEFab291N25WYXZVNENjbmtrWVU0OEEwZm84Z2RONXZHM0JnY2FId2ROLTRvek9lWmZiSFNQNlMwVVpVQ0Q1V3NsSDk1alc5Z0JoMExVY3NpYjVSVDhXd3RtYmo2M2lsdHoydlUteHlDMkp5QlZsWGQxam1JUXFuRkV0UHhOTVB0ZWtxeUhCTkNHNkRMMG5TaUdQaHBUYTlmMkhBRjBWUkZUTlNMVU1ISzFfVlduXzBJd3p0U0psdDNTa1F4Zw?oc=5",
+          "title": "Iran will not allow enriched nuclear material to leave the country, security chief says - Reuters",
+          "excerpt": "Iran will not allow enriched nuclear material to leave the country, security chief says  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-11-11T10:26:00.000Z",
           "tickers": []
         },
         {
@@ -451,28 +474,6 @@
           "country": null,
           "seenAt": "2026-11-10T10:46:57.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=68f597bf787ab80924491fb31388fe49fd41a96b55843d1758925a7c61efc0bd",
-          "title": "UTF: 7.7% Monthly Income At A Discount Again",
-          "excerpt": "See why Cohen & Steers Infrastructure Fund earns a buy rating: 7.7% yield, NAV discount, and covered payouts through 2026.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2227804495/image_2227804495.jpg?io=getty-c-og",
-          "domain": "SeekingAlpha",
-          "country": null,
-          "seenAt": "2026-11-10T04:31:17.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=2ccc0ec40fad6abf7647d2efd49e300c19be50e5016cba77a78499b2828b3b2f",
-          "title": "People Pay the Power Bill Before Almost Anything Else. $45,000 in Each of These 3 Utilities Pays $5,915 a Year",
-          "excerpt": "When money gets tight, Netflix and dinners out get cut long before the electric bill. Three regulated utilities turn that habit into dividend income, but a pending merger, a wildfire threat, and share dilution complicate the picture.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-09T22:14:25.000Z",
-          "tickers": [
-            "NFLX"
-          ]
         }
       ]
     },
@@ -482,19 +483,91 @@
       "blurb": "ריבית, אינפלציה, הפד, תשואות אג״ח ובנקים",
       "accent": "#378add",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=fba96cb8ca92a2269d7f257a0eee8b7cc1a713c9574e99af4d39878bbb57fbe8",
-          "title": "JPMorgan Names Top 3 Picks Among Auto Parts Stocks",
-          "excerpt": "Investing.com-- JPMorgan outlined its top three picks among auto parts stocks, highlighting companies with self-help initiatives and structural improvements that should offset near-term industry pressures.",
+          "url": "https://finnhub.io/api/news?id=5a82a319771b643aee3c44d54590194c45f4a9a57bcc9c9589a6c93e02500d75",
+          "title": "Jamie Dimon Warned the American Dream Was “Slipping Out of Reach.” $19 Trillion in Debt May Explain Why",
+          "excerpt": "A steady paycheck used to be the first rung on the ladder. New Federal Reserve figures, a surge in one risky type of borrowing, and a simple $80,000 budget test reveal why so many families feel stuck climbing.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T07:40:44.000Z",
+          "seenAt": "2026-11-12T14:52:31.000Z",
+          "tickers": [
+            "SO"
+          ]
+        },
+        {
+          "url": "https://www.cnbc.com/2026/11/12/democrats-unions-midterms-2026.html",
+          "title": "Unions helped Democrats win big in 2026. Now they want action",
+          "excerpt": "Unions spent millions of dollars and mobilized thousands of members to get out the vote for Democrats in the midterm election. Now they want to see action.",
+          "image": "https://image.cnbcfm.com/api/v1/image/108548436-1794344279694-gettyimages-2303690916-4075_48_po-2077-d.jpeg?v=1794344477&w=1920&h=1080",
+          "domain": "CNBC",
+          "country": null,
+          "seenAt": "2026-11-12T13:09:33.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=289876b8b96b190e337d30a64fbb693a8b27cf4a3f1e05776ac07520b117290c",
+          "title": "TransUnion to Present at 2026 J.P. Morgan Ultimate Services Investor Conference",
+          "excerpt": "CHICAGO, Nov. 12, 2026 (GLOBE NEWSWIRE) -- TransUnion (NYSE: TRU) today announced that Chris Cartwright, President and CEO, will present at the J.P. Morgan Ultimate Services Investor Conference on Tuesday, November 17, 2026. The presentation is scheduled to begin at 9:20 a.m. CT (10:20 a.m. ET). A live webcast of the presentation will be made available on the TransUnion Investor Relations website at http://www.transunion.com/tru. A replay will also be available on the company’s website following",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:50:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=6bd8c72ec4c748469bd1b25465131a9dd41edfaa5f6618d72fec97b4e96ecd8f",
+          "title": "Financial Select Sector SPDR (XLF) Sells $18.9 Million of Berkshire on Nov. 10",
+          "excerpt": "The fund sold $142.7 million of stock and bought nothing, trimming all 76 of its positions.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:05:46.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=9f753880941479f91c35d63b2401312f895afedd987a8c892c027afd390caa1a",
+          "title": "Invesco KBW Bank ETF (KBWB) Adds Wells Fargo and JPMorgan on Nov. 10",
+          "excerpt": "The fund bought $163.6 million of stock, lifting all 24 of its positions and selling nothing.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:05:36.000Z",
           "tickers": [
             "JPM"
           ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=84c37186e29f3436fe6b2dfc2a24dbe5fa2548bb9b42cee8e31fe239d4b28378",
+          "title": "Tony Robbins: 4 rules the world's greatest investors follow",
+          "excerpt": "Author, entrepreneur, and philanthropist Tony Robbins sits down with Yahoo Finance Executive Editor Brian Sozzi to break down the four things every elite investor does in common, and why you should run your money like a side business.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:00:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPc09mRGRCVmlxTnVTdDR2Y0ktNjVkZE1xUHhyTnZWUGZvbFZFS2hsTFk1SkVfNE82SVZlMTFXbUFtckZMaDIwbzA5RlgxWUxKbE5ZMGhrRkl1UWFrVG9ibW9mdWlGM0NYRTVlQnZramhHSTVadmtEaFhWMDRFY1dYVWRPX1RzNm9YNURTVUVzeGo2aEo4UzZReXRCVlQ0amhjVGFWTU1BVFVQR1k?oc=5",
+          "title": "Gold drops 3% to over one-year low as fading Middle East peace hopes fan inflation fears - Reuters",
+          "excerpt": "Gold drops 3% to over one-year low as fading Middle East peace hopes fan inflation fears  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
+          "country": null,
+          "seenAt": "2026-11-12T03:40:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=d8b6df60610994743f9c9d9dffefeaf55bb4131812fec2356626ace62a7d86ff",
+          "title": "The world's super-rich are piling into alternative investments. Here's why",
+          "excerpt": "Alternative investments now account for 60% of single-family office portfolios, surpassing traditional assets for the first time, according to BNY Wealth.",
+          "image": "https://image.cnbcfm.com/api/v1/image/108548374-1794341023796-gettyimages-1370691577-img_7844.jpeg?v=1794452397&w=1920&h=1080",
+          "domain": "CNBC",
+          "country": null,
+          "seenAt": "2026-11-11T22:36:44.000Z",
+          "tickers": []
         },
         {
           "url": "https://finnhub.io/api/news?id=a005e36a19d1c9e9ea789658c2fe87523a5293c0a20682604ec8ffe53eb6ffef",
@@ -515,80 +588,6 @@
           "country": null,
           "seenAt": "2026-11-11T19:10:00.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=ef14a6f81535ac88abab8333cdbf3b0b740e07ed8c23ec3a7e8d2af49a69ecd5",
-          "title": "What Will Bitcoin and Ethereum Be Worth in 5 Years?",
-          "excerpt": "Bitcoin and Ethereum have both slid hard from their highs, but analysts see wildly different futures for each. One faces a clear path back, while the other could end up a huge winner or a painful loser. Which one carries the bigger risk?",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T17:34:06.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=91f807af34e205852f72ef311720bb8d6bdff27121abc4970db1d4d729be6807",
-          "title": "Sky Harbour Group Corp (SKYH) (Q3 2026) Earnings Call Highlights: Revenue Jumps 45% as ...",
-          "excerpt": "Sky Harbour Group Corp (SKYH) posted strong Q3 revenue growth and record construction activity, but trimmed its adjusted EBITDA outlook on campus opening timing and Bradley ramp-up costs.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T17:04:30.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=64806252ae7173bf2a49dd6a9e8de2b4668b331ca8827af674f554c0aab2420f",
-          "title": "AI Spending Will Slow. GE Vernova Stock Can Rise Anyway.",
-          "excerpt": "GE Vernova has what it takes to weather a slowdown in artificial-intelligence spending, say the analysts.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T16:14:00.000Z",
-          "tickers": [
-            "INTC"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=489238e1edffaa93d44955760d359af9ffbd333d3f4df5828934768a7fba8656",
-          "title": "OKXICE to Launch Tokenized Stock Trading with Coinbase, Circle, Strategy",
-          "excerpt": "OKX and Intercontinental Exchange (NYSE: $ICE), the parent company of the New York Stock Exchange (NYSE), will laun...",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T15:34:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=851fc4dd22a529fbd9e39dfc2cbc30f3240e9ae3a924a32dfadae8cdbf612e63",
-          "title": "Expression Therapeutics CEO to Attend 45th J.P. Morgan Healthcare Conference 2027",
-          "excerpt": "Expression Therapeutics, Inc., a clinical-stage company developing investigational stem cell and gamma delta (γδ) T-cell therapies, today announced that Chief Executive Officer David F. Townson, Ph.D., has been invited to attend the 45th Annual J.P. Morgan Healthcare Conference, January 11-14, 2027, in San Francisco. During the week, Dr. Townson will meet with prospective pharmaceutical partners about the company's hemophilia A and neuroendocrine tumor programs.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T14:05:00.000Z",
-          "tickers": [
-            "F"
-          ]
-        },
-        {
-          "url": "https://www.cnbc.com/2026/11/11/mortgage-rates-jump-sharply-higher-after-easing-for-4-straight-weeks.html",
-          "title": "Mortgage rates jump sharply higher, after easing for four straight weeks. Here's why",
-          "excerpt": "After falling for a month, mortgage rates jumped sharply higher on a hotter-than-expected inflation report.",
-          "image": "https://image.cnbcfm.com/api/v1/image/108448116-1792697240840-gettyimages-2296175868-260923_tohomes_116.jpeg?v=1792697322&w=1920&h=1080",
-          "domain": "CNBC",
-          "country": null,
-          "seenAt": "2026-11-11T12:38:32.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=8b4435b2c5b91c85b40aee84bbc6dfea0f7ee449aa3a07dd209dbb06916c9614",
-          "title": "Dow Falls Over 150 Points Following Inflation Report: Greed Index Remains In ‘Fear’ Zone",
-          "excerpt": "U.S. stocks fell after hotter-than-expected inflation data, while CNN’s Fear &amp; Greed Index improved to 33 but remained in the Fear zone.",
-          "image": "https://cdn.benzinga.com/files/images/story/2026/11/11/Market-sentiment---Fear-and-Greed.jpg?width=2048&height=1536",
-          "domain": "Benzinga",
-          "country": null,
-          "seenAt": "2026-11-11T00:37:21.000Z",
-          "tickers": []
         }
       ]
     },
@@ -598,8 +597,53 @@
       "blurb": "תקציבי ביטחון, עסקאות נשק וקבלני הביטחון",
       "accent": "#888780",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=af7ef53ed5f44c4d08041f2c2dadb6cc7d09bccce11e92a1018aaad9bb93ca5f",
+          "title": "Global Unmanned Aerial Vehicle (UAV) Satellite Communication Market Report 2026 | Capitalize on LEO and BVLOS Demand with Viasat, Airbus, Lockheed Martin and Iridium",
+          "excerpt": "ROI strategies: launch compact, low-power UAV satcom portfolios to cut costs and boost mission efficiency; expand global BVLOS capabilities through acquisitions.Dublin, Nov. 12, 2026 (GLOBE NEWSWIRE) -- \"Unmanned Aerial Vehicle (UAV) Satellite Communication Market Global Report 2026\" has been added to ResearchAndMarkets.com's offering. The global unmanned aerial vehicle (UAV) satellite communication market is experiencing strong growth as defense agencies, governments, and commercial operators e",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T14:23:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=f6445335e1c0c5ab8fbce374965719ac395bfafcf135c57206ecefa8ff259f65",
+          "title": "Artificial Intelligence (AI)-Enabled Counter-Drone System Market Global Report 2026 | Secure the $1.66B Market by 2030 with Lockheed Martin, Thales, Rheinmetall and Anduril",
+          "excerpt": "Players: Lockheed Martin, BAE Systems, Thales, L3Harris and Rheinmetall. Profiles cover AI counter-drone offerings, detection, tracking, sensor fusion and threat neutralization.Dublin, Nov. 12, 2026 (GLOBE NEWSWIRE) -- \"Artificial Intelligence (AI)-Enabled Counter-Drone System Market Global Report 2026\" has been added to ResearchAndMarkets.com's offering. The global artificial intelligence (AI)-enabled counter-drone system market is experiencing rapid expansion as governments, defense organizati",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T14:19:00.000Z",
+          "tickers": [
+            "INTC"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=8c2dad6a4d36d4d2a1d77b40f64d8813d3ba0e19c5daaa883146ee92e0ec59b5",
+          "title": "Can RKLB's ESCAPADE Mission Strengthen Its Deep-Space Capabilities?",
+          "excerpt": "Rocket Lab's ESCAPADE spacecraft completes precise Mars-bound maneuvers, showcasing its deep-space propulsion, navigation and mission operations capabilities.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T12:12:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=8553dbfb425a96732202926a9563bf5c389e826740869d8e8b07e078ce947aec",
+          "title": "Buy 4 Aerospace Defense Behemoths to Enhance Your Portfolio Returns",
+          "excerpt": "GE, HWM, RTX and LMT stand to benefit from rising defense spending, robust order backlogs and improved earnings outlooks.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:41:00.000Z",
+          "tickers": [
+            "LMT",
+            "RTX"
+          ]
+        },
         {
           "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQSEdmMVduSHJxWEd1UWVkOUtrcF91S3VfSnI0MzlnTjh6NFdHOFNpSTBXU1JpdFk3NHdORlNsck91bFEyNUNLMHdoT1hFZmlqTGdaUDU2c2ZkeXE0Zl82cURaQXZxTS1IMmxqS3FNUEVNU1FRU1NQU01EQkxzNkN0YUhWek1qRm9ZYkNUS1FrWUIyTmFaUFFkTERqZER3UUx6cEN3VVdWNG56R19zSFkzRWphVUl1Z3I1eHc?oc=5",
           "title": "Saudi Arabia says debris from intercepted missiles falls in Mecca region - Reuters",
@@ -611,17 +655,14 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=306026d20c1c2c75a3ca79199afcdfd1b6143992ce433ced4bb98631bfd3c5b3",
-          "title": "Lockheed Martin Stock (LMT) Looks Attractive Despite the Budget Debate",
-          "excerpt": "Lockheed Martin (LMT) stock looks attractive to me despite uncertainty over next year’s defense budget, because its existing contracts provide strong revenue visibility. The aerospace and defense contractor holds a record $292 billion backlog. CEO Jim Taiclet said the F-35 framework “strengthens the way we can plan and invest in the F-35 enterprise.” Investors are questioning next year’s Pentagon spending, but production ramps are already underway. I remain bullish on LMT stock because those com",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOekJqQTlDSnpyUHhBeEEwb0V2X2s4NzdhSzR3a0NvbDZoR0FWXzR0X2k5YV9zaHlhU0M3YlVMWk9RTDltZXZiajZGdlVMSmxrMnJkWEI4QXU4bUFGSWppTDJFcVh4amhHR1lkYkdKT3VvT1BicUZnWTRBb3JuU3lHYVBScHhIdkc2bC1DZWpOVWNlbkJiTTRIQXdxYlE2a1hndlV5R3pwOVY4WVhvVXYwNVJ0UXU3WGJuTFAxZlhNU3YyeVhB?oc=5",
+          "title": "Israeli strike on southern Gaza hospital kills six, Gaza civil defence says - Reuters",
+          "excerpt": "Israeli strike on southern Gaza hospital kills six, Gaza civil defence says  Reuters",
+          "image": "https://static2.finnhub.io/file/finnhub/logo/reuters_logo.jpeg",
+          "domain": "Reuters",
           "country": null,
-          "seenAt": "2026-11-11T21:37:00.000Z",
-          "tickers": [
-            "LMT",
-            "F"
-          ]
+          "seenAt": "2026-11-11T23:26:00.000Z",
+          "tickers": []
         },
         {
           "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNa0VablB0SWViZWpCRFg4bC0yX2ZTM19HNmFFVUdqVVlwbWRuRjdpSnNXZ3liU04zeTYyZWJPSlhLeEVRTUlMS0N2SnlPdEpINzVHUTJjRXJjd3RKdEZMLS14czdZSlpjcWlJWm95bFpTNHgxblNSVlFyLWhsQ0JncVFZRGRmQ0p6cDZQRGRtNlh6LWxnVXlLRkJyelFzdTFoM285d2tQZTJvS1BkYkRzLVZwUERKc2pHbVBqOUZDSmFRbGJ4TmpmQVExbnEzOTQ?oc=5",
@@ -664,48 +705,6 @@
           "country": null,
           "seenAt": "2026-11-11T14:34:00.000Z",
           "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=025d9a0cb0677acd2eda1fa2d04464fb27c34f41164211ba12a79c2d4bad827c",
-          "title": "Global Intelligent Unmanned Underwater Navigation System Market Forecast to 2035 | Secure AI Autonomy Gains with Kongsberg, Northrop Grumman, Lockheed Martin and Thales",
-          "excerpt": "Boost ROI with AI autonomy, sensor fusion, long-endurance AUVs, edge navigation, software-led offerings, tiered pricing, wider distribution and targeted defense outreachDublin, Nov. 11, 2026 (GLOBE NEWSWIRE) -- \"Intelligent Unmanned Underwater Navigation System Global Market Opportunities and Strategies to 2035\" has been added to ResearchAndMarkets.com's offering. The global intelligent unmanned underwater navigation system market is positioned for sustained expansion as defense agencies, marine",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T14:30:00.000Z",
-          "tickers": [
-            "INTC"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=061d0e4c85a29fdd004f92d75c7e227970d1be8617f00e4d2c891f2090da7b44",
-          "title": "This Defense Tech Stock Rises on Record $2.1 Billion Backlog. Why J.P. Morgan Sees More Upside.",
-          "excerpt": "Backlog sets a record on robust military demand.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T13:39:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=c55f1dce5cf756816638ed3f47bd45b6412c98943ff01089f54555c6639e0d73",
-          "title": "CesiumAstro tees up $7M makeover for business park once at center of Velocis dispute",
-          "excerpt": "CesiumAstro founder and CEO Shey Sabripour (CesiumAstro)CesiumAstro is dropping $6.6 million to remodel its 270,000-square-foot, three-building headquarters in Bee Cave, a suburb 12 miles west of Downtown Austin. The space communications company was founded in 2017 by Shey Sabripour, a veteran of defense giant Lockheed Martin and fellow Austin-based space startup Firefly, and finalized a deal to purchase the 23-acre property from developer Velocis on March 4 following a yearslong controversy ove",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-10T22:00:00.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=7e918b7e3b86d935d4de6c76809aa12f5be30aa3ad62304fb81a6c774f3e7d5e",
-          "title": "D-Wave Stock Sinks as Earnings Lay Bare Quantum’s Commercial Growing Pains",
-          "excerpt": "D-Wave Quantum tops revenue estimates for the third quarter, but a drop in system sales and widening losses send the stock tumbling,",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-10T17:09:00.000Z",
-          "tickers": []
         }
       ]
     },
@@ -715,38 +714,48 @@
       "blurb": "מכסים, סנקציות, מלחמות סחר ושרשראות אספקה",
       "accent": "#d4537e",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=e26bec8a76e494835b135a39b4cac0de86c9c8ada7a7e38abee48025150d19c9",
-          "title": "Walmart: Q3 Preview, Expecting Bounce Back Following Weak Q2",
-          "excerpt": "Walmart (WMT) stock is rated a Hold at current levels after shares rise over 12% in a month; investors likely seek a Q3 rebound on Nov. See more here.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2240191926/image_2240191926.jpg?io=getty-c-og",
-          "domain": "SeekingAlpha",
+          "url": "https://finnhub.io/api/news?id=23de86e46f1c47bc670a84cac7494fd5d1cd15719dd2f4ce55779e70a0cfff02",
+          "title": "Walmart (WMT) Agrees To $7.8 Million Pennsylvania Child Labor Settlement",
+          "excerpt": "Walmart (NasdaqGS:WMT) agreed to pay a record $7.8 million child labor settlement in Pennsylvania following state investigations. Pennsylvania authorities found widespread violations of the state's Child Labor Act across Walmart locations, according to the settlement announcement. The agreement requires Walmart to adopt enhanced child labor compliance measures and includes higher future penalty provisions for any new violations. The record child labor settlement reshapes the compliance...",
+          "image": null,
+          "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T01:18:17.000Z",
+          "seenAt": "2026-11-12T15:12:36.000Z",
           "tickers": [
             "WMT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=10161c3a825a5f124b1ddcf1598585954c290fa9234ef4046e8863f462d21092",
-          "title": "The Dates That Matter Most For Casey's Stock",
+          "url": "https://finnhub.io/api/news?id=f5ae73d8c880e966854b5152a3947270d62ad3ba9578a6f518136d7237a35b85",
+          "title": "RJ Brunelli Brokers Sale of The Gardens Shopping Center in Morris County, N.J.",
+          "excerpt": "RJ Brunelli & Co. today announced that it has brokered the sale of the 100% fee simple interest in The Gardens, a 210,845-square-foot shopping center in the Flanders section of Mt. Olive Township. Located at the intersection of Routes 46 and 80, the Morris County power center was acquired for $41 million by Bronstein Properties, LLC from Rivani.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T13:48:00.000Z",
+          "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=b6ae574a69b0d438b420cfbbdc5b5aaba869eb36bbadd263f49eea3ae8a48bae",
+          "title": "Does The Rise In Target Stock Change Anything?",
           "excerpt": "For questions about this article or underlying research, email help@trefis.com.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T15:46:27.000Z",
+          "seenAt": "2026-11-12T13:09:31.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=6afdd55f48470bc39758be7b144c92156dccd70cf8e4d705e0ffa474d6d3b91d",
-          "title": "Synchrony Financial Sees Several Paths to Double-Digit EPS Growth in 2027",
-          "excerpt": "Synchrony Financial (NYSE:SYF) expects multiple factors, including maturing loans, revenue growth, operating leverage and capital returns, to support its pursuit of double-digit earnings-per-share growth in 2027, Chief Financial Officer Brian Wenzel said at a KBW conference. Wenzel said the company",
-          "image": null,
-          "domain": "Yahoo",
+          "url": "https://finnhub.io/api/news?id=59947d82317587ac4e7d2e4b78280eadbc77e691775345c370a403cdc17def26",
+          "title": "Grocery Outlet: Winning The Treasure Hunt, But Losing The Grocery War",
+          "excerpt": "Grocery Outlet Holding Corp. is a Hold at an $11.40 base-case target; click for why the GO stock valuation is not compelling as upside depends on several factors.",
+          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/537208605/image_537208605.jpg?io=getty-c-og",
+          "domain": "SeekingAlpha",
           "country": null,
-          "seenAt": "2026-11-11T11:12:40.000Z",
+          "seenAt": "2026-11-12T10:41:14.000Z",
           "tickers": []
         },
         {
@@ -760,13 +769,25 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=1213af9ba9007b307d694ffa3ff4a314ab7b7339bda9f6ed6119393103dd7c0b",
-          "title": "Top Analyst Reports for NVIDIA, Walmart & AbbVie",
-          "excerpt": "Today's Research Daily features new research reports on 16 major stocks, including NVIDIA Corp. (NVDA), Walmart Inc. (WMT), AbbVie Inc. (ABBV) as well as two micro-cap stocks, Pioneer Bancorp, Inc. (PBFS) and Aspira Women's Health Inc. (AWHL).",
+          "url": "https://finnhub.io/api/news?id=f1e1c19bc3fb5ebc14ce3344e9a6f68c5184ae75e717346c2a5b534980996d6b",
+          "title": "Walmart (WMT) Earnings Expected to Grow: What to Know Ahead of Next Week's Release",
+          "excerpt": "Walmart (WMT) possesses the right combination of the two key ingredients for a likely earnings beat in its upcoming report. Get prepared with the key expectations.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T20:08:00.000Z",
+          "seenAt": "2026-11-12T14:00:03.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=7aa17c138d1bbf76987a920680ca9c07a58e83e21ee70d7952a8df76922556ad",
+          "title": "The Zacks Analyst Blog Highlights NVIDIA, Walmart, AbbVie, Pioneer Bancorp and Aspira",
+          "excerpt": "NVDA, WMT and ABBV headline Zacks' latest research, with growth drivers and business risks shaping their investment outlooks.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T13:46:00.000Z",
           "tickers": [
             "WMT",
             "NVDA",
@@ -774,61 +795,37 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=0ac8e27aa381491b8c9efae43fbcff7d4319b4a04d95ab7011708e17f3eee969",
-          "title": "Walmart's AI and advertising businesses strengthen Bank of America's bullish case",
-          "excerpt": "Bank of America has reiterated its 'buy' rating on Walmart Inc (NYSE:WMT, XETRA:WMT) and raised its price target to $139 from $126, citing scope for further market share gains and stronger earnings growth. The broker increased its valuation multiple to 44 times forecast earnings from 40...",
+          "url": "https://finnhub.io/api/news?id=d05586bfc5450bdb30ce76d9b4d2797d8f3483667f2b7a59fd5336e374a9bd7d",
+          "title": "Walmart To Host Third Quarter Earnings Conference Call November 19, 2026",
+          "excerpt": "BENTONVILLE, Ark., November 12, 2026--Walmart Inc. (NASDAQ: WMT) announced it will release its third quarter earnings results at 6 a.m. CST and hold a live conference call with the investment community at 7 a.m. CST on Thursday, November 19, 2026. John Furner, president and chief executive officer, and John David Rainey, executive vice president and chief financial officer, will host the call to discuss the results and answer questions.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T18:20:00.000Z",
+          "seenAt": "2026-11-12T13:00:00.000Z",
           "tickers": [
             "WMT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=88258081c5bf60d37e7f082178603c7bd44837d705fd5664e5fec05e12b4c458",
-          "title": "Walmart Poised for Continued Growth Amid Market Share Gains, BofA Says",
-          "excerpt": "Walmart (WMT) is poised to continue gaining market share across its grocery and general merchandise",
+          "url": "https://finnhub.io/api/news?id=dac2b15e512b2c604ede2c0785705c9a16f8bde840126d169d4f341c88afd101",
+          "title": "The Lone Bear on Walmart Stock Raises a Question Wall Street Can’t Ignore",
+          "excerpt": "Analysts love Walmart, yet the stock barely clears its price target and institutions are quietly split. What does the one dissenter see that the crowd is paying a premium to ignore?",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T15:46:05.000Z",
+          "seenAt": "2026-11-12T12:48:06.000Z",
           "tickers": [
             "WMT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=1c066a22a6dbd7d31271f9c24d40d8d943c30862549ec7222571b56408398200",
-          "title": "WMT Stock Gets A Price Target Boost From BofA Ahead Of Q3 Earnings – Analyst Sees More Market Share Gains",
-          "excerpt": "BofA raised the firm's price target on Walmart to $139 from $126 while maintaining a ‘Buy’ rating, according to The Fly.",
+          "url": "https://finnhub.io/api/news?id=c9da62fffade046512a782ab94f998fb7a01aba20d8ef32eb1cf1fc87b7c0396",
+          "title": "Here's How Much a $1000 Investment in Walmart Made 10 Years Ago Would Be Worth Today",
+          "excerpt": "Why investing for the long run, especially if you buy certain popular stocks, could reap huge rewards.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T13:22:37.000Z",
-          "tickers": [
-            "WMT"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=4e26dc5617e2bf31ac17b9714b1034e1ffe71a6a1fccfee0272660c0a1ba0534",
-          "title": "Walmart Stock Slips Even as BofA Lifts Target to $139",
-          "excerpt": "The firm forecasts third-quarter EPS of $0.63 and U.S. comparable sales growth of 2.8%",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T12:14:00.000Z",
-          "tickers": [
-            "WMT"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=331996e8a1ca0116de51da3a6dc3c140fbaa8a68b519e6996378a53e245b553a",
-          "title": "State Street Consumer Staples SPDR (XLP) Buys $46.9 Million More Walmart on Nov. 9",
-          "excerpt": "The fund added $418.2 million of stock on Monday, lifting all 33 of its positions and selling nothing.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T11:03:47.000Z",
+          "seenAt": "2026-11-12T12:30:02.000Z",
           "tickers": [
             "WMT"
           ]
@@ -841,8 +838,20 @@
       "blurb": "הוצאות הצרכן, קמעונאות, מזון ומותגים",
       "accent": "#97c459",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
+        {
+          "url": "https://finnhub.io/api/news?id=23de86e46f1c47bc670a84cac7494fd5d1cd15719dd2f4ce55779e70a0cfff02",
+          "title": "Walmart (WMT) Agrees To $7.8 Million Pennsylvania Child Labor Settlement",
+          "excerpt": "Walmart (NasdaqGS:WMT) agreed to pay a record $7.8 million child labor settlement in Pennsylvania following state investigations. Pennsylvania authorities found widespread violations of the state's Child Labor Act across Walmart locations, according to the settlement announcement. The agreement requires Walmart to adopt enhanced child labor compliance measures and includes higher future penalty provisions for any new violations. The record child labor settlement reshapes the compliance...",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T15:12:36.000Z",
+          "tickers": [
+            "WMT"
+          ]
+        },
         {
           "url": "https://finnhub.io/api/news?id=e8101fb72ddc1ef6156ef8da41909e245d9319dad6c9ba4adab2e4429de2df25",
           "title": "Cramer Says Tito’s Refused Costco on Price and Kirkland Made Vodka for Half",
@@ -856,28 +865,6 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=e26bec8a76e494835b135a39b4cac0de86c9c8ada7a7e38abee48025150d19c9",
-          "title": "Walmart: Q3 Preview, Expecting Bounce Back Following Weak Q2",
-          "excerpt": "Walmart (WMT) stock is rated a Hold at current levels after shares rise over 12% in a month; investors likely seek a Q3 rebound on Nov. See more here.",
-          "image": "https://static.seekingalpha.com/cdn/s3/uploads/getty_images/2240191926/image_2240191926.jpg?io=getty-c-og",
-          "domain": "SeekingAlpha",
-          "country": null,
-          "seenAt": "2026-11-12T01:18:17.000Z",
-          "tickers": [
-            "WMT"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=8a46598793a6af0484fde92befd0e765e3ae746194719b746f9719653336f355",
-          "title": "Five Below and Dollar General challenge Kroger, Publix",
-          "excerpt": "Ollie’s is also on the list of retailers creating new problems for traditional grocery chains and new opportunities for customers.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T15:37:00.000Z",
-          "tickers": []
-        },
-        {
           "url": "https://www.cnbc.com/2026/11/11/october-retail-sales-cnbc-nrf-2026.html",
           "title": "Consumers are showing signs of strain even as they keep spending, CNBC/NRF Retail Monitor shows",
           "excerpt": "Retail sales rose at their slowest pace in nearly a year in October as American consumers showed signs of strain from high prices.",
@@ -886,6 +873,18 @@
           "country": null,
           "seenAt": "2026-11-11T12:27:47.000Z",
           "tickers": []
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=f1e1c19bc3fb5ebc14ce3344e9a6f68c5184ae75e717346c2a5b534980996d6b",
+          "title": "Walmart (WMT) Earnings Expected to Grow: What to Know Ahead of Next Week's Release",
+          "excerpt": "Walmart (WMT) possesses the right combination of the two key ingredients for a likely earnings beat in its upcoming report. Get prepared with the key expectations.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T14:00:03.000Z",
+          "tickers": [
+            "WMT"
+          ]
         },
         {
           "url": "https://www.cnbc.com/investingclub/2026/11/11/costco-is-giving-shareholders-a-big-early-holiday-gift-how-to-make-sure-you-get-it.html",
@@ -900,13 +899,13 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=1213af9ba9007b307d694ffa3ff4a314ab7b7339bda9f6ed6119393103dd7c0b",
-          "title": "Top Analyst Reports for NVIDIA, Walmart & AbbVie",
-          "excerpt": "Today's Research Daily features new research reports on 16 major stocks, including NVIDIA Corp. (NVDA), Walmart Inc. (WMT), AbbVie Inc. (ABBV) as well as two micro-cap stocks, Pioneer Bancorp, Inc. (PBFS) and Aspira Women's Health Inc. (AWHL).",
+          "url": "https://finnhub.io/api/news?id=7aa17c138d1bbf76987a920680ca9c07a58e83e21ee70d7952a8df76922556ad",
+          "title": "The Zacks Analyst Blog Highlights NVIDIA, Walmart, AbbVie, Pioneer Bancorp and Aspira",
+          "excerpt": "NVDA, WMT and ABBV headline Zacks' latest research, with growth drivers and business risks shaping their investment outlooks.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T20:08:00.000Z",
+          "seenAt": "2026-11-12T13:46:00.000Z",
           "tickers": [
             "WMT",
             "NVDA",
@@ -914,51 +913,52 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=0a58475a8265f9da560ae6b87a05d88e6a003c8202709e4872fac453c107fb4d",
-          "title": "Costco’s Regular Dividend Looks Tiny. Its Special Dividends Tell a Different Story",
-          "excerpt": "Costco's quarterly check looks forgettable, yet shareholders have watched giant one-time payouts land without warning. Cash is piling up, store spending is climbing, and the stock carries a price that leaves little room for error.",
+          "url": "https://finnhub.io/api/news?id=d05586bfc5450bdb30ce76d9b4d2797d8f3483667f2b7a59fd5336e374a9bd7d",
+          "title": "Walmart To Host Third Quarter Earnings Conference Call November 19, 2026",
+          "excerpt": "BENTONVILLE, Ark., November 12, 2026--Walmart Inc. (NASDAQ: WMT) announced it will release its third quarter earnings results at 6 a.m. CST and hold a live conference call with the investment community at 7 a.m. CST on Thursday, November 19, 2026. John Furner, president and chief executive officer, and John David Rainey, executive vice president and chief financial officer, will host the call to discuss the results and answer questions.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T20:17:01.000Z",
-          "tickers": [
-            "COST"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=0ac8e27aa381491b8c9efae43fbcff7d4319b4a04d95ab7011708e17f3eee969",
-          "title": "Walmart's AI and advertising businesses strengthen Bank of America's bullish case",
-          "excerpt": "Bank of America has reiterated its 'buy' rating on Walmart Inc (NYSE:WMT, XETRA:WMT) and raised its price target to $139 from $126, citing scope for further market share gains and stronger earnings growth. The broker increased its valuation multiple to 44 times forecast earnings from 40...",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T18:20:00.000Z",
+          "seenAt": "2026-11-12T13:00:00.000Z",
           "tickers": [
             "WMT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=076c363c1bc636b24426a8cad446345814e060a5a0401e9161e7fd171474fe78",
-          "title": "What Are Costco Stock Bulls Not Worried About?",
-          "excerpt": "For questions about this article or underlying research, email help@trefis.com.",
+          "url": "https://finnhub.io/api/news?id=dac2b15e512b2c604ede2c0785705c9a16f8bde840126d169d4f341c88afd101",
+          "title": "The Lone Bear on Walmart Stock Raises a Question Wall Street Can’t Ignore",
+          "excerpt": "Analysts love Walmart, yet the stock barely clears its price target and institutions are quietly split. What does the one dissenter see that the crowd is paying a premium to ignore?",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T19:51:03.000Z",
+          "seenAt": "2026-11-12T12:48:06.000Z",
           "tickers": [
-            "COST"
+            "WMT"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=88258081c5bf60d37e7f082178603c7bd44837d705fd5664e5fec05e12b4c458",
-          "title": "Walmart Poised for Continued Growth Amid Market Share Gains, BofA Says",
-          "excerpt": "Walmart (WMT) is poised to continue gaining market share across its grocery and general merchandise",
+          "url": "https://finnhub.io/api/news?id=c9da62fffade046512a782ab94f998fb7a01aba20d8ef32eb1cf1fc87b7c0396",
+          "title": "Here's How Much a $1000 Investment in Walmart Made 10 Years Ago Would Be Worth Today",
+          "excerpt": "Why investing for the long run, especially if you buy certain popular stocks, could reap huge rewards.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T15:46:05.000Z",
+          "seenAt": "2026-11-12T12:30:02.000Z",
           "tickers": [
             "WMT"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=70561100b5c17b17b4667335460498fa6fa1dc77304fb19edae01dad842dd589",
+          "title": "Walmart & 3 Retail Stocks With High Probability of an Earnings Beat",
+          "excerpt": "Walmart, Dollar General, Costco and Home Depot show strong earnings beat potential as value pricing, digital expansion and resilient demand fuel optimism.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:27:00.000Z",
+          "tickers": [
+            "WMT",
+            "COST"
           ]
         }
       ]
@@ -969,121 +969,120 @@
       "blurb": "פארמה, ביוטק, אישורי FDA וביטוח בריאות",
       "accent": "#5dcaa5",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=0dd5e47b5645552f30a4d02bae27c47a9c5c76dcbcd36387d438519816291924",
-          "title": "Is Eli Lilly (LLY) Priced Below Its Cash Flow Potential?",
-          "excerpt": "Eli Lilly has ridden a powerful obesity and diabetes drug story to a share price of US$1,437.29. That raises a straightforward question for investors who own or follow the stock: Is that market value meaningfully backed by the cash flows the pharmaceutical group is expected to produce over time, or has sentiment moved ahead of the underlying economics? Over the past 5 years, Eli Lilly has delivered a very large total return of 474.0%, putting significant pressure on the business to keep...",
+          "url": "https://finnhub.io/api/news?id=804567ebde6c06cea88f3507ebec99ec6effa24bab9c8d48cde4833bd79605ba",
+          "title": "Blackstone Is Paying Up to $1.5 Billion for Pfizer’s Answer to Wegovy",
+          "excerpt": "Pfizer just convinced Wall Street's biggest private investor to shoulder its obesity bet, yet the payoff for shareholders may not come from the drug at all. The real story sits in who keeps the upside and what arrives first.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T01:18:32.000Z",
+          "seenAt": "2026-11-12T15:42:15.000Z",
+          "tickers": [
+            "PFE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=15c07f517191ab5583be735a68a69c9bb8161767423947617f25cf5b2cb0f75b",
+          "title": "“Not Likely”: Eli Lilly’s Chairman Pours Cold Water on Dario Amodei’s AI Cure Timeline",
+          "excerpt": "Key TakeawaysAnthropic CEO Dario Amodei said in a video for Anthropic’s IPO roadshow that cancer and Alzheimer’s will be “relics of the past” in less than a decade. Eli Lilly chairman and CEO Dave Ricks called that “not likely.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T15:13:09.000Z",
           "tickers": [
             "LLY"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=d724df0690ef5ddd6eaa553272cfdf694f9b5abd12f1d599761b79e888959ac9",
-          "title": "Apple Shares (AAPL) Look Expensive Heading into 2027",
-          "excerpt": "Apple (AAPL) shares look expensive heading into 2027, despite the company’s strong growth prospects. Shares of the iPhone maker have soared in 2026, easily outperforming the Nasdaq-100 (NDX) as tracked by the Invesco QQQ Trust (QQQ). This comes as Apple has delivered higher sales and revenues this year, a trend analysts expect to continue into Fiscal 2027. What is more, Apple may benefit from higher device sales should memory costs normalize, potentially making the shares interesting for investo",
+          "url": "https://finnhub.io/api/news?id=58f8544edfcda311e904bffa8e9e027788b094bdd3de0a3214a966db4209e2a4",
+          "title": "Beyond GLP-1RA’s: Novel mechanisms and combos to shape future of obesity market",
+          "excerpt": "Emerging mechanisms and combinatorial approaches are redefining the obesity space as the outcome focus shifts away from weight loss alone.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T21:15:00.000Z",
-          "tickers": [
-            "AAPL"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=c5f81cd77d0dad99b6def58d9cc5e0d3183968d401bc215b7b7006cef15fcde5",
-          "title": "Sector Update: Healthcare Stocks Softer in Afternoon Trading",
-          "excerpt": "Healthcare stocks declined Wednesday afternoon, with the NYSE Healthcare Index decreasing 0.6% and t",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T18:29:29.000Z",
+          "seenAt": "2026-11-12T14:11:19.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=a7866a4348f11394f27757a8b5a4f6302c4e1a6524aeef3b383b83852d7541f1",
-          "title": "Jim Cramer’s Top 5 Dividend Stocks for Safe, Consistent Returns",
-          "excerpt": "From 2000 through 2009, dividends earned S&P 500 investors an annualized 1.8%, according to Hartford Funds. Even with those payments, the index posted a negative total return for the decade. Over the longer stretch from 1940 through 2025, Hartford found that dividend income accounted for an average of 33% of the index’s total return. For […]",
+          "url": "https://finnhub.io/api/news?id=f3d279a98648096c97e1d5ffa5db08ecf33fdde376310d9be392663d3ca5b4cb",
+          "title": "The RFK Jr. Effect: Why GLP-1s Won't Be The Last 'Explosive' Story In Peptides",
+          "excerpt": "Hims stock zoomed higher on a Health Department push to legalize six peptides. It could be just the beginning of a massive overhaul in health.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T17:06:10.000Z",
+          "seenAt": "2026-11-12T13:00:55.000Z",
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=8c71072e8ebf4ef5a1fc97db26342e6521e86eb166ff7ea4d4ffefde07e1af44",
-          "title": "Will Wegovy Pill Drive Renewed GLP-1 Growth Momentum for Novo Stock?",
-          "excerpt": "NVO's Wegovy pill generated DKK 5.4 billion in Q3 sales, boosting obesity growth amid expanding global access and intensifying GLP-1 competition.",
+          "url": "https://finnhub.io/api/news?id=d3c0a16642bd992f2a260905be20f5e8b0c0d2e65518b41fca83abbb976cdfff",
+          "title": "Is There A Risk Hiding In Johnson & Johnson Stock's Earnings?",
+          "excerpt": "For questions about this article or underlying research, email help@trefis.com.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T15:56:00.000Z",
+          "seenAt": "2026-11-12T13:00:10.000Z",
           "tickers": [
-            "NVO"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=22a4af8d8976659f9c1db6e84a61df43a65fe0cc4eb883af0a2d05325ce33cde",
-          "title": "ABBV Stock Rises More Than 4% in a Month: Time to Buy, Hold or Sell?",
-          "excerpt": "AbbVie's strong immunology and neuroscience growth offset Humira erosion and persistent aesthetics and oncology challenges.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T15:39:00.000Z",
-          "tickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=6ff706aabd2be52545e88350371f9d958da5bf626fb616a20e1bd27f452f5e8b",
-          "title": "Eli Lilly Just Raised Its 2026 Sales Forecast to as Much as $92 Billion. But Is Viking Therapeutics the Next Big Obesity Winner?",
-          "excerpt": "These drugmakers offer very different risk-reward profiles.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T22:54:00.000Z",
-          "tickers": [
-            "LLY"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=06de5c4551d7b705cba423430683dacc7cdf38df3419851f1401334c05734b82",
-          "title": "S&P 500 After-Hours Movers: MNST, RDDT Among Gainers; VEEV, LLY Among Losers in Latest Session",
-          "excerpt": "S&P 500 after-hours movers from the latest U.S. session include MNST and RDDT among gainers, while VEEV and LLY posted sharp after-hours declines.",
-          "image": "https://www.chartmill.com/images/uploads/CM_Aftermarket_Movers_Small_free_e077945a19.webp",
-          "domain": "ChartMill",
-          "country": null,
-          "seenAt": "2026-11-11T22:06:19.000Z",
-          "tickers": [
-            "LLY"
-          ]
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=a41a8d4a5090676f26a2c9bad9e713d7061c139b18ef0d4583794c861308fb4d",
-          "title": "Johnson & Johnson vs. Eli Lilly: Which Healthcare Giant's Stock Is a Better Buy for 2027?",
-          "excerpt": "Eli Lilly's sales jumped 44.7% last year, while Johnson & Johnson's steadier profile raises a different question for cautious portfolios.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T20:20:02.000Z",
-          "tickers": [
-            "LLY",
             "JNJ"
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=47b7e8771d1db8a4ab8fd4c6554f0189d1ee2d44b5296c1c088e78d09aea439e",
-          "title": "Bank of America resets Eli Lilly stock target ahead of key event",
-          "excerpt": "BofA analyst Jason Gerberry changed Lilly’s price target, pointing to noteworthy bets outside its weight-loss franchise.",
+          "url": "https://finnhub.io/api/news?id=64e8ddee772d01a60c455d1b928cffd82712031b3ac4dda618e2eac729989daa",
+          "title": "Why Pfizer Is Tapping Private Equity to Back Its Once-Monthly Weight-Loss Drug",
+          "excerpt": "Blackstone Life Sciences agrees to pay $1.5 billion in development costs for Pfizer’s berobenatide through 2028 in exchange for milestone-based payments.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T18:17:00.000Z",
+          "seenAt": "2026-11-12T14:42:00.000Z",
+          "tickers": [
+            "PFE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=a606a03c54c394101656e9565cac4dd86f2ebae5aa4a093ea492f83b5b81af00",
+          "title": "Hims & Hers Lost 22% in a Week. Needham Still Sees 54% Upside From Here",
+          "excerpt": "Key TakeawaysHims & Hers lost 22% in a week, including a 16. 6% drop after it cut its 2026 profit outlook for the third time, erasing the lift from its Eli Lilly deal.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T13:04:03.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=9d67f54684c22cc9deb49ff92b2bdcfdbeded44013b273da97a88f5cfe2ff154",
+          "title": "Lilly Stock Rises as China Clears Its Weight-Loss Pill",
+          "excerpt": "The pill will compete with GLP-1 injections from Novo, Pfizer and Innovent",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:18:59.000Z",
+          "tickers": [
+            "PFE"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=f083728fd564b93c6c8c73ad21c96d2e919fecc294c6f92f2ab15632ac16e68e",
+          "title": "Baron Funds Sees Eli Lilly’s (LLY) Mounjaro, Zepbound and Orforglipron as Transformational",
+          "excerpt": "We recently published the list of the 10 Best Growth Stocks to Buy for the Next Decade, and Eli Lilly (NYSE:LLY) came in 9th. On November 5, the S&P 500 fell 4.36%, its worst day since the April 2025 tariff crash, with roughly $3 trillion in value wiped off S&P 500 companies. The Nasdaq Composite […]",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:32:52.000Z",
+          "tickers": [
+            "LLY"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=0bd083c8ee4fa186fb47ee61cfe9fa079ebb926251d8fb8f7174ae96f80b003d",
+          "title": "Can LLY's Expanding Obesity Pipeline Sustain Its GLP-1 Leadership?",
+          "excerpt": "Lilly's expanding obesity pipeline, led by oral Foundayo and next-generation candidates retatrutide and EloraTZP, could strengthen its GLP-1 market leadership.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-12T11:30:00.000Z",
           "tickers": [
             "LLY"
           ]
@@ -1096,16 +1095,16 @@
       "blurb": "סטרימינג, גיימינג, פלטפורמות הזמנות ומסחר מקוון",
       "accent": "#d2789f",
       "ok": true,
-      "refreshedAt": "2026-11-12T08:54:12.601Z",
+      "refreshedAt": "2026-11-12T17:47:10.449Z",
       "articles": [
         {
-          "url": "https://finnhub.io/api/news?id=b05c32b5ab76f433924d412782dc52cb1d9e29c5a1a3dec521c398751558d66a",
-          "title": "AMC Global Media: 3 Key Takeaways for Long-Term Investors",
-          "excerpt": "Shared Netflix funding and debt-first capital allocation give long-term holders two levers to watch as linear ads decline.",
+          "url": "https://finnhub.io/api/news?id=832bca439dcf441441f302655fc9b9320b2d2731028bcaeb93ad623e88a6ec1c",
+          "title": "Will Content Capex Weigh on Netflix's Free Cash Flow Trajectory?",
+          "excerpt": "NFLX's rising content spending is testing its free cash flow outlook, even as strong cash generation and a packed holiday slate support growth prospects.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-12T06:28:13.000Z",
+          "seenAt": "2026-11-12T13:23:00.000Z",
           "tickers": [
             "NFLX"
           ]
@@ -1120,6 +1119,18 @@
           "seenAt": "2026-11-12T00:19:50.000Z",
           "tickers": [
             "TTWO"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=06de5c4551d7b705cba423430683dacc7cdf38df3419851f1401334c05734b82",
+          "title": "S&P 500 After-Hours Movers: MNST, RDDT Among Gainers; VEEV, LLY Among Losers in Latest Session",
+          "excerpt": "S&P 500 after-hours movers from the latest U.S. session include MNST and RDDT among gainers, while VEEV and LLY posted sharp after-hours declines.",
+          "image": "https://www.chartmill.com/images/uploads/CM_Aftermarket_Movers_Small_free_e077945a19.webp",
+          "domain": "ChartMill",
+          "country": null,
+          "seenAt": "2026-11-11T22:06:19.000Z",
+          "tickers": [
+            "LLY"
           ]
         },
         {
@@ -1156,33 +1167,13 @@
           "tickers": []
         },
         {
-          "url": "https://finnhub.io/api/news?id=f21ed546c52d7960595fde31e65328748e7d5dfb9b9a22e9d26f1190275c2277",
-          "title": "S&P 500 Most Active Stocks in Today's Session: SMCI, AT&T, Ford Lead Volume",
-          "excerpt": "S&P 500 most-active list led by Super Micro Computer, AT&T and Ford by volume; the ten stocks ranged from a 3.65% gain to a 3.81% decline.",
-          "image": "https://www.chartmill.com/images/uploads/CM_Most_Active_Stocks_Small_free_fec0650b7f.webp",
-          "domain": "ChartMill",
-          "country": null,
-          "seenAt": "2026-11-10T19:06:05.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=3aff46d29b0a8380287cd83aad42f8379e760bf6f7292c428e94c7eed7d7d4eb",
-          "title": "Skydance Plans to Cut $6 Billion in Costs After Swallowing Warner Bros.",
-          "excerpt": "Skydance has a plan to squeeze billions out of its Warner Bros. megadeal, but the bills arrive long before the savings do. With a heavy debt load and analysts slashing forecasts, one upcoming number could decide whether the bet pays off.",
+          "url": "https://finnhub.io/api/news?id=b05c32b5ab76f433924d412782dc52cb1d9e29c5a1a3dec521c398751558d66a",
+          "title": "AMC Global Media: 3 Key Takeaways for Long-Term Investors",
+          "excerpt": "Shared Netflix funding and debt-first capital allocation give long-term holders two levers to watch as linear ads decline.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-10T16:07:33.000Z",
-          "tickers": []
-        },
-        {
-          "url": "https://finnhub.io/api/news?id=2f5c28844eee560b60ebe224f3aa29c8e812079165c0d073a01991f6c6632a3b",
-          "title": "Netflix Wipes Out Five Years of Gains",
-          "excerpt": "Netflix shares have erased five years of gains, falling 53% from their June 2025 peak as slowing engagement, YouTube competition and a costly content strategy test investor patience.",
-          "image": null,
-          "domain": "Yahoo",
-          "country": null,
-          "seenAt": "2026-11-11T21:22:20.000Z",
+          "seenAt": "2026-11-12T06:28:13.000Z",
           "tickers": [
             "NFLX"
           ]
@@ -1200,16 +1191,28 @@
           ]
         },
         {
-          "url": "https://finnhub.io/api/news?id=50e0b2d215b30106acd678e0dd3caf95ac92c358152bd65baa9c7281efa7ed83",
-          "title": "Clarion Partners’ loan on Netflix-occupied Hollywood campus hits market",
-          "excerpt": "Clarion’s David Gilbert and 817-827 Vine Street in Hollywood (Clarion, Google Maps)Clarion Partners’ lender is shopping the note on a Netflix-occupied creative office campus in Tinseltown, The Real Deal has learned. Cushman & Wakefield marketing materials viewed by TRD note the loan is on the campus at 817-827 Vine Street in Hollywood, which is completely leased to Netflix until 2031. AXA Equitable Life Insurance lent Clarion Partners $48 million in December 2019, records reveal. Representatives",
+          "url": "https://finnhub.io/api/news?id=e64d17e6d8d2d90562d0066821463e566a0c76c94832754a7e191439bb63de7d",
+          "title": "Netflix’s Thanksgiving Eve NFL Game Is the Next Test After a $300 Million Ad Cut",
+          "excerpt": "Key TakeawaysNetflix trades near a two-year low after its third-quarter report cut its 2026 ad revenue forecast to about $2. 7 billion from about $3 billion.",
           "image": null,
           "domain": "Yahoo",
           "country": null,
-          "seenAt": "2026-11-11T18:59:58.000Z",
+          "seenAt": "2026-11-12T04:38:13.000Z",
           "tickers": [
-            "NFLX",
-            "GOOGL"
+            "NFLX"
+          ]
+        },
+        {
+          "url": "https://finnhub.io/api/news?id=49e96f4ad15154ec00bffea0cf2bfcf0b5c473572a59acf9218c6951c3d102d1",
+          "title": "Take-Two's Zelnick on Success of the GTA Franchise",
+          "excerpt": "Take-Two Interactive CEO Strauss Zelnick talks about the highly anticipated release of Grand Theft Auto VI, out next week. He says the Grand Theft Auto franchise \"is probably the most valuable intellectual property in the entertainment business\" because of its enormous global reach. Zelnick sits down with David Rubenstein on this week's episode of The David Rubenstein Show: Peer to Peer Conversations. This interview was recorded October 19 in New York.",
+          "image": null,
+          "domain": "Yahoo",
+          "country": null,
+          "seenAt": "2026-11-11T19:10:53.000Z",
+          "tickers": [
+            "TTWO",
+            "INTC"
           ]
         }
       ]
