@@ -1,32 +1,23 @@
 {
-  "builtAt": "2026-11-13T01:47:29.397Z",
+  "builtAt": "2026-11-13T08:54:20.626Z",
   "universe": 123,
   "priced": 123,
   "counts": {
-    "move": 2,
-    "opportunity": 0,
-    "range": 11,
+    "move": 0,
+    "opportunity": 1,
+    "range": 5,
     "event": 1,
-    "story": 2
+    "story": 9
   },
   "findings": [
     {
-      "kind": "move",
-      "ticker": "MU",
-      "headline": "MU זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "11.89% ביום — פי 2.9 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.911919411379546,
-      "href": "/company/MU",
-      "at": "2026-11-13T01:47:29.397Z"
-    },
-    {
-      "kind": "move",
-      "ticker": "ORCL",
-      "headline": "ORCL זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "8.82% ביום — פי 2.5 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.493470213216751,
-      "href": "/company/ORCL",
-      "at": "2026-11-13T01:47:29.397Z"
+      "kind": "opportunity",
+      "ticker": "NVDA",
+      "headline": "NVDA עוברת 9 מתוך 10 המבחנים, ובשפל של רבעון",
+      "detail": "הסגירה 166.19 היא הנמוכה ביותר ברבעון, על חברה שעוברת 9 מתוך 10 המבחנים",
+      "weight": 2.6,
+      "href": "/company/NVDA",
+      "at": "2026-11-13T08:54:20.626Z"
     },
     {
       "kind": "event",
@@ -35,16 +26,52 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.25,
       "href": "/company/TTWO",
-      "at": "2026-11-13T01:47:29.397Z"
+      "at": "2026-11-13T08:54:20.626Z"
     },
     {
       "kind": "story",
-      "ticker": "MRVL",
-      "headline": "Marvell makes major board move ahead of $115 billion AI deal",
-      "detail": "Marvell מינתה שלושה דירקטורים עצמאיים חדשים לדירקטוריון שלה, הכולל כעת 10 חברים, כחלק מההכנות לרכישת Lumentum בעסקה המבוססת על מניות בשווי של 115 מיליארד דולר. המהלך נועד לחזק את פעילות תשתי",
+      "ticker": "SMCI",
+      "headline": "Down 32% in a month, Super Micro trades at 6x P/E: Bargain or trap?",
+      "detail": "מניית סופר מיקרו ירדה ב-31.7% בחודש למרות צמיחה של 298% בהכנסות ברבעון הראשון ל-19.9 מיליארד דולר והעלאת תחזית ההכנסות השנתית ל-72 עד 82 מיליארד דולר. עם זאת, המרווח הגולמי המתואם ירד ל-12.8",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=5f7b91e4ce34e1f3b948f3cfe93f31d903fe42f161c72ed5700b07b924c666ab",
-      "at": "2026-11-12T19:44:50.000Z"
+      "href": "https://finnhub.io/api/news?id=4fb29ed39b54199be2fd869cc1e00eaec0c051de90b75e89e9a5e03ba2a654ad",
+      "at": "2026-11-13T07:34:59.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia CEO Jensen Huang resigns: Is the stock now a 50% bargain?",
+      "detail": "מנכ\"ל NVIDIA, ג'נסן הואנג, התפטר באופן מידי על רקע חקירת דירקטוריון וטענות להתנהגות אישית פסולה, לאחר שכונתה 33 שנות כהונה. סמנכ\"לית הכספים קולט קרס תמונה למנכ\"לית זמנית לצד יו\"ר הדירקטוריון",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=230b76a78437121aab06b6d67d0ac68d24e700a28436fa3cfe96162569eb096a",
+      "at": "2026-11-13T07:30:49.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "CSCO",
+      "headline": "Cisco beats on earnings, says AI infrastructure revenue will double this fiscal year",
+      "detail": "סיסקו דיווחה על תוצאות הרבעון הפיסקלי הראשון שעקפו את תחזיות האנליסטים, עם רווח מתואם של $1.40 למניה והכנסות של $18.5 מיליארד. החברה העלתה את תחזית הכנסות תשתיות ה-AI מלקוחות ענן ל-$9 מיליאר",
+      "weight": 2.2,
+      "href": "https://www.cnbc.com/2026/11/12/cisco-csco-q1-2027-earnings.html",
+      "at": "2026-11-12T21:20:35.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia CEO Jensen Huang resigns: Is the stock now a 50% bargain?",
+      "detail": "מנכ\"ל NVIDIA, ג'נסן הואנג, התפטר באופן מידי על רקע חקירת דירקטוריון וטענות להתנהגות אישית פסולה, לאחר שכונתה 33 שנות כהונה. סמנכ\"לית הכספים קולט קרס תמונה למנכ\"לית זמנית לצד יו\"ר הדירקטוריון",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=230b76a78437121aab06b6d67d0ac68d24e700a28436fa3cfe96162569eb096a",
+      "at": "2026-11-13T07:30:49.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia Employees Reportedly Rally Behind Huang Even As Congress Seeks Answers On China Spy Scandal",
+      "detail": "מנכ\"ל Nvidia, ג'נסן הואנג, התפטר מתפקידו לאחר שהודה ברומנים, כולל קשר עם חשודה בריגול סיני, וחברת Nvidia מינתה את סמנכ\"לית הכספים קולט קרס למנכ\"לית זמנית. מניות החברה ירדו ב-11% במהלך השבוע,",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=c54946a280ad06d1ca997cdce27a35fd0bebc55427a2f8ffcd3921da2ec95a31",
+      "at": "2026-11-13T07:06:40.000Z"
     },
     {
       "kind": "story",
@@ -56,103 +83,76 @@
       "at": "2026-11-12T16:27:35.000Z"
     },
     {
-      "kind": "range",
-      "ticker": "NXPI",
-      "headline": "NXPI בשיא של רבעון",
-      "detail": "הסגירה האחרונה 267.29 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/NXPI",
-      "at": "2026-11-13T01:47:29.397Z"
+      "kind": "story",
+      "ticker": "CVS",
+      "headline": "What Could Go Wrong At CVS Health From Here?",
+      "detail": "הנהלת CVS Health הודיעה על תוכנית פיצול החברה לשתי חברות נפרדות ועל העלאת תחזית 2026. במקביל, הנהלת החברה הזהירה כי שנת 2027 תהיה שנת שפל רווחי עבור מגזר ה-Health Services, עקב ירידה בעסקאות",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=3609da2b1daaf496774090626cf65a6da2b16c31db829292286377314a26ca7a",
+      "at": "2026-11-12T19:07:03.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "AMZN",
+      "headline": "At 21x earnings, Amazon is cheaper than Walmart and surging",
+      "detail": "אמזון נסחרת לפי מכפיל רווח של 21.4, נמוך מוולמארט וקוסטקו, ועלתה ב-10.74% מאז ה-1 בנובמבר לרמה של כ-266.17 דולר. AWS מציגה צבר הזמנות של 578 מיליארד דולר והתחייבות ענן של אנתרופיק בסך 110 מי",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=eb60721151017e5528da60f686f63be8e678d636e2afd83ffbfff23dc601f09e",
+      "at": "2026-11-13T07:30:33.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "CBRS",
+      "headline": "Cerebras surges 13% after beating on quarterly revenue and announcing Microsoft deal",
+      "detail": "חברת שבבי הבינה המלאכותית Cerebras דיווחה על הכנסות רבעוניות של 230.9 מיליון דולר לעומת 214.7 מיליון דולר צפויים, עקפה את תחזיות הרווח והודיעה על הסכם חדש עם מיקרוסופט. המניה זינקה ב-17% במס",
+      "weight": 2.2,
+      "href": "https://www.cnbc.com/2026/11/12/cerebras-systems-cbrs-q3-earnings-report-2026.html",
+      "at": "2026-11-12T21:23:33.000Z"
     },
     {
       "kind": "range",
-      "ticker": "TTD",
-      "headline": "TTD בשיא של רבעון",
-      "detail": "הסגירה האחרונה 15.47 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "ticker": "TXN",
+      "headline": "TXN בשיא של רבעון",
+      "detail": "הסגירה האחרונה 312.48 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/TTD",
-      "at": "2026-11-13T01:47:29.397Z"
+      "href": "/company/TXN",
+      "at": "2026-11-13T08:54:20.626Z"
     },
     {
       "kind": "range",
-      "ticker": "ABBV",
-      "headline": "ABBV בשיא של רבעון",
-      "detail": "הסגירה האחרונה 294.45 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "ticker": "NVDA",
+      "headline": "NVDA בשפל של רבעון",
+      "detail": "הסגירה האחרונה 166.19 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/ABBV",
-      "at": "2026-11-13T01:47:29.397Z"
+      "href": "/company/NVDA",
+      "at": "2026-11-13T08:54:20.626Z"
     },
     {
       "kind": "range",
-      "ticker": "LLY",
-      "headline": "LLY בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1427.28 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "ticker": "JNJ",
+      "headline": "JNJ בשיא של רבעון",
+      "detail": "הסגירה האחרונה 283.52 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/LLY",
-      "at": "2026-11-13T01:47:29.397Z"
+      "href": "/company/JNJ",
+      "at": "2026-11-13T08:54:20.626Z"
     },
     {
       "kind": "range",
-      "ticker": "BLK",
-      "headline": "BLK בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1216.61 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "ticker": "PGR",
+      "headline": "PGR בשיא של רבעון",
+      "detail": "הסגירה האחרונה 235.49 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/BLK",
-      "at": "2026-11-13T01:47:29.397Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "AAPL",
-      "headline": "AAPL בשיא של רבעון",
-      "detail": "הסגירה האחרונה 354.88 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/AAPL",
-      "at": "2026-11-13T01:47:29.397Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "KO",
-      "headline": "KO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 97.44 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/KO",
-      "at": "2026-11-13T01:47:29.397Z"
+      "href": "/company/PGR",
+      "at": "2026-11-13T08:54:20.626Z"
     },
     {
       "kind": "range",
       "ticker": "COST",
       "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1092.21 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1092.21 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-11-13T01:47:29.397Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "SBUX",
-      "headline": "SBUX בשיא של רבעון",
-      "detail": "הסגירה האחרונה 107.26 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/SBUX",
-      "at": "2026-11-13T01:47:29.397Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "LOW",
-      "headline": "LOW בשיא של רבעון",
-      "detail": "הסגירה האחרונה 227.46 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/LOW",
-      "at": "2026-11-13T01:47:29.397Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "DIS",
-      "headline": "DIS בשיא של רבעון",
-      "detail": "הסגירה האחרונה 118.23 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/DIS",
-      "at": "2026-11-13T01:47:29.397Z"
+      "at": "2026-11-13T08:54:20.626Z"
     }
   ]
 }
