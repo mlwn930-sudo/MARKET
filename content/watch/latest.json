@@ -1,23 +1,23 @@
 {
-  "builtAt": "2026-11-13T08:54:20.626Z",
+  "builtAt": "2026-11-13T17:28:39.300Z",
   "universe": 123,
   "priced": 123,
   "counts": {
-    "move": 0,
+    "move": 1,
     "opportunity": 1,
-    "range": 5,
+    "range": 9,
     "event": 1,
-    "story": 9
+    "story": 6
   },
   "findings": [
     {
       "kind": "opportunity",
       "ticker": "NVDA",
       "headline": "NVDA עוברת 9 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 166.19 היא הנמוכה ביותר ברבעון, על חברה שעוברת 9 מתוך 10 המבחנים",
+      "detail": "הסגירה 161.48 היא הנמוכה ביותר ברבעון, על חברה שעוברת 9 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NVDA",
-      "at": "2026-11-13T08:54:20.626Z"
+      "at": "2026-11-13T17:28:39.300Z"
     },
     {
       "kind": "event",
@@ -26,25 +26,16 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.25,
       "href": "/company/TTWO",
-      "at": "2026-11-13T08:54:20.626Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "SMCI",
-      "headline": "Down 32% in a month, Super Micro trades at 6x P/E: Bargain or trap?",
-      "detail": "מניית סופר מיקרו ירדה ב-31.7% בחודש למרות צמיחה של 298% בהכנסות ברבעון הראשון ל-19.9 מיליארד דולר והעלאת תחזית ההכנסות השנתית ל-72 עד 82 מיליארד דולר. עם זאת, המרווח הגולמי המתואם ירד ל-12.8",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=4fb29ed39b54199be2fd869cc1e00eaec0c051de90b75e89e9a5e03ba2a654ad",
-      "at": "2026-11-13T07:34:59.000Z"
+      "at": "2026-11-13T17:28:39.300Z"
     },
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Nvidia CEO Jensen Huang resigns: Is the stock now a 50% bargain?",
-      "detail": "מנכ\"ל NVIDIA, ג'נסן הואנג, התפטר באופן מידי על רקע חקירת דירקטוריון וטענות להתנהגות אישית פסולה, לאחר שכונתה 33 שנות כהונה. סמנכ\"לית הכספים קולט קרס תמונה למנכ\"לית זמנית לצד יו\"ר הדירקטוריון",
+      "headline": "What the Nvidia scandal means for the company's earnings next week",
+      "detail": "דירקטוריון אנבידיה הדיח את המנכ\"ל והמייסד השותף ג'נסן הואנג על רקע שערוריית רומן, ומינה את סמנכ\"לית הכספים קולט קרס למנכ\"לית זמנית. החברה צפויה לדווח על תוצאות הרבעון השלישי ביום שלישי הקרוב",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=230b76a78437121aab06b6d67d0ac68d24e700a28436fa3cfe96162569eb096a",
-      "at": "2026-11-13T07:30:49.000Z"
+      "href": "https://finnhub.io/api/news?id=a6029c62b665f3a49666d4575e891f053eb67d3af062def54ca53d06807c9825",
+      "at": "2026-11-13T15:59:03.000Z"
     },
     {
       "kind": "story",
@@ -58,47 +49,29 @@
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Nvidia CEO Jensen Huang resigns: Is the stock now a 50% bargain?",
-      "detail": "מנכ\"ל NVIDIA, ג'נסן הואנג, התפטר באופן מידי על רקע חקירת דירקטוריון וטענות להתנהגות אישית פסולה, לאחר שכונתה 33 שנות כהונה. סמנכ\"לית הכספים קולט קרס תמונה למנכ\"לית זמנית לצד יו\"ר הדירקטוריון",
+      "headline": "What the Nvidia scandal means for the company's earnings next week",
+      "detail": "דירקטוריון אנבידיה הדיח את המנכ\"ל והמייסד השותף ג'נסן הואנג על רקע שערוריית רומן, ומינה את סמנכ\"לית הכספים קולט קרס למנכ\"לית זמנית. החברה צפויה לדווח על תוצאות הרבעון השלישי ביום שלישי הקרוב",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=230b76a78437121aab06b6d67d0ac68d24e700a28436fa3cfe96162569eb096a",
-      "at": "2026-11-13T07:30:49.000Z"
+      "href": "https://finnhub.io/api/news?id=a6029c62b665f3a49666d4575e891f053eb67d3af062def54ca53d06807c9825",
+      "at": "2026-11-13T15:59:03.000Z"
     },
     {
       "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Nvidia Employees Reportedly Rally Behind Huang Even As Congress Seeks Answers On China Spy Scandal",
-      "detail": "מנכ\"ל Nvidia, ג'נסן הואנג, התפטר מתפקידו לאחר שהודה ברומנים, כולל קשר עם חשודה בריגול סיני, וחברת Nvidia מינתה את סמנכ\"לית הכספים קולט קרס למנכ\"לית זמנית. מניות החברה ירדו ב-11% במהלך השבוע,",
+      "ticker": "SMCI",
+      "headline": "Here’s Who’s Getting Dragged Down Further as Huang Exits: CoreWeave Vs. Super Micro Computer",
+      "detail": "מניות תשתיות ה-AI של CoreWeave ו-Super Micro Computer רשמו דוחות חזקים ברבעון, אך מיד לאחר מכן מנכ\"ל Nvidia עזב את האירוע ונפתחה חקירה פדרלית נגד החברות.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=c54946a280ad06d1ca997cdce27a35fd0bebc55427a2f8ffcd3921da2ec95a31",
-      "at": "2026-11-13T07:06:40.000Z"
+      "href": "https://finnhub.io/api/news?id=94a0c8fe17f5e5d34a52d1d140abdbdbac0c054e97e41f5485123e14935cc146",
+      "at": "2026-11-13T15:45:47.000Z"
     },
     {
       "kind": "story",
       "ticker": null,
-      "headline": "Four tankers struck by explosions in Strait of Hormuz, Iran says - Reuters",
-      "detail": "ארבע מכליות נפגעו מפיצוצים במצר הורמוז, לפי דיווח של איראן רויטרס.",
+      "headline": "5 Best Stocks to Buy for a Rising Interest Rate Environment",
+      "detail": "הציפיות לריבית השתנו וכלכלנים צופים העלאת ריבית נוספת בדצמבר על ידי הפדרל ריזרב, לאחר העלאה של 25 נקודות בסיס בספטמבר. שוקי האג״ח הגיבו לשינויים בעקום תשואות לפדיון.",
       "weight": 2.2,
-      "href": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQcDQ2cWxyeTFpazFaX1ZNM2RoS0t2ZVpEa0JpMElTZVFMUElROEF5c20tMlU0dEszWFlEdkhfR2VOb3hEQmo3MjRtdVlSaEhkZnpKXzExbE5QcXItQ3Z6REoyY1Fpak9IUUplYWp6NTQ2UjBiNVk1WDN0MmJjaFRkOHNLdDYxMU9xOWhuMnVaTlNiVXJNTlhLYV9EZEpnd1oxYmF0cG82b2VkMURkYnkzZkZBX0hhWHM?oc=5",
-      "at": "2026-11-12T16:27:35.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "CVS",
-      "headline": "What Could Go Wrong At CVS Health From Here?",
-      "detail": "הנהלת CVS Health הודיעה על תוכנית פיצול החברה לשתי חברות נפרדות ועל העלאת תחזית 2026. במקביל, הנהלת החברה הזהירה כי שנת 2027 תהיה שנת שפל רווחי עבור מגזר ה-Health Services, עקב ירידה בעסקאות",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=3609da2b1daaf496774090626cf65a6da2b16c31db829292286377314a26ca7a",
-      "at": "2026-11-12T19:07:03.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "AMZN",
-      "headline": "At 21x earnings, Amazon is cheaper than Walmart and surging",
-      "detail": "אמזון נסחרת לפי מכפיל רווח של 21.4, נמוך מוולמארט וקוסטקו, ועלתה ב-10.74% מאז ה-1 בנובמבר לרמה של כ-266.17 דולר. AWS מציגה צבר הזמנות של 578 מיליארד דולר והתחייבות ענן של אנתרופיק בסך 110 מי",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=eb60721151017e5528da60f686f63be8e678d636e2afd83ffbfff23dc601f09e",
-      "at": "2026-11-13T07:30:33.000Z"
+      "href": "https://finnhub.io/api/news?id=6dc309134ac3d202e433afdf2a5a219c7b827734ae59594378d96a52d3cd3ddd",
+      "at": "2026-11-13T13:05:23.000Z"
     },
     {
       "kind": "story",
@@ -110,49 +83,94 @@
       "at": "2026-11-12T21:23:33.000Z"
     },
     {
-      "kind": "range",
-      "ticker": "TXN",
-      "headline": "TXN בשיא של רבעון",
-      "detail": "הסגירה האחרונה 312.48 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TXN",
-      "at": "2026-11-13T08:54:20.626Z"
+      "kind": "move",
+      "ticker": "AMD",
+      "headline": "AMD זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-10.09% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.1545342682961754,
+      "href": "/company/AMD",
+      "at": "2026-11-13T17:28:39.300Z"
     },
     {
       "kind": "range",
       "ticker": "NVDA",
       "headline": "NVDA בשפל של רבעון",
-      "detail": "הסגירה האחרונה 166.19 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 161.48 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NVDA",
-      "at": "2026-11-13T08:54:20.626Z"
+      "at": "2026-11-13T17:28:39.300Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "LLY",
+      "headline": "LLY בשיא של רבעון",
+      "detail": "הסגירה האחרונה 1441.62 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/LLY",
+      "at": "2026-11-13T17:28:39.300Z"
     },
     {
       "kind": "range",
       "ticker": "JNJ",
       "headline": "JNJ בשיא של רבעון",
-      "detail": "הסגירה האחרונה 283.52 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 286.00 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/JNJ",
-      "at": "2026-11-13T08:54:20.626Z"
+      "at": "2026-11-13T17:28:39.300Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "CB",
+      "headline": "CB בשיא של רבעון",
+      "detail": "הסגירה האחרונה 375.07 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/CB",
+      "at": "2026-11-13T17:28:39.300Z"
     },
     {
       "kind": "range",
       "ticker": "PGR",
       "headline": "PGR בשיא של רבעון",
-      "detail": "הסגירה האחרונה 235.49 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 235.89 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PGR",
-      "at": "2026-11-13T08:54:20.626Z"
+      "at": "2026-11-13T17:28:39.300Z"
     },
     {
       "kind": "range",
       "ticker": "COST",
       "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1092.21 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1107.15 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-11-13T08:54:20.626Z"
+      "at": "2026-11-13T17:28:39.300Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PG",
+      "headline": "PG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 169.87 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PG",
+      "at": "2026-11-13T17:28:39.300Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "AAPL",
+      "headline": "AAPL בשיא של רבעון",
+      "detail": "הסגירה האחרונה 358.23 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/AAPL",
+      "at": "2026-11-13T17:28:39.300Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "KO",
+      "headline": "KO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 99.02 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/KO",
+      "at": "2026-11-13T17:28:39.300Z"
     }
   ]
 }
