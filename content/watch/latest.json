@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-13T20:22:59.765Z",
+  "builtAt": "2026-11-13T20:28:06.709Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,17 +7,17 @@
     "opportunity": 1,
     "range": 12,
     "event": 1,
-    "story": 6
+    "story": 5
   },
   "findings": [
     {
       "kind": "opportunity",
       "ticker": "NVDA",
       "headline": "NVDA עוברת 9 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 162.74 היא הנמוכה ביותר ברבעון, על חברה שעוברת 9 מתוך 10 המבחנים",
+      "detail": "הסגירה 162.49 היא הנמוכה ביותר ברבעון, על חברה שעוברת 9 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NVDA",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
     },
     {
       "kind": "event",
@@ -26,43 +26,34 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.25,
       "href": "/company/TTWO",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "MRNA",
+      "headline": "While AI hogged the headlines, 1 overlooked sector beat the S&P 500 — and its top stock is up 700%+ this year",
+      "detail": "סקטור הבריאות עוקף את מדד ה-S&P 500 ב-2026, כאשר מניית Moderna זינקה ביותר מ-700% מתחילת השנה לאחר שדיווחה באוגוסט על תוצאות שלב 3 לחיסון סרטן מותאם אישית בשילוב עם Keytruda של Merck. משקיעי",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=39efc3e3702f69802d1b8c3ab4dac907a623122dc31a754ce051f76f3a2d47b0",
+      "at": "2026-11-13T12:00:00.000Z"
     },
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "What the Nvidia scandal means for the company's earnings next week",
-      "detail": "דירקטוריון אנבידיה הדיח את המנכ\"ל והמייסד השותף ג'נסן הואנג על רקע שערוריית רומן, ומינה את סמנכ\"לית הכספים קולט קרס למנכ\"לית זמנית. החברה צפויה לדווח על תוצאות הרבעון השלישי ביום שלישי הקרוב",
+      "headline": "Nvidia Scandal is Poking Real Holes in the AI Trade. But That Doesn’t Mean it’s Over.",
+      "detail": "הכתבה דנה בהשפעת שערורייה הקשורה למנכ\"ל Nvidia, ג'נסן הואנג (Jensen Huang), על מניות החברה ועל סקטור הבינה המלאכותית (AI Trade). מניית Nvidia רשמה ירידות ונסיגה המרחיבה את ההפסדים ליומיים בע",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=a6029c62b665f3a49666d4575e891f053eb67d3af062def54ca53d06807c9825",
-      "at": "2026-11-13T15:59:03.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "CSCO",
-      "headline": "Cisco beats on earnings, says AI infrastructure revenue will double this fiscal year",
-      "detail": "סיסקו דיווחה על תוצאות הרבעון הפיסקלי הראשון שעקפו את תחזיות האנליסטים, עם רווח מתואם של $1.40 למניה והכנסות של $18.5 מיליארד. החברה העלתה את תחזית הכנסות תשתיות ה-AI מלקוחות ענן ל-$9 מיליאר",
-      "weight": 2.2,
-      "href": "https://www.cnbc.com/2026/11/12/cisco-csco-q1-2027-earnings.html",
-      "at": "2026-11-12T21:20:35.000Z"
+      "href": "https://finnhub.io/api/news?id=a4f047fc1f07ea55b5f11427adca1678fa58806eac747751e163349380c340f1",
+      "at": "2026-11-13T19:39:00.000Z"
     },
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "What the Nvidia scandal means for the company's earnings next week",
-      "detail": "דירקטוריון אנבידיה הדיח את המנכ\"ל והמייסד השותף ג'נסן הואנג על רקע שערוריית רומן, ומינה את סמנכ\"לית הכספים קולט קרס למנכ\"לית זמנית. החברה צפויה לדווח על תוצאות הרבעון השלישי ביום שלישי הקרוב",
+      "headline": "Wall Street Is Writing Off Nvidia Stock. Here's Why That's a Mistake.",
+      "detail": "מניית Nvidia ירדה ב-2.0% ל-162.81 דולר על רקע תיקון בשוק ה-AI, פרשת הנהגה שכללה את התפטרותו של המנכ\"ל ג'נסן הואנג ומינוי זמני של סמנכ\"לית הכספים קולט קרס, ודיווח של הלקוחה Anthropic לפיו הצל",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=a6029c62b665f3a49666d4575e891f053eb67d3af062def54ca53d06807c9825",
-      "at": "2026-11-13T15:59:03.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "SMCI",
-      "headline": "Here’s Who’s Getting Dragged Down Further as Huang Exits: CoreWeave Vs. Super Micro Computer",
-      "detail": "מניות תשתיות ה-AI של CoreWeave ו-Super Micro Computer רשמו דוחות חזקים ברבעון, אך מיד לאחר מכן מנכ\"ל Nvidia עזב את האירוע ונפתחה חקירה פדרלית נגד החברות.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=94a0c8fe17f5e5d34a52d1d140abdbdbac0c054e97e41f5485123e14935cc146",
-      "at": "2026-11-13T15:45:47.000Z"
+      "href": "https://finnhub.io/api/news?id=1f25b50d7e18813c5b771a8af6168f7a90d2427c93ce1bcc134deb531f9c209f",
+      "at": "2026-11-13T19:37:00.000Z"
     },
     {
       "kind": "story",
@@ -86,109 +77,109 @@
       "kind": "range",
       "ticker": "NVDA",
       "headline": "NVDA בשפל של רבעון",
-      "detail": "הסגירה האחרונה 162.74 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 162.49 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NVDA",
-      "at": "2026-11-13T20:22:59.765Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "ABBV",
-      "headline": "ABBV בשיא של רבעון",
-      "detail": "הסגירה האחרונה 295.51 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/ABBV",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
     },
     {
       "kind": "range",
       "ticker": "LLY",
       "headline": "LLY בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1445.67 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1445.69 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/LLY",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "ABBV",
+      "headline": "ABBV בשיא של רבעון",
+      "detail": "הסגירה האחרונה 295.39 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/ABBV",
+      "at": "2026-11-13T20:28:06.709Z"
     },
     {
       "kind": "range",
       "ticker": "JNJ",
       "headline": "JNJ בשיא של רבעון",
-      "detail": "הסגירה האחרונה 286.74 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 286.69 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/JNJ",
-      "at": "2026-11-13T20:22:59.765Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PGR",
-      "headline": "PGR בשיא של רבעון",
-      "detail": "הסגירה האחרונה 235.19 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PGR",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
     },
     {
       "kind": "range",
       "ticker": "CB",
       "headline": "CB בשיא של רבעון",
-      "detail": "הסגירה האחרונה 374.04 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 374.13 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/CB",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PGR",
+      "headline": "PGR בשיא של רבעון",
+      "detail": "הסגירה האחרונה 235.18 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PGR",
+      "at": "2026-11-13T20:28:06.709Z"
     },
     {
       "kind": "range",
       "ticker": "AAPL",
       "headline": "AAPL בשיא של רבעון",
-      "detail": "הסגירה האחרונה 356.83 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 356.76 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AAPL",
-      "at": "2026-11-13T20:22:59.765Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "KO",
-      "headline": "KO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 99.16 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/KO",
-      "at": "2026-11-13T20:22:59.765Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PEP",
-      "headline": "PEP בשיא של רבעון",
-      "detail": "הסגירה האחרונה 144.68 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PEP",
-      "at": "2026-11-13T20:22:59.765Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PG",
-      "headline": "PG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 169.77 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PG",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
     },
     {
       "kind": "range",
       "ticker": "COST",
       "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1103.18 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1103.81 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PEP",
+      "headline": "PEP בשיא של רבעון",
+      "detail": "הסגירה האחרונה 144.85 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PEP",
+      "at": "2026-11-13T20:28:06.709Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PG",
+      "headline": "PG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 169.83 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PG",
+      "at": "2026-11-13T20:28:06.709Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "KO",
+      "headline": "KO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 99.19 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/KO",
+      "at": "2026-11-13T20:28:06.709Z"
     },
     {
       "kind": "range",
       "ticker": "MDLZ",
       "headline": "MDLZ בשיא של רבעון",
-      "detail": "הסגירה האחרונה 67.31 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 67.34 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MDLZ",
-      "at": "2026-11-13T20:22:59.765Z"
+      "at": "2026-11-13T20:28:06.709Z"
     }
   ]
 }
