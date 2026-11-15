@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-15T08:33:44.686Z",
+  "builtAt": "2026-11-15T16:43:03.593Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,17 +7,17 @@
     "opportunity": 2,
     "range": 13,
     "event": 1,
-    "story": 6
+    "story": 4
   },
   "findings": [
     {
       "kind": "opportunity",
       "ticker": "NVDA",
-      "headline": "NVDA עוברת 9 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 162.85 היא הנמוכה ביותר ברבעון, על חברה שעוברת 9 מתוך 10 המבחנים",
+      "headline": "NVDA עוברת 10 מתוך 10 המבחנים, ובשפל של רבעון",
+      "detail": "הסגירה 162.85 היא הנמוכה ביותר ברבעון, על חברה שעוברת 10 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NVDA",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "opportunity",
@@ -26,7 +26,7 @@
       "detail": "הסגירה 62.15 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NFLX",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "event",
@@ -35,16 +35,16 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.3,
       "href": "/company/TTWO",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "story",
-      "ticker": "GOOGL",
-      "headline": "Meet the seven co-founders of Anthropic",
-      "detail": "חברת הבינה מלאכותית Anthropic צפויה לצאת להנפקה ראשונה הציבור (IPO) ב-19 בנובמבר, לפי טווח מחירים של 70 עד 78 דולר למניה ושוויי שוק מוערך של כמעט 1.4 טריליון דולר. שבעת מייסדי החברה, ובראשם ",
+      "ticker": "NVDA",
+      "headline": "3 big things we're watching in the stock market in the week ahead",
+      "detail": "אנבידיה מדווחת על תוצאותיה הרבעוניות לקראת יום שלישי, לראשונה בתולדותיה ללא ג'נסן הואנג כמנכ\"ל, לאחר שהתפטר בעקבות שערורייה. במקביל, חברת האופנה וה-AI אנתרופיק צפויה להנפיק בנאסד\"ק ביום חמיש",
       "weight": 2.2,
-      "href": "https://www.cnbc.com/2026/11/14/meet-the-seven-co-founders-of-anthropic.html",
-      "at": "2026-11-14T12:00:01.000Z"
+      "href": "https://www.cnbc.com/investingclub/2026/11/15/3-big-things-were-watching-in-the-stock-market-in-the-week-ahead.html",
+      "at": "2026-11-15T15:26:20.000Z"
     },
     {
       "kind": "story",
@@ -58,29 +58,11 @@
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Nvidia's Jensen Huang Is 'Irreplaceable' And Worth $1 Trillion To The Story, Says Dan Ives Amid Support From Elon Musk, Gavin Baker And Othe",
-      "detail": "אנליסטים ודמויות בולטות בתעשייה, בהם דן אייבס, אילון מאסק וגאווין בייקר, הביעו תמיכה במנכ\"ל אנבידיה ג'נסן הואנג על רקע שאלות סביב ייצוא שבבי AI לסין ושערוריות אישיות. מניות אנבידיה ירדו ביות",
+      "headline": "Here's how Jensen Huang's abrupt resignation unfolded at Nvidia",
+      "detail": "מנכ\"ל Nvidia, ג'נסן הואנג, התפטר מתפקידו לאחר פרסום על קשר רומנטי בינו לבין אליס הואנג, אישה החשודה כמרגלת סינית שניהלה את חברת ענן הנתונים Megaspeed. הכתבה מפרטת ציר זמן של אירועים, הכולל א",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=3f45aeb4ee0c52f82d5bc18c48c2782e4abde3942e5007810b38dc251962b227",
-      "at": "2026-11-15T06:39:09.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "AAPL",
-      "headline": "Nov. 25 Will Be a Critical Day for the Stock Market",
-      "detail": "הלשכה לניתוח כלכלי תפרסם ב-25 בנובמבר את מדד המחירים של הוצאות צריכה פרטיות (PCE) לחודש אוקטובר, המהווה את מדד האינפלציה המועדף על הפד. זאת לאחר שנתוני מדד המחירים לצרכן (CPI) לאוקטובר הציגו",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=0c14b900197487a3f5f130cbc7b1f9ff5bafa2c4916fb6cd29ee6f1948948d01",
-      "at": "2026-11-15T03:20:02.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "LLY",
-      "headline": "Trump Touts Lilly’s “$3.5 Billion” Obesity Drug Plant, Its 10th New U.S. Site Since 2020",
-      "detail": "אלי לילי החלה בבניית מפעל בסך 3.5 מיליארד דולר בפנסילבניה לייצור תרופות להשמנת קדמה, שצפוי לפעול ב-2031. באותו יום, הרגולטור בסין אישר את גלולת הרזיה שלה, orforglipron.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=32f66daa17bc88fb6238f8f668e605e49f62b965feadf359043ad5be22de9b60",
-      "at": "2026-11-14T09:00:04.000Z"
+      "href": "https://finnhub.io/api/news?id=14d6f22b8cce98a18f4cf2a4c7d6f8f2cf853e8e68e127d3722b0aaefece0d55",
+      "at": "2026-11-15T14:52:34.000Z"
     },
     {
       "kind": "story",
@@ -98,16 +80,7 @@
       "detail": "הסגירה האחרונה 162.85 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NVDA",
-      "at": "2026-11-15T08:33:44.686Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "NFLX",
-      "headline": "NFLX בשפל של רבעון",
-      "detail": "הסגירה האחרונה 62.15 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/NFLX",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -116,7 +89,7 @@
       "detail": "הסגירה האחרונה 285.75 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/JNJ",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -125,7 +98,16 @@
       "detail": "הסגירה האחרונה 1443.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/LLY",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "NFLX",
+      "headline": "NFLX בשפל של רבעון",
+      "detail": "הסגירה האחרונה 62.15 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/NFLX",
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -134,7 +116,7 @@
       "detail": "הסגירה האחרונה 295.03 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ABBV",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -143,7 +125,7 @@
       "detail": "הסגירה האחרונה 235.78 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PGR",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -152,7 +134,7 @@
       "detail": "הסגירה האחרונה 375.74 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/CB",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -161,7 +143,7 @@
       "detail": "הסגירה האחרונה 1106.21 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -170,25 +152,7 @@
       "detail": "הסגירה האחרונה 99.25 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/KO",
-      "at": "2026-11-15T08:33:44.686Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "AAPL",
-      "headline": "AAPL בשיא של רבעון",
-      "detail": "הסגירה האחרונה 356.27 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/AAPL",
-      "at": "2026-11-15T08:33:44.686Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PG",
-      "headline": "PG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 169.80 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PG",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -197,7 +161,25 @@
       "detail": "הסגירה האחרונה 145.44 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PEP",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PG",
+      "headline": "PG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 169.80 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PG",
+      "at": "2026-11-15T16:43:03.593Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "AAPL",
+      "headline": "AAPL בשיא של רבעון",
+      "detail": "הסגירה האחרונה 356.27 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/AAPL",
+      "at": "2026-11-15T16:43:03.593Z"
     },
     {
       "kind": "range",
@@ -206,7 +188,7 @@
       "detail": "הסגירה האחרונה 67.54 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MDLZ",
-      "at": "2026-11-15T08:33:44.686Z"
+      "at": "2026-11-15T16:43:03.593Z"
     }
   ]
 }
