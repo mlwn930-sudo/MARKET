@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-15T16:43:03.593Z",
+  "builtAt": "2026-11-16T08:43:44.900Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 2,
     "range": 13,
     "event": 1,
-    "story": 4
+    "story": 9
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "הסגירה 162.85 היא הנמוכה ביותר ברבעון, על חברה שעוברת 10 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NVDA",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "opportunity",
@@ -26,52 +26,97 @@
       "detail": "הסגירה 62.15 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NFLX",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "event",
       "ticker": "TTWO",
-      "headline": "השקת GTA VI — בעוד 4 ימים",
+      "headline": "השקת GTA VI — בעוד 3 ימים",
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
-      "weight": 2.3,
+      "weight": 2.3249999999999997,
       "href": "/company/TTWO",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "3 big things we're watching in the stock market in the week ahead",
-      "detail": "אנבידיה מדווחת על תוצאותיה הרבעוניות לקראת יום שלישי, לראשונה בתולדותיה ללא ג'נסן הואנג כמנכ\"ל, לאחר שהתפטר בעקבות שערורייה. במקביל, חברת האופנה וה-AI אנתרופיק צפויה להנפיק בנאסד\"ק ביום חמיש",
+      "headline": "Losing Jensen Was Bad Enough. Losing NVIDIA’s Bench Would Be Worse",
+      "detail": "הסיכון המרכזי עבור NVIDIA אינו איתור מנכ\"ל חדש אם Jensen Huang יעזוב, אלא אובדן ההנהגה הבכירה המנהלת את החברה. מוצרי החברה לשנים הקרובות כבר מתוכננים, ולכן בריחת מוחות תפגע בה בעיקר בשלב מאו",
       "weight": 2.2,
-      "href": "https://www.cnbc.com/investingclub/2026/11/15/3-big-things-were-watching-in-the-stock-market-in-the-week-ahead.html",
-      "at": "2026-11-15T15:26:20.000Z"
+      "href": "https://finnhub.io/api/news?id=c2934f7ea0a7e1334c558e63622e1d54b5d83045eb0bf8304ff21cbaa92a408a",
+      "at": "2026-11-16T07:20:34.000Z"
     },
     {
       "kind": "story",
       "ticker": "TSM",
-      "headline": "“Being Prudent”: TSMC Stock Has Surged 41% in a Year. Is It Too Late to Buy?",
-      "detail": "מניית TSMC עלתה ב-41% בשנה האחרונה ונסגרה על $398.73 ב-13 בנובמבר, למרות ירידה של כ-11% ב-5 בדצמבר עקב לחצים בסกטור. הכנסות הרבעון השלישי עלו ב-41.2% ל-$46.72 מיליארד והמכירות באוקטובר זינקו",
+      "headline": "What TSMC Doubters Got Wrong",
+      "detail": "מניית Taiwan Semiconductor Manufacturing השיגה תשואה של 66.4% בשנה האחרונה כולל דיבידנדים, לצד רווחיות שיא ברבעון 3 2026 ותוכניות להתרחבות בארצות הברית.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=7dc3e9387df243b4e3b1fac44783ea6562534f91ac24ac24050b69da3a55306e",
-      "at": "2026-11-14T22:30:54.000Z"
+      "href": "https://finnhub.io/api/news?id=12183ee6583e4b1e8da8fa6589478f431e2ed8eb4a786e4b00f51de9671d13bc",
+      "at": "2026-11-15T20:05:27.000Z"
     },
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Here's how Jensen Huang's abrupt resignation unfolded at Nvidia",
-      "detail": "מנכ\"ל Nvidia, ג'נסן הואנג, התפטר מתפקידו לאחר פרסום על קשר רומנטי בינו לבין אליס הואנג, אישה החשודה כמרגלת סינית שניהלה את חברת ענן הנתונים Megaspeed. הכתבה מפרטת ציר זמן של אירועים, הכולל א",
+      "headline": "Losing Jensen Was Bad Enough. Losing NVIDIA’s Bench Would Be Worse",
+      "detail": "הסיכון המרכזי עבור NVIDIA אינו איתור מנכ\"ל חדש אם Jensen Huang יעזוב, אלא אובדן ההנהגה הבכירה המנהלת את החברה. מוצרי החברה לשנים הקרובות כבר מתוכננים, ולכן בריחת מוחות תפגע בה בעיקר בשלב מאו",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=14d6f22b8cce98a18f4cf2a4c7d6f8f2cf853e8e68e127d3722b0aaefece0d55",
-      "at": "2026-11-15T14:52:34.000Z"
+      "href": "https://finnhub.io/api/news?id=c2934f7ea0a7e1334c558e63622e1d54b5d83045eb0bf8304ff21cbaa92a408a",
+      "at": "2026-11-16T07:20:34.000Z"
     },
     {
       "kind": "story",
-      "ticker": "NFLX",
-      "headline": "Netflix (NFLX) Following Ad Outlook Cuts Still Looks Undervalued To Some Investors",
-      "detail": "נטפליקס קיצצה את תחזית הכנסות הפרסום ותזרים המזומנים החופשי לשנת 2026 עקב עיכובים בהשקת תכונות פרסום חדשות ושילוב שותפים.",
+      "ticker": "BA",
+      "headline": "SPCX Stock Climbs After Starship Catch — Musk Taunts Bezos, Boeing And Lockheed Martin For Trailing SpaceX",
+      "detail": "מניית SPCX עלתה בכמעט 1% במסחר המאוחר לאחר שחברת SpaceX הצליחה לתפוס לראשונה חללית Starship שחזרה מהמסלול, ורשמה עלייה שבועית של 3%. האירוע התרחש שעות ספורות לאחר שטיסת של United Launch Alli",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=98d87fdee82c990d1126ef925347b9c397160e8c19449dc26457da320d0d50ca",
-      "at": "2026-11-14T19:08:05.000Z"
+      "href": "https://finnhub.io/api/news?id=0356939cef4fcc1062a1f908260c009db1d0e957818c7577df7f80cfdcc4a0c6",
+      "at": "2026-11-16T04:19:57.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia, Anthropic, Walmart, Home Depot, the Fed, Home Sales, and More to Watch This Week",
+      "detail": "השבוע צפויים אירועים מרכזיים בתחום הבינה המלאכותית ובמאקרו-כלכלה, הכוללים את דוחות הרווח של Nvidia, הנפקה ציבורית של Anthropic ופרסום נתונים על מדיניות הריבית של הפד.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=c1110a3ac123f482aae97e3a94faee743b115a8cc92e6139d333a789dd2af749",
+      "at": "2026-11-15T19:00:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "NVDA",
+      "headline": "Nvidia, Anthropic, Walmart, Home Depot, the Fed, Home Sales, and More to Watch This Week",
+      "detail": "השבוע צפויים אירועים מרכזיים בתחום הבינה המלאכותית ובמאקרו-כלכלה, הכוללים את דוחות הרווח של Nvidia, הנפקה ציבורית של Anthropic ופרסום נתונים על מדיניות הריבית של הפד.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=c1110a3ac123f482aae97e3a94faee743b115a8cc92e6139d333a789dd2af749",
+      "at": "2026-11-15T19:00:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "SMMT",
+      "headline": "Three FDA Decisions Loom After Summit’s Rejection — Capricor, Savara, Alzheimer’s Data Top Biotech’s Watchlist",
+      "detail": "ה-FDA דחה את אישור שילוב התרופות Ivonescimab של Summit Therapeutics לסרטן ריאות לאחר שלא הציג שיפור מובהק סטטיסטית בהישרדות הכוללת. במקביל, חברות כמו Capricor ו-Savara לקראת החלטות FDA הקרוב",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=94dd83d34af8ddf265aa741881b441772a801e9f9a646d967338d0499125a6ef",
+      "at": "2026-11-16T02:25:30.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "Prediction: $10,000 Equally Split Between Eli Lilly and Novo Nordisk Will Be Worth This Much by the End of 2027",
+      "detail": "הכנסות אלי לילי ברבעון השלישי עלו ב-39% ל-24.4 מיליארד דולר והרווח למניה עלה ב-16% ל-7.22 דולר, בין היתר הודות לתרופות Mounjaro ו-Zepbound. נבו נורדיסק דיווחה על עלייה של 6% במכירות נטו ל-79",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=76d9bbe82bad87211bfe136f3b83e582a84b047cb57de42bd4df324c16f14b26",
+      "at": "2026-11-15T23:50:01.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "LLY",
+      "headline": "Eli Lilly Stock: What Its 23% Weight-Loss Combo and 27% Dropout Rate Mean",
+      "detail": "אלי לילי דיווחה כי שילוב התרופות EloraTZP הניב ירידה משקל ממוצעת של 23.3% לאחר 48 שבועות בקרב מבוגרים הסובלים מהשמנת יתר וסוכרת מסוג 2, לעומת 14.8% לטירזפטיד לבדו. עם זאת, מינון העזר הגבוה ר",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=89202cd0c6fd2fc8aa09dd679067ba37ce18bdcdd0249b4d2fd52b42da0eb1b6",
+      "at": "2026-11-15T17:07:22.000Z"
     },
     {
       "kind": "range",
@@ -80,7 +125,7 @@
       "detail": "הסגירה האחרונה 162.85 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NVDA",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "range",
@@ -89,16 +134,7 @@
       "detail": "הסגירה האחרונה 285.75 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/JNJ",
-      "at": "2026-11-15T16:43:03.593Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "LLY",
-      "headline": "LLY בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1443.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/LLY",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "range",
@@ -107,7 +143,7 @@
       "detail": "הסגירה האחרונה 62.15 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NFLX",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "range",
@@ -116,7 +152,16 @@
       "detail": "הסגירה האחרונה 295.03 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ABBV",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "LLY",
+      "headline": "LLY בשיא של רבעון",
+      "detail": "הסגירה האחרונה 1443.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/LLY",
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "range",
@@ -125,7 +170,7 @@
       "detail": "הסגירה האחרונה 235.78 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PGR",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "range",
@@ -134,43 +179,7 @@
       "detail": "הסגירה האחרונה 375.74 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/CB",
-      "at": "2026-11-15T16:43:03.593Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "COST",
-      "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1106.21 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/COST",
-      "at": "2026-11-15T16:43:03.593Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "KO",
-      "headline": "KO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 99.25 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/KO",
-      "at": "2026-11-15T16:43:03.593Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PEP",
-      "headline": "PEP בשיא של רבעון",
-      "detail": "הסגירה האחרונה 145.44 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PEP",
-      "at": "2026-11-15T16:43:03.593Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PG",
-      "headline": "PG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 169.80 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PG",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "range",
@@ -179,7 +188,43 @@
       "detail": "הסגירה האחרונה 356.27 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AAPL",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "KO",
+      "headline": "KO בשיא של רבעון",
+      "detail": "הסגירה האחרונה 99.25 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/KO",
+      "at": "2026-11-16T08:43:44.900Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PEP",
+      "headline": "PEP בשיא של רבעון",
+      "detail": "הסגירה האחרונה 145.44 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PEP",
+      "at": "2026-11-16T08:43:44.900Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PG",
+      "headline": "PG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 169.80 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PG",
+      "at": "2026-11-16T08:43:44.900Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "COST",
+      "headline": "COST בשיא של רבעון",
+      "detail": "הסגירה האחרונה 1106.21 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/COST",
+      "at": "2026-11-16T08:43:44.900Z"
     },
     {
       "kind": "range",
@@ -188,7 +233,7 @@
       "detail": "הסגירה האחרונה 67.54 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MDLZ",
-      "at": "2026-11-15T16:43:03.593Z"
+      "at": "2026-11-16T08:43:44.900Z"
     }
   ]
 }
