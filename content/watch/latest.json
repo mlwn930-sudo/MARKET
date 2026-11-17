@@ -1,41 +1,68 @@
 {
-  "builtAt": "2026-11-17T09:55:17.485Z",
+  "builtAt": "2026-11-17T18:56:33.959Z",
   "universe": 123,
   "priced": 123,
   "counts": {
-    "move": 2,
-    "opportunity": 2,
+    "move": 4,
+    "opportunity": 4,
     "range": 12,
     "event": 1,
-    "story": 5
+    "story": 4
   },
   "findings": [
     {
       "kind": "move",
-      "ticker": "TTWO",
-      "headline": "TTWO זזה למטה הרבה מעבר לרגיל שלה",
-      "detail": "-6.30% ביום — פי 2.6 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.6052228608236185,
-      "href": "/company/TTWO",
-      "at": "2026-11-17T09:55:17.485Z"
+      "ticker": "UNH",
+      "headline": "UNH זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-4.39% ביום — פי 3.1 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 3.056374061735806,
+      "href": "/company/UNH",
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "opportunity",
+      "ticker": "UNH",
+      "headline": "UNH עוברת 8 מתוך 10 המבחנים, וירדה חזק",
+      "detail": "-4.39% ביום — פי 3.1 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
+      "weight": 2.9056374061735806,
+      "href": "/company/UNH",
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "opportunity",
+      "ticker": "INTU",
+      "headline": "INTU עוברת 8 מתוך 10 המבחנים, וירדה חזק",
+      "detail": "-5.33% ביום — פי 2.1 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
+      "weight": 2.8101663401839785,
+      "href": "/company/INTU",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "opportunity",
       "ticker": "NVDA",
       "headline": "NVDA עוברת 10 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 156.14 היא הנמוכה ביותר ברבעון, על חברה שעוברת 10 מתוך 10 המבחנים",
+      "detail": "הסגירה 153.19 היא הנמוכה ביותר ברבעון, על חברה שעוברת 10 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NVDA",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "opportunity",
       "ticker": "NFLX",
       "headline": "NFLX עוברת 8 מתוך 10 המבחנים, ובשפל של רבעון",
-      "detail": "הסגירה 60.75 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
+      "detail": "הסגירה 59.53 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NFLX",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "move",
+      "ticker": "CRM",
+      "headline": "CRM זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-8.23% ביום — פי 2.4 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.418862879319165,
+      "href": "/company/CRM",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "event",
@@ -44,34 +71,25 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.35,
       "href": "/company/TTWO",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "move",
+      "ticker": "SPGI",
+      "headline": "SPGI זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-3.37% ביום — פי 2.3 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.3288444952650393,
+      "href": "/company/SPGI",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Evercore just slashed its NVDA price target 60% — from $465 to $186 — after Huang quit. Are analysts still bullish?",
-      "detail": "Evercore קיצצה את מחיר היעד של NVDA ב-60% מ-$465 ל-$186 בעקבות עזיבתו של Huang. הדירקטוריון והמנכ\"ל לשעבר חלוקים בדעותיהם, כאשר Huang מתכנן קאמבק והדירקטוריון מחפש מחליף.",
+      "ticker": "MU",
+      "headline": "Micron is Deeply Affected By The Loss of Jensen Huang’s Risk Appetite",
+      "detail": "מיקרון פרסמה רווחים שיא ונסחרת במכפיל עתידי נמוך, אך מניותיה ממשיכות לרדת. שינוי מנהיגות אצל הלקוח הגדול ביותר שלה מעורר שאלות לגבי החלטות הרכש של השבבים.",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=9ae1fb9396be5d75d249f7f0ac3f4bdce877a5235dbb79781e00de57d0356777",
-      "at": "2026-11-17T07:28:19.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Dow, S&P 500, Nasdaq Futures Mixed Ahead Of Much-Anticipated Nvidia Earnings, Anthropic IPO: SLS, BABA, JPM, OMER In Focus",
-      "detail": "חוזים עתידיים על מדדי המניות בארה\"ב נסחרים במגמה מעורבת לקראת דוח הרבעון השלישי של Nvidia והנפקת הענק של Anthropic לפי שווי מוערך של עד 1.4 טריליון דולר. זאת, על רקע ירידות שערים חדות במניות",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=4b2ed273835214de49b76faa572acbc37c3b33f639b191f94f336d599500adba",
-      "at": "2026-11-17T04:06:22.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Evercore just slashed its NVDA price target 60% — from $465 to $186 — after Huang quit. Are analysts still bullish?",
-      "detail": "Evercore קיצצה את מחיר היעד של NVDA ב-60% מ-$465 ל-$186 בעקבות עזיבתו של Huang. הדירקטוריון והמנכ\"ל לשעבר חלוקים בדעותיהם, כאשר Huang מתכנן קאמבק והדירקטוריון מחפש מחליף.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=9ae1fb9396be5d75d249f7f0ac3f4bdce877a5235dbb79781e00de57d0356777",
-      "at": "2026-11-17T07:28:19.000Z"
+      "href": "https://finnhub.io/api/news?id=348b3e137c3422dd03e82b073105a15ae459539465134c01bcd97056516174a3",
+      "at": "2026-11-17T17:45:49.000Z"
     },
     {
       "kind": "story",
@@ -85,128 +103,137 @@
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Dow, S&P 500, Nasdaq Futures Mixed Ahead Of Much-Anticipated Nvidia Earnings, Anthropic IPO: SLS, BABA, JPM, OMER In Focus",
-      "detail": "חוזים עתידיים על מדדי המניות בארה\"ב נסחרים במגמה מעורבת לקראת דוח הרבעון השלישי של Nvidia והנפקת הענק של Anthropic לפי שווי מוערך של עד 1.4 טריליון דולר. זאת, על רקע ירידות שערים חדות במניות",
+      "headline": "In His First Statement Since His Resignation, Former CEO Jensen Huang Just Delivered Stunning News to Nvidia Shareholders",
+      "detail": "מנכ\"ל Nvidia לשעבר, ג'נסן הואנג, הודיע בהצהרה פומבית ראשונה מאז התפטרותו ב-12 בנובמבר כי יהיה מוכן לחזור לתפקידו אם הדירקטוריון יבקש זאת. הואנג הודה בטעויות אישיות ובחקירה עצמאית של הדירקטור",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=4b2ed273835214de49b76faa572acbc37c3b33f639b191f94f336d599500adba",
-      "at": "2026-11-17T04:06:22.000Z"
+      "href": "https://finnhub.io/api/news?id=cdde5a43d3bbaeff0ebadd14348bb60a119e0e5c6c6923b7a67fa35491cc92a8",
+      "at": "2026-11-17T17:43:02.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TTWO",
+      "headline": "Take-Two Interactive Fell 13% Over 3 Months: GTA VI Launches Nov. 19 and This Analyst Predicts 55% Gains",
+      "detail": "מניית Take-Two Interactive ירדה ב-13% במהלך שלושה חודשים לאחר שפספסה את תחזיות ההזמנות לקראת ההשקה של GTA VI המתוכננת ל-19 בנובמבר.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=ad2a794b00f4634bb56e4a0cffb7ddfb5e234517982bb4509bef25a0c7395105",
+      "at": "2026-11-17T15:45:54.000Z"
     },
     {
       "kind": "move",
-      "ticker": "EMR",
-      "headline": "EMR זזה למטה הרבה מעבר לרגיל שלה",
-      "detail": "-3.44% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.1307524248995136,
-      "href": "/company/EMR",
-      "at": "2026-11-17T09:55:17.485Z"
+      "ticker": "INTU",
+      "headline": "INTU זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-5.33% ביום — פי 2.1 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.101663401839786,
+      "href": "/company/INTU",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
       "ticker": "NVDA",
       "headline": "NVDA בשפל של רבעון",
-      "detail": "הסגירה האחרונה 156.14 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 153.19 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NVDA",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "SNOW",
+      "headline": "SNOW בשפל של רבעון",
+      "detail": "הסגירה האחרונה 269.93 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/SNOW",
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PANW",
+      "headline": "PANW בשפל של רבעון",
+      "detail": "הסגירה האחרונה 306.64 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PANW",
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TEAM",
+      "headline": "TEAM בשפל של רבעון",
+      "detail": "הסגירה האחרונה 142.02 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TEAM",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
       "ticker": "NOW",
       "headline": "NOW בשפל של רבעון",
-      "detail": "הסגירה האחרונה 99.37 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 92.91 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NOW",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
       "ticker": "DDOG",
       "headline": "DDOG בשפל של רבעון",
-      "detail": "הסגירה האחרונה 172.86 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 164.47 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DDOG",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "ORCL",
+      "headline": "ORCL בשפל של רבעון",
+      "detail": "הסגירה האחרונה 113.89 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/ORCL",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
       "ticker": "NFLX",
       "headline": "NFLX בשפל של רבעון",
-      "detail": "הסגירה האחרונה 60.75 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 59.53 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NFLX",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
-      "ticker": "CB",
-      "headline": "CB בשיא של רבעון",
-      "detail": "הסגירה האחרונה 381.28 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "DASH",
+      "headline": "DASH בשפל של רבעון",
+      "detail": "הסגירה האחרונה 164.97 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/CB",
-      "at": "2026-11-17T09:55:17.485Z"
+      "href": "/company/DASH",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
-      "ticker": "PGR",
-      "headline": "PGR בשיא של רבעון",
-      "detail": "הסגירה האחרונה 237.33 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "BAC",
+      "headline": "BAC בשפל של רבעון",
+      "detail": "הסגירה האחרונה 49.17 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/PGR",
-      "at": "2026-11-17T09:55:17.485Z"
+      "href": "/company/BAC",
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
       "ticker": "COST",
       "headline": "COST בשיא של רבעון",
-      "detail": "הסגירה האחרונה 1113.74 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 1114.82 היא הגבוהה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/COST",
-      "at": "2026-11-17T09:55:17.485Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PG",
-      "headline": "PG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 173.02 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PG",
-      "at": "2026-11-17T09:55:17.485Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "KO",
-      "headline": "KO בשיא של רבעון",
-      "detail": "הסגירה האחרונה 99.48 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/KO",
-      "at": "2026-11-17T09:55:17.485Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PEP",
-      "headline": "PEP בשיא של רבעון",
-      "detail": "הסגירה האחרונה 146.43 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PEP",
-      "at": "2026-11-17T09:55:17.485Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "MDLZ",
-      "headline": "MDLZ בשיא של רבעון",
-      "detail": "הסגירה האחרונה 67.54 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/MDLZ",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
     },
     {
       "kind": "range",
       "ticker": "BA",
       "headline": "BA בשפל של רבעון",
-      "detail": "הסגירה האחרונה 165.22 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 163.79 היא הנמוכה ביותר מתוך 66 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BA",
-      "at": "2026-11-17T09:55:17.485Z"
+      "at": "2026-11-17T18:56:33.959Z"
     }
   ]
 }
