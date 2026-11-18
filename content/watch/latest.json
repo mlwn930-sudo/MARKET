@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-18T03:09:28.028Z",
+  "builtAt": "2026-11-18T09:24:47.436Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 4,
     "range": 12,
     "event": 1,
-    "story": 5
+    "story": 9
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "-5.42% ביום — פי 3.7 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.743942888734467,
       "href": "/company/UNH",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "-6.30% ביום — פי 3.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 3.2709579457893945,
       "href": "/company/NKE",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "opportunity",
@@ -35,7 +35,7 @@
       "detail": "-5.42% ביום — פי 3.7 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
       "weight": 2.9743942888734467,
       "href": "/company/UNH",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "opportunity",
@@ -44,7 +44,7 @@
       "detail": "-7.17% ביום — פי 2.8 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
       "weight": 2.883070714371631,
       "href": "/company/INTU",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "move",
@@ -53,7 +53,7 @@
       "detail": "-7.17% ביום — פי 2.8 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.8307071437163134,
       "href": "/company/INTU",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "move",
@@ -62,7 +62,7 @@
       "detail": "-4.08% ביום — פי 2.8 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.7758157422542413,
       "href": "/company/SPGI",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "move",
@@ -71,7 +71,7 @@
       "detail": "-9.45% ביום — פי 2.7 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.7480278342633504,
       "href": "/company/CRM",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "opportunity",
@@ -80,7 +80,7 @@
       "detail": "הסגירה 155.46 היא הנמוכה ביותר ברבעון, על חברה שעוברת 10 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NVDA",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "opportunity",
@@ -89,7 +89,7 @@
       "detail": "הסגירה 59.68 היא הנמוכה ביותר ברבעון, על חברה שעוברת 8 מתוך 10 המבחנים",
       "weight": 2.6,
       "href": "/company/NFLX",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "move",
@@ -98,7 +98,7 @@
       "detail": "-5.80% ביום — פי 2.4 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.44933044383932,
       "href": "/company/WDAY",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "event",
@@ -107,34 +107,79 @@
       "detail": "תאריך שהחברה אישרה: 2026-11-19",
       "weight": 2.375,
       "href": "/company/TTWO",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "story",
-      "ticker": "GOOGL",
-      "headline": "Anthropic IPO Costs About Twice Google Per Sales Dollar",
-      "detail": "הנפקת המניות הראשונה (IPO) של Anthropic צפויה להעריך את החברה בלמעלה מ-1 טריליון דולר, עם טווח מחירים של 70 עד 78 דולר למניה עבור 825 מיליון המניות המוצעות. הכנסות החברה ברבעון השלישי עמדו ע",
+      "ticker": "MRVL",
+      "headline": "Down 36% in a month at 48x P/E: Is Marvell a dip or a trap?",
+      "detail": "מניית מארוול ירדה ב-36.2% במהלך החודש האחרון לרמה של 145.36 דולר, בין היתר עקב תחזית חלשה של אינטל וחששות מדילול הון בעקבות הצעה לרכישת לומנטום תמורת 115 מיליארד דולר במניות. זאת למרות צמיחה",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=d957a0ba9f361eb104bd37e669d0dbbba57237eb291e903a5980bdaf96e3f236",
-      "at": "2026-11-17T11:29:48.000Z"
+      "href": "https://finnhub.io/api/news?id=1fb228403b6d3a8aaab0da850178b601c051cddfad4cf0bb278f80f165b32768",
+      "at": "2026-11-18T07:23:39.000Z"
     },
     {
       "kind": "story",
-      "ticker": "CRWV",
-      "headline": "The 5 Best Stocks in Cathie Wood’s Portfolio",
-      "detail": "קרן ARK Invest של קתי ווד הגדילה את אחזקותיה ב-CoreWeave, ב-SpaceX וב-NVIDIA ברבעון השלישי, לפי טופס 13F שהוגש ב-13 בנובמבר. חמש המניות בתיק ירדו מאז ה-30 בספטמבר, כאשר מחירי היעד של האנליסט",
+      "ticker": "UNH",
+      "headline": "UnitedHealth Is Targeting 13% to 16% Long-Term Earnings Growth. Where Will the Stock Be in 5 Years?",
+      "detail": "יונייטדהלת' דיווחה על עלייה ברווחי התפעול ברבעון השלישי ל-6.6 מיליארד דולר והעלתה את תחזית הרווח המתואם לשנת 2026 לפחות ל-20.50 דולר למניה. החברה אישרה מחדש את יעד צמיחת הרווחים לטווח ארוך ש",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=bb0d80da9e7ce9082629afaab87899f11959aa54074b03fbf33e12c4434a1e6e",
-      "at": "2026-11-17T19:38:42.000Z"
+      "href": "https://finnhub.io/api/news?id=9c320453f42703d4fdbdc564caef47e181122e037c89f2cce702876c90510c27",
+      "at": "2026-11-18T07:20:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "SPCX",
+      "headline": "SpaceX vs. Anthropic: Here’s Which Mega-IPO Stock I’d Buy After Anthropic Goes Public.",
+      "detail": "החברה Anthropic מתכננת הנפקה ציבורית ב-19 בנובמבר 2026. הכתבה משווה בינה לבין SpaceX (שנסחרת תחת הטיקר SPCX), אשר הפכה לחברת בינה מלאכותית בעיקרה לאחר שרכשה את xAI ורשמה צמיחה של 830% ב-Q3, ",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=4730ce6c5a5a361f5f14221e4b7ed9a58ed9b092611e792c51b57403a1ce4662",
+      "at": "2026-11-18T06:29:02.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TSM",
+      "headline": "TSMC: The Biggest Loser From The Nvidia Debacle (Rating Downgrade)",
+      "detail": "אנליסט הורד את המלצתו למניית TSMC מ-Buy ל-Hold, עקב סיכונים לדัש ביקוש המונע ממימון מצד Nvidia. Nvidia היוותה 19% מההכנסות ב-2025, ועלולה להקטין או להתאים את התחייבויות האספקה שלה לצד תוכניו",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=3173fe7902fc844d92aea18fb822043dab59d6f888e56a3f0087e72b4abb75e0",
+      "at": "2026-11-18T02:38:42.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "TSM",
+      "headline": "TSMC Stocks Fall 4.26% as New US Rule Tightens Checks on Chip Foundries",
+      "detail": "מניות TSMC ירדו ב-4.26% בעקבות תקנה חדשה של משרד המסחר האמריקאי המגבירה את בדיקות הנאותות ודרישות הרישוי על יצרניות שבבים ומארזים עבור שבבי לוגיקה מתקדמים.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=7acfb949021b2bea5725ecc1fc5415947411aa665db4fed3fb9074ba2481fee4",
+      "at": "2026-11-17T19:01:03.000Z"
     },
     {
       "kind": "story",
       "ticker": "NVDA",
-      "headline": "Nvidia Falls Ahead Of Earnings. Funds Have Been Dumping Stock. (Live Coverage)",
-      "detail": "מניית Nvidia ירדה לקראת פרסום דוחות הרבעון השלישי, כאשר קרנות השקיעו את מניותיהן והחברה מתמודדת עם תקופה ראשונה ללא המנכ\"ל הקודם ג'נסן הואנג.",
+      "headline": "Can Anthropic’s IPO Burn NVDA Stock Bears? Jim Cramer Thinks So — Jeff Bezos Weighs In On Jensen Huang’s Successor",
+      "detail": "אננתרופיק נערכת להנפקה ציבורית בנאסד\"ק לפי שווי של כ-61 מיליארד דולר, כאשר אנוידיה משקיעה בה במסגרת השקעה פרטית ומספקת שבבים לענן של מייקרוסופט שעליו מתחייבת אננתרופיק לרכוש קיבולת חישוב. במ",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=cbaf81f019236b6f291e447b3c9eaefda4ea9ce13fe6b29c5f3ef3d420d4f884",
-      "at": "2026-11-17T19:37:40.000Z"
+      "href": "https://finnhub.io/api/news?id=59c7a6ed911df39769c4b6202ac3ea4be924cf2ce1957f53a19aa10a632d828b",
+      "at": "2026-11-18T06:19:08.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "AZN",
+      "headline": "AstraZeneca Stock Up 12% in a Month: Time to Buy, Sell or Hold?",
+      "detail": "מניית AstraZeneca עלתה ב-12.2% בחודש האחרון, בין היתר הודות לתוצאות חזקות ברבעון השלישי של 2026 שעקפו את תחזיות האנליסטים עם הכנסות של 16.21 מיליארד דולר ורווח ליבה של 2.79 דולר למניה. החברה",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=50daf2b6d72c516d5c84ded0d8f30315f7d12a4f656fa0c671a2f414409d8bfd",
+      "at": "2026-11-17T14:58:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "D",
+      "headline": "Virginia regulators start Dominion-NextEra merger hearing",
+      "detail": "רגולטורים בווירג'יניה החלו בדיונים רשמיים לאישור מיזוג בשווי 67 מיליארד דולר בין Dominion Energy לבין NextEra Energy. המהלך צפוי ליצור את חברת החשמל המפוקחת הגדולה בעולם.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=60cb453d3e3a9c852bb9cd80beb952a8a337c9e7a4d8d282c6de255ef2d939eb",
+      "at": "2026-11-17T22:08:00.000Z"
     },
     {
       "kind": "story",
@@ -146,22 +191,13 @@
       "at": "2026-11-17T19:24:00.000Z"
     },
     {
-      "kind": "story",
-      "ticker": "TTWO",
-      "headline": "Take-Two Interactive Fell 13% Over 3 Months: GTA VI Launches Nov. 19 and This Analyst Predicts 55% Gains",
-      "detail": "מניית Take-Two Interactive ירדה ב-13% במהלך שלושה חודשים לאחר שפספסה את תחזיות ההזמנות לקראת ההשקה של GTA VI המתוכננת ל-19 בנובמבר.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ad2a794b00f4634bb56e4a0cffb7ddfb5e234517982bb4509bef25a0c7395105",
-      "at": "2026-11-17T15:45:54.000Z"
-    },
-    {
       "kind": "move",
       "ticker": "PEP",
       "headline": "PEP זזה למטה הרבה מעבר לרגיל שלה",
       "detail": "-3.01% ביום — פי 2.2 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.194900871065277,
       "href": "/company/PEP",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "range",
@@ -170,16 +206,7 @@
       "detail": "הסגירה האחרונה 155.46 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NVDA",
-      "at": "2026-11-18T03:09:28.028Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "DDOG",
-      "headline": "DDOG בשפל של רבעון",
-      "detail": "הסגירה האחרונה 165.18 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/DDOG",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "range",
@@ -188,43 +215,7 @@
       "detail": "הסגירה האחרונה 115.00 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/ORCL",
-      "at": "2026-11-18T03:09:28.028Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "NOW",
-      "headline": "NOW בשפל של רבעון",
-      "detail": "הסגירה האחרונה 92.90 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/NOW",
-      "at": "2026-11-18T03:09:28.028Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "WDAY",
-      "headline": "WDAY בשפל של רבעון",
-      "detail": "הסגירה האחרונה 182.80 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/WDAY",
-      "at": "2026-11-18T03:09:28.028Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "CRM",
-      "headline": "CRM בשפל של רבעון",
-      "detail": "הסגירה האחרונה 194.52 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/CRM",
-      "at": "2026-11-18T03:09:28.028Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "TEAM",
-      "headline": "TEAM בשפל של רבעון",
-      "detail": "הסגירה האחרונה 140.98 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/TEAM",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "range",
@@ -233,7 +224,52 @@
       "detail": "הסגירה האחרונה 309.29 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PANW",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "NOW",
+      "headline": "NOW בשפל של רבעון",
+      "detail": "הסגירה האחרונה 92.90 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/NOW",
+      "at": "2026-11-18T09:24:47.436Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "CRM",
+      "headline": "CRM בשפל של רבעון",
+      "detail": "הסגירה האחרונה 194.52 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/CRM",
+      "at": "2026-11-18T09:24:47.436Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "TEAM",
+      "headline": "TEAM בשפל של רבעון",
+      "detail": "הסגירה האחרונה 140.98 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/TEAM",
+      "at": "2026-11-18T09:24:47.436Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "WDAY",
+      "headline": "WDAY בשפל של רבעון",
+      "detail": "הסגירה האחרונה 182.80 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/WDAY",
+      "at": "2026-11-18T09:24:47.436Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "DDOG",
+      "headline": "DDOG בשפל של רבעון",
+      "detail": "הסגירה האחרונה 165.18 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/DDOG",
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "range",
@@ -242,7 +278,7 @@
       "detail": "הסגירה האחרונה 59.68 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/NFLX",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "range",
@@ -251,7 +287,7 @@
       "detail": "הסגירה האחרונה 164.91 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DASH",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "range",
@@ -260,7 +296,7 @@
       "detail": "הסגירה האחרונה 49.44 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BAC",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     },
     {
       "kind": "range",
@@ -269,7 +305,7 @@
       "detail": "הסגירה האחרונה 163.91 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/BA",
-      "at": "2026-11-18T03:09:28.028Z"
+      "at": "2026-11-18T09:24:47.436Z"
     }
   ]
 }
