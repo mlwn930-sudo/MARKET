@@ -1,165 +1,141 @@
 {
-  "builtAt": "2026-11-15T11:54:05.339Z",
+  "builtAt": "2026-11-22T12:28:08.025Z",
   "institutions": [
     {
       "cik": 1067983,
       "name": "BERKSHIRE HATHAWAY INC",
       "note": "וורן באפט",
-      "reportDate": "2026-06-30",
-      "filedAt": "2026-08-14",
-      "previousReportDate": "2026-03-31",
-      "totalValue": 299253556246,
-      "positionCount": 26,
+      "reportDate": "2026-09-30",
+      "filedAt": "2026-11-16",
+      "previousReportDate": "2026-06-30",
+      "totalValue": 304196581325,
+      "positionCount": 27,
       "topHoldings": [
         {
           "issuer": "APPLE INC",
-          "value": 65950296923,
+          "value": 75901188420,
           "shares": 227917808,
-          "weight": 22.038266729497398
+          "weight": 24.95136141550127
         },
         {
           "issuer": "AMERICAN EXPRESS CO",
-          "value": 51282319275,
+          "value": 46104813870,
           "shares": 151610700,
-          "weight": 17.136745146261052
+          "weight": 15.15625641457889
         },
         {
           "issuer": "ALPHABET INC",
-          "value": 37764088383,
+          "value": 36374651401,
           "shares": 105979600,
-          "weight": 12.619428439458947
+          "weight": 11.957613475654993
         },
         {
           "issuer": "COCA COLA CO",
-          "value": 32508000000,
+          "value": 34432000000,
           "shares": 400000000,
-          "weight": 10.863028799990918
+          "weight": 11.318996370709788
         },
         {
           "issuer": "BANK OF AMER CORP",
-          "value": 27543790975,
-          "shares": 483394015,
-          "weight": 9.204164963158451
+          "value": 24812509222,
+          "shares": 455860908,
+          "weight": 8.156735067147453
         },
         {
           "issuer": "CHEVRON CORPORATION",
-          "value": 13986141890,
+          "value": 17230393553,
           "shares": 84375856,
-          "weight": 4.673676084404744
+          "weight": 5.664229847011743
         },
         {
           "issuer": "OCCIDENTAL PETE CORP",
-          "value": 12868205304,
+          "value": 14656559963,
           "shares": 264941431,
-          "weight": 4.300101046559243
-        },
-        {
-          "issuer": "CHUBB LIMITED",
-          "value": 11670066615,
-          "shares": 34249183,
-          "weight": 3.8997252902841617
+          "weight": 4.818121196221172
         },
         {
           "issuer": "MOODYS CORP",
-          "value": 11173435852,
+          "value": 11203286284,
           "shares": 24669778,
-          "weight": 3.7337687786122506
+          "weight": 3.6829099903757765
+        },
+        {
+          "issuer": "CHUBB LIMITED",
+          "value": 11139546771,
+          "shares": 34249183,
+          "weight": 3.661956594804279
         },
         {
           "issuer": "KRAFT HEINZ CO",
-          "value": 7691494401,
+          "value": 7398423065,
           "shares": 325634818,
-          "weight": 2.5702265655540755
+          "weight": 2.4321190701007955
         }
       ],
       "changes": [
         {
-          "issuer": "ALPHABET INC",
-          "kind": "increased",
-          "value": 37764088383,
-          "shares": 105979600,
-          "previousShares": 57835013,
-          "sharesChangePercent": 83.24470680070566
-        },
-        {
           "issuer": "BANK OF AMER CORP",
           "kind": "decreased",
-          "value": 27543790975,
-          "shares": 483394015,
-          "previousShares": 513624165,
-          "sharesChangePercent": -5.885655710922402
+          "value": 24812509222,
+          "shares": 455860908,
+          "previousShares": 483394015,
+          "sharesChangePercent": -5.695789799962666
         },
         {
           "issuer": "DELTA AIR LINES INC",
           "kind": "increased",
-          "value": 5368591200,
-          "shares": 57320000,
-          "previousShares": 39809456,
-          "sharesChangePercent": 43.985891191278775
-        },
-        {
-          "issuer": "KROGER CO",
-          "kind": "decreased",
-          "value": 2165670000,
-          "shares": 39000000,
-          "previousShares": 50000000,
-          "sharesChangePercent": -22
-        },
-        {
-          "issuer": "ALLY FINL INC",
-          "kind": "decreased",
-          "value": 1240650000,
-          "shares": 27000000,
-          "previousShares": 29000000,
-          "sharesChangePercent": -6.896551724137931
+          "value": 5378997000,
+          "shares": 64450000,
+          "previousShares": 57320000,
+          "sharesChangePercent": 12.43893928820656
         },
         {
           "issuer": "LENNAR CORP",
           "kind": "increased",
-          "value": 1212927402,
-          "shares": 13409858,
-          "previousShares": 10337345,
-          "sharesChangePercent": 29.722457749064198
+          "value": 2168384103,
+          "shares": 26587436,
+          "previousShares": 13409858,
+          "sharesChangePercent": 98.26784146409305
         },
         {
-          "issuer": "CAPITAL ONE FINL CORP",
+          "issuer": "KROGER CO",
           "kind": "decreased",
-          "value": 601860000,
-          "shares": 3000000,
-          "previousShares": 7150000,
-          "sharesChangePercent": -58.04195804195804
+          "value": 2051700000,
+          "shares": 35000000,
+          "previousShares": 39000000,
+          "sharesChangePercent": -10.256410256410255
         },
         {
-          "issuer": "NUCOR CORP",
+          "issuer": "VERISIGN INC",
           "kind": "decreased",
-          "value": 413814258,
-          "shares": 1857752,
-          "previousShares": 3907075,
-          "sharesChangePercent": -52.45159102397574
+          "value": 1670101573,
+          "shares": 5922136,
+          "previousShares": 8989880,
+          "sharesChangePercent": -34.12441545382141
         },
         {
-          "issuer": "MACYS INC",
-          "kind": "increased",
-          "value": 173031882,
-          "shares": 7347426,
-          "previousShares": 3038355,
-          "sharesChangePercent": 141.82249934586312
-        },
-        {
-          "issuer": "D R HORTON INC",
+          "issuer": "BENDING SPOONS SPA",
           "kind": "new",
-          "value": 580504,
-          "shares": 3564,
+          "value": 689379305,
+          "shares": 20689655,
           "previousShares": 0,
           "sharesChangePercent": null
         },
         {
-          "issuer": "CONSTELLATION BRANDS INC",
-          "kind": "exited",
-          "value": 0,
-          "shares": 0,
-          "previousShares": 632890,
-          "sharesChangePercent": -100
+          "issuer": "NUCOR CORP",
+          "kind": "decreased",
+          "value": 369506390,
+          "shares": 1580776,
+          "previousShares": 1857752,
+          "sharesChangePercent": -14.909202089406982
+        },
+        {
+          "issuer": "CAPITAL ONE FINL CORP",
+          "kind": "decreased",
+          "value": 222030500,
+          "shares": 1150000,
+          "previousShares": 3000000,
+          "sharesChangePercent": -61.66666666666667
         }
       ],
       "hasComparison": true
@@ -168,169 +144,169 @@
       "cik": 1350694,
       "name": "Bridgewater Associates, LP",
       "note": "ריי דליו",
-      "reportDate": "2026-06-30",
-      "filedAt": "2026-08-14",
-      "previousReportDate": "2026-03-31",
-      "totalValue": 24376086530,
-      "positionCount": 990,
+      "reportDate": "2026-09-30",
+      "filedAt": "2026-11-16",
+      "previousReportDate": "2026-06-30",
+      "totalValue": 22985792515,
+      "positionCount": 965,
       "topHoldings": [
         {
           "issuer": "STATE STR SPDR S&P 500 ETF T",
-          "value": 3973046405,
-          "shares": 5320308,
-          "weight": 16.29895102362028
+          "value": 2595471644,
+          "shares": 3403317,
+          "weight": 11.291634353291299
         },
         {
           "issuer": "ISHARES TR",
-          "value": 2494609800,
-          "shares": 5446707,
-          "weight": 10.233840435911842
+          "value": 1394128698,
+          "shares": 4024374,
+          "weight": 6.065175682283844
         },
         {
           "issuer": "NVIDIA CORPORATION",
-          "value": 773586958,
-          "shares": 3866195,
-          "weight": 3.1735486213011894
-        },
-        {
-          "issuer": "ALPHABET INC",
-          "value": 498725596,
-          "shares": 1396383,
-          "weight": 2.0459625271932445
-        },
-        {
-          "issuer": "BROADCOM INC",
-          "value": 497845413,
-          "shares": 1317923,
-          "weight": 2.042351680969357
+          "value": 613935912,
+          "shares": 2688221,
+          "weight": 2.670936456071112
         },
         {
           "issuer": "ISHARES INC",
-          "value": 496484181,
-          "shares": 3816595,
-          "weight": 2.036767388354032
+          "value": 473956766,
+          "shares": 4111440,
+          "weight": 2.0619552956057823
         },
         {
-          "issuer": "AMAZON COM INC",
-          "value": 482753142,
-          "shares": 2025481,
-          "weight": 1.9804374316027669
+          "issuer": "BROADCOM INC",
+          "value": 461725648,
+          "shares": 1314746,
+          "weight": 2.008743651969748
         },
         {
           "issuer": "LAM RESEARCH CORP",
-          "value": 406560606,
-          "shares": 938224,
-          "weight": 1.6678666015549297
-        },
-        {
-          "issuer": "VANGUARD INDEX FDS",
-          "value": 314820655,
-          "shares": 458381,
-          "weight": 1.2915143479349964
+          "value": 348182821,
+          "shares": 1059885,
+          "weight": 1.5147740534627374
         },
         {
           "issuer": "ADVANCED MICRO DEVICES INC",
-          "value": 312896715,
-          "shares": 538632,
-          "weight": 1.2836216125788424
+          "value": 300580323,
+          "shares": 491337,
+          "weight": 1.3076787446151712
+        },
+        {
+          "issuer": "APPLIED MATLS INC",
+          "value": 288100753,
+          "shares": 563379,
+          "weight": 1.2533862072060038
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "value": 252557818,
+          "shares": 237119,
+          "weight": 1.098756189655791
+        },
+        {
+          "issuer": "NEWMONT CORP",
+          "value": 242638682,
+          "shares": 2103682,
+          "weight": 1.0556028548576672
         }
       ],
       "changes": [
         {
           "issuer": "STATE STR SPDR S&P 500 ETF T",
-          "kind": "increased",
-          "value": 3973046405,
-          "shares": 5320308,
-          "previousShares": 4364862,
-          "sharesChangePercent": 21.889489289695756
+          "kind": "decreased",
+          "value": 2595471644,
+          "shares": 3403317,
+          "previousShares": 5320308,
+          "sharesChangePercent": -36.031579374727926
         },
         {
           "issuer": "ISHARES TR",
-          "kind": "increased",
-          "value": 2494609800,
-          "shares": 5446707,
-          "previousShares": 5067905,
-          "sharesChangePercent": 7.474528429400314
+          "kind": "decreased",
+          "value": 1394128698,
+          "shares": 4024374,
+          "previousShares": 5446707,
+          "sharesChangePercent": -26.113631594282566
         },
         {
           "issuer": "NVIDIA CORPORATION",
           "kind": "decreased",
-          "value": 773586958,
-          "shares": 3866195,
-          "previousShares": 4693003,
-          "sharesChangePercent": -17.61788773627462
-        },
-        {
-          "issuer": "ALPHABET INC",
-          "kind": "decreased",
-          "value": 498725596,
-          "shares": 1396383,
-          "previousShares": 2384676,
-          "sharesChangePercent": -41.44349169446919
-        },
-        {
-          "issuer": "BROADCOM INC",
-          "kind": "decreased",
-          "value": 497845413,
-          "shares": 1317923,
-          "previousShares": 1835380,
-          "sharesChangePercent": -28.193453126872907
+          "value": 613935912,
+          "shares": 2688221,
+          "previousShares": 3866195,
+          "sharesChangePercent": -30.468561466765127
         },
         {
           "issuer": "ISHARES INC",
-          "kind": "decreased",
-          "value": 496484181,
-          "shares": 3816595,
-          "previousShares": 4375869,
-          "sharesChangePercent": -12.780867068918198
-        },
-        {
-          "issuer": "AMAZON COM INC",
-          "kind": "decreased",
-          "value": 482753142,
-          "shares": 2025481,
-          "previousShares": 4388711,
-          "sharesChangePercent": -53.847929380631356
+          "kind": "increased",
+          "value": 473956766,
+          "shares": 4111440,
+          "previousShares": 3816595,
+          "sharesChangePercent": 7.725341567549085
         },
         {
           "issuer": "LAM RESEARCH CORP",
-          "kind": "decreased",
-          "value": 406560606,
-          "shares": 938224,
-          "previousShares": 1571229,
-          "sharesChangePercent": -40.28725284474765
-        },
-        {
-          "issuer": "VANGUARD INDEX FDS",
           "kind": "increased",
-          "value": 314820655,
-          "shares": 458381,
-          "previousShares": 158628,
-          "sharesChangePercent": 188.96600852308546
+          "value": 348182821,
+          "shares": 1059885,
+          "previousShares": 938224,
+          "sharesChangePercent": 12.967159228499803
         },
         {
           "issuer": "ADVANCED MICRO DEVICES INC",
           "kind": "decreased",
-          "value": 312896715,
-          "shares": 538632,
-          "previousShares": 1292767,
-          "sharesChangePercent": -58.33495130986481
+          "value": 300580323,
+          "shares": 491337,
+          "previousShares": 538632,
+          "sharesChangePercent": -8.780577462906027
         },
         {
-          "issuer": "MICROSOFT CORP",
-          "kind": "decreased",
-          "value": 265551446,
-          "shares": 711896,
-          "previousShares": 1084979,
-          "sharesChangePercent": -34.386195493184665
+          "issuer": "APPLIED MATLS INC",
+          "kind": "increased",
+          "value": 288100753,
+          "shares": 563379,
+          "previousShares": 291426,
+          "sharesChangePercent": 93.31802927672891
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "kind": "increased",
+          "value": 252557818,
+          "shares": 237119,
+          "previousShares": 116666,
+          "sharesChangePercent": 103.24601854867743
         },
         {
           "issuer": "NEWMONT CORP",
+          "kind": "decreased",
+          "value": 242638682,
+          "shares": 2103682,
+          "previousShares": 2695170,
+          "sharesChangePercent": -21.94622231621753
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "kind": "decreased",
+          "value": 241863857,
+          "shares": 970756,
+          "previousShares": 2025481,
+          "sharesChangePercent": -52.07281628413202
+        },
+        {
+          "issuer": "APPLOVIN CORP",
           "kind": "increased",
-          "value": 251728878,
-          "shares": 2695170,
-          "previousShares": 2316641,
-          "sharesChangePercent": 16.339562323208472
+          "value": 198375307,
+          "shares": 683040,
+          "previousShares": 146602,
+          "sharesChangePercent": 365.91451685515887
+        },
+        {
+          "issuer": "SHELL PLC",
+          "kind": "increased",
+          "value": 195929321,
+          "shares": 2061329,
+          "previousShares": 1526163,
+          "sharesChangePercent": 35.0661102385525
         }
       ],
       "hasComparison": true
@@ -681,169 +657,169 @@
       "cik": 1167483,
       "name": "TIGER GLOBAL MANAGEMENT LLC",
       "note": "צמיחה וטכנולוגיה",
-      "reportDate": "2026-06-30",
-      "filedAt": "2026-08-14",
-      "previousReportDate": "2026-03-31",
-      "totalValue": 23981506027,
-      "positionCount": 46,
+      "reportDate": "2026-09-30",
+      "filedAt": "2026-11-16",
+      "previousReportDate": "2026-06-30",
+      "totalValue": 20173101170,
+      "positionCount": 45,
       "topHoldings": [
         {
-          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
-          "value": 2331022991,
-          "shares": 4881008,
-          "weight": 9.72008592110761
+          "issuer": "NVIDIA CORPORATION",
+          "value": 2740560000,
+          "shares": 12000000,
+          "weight": 13.585219133662829
         },
         {
           "issuer": "AMAZON COM INC",
-          "value": 2307979214,
-          "shares": 9683558,
-          "weight": 9.623996138530753
-        },
-        {
-          "issuer": "NVIDIA CORPORATION",
-          "value": 2240762490,
-          "shares": 11198773,
-          "weight": 9.34371047204958
-        },
-        {
-          "issuer": "ALPHABET INC",
-          "value": 2074778363,
-          "shares": 5805687,
-          "weight": 8.651576596832886
+          "value": 2311877799,
+          "shares": 9279060,
+          "weight": 11.460200291059165
         },
         {
           "issuer": "META PLATFORMS INC",
-          "value": 1590269062,
-          "shares": 2823180,
-          "weight": 6.631231000294842
+          "value": 1630449026,
+          "shares": 2248337,
+          "weight": 8.082292416322622
         },
         {
-          "issuer": "LAM RESEARCH CORP",
-          "value": 1370837288,
-          "shares": 3163495,
-          "weight": 5.716226856047401
-        },
-        {
-          "issuer": "SEA LTD",
-          "value": 1203543536,
-          "shares": 12559152,
-          "weight": 5.018632001864142
-        },
-        {
-          "issuer": "APPLIED MATLS INC",
-          "value": 1180087830,
-          "shares": 1632210,
-          "weight": 4.920824524829164
-        },
-        {
-          "issuer": "GE VERNOVA INC",
-          "value": 936963773,
-          "shares": 797511,
-          "weight": 3.907026405869184
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "value": 1429664790,
+          "shares": 3133924,
+          "weight": 7.086985674399411
         },
         {
           "issuer": "MICROSOFT CORP",
-          "value": 845603887,
+          "value": 1162699678,
           "shares": 2266913,
-          "weight": 3.5260666533951706
+          "weight": 5.7636139738846115
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "value": 1152398929,
+          "shares": 3349218,
+          "weight": 5.712552171769037
+        },
+        {
+          "issuer": "CORPAY INC",
+          "value": 835442202,
+          "shares": 2149877,
+          "weight": 4.141367234317003
+        },
+        {
+          "issuer": "CEREBRAS SYSTEMS INC",
+          "value": 789893545,
+          "shares": 4446347,
+          "weight": 3.915578166904122
+        },
+        {
+          "issuer": "LAM RESEARCH CORP",
+          "value": 720533795,
+          "shares": 2193339,
+          "weight": 3.571755224583549
+        },
+        {
+          "issuer": "SEA LTD",
+          "value": 691997494,
+          "shares": 7107616,
+          "weight": 3.430298039793155
         }
       ],
       "changes": [
         {
-          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
-          "kind": "decreased",
-          "value": 2331022991,
-          "shares": 4881008,
-          "previousShares": 5565074,
-          "sharesChangePercent": -12.29212765185153
-        },
-        {
           "issuer": "NVIDIA CORPORATION",
-          "kind": "decreased",
-          "value": 2240762490,
-          "shares": 11198773,
-          "previousShares": 12011752,
-          "sharesChangePercent": -6.768196679385322
-        },
-        {
-          "issuer": "ALPHABET INC",
-          "kind": "decreased",
-          "value": 2074778363,
-          "shares": 5805687,
-          "previousShares": 10631402,
-          "sharesChangePercent": -45.39114408428917
+          "kind": "increased",
+          "value": 2740560000,
+          "shares": 12000000,
+          "previousShares": 11198773,
+          "sharesChangePercent": 7.154596311578063
         },
         {
           "issuer": "META PLATFORMS INC",
           "kind": "decreased",
-          "value": 1590269062,
-          "shares": 2823180,
-          "previousShares": 3086864,
-          "sharesChangePercent": -8.54213207967698
+          "value": 1630449026,
+          "shares": 2248337,
+          "previousShares": 2823180,
+          "sharesChangePercent": -20.361542657570542
+        },
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "kind": "decreased",
+          "value": 1429664790,
+          "shares": 3133924,
+          "previousShares": 4881008,
+          "sharesChangePercent": -35.79350822616968
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "kind": "decreased",
+          "value": 1152398929,
+          "shares": 3349218,
+          "previousShares": 5805687,
+          "sharesChangePercent": -42.31142670970722
+        },
+        {
+          "issuer": "CEREBRAS SYSTEMS INC",
+          "kind": "increased",
+          "value": 789893545,
+          "shares": 4446347,
+          "previousShares": 2999000,
+          "sharesChangePercent": 48.26098699566522
         },
         {
           "issuer": "LAM RESEARCH CORP",
           "kind": "decreased",
-          "value": 1370837288,
-          "shares": 3163495,
-          "previousShares": 3900439,
-          "sharesChangePercent": -18.893873228116117
+          "value": 720533795,
+          "shares": 2193339,
+          "previousShares": 3163495,
+          "sharesChangePercent": -30.667220905991634
         },
         {
           "issuer": "SEA LTD",
           "kind": "decreased",
-          "value": 1203543536,
-          "shares": 12559152,
-          "previousShares": 15415835,
-          "sharesChangePercent": -18.530835339117214
+          "value": 691997494,
+          "shares": 7107616,
+          "previousShares": 12559152,
+          "sharesChangePercent": -43.4068797001581
+        },
+        {
+          "issuer": "INTEL CORP",
+          "kind": "increased",
+          "value": 666599365,
+          "shares": 5544368,
+          "previousShares": 4252690,
+          "sharesChangePercent": 30.373199081052228
+        },
+        {
+          "issuer": "APPLIED MATLS INC",
+          "kind": "decreased",
+          "value": 614353522,
+          "shares": 1201364,
+          "previousShares": 1632210,
+          "sharesChangePercent": -26.396480844989306
         },
         {
           "issuer": "GE VERNOVA INC",
           "kind": "decreased",
-          "value": 936963773,
-          "shares": 797511,
-          "previousShares": 972994,
-          "sharesChangePercent": -18.035363013543762
+          "value": 550613154,
+          "shares": 579294,
+          "previousShares": 797511,
+          "sharesChangePercent": -27.362255818415044
         },
         {
-          "issuer": "MICROSOFT CORP",
-          "kind": "decreased",
-          "value": 845603887,
-          "shares": 2266913,
-          "previousShares": 2500000,
-          "sharesChangePercent": -9.32348
-        },
-        {
-          "issuer": "CORPAY INC",
+          "issuer": "MERCADOLIBRE INC",
           "kind": "increased",
-          "value": 716489508,
-          "shares": 2149877,
-          "previousShares": 1752146,
-          "sharesChangePercent": 22.69964945843554
+          "value": 422843380,
+          "shares": 244626,
+          "previousShares": 153126,
+          "sharesChangePercent": 59.75471180596371
         },
         {
-          "issuer": "CEREBRAS SYSTEMS INC",
-          "kind": "new",
-          "value": 662779000,
-          "shares": 2999000,
-          "previousShares": 0,
-          "sharesChangePercent": null
-        },
-        {
-          "issuer": "BROADCOM INC",
+          "issuer": "REDDIT INC",
           "kind": "decreased",
-          "value": 662596921,
-          "shares": 1754062,
-          "previousShares": 3584814,
-          "sharesChangePercent": -51.06965103349853
-        },
-        {
-          "issuer": "COUPANG INC",
-          "kind": "increased",
-          "value": 633448674,
-          "shares": 36467972,
-          "previousShares": 34595407,
-          "sharesChangePercent": 5.412756092159864
+          "value": 323416857,
+          "shares": 2270548,
+          "previousShares": 2528819,
+          "sharesChangePercent": -10.21310738332795
         }
       ],
       "hasComparison": true
