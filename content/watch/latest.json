@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-26T10:10:14.950Z",
+  "builtAt": "2026-11-26T22:10:21.756Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 0,
     "range": 13,
     "event": 0,
-    "story": 5
+    "story": 1
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "4.44% ביום — פי 2.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.3451463422495085,
       "href": "/company/DE",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "move",
@@ -26,7 +26,7 @@
       "detail": "8.39% ביום — פי 2.3 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.2868544236546127,
       "href": "/company/CHTR",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "story",
@@ -38,49 +38,13 @@
       "at": "2026-11-26T05:20:02.000Z"
     },
     {
-      "kind": "story",
-      "ticker": "JPM",
-      "headline": "JPMorgan Sees $450 Billion AI Debt Blitz in 2027 Before Plateau",
-      "detail": "אנליסטים ב-JPMorgan מעריכים שחברות יגייסו 450 מיליארד דולר בשוק החוב בדרגת השקעה בשנה הבאה כדי לממן הוצאות הוניות הקשורות לבינה מלאכותית, טרם התייצבות בצמיחה בעתיד.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=ba5f5e61702518ed11052cd44397cdbfb6b29461968abb874cea8a4afea583fd",
-      "at": "2026-11-25T21:17:21.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TSMC",
-      "headline": "TSMC eyes 3K-acre Aggieland site for $22.6B chip plant",
-      "detail": "TSMC שוקלת להקים מפעל שבבים בעלות של 22.6 מיליארד דולר (או 23 מיליארד דולר לפי דיווחים) בשטח של 3,000 דונם ב-Aggieland שבטקסס. המיזם נחשף דרך הגשה לתוכנית ממשלתית בטקסס, והחברה מעריכה כי המפ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=54770dfdb0c7cf4fb26cc3060fe96075e6aea203b5c9a6d2f157c9750de8e306",
-      "at": "2026-11-25T19:29:01.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "ORCL",
-      "headline": "Oracle Is Down 60% From Its June High. J.P. Morgan Still Sees $200",
-      "detail": "אנליסט J.P. Morgan הותיר על כנו את המלצת הקנייה ואת יעד המחיר של 200 דולר למניית Oracle, נמוך בהרבה מהממוצע בשוק אך גבוה מהמחיר הנוכחי שעמד על 109.51 דולר ב-24 בנובמבר. החברה מימנה מרכזי נתו",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=3589c4ce2c7d1de35499a0de8e18c0913456ad6a08dd1bd41e419ed0d2a91d0a",
-      "at": "2026-11-25T16:50:56.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": null,
-      "headline": "US third-quarter economic growth revised sharply higher; inflation broadening out - Reuters",
-      "detail": "הצמיחה הכלכלית בארה\"ב ברבעון השלישי עודכנה כלפי מעלה בחדות, במקביל להתרחבות אינפלציונית.",
-      "weight": 2.2,
-      "href": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNalBrRjhRWHdhRDduMzduLU1kN1lGVFpzNFllX0RzdjJXMjdtajRZS1l1dms2MFJFbkhJQmx3Qzgydi1nTTJnQ1JPLUtoa1R5LWZjWjItUXJhXzhoZG51NU9ENzVBQjVSZWFpdHlqbV9PSkVncWtjUlptdXhjd0ZKRXZ6d2Y1dw?oc=5",
-      "at": "2026-11-25T16:15:17.000Z"
-    },
-    {
       "kind": "move",
       "ticker": "GD",
       "headline": "GD זזה למעלה הרבה מעבר לרגיל שלה",
       "detail": "2.48% ביום — פי 2.0 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.001442432073998,
       "href": "/company/GD",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -89,7 +53,7 @@
       "detail": "הסגירה האחרונה 406.03 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AMD",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -98,7 +62,7 @@
       "detail": "הסגירה האחרונה 158.25 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DDOG",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -107,7 +71,7 @@
       "detail": "הסגירה האחרונה 564.12 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/VRTX",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -116,43 +80,7 @@
       "detail": "הסגירה האחרונה 238.70 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PGR",
-      "at": "2026-11-26T10:10:14.950Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PSX",
-      "headline": "PSX בשפל של רבעון",
-      "detail": "הסגירה האחרונה 236.08 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PSX",
-      "at": "2026-11-26T10:10:14.950Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PG",
-      "headline": "PG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 173.23 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PG",
-      "at": "2026-11-26T10:10:14.950Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "VLO",
-      "headline": "VLO בשפל של רבעון",
-      "detail": "הסגירה האחרונה 323.00 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/VLO",
-      "at": "2026-11-26T10:10:14.950Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "MPC",
-      "headline": "MPC בשפל של רבעון",
-      "detail": "הסגירה האחרונה 346.27 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/MPC",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -161,7 +89,43 @@
       "detail": "הסגירה האחרונה 283.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MCD",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PSX",
+      "headline": "PSX בשפל של רבעון",
+      "detail": "הסגירה האחרונה 236.08 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PSX",
+      "at": "2026-11-26T22:10:21.756Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "PG",
+      "headline": "PG בשיא של רבעון",
+      "detail": "הסגירה האחרונה 173.23 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/PG",
+      "at": "2026-11-26T22:10:21.756Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "VLO",
+      "headline": "VLO בשפל של רבעון",
+      "detail": "הסגירה האחרונה 323.00 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/VLO",
+      "at": "2026-11-26T22:10:21.756Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "MPC",
+      "headline": "MPC בשפל של רבעון",
+      "detail": "הסגירה האחרונה 346.27 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/MPC",
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -170,16 +134,7 @@
       "detail": "הסגירה האחרונה 361.26 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/HD",
-      "at": "2026-11-26T10:10:14.950Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "DIS",
-      "headline": "DIS בשיא של רבעון",
-      "detail": "הסגירה האחרונה 125.60 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/DIS",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -188,7 +143,16 @@
       "detail": "הסגירה האחרונה 235.65 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/LOW",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "DIS",
+      "headline": "DIS בשיא של רבעון",
+      "detail": "הסגירה האחרונה 125.60 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/DIS",
+      "at": "2026-11-26T22:10:21.756Z"
     },
     {
       "kind": "range",
@@ -197,7 +161,7 @@
       "detail": "הסגירה האחרונה 67.81 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MDLZ",
-      "at": "2026-11-26T10:10:14.950Z"
+      "at": "2026-11-26T22:10:21.756Z"
     }
   ]
 }
