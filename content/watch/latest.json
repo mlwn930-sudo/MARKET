@@ -1,32 +1,32 @@
 {
-  "builtAt": "2026-11-27T10:16:22.627Z",
+  "builtAt": "2026-11-27T21:50:44.602Z",
   "universe": 123,
   "priced": 123,
   "counts": {
-    "move": 3,
-    "opportunity": 0,
-    "range": 13,
+    "move": 1,
+    "opportunity": 1,
+    "range": 9,
     "event": 0,
-    "story": 5
+    "story": 3
   },
   "findings": [
     {
       "kind": "move",
-      "ticker": "DE",
-      "headline": "DE זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "4.44% ביום — פי 2.3 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.3451463422495085,
-      "href": "/company/DE",
-      "at": "2026-11-27T10:16:22.627Z"
+      "ticker": "VRTX",
+      "headline": "VRTX זזה למטה הרבה מעבר לרגיל שלה",
+      "detail": "-5.24% ביום — פי 3.0 מסטיית התקן היומית שלה ברבעון האחרון",
+      "weight": 2.9506181774207234,
+      "href": "/company/VRTX",
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
-      "kind": "move",
-      "ticker": "CHTR",
-      "headline": "CHTR זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "8.39% ביום — פי 2.3 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.2868544236546127,
-      "href": "/company/CHTR",
-      "at": "2026-11-27T10:16:22.627Z"
+      "kind": "opportunity",
+      "ticker": "VRTX",
+      "headline": "VRTX עוברת 10 מתוך 10 המבחנים, וירדה חזק",
+      "detail": "-5.24% ביום — פי 3.0 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
+      "weight": 2.8950618177420724,
+      "href": "/company/VRTX",
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
       "kind": "story",
@@ -56,148 +56,85 @@
       "at": "2026-11-27T02:22:10.000Z"
     },
     {
-      "kind": "story",
-      "ticker": "TTWO",
-      "headline": "Take-Two’s (TTWO) GTA 6 Could Be a Cash Cow for the Next Decade",
-      "detail": "Take-Two דיווחה על מכירות קמעונאיות בסך 3.79 מיליארד דולר ביום הראשון להשקת המשחק Grand Theft Auto 6.",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=1d9ca473e389f8612ef71cd492e41abe2c9d1cfd4d53c7aa532cc11172d387b4",
-      "at": "2026-11-26T21:33:00.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "TTWO",
-      "headline": "At the gym with the CEO who made us wait 13 years for GTA VI",
-      "detail": "כתבת פרופיל על שטראוס זלניק, מנכ\"ל Take-Two Interactive, מתארת את סגנון הניהול שלו ואת האסטרטגיה מאחורי פיתוח המשחק Grand Theft Auto VI, שנמשך 13 שנים. הכתבה מציינת כי המשחק הפך להשקת הבידור",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=e797941f577d9c0a94e10a6a958a026c352b05086dc4625b8c5994f7eb93308b",
-      "at": "2026-11-26T11:00:16.000Z"
-    },
-    {
-      "kind": "move",
-      "ticker": "GD",
-      "headline": "GD זזה למעלה הרבה מעבר לרגיל שלה",
-      "detail": "2.48% ביום — פי 2.0 מסטיית התקן היומית שלה ברבעון האחרון",
-      "weight": 2.001442432073998,
-      "href": "/company/GD",
-      "at": "2026-11-27T10:16:22.627Z"
+      "kind": "range",
+      "ticker": "REGN",
+      "headline": "REGN בשיא של רבעון",
+      "detail": "הסגירה האחרונה 992.14 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/REGN",
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
       "kind": "range",
-      "ticker": "AMD",
-      "headline": "AMD בשפל של רבעון",
-      "detail": "הסגירה האחרונה 406.03 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "CB",
+      "headline": "CB בשיא של רבעון",
+      "detail": "הסגירה האחרונה 381.02 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/AMD",
-      "at": "2026-11-27T10:16:22.627Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "DDOG",
-      "headline": "DDOG בשפל של רבעון",
-      "detail": "הסגירה האחרונה 158.25 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/DDOG",
-      "at": "2026-11-27T10:16:22.627Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "VRTX",
-      "headline": "VRTX בשיא של רבעון",
-      "detail": "הסגירה האחרונה 564.12 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/VRTX",
-      "at": "2026-11-27T10:16:22.627Z"
+      "href": "/company/CB",
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
       "kind": "range",
       "ticker": "PGR",
       "headline": "PGR בשיא של רבעון",
-      "detail": "הסגירה האחרונה 238.70 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 239.14 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PGR",
-      "at": "2026-11-27T10:16:22.627Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PG",
-      "headline": "PG בשיא של רבעון",
-      "detail": "הסגירה האחרונה 173.23 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PG",
-      "at": "2026-11-27T10:16:22.627Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "VLO",
-      "headline": "VLO בשפל של רבעון",
-      "detail": "הסגירה האחרונה 323.00 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/VLO",
-      "at": "2026-11-27T10:16:22.627Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "PSX",
-      "headline": "PSX בשפל של רבעון",
-      "detail": "הסגירה האחרונה 236.08 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/PSX",
-      "at": "2026-11-27T10:16:22.627Z"
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
       "kind": "range",
       "ticker": "HD",
       "headline": "HD בשיא של רבעון",
-      "detail": "הסגירה האחרונה 361.26 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 362.15 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/HD",
-      "at": "2026-11-27T10:16:22.627Z"
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
       "kind": "range",
-      "ticker": "MCD",
-      "headline": "MCD בשיא של רבעון",
-      "detail": "הסגירה האחרונה 283.50 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "WMT",
+      "headline": "WMT בשיא של רבעון",
+      "detail": "הסגירה האחרונה 133.13 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/MCD",
-      "at": "2026-11-27T10:16:22.627Z"
+      "href": "/company/WMT",
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
       "kind": "range",
-      "ticker": "MPC",
-      "headline": "MPC בשפל של רבעון",
-      "detail": "הסגירה האחרונה 346.27 היא הנמוכה ביותר מתוך 65 ימי מסחר ברבעון",
+      "ticker": "AAPL",
+      "headline": "AAPL בשיא של רבעון",
+      "detail": "הסגירה האחרונה 358.54 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
-      "href": "/company/MPC",
-      "at": "2026-11-27T10:16:22.627Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "MDLZ",
-      "headline": "MDLZ בשיא של רבעון",
-      "detail": "הסגירה האחרונה 67.81 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/MDLZ",
-      "at": "2026-11-27T10:16:22.627Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "LOW",
-      "headline": "LOW בשיא של רבעון",
-      "detail": "הסגירה האחרונה 235.65 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/LOW",
-      "at": "2026-11-27T10:16:22.627Z"
+      "href": "/company/AAPL",
+      "at": "2026-11-27T21:50:44.602Z"
     },
     {
       "kind": "range",
       "ticker": "DIS",
       "headline": "DIS בשיא של רבעון",
-      "detail": "הסגירה האחרונה 125.60 היא הגבוהה ביותר מתוך 65 ימי מסחר ברבעון",
+      "detail": "הסגירה האחרונה 127.24 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DIS",
-      "at": "2026-11-27T10:16:22.627Z"
+      "at": "2026-11-27T21:50:44.602Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "LOW",
+      "headline": "LOW בשיא של רבעון",
+      "detail": "הסגירה האחרונה 236.46 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/LOW",
+      "at": "2026-11-27T21:50:44.602Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "MDLZ",
+      "headline": "MDLZ בשיא של רבעון",
+      "detail": "הסגירה האחרונה 67.77 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/MDLZ",
+      "at": "2026-11-27T21:50:44.602Z"
     }
   ]
 }
