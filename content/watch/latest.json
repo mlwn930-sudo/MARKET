@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-27T21:55:26.855Z",
+  "builtAt": "2026-11-28T09:35:45.835Z",
   "universe": 123,
   "priced": 123,
   "counts": {
@@ -7,7 +7,7 @@
     "opportunity": 1,
     "range": 9,
     "event": 0,
-    "story": 4
+    "story": 5
   },
   "findings": [
     {
@@ -17,7 +17,7 @@
       "detail": "-5.24% ביום — פי 3.0 מסטיית התקן היומית שלה ברבעון האחרון",
       "weight": 2.9506181774207234,
       "href": "/company/VRTX",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "opportunity",
@@ -26,16 +26,43 @@
       "detail": "-5.24% ביום — פי 3.0 מסטיית התקן הרבעונית שלה, על חברה שעוברת רוב המבחנים שניתן היה לחשב",
       "weight": 2.8950618177420724,
       "href": "/company/VRTX",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Should You Buy Nvidia Stock Before CEO Jensen Huang Testifies in Front of Congress on Dec. 1 and Dec. 3?",
-      "detail": "מנכ\"ל Nvidia, ג'נסן הואנג, צפוי להעיד בפני הקונגרס ב-1 וב-3 בדצמבר בנוגע לקשרי החברה בסין, בחינת הפרת בקרות ייצוא ופרשת מעורבות לכאורה של בכירה לשעבר בחברת MegaSpeed מסינגפור בהעברת שבבים למ",
+      "ticker": "AAPL",
+      "headline": "Apple Is Beating the Rest of the \"Magnificent Seven\" in 2026. Can It Do It Again in 2027?",
+      "detail": "אפל הובילה את מניות \"שבע המופלאות\" ב-2026 עם עלייה של כ-32%, הודות להימנעות מהוצאות הון עצומות על מרכזי נתונים. בשנה הפיסקלית 2026 רשמה הכנסות של 478.8 מיליארד דולר וייצרה 136.1 מיליארד דולר",
       "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=6485c9afc0ccda7c8349157b048306d43cc7dfa4db44f087308da73de51263b5",
-      "at": "2026-11-27T19:48:09.000Z"
+      "href": "https://finnhub.io/api/news?id=99b36f5e91cfa5424783695ea2d69d16329b9a486abca7ca930c536d37fbae7d",
+      "at": "2026-11-28T01:19:10.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "INTC",
+      "headline": "No Threat to TSMC Before 2028: Intel’s Foundry Gap Is Still Huge",
+      "detail": "אינטל רשמה את צמיחת מרכזי הנתונים הטובה ביותר מזה 15 שנה, אך פעילות היציקה שלה ממשיכה לייצר הפסדים כבדים. במקביל, TSMC מדווחת שביקוש הבינה המלאכותית עולה על ההיצע.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=17aad9b017356426b964aeb13f02e64d5805b7eaf2162799882f70e2026c0f20",
+      "at": "2026-11-27T15:45:12.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "MSTR",
+      "headline": "Weekly Wrap: Bitcoin Struggles As Latest Rally Fails",
+      "detail": "הביטקוין ירד ל-59,875 דולר ורשם שבוע שמיני ברציפות של ירידות, לצד ירידה חודשית של 25% בנובמבר. במקביל, נרשמו פדיונות שיא של 4.71 מיליארד דולר בקרנות סל של ביטקוין במהלך חודש נובמבר.",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=ed9ddebb2d7cc8d11f4b1ed76d484e00acd05e89a43514583894a82584ea6323",
+      "at": "2026-11-27T20:19:00.000Z"
+    },
+    {
+      "kind": "story",
+      "ticker": "SNY",
+      "headline": "Stocktwits Biotech Dealmaker: Sanofi’s $41B Insmed Buyout Anchors Holiday Week As Lilly Continues Buying Spree",
+      "detail": "חברת סנופי הודיעה על רכישת חברת התרופות אינסמד תמורת 175 דולר למניה במזומן, בשווי שוק של כ-41 מיליארד דולר. במקביל, אלי לילי סיכמה על רכישת חברת LoQus23 Therapeutics הפרטית תמורת עד 725 מילי",
+      "weight": 2.2,
+      "href": "https://finnhub.io/api/news?id=989e160efd9f9f3157ad1fc454cd1549788d89b1af5996a9d472c6a7558ab85b",
+      "at": "2026-11-28T00:10:23.000Z"
     },
     {
       "kind": "story",
@@ -47,31 +74,13 @@
       "at": "2026-11-27T19:19:02.000Z"
     },
     {
-      "kind": "story",
-      "ticker": "ANT",
-      "headline": "ANT Stock Ends First Full Week Of Trading Around 11% Above IPO Price: Lockup Expiry, Nasdaq 100 Entry Loom",
-      "detail": "מניית אנת'רופיק (ANT) סיימה את שבוע המסחר המלא הראשון שלה בכ-11% מעל מחיר ההנפקה של 83 דולר, לפי שווי שוק של כ-1.3 עד 1.7 טריליון דולר. זאת על רקע התאוששות בסנטימנט הטכנולוגי הביקוש לכלים כמ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=6dc7c92350920efcab193e06a73dfa7208d086468d373aa5dbe1591545690c96",
-      "at": "2026-11-27T18:57:52.000Z"
-    },
-    {
-      "kind": "story",
-      "ticker": "NVDA",
-      "headline": "Should You Buy Nvidia Stock Before CEO Jensen Huang Testifies in Front of Congress on Dec. 1 and Dec. 3?",
-      "detail": "מנכ\"ל Nvidia, ג'נסן הואנג, צפוי להעיד בפני הקונגרס ב-1 וב-3 בדצמבר בנוגע לקשרי החברה בסין, בחינת הפרת בקרות ייצוא ופרשת מעורבות לכאורה של בכירה לשעבר בחברת MegaSpeed מסינגפור בהעברת שבבים למ",
-      "weight": 2.2,
-      "href": "https://finnhub.io/api/news?id=6485c9afc0ccda7c8349157b048306d43cc7dfa4db44f087308da73de51263b5",
-      "at": "2026-11-27T19:48:09.000Z"
-    },
-    {
       "kind": "range",
       "ticker": "REGN",
       "headline": "REGN בשיא של רבעון",
       "detail": "הסגירה האחרונה 992.14 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/REGN",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "range",
@@ -80,7 +89,7 @@
       "detail": "הסגירה האחרונה 239.14 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/PGR",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "range",
@@ -89,25 +98,7 @@
       "detail": "הסגירה האחרונה 381.02 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/CB",
-      "at": "2026-11-27T21:55:26.855Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "HD",
-      "headline": "HD בשיא של רבעון",
-      "detail": "הסגירה האחרונה 362.15 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/HD",
-      "at": "2026-11-27T21:55:26.855Z"
-    },
-    {
-      "kind": "range",
-      "ticker": "WMT",
-      "headline": "WMT בשיא של רבעון",
-      "detail": "הסגירה האחרונה 133.13 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
-      "weight": 1.8,
-      "href": "/company/WMT",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "range",
@@ -116,7 +107,25 @@
       "detail": "הסגירה האחרונה 358.54 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/AAPL",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "HD",
+      "headline": "HD בשיא של רבעון",
+      "detail": "הסגירה האחרונה 362.15 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/HD",
+      "at": "2026-11-28T09:35:45.835Z"
+    },
+    {
+      "kind": "range",
+      "ticker": "WMT",
+      "headline": "WMT בשיא של רבעון",
+      "detail": "הסגירה האחרונה 133.13 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
+      "weight": 1.8,
+      "href": "/company/WMT",
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "range",
@@ -125,7 +134,7 @@
       "detail": "הסגירה האחרונה 67.77 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/MDLZ",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "range",
@@ -134,7 +143,7 @@
       "detail": "הסגירה האחרונה 236.46 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/LOW",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     },
     {
       "kind": "range",
@@ -143,7 +152,7 @@
       "detail": "הסגירה האחרונה 127.24 היא הגבוהה ביותר מתוך 64 ימי מסחר ברבעון",
       "weight": 1.8,
       "href": "/company/DIS",
-      "at": "2026-11-27T21:55:26.855Z"
+      "at": "2026-11-28T09:35:45.835Z"
     }
   ]
 }
